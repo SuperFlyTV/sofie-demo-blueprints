@@ -1,34 +1,58 @@
 import * as _ from 'underscore'
+import * as objectPath from 'object-path'
 import {
-	SegmentContext, IngestSegment, BlueprintResultSegment
+	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintSegmentLine
 } from 'tv-automation-sofie-blueprints-integration'
+import { literal } from '../common/util'
 
-export function getSegment (_context: SegmentContext, _ingestSegment: IngestSegment): BlueprintResultSegment | null {
-	// let type = ''
-	// let variant = ''
+export function getSegment (context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
+	const segment = literal<IBlueprintSegment>({
+		_rank: 0,
+		externalId: ingestSegment.externalId,
+		runningOrderId: '',
+		name: ingestSegment.name,
+		metaData: {}
+	})
 
-	// if (story.MosExternalMetaData) {
-	// 	for (let md of story.MosExternalMetaData) {
-	// 		if (
-	// 			md.MosScope === 'PLAYLIST' &&
-	// 			md.MosSchema.match(/10505\/schema\/enps.dtd/)
-	// 		) {
-	// 			type = md.MosPayload.mosartType + ''
-	// 			variant = md.MosPayload.mosartVariant + ''
+	const parts: BlueprintResultPart[] = []
 
-	// 			if (!type) {
-	// 				context.warning(`Type missing in Story ${story.Slug} `)
-	// 				return null
-	// 			} else if (!variant) {
-	// 				context.warning(`Variant missing in Story ${story.Slug} `)
-	// 				return null
-	// 			} else if (type.match(/kam/i)) {
-	// 				// return KamBlueprint(context, story)
-	// 			}
-	// 		}
-	// 	}
-	// }
+	for (const part of ingestSegment.parts) {
+		if (!part.payload) {
+			// TODO
+			context.warning(`Missing payload for part: '${part.name || part.externalId}'`)
+		} else {
+			const type = objectPath.get(part.payload, 'type', '') + ''
+			if (!type) {
+				context.warning(`Missing type for part: '${part.name || part.externalId}'`)
+				parts.push(createGeneric(part))
+			} else if (type.match(/full/i)) {
+				// TODO
+				console.log('hi!')
+				parts.push(createGeneric(part))
+			} else {
+				context.warning(`Missing type '${type}' for part: '${part.name || part.externalId}'`)
+				parts.push(createGeneric(part))
+			}
+		}
+	}
 
-	// context.warning(`No template found for Type: "${type}", Variant: "${variant}" in Story ${story.Slug}`)
-	return null
+	return {
+		segment,
+		parts
+	}
+}
+
+function createGeneric (ingestPart: IngestPart): BlueprintResultPart {
+	const part = literal<IBlueprintSegmentLine>({
+		externalId: ingestPart.externalId,
+		title: ingestPart.name || 'Unknown',
+		metaData: {},
+		typeVariant: ''
+	})
+
+	return {
+		part,
+		adLibPieces: [],
+		pieces: []
+	}
 }

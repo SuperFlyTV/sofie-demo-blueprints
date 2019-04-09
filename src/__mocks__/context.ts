@@ -6,7 +6,10 @@ import {
 	ICommonContext,
 	NotesContext as INotesContext,
 	ShowStyleContext as IShowStyleContext,
-	BlueprintMappings
+	SegmentContext as ISegmentContext,
+	BlueprintMappings,
+	BlueprintRuntimeArguments,
+	IBlueprintRunningOrderDB
 } from 'tv-automation-sofie-blueprints-integration'
 import mappingsDefaults from '../blueprint0/migrations/mappings-defaults'
 
@@ -129,8 +132,8 @@ export class ShowStyleContext extends NotesContext implements IShowStyleContext 
 	studioConfig: {[key: string]: ConfigItemValue} = {}
 	showStyleConfig: {[key: string]: ConfigItemValue} = {}
 
-	constructor (contextName: string) {
-		super(contextName)
+	constructor (contextName: string, runningOrderId?: string) {
+		super(contextName, runningOrderId)
 	}
 	getStudioConfig (): {[key: string]: ConfigItemValue} {
 		return this.studioConfig
@@ -146,6 +149,24 @@ export class ShowStyleContext extends NotesContext implements IShowStyleContext 
 	}
 	getStudioMappings (): BlueprintMappings {
 		return _.clone(mappingsDefaults)
+	}
+}
+
+export class SegmentContext extends ShowStyleContext implements ISegmentContext {
+	runningOrderId: string
+	runningOrder: IBlueprintRunningOrderDB
+
+	runtimeArguments: {[key: string]: BlueprintRuntimeArguments} = {}
+
+	constructor (runningOrder: IBlueprintRunningOrderDB, contextName?: string) {
+		super(contextName || runningOrder.name, runningOrder._id)
+
+		this.runningOrderId = runningOrder._id
+		this.runningOrder = runningOrder
+	}
+
+	getRuntimeArguments (externalId: string): BlueprintRuntimeArguments | undefined {
+		return this.runtimeArguments[externalId]
 	}
 }
 
