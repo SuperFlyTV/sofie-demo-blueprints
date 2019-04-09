@@ -35,7 +35,7 @@ export function getBaseline (context: IStudioContext): Timeline.TimelineObject[]
 			content: {
 				type: TimelineContentTypeAtem.ME,
 				attributes: {
-					previewInput: AtemSourceIndex.Bars,
+					input: AtemSourceIndex.Bars,
 					transition: AtemTransitionStyle.CUT
 				}
 			}
