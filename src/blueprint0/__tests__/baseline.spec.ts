@@ -1,5 +1,5 @@
-import { RunningOrderContext } from '../../__mocks__/context'
-import { IBlueprintRunningOrder } from 'tv-automation-sofie-blueprints-integration'
+import { ShowStyleContext } from '../../__mocks__/context'
+import { IngestRunningOrder } from 'tv-automation-sofie-blueprints-integration'
 import { checkAllLayers } from './layers-check'
 
 // @ts-ignore
@@ -21,23 +21,25 @@ describe('Baseline', () => {
 			expect(configSpec.studioConfig).toBeTruthy()
 			expect(configSpec.showStyleConfig).toBeTruthy()
 
-			const runningOrder: IBlueprintRunningOrder = {
-				_id: 'abc',
+			const runningOrder: IngestRunningOrder = {
+				externalId: 'abc',
 				name: 'Mock RO',
-				showStyleVariantId: 'variant0'
+				type: 'mock',
+				payload: {},
+				segments: []
 			}
 
-			const mockContext = new RunningOrderContext(runningOrder)
+			const mockContext = new ShowStyleContext(runningOrder.name)
 			mockContext.studioConfig = configSpec.studioConfig
 			mockContext.showStyleConfig = configSpec.showStyleConfig
 
-			const res = Blueprints.getBaseline(mockContext)
+			const res = Blueprints.getRunningOrder(mockContext, runningOrder)
 
 			expect(res).not.toBeNull()
-			expect(res.baselineItems).not.toHaveLength(0)
-			expect(res.adLibItems).not.toHaveLength(0)
+			expect(res.baseline).not.toHaveLength(0)
+			expect(res.globalAdLibPieces).not.toHaveLength(0)
 
-			checkAllLayers(mockContext, res.adLibItems, res.baselineItems)
+			checkAllLayers(mockContext, res.globalAdLibPieces, res.baseline)
 
 			// ensure there were no warnings
 			expect(mockContext.getNotes()).toEqual([])

@@ -5,7 +5,7 @@ import {
 	IBlueprintSegmentLineAdLibItem,
 	Timeline,
 	TimelineObjectCoreExt,
-	RunningOrderContext
+	ShowStyleContext
 } from 'tv-automation-sofie-blueprints-integration'
 
 import {
@@ -36,7 +36,7 @@ function getMappingsForSources (config: BlueprintConfig): string[] {
 	return res
 }
 
-export function checkAllLayers (context: RunningOrderContext, segmentLineItems: (IBlueprintSegmentLineItem | IBlueprintSegmentLineAdLibItem)[], otherObjs?: Timeline.TimelineObject[]) {
+export function checkAllLayers (context: ShowStyleContext, segmentLineItems: (IBlueprintSegmentLineItem | IBlueprintSegmentLineAdLibItem)[], otherObjs?: Timeline.TimelineObject[]) {
 	const missingSourceLayers: string[] = []
 	const missingOutputLayers: string[] = []
 	const missingLLayers: (string | number)[] = []
