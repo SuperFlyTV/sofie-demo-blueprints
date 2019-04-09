@@ -1,12 +1,15 @@
 import * as _ from 'underscore'
 
 import {
-	ShowStyleBaselineResult,
 	Timeline,
 	IBlueprintSegmentLineAdLibItem,
 	SegmentLineItemLifespan,
 	RunningOrderContext,
-	SourceLayerType
+	SourceLayerType,
+	IStudioContext,
+	IngestRunningOrder,
+	BlueprintResultRunningOrder,
+	IBlueprintRunningOrder
 } from 'tv-automation-sofie-blueprints-integration'
 import { AtemSourceIndex } from '../types/atem'
 import {
@@ -33,16 +36,39 @@ import { literal } from '../common/util'
 import { CasparLLayer, SourceLayer, AtemLLayer, HyperdeckLLayer } from '../types/layers'
 import { Constants } from '../types/constants'
 
-import { parseConfig } from './helpers/config'
+import { parseConfig, BlueprintConfig } from './helpers/config'
 import { parseSources, SourceInfo } from './helpers/sources'
 
-export default function (context: RunningOrderContext): ShowStyleBaselineResult {
-	const config = parseConfig(context)
+export default function (context: IStudioContext, ingestRunningOrder: IngestRunningOrder): BlueprintResultRunningOrder | null {
+	// TODO - this needs a different context
+
+	const variants = context.getShowStyleVariants('show0')
+	const variant = _.first(variants)
+	if (variant) {
+		const config = parseConfig(context)
+
+		return {
+			runningOrder: literal<IBlueprintRunningOrder>({
+				externalId: ingestRunningOrder.externalId,
+				name: ingestRunningOrder.name,
+				expectedStart: 0,
+				expectedDuration: 0,
+				showStyleVariantId: variant._id
+			}),
+			globalAdLibPieces: getGlobalAdLibPieces(context, config),
+			baseline: getBaseline(config)
+		}
+	} else {
+		return null
+	}
+}
+
+function getGlobalAdLibPieces (context: RunningOrderContext, config: BlueprintConfig) {
 	const sources = parseSources(context, config)
 
 	function makeCameraAdLib (info: SourceInfo, rank: number): IBlueprintSegmentLineAdLibItem {
 		return {
-			mosId: 'cam',
+			externalId: 'cam',
 			name: info.id + '',
 			_rank: rank || 0,
 			sourceLayerId: SourceLayer.PgmCam,
@@ -77,7 +103,10 @@ export default function (context: RunningOrderContext): ShowStyleBaselineResult 
 		}
 	})
 
-	const objects: TimelineObjectAny[] = [
+}
+
+function getBaseline (config: BlueprintConfig): Timeline.TimelineObject[] {
+	return [
 		// Default timeline
 		literal<TimelineObjAtemME>({
 			id: '',
@@ -303,9 +332,4 @@ export default function (context: RunningOrderContext): ShowStyleBaselineResult 
 		}))
 
 	]
-
-	return {
-		adLibItems: adlibItems,
-		baselineItems: objects
-	}
 }

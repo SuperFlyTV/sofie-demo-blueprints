@@ -2,9 +2,8 @@ import { ShowStyleBlueprintManifest, BlueprintManifestType } from 'tv-automation
 import { StudioConfigManifest, ShowStyleConfigManifest } from './config-manifests'
 import { studioMigrations, showStyleMigrations } from './migrations'
 
-import getBaseline from './getBaseline'
-import getSegmentLine from './getSegmentLine'
-import getSegmentPost from './getSegmentPost'
+import getRunningOrder from './getRunningOrder'
+import getSegment from './getSegment'
 import onAsRunEvent from './onAsRunEvent'
 
 declare const VERSION: string // Injected by webpack
@@ -20,9 +19,10 @@ const manifest: ShowStyleBlueprintManifest = {
 
 	minimumCoreVersion: '0.24.0',
 
-	getBaseline: getBaseline,
-	getSegmentLine: getSegmentLine,
-	getSegmentPost: getSegmentPost,
+	getRunningOrder: getRunningOrder,
+	getSegment: getSegment,
+	getPart: undefined,
+
 	onAsRunEvent: onAsRunEvent,
 
 	studioConfigManifest: StudioConfigManifest,

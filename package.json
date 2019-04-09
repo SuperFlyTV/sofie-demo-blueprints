@@ -44,6 +44,6 @@
   },
   "dependencies": {
     "timeline-state-resolver-types": "^2.0.1",
-    "tv-automation-sofie-blueprints-integration": "^0.18.0"
+    "tv-automation-sofie-blueprints-integration": "nrkno/tv-automation-sofie-blueprints-integration#feature/new-ingest-api-dist"
   }
 }

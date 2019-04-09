@@ -9,7 +9,8 @@ export function literal<T> (o: T) { return o }
 
 export function createVirtualSli (layer: SourceLayer, trigger: number | TimelineTrigger, mainSli?: IBlueprintSegmentLineItem): IBlueprintSegmentLineItem {
 	return {
-		_id: '', mosId: (mainSli ? mainSli.mosId : '-'), name: '',
+		_id: '', name: '',
+		externalId: (mainSli ? mainSli.externalId : '-'),
 		trigger: typeof trigger === 'number' ? {
 			type: Timeline.TriggerType.TIME_ABSOLUTE,
 			value: trigger
