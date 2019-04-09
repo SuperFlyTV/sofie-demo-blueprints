@@ -24,8 +24,8 @@ module.exports = env => {
 	if (!versionTSRTypes) throw Error('timeline-state-resolver-types version missing!')
 	if (!versionIntegration) throw Error('tv-automation-sofie-blueprints-integration version missing!')
 
-	versionTSRTypes = versionTSRTypes.replace(/[^\d.]/g,'')
-	versionIntegration = versionIntegration.replace(/[^\d.]/g,'')
+	versionTSRTypes = versionTSRTypes.replace(/[^\d.]/g,'') || '0.0.0'
+	versionIntegration = versionIntegration.replace(/[^\d.]/g,'') || '0.0.0'
 
 	return {
 		entry: {

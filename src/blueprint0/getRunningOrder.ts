@@ -4,12 +4,14 @@ import {
 	Timeline,
 	IBlueprintSegmentLineAdLibItem,
 	SegmentLineItemLifespan,
-	RunningOrderContext,
 	SourceLayerType,
-	IStudioContext,
+	ShowStyleContext,
 	IngestRunningOrder,
 	BlueprintResultRunningOrder,
-	IBlueprintRunningOrder
+	IBlueprintRunningOrder,
+	NotesContext,
+	IBlueprintShowStyleVariant,
+	IStudioConfigContext
 } from 'tv-automation-sofie-blueprints-integration'
 import { AtemSourceIndex } from '../types/atem'
 import {
@@ -39,31 +41,30 @@ import { Constants } from '../types/constants'
 import { parseConfig, BlueprintConfig } from './helpers/config'
 import { parseSources, SourceInfo } from './helpers/sources'
 
-export default function (context: IStudioContext, ingestRunningOrder: IngestRunningOrder): BlueprintResultRunningOrder | null {
-	// TODO - this needs a different context
-
-	const variants = context.getShowStyleVariants('show0')
-	const variant = _.first(variants)
+export function getShowStyleVariantId (_context: IStudioConfigContext, showStyleVariants: Array<IBlueprintShowStyleVariant>, _ingestRunningOrder: IngestRunningOrder): string | null {
+	const variant = _.first(showStyleVariants)
 	if (variant) {
-		const config = parseConfig(context)
+		return variant._id
+	}
+	return null
+}
 
-		return {
-			runningOrder: literal<IBlueprintRunningOrder>({
-				externalId: ingestRunningOrder.externalId,
-				name: ingestRunningOrder.name,
-				expectedStart: 0,
-				expectedDuration: 0,
-				showStyleVariantId: variant._id
-			}),
-			globalAdLibPieces: getGlobalAdLibPieces(context, config),
-			baseline: getBaseline(config)
-		}
-	} else {
-		return null
+export function getRunningOrder (context: ShowStyleContext, ingestRunningOrder: IngestRunningOrder): BlueprintResultRunningOrder {
+	const config = parseConfig(context)
+
+	return {
+		runningOrder: literal<IBlueprintRunningOrder>({
+			externalId: ingestRunningOrder.externalId,
+			name: ingestRunningOrder.name,
+			expectedStart: 0,
+			expectedDuration: 0
+		}),
+		globalAdLibPieces: getGlobalAdLibPieces(context, config),
+		baseline: getBaseline(config)
 	}
 }
 
-function getGlobalAdLibPieces (context: RunningOrderContext, config: BlueprintConfig) {
+function getGlobalAdLibPieces (context: NotesContext, config: BlueprintConfig): IBlueprintSegmentLineAdLibItem[] {
 	const sources = parseSources(context, config)
 
 	function makeCameraAdLib (info: SourceInfo, rank: number): IBlueprintSegmentLineAdLibItem {
@@ -102,7 +103,7 @@ function getGlobalAdLibPieces (context: RunningOrderContext, config: BlueprintCo
 			adlibItems.push(makeCameraAdLib(v, (100 + v.id)))
 		}
 	})
-
+	return adlibItems
 }
 
 function getBaseline (config: BlueprintConfig): Timeline.TimelineObject[] {

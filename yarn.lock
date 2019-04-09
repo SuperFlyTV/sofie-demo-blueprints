@@ -4987,7 +4987,7 @@ tunnel-agent@^0.6.0:
 
 tv-automation-sofie-blueprints-integration@nrkno/tv-automation-sofie-blueprints-integration#feature/new-ingest-api-dist:
   version "0.17.0"
-  resolved "https://codeload.github.com/nrkno/tv-automation-sofie-blueprints-integration/tar.gz/4c21216cd3dc25e1fe7e5c54d8358790e367853c"
+  resolved "https://codeload.github.com/nrkno/tv-automation-sofie-blueprints-integration/tar.gz/10330359bcbf1ef60db8a8233a743345d7190dfb"
   dependencies:
     moment "^2.22.2"
     tslib "^1.9.3"

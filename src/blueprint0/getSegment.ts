@@ -1,9 +1,9 @@
 import * as _ from 'underscore'
 import {
-	SegmentLineContext, IngestSegment, BlueprintResultSegment
+	SegmentContext, IngestSegment, BlueprintResultSegment
 } from 'tv-automation-sofie-blueprints-integration'
 
-export default function (_context: SegmentLineContext, _ingestSegment: IngestSegment): BlueprintResultSegment | null {
+export function getSegment (_context: SegmentContext, _ingestSegment: IngestSegment): BlueprintResultSegment | null {
 	// let type = ''
 	// let variant = ''
 
