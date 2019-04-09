@@ -256,52 +256,52 @@ export const deviceMigrations = literal<MigrationStepStudio[]>([
 	// create all devices
 	..._.map(devices, createDevice),
 
-	ensureMakeReadyIsUpToDate('http0', 'nora-reset-stage', () => ({})),
+	// ensureMakeReadyIsUpToDate('http0', 'nora-reset-stage', () => ({})),
 
 	// ensure all devices still look valid
 	..._.map(devices, validateDevice)
 ])
 
-function ensureMakeReadyIsUpToDate (deviceId: string, cmdId: string, getExpectedCommand: (context: MigrationContextStudio, deviceId: string, cmdId: string) => any) {
-	return literal<MigrationStepStudio>({
-		id: `Playout-gateway.${deviceId}.make-ready.${cmdId}`,
-		version: VERSION, // Always run to ensure up-to-date
-		dependOnResultFrom: `Playout-gateway.${deviceId}.create`,
-		canBeRunAutomatically: true,
-		validate: (context: MigrationContextStudio) => {
-			const expected = getExpectedCommand(context, deviceId, cmdId)
-			if (!expected) return false
+// function ensureMakeReadyIsUpToDate (deviceId: string, cmdId: string, getExpectedCommand: (context: MigrationContextStudio, deviceId: string, cmdId: string) => any) {
+// 	return literal<MigrationStepStudio>({
+// 		id: `Playout-gateway.${deviceId}.make-ready.${cmdId}`,
+// 		version: VERSION, // Always run to ensure up-to-date
+// 		dependOnResultFrom: `Playout-gateway.${deviceId}.create`,
+// 		canBeRunAutomatically: true,
+// 		validate: (context: MigrationContextStudio) => {
+// 			const expected = getExpectedCommand(context, deviceId, cmdId)
+// 			if (!expected) return false
 
-			const dev = context.getDevice(deviceId)
-			if (!dev) return `"${deviceId}" missing`
+// 			const dev = context.getDevice(deviceId)
+// 			if (!dev) return `"${deviceId}" missing`
 
-			const opts = dev.options as any
-			if (!opts || !opts.makeReadyCommands || opts.makeReadyCommands.length === 0) return `"${deviceId}" missing ${cmdId}`
+// 			const opts = dev.options as any
+// 			if (!opts || !opts.makeReadyCommands || opts.makeReadyCommands.length === 0) return `"${deviceId}" missing ${cmdId}`
 
-			const cmd = opts.makeReadyCommands.find((c: any) => c.id === cmdId)
-			if (!cmd) return `"${deviceId}" missing ${cmdId}`
+// 			const cmd = opts.makeReadyCommands.find((c: any) => c.id === cmdId)
+// 			if (!cmd) return `"${deviceId}" missing ${cmdId}`
 
-			if (!_.isEqual(cmd, expected)) return `"${deviceId}" ${cmdId}: current value does not match expected`
+// 			if (!_.isEqual(cmd, expected)) return `"${deviceId}" ${cmdId}: current value does not match expected`
 
-			return false
-		},
-		migrate: (context: MigrationContextStudio) => {
-			const dev = context.getDevice(deviceId)
-			const expected = getExpectedCommand(context, deviceId, cmdId)
+// 			return false
+// 		},
+// 		migrate: (context: MigrationContextStudio) => {
+// 			const dev = context.getDevice(deviceId)
+// 			const expected = getExpectedCommand(context, deviceId, cmdId)
 
-			if (dev && expected) {
-				const opts = dev.options as any
-				if (!opts.makeReadyCommands) opts.makeReadyCommands = []
+// 			if (dev && expected) {
+// 				const opts = dev.options as any
+// 				if (!opts.makeReadyCommands) opts.makeReadyCommands = []
 
-				const i = opts.makeReadyCommands.findIndex((c: any) => c.id === cmdId)
-				if (i === -1) {
-					opts.makeReadyCommands.push(expected)
-				} else {
-					opts.makeReadyCommands[i] = expected
-				}
+// 				const i = opts.makeReadyCommands.findIndex((c: any) => c.id === cmdId)
+// 				if (i === -1) {
+// 					opts.makeReadyCommands.push(expected)
+// 				} else {
+// 					opts.makeReadyCommands[i] = expected
+// 				}
 
-				context.updateDevice(deviceId, { options: opts })
-			}
-		}
-	})
-}
+// 				context.updateDevice(deviceId, { options: opts })
+// 			}
+// 		}
+// 	})
+// }
