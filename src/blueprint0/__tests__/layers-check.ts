@@ -1,8 +1,8 @@
 import * as _ from 'underscore'
 
 import {
-	IBlueprintSegmentLineItem,
-	IBlueprintSegmentLineAdLibItem,
+	IBlueprintPiece,
+	IBlueprintAdLibPiece,
 	Timeline,
 	TimelineObjectCoreExt,
 	ShowStyleContext
@@ -36,7 +36,7 @@ function getMappingsForSources (config: BlueprintConfig): string[] {
 	return res
 }
 
-export function checkAllLayers (context: ShowStyleContext, segmentLineItems: (IBlueprintSegmentLineItem | IBlueprintSegmentLineAdLibItem)[], otherObjs?: Timeline.TimelineObject[]) {
+export function checkAllLayers (context: ShowStyleContext, pieces: (IBlueprintPiece | IBlueprintAdLibPiece)[], otherObjs?: Timeline.TimelineObject[]) {
 	const missingSourceLayers: string[] = []
 	const missingOutputLayers: string[] = []
 	const missingLLayers: (string | number)[] = []
@@ -50,16 +50,16 @@ export function checkAllLayers (context: ShowStyleContext, segmentLineItems: (IB
 
 	const virtualLLayers = VirtualLLayers()
 
-	for (let sli of segmentLineItems) {
-		if (allSourceLayers.indexOf(sli.sourceLayerId) === -1) {
-			missingSourceLayers.push(sli.sourceLayerId)
+	for (let piece of pieces) {
+		if (allSourceLayers.indexOf(piece.sourceLayerId) === -1) {
+			missingSourceLayers.push(piece.sourceLayerId)
 		}
-		if (allOutputLayers.indexOf(sli.outputLayerId) === -1) {
-			missingOutputLayers.push(sli.outputLayerId)
+		if (allOutputLayers.indexOf(piece.outputLayerId) === -1) {
+			missingOutputLayers.push(piece.outputLayerId)
 		}
 
-		if (sli.content && sli.content.timelineObjects) {
-			for (let obj of sli.content.timelineObjects as TimelineObjectCoreExt[]) {
+		if (piece.content && piece.content.timelineObjects) {
+			for (let obj of piece.content.timelineObjects as TimelineObjectCoreExt[]) {
 				if (!obj.isAbstract && allLLayers.indexOf(obj.LLayer) === -1) {
 					missingLLayers.push(obj.LLayer)
 				} else if (obj.isAbstract && virtualLLayers.indexOf(obj.LLayer) === -1) {

@@ -1,16 +1,16 @@
 import {
 	Timeline,
-	IBlueprintSegmentLineItem
+	IBlueprintPiece
 } from 'tv-automation-sofie-blueprints-integration'
 import { SourceLayer } from '../types/layers'
 import { TimelineTrigger } from 'timeline-state-resolver-types/dist/superfly-timeline'
 
 export function literal<T> (o: T) { return o }
 
-export function createVirtualSli (layer: SourceLayer, trigger: number | TimelineTrigger, mainSli?: IBlueprintSegmentLineItem): IBlueprintSegmentLineItem {
+export function createVirtualPiece (layer: SourceLayer, trigger: number | TimelineTrigger, mainPiece?: IBlueprintPiece): IBlueprintPiece {
 	return {
 		_id: '', name: '',
-		externalId: (mainSli ? mainSli.externalId : '-'),
+		externalId: (mainPiece ? mainPiece.externalId : '-'),
 		trigger: typeof trigger === 'number' ? {
 			type: Timeline.TriggerType.TIME_ABSOLUTE,
 			value: trigger

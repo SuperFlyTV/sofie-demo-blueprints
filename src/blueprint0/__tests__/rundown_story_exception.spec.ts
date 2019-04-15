@@ -1,14 +1,7 @@
 import * as _ from 'underscore'
 
-// import {
-// 	IBlueprintRunningOrder,
-// 	IMessageBlueprintSegmentLine
-// } from 'tv-automation-sofie-blueprints-integration'
-// import {
-// 	getHash, SegmentLineContext
-// } from '../../__mocks__/context'
 import { ConfigMap, DefaultStudioConfig, DefaultShowStyleConfig } from './configs'
-import { IngestRunningOrder, IBlueprintRunningOrderDB, IngestSegment, IngestPart } from 'tv-automation-sofie-blueprints-integration'
+import { IngestRundown, IBlueprintRundownDB, IngestSegment, IngestPart } from 'tv-automation-sofie-blueprints-integration'
 import { checkAllLayers } from './layers-check'
 
 // @ts-ignore
@@ -34,7 +27,7 @@ describe('Rundown exceptions', () => {
 			// expect(roData.type).toEqual('runningOrderCache')
 		})
 
-		const ingressRo = literal<IngestRunningOrder>({
+		const ingressRo = literal<IngestRundown>({
 			externalId: roData.id,
 			name: roData.name,
 			type: 'mock',
@@ -46,17 +39,17 @@ describe('Rundown exceptions', () => {
 		const mockShowContext = new ShowStyleContext(ingressRo.name)
 		mockShowContext.studioConfig = roSpec.studioConfig
 		mockShowContext.showStyleConfig = roSpec.showStyleConfig
-		const roRes = Blueprints.getRunningOrder(mockShowContext, ingressRo)
+		const roRes = Blueprints.getRundown(mockShowContext, ingressRo)
 		expect(roRes).toBeTruthy()
 
-		const ro = literal<IBlueprintRunningOrderDB>({
-			...roRes.runningOrder,
+		const rundown = literal<IBlueprintRundownDB>({
+			...roRes.rundown,
 			_id: 'mockRo',
 			showStyleVariantId: 'mockVariant'
 		})
 
 		for (const sectionId of _.keys(roData.sections)) {
-			const mockContext = new SegmentContext(ro, ingressRo.name)
+			const mockContext = new SegmentContext(rundown, ingressRo.name)
 			mockContext.studioConfig = roSpec.studioConfig
 			mockContext.showStyleConfig = roSpec.showStyleConfig
 
@@ -64,6 +57,7 @@ describe('Rundown exceptions', () => {
 			const segment = literal<IngestSegment>({
 				externalId: section.id,
 				name: section.name,
+				rank: 0, // TODO
 				parts: [],
 				payload: section
 			})
@@ -75,20 +69,17 @@ describe('Rundown exceptions', () => {
 					segment.parts.push(literal<IngestPart>({
 						externalId: story.id,
 						name: story.name,
+						rank: 0, // TODO
 						payload: story
 					}))
 				}
 
 				const res = Blueprints.getSegment(mockContext, segment)
-				expect(res).toBeTruthy()
-
-				if (res !== null) {
-					expect(res.parts).toHaveLength(segment.parts.length) // This may change in future?
-					_.each(res.parts, p => {
-						checkAllLayers(mockContext, p.pieces)
-						checkAllLayers(mockContext, p.adLibPieces)
-					})
-				}
+				expect(res.parts).toHaveLength(segment.parts.length) // This may change in future?
+				_.each(res.parts, p => {
+					checkAllLayers(mockContext, p.pieces)
+					checkAllLayers(mockContext, p.adLibPieces)
+				})
 
 				// ensure there were no warnings
 				expect(mockContext.getNotes()).toEqual([])

@@ -1,7 +1,7 @@
 import * as _ from 'underscore'
 import * as objectPath from 'object-path'
 import {
-	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintSegmentLine, IBlueprintSegmentLineItem
+	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../common/util'
 import { SourceLayer } from '../types/layers'
@@ -41,7 +41,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 }
 
 function createGeneric (ingestPart: IngestPart): BlueprintResultPart {
-	const part = literal<IBlueprintSegmentLine>({
+	const part = literal<IBlueprintPart>({
 		externalId: ingestPart.externalId,
 		title: ingestPart.name || 'Unknown',
 		metaData: {},
@@ -49,7 +49,7 @@ function createGeneric (ingestPart: IngestPart): BlueprintResultPart {
 		expectedDuration: 5000
 	})
 
-	const piece = literal<IBlueprintSegmentLineItem>({
+	const piece = literal<IBlueprintPiece>({
 		_id: '',
 		externalId: ingestPart.externalId,
 		name: part.title,

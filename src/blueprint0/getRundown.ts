@@ -2,13 +2,13 @@ import * as _ from 'underscore'
 
 import {
 	Timeline,
-	IBlueprintSegmentLineAdLibItem,
-	SegmentLineItemLifespan,
+	IBlueprintAdLibPiece,
+	PieceLifespan,
 	SourceLayerType,
 	ShowStyleContext,
-	IngestRunningOrder,
-	BlueprintResultRunningOrder,
-	IBlueprintRunningOrder,
+	IngestRundown,
+	BlueprintResultRundown,
+	IBlueprintRundown,
 	NotesContext,
 	IBlueprintShowStyleVariant,
 	IStudioConfigContext
@@ -41,7 +41,7 @@ import { Constants } from '../types/constants'
 import { parseConfig, BlueprintConfig } from './helpers/config'
 import { parseSources, SourceInfo } from './helpers/sources'
 
-export function getShowStyleVariantId (_context: IStudioConfigContext, showStyleVariants: Array<IBlueprintShowStyleVariant>, _ingestRunningOrder: IngestRunningOrder): string | null {
+export function getShowStyleVariantId (_context: IStudioConfigContext, showStyleVariants: Array<IBlueprintShowStyleVariant>, _ingestRundown: IngestRundown): string | null {
 	const variant = _.first(showStyleVariants)
 	if (variant) {
 		return variant._id
@@ -49,13 +49,13 @@ export function getShowStyleVariantId (_context: IStudioConfigContext, showStyle
 	return null
 }
 
-export function getRunningOrder (context: ShowStyleContext, ingestRunningOrder: IngestRunningOrder): BlueprintResultRunningOrder {
+export function getRundown (context: ShowStyleContext, ingestRundown: IngestRundown): BlueprintResultRundown {
 	const config = parseConfig(context)
 
 	return {
-		runningOrder: literal<IBlueprintRunningOrder>({
-			externalId: ingestRunningOrder.externalId,
-			name: ingestRunningOrder.name,
+		rundown: literal<IBlueprintRundown>({
+			externalId: ingestRundown.externalId,
+			name: ingestRundown.name,
 			expectedStart: 0,
 			expectedDuration: 0
 		}),
@@ -64,10 +64,10 @@ export function getRunningOrder (context: ShowStyleContext, ingestRunningOrder: 
 	}
 }
 
-function getGlobalAdLibPieces (context: NotesContext, config: BlueprintConfig): IBlueprintSegmentLineAdLibItem[] {
+function getGlobalAdLibPieces (context: NotesContext, config: BlueprintConfig): IBlueprintAdLibPiece[] {
 	const sources = parseSources(context, config)
 
-	function makeCameraAdLib (info: SourceInfo, rank: number): IBlueprintSegmentLineAdLibItem {
+	function makeCameraAdLib (info: SourceInfo, rank: number): IBlueprintAdLibPiece {
 		return {
 			externalId: 'cam',
 			name: info.id + '',
@@ -75,7 +75,7 @@ function getGlobalAdLibPieces (context: NotesContext, config: BlueprintConfig): 
 			sourceLayerId: SourceLayer.PgmCam,
 			outputLayerId: 'pgm0',
 			expectedDuration: 0,
-			infiniteMode: SegmentLineItemLifespan.OutOnNextSegmentLine,
+			infiniteMode: PieceLifespan.OutOnNextPart,
 			content: {
 				timelineObjects: _.compact<TimelineObjectAny>([
 					literal<TimelineObjAtemME>({
@@ -97,7 +97,7 @@ function getGlobalAdLibPieces (context: NotesContext, config: BlueprintConfig): 
 		}
 	}
 
-	let adlibItems: IBlueprintSegmentLineAdLibItem[] = []
+	let adlibItems: IBlueprintAdLibPiece[] = []
 	_.each(sources, v => {
 		if (v.type === SourceLayerType.CAMERA) {
 			adlibItems.push(makeCameraAdLib(v, (100 + v.id)))

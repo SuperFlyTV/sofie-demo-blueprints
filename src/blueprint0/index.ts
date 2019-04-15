@@ -2,7 +2,7 @@ import { ShowStyleBlueprintManifest, BlueprintManifestType } from 'tv-automation
 import { StudioConfigManifest, ShowStyleConfigManifest } from './config-manifests'
 import { studioMigrations, showStyleMigrations } from './migrations'
 
-import { getRunningOrder, getShowStyleVariantId } from './getRunningOrder'
+import { getRundown, getShowStyleVariantId } from './getRundown'
 import { getSegment } from './getSegment'
 import onAsRunEvent from './onAsRunEvent'
 
@@ -20,7 +20,7 @@ const manifest: ShowStyleBlueprintManifest = {
 	minimumCoreVersion: '0.24.0',
 
 	getShowStyleVariantId: getShowStyleVariantId,
-	getRunningOrder: getRunningOrder,
+	getRundown: getRundown,
 	getSegment: getSegment,
 	getPart: undefined,
 
