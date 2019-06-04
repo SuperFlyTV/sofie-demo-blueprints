@@ -1,8 +1,7 @@
 import * as _ from 'underscore'
 
 import {
-	IBlueprintPiece,
-	IBlueprintAdLibPiece,
+	IBlueprintPieceGeneric,
 	Timeline,
 	TimelineObjectCoreExt,
 	ShowStyleContext
@@ -36,7 +35,7 @@ function getMappingsForSources (config: BlueprintConfig): string[] {
 	return res
 }
 
-export function checkAllLayers (context: ShowStyleContext, pieces: (IBlueprintPiece | IBlueprintAdLibPiece)[], otherObjs?: Timeline.TimelineObject[]) {
+export function checkAllLayers (context: ShowStyleContext, pieces: IBlueprintPieceGeneric[], otherObjs?: Timeline.TimelineObject[]) {
 	const missingSourceLayers: string[] = []
 	const missingOutputLayers: string[] = []
 	const missingLLayers: (string | number)[] = []
