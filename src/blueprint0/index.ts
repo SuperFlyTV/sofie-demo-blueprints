@@ -22,7 +22,6 @@ const manifest: ShowStyleBlueprintManifest = {
 	getShowStyleVariantId: getShowStyleVariantId,
 	getRundown: getRundown,
 	getSegment: getSegment,
-	getPart: undefined,
 
 	onAsRunEvent: onAsRunEvent,
 

@@ -27,6 +27,22 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 				// TODO
 				console.log('hi!')
 				parts.push(createGeneric(part))
+			} else if (type.match(/cam/i)) {
+				// TODO
+				console.log('hi!')
+				parts.push(createGeneric(part))
+			} else if (type.match(/ls/i)) {
+				// TODO
+				console.log('hi!')
+				parts.push(createGeneric(part))
+			} else if (type.match(/split/i)) {
+				// TODO
+				console.log('hi!')
+				parts.push(createGeneric(part))
+			} else if (type.match(/head/i)) {
+				// TODO
+				console.log('hi!')
+				parts.push(createGeneric(part))
 			} else {
 				context.warning(`Missing type '${type}' for part: '${part.name || part.externalId}'`)
 				parts.push(createGeneric(part))
@@ -53,8 +69,7 @@ function createGeneric (ingestPart: IngestPart): BlueprintResultPart {
 		_id: '',
 		externalId: ingestPart.externalId,
 		name: part.title,
-		trigger: { type: 0, value: 0 },
-		expectedDuration: 0,
+		enable: { start: 0, duration: 0 },
 		outputLayerId: 'pgm0',
 		sourceLayerId: SourceLayer.PgmCam
 	})
