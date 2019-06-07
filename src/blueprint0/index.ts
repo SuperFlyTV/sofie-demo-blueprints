@@ -17,7 +17,7 @@ const manifest: ShowStyleBlueprintManifest = {
 	integrationVersion: VERSION_INTEGRATION,
 	TSRVersion: VERSION_TSR,
 
-	minimumCoreVersion: '0.25.0',
+	minimumCoreVersion: '0.26.0',
 
 	getShowStyleVariantId: getShowStyleVariantId,
 	getRundown: getRundown,
