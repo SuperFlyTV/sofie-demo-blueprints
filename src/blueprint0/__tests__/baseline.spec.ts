@@ -1,5 +1,5 @@
 import { ShowStyleContext } from '../../__mocks__/context'
-import { IngestRunningOrder } from 'tv-automation-sofie-blueprints-integration'
+import { IngestRundown } from 'tv-automation-sofie-blueprints-integration'
 import { checkAllLayers } from './layers-check'
 
 // @ts-ignore
@@ -21,7 +21,7 @@ describe('Baseline', () => {
 			expect(configSpec.studioConfig).toBeTruthy()
 			expect(configSpec.showStyleConfig).toBeTruthy()
 
-			const runningOrder: IngestRunningOrder = {
+			const rundown: IngestRundown = {
 				externalId: 'abc',
 				name: 'Mock RO',
 				type: 'mock',
@@ -29,11 +29,11 @@ describe('Baseline', () => {
 				segments: []
 			}
 
-			const mockContext = new ShowStyleContext(runningOrder.name)
+			const mockContext = new ShowStyleContext(rundown.name)
 			mockContext.studioConfig = configSpec.studioConfig
 			mockContext.showStyleConfig = configSpec.showStyleConfig
 
-			const res = Blueprints.getRunningOrder(mockContext, runningOrder)
+			const res = Blueprints.getRundown(mockContext, rundown)
 
 			expect(res).not.toBeNull()
 			expect(res.baseline).not.toHaveLength(0)

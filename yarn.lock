@@ -4985,9 +4985,9 @@ tunnel-agent@^0.6.0:
   dependencies:
     safe-buffer "^5.0.1"
 
-tv-automation-sofie-blueprints-integration@nrkno/tv-automation-sofie-blueprints-integration#feature/new-ingest-api-dist:
+tv-automation-sofie-blueprints-integration@nrkno/tv-automation-sofie-blueprints-integration#feature/theBigRenamingDist:
   version "0.17.0"
-  resolved "https://codeload.github.com/nrkno/tv-automation-sofie-blueprints-integration/tar.gz/a6fe2c5b71b66f87a3532e1e455eeaef85051a59"
+  resolved "https://codeload.github.com/nrkno/tv-automation-sofie-blueprints-integration/tar.gz/5ba619f1a3d67d4a44ff409b8737e0bba622b8b0"
   dependencies:
     moment "^2.22.2"
     tslib "^1.9.3"
