@@ -1,5 +1,5 @@
 import {
-	IBlueprintPiece
+	IBlueprintPiece, IBlueprintAdLibPiece
 } from 'tv-automation-sofie-blueprints-integration'
 import { SourceLayer } from '../types/layers'
 import { TimelineEnable } from 'timeline-state-resolver-types/dist/superfly-timeline'
@@ -21,4 +21,12 @@ export function createVirtualPiece (layer: SourceLayer, enable: number | Timelin
 			timelineObjects: []
 		}
 	}
+}
+
+/**
+ * Returs true if the piece is interface IBlueprintAdLibPiece
+ * @param {IBlueprintPiece | IBlueprintAdLibPiece} piece Piece to check
+ */
+export function isAdLibPiece (piece: IBlueprintPiece | IBlueprintAdLibPiece) {
+	return '_rank' in piece
 }

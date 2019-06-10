@@ -1,9 +1,9 @@
 import * as _ from 'underscore'
 import * as objectPath from 'object-path'
 import {
-	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece, PieceEnable
+	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece, PieceEnable, IBlueprintAdLibPiece
 } from 'tv-automation-sofie-blueprints-integration'
-import { literal } from '../common/util'
+import { literal, isAdLibPiece } from '../common/util'
 import { SourceLayer } from '../types/layers'
 import { Piece } from '../types/classes'
 
@@ -35,22 +35,39 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 				parts.push(createGeneric(part))
 			} else {
 				let pieces: IBlueprintPiece[] = []
+				let adLibPieces: IBlueprintAdLibPiece[] = []
 				if ('pieces' in part.payload) {
 					(part.payload['pieces'] as Piece[]).forEach(piece => {
+						let p: IBlueprintAdLibPiece | IBlueprintPiece
 						switch (piece.objectType) {
 							case 'video':
-								pieces.push(createPieceVideo(piece))
+								p = createPieceVideo(piece)
+								if (isAdLibPiece(p)) {
+									adLibPieces.push(p as IBlueprintAdLibPiece)
+								} else {
+									pieces.push(p as IBlueprintPiece)
+								}
 								break
 							case 'camera':
-								pieces.push(createPieceCam(piece))
+								p = createPieceCam(piece)
+								if (isAdLibPiece(p)) {
+									adLibPieces.push(p as IBlueprintAdLibPiece)
+								} else {
+									pieces.push(p as IBlueprintPiece)
+								}
 								break
 							case 'graphic':
-								pieces.push(createPieceGraphic(piece))
+								p = createPieceGraphic(piece)
+								if (isAdLibPiece(p)) {
+									adLibPieces.push(p as IBlueprintAdLibPiece)
+								} else {
+									pieces.push(p as IBlueprintPiece)
+								}
 								break
 						}
 					})
 				}
-				parts.push(createPart(part, pieces))
+				parts.push(createPart(part, pieces, adLibPieces))
 			}
 		}
 	}
@@ -64,34 +81,47 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 /**
  * Creates a generic piece. Will return an Adlib piece if suitable.
  * @param {Piece} piece Piece to evaluate.
- * @returns {IBlueprintPiece} A possibly infinite, possibly Adlib piece.
+ * @returns {IBlueprintPieceGeneric} A possibly infinite, possibly Adlib piece.
  */
-function createPieceGeneric (piece: Piece): IBlueprintPiece {
+function createPieceGeneric (piece: Piece): IBlueprintAdLibPiece | IBlueprintPiece {
 	let enable: PieceEnable = {}
+	let p: IBlueprintPiece | IBlueprintAdLibPiece
 
-	if (!piece.objectTime) {
+	console.log(piece.objectTime)
+	console.log(piece.attributes)
+
+	if ('adlib' in piece.attributes && piece.attributes['adlib'] === 'true') {
 		console.log('It\'s an adlib!')
-		enable.start = 0
+
+		p = literal<IBlueprintAdLibPiece>({
+			externalId: piece.id,
+			name: piece.clipName,
+			outputLayerId: 'pgm0',
+			sourceLayerId: SourceLayer.PgmCam,
+			metaData: piece.attributes,
+			_rank: 0
+		})
 	} else {
 		enable.start = piece.objectTime
-	}
 
-	if (!piece.duration) {
-		console.log('It\'s infinite!')
-		enable.duration = 1000
-	} else {
-		enable.duration = piece.duration
-	}
+		// TODO: This may become context-specific
+		if (!piece.duration) {
+			console.log('It\'s infinite!')
+			enable.duration = 1000
+		} else {
+			enable.duration = piece.duration
+		}
 
-	let p = literal<IBlueprintPiece>({
-		_id: '',
-		externalId: piece.id,
-		name: piece.clipName,
-		enable: enable,
-		outputLayerId: 'pgm0',
-		sourceLayerId: SourceLayer.PgmCam,
-		metaData: piece.attributes
-	})
+		p = literal<IBlueprintPiece>({
+			_id: '',
+			externalId: piece.id,
+			name: piece.clipName,
+			enable: enable,
+			outputLayerId: 'pgm0',
+			sourceLayerId: SourceLayer.PgmCam,
+			metaData: piece.attributes
+		})
+	}
 
 	return p
 }
@@ -100,7 +130,7 @@ function createPieceGeneric (piece: Piece): IBlueprintPiece {
  * Creates a cam piece.
  * @param {Piece} piece Piece to evaluate.
  */
-function createPieceCam (piece: Piece): IBlueprintPiece {
+function createPieceCam (piece: Piece): IBlueprintAdLibPiece | IBlueprintPiece {
 	let p = createPieceGeneric(piece)
 
 	p.sourceLayerId = SourceLayer.PgmCam
@@ -113,7 +143,7 @@ function createPieceCam (piece: Piece): IBlueprintPiece {
  * Creates a cam piece.
  * @param {Piece} piece Piece to evaluate.
  */
-function createPieceVideo (piece: Piece): IBlueprintPiece {
+function createPieceVideo (piece: Piece): IBlueprintAdLibPiece | IBlueprintPiece {
 	let p = createPieceGeneric(piece)
 
 	p.sourceLayerId = SourceLayer.PgmClip
@@ -127,7 +157,7 @@ function createPieceVideo (piece: Piece): IBlueprintPiece {
  * Creates a cam piece.
  * @param {Piece} piece Piece to evaluate.
  */
-function createPieceGraphic (piece: Piece): IBlueprintPiece {
+function createPieceGraphic (piece: Piece): IBlueprintAdLibPiece | IBlueprintPiece {
 	let p = createPieceGeneric(piece)
 
 	p.sourceLayerId = SourceLayer.PgmGraphicsSuper
@@ -171,7 +201,7 @@ function createGeneric (ingestPart: IngestPart): BlueprintResultPart {
  * @param {IngestPart} ingestPart Ingest part.
  * @param {IBlueprintPiece[]} pieces Array of pieces.
  */
-function createPart (ingestPart: IngestPart, pieces: IBlueprintPiece[]): BlueprintResultPart {
+function createPart (ingestPart: IngestPart, pieces: IBlueprintPiece[], adLibPieces: IBlueprintAdLibPiece[]): BlueprintResultPart {
 	const part = literal<IBlueprintPart>({
 		externalId: ingestPart.externalId,
 		title: ingestPart.name || 'Unknown',
@@ -182,7 +212,7 @@ function createPart (ingestPart: IngestPart, pieces: IBlueprintPiece[]): Bluepri
 
 	return {
 		part,
-		adLibPieces: [],
+		adLibPieces: adLibPieces,
 		pieces: pieces
 	}
 }
@@ -206,7 +236,7 @@ function calculateExpectedDuration (pieces: IBlueprintPiece[]): number {
  * @param {IBlueprintPiece} p The Piece blueprint to modify.
  * @param {any} attr Attributes of the piece.
  */
-function checkAndPlaceOnScreen (p: IBlueprintPiece, attr: any) {
+function checkAndPlaceOnScreen (p: IBlueprintPiece | IBlueprintAdLibPiece, attr: any) {
 	if ('name' in attr) {
 		if (attr['name'].match(/screen \d/i)) {
 			// TODO: this whitespace replacement is due to the current testing environment.
