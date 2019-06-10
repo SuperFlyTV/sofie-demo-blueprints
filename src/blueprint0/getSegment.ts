@@ -15,6 +15,13 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 
 	const parts: BlueprintResultPart[] = []
 
+	if (ingestSegment.payload['float']) {
+		return {
+			segment,
+			parts
+		}
+	}
+
 	for (const part of ingestSegment.parts) {
 		if (!part.payload) {
 			// TODO
