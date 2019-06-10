@@ -44,7 +44,13 @@ describe('Rundown exceptions', () => {
 
 				const res = Blueprints.getSegment(mockContext, segment)
 				expect(res.segment.name).toEqual(segment.name)
-				expect(res.parts).toHaveLength(segment.parts.length)
+				let floated = 0
+				segment.parts.forEach(part => {
+					if (part.payload['float']) {
+						floated++
+					}
+				})
+				expect(res.parts).toHaveLength(segment.parts.length - floated)
 
 				const allPieces: IBlueprintPieceGeneric[] = []
 				_.each(res.parts, part => {

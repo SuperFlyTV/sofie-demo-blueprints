@@ -19,6 +19,8 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 		if (!part.payload) {
 			// TODO
 			context.warning(`Missing payload for part: '${part.name || part.externalId}'`)
+		} else if (part.payload['float']) {
+			continue
 		} else {
 			const type = objectPath.get(part.payload, 'type', '') + ''
 			if (!type) {
