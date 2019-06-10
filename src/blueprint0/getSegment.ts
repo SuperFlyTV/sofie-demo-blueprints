@@ -1,7 +1,7 @@
 import * as _ from 'underscore'
 import * as objectPath from 'object-path'
 import {
-	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece
+	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece, PieceEnable
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../common/util'
 import { SourceLayer } from '../types/layers'
@@ -33,47 +33,24 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 			if (!type) {
 				context.warning(`Missing type for part: '${part.name || part.externalId}'`)
 				parts.push(createGeneric(part))
-			} else if (type.match(/full/i)) {
-				console.log('Creating a full part')
+			} else {
 				let pieces: IBlueprintPiece[] = []
 				if ('pieces' in part.payload) {
 					(part.payload['pieces'] as Piece[]).forEach(piece => {
-						if (piece.objectType === 'video') {
-							let p = literal<IBlueprintPiece>({
-								_id: '',
-								externalId: piece.id,
-								name: piece.clipName,
-								enable: { start: piece.objectTime, end: piece.objectTime + piece.duration },
-								outputLayerId: 'pgm0',
-								sourceLayerId: SourceLayer.PgmClip
-							})
-							pieces.push(p)
+						switch (piece.objectType) {
+							case 'video':
+								pieces.push(createPieceVideo(piece))
+								break
+							case 'camera':
+								pieces.push(createPieceCam(piece))
+								break
+							case 'graphic':
+								pieces.push(createPieceGraphic(piece))
+								break
 						}
-
 					})
-				} else {
-					console.log(`No pieces in part '${part.name}'`)
 				}
 				parts.push(createPart(part, pieces))
-			} else if (type.match(/cam/i)) {
-				// TODO
-				console.log('hi! Got a cam part!')
-				parts.push(createGeneric(part))
-			} else if (type.match(/ls/i)) {
-				// TODO
-				console.log('hi! Got an ls part!')
-				parts.push(createGeneric(part))
-			} else if (type.match(/split/i)) {
-				// TODO
-				console.log('hi! Got a split part!')
-				parts.push(createGeneric(part))
-			} else if (type.match(/head/i)) {
-				// TODO
-				console.log('hi! Got a head part!')
-				parts.push(createGeneric(part))
-			} else {
-				context.warning(`Missing type '${type}' for part: '${part.name || part.externalId}'`)
-				parts.push(createGeneric(part))
 			}
 		}
 	}
@@ -84,6 +61,83 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 	}
 }
 
+/**
+ * Creates a generic piece. Will return an Adlib piece if suitable.
+ * @param {Piece} piece Piece to evaluate.
+ * @returns {IBlueprintPiece} A possibly infinite, possibly Adlib piece.
+ */
+function createPieceGeneric (piece: Piece): IBlueprintPiece {
+	let enable: PieceEnable = {}
+
+	if (!piece.objectTime) {
+		console.log('It\'s an adlib!')
+		enable.start = 0
+	} else {
+		enable.start = piece.objectTime
+	}
+
+	if (!piece.duration) {
+		console.log('It\'s infinite!')
+		enable.duration = 1000
+	} else {
+		enable.duration = piece.duration
+	}
+
+	let p = literal<IBlueprintPiece>({
+		_id: '',
+		externalId: piece.id,
+		name: piece.clipName,
+		enable: enable,
+		outputLayerId: 'pgm0',
+		sourceLayerId: SourceLayer.PgmCam
+	})
+
+	return p
+}
+
+/**
+ * Creates a cam piece.
+ * @param {Piece} piece Piece to evaluate.
+ */
+function createPieceCam (piece: Piece): IBlueprintPiece {
+	let p = createPieceGeneric(piece)
+
+	p.sourceLayerId = SourceLayer.PgmCam
+	p.name = piece.attributes['name']
+	p.metaData = []
+	p.metaData['name'] = piece.attributes['name']
+
+	return p
+}
+
+/**
+ * Creates a cam piece.
+ * @param {Piece} piece Piece to evaluate.
+ */
+function createPieceVideo (piece: Piece): IBlueprintPiece {
+	let p = createPieceGeneric(piece)
+
+	p.sourceLayerId = SourceLayer.PgmClip
+
+	return p
+}
+
+/**
+ * Creates a cam piece.
+ * @param {Piece} piece Piece to evaluate.
+ */
+function createPieceGraphic (piece: Piece): IBlueprintPiece {
+	let p = createPieceGeneric(piece)
+
+	p.sourceLayerId = SourceLayer.PgmGraphicsSuper
+
+	return p
+}
+
+/**
+ * Creates a generic part. Only used as a placeholder for part types that have not been implemented yet.
+ * @param {Piece} piece Piece to evaluate.
+ */
 function createGeneric (ingestPart: IngestPart): BlueprintResultPart {
 	const part = literal<IBlueprintPart>({
 		externalId: ingestPart.externalId,
