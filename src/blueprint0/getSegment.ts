@@ -89,7 +89,8 @@ function createPieceGeneric (piece: Piece): IBlueprintPiece {
 		name: piece.clipName,
 		enable: enable,
 		outputLayerId: 'pgm0',
-		sourceLayerId: SourceLayer.PgmCam
+		sourceLayerId: SourceLayer.PgmCam,
+		metaData: piece.attributes
 	})
 
 	return p
@@ -104,8 +105,6 @@ function createPieceCam (piece: Piece): IBlueprintPiece {
 
 	p.sourceLayerId = SourceLayer.PgmCam
 	p.name = piece.attributes['name']
-	p.metaData = []
-	p.metaData['name'] = piece.attributes['name']
 
 	return p
 }
@@ -119,6 +118,8 @@ function createPieceVideo (piece: Piece): IBlueprintPiece {
 
 	p.sourceLayerId = SourceLayer.PgmClip
 
+	checkAndPlaceOnScreen(p, piece.attributes)
+
 	return p
 }
 
@@ -130,6 +131,8 @@ function createPieceGraphic (piece: Piece): IBlueprintPiece {
 	let p = createPieceGeneric(piece)
 
 	p.sourceLayerId = SourceLayer.PgmGraphicsSuper
+
+	checkAndPlaceOnScreen(p, piece.attributes)
 
 	return p
 }
@@ -196,4 +199,19 @@ function calculateExpectedDuration (pieces: IBlueprintPiece[]): number {
 	})
 
 	return duration
+}
+
+/**
+ * Checks whether a piece should be placed on a screen, if so, it places it on the corresponding screen.
+ * @param {IBlueprintPiece} p The Piece blueprint to modify.
+ * @param {any} attr Attributes of the piece.
+ */
+function checkAndPlaceOnScreen (p: IBlueprintPiece, attr: any) {
+	if ('name' in attr) {
+		if (attr['name'].match(/screen \d/i)) {
+			// TODO: this whitespace replacement is due to the current testing environment.
+			// 		in future, the 'name' attr should be populated such that it is correct at this point, without string manipulation.
+			p.outputLayerId = attr['name'].replace(/\s/g, '')
+		}
+	}
 }
