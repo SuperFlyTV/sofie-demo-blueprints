@@ -33,7 +33,7 @@
                    "name":"INTRO",
                    "float":false,
                    "script":"",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"b36ada08-eb9d-4c88-8cc4-126def13c90d_item",
                          "objectType":"video",
@@ -60,7 +60,7 @@
                    "name":"Head 1",
                    "float":false,
                    "script":"The ducks in the pond are swimming and quacking. They don't seem to be aware of what awaits them",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"2d9ee63b-0726-4637-afc2-8793d10fbcd5_item",
                          "objectType":"video",
@@ -98,7 +98,7 @@
                    "name":"Head 2",
                    "float":false,
                    "script":"The deers in the forest seem worried. Last nights blood moon seem to have stirred some uneasiness",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"d9430f9a-61f0-4b90-a43c-20a3623ab7d4_item",
                          "objectType":"video",
@@ -136,7 +136,7 @@
                    "name":"Head 3",
                    "float":false,
                    "script":"A new tv studio automation solution takes its first baby steps, after an intense year of development",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"d5069c06-010d-4fde-abee-de0024b65a08_item",
                          "objectType":"video",
@@ -174,7 +174,7 @@
                    "name":"Studio",
                    "float":false,
                    "script":"Hello and welcome to super-news, your daily source for the most interesting news!",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"0bbd6c2e-35f5-4d8f-a2d2-7514564c94d5_item",
                          "objectType":"camera",
@@ -226,7 +226,7 @@
                    "name":"New story",
                    "float":false,
                    "script":"",
-                   "items":[
+                   "pieces":[
  
                    ]
                 }
@@ -257,7 +257,7 @@
                    "name":"Egg story, intro",
                    "float":false,
                    "script":"But first, we're going to turn our attention to the newly hatched egg in the back of the studio",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"3410f769-2941-4216-9044-ec4a451a87cd_item",
                          "objectType":"camera",
@@ -284,7 +284,7 @@
                    "name":"Egg story",
                    "float":true,
                    "script":"",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"8b644cd6-1fd0-40b1-8371-ec5663ec0a0c_item",
                          "objectType":"video",
@@ -311,7 +311,7 @@
                    "name":"Egg, interview",
                    "float":false,
                    "script":"With me in the studio, I've got Abe Bergsson, who works at the local farm. [..]",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"19c6f3da-c6b6-48f1-b3d7-288f519ea651_item",
                          "objectType":"camera",
@@ -374,7 +374,7 @@
                    "name":"Wow!!",
                    "float":false,
                    "script":"",
-                   "items":[
+                   "pieces":[
  
                    ]
                 }
@@ -405,7 +405,7 @@
                    "name":"Ducks, intro",
                    "float":false,
                    "script":"We've got our reporter, Charlie Deidriksson with us out by the pond, what can you tell us, Charlie?",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"3ace21fc-62bd-426b-97e7-f441e5ea779b_item",
                          "objectType":"camera",
@@ -432,7 +432,7 @@
                    "name":"Split",
                    "float":false,
                    "script":"",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"0c60032c-f381-4450-b990-70c36f13127f_item",
                          "objectType":"split",
@@ -495,7 +495,7 @@
                    "name":"Forest, intro",
                    "float":false,
                    "script":"In the forest behind the old mill, there's been quite a disturbance yesterday...",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"0c166ce2-9fc7-42db-b896-926e64ce12f7_item",
                          "objectType":"camera",
@@ -522,7 +522,7 @@
                    "name":"Forest",
                    "float":false,
                    "script":"",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"694a96b6-3643-416d-9a11-a384fc14b228_item",
                          "objectType":"video",
@@ -585,7 +585,7 @@
                    "name":"Sofie, intro",
                    "float":false,
                    "script":"The biggest event of the century, the TV Automation system \"Sofie\" opens it's doors to the public. The founders, Superfly.tv thinks it's going to be an industry-changing solution.",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"3832b08c-937c-49f5-89a0-0856e5c734e4_item",
                          "objectType":"camera",
@@ -612,7 +612,7 @@
                    "name":"Sofie",
                    "float":false,
                    "script":"",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"35dd2f11-854c-4446-a2e4-e8bb63c4300b_item",
                          "objectType":"video",
@@ -639,7 +639,7 @@
                    "name":"Sofie, guests",
                    "float":false,
                    "script":"The studio is full of guests, we've got",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"cd43ffa9-efa6-4b37-811d-36359fa14684_item",
                          "objectType":"camera",
@@ -757,7 +757,7 @@
                    "name":"Weather, intro",
                    "float":false,
                    "script":"...And now it's time for the weather.",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"1652f8dc-43a3-4001-b763-c658e42d89eb_item",
                          "objectType":"camera",
@@ -784,7 +784,7 @@
                    "name":"Weather",
                    "float":false,
                    "script":"Today it's gonna be cloudy with a chance of meatballs. Later tonight, NASA has issued a class 3 warning for falling debris, so be safe out there.",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"b488f7f6-9ab0-4a3a-ba8c-e6e7c1f69d18_item",
                          "objectType":"video",
@@ -825,7 +825,7 @@
                    "name":"Outro",
                    "float":false,
                    "script":"That's all from us guys, see you all next time! Don't forget to like and subscribe!",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"196f8a6c-be0f-4579-b697-9b92649d9b62_item",
                          "objectType":"camera",
@@ -852,7 +852,7 @@
                    "name":"Outro",
                    "float":false,
                    "script":"",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"cf3817d9-a0fc-44d8-a51c-d37b51bf5a30_item",
                          "objectType":"camera",
@@ -915,7 +915,7 @@
                    "name":"Brexit, intro",
                    "float":false,
                    "script":"Nobody knows what's going on! Run for the hills! Run away! Run away!",
-                   "items":[
+                   "pieces":[
                       {
                          "id":"26f4758e-d7c8-4e84-8c31-12c3655d866f_item",
                          "objectType":"camera",
