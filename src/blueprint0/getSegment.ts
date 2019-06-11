@@ -38,31 +38,15 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 				let adLibPieces: IBlueprintAdLibPiece[] = []
 				if ('pieces' in part.payload) {
 					(part.payload['pieces'] as Piece[]).forEach(piece => {
-						let p: IBlueprintAdLibPiece | IBlueprintPiece
 						switch (piece.objectType) {
 							case 'video':
-								p = createPieceVideo(piece)
-								if (isAdLibPiece(p)) {
-									adLibPieces.push(p as IBlueprintAdLibPiece)
-								} else {
-									pieces.push(p as IBlueprintPiece)
-								}
+								createPieceByType(piece, createPieceVideo, pieces, adLibPieces)
 								break
 							case 'camera':
-								p = createPieceCam(piece)
-								if (isAdLibPiece(p)) {
-									adLibPieces.push(p as IBlueprintAdLibPiece)
-								} else {
-									pieces.push(p as IBlueprintPiece)
-								}
+								createPieceByType(piece, createPieceCam, pieces, adLibPieces)
 								break
 							case 'graphic':
-								p = createPieceGraphic(piece)
-								if (isAdLibPiece(p)) {
-									adLibPieces.push(p as IBlueprintAdLibPiece)
-								} else {
-									pieces.push(p as IBlueprintPiece)
-								}
+								createPieceByType(piece, createPieceGraphic, pieces, adLibPieces)
 								break
 						}
 					})
@@ -165,6 +149,26 @@ function createPieceGraphic (piece: Piece): IBlueprintAdLibPiece | IBlueprintPie
 	checkAndPlaceOnScreen(p, piece.attributes)
 
 	return p
+}
+
+/**
+ * Creates a piece using a given function.
+ * @param {Piece} piece Piece to create.
+ * @param {(p: Piece) => IBlueprintPiece | IBlueprintAdLibPiece} creator Function for creating the piece.
+ * @param {IBlueprintPiece[]} pieces Array of IBlueprintPiece to add regular pieces to.
+ * @param {IBlueprintAdLibPiece[]} adLibPieces Array of IBlueprintAdLibPiece to add adLib pieces to.
+ */
+function createPieceByType (
+		piece: Piece, creator: (p: Piece) => IBlueprintPiece | IBlueprintAdLibPiece,
+		pieces: IBlueprintPiece[],
+		adLibPieces: IBlueprintAdLibPiece[]
+	) {
+	let p = creator(piece)
+	if (isAdLibPiece(p)) {
+		adLibPieces.push(p as IBlueprintAdLibPiece)
+	} else {
+		pieces.push(p as IBlueprintPiece)
+	}
 }
 
 /**
