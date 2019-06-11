@@ -1,11 +1,13 @@
 import * as _ from 'underscore'
 import * as objectPath from 'object-path'
 import {
-	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece, PieceEnable, IBlueprintAdLibPiece, PieceLifespan
+	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece, PieceEnable, IBlueprintAdLibPiece, PieceLifespan, VTContent, CameraContent, GraphicsContent
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal, isAdLibPiece } from '../common/util'
-import { SourceLayer } from '../types/layers'
+import { SourceLayer, AtemLLayer, CasparLLayer } from '../types/layers'
 import { Piece } from '../types/classes'
+import { TSRTimelineObj, DeviceType, TimelineContentTypeAtem, AtemTransitionStyle, TimelineObjAtemME, TimelineObjCCGMedia, TimelineContentTypeCasparCg } from 'timeline-state-resolver-types'
+import { TimelineEnable } from 'timeline-state-resolver-types/dist/superfly-timeline'
 
 export function getSegment (context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
 	const segment = literal<IBlueprintSegment>({
@@ -120,6 +122,28 @@ function createPieceCam (piece: Piece): IBlueprintAdLibPiece | IBlueprintPiece {
 
 	p.sourceLayerId = SourceLayer.PgmCam
 	p.name = piece.attributes['name']
+	let content: CameraContent = {
+		studioLabel: 'Spreadsheet Studio',
+		switcherInput: 1000,
+		timelineObjects: _.compact<TSRTimelineObj>([
+			literal<TimelineObjAtemME>({
+				id: '',
+				enable: createEnableForTimelineObject(piece),
+				priority: 1,
+				layer: AtemLLayer.AtemMEProgram,
+				content: {
+					deviceType: DeviceType.ATEM,
+					type: TimelineContentTypeAtem.ME,
+					me: {
+						input: 1000, // TODO: Fetch this from Sofie
+						transition: AtemTransitionStyle.CUT
+					}
+				}
+			})
+		])
+	}
+
+	p.content = content
 
 	return p
 }
@@ -132,6 +156,29 @@ function createPieceVideo (piece: Piece): IBlueprintAdLibPiece | IBlueprintPiece
 	let p = createPieceGeneric(piece)
 
 	p.sourceLayerId = SourceLayer.PgmClip
+
+	let content: VTContent = {
+		fileName: piece.clipName,
+		path: piece.clipName,
+		firstWords: '',
+		lastWords: '',
+		sourceDuration: piece.duration ? piece.duration : 0,
+		timelineObjects: _.compact<TSRTimelineObj>([
+			literal<TimelineObjCCGMedia>({
+				id: '',
+				enable: createEnableForTimelineObject(piece),
+				priority: 1,
+				layer: CasparLLayer.CasparPlayerClip,
+				content: {
+					deviceType: DeviceType.CASPARCG,
+					type: TimelineContentTypeCasparCg.MEDIA,
+					file: piece.clipName
+				}
+			})
+		])
+	}
+
+	p.content = content
 
 	checkAndPlaceOnScreen(p, piece.attributes)
 
@@ -146,6 +193,26 @@ function createPieceGraphic (piece: Piece): IBlueprintAdLibPiece | IBlueprintPie
 	let p = createPieceGeneric(piece)
 
 	p.sourceLayerId = SourceLayer.PgmGraphicsSuper
+
+	let content: GraphicsContent = {
+		fileName: piece.clipName,
+		path: piece.clipName,
+		timelineObjects: _.compact<TSRTimelineObj>([
+			literal<TimelineObjCCGMedia>({
+				id: '',
+				enable: createEnableForTimelineObject(piece),
+				priority: 1,
+				layer: CasparLLayer.CasparCGGraphics,
+				content: {
+					deviceType: DeviceType.CASPARCG,
+					type: TimelineContentTypeCasparCg.MEDIA,
+					file: piece.clipName
+				}
+			})
+		])
+	}
+
+	p.content = content
 
 	checkAndPlaceOnScreen(p, piece.attributes)
 
@@ -165,10 +232,12 @@ function createPieceByType (
 		adLibPieces: IBlueprintAdLibPiece[]
 	) {
 	let p = creator(piece)
-	if (isAdLibPiece(p)) {
-		adLibPieces.push(p as IBlueprintAdLibPiece)
-	} else {
-		pieces.push(p as IBlueprintPiece)
+	if (p.content) {
+		if (isAdLibPiece(p)) {
+			adLibPieces.push(p as IBlueprintAdLibPiece)
+		} else {
+			pieces.push(p as IBlueprintPiece)
+		}
 	}
 }
 
@@ -249,4 +318,20 @@ function checkAndPlaceOnScreen (p: IBlueprintPiece | IBlueprintAdLibPiece, attr:
 			p.outputLayerId = attr['name'].replace(/\s/g, '')
 		}
 	}
+}
+
+/**
+ * Creates an enable object for a timeline object.
+ * @param {Piece} piece Piece to create enable for.
+ */
+function createEnableForTimelineObject (piece: Piece): TimelineEnable {
+	let enable: TimelineEnable = {
+		start: piece.objectTime ? piece.objectTime : 0
+	}
+
+	if (piece.duration) {
+		enable.duration = piece.duration
+	}
+
+	return piece
 }
