@@ -71,9 +71,6 @@ function createPieceGeneric (piece: Piece): IBlueprintAdLibPiece | IBlueprintPie
 	let enable: PieceEnable = {}
 	let p: IBlueprintPiece | IBlueprintAdLibPiece
 
-	console.log(piece.objectTime)
-	console.log(piece.attributes)
-
 	if ('adlib' in piece.attributes && piece.attributes['adlib'] === 'true') {
 		p = literal<IBlueprintAdLibPiece>({
 			externalId: piece.id,
