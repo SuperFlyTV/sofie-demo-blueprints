@@ -1,7 +1,7 @@
 import * as _ from 'underscore'
 import * as objectPath from 'object-path'
 import {
-	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece, PieceEnable, IBlueprintAdLibPiece
+	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece, PieceEnable, IBlueprintAdLibPiece, PieceLifespan
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal, isAdLibPiece } from '../common/util'
 import { SourceLayer } from '../types/layers'
@@ -75,8 +75,6 @@ function createPieceGeneric (piece: Piece): IBlueprintAdLibPiece | IBlueprintPie
 	console.log(piece.attributes)
 
 	if ('adlib' in piece.attributes && piece.attributes['adlib'] === 'true') {
-		console.log('It\'s an adlib!')
-
 		p = literal<IBlueprintAdLibPiece>({
 			externalId: piece.id,
 			name: piece.clipName,
@@ -85,16 +83,12 @@ function createPieceGeneric (piece: Piece): IBlueprintAdLibPiece | IBlueprintPie
 			metaData: piece.attributes,
 			_rank: 0
 		})
+
+		if (!piece.duration) {
+			p.expectedDuration = piece.duration
+		}
 	} else {
 		enable.start = piece.objectTime
-
-		// TODO: This may become context-specific
-		if (!piece.duration) {
-			console.log('It\'s infinite!')
-			enable.duration = 1000
-		} else {
-			enable.duration = piece.duration
-		}
 
 		p = literal<IBlueprintPiece>({
 			_id: '',
@@ -105,6 +99,16 @@ function createPieceGeneric (piece: Piece): IBlueprintAdLibPiece | IBlueprintPie
 			sourceLayerId: SourceLayer.PgmCam,
 			metaData: piece.attributes
 		})
+
+		if (piece.duration) {
+			enable.duration = piece.duration
+			p.enable = enable
+		}
+	}
+
+	// TODO: This may become context-specific
+	if (!piece.duration) {
+		p.infiniteMode = PieceLifespan.OutOnNextPart
 	}
 
 	return p
