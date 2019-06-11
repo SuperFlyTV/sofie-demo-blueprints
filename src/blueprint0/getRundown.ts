@@ -53,12 +53,31 @@ export function getShowStyleVariantId (_context: IStudioConfigContext, showStyle
 export function getRundown (context: ShowStyleContext, ingestRundown: IngestRundown): BlueprintResultRundown {
 	const config = parseConfig(context)
 
+	let startTime: number = 0
+	let endTime: number = 0
+
+	// Set start / end times
+	if ('payload' in ingestRundown) {
+		if (ingestRundown['payload'].expectedStart) {
+			startTime = Number(ingestRundown['payload'].expectedStart)
+		}
+
+		if (ingestRundown['payload'].expectedEnd) {
+			endTime = Number(ingestRundown['payload'].expectedEnd)
+		}
+	}
+
+	// Can't end before we begin
+	if (endTime < startTime) {
+		endTime = startTime
+	}
+
 	return {
 		rundown: literal<IBlueprintRundown>({
 			externalId: ingestRundown.externalId,
 			name: ingestRundown.name,
-			expectedStart: 0,
-			expectedDuration: 0
+			expectedStart: startTime,
+			expectedDuration: endTime - startTime
 		}),
 		globalAdLibPieces: getGlobalAdLibPieces(context, config),
 		baseline: getBaseline(config)
