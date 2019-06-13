@@ -65,6 +65,9 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 							case 'graphic':
 								createPieceByType(piece, createPieceGraphic, pieces, adLibPieces, first, script)
 								break
+							default:
+								context.warning(`Missing objectType '${piece.objectType}' for piece: '${piece.clipName || piece.id}'`)
+								break
 						}
 						first = false
 					})
@@ -157,7 +160,7 @@ function createPieceCam (piece: Piece): IBlueprintAdLibPiece | IBlueprintPiece {
 	let p = createPieceGeneric(piece)
 
 	p.sourceLayerId = SourceLayer.PgmCam
-	p.name = piece.attributes['name']
+	p.name = piece.attributes['attr0'] // TODO: Pull this from attributes?
 	let content: CameraContent = {
 		studioLabel: 'Spreadsheet Studio',
 		switcherInput: 1000,
@@ -411,11 +414,11 @@ function calculateExpectedDuration (pieces: IBlueprintPiece[]): number {
  * @param {any} attr Attributes of the piece.
  */
 function checkAndPlaceOnScreen (p: IBlueprintPiece | IBlueprintAdLibPiece, attr: any): boolean {
-	if ('name' in attr) {
-		if (attr['name'].match(/screen \d/i)) {
+	if ('attr0' in attr) {
+		if (attr['attr0'].match(/screen \d/i)) {
 			// TODO: this whitespace replacement is due to the current testing environment.
 			// 		in future, the 'name' attr should be populated such that it is correct at this point, without string manipulation.
-			p.outputLayerId = attr['name'].replace(/\s/g, '')
+			p.outputLayerId = attr['attr0'].replace(/\s/g, '')
 			return true
 		}
 	}
