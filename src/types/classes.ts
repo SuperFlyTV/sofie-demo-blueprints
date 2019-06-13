@@ -5,5 +5,6 @@ export interface Piece {
 	duration: number,
 	clipName: string,
 	attributes: any,
-	position: string
+	position: string,
+	script?: string
 }

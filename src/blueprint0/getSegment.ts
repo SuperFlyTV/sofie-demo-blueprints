@@ -1,7 +1,7 @@
 import * as _ from 'underscore'
 import * as objectPath from 'object-path'
 import {
-	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece, PieceEnable, IBlueprintAdLibPiece, PieceLifespan, VTContent, CameraContent, GraphicsContent
+	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece, PieceEnable, IBlueprintAdLibPiece, PieceLifespan, VTContent, CameraContent, GraphicsContent, ScriptContent
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal, isAdLibPiece } from '../common/util'
 import { SourceLayer, AtemLLayer, CasparLLayer } from '../types/layers'
@@ -39,18 +39,34 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 				let pieces: IBlueprintPiece[] = []
 				let adLibPieces: IBlueprintAdLibPiece[] = []
 				if ('pieces' in part.payload) {
-					(part.payload['pieces'] as Piece[]).forEach(piece => {
+					let pieceList = part.payload['pieces'] as Piece[]
+
+					// Generate script
+					let script = ''
+					if ('script' in part.payload) {
+						script += part.payload['script']
+					}
+					pieceList.forEach(piece => {
+						if (piece.script) {
+							script += `\n${piece.script}`
+						}
+					})
+
+					// Iterate over pieces + generate.
+					let first = true
+					pieceList.forEach(piece => {
 						switch (piece.objectType) {
 							case 'video':
-								createPieceByType(piece, createPieceVideo, pieces, adLibPieces)
+								createPieceByType(piece, createPieceVideo, pieces, adLibPieces, first, script)
 								break
 							case 'camera':
-								createPieceByType(piece, createPieceCam, pieces, adLibPieces)
+								createPieceByType(piece, createPieceCam, pieces, adLibPieces, first, script)
 								break
 							case 'graphic':
-								createPieceByType(piece, createPieceGraphic, pieces, adLibPieces)
+								createPieceByType(piece, createPieceGraphic, pieces, adLibPieces, first, script)
 								break
 						}
+						first = false
 					})
 				}
 				parts.push(createPart(part, pieces, adLibPieces))
@@ -65,44 +81,64 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 }
 
 /**
+ * Creates a generic adLib piece.
+ * @param {Piece} piece Piece properties.
+ */
+function createPieceGenericAdLib (piece: Piece): IBlueprintAdLibPiece {
+	let p = literal<IBlueprintAdLibPiece>({
+		externalId: piece.id,
+		name: piece.clipName,
+		outputLayerId: 'pgm0',
+		sourceLayerId: SourceLayer.PgmCam,
+		metaData: piece.attributes,
+		_rank: 0
+	})
+
+	if (!piece.duration) {
+		p.expectedDuration = piece.duration
+	}
+
+	return p
+}
+
+/**
+ * Creates a generic IBlueprintPiece.
+ * @param {Piece} piece Piece properties.
+ */
+function createPieceGenericEnable (piece: Piece): IBlueprintPiece {
+	let enable: PieceEnable = {}
+	enable.start = piece.objectTime || 0
+
+	let p = literal<IBlueprintPiece>({
+		_id: '',
+		externalId: piece.id,
+		name: piece.clipName,
+		enable: enable,
+		outputLayerId: 'pgm0',
+		sourceLayerId: SourceLayer.PgmCam,
+		metaData: piece.attributes
+	})
+
+	if (piece.duration) {
+		enable.duration = piece.duration
+		p.enable = enable
+	}
+
+	return p
+}
+
+/**
  * Creates a generic piece. Will return an Adlib piece if suitable.
  * @param {Piece} piece Piece to evaluate.
  * @returns {IBlueprintPieceGeneric} A possibly infinite, possibly Adlib piece.
  */
 function createPieceGeneric (piece: Piece): IBlueprintAdLibPiece | IBlueprintPiece {
-	let enable: PieceEnable = {}
 	let p: IBlueprintPiece | IBlueprintAdLibPiece
 
 	if ('adlib' in piece.attributes && piece.attributes['adlib'] === 'true') {
-		p = literal<IBlueprintAdLibPiece>({
-			externalId: piece.id,
-			name: piece.clipName,
-			outputLayerId: 'pgm0',
-			sourceLayerId: SourceLayer.PgmCam,
-			metaData: piece.attributes,
-			_rank: 0
-		})
-
-		if (!piece.duration) {
-			p.expectedDuration = piece.duration
-		}
+		p = createPieceGenericAdLib(piece)
 	} else {
-		enable.start = piece.objectTime
-
-		p = literal<IBlueprintPiece>({
-			_id: '',
-			externalId: piece.id,
-			name: piece.clipName,
-			enable: enable,
-			outputLayerId: 'pgm0',
-			sourceLayerId: SourceLayer.PgmCam,
-			metaData: piece.attributes
-		})
-
-		if (piece.duration) {
-			enable.duration = piece.duration
-			p.enable = enable
-		}
+		p = createPieceGenericEnable(piece)
 	}
 
 	// TODO: This may become context-specific
@@ -220,6 +256,29 @@ function createPieceGraphic (piece: Piece): IBlueprintAdLibPiece | IBlueprintPie
 }
 
 /**
+ * Creates a script piece.
+ * @param {Piece} piece Parent piece.
+ * @param {string} script String containing script.
+ */
+function createPieceScript (piece: Piece, script: string): IBlueprintPiece {
+	let p = createPieceGenericEnable(piece)
+
+	p.sourceLayerId = SourceLayer.PgmScript
+	let scriptWords = script.replace('\n', ' ').split(' ')
+
+	let content: ScriptContent = {
+		firstWords: scriptWords.slice(0, Math.min(4, scriptWords.length)).join(' '),
+		lastWords: scriptWords.slice(scriptWords.length - (Math.min(4, scriptWords.length)), (Math.min(4, scriptWords.length))).join(' '),
+		fullScript: script,
+		sourceDuration: Number(p.enable.start) || 0
+	}
+
+	p.content = content
+
+	return p
+}
+
+/**
  * Creates a piece using a given function.
  * @param {Piece} piece Piece to create.
  * @param {(p: Piece) => IBlueprintPiece | IBlueprintAdLibPiece} creator Function for creating the piece.
@@ -229,7 +288,9 @@ function createPieceGraphic (piece: Piece): IBlueprintAdLibPiece | IBlueprintPie
 function createPieceByType (
 		piece: Piece, creator: (p: Piece) => IBlueprintPiece | IBlueprintAdLibPiece,
 		pieces: IBlueprintPiece[],
-		adLibPieces: IBlueprintAdLibPiece[]
+		adLibPieces: IBlueprintAdLibPiece[],
+		first: boolean,
+		script: string
 	) {
 	let p = creator(piece)
 	if (p.content) {
@@ -238,6 +299,10 @@ function createPieceByType (
 		} else {
 			pieces.push(p as IBlueprintPiece)
 		}
+	}
+
+	if (first && script) {
+		pieces.push(createPieceScript(piece, script))
 	}
 }
 
