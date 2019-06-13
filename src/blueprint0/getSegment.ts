@@ -216,7 +216,25 @@ function createPieceVideo (piece: Piece): IBlueprintAdLibPiece | IBlueprintPiece
 
 	p.content = content
 
-	checkAndPlaceOnScreen(p, piece.attributes)
+	// TODO if it should be placed on a screen, it should probably go out over an aux.
+	if (!checkAndPlaceOnScreen(p, piece.attributes)) {
+		content.timelineObjects.push(
+			literal<TimelineObjAtemME>({
+				id: '',
+				enable: createEnableForTimelineObject(piece),
+				priority: 1,
+				layer: AtemLLayer.AtemMEProgram,
+				content: {
+					deviceType: DeviceType.ATEM,
+					type: TimelineContentTypeAtem.ME,
+					me: {
+						input: 1000, // TODO: This should be the CasparCG input.
+						transition: AtemTransitionStyle.CUT
+					}
+				}
+			})
+		)
+	}
 
 	return p
 }
@@ -248,9 +266,26 @@ function createPieceGraphic (piece: Piece): IBlueprintAdLibPiece | IBlueprintPie
 		])
 	}
 
-	p.content = content
+	if (!checkAndPlaceOnScreen(p, piece.attributes)) {
+		content.timelineObjects.push(
+			literal<TimelineObjAtemME>({
+				id: '',
+				enable: createEnableForTimelineObject(piece),
+				priority: 1,
+				layer: AtemLLayer.AtemMEProgram,
+				content: {
+					deviceType: DeviceType.ATEM,
+					type: TimelineContentTypeAtem.ME,
+					me: {
+						input: 1000, // TODO: This should be the CasparCG input.
+						transition: AtemTransitionStyle.CUT
+					}
+				}
+			})
+		)
+	}
 
-	checkAndPlaceOnScreen(p, piece.attributes)
+	p.content = content
 
 	return p
 }
@@ -375,14 +410,16 @@ function calculateExpectedDuration (pieces: IBlueprintPiece[]): number {
  * @param {IBlueprintPiece} p The Piece blueprint to modify.
  * @param {any} attr Attributes of the piece.
  */
-function checkAndPlaceOnScreen (p: IBlueprintPiece | IBlueprintAdLibPiece, attr: any) {
+function checkAndPlaceOnScreen (p: IBlueprintPiece | IBlueprintAdLibPiece, attr: any): boolean {
 	if ('name' in attr) {
 		if (attr['name'].match(/screen \d/i)) {
 			// TODO: this whitespace replacement is due to the current testing environment.
 			// 		in future, the 'name' attr should be populated such that it is correct at this point, without string manipulation.
 			p.outputLayerId = attr['name'].replace(/\s/g, '')
+			return true
 		}
 	}
+	return false
 }
 
 /**
