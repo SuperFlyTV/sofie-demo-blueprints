@@ -57,13 +57,13 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 					pieceList.forEach(piece => {
 						switch (piece.objectType) {
 							case 'video':
-								createPieceByType(piece, createPieceVideo, pieces, adLibPieces, first, script)
+								createPieceByType(piece, createPieceVideo, pieces, adLibPieces, first, script, type)
 								break
 							case 'camera':
-								createPieceByType(piece, createPieceCam, pieces, adLibPieces, first, script)
+								createPieceByType(piece, createPieceCam, pieces, adLibPieces, first, script, type)
 								break
 							case 'graphic':
-								createPieceByType(piece, createPieceGraphic, pieces, adLibPieces, first, script)
+								createPieceByType(piece, createPieceGraphic, pieces, adLibPieces, first, script, type)
 								break
 							default:
 								context.warning(`Missing objectType '${piece.objectType}' for piece: '${piece.clipName || piece.id}'`)
@@ -155,8 +155,9 @@ function createPieceGeneric (piece: Piece): IBlueprintAdLibPiece | IBlueprintPie
 /**
  * Creates a cam piece.
  * @param {Piece} piece Piece to evaluate.
+ * @param {string} context Context the piece belongs to.
  */
-function createPieceCam (piece: Piece): IBlueprintAdLibPiece | IBlueprintPiece {
+function createPieceCam (piece: Piece, context: string): IBlueprintAdLibPiece | IBlueprintPiece {
 	let p = createPieceGeneric(piece)
 
 	p.sourceLayerId = SourceLayer.PgmCam
@@ -164,22 +165,28 @@ function createPieceCam (piece: Piece): IBlueprintAdLibPiece | IBlueprintPiece {
 	let content: CameraContent = {
 		studioLabel: 'Spreadsheet Studio',
 		switcherInput: 1000,
-		timelineObjects: _.compact<TSRTimelineObj>([
-			literal<TimelineObjAtemME>({
-				id: '',
-				enable: createEnableForTimelineObject(piece),
-				priority: 1,
-				layer: AtemLLayer.AtemMEProgram,
-				content: {
-					deviceType: DeviceType.ATEM,
-					type: TimelineContentTypeAtem.ME,
-					me: {
-						input: 1000, // TODO: Fetch this from Sofie
-						transition: AtemTransitionStyle.CUT
+		timelineObjects: _.compact<TSRTimelineObj>([])
+	}
+
+	switch (context) {
+		default:
+			content.timelineObjects = _.compact<TSRTimelineObj>([
+				literal<TimelineObjAtemME>({
+					id: '',
+					enable: createEnableForTimelineObject(piece),
+					priority: 1,
+					layer: AtemLLayer.AtemMEProgram,
+					content: {
+						deviceType: DeviceType.ATEM,
+						type: TimelineContentTypeAtem.ME,
+						me: {
+							input: 1000, // TODO: Fetch this from Sofie
+							transition: AtemTransitionStyle.CUT
+						}
 					}
-				}
-			})
-		])
+				})
+			])
+			break
 	}
 
 	p.content = content
@@ -190,8 +197,9 @@ function createPieceCam (piece: Piece): IBlueprintAdLibPiece | IBlueprintPiece {
 /**
  * Creates a cam piece.
  * @param {Piece} piece Piece to evaluate.
+ * @param {string} context Context the piece belongs to.
  */
-function createPieceVideo (piece: Piece): IBlueprintAdLibPiece | IBlueprintPiece {
+function createPieceVideo (piece: Piece, context: string): IBlueprintAdLibPiece | IBlueprintPiece {
 	let p = createPieceGeneric(piece)
 
 	p.sourceLayerId = SourceLayer.PgmClip
@@ -202,24 +210,28 @@ function createPieceVideo (piece: Piece): IBlueprintAdLibPiece | IBlueprintPiece
 		firstWords: '',
 		lastWords: '',
 		sourceDuration: piece.duration ? piece.duration : 0,
-		timelineObjects: _.compact<TSRTimelineObj>([
-			literal<TimelineObjCCGMedia>({
-				id: '',
-				enable: createEnableForTimelineObject(piece),
-				priority: 1,
-				layer: CasparLLayer.CasparPlayerClip,
-				content: {
-					deviceType: DeviceType.CASPARCG,
-					type: TimelineContentTypeCasparCg.MEDIA,
-					file: piece.clipName
-				}
-			})
-		])
+		timelineObjects: _.compact<TSRTimelineObj>([])
 	}
 
-	p.content = content
+	switch (context) {
+		default:
+			content.timelineObjects = _.compact<TSRTimelineObj>([
+				literal<TimelineObjCCGMedia>({
+					id: '',
+					enable: createEnableForTimelineObject(piece),
+					priority: 1,
+					layer: CasparLLayer.CasparPlayerClip,
+					content: {
+						deviceType: DeviceType.CASPARCG,
+						type: TimelineContentTypeCasparCg.MEDIA,
+						file: piece.clipName
+					}
+				})
+			])
+			break
+	}
 
-	// TODO if it should be placed on a screen, it should probably go out over an aux.
+	// TODO: if it should be placed on a screen, it should probably go out over an aux.
 	if (!checkAndPlaceOnScreen(p, piece.attributes)) {
 		content.timelineObjects.push(
 			literal<TimelineObjAtemME>({
@@ -238,6 +250,8 @@ function createPieceVideo (piece: Piece): IBlueprintAdLibPiece | IBlueprintPiece
 			})
 		)
 	}
+
+	p.content = content
 
 	return p
 }
@@ -245,8 +259,9 @@ function createPieceVideo (piece: Piece): IBlueprintAdLibPiece | IBlueprintPiece
 /**
  * Creates a cam piece.
  * @param {Piece} piece Piece to evaluate.
+ * @param {string} context Context the piece belongs to.
  */
-function createPieceGraphic (piece: Piece): IBlueprintAdLibPiece | IBlueprintPiece {
+function createPieceGraphic (piece: Piece, context: string): IBlueprintAdLibPiece | IBlueprintPiece {
 	let p = createPieceGeneric(piece)
 
 	p.sourceLayerId = SourceLayer.PgmGraphicsSuper
@@ -254,38 +269,95 @@ function createPieceGraphic (piece: Piece): IBlueprintAdLibPiece | IBlueprintPie
 	let content: GraphicsContent = {
 		fileName: piece.clipName,
 		path: piece.clipName,
-		timelineObjects: _.compact<TSRTimelineObj>([
-			literal<TimelineObjCCGMedia>({
-				id: '',
-				enable: createEnableForTimelineObject(piece),
-				priority: 1,
-				layer: CasparLLayer.CasparCGGraphics,
-				content: {
-					deviceType: DeviceType.CASPARCG,
-					type: TimelineContentTypeCasparCg.MEDIA,
-					file: piece.clipName
-				}
-			})
-		])
+		timelineObjects: _.compact<TSRTimelineObj>([])
 	}
 
-	if (!checkAndPlaceOnScreen(p, piece.attributes)) {
-		content.timelineObjects.push(
-			literal<TimelineObjAtemME>({
-				id: '',
-				enable: createEnableForTimelineObject(piece),
-				priority: 1,
-				layer: AtemLLayer.AtemMEProgram,
-				content: {
-					deviceType: DeviceType.ATEM,
-					type: TimelineContentTypeAtem.ME,
-					me: {
-						input: 1000, // TODO: This should be the CasparCG input.
-						transition: AtemTransitionStyle.CUT
+	switch (context) {
+		case 'HEAD':
+			content.timelineObjects = _.compact<TSRTimelineObj>([
+				literal<TimelineObjCCGMedia>({
+					id: '',
+					enable: createEnableForTimelineObject(piece),
+					priority: 1,
+					layer: CasparLLayer.CasparCGGraphics,
+					content: {
+						deviceType: DeviceType.CASPARCG,
+						type: TimelineContentTypeCasparCg.MEDIA,
+						file: piece.clipName
 					}
-				}
-			})
-		)
+				})
+			])
+
+			if (checkAndPlaceOnScreen(p, piece.attributes)) {
+				content.timelineObjects.push(
+					literal<TimelineObjAtemME>({
+						id: '',
+						enable: createEnableForTimelineObject(piece),
+						priority: 1,
+						layer: AtemLLayer.AtemMEProgram,
+						content: {
+							deviceType: DeviceType.ATEM,
+							type: TimelineContentTypeAtem.ME,
+							me: {
+								input: 1000, // TODO: This should be the CasparCG input.
+								transition: AtemTransitionStyle.CUT
+							}
+						}
+					})
+				)
+			} else {
+				content.timelineObjects.push(
+					literal<TimelineObjAtemME>({
+						id: '',
+						enable: createEnableForTimelineObject(piece),
+						priority: 1,
+						layer: AtemLLayer.AtemMEProgram,
+						content: {
+							deviceType: DeviceType.ATEM,
+							type: TimelineContentTypeAtem.ME,
+							me: {
+								input: 1000, // TODO: This should be the CasparCG input.
+								transition: AtemTransitionStyle.WIPE
+							}
+						}
+					})
+				)
+			}
+			break
+		default:
+			content.timelineObjects = _.compact<TSRTimelineObj>([
+				literal<TimelineObjCCGMedia>({
+					id: '',
+					enable: createEnableForTimelineObject(piece),
+					priority: 1,
+					layer: CasparLLayer.CasparCGGraphics,
+					content: {
+						deviceType: DeviceType.CASPARCG,
+						type: TimelineContentTypeCasparCg.MEDIA,
+						file: piece.clipName
+					}
+				})
+			])
+
+			if (!checkAndPlaceOnScreen(p, piece.attributes)) {
+				content.timelineObjects.push(
+					literal<TimelineObjAtemME>({
+						id: '',
+						enable: createEnableForTimelineObject(piece),
+						priority: 1,
+						layer: AtemLLayer.AtemMEProgram,
+						content: {
+							deviceType: DeviceType.ATEM,
+							type: TimelineContentTypeAtem.ME,
+							me: {
+								input: 1000, // TODO: This should be the CasparCG input.
+								transition: AtemTransitionStyle.CUT
+							}
+						}
+					})
+				)
+			}
+			break
 	}
 
 	p.content = content
@@ -322,15 +394,18 @@ function createPieceScript (piece: Piece, script: string): IBlueprintPiece {
  * @param {(p: Piece) => IBlueprintPiece | IBlueprintAdLibPiece} creator Function for creating the piece.
  * @param {IBlueprintPiece[]} pieces Array of IBlueprintPiece to add regular pieces to.
  * @param {IBlueprintAdLibPiece[]} adLibPieces Array of IBlueprintAdLibPiece to add adLib pieces to.
+ * @param {boolean} firt Whether this is the first piece in a part.
+ * @param {string} context The part type the piece belogs to e.g. 'HEAD'
  */
 function createPieceByType (
-		piece: Piece, creator: (p: Piece) => IBlueprintPiece | IBlueprintAdLibPiece,
+		piece: Piece, creator: (p: Piece, context: string) => IBlueprintPiece | IBlueprintAdLibPiece,
 		pieces: IBlueprintPiece[],
 		adLibPieces: IBlueprintAdLibPiece[],
 		first: boolean,
-		script: string
+		script: string,
+		context: string
 	) {
-	let p = creator(piece)
+	let p = creator(piece, context)
 	if (p.content) {
 		if (isAdLibPiece(p)) {
 			adLibPieces.push(p as IBlueprintAdLibPiece)
