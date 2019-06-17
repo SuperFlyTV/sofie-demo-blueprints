@@ -53,24 +53,27 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 					})
 
 					// Iterate over pieces + generate.
-					let first = true
-					pieceList.forEach(piece => {
+					for (let i = 0; i < pieceList.length; i++) {
+						let piece = pieceList[i]
 						switch (piece.objectType) {
 							case 'video':
-								createPieceByType(piece, createPieceVideo, pieces, adLibPieces, first, script, type)
+								createPieceByType(piece, createPieceVideo, pieces, adLibPieces, type)
 								break
 							case 'camera':
-								createPieceByType(piece, createPieceCam, pieces, adLibPieces, first, script, type)
+								createPieceByType(piece, createPieceCam, pieces, adLibPieces, type)
 								break
 							case 'graphic':
-								createPieceByType(piece, createPieceGraphic, pieces, adLibPieces, first, script, type)
+								createPieceByType(piece, createPieceGraphic, pieces, adLibPieces, type)
 								break
 							default:
 								context.warning(`Missing objectType '${piece.objectType}' for piece: '${piece.clipName || piece.id}'`)
 								break
 						}
-						first = false
-					})
+
+						if (i === 0 && script) {
+							pieces.push(createPieceScript(piece, script))
+						}
+					}
 				}
 				parts.push(createPart(part, pieces, adLibPieces))
 			}
@@ -394,15 +397,12 @@ function createPieceScript (piece: Piece, script: string): IBlueprintPiece {
  * @param {(p: Piece) => IBlueprintPiece | IBlueprintAdLibPiece} creator Function for creating the piece.
  * @param {IBlueprintPiece[]} pieces Array of IBlueprintPiece to add regular pieces to.
  * @param {IBlueprintAdLibPiece[]} adLibPieces Array of IBlueprintAdLibPiece to add adLib pieces to.
- * @param {boolean} firt Whether this is the first piece in a part.
  * @param {string} context The part type the piece belogs to e.g. 'HEAD'
  */
 function createPieceByType (
 		piece: Piece, creator: (p: Piece, context: string) => IBlueprintPiece | IBlueprintAdLibPiece,
 		pieces: IBlueprintPiece[],
 		adLibPieces: IBlueprintAdLibPiece[],
-		first: boolean,
-		script: string,
 		context: string
 	) {
 	let p = creator(piece, context)
@@ -412,10 +412,6 @@ function createPieceByType (
 		} else {
 			pieces.push(p as IBlueprintPiece)
 		}
-	}
-
-	if (first && script) {
-		pieces.push(createPieceScript(piece, script))
 	}
 }
 
