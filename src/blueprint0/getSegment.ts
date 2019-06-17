@@ -480,7 +480,7 @@ function createPieceScript (piece: Piece, script: string): IBlueprintPiece {
 		firstWords: scriptWords.slice(0, Math.min(4, scriptWords.length)).join(' '),
 		lastWords: scriptWords.slice(scriptWords.length - (Math.min(4, scriptWords.length)), (Math.min(4, scriptWords.length))).join(' '),
 		fullScript: script,
-		sourceDuration: Number(p.enable.start) || 0
+		sourceDuration: Number(p.enable.duration) || 1000
 	}
 
 	p.content = content
