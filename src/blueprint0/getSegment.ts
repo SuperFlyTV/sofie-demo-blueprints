@@ -88,7 +88,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 									createPieceByType(piece, createPieceGraphic, pieces, adLibPieces, type, transitionType)
 									break
 								case 'transition':
-									pieces.push(createPieceTransition(piece, transitionType))
+									pieces.push(createPieceInTransitionDefault(piece, transitionType))
 									break
 								default:
 									context.warning(`Missing objectType '${piece.objectType}' for piece: '${piece.clipName || piece.id}'`)
@@ -550,16 +550,21 @@ function createPieceByType (
 		pieces: IBlueprintPiece[],
 		adLibPieces: IBlueprintAdLibPiece[],
 		context: string,
-		transitionType: AtemTransitionStyle
+		transitionType?: AtemTransitionStyle
 	) {
-	let p = creator(piece, context, transitionType)
+	let p = creator(piece, context, transitionType || AtemTransitionStyle.CUT)
 	if (p.content) {
 		if (isAdLibPiece(p)) {
 			adLibPieces.push(p as IBlueprintAdLibPiece)
 		} else {
 			pieces.push(p as IBlueprintPiece)
-			if (context.match(/titles/i) && (piece.objectType.match(/(graphic)|(video)/i))) {
+
+			if (context.match(/titles/i) && piece.objectType.match(/(graphic)|(video)/i)) {
 				pieces.push(createPieceOutTransition(piece, AtemTransitionStyle.DIP, (1 / 50) * 150 * 1000)) // TODO: Use actual framerate
+			}
+
+			if (context.match(/breaker/i) && piece.objectType.match(/(graphic)|(video)/i)) {
+				pieces.push(createPieceOutTransition(piece, transitionType || AtemTransitionStyle.DIP, (1 / 50) * 50 * 1000)) // TODO: Use actual framerate
 			}
 		}
 	}
