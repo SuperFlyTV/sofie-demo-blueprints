@@ -88,7 +88,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 									createPieceByType(piece, createPieceGraphic, pieces, adLibPieces, type, transitionType)
 									break
 								case 'transition':
-									pieces.push(createPieceInTransitionDefault(piece, transitionType))
+									pieces.push(createPieceInTransition(piece, transitionType, piece.duration || 1000))
 									break
 								default:
 									context.warning(`Missing objectType '${piece.objectType}' for piece: '${piece.clipName || piece.id}'`)
@@ -204,17 +204,18 @@ function createPieceGeneric (piece: Piece): IBlueprintAdLibPiece | IBlueprintPie
 
 /**
  * Creates a transition piece.
- * @param piece Piece to generate.
- * @param transition Transition style.
+ * @param {Piece} piece Piece to generate.
+ * @param {AtemTransitionStyle} transition Transition style.
+ * @param {number} duration Length of transition.
  */
-function createPieceInTransitionDefault (piece: Piece, transition: AtemTransitionStyle): IBlueprintPiece {
+function createPieceInTransition (piece: Piece, transition: AtemTransitionStyle, duration: number): IBlueprintPiece {
 	let p = literal<IBlueprintPiece>({
 		_id: '',
 		externalId: 'T' + piece.id,
-		name: 'T' + (piece.duration || 100),
+		name: 'T' + duration,
 		enable: {
 			start: 0,
-			duration: piece.duration || 100
+			duration: duration
 		},
 		outputLayerId: 'pgm0',
 		sourceLayerId: SourceLayer.PgmTransition,
@@ -560,10 +561,15 @@ function createPieceByType (
 			pieces.push(p as IBlueprintPiece)
 
 			if (context.match(/titles/i) && piece.objectType.match(/(graphic)|(video)/i)) {
-				pieces.push(createPieceOutTransition(piece, AtemTransitionStyle.DIP, (1 / 50) * 150 * 1000)) // TODO: Use actual framerate
+				pieces.push(createPieceOutTransition(piece, transitionType || AtemTransitionStyle.DIP, (1 / 50) * 150 * 1000)) // TODO: Use actual framerate
 			}
 
 			if (context.match(/breaker/i) && piece.objectType.match(/(graphic)|(video)/i)) {
+				pieces.push(createPieceOutTransition(piece, transitionType || AtemTransitionStyle.DIP, (1 / 50) * 50 * 1000)) // TODO: Use actual framerate
+			}
+
+			if (context.match(/package/i) && piece.objectType.match(/video/i)) {
+				pieces.push(createPieceInTransition(piece, transitionType || AtemTransitionStyle.MIX, (1 / 50) * 150 * 1000))
 				pieces.push(createPieceOutTransition(piece, transitionType || AtemTransitionStyle.DIP, (1 / 50) * 50 * 1000)) // TODO: Use actual framerate
 			}
 		}
