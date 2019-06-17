@@ -1,7 +1,7 @@
 import * as _ from 'underscore'
 import * as objectPath from 'object-path'
 import {
-	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece, PieceEnable, IBlueprintAdLibPiece, PieceLifespan, VTContent, CameraContent, GraphicsContent, ScriptContent
+	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece, PieceEnable, IBlueprintAdLibPiece, PieceLifespan, VTContent, CameraContent, GraphicsContent, ScriptContent, TransitionContent
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal, isAdLibPiece } from '../common/util'
 import { SourceLayer, AtemLLayer, CasparLLayer } from '../types/layers'
@@ -86,6 +86,9 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 									break
 								case 'graphic':
 									createPieceByType(piece, createPieceGraphic, pieces, adLibPieces, type, transitionType)
+									break
+								case 'transition':
+									pieces.push(createPieceTransition(piece, transitionType))
 									break
 								default:
 									context.warning(`Missing objectType '${piece.objectType}' for piece: '${piece.clipName || piece.id}'`)
@@ -195,6 +198,53 @@ function createPieceGeneric (piece: Piece): IBlueprintAdLibPiece | IBlueprintPie
 	if (!piece.duration) {
 		p.infiniteMode = PieceLifespan.OutOnNextPart
 	}
+
+	return p
+}
+
+/**
+ * Creates a transition piece.
+ * @param piece Piece to generate.
+ * @param transition Transition style.
+ */
+function createPieceTransition (piece: Piece, transition: AtemTransitionStyle): IBlueprintPiece {
+	let p = literal<IBlueprintPiece>({
+		_id: '',
+		externalId: piece.id,
+		name: 'T' + (piece.duration || 100),
+		enable: {
+			start: 0,
+			duration: piece.duration || 100
+		},
+		outputLayerId: 'pgm0',
+		sourceLayerId: SourceLayer.PgmTransition,
+		isTransition: true,
+		content: literal<TransitionContent>({
+			timelineObjects: _.compact<TSRTimelineObj>([
+				literal<TimelineObjAtemME>({
+					id: '',
+					enable: {
+						start: 0
+					},
+					priority: 5,
+					layer: AtemLLayer.AtemMEProgram,
+					content: {
+						deviceType: DeviceType.ATEM,
+						type: TimelineContentTypeAtem.ME,
+						me: {
+							input: 1000,
+							transition: transition,
+							transitionSettings: {
+								mix: {
+									rate: 0
+								}
+							}
+						}
+					}
+				})
+			])
+		})
+	})
 
 	return p
 }
