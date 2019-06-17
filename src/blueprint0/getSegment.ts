@@ -87,6 +87,9 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 								case 'graphic':
 									createPieceByType(piece, createPieceGraphic, pieces, adLibPieces, type, transitionType)
 									break
+								case 'overlay':
+									createPieceByType(piece, createPieceGraphicOverlay, pieces,adLibPieces, type, transitionType)
+									break
 								case 'transition':
 									pieces.push(createPieceInTransition(piece, transitionType, piece.duration || 1000))
 									break
@@ -515,6 +518,71 @@ function createPieceGraphic (piece: Piece, context: string, transition: AtemTran
 	}
 
 	p.content = content
+
+	return p
+}
+
+/**
+ * Creates a graphics overlay.
+ * @param {Piece} piece Piece to create.
+ * @param {string} context Context the piece belongs to.
+ * @param {AtemTransitionsStyle} transition Type of transition to use.
+ */
+function createPieceGraphicOverlay (piece: Piece, context: string, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
+	let p = createPieceGeneric(piece)
+
+	p.sourceLayerId = SourceLayer.PgmGraphicsSuper
+
+	let content: GraphicsContent = {
+		fileName: piece.clipName,
+		path: piece.clipName,
+		timelineObjects: _.compact<TSRTimelineObj>([
+			literal<TimelineObjCCGMedia>({
+				id: '',
+				enable: createEnableForTimelineObject(piece),
+				priority: 1,
+				layer: CasparLLayer.CasparCGGraphics,
+				content: {
+					deviceType: DeviceType.CASPARCG,
+					type: TimelineContentTypeCasparCg.MEDIA,
+					file: piece.clipName,
+					mixer: {
+						keyer: true
+					}
+				}
+			}),
+
+			literal<TimelineObjAtemME>({
+				id: '',
+				enable: createEnableForTimelineObject(piece),
+				priority: 1,
+				layer: AtemLLayer.AtemDSKGraphics,
+				content: {
+					deviceType: DeviceType.ATEM,
+					type: TimelineContentTypeAtem.ME,
+					me: {
+						transition: transition,
+						transitionSettings: {
+							mix: {
+								rate: 100
+							}
+						},
+						upstreamKeyers: [
+							{
+								upstreamKeyerId: 1000, // TODO: get from Sofie.
+								onAir: true,
+								fillSource: 1000 // TODO: get from Sofie.
+							}
+						]
+					}
+				}
+			})
+		])
+	}
+
+	p.content = content
+
+	console.log(context) // TODO: there has to be a better way.
 
 	return p
 }
