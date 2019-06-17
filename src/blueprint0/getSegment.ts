@@ -207,10 +207,10 @@ function createPieceGeneric (piece: Piece): IBlueprintAdLibPiece | IBlueprintPie
  * @param piece Piece to generate.
  * @param transition Transition style.
  */
-function createPieceTransition (piece: Piece, transition: AtemTransitionStyle): IBlueprintPiece {
+function createPieceInTransitionDefault (piece: Piece, transition: AtemTransitionStyle): IBlueprintPiece {
 	let p = literal<IBlueprintPiece>({
 		_id: '',
-		externalId: piece.id,
+		externalId: 'T' + piece.id,
 		name: 'T' + (piece.duration || 100),
 		enable: {
 			start: 0,
@@ -233,6 +233,54 @@ function createPieceTransition (piece: Piece, transition: AtemTransitionStyle): 
 						type: TimelineContentTypeAtem.ME,
 						me: {
 							input: 1000,
+							transition: transition,
+							transitionSettings: {
+								mix: {
+									rate: 0
+								}
+							}
+						}
+					}
+				})
+			])
+		})
+	})
+
+	return p
+}
+
+/**
+ * Creates an out transition of given duration.
+ * @param {Piece} piece Piece to transition.
+ * @param {AtemTransitionStyle} transition Transition type.
+ * @param {number} duration Length of transition.
+ */
+function createPieceOutTransition (piece: Piece, transition: AtemTransitionStyle, duration: number): IBlueprintPiece {
+	let p = literal<IBlueprintPiece>({
+		_id: '',
+		externalId: 'T' + piece.id,
+		name: 'T' + duration,
+		enable: {
+			start: piece.duration - duration,
+			duration: duration
+		},
+		outputLayerId: 'pgm0',
+		sourceLayerId: SourceLayer.PgmTransition,
+		isTransition: true,
+		content: literal<TransitionContent>({
+			timelineObjects: _.compact<TSRTimelineObj>([
+				literal<TimelineObjAtemME>({
+					id: '',
+					enable: {
+						start: piece.duration - duration
+					},
+					priority: 5,
+					layer: AtemLLayer.AtemMEProgram,
+					content: {
+						deviceType: DeviceType.ATEM,
+						type: TimelineContentTypeAtem.ME,
+						me: {
+							input: 1000, // TODO get from Sofie
 							transition: transition,
 							transitionSettings: {
 								mix: {
@@ -510,6 +558,9 @@ function createPieceByType (
 			adLibPieces.push(p as IBlueprintAdLibPiece)
 		} else {
 			pieces.push(p as IBlueprintPiece)
+			if (context.match(/titles/i) && (piece.objectType.match(/(graphic)|(video)/i))) {
+				pieces.push(createPieceOutTransition(piece, AtemTransitionStyle.DIP, (1 / 50) * 150 * 1000)) // TODO: Use actual framerate
+			}
 		}
 	}
 }
