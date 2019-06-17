@@ -443,13 +443,18 @@ function createPieceGraphic (piece: Piece, context: string, transition: AtemTran
 						id: '',
 						enable: createEnableForTimelineObject(piece),
 						priority: 1,
-						layer: AtemLLayer.AtemMEProgram,
+						layer: AtemLLayer.AtemMEProgram, // TODO: Should be aux?
 						content: {
 							deviceType: DeviceType.ATEM,
 							type: TimelineContentTypeAtem.ME,
 							me: {
 								input: 1000, // TODO: This should be the CasparCG input.
-								transition: transition
+								transition: transition,
+								transitionSettings: {
+									mix: {
+										rate: 100
+									}
+								}
 							}
 						}
 					})
