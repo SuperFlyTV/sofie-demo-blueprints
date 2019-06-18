@@ -1,3 +1,7 @@
+import { SegmentContext } from 'tv-automation-sofie-blueprints-integration'
+import { BlueprintConfig } from '../blueprint0/helpers/config'
+import { SourceInfo } from '../blueprint0/helpers/sources'
+
 export interface Piece {
 	id: string,
 	objectType: string, // TODO: Enum?
@@ -13,4 +17,10 @@ export interface BoxProps {
 	x: number
 	y: number
 	size: number
+}
+
+export interface SegmentConf {
+	context: SegmentContext,
+	config: BlueprintConfig
+	sourceConfig: SourceInfo[]
 }
