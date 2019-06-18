@@ -8,7 +8,7 @@ import { SourceLayer, CasparLLayer } from '../types/layers'
 import { Piece, BoxProps, SegmentConf } from '../types/classes'
 import { TSRTimelineObj, DeviceType, AtemTransitionStyle, TimelineObjCCGMedia, TimelineContentTypeCasparCg, SuperSourceBox } from 'timeline-state-resolver-types'
 import { parseConfig } from './helpers/config'
-import { parseSources } from './helpers/sources'
+import { parseSources, getInputValue } from './helpers/sources'
 import { createContentGraphics, createContentVT, createContentCam } from './helpers/content'
 import { getStudioName } from './helpers/studio'
 import { createPieceVideo, createPieceCam, createPieceGraphic, createPieceGraphicOverlay, createPieceInTransition, createPieceScript, createPieceGeneric, createPieceOutTransition } from './helpers/pieces'
@@ -261,6 +261,7 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
 
 	let sourceConfigurations: Array<(VTContent | CameraContent | RemoteContent | GraphicsContent) & SourceMeta> = []
 
+	let index = 0
 	pieces.forEach(piece => {
 		let newContent: (VTContent | CameraContent | RemoteContent | GraphicsContent) & SourceMeta
 		switch (piece.objectType) {
@@ -268,7 +269,7 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
 				newContent = literal<GraphicsContent & SourceMeta>({...createContentGraphics(piece), ...{
 					type: SourceLayerType.GRAPHICS,
 					studioLabel: getStudioName(config.context),
-					switcherInput: 1000 // TODO: Get from Sofie.
+					switcherInput: config.config.studio.AtemSource.Server2 // TODO: Get from Sofie.
 				}})
 				newContent.timelineObjects = _.compact<TSRTimelineObj>([
 					literal<TimelineObjCCGMedia>({
@@ -284,12 +285,13 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
 					})
 				]),
 				sourceConfigurations.push(newContent)
+				sourceBoxes[index].source = newContent.switcherInput as number
 				break
 			case 'video':
 				newContent = literal<VTContent & SourceMeta>({...createContentVT(piece), ...{
 					type: SourceLayerType.VT,
 					studioLabel: getStudioName(config.context),
-					switcherInput: 1000 // TODO: Get from Sofie.
+					switcherInput: config.config.studio.AtemSource.Server1
 				}})
 				newContent.timelineObjects = _.compact<TSRTimelineObj>([
 					literal<TimelineObjCCGMedia>({
@@ -305,15 +307,17 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
 					})
 				]), // TODO
 				sourceConfigurations.push(newContent)
+				sourceBoxes[index].source = newContent.switcherInput as number
 				break
 			case 'camera':
 				newContent = literal<CameraContent & SourceMeta>({...createContentCam(config, piece), ...{
 					type: SourceLayerType.CAMERA,
 					studioLabel: getStudioName(config.context),
-					switcherInput: 1000 // TODO: Get from Sofie.
+					switcherInput: getInputValue(config.context, config.sourceConfig, piece.attributes['attr0'])
 				}})
 				newContent.timelineObjects = [], // TODO
 				sourceConfigurations.push(newContent)
+				sourceBoxes[index].source = newContent.switcherInput as number
 				break
 			case 'remote':
 				newContent = literal<RemoteContent & SourceMeta>({
@@ -323,11 +327,13 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
 					switcherInput: 1000 // TODO: Get from Sofie.
 				})
 				sourceConfigurations.push(newContent)
+				sourceBoxes[index].source = newContent.switcherInput as number
 				break
 			default:
 				config.context.warning(`DVE does not support objectType '${piece.objectType}' for piece: '${piece.clipName || piece.id}'`)
 				break
 		}
+		index++
 	})
 
 	let p = createPieceGeneric(dvePiece)
