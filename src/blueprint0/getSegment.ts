@@ -15,18 +15,20 @@ import { createPieceVideo, createPieceCam, createPieceGraphic, createPieceGraphi
 import { createEnableForTimelineObject } from './helpers/timeline'
 
 export function getSegment (context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
+	console.log(context)
 	const config: SegmentConf = {
 		context: context,
 		config: parseConfig(context),
-		sourceConfig: parseSources(context, parseConfig(context))
+		sourceConfig: parseSources(context, parseConfig(context)),
+		frameHeight: 1920,
+		frameWidth: 1080,
+		framesPerSecond: 50
 	}
 	const segment = literal<IBlueprintSegment>({
 		name: ingestSegment.name,
 		metaData: {}
 	})
 	const parts: BlueprintResultPart[] = []
-	const screenWidth = 1920 // TODO: get from Sofie
-	const screenHeight = 1080
 
 	if (ingestSegment.payload['float']) {
 		return {
@@ -79,7 +81,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 							context.warning('Minimum number of elements in DVE is 2')
 						} else {
 							let sources = Math.min(length, 4)
-							let p = createDVE(config, pieceList, sources, screenWidth, screenHeight)
+							let p = createDVE(config, pieceList, sources, config.frameHeight, config.frameWidth)
 							if (isAdLibPiece(p)) {
 								adLibPieces.push(p as IBlueprintAdLibPiece)
 							} else {
@@ -369,16 +371,16 @@ function createPieceByType (
 			pieces.push(p as IBlueprintPiece)
 
 			if (context.match(/titles/i) && piece.objectType.match(/(graphic)|(video)/i)) {
-				pieces.push(createPieceOutTransition(piece, transitionType || AtemTransitionStyle.DIP, (1 / 50) * 150 * 1000)) // TODO: Use actual framerate
+				pieces.push(createPieceOutTransition(piece, transitionType || AtemTransitionStyle.DIP, (1 / config.framesPerSecond) * 150 * 1000)) // TODO: Use actual framerate
 			}
 
 			if (context.match(/breaker/i) && piece.objectType.match(/(graphic)|(video)/i)) {
-				pieces.push(createPieceOutTransition(piece, transitionType || AtemTransitionStyle.DIP, (1 / 50) * 50 * 1000)) // TODO: Use actual framerate
+				pieces.push(createPieceOutTransition(piece, transitionType || AtemTransitionStyle.DIP, (1 / config.framesPerSecond) * 50 * 1000)) // TODO: Use actual framerate
 			}
 
 			if (context.match(/package/i) && piece.objectType.match(/video/i)) {
-				pieces.push(createPieceInTransition(piece, transitionType || AtemTransitionStyle.MIX, (1 / 50) * 150 * 1000))
-				pieces.push(createPieceOutTransition(piece, transitionType || AtemTransitionStyle.DIP, (1 / 50) * 50 * 1000)) // TODO: Use actual framerate
+				pieces.push(createPieceInTransition(piece, transitionType || AtemTransitionStyle.MIX, (1 / config.framesPerSecond) * 150 * 1000))
+				pieces.push(createPieceOutTransition(piece, transitionType || AtemTransitionStyle.DIP, (1 / config.framesPerSecond) * 50 * 1000)) // TODO: Use actual framerate
 			}
 		}
 	}

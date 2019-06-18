@@ -20,7 +20,10 @@ export interface BoxProps {
 }
 
 export interface SegmentConf {
-	context: SegmentContext,
+	context: SegmentContext
 	config: BlueprintConfig
 	sourceConfig: SourceInfo[]
+	frameHeight: number
+	frameWidth: number
+	framesPerSecond: number
 }
