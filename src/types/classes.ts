@@ -3,13 +3,13 @@ import { BlueprintConfig } from '../blueprint0/helpers/config'
 import { SourceInfo } from '../blueprint0/helpers/sources'
 
 export interface Piece {
-	id: string,
-	objectType: string, // TODO: Enum?
-	objectTime: number,
-	duration: number,
-	clipName: string,
-	attributes: any,
-	position: string,
+	id: string
+	objectType: string // TODO: Enum?
+	objectTime: number
+	duration: number
+	clipName: string
+	attributes: any
+	position: string
 	script?: string
 }
 
