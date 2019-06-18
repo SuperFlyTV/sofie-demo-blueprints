@@ -1,12 +1,12 @@
 import * as _ from 'underscore'
 import * as objectPath from 'object-path'
 import {
-	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece, PieceEnable, IBlueprintAdLibPiece, PieceLifespan, VTContent, CameraContent, GraphicsContent, ScriptContent, TransitionContent
+	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece, PieceEnable, IBlueprintAdLibPiece, PieceLifespan, VTContent, CameraContent, GraphicsContent, ScriptContent, TransitionContent, SplitsContent, SourceLayerType, RemoteContent
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal, isAdLibPiece } from '../common/util'
 import { SourceLayer, AtemLLayer, CasparLLayer } from '../types/layers'
-import { Piece } from '../types/classes'
-import { TSRTimelineObj, DeviceType, TimelineContentTypeAtem, AtemTransitionStyle, TimelineObjAtemME, TimelineObjCCGMedia, TimelineContentTypeCasparCg } from 'timeline-state-resolver-types'
+import { Piece, BoxProps } from '../types/classes'
+import { TSRTimelineObj, DeviceType, TimelineContentTypeAtem, AtemTransitionStyle, TimelineObjAtemME, TimelineObjCCGMedia, TimelineContentTypeCasparCg, SuperSourceBox } from 'timeline-state-resolver-types'
 import { TimelineEnable } from 'timeline-state-resolver-types/dist/superfly-timeline'
 
 export function getSegment (context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
@@ -14,8 +14,9 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 		name: ingestSegment.name,
 		metaData: {}
 	})
-
 	const parts: BlueprintResultPart[] = []
+	const screenWidth = 1920 // TODO: get from Sofie
+	const screenHeight = 1080
 
 	if (ingestSegment.payload['float']) {
 		return {
@@ -56,7 +57,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 						let length = 0
 
 						for (let i = 0; i < pieceList.length; i++) {
-							if (!pieceList[i].objectType.match(/transition/i)) {
+							if (!pieceList[i].objectType.match(/(transition)|(split)/i)) {
 								length++
 							}
 						}
@@ -64,6 +65,16 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 						if (length > 5) {
 							// TODO: Report this to spreadsheet
 							context.warning('Maximum number of elements in DVE is 4')
+						} else if (length < 2) {
+							context.warning('Minimum number of elements in DVE is 2')
+						} else {
+							let sources = Math.min(length, 4)
+							let p = createDVE(context, pieceList, sources, screenWidth, screenHeight)
+							if (isAdLibPiece(p)) {
+								adLibPieces.push(p as IBlueprintAdLibPiece)
+							} else {
+								pieces.push(p as IBlueprintPiece)
+							}
 						}
 					} else {
 						let transitionType = AtemTransitionStyle.CUT
@@ -134,6 +145,200 @@ function transitionTypeFromString (str: string): AtemTransitionStyle {
 	} else {
 		return AtemTransitionStyle.CUT
 	}
+}
+
+/**
+ * Creates a DVE Piece.
+ * Currently only supports split, not PIP.
+ * @param {Piece[]} pieces Pieces to insert into the DVE.
+ * @param {number} sources Number of sources to display.
+ * @param {number} width Screen width.
+ * @param {number} height Screen height.
+ */
+function createDVE (context: SegmentContext, pieces: Piece[], sources: number, width: number, height: number): IBlueprintPiece | IBlueprintAdLibPiece {
+	let dvePiece = pieces[0] // First piece is always assumed to be the DVE.
+	pieces = pieces.slice(1, sources + 1)
+	let boxes: BoxProps[] = []
+	// Right now there are always half the width/height, but could change!
+	let boxWidth = 0
+	let boxHeight = 0
+
+	switch (sources) {
+		case 2:
+			boxWidth = width / 2
+			boxHeight = height / 2
+			boxes = [
+				{
+					x: -boxWidth,
+					y: boxHeight,
+					size: boxWidth
+				},
+				{
+					x: 0,
+					y: boxHeight,
+					size: boxWidth
+				}
+			]
+			break
+		case 3:
+			boxWidth = width / 2
+			boxHeight = height / 2
+			boxes = [
+				{
+					x: -(boxWidth / 2),
+					y: boxHeight,
+					size: boxWidth
+				},
+				{
+					x: -boxWidth,
+					y: 0,
+					size: boxWidth
+				},
+				{
+					x: 0,
+					y: 0,
+					size: boxWidth
+				}
+			]
+			break
+		case 4:
+			boxWidth = width / 2
+			boxHeight = height / 2
+			boxes = [
+				{
+					x: -boxWidth,
+					y: boxHeight,
+					size: boxWidth
+				},
+				{
+					x: 0,
+					y: boxHeight,
+					size: boxWidth
+				},
+				{
+					x: -boxWidth,
+					y: 0,
+					size: boxWidth
+				},
+				{
+					x: 0,
+					y: 0,
+					size: boxWidth
+				}
+			]
+			break
+	}
+
+	let sourceBoxes: SuperSourceBox[] = []
+
+	for (let i = 0; i < sources; i++) {
+		sourceBoxes.push(literal<SuperSourceBox>({
+			enabled: true,
+			source: 1000, // TODO: Get this from Sofie.
+			x: boxes[i].x,
+			y: boxes[i].y,
+			size: boxes[i].size
+		}))
+	}
+
+	interface SourceMeta {
+		type: SourceLayerType
+		studioLabel: string
+		switcherInput: number | string
+	}
+
+	let sourceConfigurations: Array<(VTContent | CameraContent | RemoteContent | GraphicsContent) & SourceMeta> = []
+
+	pieces.forEach(piece => {
+		let newContent: (VTContent | CameraContent | RemoteContent | GraphicsContent) & SourceMeta
+		switch (piece.objectType) {
+			case 'graphic':
+				newContent = literal<GraphicsContent & SourceMeta>({
+					fileName: piece.clipName,
+					path: piece.clipName,
+					timelineObjects: _.compact<TSRTimelineObj>([
+						literal<TimelineObjCCGMedia>({
+							id: '',
+							enable: createEnableForTimelineObject(piece),
+							priority: 1,
+							layer: CasparLLayer.CasparCGGraphics,
+							content: {
+								deviceType: DeviceType.CASPARCG,
+								type: TimelineContentTypeCasparCg.MEDIA,
+								file: piece.clipName
+							}
+						})
+					]),
+					type: SourceLayerType.GRAPHICS,
+					studioLabel: 'Spreadsheet Studio', // TODO: Get from Sofie.
+					switcherInput: 1000 // TODO: Get from Sofie.
+				})
+				sourceConfigurations.push(newContent)
+				break
+			case 'video':
+				newContent = literal<VTContent & SourceMeta>({
+					fileName: piece.clipName,
+					path: piece.clipName,
+					firstWords: '', // TODO add to spreadsheet as attr.
+					lastWords: '',
+					sourceDuration: piece.duration || 0,
+					timelineObjects:  _.compact<TSRTimelineObj>([
+						literal<TimelineObjCCGMedia>({
+							id: '',
+							enable: createEnableForTimelineObject(piece),
+							priority: 1,
+							layer: CasparLLayer.CasparPlayerClip,
+							content: {
+								deviceType: DeviceType.CASPARCG,
+								type: TimelineContentTypeCasparCg.MEDIA,
+								file: piece.clipName
+							}
+						})
+					]), // TODO
+					type: SourceLayerType.VT,
+					studioLabel: 'Spreadsheet Studio', // TODO: Get from Sofie.
+					switcherInput: 1000 // TODO: Get from Sofie.
+				})
+				sourceConfigurations.push(newContent)
+				break
+			case 'camera':
+				newContent = literal<CameraContent & SourceMeta>({
+					timelineObjects: [], // TODO
+					type: SourceLayerType.CAMERA,
+					studioLabel: 'Spreadsheet Studio', // TODO: Get from Sofie.
+					switcherInput: 1000 // TODO: Get from Sofie.
+				})
+				sourceConfigurations.push(newContent)
+				break
+			case 'remote':
+				newContent = literal<RemoteContent & SourceMeta>({
+					timelineObjects: [], // TODO
+					type: SourceLayerType.REMOTE,
+					studioLabel: 'Spreadsheet Studio', // TODO: Get from Sofie.
+					switcherInput: 1000 // TODO: Get from Sofie.
+				})
+				sourceConfigurations.push(newContent)
+				break
+			default:
+				context.warning(`DVE does not support objectType '${piece.objectType}' for piece: '${piece.clipName || piece.id}'`)
+				break
+		}
+	})
+
+	let p = createPieceGeneric(dvePiece)
+
+	let content: SplitsContent = {
+		dveConfiguration: {},
+		boxSourceConfiguration: sourceConfigurations,
+		timelineObjects: _.compact<TSRTimelineObj>([
+
+		])
+	}
+
+	p.content = content
+	p.name = `DVE: ${sources} split`
+
+	return p
 }
 
 /**
