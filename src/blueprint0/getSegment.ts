@@ -140,6 +140,20 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 }
 
 /**
+ * Gets the name of the studio this context belongs to.
+ * @param {SegmentContext} context Context to find the studio name for.
+ */
+function getStudioName (context: SegmentContext) {
+	let studio = (context as any)['studio']
+
+	if (studio) {
+		return studio['name']
+	}
+
+	return ''
+}
+
+/**
  * Returns the AtemTransitionStyle represented by a string.
  * If no match is found, CUT is returned.
  * @param {string} str Transtion style to match.
@@ -268,7 +282,7 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
 			case 'graphic':
 				newContent = literal<GraphicsContent & SourceMeta>({...createContentGraphics(piece), ...{
 					type: SourceLayerType.GRAPHICS,
-					studioLabel: 'Spreadsheet Studio', // TODO: Get from Sofie.
+					studioLabel: getStudioName(config.context),
 					switcherInput: 1000 // TODO: Get from Sofie.
 				}})
 				newContent.timelineObjects = _.compact<TSRTimelineObj>([
@@ -289,7 +303,7 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
 			case 'video':
 				newContent = literal<VTContent & SourceMeta>({...createContentVT(piece), ...{
 					type: SourceLayerType.VT,
-					studioLabel: 'Spreadsheet Studio', // TODO: Get from Sofie.
+					studioLabel: getStudioName(config.context),
 					switcherInput: 1000 // TODO: Get from Sofie.
 				}})
 				newContent.timelineObjects = _.compact<TSRTimelineObj>([
@@ -310,7 +324,7 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
 			case 'camera':
 				newContent = literal<CameraContent & SourceMeta>({...createContentCam(config, piece), ...{
 					type: SourceLayerType.CAMERA,
-					studioLabel: 'Spreadsheet Studio', // TODO: Get from Sofie.
+					studioLabel: getStudioName(config.context),
 					switcherInput: 1000 // TODO: Get from Sofie.
 				}})
 				newContent.timelineObjects = [], // TODO
@@ -320,7 +334,7 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
 				newContent = literal<RemoteContent & SourceMeta>({
 					timelineObjects: [], // TODO
 					type: SourceLayerType.REMOTE,
-					studioLabel: 'Spreadsheet Studio', // TODO: Get from Sofie.
+					studioLabel: getStudioName(config.context),
 					switcherInput: 1000 // TODO: Get from Sofie.
 				})
 				sourceConfigurations.push(newContent)
@@ -352,7 +366,7 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
  */
 function createContentCam (config: SegmentConf, piece: Piece): CameraContent {
 	let content: CameraContent = {
-		studioLabel: 'Spreadsheet Studio',
+		studioLabel: getStudioName(config.context),
 		switcherInput: getInputValue(config.context, config.sourceConfig, piece.attributes['attr0']),
 		timelineObjects: _.compact<TSRTimelineObj>([])
 	}
