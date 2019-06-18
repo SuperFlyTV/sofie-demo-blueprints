@@ -253,61 +253,54 @@ function createDVE (context: SegmentContext, pieces: Piece[], sources: number, w
 		let newContent: (VTContent | CameraContent | RemoteContent | GraphicsContent) & SourceMeta
 		switch (piece.objectType) {
 			case 'graphic':
-				newContent = literal<GraphicsContent & SourceMeta>({
-					fileName: piece.clipName,
-					path: piece.clipName,
-					timelineObjects: _.compact<TSRTimelineObj>([
-						literal<TimelineObjCCGMedia>({
-							id: '',
-							enable: createEnableForTimelineObject(piece),
-							priority: 1,
-							layer: CasparLLayer.CasparCGGraphics,
-							content: {
-								deviceType: DeviceType.CASPARCG,
-								type: TimelineContentTypeCasparCg.MEDIA,
-								file: piece.clipName
-							}
-						})
-					]),
+				newContent = literal<GraphicsContent & SourceMeta>({...createContentGraphics(piece), ...{
 					type: SourceLayerType.GRAPHICS,
 					studioLabel: 'Spreadsheet Studio', // TODO: Get from Sofie.
 					switcherInput: 1000 // TODO: Get from Sofie.
-				})
+				}})
+				newContent.timelineObjects = _.compact<TSRTimelineObj>([
+					literal<TimelineObjCCGMedia>({
+						id: '',
+						enable: createEnableForTimelineObject(piece),
+						priority: 1,
+						layer: CasparLLayer.CasparCGGraphics,
+						content: {
+							deviceType: DeviceType.CASPARCG,
+							type: TimelineContentTypeCasparCg.MEDIA,
+							file: piece.clipName
+						}
+					})
+				]),
 				sourceConfigurations.push(newContent)
 				break
 			case 'video':
-				newContent = literal<VTContent & SourceMeta>({
-					fileName: piece.clipName,
-					path: piece.clipName,
-					firstWords: '', // TODO add to spreadsheet as attr.
-					lastWords: '',
-					sourceDuration: piece.duration || 0,
-					timelineObjects:  _.compact<TSRTimelineObj>([
-						literal<TimelineObjCCGMedia>({
-							id: '',
-							enable: createEnableForTimelineObject(piece),
-							priority: 1,
-							layer: CasparLLayer.CasparPlayerClip,
-							content: {
-								deviceType: DeviceType.CASPARCG,
-								type: TimelineContentTypeCasparCg.MEDIA,
-								file: piece.clipName
-							}
-						})
-					]), // TODO
+				newContent = literal<VTContent & SourceMeta>({...createContentVT(piece), ...{
 					type: SourceLayerType.VT,
 					studioLabel: 'Spreadsheet Studio', // TODO: Get from Sofie.
 					switcherInput: 1000 // TODO: Get from Sofie.
-				})
+				}})
+				newContent.timelineObjects = _.compact<TSRTimelineObj>([
+					literal<TimelineObjCCGMedia>({
+						id: '',
+						enable: createEnableForTimelineObject(piece),
+						priority: 1,
+						layer: CasparLLayer.CasparPlayerClip,
+						content: {
+							deviceType: DeviceType.CASPARCG,
+							type: TimelineContentTypeCasparCg.MEDIA,
+							file: piece.clipName
+						}
+					})
+				]), // TODO
 				sourceConfigurations.push(newContent)
 				break
 			case 'camera':
-				newContent = literal<CameraContent & SourceMeta>({
-					timelineObjects: [], // TODO
+				newContent = literal<CameraContent & SourceMeta>({...createContentCam(), ...{
 					type: SourceLayerType.CAMERA,
 					studioLabel: 'Spreadsheet Studio', // TODO: Get from Sofie.
 					switcherInput: 1000 // TODO: Get from Sofie.
-				})
+				}})
+				newContent.timelineObjects = [], // TODO
 				sourceConfigurations.push(newContent)
 				break
 			case 'remote':
@@ -339,6 +332,49 @@ function createDVE (context: SegmentContext, pieces: Piece[], sources: number, w
 	p.name = `DVE: ${sources} split`
 
 	return p
+}
+
+/**
+ * Creates a base camera content.
+ */
+function createContentCam (): CameraContent {
+	let content: CameraContent = {
+		studioLabel: 'Spreadsheet Studio',
+		switcherInput: 1000,
+		timelineObjects: _.compact<TSRTimelineObj>([])
+	}
+
+	return content
+}
+/**
+ * Creates a base VT content.
+ * @param piece Piece used to create content.
+ */
+function createContentVT (piece: Piece): VTContent {
+	let content: VTContent = {
+		fileName: piece.clipName,
+		path: piece.clipName,
+		firstWords: '',
+		lastWords: '',
+		sourceDuration: piece.duration ? piece.duration : 0,
+		timelineObjects: _.compact<TSRTimelineObj>([])
+	}
+
+	return content
+}
+
+/**
+ * Creates a base graphics content.
+ * @param piece Piece used to create content.
+ */
+function createContentGraphics (piece: Piece): GraphicsContent {
+	let content: GraphicsContent = {
+		fileName: piece.clipName,
+		path: piece.clipName,
+		timelineObjects: _.compact<TSRTimelineObj>([])
+	}
+
+	return content
 }
 
 /**
@@ -517,11 +553,7 @@ function createPieceCam (piece: Piece, context: string, transition: AtemTransiti
 
 	p.sourceLayerId = SourceLayer.PgmCam
 	p.name = piece.attributes['attr0'] // TODO: Pull this from attributes?
-	let content: CameraContent = {
-		studioLabel: 'Spreadsheet Studio',
-		switcherInput: 1000,
-		timelineObjects: _.compact<TSRTimelineObj>([])
-	}
+	let content: CameraContent = createContentCam()
 
 	switch (context) {
 		default:
@@ -560,14 +592,7 @@ function createPieceVideo (piece: Piece, context: string, transition: AtemTransi
 
 	p.sourceLayerId = SourceLayer.PgmClip
 
-	let content: VTContent = {
-		fileName: piece.clipName,
-		path: piece.clipName,
-		firstWords: '',
-		lastWords: '',
-		sourceDuration: piece.duration ? piece.duration : 0,
-		timelineObjects: _.compact<TSRTimelineObj>([])
-	}
+	let content: VTContent = createContentVT(piece)
 
 	switch (context) {
 		default:
@@ -623,11 +648,7 @@ function createPieceGraphic (piece: Piece, context: string, transition: AtemTran
 
 	p.sourceLayerId = SourceLayer.PgmGraphicsSuper
 
-	let content: GraphicsContent = {
-		fileName: piece.clipName,
-		path: piece.clipName,
-		timelineObjects: _.compact<TSRTimelineObj>([])
-	}
+	let content: GraphicsContent = createContentGraphics(piece)
 
 	switch (context) {
 		case 'HEAD':
@@ -738,52 +759,50 @@ function createPieceGraphicOverlay (piece: Piece, context: string, transition: A
 
 	p.sourceLayerId = SourceLayer.PgmGraphicsSuper
 
-	let content: GraphicsContent = {
-		fileName: piece.clipName,
-		path: piece.clipName,
-		timelineObjects: _.compact<TSRTimelineObj>([
-			literal<TimelineObjCCGMedia>({
-				id: '',
-				enable: createEnableForTimelineObject(piece),
-				priority: 1,
-				layer: CasparLLayer.CasparCGGraphics,
-				content: {
-					deviceType: DeviceType.CASPARCG,
-					type: TimelineContentTypeCasparCg.MEDIA,
-					file: piece.clipName,
-					mixer: {
-						keyer: true
-					}
-				}
-			}),
+	let content: GraphicsContent = createContentGraphics(piece)
 
-			literal<TimelineObjAtemME>({
-				id: '',
-				enable: createEnableForTimelineObject(piece),
-				priority: 1,
-				layer: AtemLLayer.AtemDSKGraphics,
-				content: {
-					deviceType: DeviceType.ATEM,
-					type: TimelineContentTypeAtem.ME,
-					me: {
-						transition: transition,
-						transitionSettings: {
-							mix: {
-								rate: 100
-							}
-						},
-						upstreamKeyers: [
-							{
-								upstreamKeyerId: 1000, // TODO: get from Sofie.
-								onAir: true,
-								fillSource: 1000 // TODO: get from Sofie.
-							}
-						]
-					}
+	content.timelineObjects = _.compact<TSRTimelineObj>([
+		literal<TimelineObjCCGMedia>({
+			id: '',
+			enable: createEnableForTimelineObject(piece),
+			priority: 1,
+			layer: CasparLLayer.CasparCGGraphics,
+			content: {
+				deviceType: DeviceType.CASPARCG,
+				type: TimelineContentTypeCasparCg.MEDIA,
+				file: piece.clipName,
+				mixer: {
+					keyer: true
 				}
-			})
-		])
-	}
+			}
+		}),
+
+		literal<TimelineObjAtemME>({
+			id: '',
+			enable: createEnableForTimelineObject(piece),
+			priority: 1,
+			layer: AtemLLayer.AtemDSKGraphics,
+			content: {
+				deviceType: DeviceType.ATEM,
+				type: TimelineContentTypeAtem.ME,
+				me: {
+					transition: transition,
+					transitionSettings: {
+						mix: {
+							rate: 100
+						}
+					},
+					upstreamKeyers: [
+						{
+							upstreamKeyerId: 1000, // TODO: get from Sofie.
+							onAir: true,
+							fillSource: 1000 // TODO: get from Sofie.
+						}
+					]
+				}
+			}
+		})
+	])
 
 	p.content = content
 

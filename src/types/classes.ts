@@ -8,3 +8,9 @@ export interface Piece {
 	position: string,
 	script?: string
 }
+
+export interface BoxProps {
+	x: number
+	y: number
+	size: number
+}
