@@ -2,6 +2,7 @@ import * as _ from 'underscore'
 
 import { BlueprintConfig } from './config'
 import { NotesContext, SourceLayerType } from 'tv-automation-sofie-blueprints-integration'
+import { literal } from '../../common/util'
 
 export function parseMapStr (context: NotesContext | undefined, str: string, canBeStrings: boolean): { id: number, val: any }[] {
 	str = str.trim()
@@ -92,4 +93,15 @@ export function findSourceByName (context: NotesContext, sources: SourceInfo[], 
 
 	context.warning(`Invalid source name "${name}"`)
 	return undefined
+}
+
+export function getInputValue (context: NotesContext, sources: SourceInfo[], name: string): number {
+	let input = 1000
+	let source = findSourceByName(context, sources, name)
+
+	if (source !== undefined) {
+		input = literal<SourceInfo>(source).port
+	}
+
+	return input
 }

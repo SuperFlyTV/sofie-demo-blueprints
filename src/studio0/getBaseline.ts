@@ -1,6 +1,6 @@
-import { IStudioContext, Timeline, BlueprintMappings, BlueprintMapping } from 'tv-automation-sofie-blueprints-integration'
+import { IStudioContext, BlueprintMappings, BlueprintMapping } from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
-import { DeviceType, MappingAtemType, TimelineObjAtemME, TimelineContentTypeAtem, AtemTransitionStyle } from 'timeline-state-resolver-types'
+import { DeviceType, MappingAtemType, TimelineObjAtemME, TimelineContentTypeAtem, AtemTransitionStyle, TSRTimelineObjBase } from 'timeline-state-resolver-types'
 import { literal } from '../common/util'
 import { AtemSourceIndex } from '../types/atem'
 
@@ -20,7 +20,7 @@ function convertMappings<T> (input: BlueprintMappings, func: (k: string, v: Blue
 	return _.map(_.keys(input), k => func(k, input[k]))
 }
 
-export function getBaseline (context: IStudioContext): Timeline.TimelineObject[] {
+export function getBaseline (context: IStudioContext): TSRTimelineObjBase[] {
 	const mappings = context.getStudioMappings()
 
 	const atemMeMappings = filterMappings(mappings, (_, v) => v.device === DeviceType.ATEM && (v as any).mappingType === MappingAtemType.MixEffect)
@@ -28,13 +28,13 @@ export function getBaseline (context: IStudioContext): Timeline.TimelineObject[]
 	return [
 		...convertMappings(atemMeMappings, id => literal<TimelineObjAtemME>({
 			id: '',
-			trigger: { type: Timeline.TriggerType.LOGICAL, value: '1' },
+			enable: { while: '1', duration: 0 },
 			priority: 0,
-			duration: 0,
-			LLayer: id,
+			layer: id,
 			content: {
+				deviceType: DeviceType.ATEM,
 				type: TimelineContentTypeAtem.ME,
-				attributes: {
+				me: {
 					input: AtemSourceIndex.Bars,
 					transition: AtemTransitionStyle.CUT
 				}

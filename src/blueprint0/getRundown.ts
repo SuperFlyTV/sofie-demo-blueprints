@@ -1,14 +1,13 @@
 import * as _ from 'underscore'
 
 import {
-	Timeline,
-	IBlueprintSegmentLineAdLibItem,
-	SegmentLineItemLifespan,
+	IBlueprintAdLibPiece,
+	PieceLifespan,
 	SourceLayerType,
 	ShowStyleContext,
-	IngestRunningOrder,
-	BlueprintResultRunningOrder,
-	IBlueprintRunningOrder,
+	IngestRundown,
+	BlueprintResultRundown,
+	IBlueprintRundown,
 	NotesContext,
 	IBlueprintShowStyleVariant,
 	IStudioConfigContext
@@ -18,7 +17,7 @@ import {
 	TimelineContentTypeCasparCg,
 	TimelineObjCCGHTMLPage,
 	TimelineObjCCGRoute,
-	TimelineObjCCGVideo,
+	TimelineObjCCGMedia,
 	TimelineContentTypeAtem,
 	AtemTransitionStyle,
 	TimelineObjAtemME,
@@ -26,11 +25,13 @@ import {
 	TimelineObjAtemDSK,
 	TimelineObjAtemSsrc,
 	TimelineObjAtemSsrcProps,
-	TimelineObjectAny,
+	TSRTimelineObj,
 	TimelineContentTypeHyperdeck,
 	TimelineObjHyperdeckTransport,
-	HyperdeckTransportStatus,
-	Transition
+	TransportStatus,
+	Transition,
+	DeviceType,
+	TSRTimelineObjBase
 } from 'timeline-state-resolver-types'
 
 import { literal } from '../common/util'
@@ -41,7 +42,7 @@ import { Constants } from '../types/constants'
 import { parseConfig, BlueprintConfig } from './helpers/config'
 import { parseSources, SourceInfo } from './helpers/sources'
 
-export function getShowStyleVariantId (_context: IStudioConfigContext, showStyleVariants: Array<IBlueprintShowStyleVariant>, _ingestRunningOrder: IngestRunningOrder): string | null {
+export function getShowStyleVariantId (_context: IStudioConfigContext, showStyleVariants: Array<IBlueprintShowStyleVariant>, _ingestRundown: IngestRundown): string | null {
 	const variant = _.first(showStyleVariants)
 	if (variant) {
 		return variant._id
@@ -49,25 +50,44 @@ export function getShowStyleVariantId (_context: IStudioConfigContext, showStyle
 	return null
 }
 
-export function getRunningOrder (context: ShowStyleContext, ingestRunningOrder: IngestRunningOrder): BlueprintResultRunningOrder {
+export function getRundown (context: ShowStyleContext, ingestRundown: IngestRundown): BlueprintResultRundown {
 	const config = parseConfig(context)
 
+	let startTime: number = 0
+	let endTime: number = 0
+
+	// Set start / end times
+	if ('payload' in ingestRundown) {
+		if (ingestRundown['payload'].expectedStart) {
+			startTime = Number(ingestRundown['payload'].expectedStart)
+		}
+
+		if (ingestRundown['payload'].expectedEnd) {
+			endTime = Number(ingestRundown['payload'].expectedEnd)
+		}
+	}
+
+	// Can't end before we begin
+	if (endTime < startTime) {
+		endTime = startTime
+	}
+
 	return {
-		runningOrder: literal<IBlueprintRunningOrder>({
-			externalId: ingestRunningOrder.externalId,
-			name: ingestRunningOrder.name,
-			expectedStart: 0,
-			expectedDuration: 0
+		rundown: literal<IBlueprintRundown>({
+			externalId: ingestRundown.externalId,
+			name: ingestRundown.name,
+			expectedStart: startTime,
+			expectedDuration: endTime - startTime
 		}),
 		globalAdLibPieces: getGlobalAdLibPieces(context, config),
 		baseline: getBaseline(config)
 	}
 }
 
-function getGlobalAdLibPieces (context: NotesContext, config: BlueprintConfig): IBlueprintSegmentLineAdLibItem[] {
+function getGlobalAdLibPieces (context: NotesContext, config: BlueprintConfig): IBlueprintAdLibPiece[] {
 	const sources = parseSources(context, config)
 
-	function makeCameraAdLib (info: SourceInfo, rank: number): IBlueprintSegmentLineAdLibItem {
+	function makeCameraAdLib (info: SourceInfo, rank: number): IBlueprintAdLibPiece {
 		return {
 			externalId: 'cam',
 			name: info.id + '',
@@ -75,18 +95,18 @@ function getGlobalAdLibPieces (context: NotesContext, config: BlueprintConfig): 
 			sourceLayerId: SourceLayer.PgmCam,
 			outputLayerId: 'pgm0',
 			expectedDuration: 0,
-			infiniteMode: SegmentLineItemLifespan.OutOnNextSegmentLine,
+			infiniteMode: PieceLifespan.OutOnNextPart,
 			content: {
-				timelineObjects: _.compact<TimelineObjectAny>([
+				timelineObjects: _.compact<TSRTimelineObj>([
 					literal<TimelineObjAtemME>({
 						id: '',
-						trigger: { type: Timeline.TriggerType.TIME_ABSOLUTE, value: 0 },
+						enable: { while: 0, duration: 0 },
 						priority: 1,
-						duration: 0,
-						LLayer: AtemLLayer.AtemMEProgram,
+						layer: AtemLLayer.AtemMEProgram,
 						content: {
+							deviceType: DeviceType.ATEM,
 							type: TimelineContentTypeAtem.ME,
-							attributes: {
+							me: {
 								input: info.port,
 								transition: AtemTransitionStyle.CUT
 							}
@@ -97,7 +117,7 @@ function getGlobalAdLibPieces (context: NotesContext, config: BlueprintConfig): 
 		}
 	}
 
-	let adlibItems: IBlueprintSegmentLineAdLibItem[] = []
+	let adlibItems: IBlueprintAdLibPiece[] = []
 	_.each(sources, v => {
 		if (v.type === SourceLayerType.CAMERA) {
 			adlibItems.push(makeCameraAdLib(v, (100 + v.id)))
@@ -106,17 +126,18 @@ function getGlobalAdLibPieces (context: NotesContext, config: BlueprintConfig): 
 	return adlibItems
 }
 
-function getBaseline (config: BlueprintConfig): Timeline.TimelineObject[] {
+function getBaseline (config: BlueprintConfig): TSRTimelineObjBase[] {
 	return [
 		// Default timeline
 		literal<TimelineObjAtemME>({
 			id: '',
-			trigger: { type: Timeline.TriggerType.LOGICAL, value: '1' },
-			priority: 0, duration: 0,
-			LLayer: AtemLLayer.AtemMEProgram,
+			enable: { while: 1, duration: 0 },
+			priority: 0,
+			layer: AtemLLayer.AtemMEProgram,
 			content: {
+				deviceType: DeviceType.ATEM,
 				type: TimelineContentTypeAtem.ME,
-				attributes: {
+				me: {
 					input: config.studio.AtemSource.Default,
 					transition: AtemTransitionStyle.CUT
 				}
@@ -124,48 +145,52 @@ function getBaseline (config: BlueprintConfig): Timeline.TimelineObject[] {
 		}),
 		literal<TimelineObjAtemAUX>({
 			id: '',
-			trigger: { type: Timeline.TriggerType.LOGICAL, value: '1' },
-			priority: 0, duration: 0,
-			LLayer: AtemLLayer.AtemAuxLookahead,
+			enable: { while: '1', duration: 0 },
+			priority: 0,
+			layer: AtemLLayer.AtemAuxLookahead,
 			content: {
+				deviceType: DeviceType.ATEM,
 				type: TimelineContentTypeAtem.AUX,
-				attributes: {
+				aux: {
 					input: config.studio.AtemSource.Default
 				}
 			}
 		}),
 		literal<TimelineObjAtemAUX>({
 			id: '',
-			trigger: { type: Timeline.TriggerType.LOGICAL, value: '1' },
-			priority: 0, duration: 0,
-			LLayer: AtemLLayer.AtemAuxSSrc,
+			enable: { while: '1', duration: 0 },
+			priority: 0,
+			layer: AtemLLayer.AtemAuxSSrc,
 			content: {
+				deviceType: DeviceType.ATEM,
 				type: TimelineContentTypeAtem.AUX,
-				attributes: {
+				aux: {
 					input: AtemSourceIndex.SSrc
 				}
 			}
 		}),
 		literal<TimelineObjAtemAUX>({
 			id: '',
-			trigger: { type: Timeline.TriggerType.LOGICAL, value: '1' },
-			priority: 0, duration: 0,
-			LLayer: AtemLLayer.AtemAuxClean,
+			enable: { while: '1', duration: 0 },
+			priority: 0,
+			layer: AtemLLayer.AtemAuxClean,
 			content: {
+				deviceType: DeviceType.ATEM,
 				type: TimelineContentTypeAtem.AUX,
-				attributes: {
+				aux: {
 					input: AtemSourceIndex.Cfd1
 				}
 			}
 		}),
 		literal<TimelineObjAtemDSK>({
 			id: '',
-			trigger: { type: Timeline.TriggerType.LOGICAL, value: '1' },
-			priority: 0, duration: 0,
-			LLayer: AtemLLayer.AtemDSKGraphics,
+			enable: { while: '1', duration: 0 },
+			priority: 0,
+			layer: AtemLLayer.AtemDSKGraphics,
 			content: {
+				deviceType: DeviceType.ATEM,
 				type: TimelineContentTypeAtem.DSK,
-				attributes: {
+				dsk: {
 					onAir: true,
 					sources: {
 						fillSource: config.studio.AtemSource.DSK1F,
@@ -183,12 +208,13 @@ function getBaseline (config: BlueprintConfig): Timeline.TimelineObject[] {
 		}),
 		literal<TimelineObjAtemDSK>({
 			id: '',
-			trigger: { type: Timeline.TriggerType.LOGICAL, value: '1' },
-			priority: 0, duration: 0,
-			LLayer: AtemLLayer.AtemDSKEffect,
+			enable: { while: '1', duration: 0 },
+			priority: 0,
+			layer: AtemLLayer.AtemDSKEffect,
 			content: {
+				deviceType: DeviceType.ATEM,
 				type: TimelineContentTypeAtem.DSK,
-				attributes: {
+				dsk: {
 					onAir: true,
 					sources: {
 						fillSource: config.studio.AtemSource.DSK2F,
@@ -206,13 +232,13 @@ function getBaseline (config: BlueprintConfig): Timeline.TimelineObject[] {
 		}),
 		literal<TimelineObjAtemSsrcProps>({
 			id: '',
-			trigger: { type: Timeline.TriggerType.LOGICAL, value: '1' },
+			enable: { while: '1', duration: 0 },
 			priority: 0,
-			duration: 0,
-			LLayer: AtemLLayer.AtemSSrcArt,
+			layer: AtemLLayer.AtemSSrcArt,
 			content: {
+				deviceType: DeviceType.ATEM,
 				type: TimelineContentTypeAtem.SSRCPROPS,
-				attributes: {
+				ssrcProps: {
 					artFillSource: config.studio.AtemSource.SplitArtF,
 					artCutSource: config.studio.AtemSource.SplitArtK,
 					artOption: 1, // foreground
@@ -222,13 +248,13 @@ function getBaseline (config: BlueprintConfig): Timeline.TimelineObject[] {
 		}),
 		literal<TimelineObjAtemSsrc>({
 			id: '',
-			trigger: { type: Timeline.TriggerType.LOGICAL, value: '1' },
+			enable: { while: '1', duration: 0 },
 			priority: 0,
-			duration: 0,
-			LLayer: AtemLLayer.AtemSSrcDefault,
+			layer: AtemLLayer.AtemSSrcDefault,
 			content: {
+				deviceType: DeviceType.ATEM,
 				type: TimelineContentTypeAtem.SSRC,
-				attributes: {
+				ssrc: {
 					boxes: [
 						{ // left
 							enabled: true,
@@ -258,16 +284,15 @@ function getBaseline (config: BlueprintConfig): Timeline.TimelineObject[] {
 			}
 		}),
 
-		literal<TimelineObjCCGVideo>({
+		literal<TimelineObjCCGMedia>({
 			id: '',
-			trigger: { type: Timeline.TriggerType.LOGICAL, value: '1' },
-			priority: 0, duration: 0,
-			LLayer: CasparLLayer.CasparPlayerClip,
+			enable: { while: '1', duration: 0 },
+			priority: 0,
+			layer: CasparLLayer.CasparPlayerClip,
 			content: {
-				type: TimelineContentTypeCasparCg.VIDEO,
-				attributes: {
-					file: 'EMPTY'
-				},
+				deviceType: DeviceType.CASPARCG,
+				type: TimelineContentTypeCasparCg.MEDIA,
+				file: 'EMPTY',
 				mixer: {
 					opacity: 0
 				},
@@ -281,54 +306,50 @@ function getBaseline (config: BlueprintConfig): Timeline.TimelineObject[] {
 		}),
 		literal<TimelineObjCCGRoute>({
 			id: '',
-			trigger: { type: Timeline.TriggerType.LOGICAL, value: '1' },
-			priority: 0, duration: 0,
-			LLayer: CasparLLayer.CasparPlayerClipNext,
+			enable: { while: '1', duration: 0 },
+			priority: 0,
+			layer: CasparLLayer.CasparPlayerClipNext,
 			content: {
+				deviceType: DeviceType.CASPARCG,
 				type: TimelineContentTypeCasparCg.ROUTE,
-				attributes: {
-					LLayer: CasparLLayer.CasparPlayerClip,
-					mode: 'BACKGROUND'
-				}
+				mappedLayer: CasparLLayer.CasparPlayerClip,
+				mode: 'BACKGROUND'
 			}
 		}),
-		literal<TimelineObjCCGVideo>({
+		literal<TimelineObjCCGMedia>({
 			id: '',
-			trigger: { type: Timeline.TriggerType.LOGICAL, value: '1' },
-			priority: 0, duration: 0,
-			LLayer: CasparLLayer.CasparPlayerClipNextWarning,
+			enable: { while: '1', duration: 0 },
+			priority: 0,
+			layer: CasparLLayer.CasparPlayerClipNextWarning,
 			content: {
-				type: TimelineContentTypeCasparCg.VIDEO,
-				attributes: {
-					file: 'assets/no_clip_spinner_loop',
-					loop: true
-				}
+				deviceType: DeviceType.CASPARCG,
+				type: TimelineContentTypeCasparCg.MEDIA,
+				file: 'assets/no_clip_spinner_loop',
+				loop: true
 			}
 		}),
 
 		literal<TimelineObjCCGHTMLPage>({
 			id: '',
-			trigger: { type: Timeline.TriggerType.LOGICAL, value: '1' },
-			priority: 0, duration: 0,
-			LLayer: CasparLLayer.CasparCountdown,
+			enable: { while: '1', duration: 0 },
+			priority: 0,
+			layer: CasparLLayer.CasparCountdown,
 			content: {
+				deviceType: DeviceType.CASPARCG,
 				type: TimelineContentTypeCasparCg.HTMLPAGE,
-				attributes: {
-					url: config.studio.SofieHostURL + '/countdowns/studio0/presenter'
-				}
+				url: config.studio.SofieHostURL + '/countdowns/studio0/presenter'
 			}
 		}),
 
 		..._.range(config.studio.HyperdeckCount).map(i => literal<TimelineObjHyperdeckTransport>({
 			id: '',
-			trigger: { type: Timeline.TriggerType.LOGICAL, value: '1' },
-			priority: 0, duration: 0,
-			LLayer: HyperdeckLLayer(i),
+			enable: { while: '1', duration: 0 },
+			priority: 0,
+			layer: HyperdeckLLayer(i),
 			content: {
+				deviceType: DeviceType.HYPERDECK,
 				type: TimelineContentTypeHyperdeck.TRANSPORT,
-				attributes: {
-					status: HyperdeckTransportStatus.PREVIEW
-				}
+				status: TransportStatus.PREVIEW
 			}
 		}))
 

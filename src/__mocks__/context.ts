@@ -9,7 +9,7 @@ import {
 	SegmentContext as ISegmentContext,
 	BlueprintMappings,
 	BlueprintRuntimeArguments,
-	IBlueprintRunningOrderDB
+	IBlueprintRundownDB
 } from 'tv-automation-sofie-blueprints-integration'
 import mappingsDefaults from '../blueprint0/migrations/mappings-defaults'
 
@@ -44,18 +44,18 @@ export class CommonContext implements ICommonContext {
 		return this.hashed[hash] || hash
 	}
 }
-export enum SegmentLineNoteType {
+export enum NoteType {
 	WARNING = 1,
 	ERROR = 2
 }
-export interface SegmentLineNote {
-	type: SegmentLineNoteType,
+export interface PartNote {
+	type: NoteType,
 	origin: {
 		name: string,
 		roId?: string,
 		segmentId?: string,
-		segmentLineId?: string,
-		segmentLineItemId?: string
+		partId?: string,
+		pieceId?: string
 	},
 	message: string
 
@@ -63,38 +63,38 @@ export interface SegmentLineNote {
 export class NotesContext extends CommonContext implements INotesContext {
 
 	private _contextName: string
-	private _runningOrderId?: string
+	private _rundownId?: string
 	private _segmentId?: string
-	private _segmentLineId?: string
+	private _partId?: string
 
-	private savedNotes: Array<SegmentLineNote> = []
+	private savedNotes: Array<PartNote> = []
 
 	constructor (
 		contextName: string,
-		runningOrderId?: string,
+		rundownId?: string,
 		segmentId?: string,
-		segmentLineId?: string
+		partId?: string
 	) {
 		super(
-			runningOrderId +
+			rundownId +
 			(
-				segmentLineId ? '_' + segmentLineId :
+				partId ? '_' + partId :
 				(
 					segmentId ? '_' + segmentId : ''
 				)
 			)
 		)
-		this._contextName		= contextName
-		this._runningOrderId	= runningOrderId
-		this._segmentId			= segmentId
-		this._segmentLineId		= segmentLineId
+		this._contextName = contextName
+		this._rundownId	= rundownId
+		this._segmentId = segmentId
+		this._partId = partId
 
 	}
 	/** Throw Error and display message to the user in the GUI */
 	error (message: string) {
 		// logger.error('Error from blueprint: ' + message)
 		this._pushNote(
-			SegmentLineNoteType.ERROR,
+			NoteType.ERROR,
 			message
 		)
 		throw new Error(message)
@@ -102,22 +102,22 @@ export class NotesContext extends CommonContext implements INotesContext {
 	/** Save note, which will be displayed to the user in the GUI */
 	warning (message: string) {
 		this._pushNote(
-			SegmentLineNoteType.WARNING,
+			NoteType.WARNING,
 			message
 		)
 	}
 	getNotes () {
 		return this.savedNotes
 	}
-	private _pushNote (type: SegmentLineNoteType, message: string) {
+	private _pushNote (type: NoteType, message: string) {
 		// console.log(message)
 		this.savedNotes.push({
 			type: type,
 			origin: {
 				name: this._getLoggerName(),
-				roId: this._runningOrderId,
+				roId: this._rundownId,
 				segmentId: this._segmentId,
-				segmentLineId: this._segmentLineId
+				partId: this._partId
 			},
 			message: message
 		})
@@ -132,8 +132,8 @@ export class ShowStyleContext extends NotesContext implements IShowStyleContext 
 	studioConfig: {[key: string]: ConfigItemValue} = {}
 	showStyleConfig: {[key: string]: ConfigItemValue} = {}
 
-	constructor (contextName: string, runningOrderId?: string) {
-		super(contextName, runningOrderId)
+	constructor (contextName: string, rundownId?: string) {
+		super(contextName, rundownId)
 	}
 	getStudioConfig (): {[key: string]: ConfigItemValue} {
 		return this.studioConfig
@@ -153,16 +153,16 @@ export class ShowStyleContext extends NotesContext implements IShowStyleContext 
 }
 
 export class SegmentContext extends ShowStyleContext implements ISegmentContext {
-	runningOrderId: string
-	runningOrder: IBlueprintRunningOrderDB
+	rundownId: string
+	rundown: IBlueprintRundownDB
 
 	runtimeArguments: {[key: string]: BlueprintRuntimeArguments} = {}
 
-	constructor (runningOrder: IBlueprintRunningOrderDB, contextName?: string) {
-		super(contextName || runningOrder.name, runningOrder._id)
+	constructor (rundown: IBlueprintRundownDB, contextName?: string) {
+		super(contextName || rundown.name, rundown._id)
 
-		this.runningOrderId = runningOrder._id
-		this.runningOrder = runningOrder
+		this.rundownId = rundown._id
+		this.rundown = rundown
 	}
 
 	getRuntimeArguments (externalId: string): BlueprintRuntimeArguments | undefined {
@@ -204,10 +204,10 @@ export class SegmentContext extends ShowStyleContext implements ISegmentContext 
 // 	getSegmentLine (id?: string): SegmentLine | undefined {
 // 		return _.find(super.getSegmentLines(), sl => sl._id === (id || this.asRunEvent.segmentLineId))
 // 	}
-// 	getSegmentLineItem (segmentLineItemId?: string): IBlueprintSegmentLineItem | undefined {
+// 	getSegmentLineItem (segmentLineItemId?: string): IBlueprintPiece | undefined {
 // 		return _.find(super.getSegmentLinesItems(), sli => sli._id === (segmentLineItemId || this.asRunEvent.segmentLineItemId))
 // 	}
-// 	getSegmentLineItems (segmentLineId: string): Array<IBlueprintSegmentLineItem> {
+// 	getSegmentLineItems (segmentLineId: string): Array<IBlueprintPiece> {
 // 		return _.filter(super.getSegmentLinesItems(), sli => sli.segmentLineId === segmentLineId)
 // 	}
 // 	/** Get the mos story related to a segmentLine */
