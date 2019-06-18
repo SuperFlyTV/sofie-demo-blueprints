@@ -8,8 +8,21 @@ import { SourceLayer, AtemLLayer, CasparLLayer } from '../types/layers'
 import { Piece, BoxProps } from '../types/classes'
 import { TSRTimelineObj, DeviceType, TimelineContentTypeAtem, AtemTransitionStyle, TimelineObjAtemME, TimelineObjCCGMedia, TimelineContentTypeCasparCg, SuperSourceBox } from 'timeline-state-resolver-types'
 import { TimelineEnable } from 'timeline-state-resolver-types/dist/superfly-timeline'
+import { parseConfig, BlueprintConfig } from './helpers/config'
+import { parseSources, SourceInfo, getInputValue } from './helpers/sources'
+
+interface SegmentConf {
+	context: SegmentContext,
+	config: BlueprintConfig
+	sourceConfig: SourceInfo[]
+}
 
 export function getSegment (context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
+	const config: SegmentConf = {
+		context: context,
+		config: parseConfig(context),
+		sourceConfig: parseSources(context, parseConfig(context))
+	}
 	const segment = literal<IBlueprintSegment>({
 		name: ingestSegment.name,
 		metaData: {}
@@ -69,7 +82,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 							context.warning('Minimum number of elements in DVE is 2')
 						} else {
 							let sources = Math.min(length, 4)
-							let p = createDVE(context, pieceList, sources, screenWidth, screenHeight)
+							let p = createDVE(config, pieceList, sources, screenWidth, screenHeight)
 							if (isAdLibPiece(p)) {
 								adLibPieces.push(p as IBlueprintAdLibPiece)
 							} else {
@@ -90,16 +103,16 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 							let piece = pieceList[i]
 							switch (piece.objectType) {
 								case 'video':
-									createPieceByType(piece, createPieceVideo, pieces, adLibPieces, type, transitionType)
+									createPieceByType(config, piece, createPieceVideo, pieces, adLibPieces, type, transitionType)
 									break
 								case 'camera':
-									createPieceByType(piece, createPieceCam, pieces, adLibPieces, type, transitionType)
+									createPieceByType(config, piece, createPieceCam, pieces, adLibPieces, type, transitionType)
 									break
 								case 'graphic':
-									createPieceByType(piece, createPieceGraphic, pieces, adLibPieces, type, transitionType)
+									createPieceByType(config, piece, createPieceGraphic, pieces, adLibPieces, type, transitionType)
 									break
 								case 'overlay':
-									createPieceByType(piece, createPieceGraphicOverlay, pieces,adLibPieces, type, transitionType)
+									createPieceByType(config, piece, createPieceGraphicOverlay, pieces,adLibPieces, type, transitionType)
 									break
 								case 'transition':
 									pieces.push(createPieceInTransition(piece, transitionType, piece.duration || 1000))
@@ -155,7 +168,7 @@ function transitionTypeFromString (str: string): AtemTransitionStyle {
  * @param {number} width Screen width.
  * @param {number} height Screen height.
  */
-function createDVE (context: SegmentContext, pieces: Piece[], sources: number, width: number, height: number): IBlueprintPiece | IBlueprintAdLibPiece {
+function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width: number, height: number): IBlueprintPiece | IBlueprintAdLibPiece {
 	let dvePiece = pieces[0] // First piece is always assumed to be the DVE.
 	pieces = pieces.slice(1, sources + 1)
 	let boxes: BoxProps[] = []
@@ -295,7 +308,7 @@ function createDVE (context: SegmentContext, pieces: Piece[], sources: number, w
 				sourceConfigurations.push(newContent)
 				break
 			case 'camera':
-				newContent = literal<CameraContent & SourceMeta>({...createContentCam(), ...{
+				newContent = literal<CameraContent & SourceMeta>({...createContentCam(config, piece), ...{
 					type: SourceLayerType.CAMERA,
 					studioLabel: 'Spreadsheet Studio', // TODO: Get from Sofie.
 					switcherInput: 1000 // TODO: Get from Sofie.
@@ -313,7 +326,7 @@ function createDVE (context: SegmentContext, pieces: Piece[], sources: number, w
 				sourceConfigurations.push(newContent)
 				break
 			default:
-				context.warning(`DVE does not support objectType '${piece.objectType}' for piece: '${piece.clipName || piece.id}'`)
+				config.context.warning(`DVE does not support objectType '${piece.objectType}' for piece: '${piece.clipName || piece.id}'`)
 				break
 		}
 	})
@@ -337,10 +350,10 @@ function createDVE (context: SegmentContext, pieces: Piece[], sources: number, w
 /**
  * Creates a base camera content.
  */
-function createContentCam (): CameraContent {
+function createContentCam (config: SegmentConf, piece: Piece): CameraContent {
 	let content: CameraContent = {
 		studioLabel: 'Spreadsheet Studio',
-		switcherInput: 1000,
+		switcherInput: getInputValue(config.context, config.sourceConfig, piece.attributes['attr0']),
 		timelineObjects: _.compact<TSRTimelineObj>([])
 	}
 
@@ -548,12 +561,12 @@ function createPieceOutTransition (piece: Piece, transition: AtemTransitionStyle
  * @param {string} context Context the piece belongs to.
  * @param {AtemTransitionsStyle} transition Type of transition to use.
  */
-function createPieceCam (piece: Piece, context: string, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
+function createPieceCam (config: SegmentConf, piece: Piece, context: string, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
 	let p = createPieceGeneric(piece)
 
 	p.sourceLayerId = SourceLayer.PgmCam
 	p.name = piece.attributes['attr0'] // TODO: Pull this from attributes?
-	let content: CameraContent = createContentCam()
+	let content: CameraContent = createContentCam(config, piece)
 
 	switch (context) {
 		default:
@@ -567,7 +580,7 @@ function createPieceCam (piece: Piece, context: string, transition: AtemTransiti
 						deviceType: DeviceType.ATEM,
 						type: TimelineContentTypeAtem.ME,
 						me: {
-							input: 1000, // TODO: Fetch this from Sofie
+							input: getInputValue(config.context, config.sourceConfig, piece.attributes['attr0']),
 							transition: transition
 						}
 					}
@@ -587,7 +600,7 @@ function createPieceCam (piece: Piece, context: string, transition: AtemTransiti
  * @param {string} context Context the piece belongs to.
  * @param {AtemTransitionsStyle} transition Type of transition to use.
  */
-function createPieceVideo (piece: Piece, context: string, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
+function createPieceVideo (config: SegmentConf, piece: Piece, context: string, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
 	let p = createPieceGeneric(piece)
 
 	p.sourceLayerId = SourceLayer.PgmClip
@@ -624,7 +637,7 @@ function createPieceVideo (piece: Piece, context: string, transition: AtemTransi
 					deviceType: DeviceType.ATEM,
 					type: TimelineContentTypeAtem.ME,
 					me: {
-						input: 1000, // TODO: This should be the CasparCG input.
+						input: config.config.studio.AtemSource.Server1,
 						transition: transition
 					}
 				}
@@ -643,7 +656,7 @@ function createPieceVideo (piece: Piece, context: string, transition: AtemTransi
  * @param {string} context Context the piece belongs to.
  * @param {AtemTransitionsStyle} transition Type of transition to use.
  */
-function createPieceGraphic (piece: Piece, context: string, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
+function createPieceGraphic (config: SegmentConf, piece: Piece, context: string, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
 	let p = createPieceGeneric(piece)
 
 	p.sourceLayerId = SourceLayer.PgmGraphicsSuper
@@ -677,7 +690,7 @@ function createPieceGraphic (piece: Piece, context: string, transition: AtemTran
 							deviceType: DeviceType.ATEM,
 							type: TimelineContentTypeAtem.ME,
 							me: {
-								input: 1000, // TODO: This should be the CasparCG input.
+								input: config.config.studio.AtemSource.Server1,
 								transition: transition,
 								transitionSettings: {
 									mix: {
@@ -699,7 +712,7 @@ function createPieceGraphic (piece: Piece, context: string, transition: AtemTran
 							deviceType: DeviceType.ATEM,
 							type: TimelineContentTypeAtem.ME,
 							me: {
-								input: 1000, // TODO: This should be the CasparCG input.
+								input: config.config.studio.AtemSource.Server1,
 								transition: AtemTransitionStyle.WIPE
 							}
 						}
@@ -733,7 +746,7 @@ function createPieceGraphic (piece: Piece, context: string, transition: AtemTran
 							deviceType: DeviceType.ATEM,
 							type: TimelineContentTypeAtem.ME,
 							me: {
-								input: 1000, // TODO: This should be the CasparCG input.
+								input: config.config.studio.AtemSource.Server1,
 								transition: AtemTransitionStyle.CUT
 							}
 						}
@@ -754,7 +767,7 @@ function createPieceGraphic (piece: Piece, context: string, transition: AtemTran
  * @param {string} context Context the piece belongs to.
  * @param {AtemTransitionsStyle} transition Type of transition to use.
  */
-function createPieceGraphicOverlay (piece: Piece, context: string, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
+function createPieceGraphicOverlay (config: SegmentConf, piece: Piece, context: string, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
 	let p = createPieceGeneric(piece)
 
 	p.sourceLayerId = SourceLayer.PgmGraphicsSuper
@@ -807,6 +820,7 @@ function createPieceGraphicOverlay (piece: Piece, context: string, transition: A
 	p.content = content
 
 	console.log(context) // TODO: there has to be a better way.
+	console.log(config)
 
 	return p
 }
@@ -837,20 +851,21 @@ function createPieceScript (piece: Piece, script: string): IBlueprintPiece {
 /**
  * Creates a piece using a given function.
  * @param {Piece} piece Piece to create.
- * @param {(p: Piece) => IBlueprintPiece | IBlueprintAdLibPiece} creator Function for creating the piece.
+ * @param {(config: SegmentConf, p: Piece, context: string, transition: AtemTransitionStyle) => IBlueprintPiece | IBlueprintAdLibPiece} creator Function for creating the piece.
  * @param {IBlueprintPiece[]} pieces Array of IBlueprintPiece to add regular pieces to.
  * @param {IBlueprintAdLibPiece[]} adLibPieces Array of IBlueprintAdLibPiece to add adLib pieces to.
  * @param {string} context The part type the piece belogs to e.g. 'HEAD'
  * @param {AtemTransitionsStyle} transitionType Type of transition to use.
  */
 function createPieceByType (
-		piece: Piece, creator: (p: Piece, context: string, transition: AtemTransitionStyle) => IBlueprintPiece | IBlueprintAdLibPiece,
+		config: SegmentConf,
+		piece: Piece, creator: (config: SegmentConf, p: Piece, context: string, transition: AtemTransitionStyle) => IBlueprintPiece | IBlueprintAdLibPiece,
 		pieces: IBlueprintPiece[],
 		adLibPieces: IBlueprintAdLibPiece[],
 		context: string,
 		transitionType?: AtemTransitionStyle
 	) {
-	let p = creator(piece, context, transitionType || AtemTransitionStyle.CUT)
+	let p = creator(config, piece, context, transitionType || AtemTransitionStyle.CUT)
 	if (p.content) {
 		if (isAdLibPiece(p)) {
 			adLibPieces.push(p as IBlueprintAdLibPiece)
