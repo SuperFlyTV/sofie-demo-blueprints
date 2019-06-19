@@ -1,12 +1,12 @@
 import _ = require('underscore')
 import { Piece, SegmentConf } from '../../types/classes'
 import {
-	IBlueprintAdLibPiece, IBlueprintPiece, PieceEnable, PieceLifespan, TransitionContent, CameraContent, VTContent, GraphicsContent, ScriptContent
+	IBlueprintAdLibPiece, IBlueprintPiece, PieceEnable, PieceLifespan, TransitionContent, CameraContent, VTContent, GraphicsContent, ScriptContent, MicContent
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
-import { SourceLayer, AtemLLayer, CasparLLayer } from '../../types/layers'
+import { SourceLayer, AtemLLayer, CasparLLayer, LawoLLayer } from '../../types/layers'
 import {
-	AtemTransitionStyle, TSRTimelineObj, TimelineObjAtemME, DeviceType, TimelineContentTypeAtem, TimelineObjCCGMedia, TimelineContentTypeCasparCg
+	AtemTransitionStyle, TSRTimelineObj, TimelineObjAtemME, DeviceType, TimelineContentTypeAtem, TimelineObjCCGMedia, TimelineContentTypeCasparCg, TimelineObjLawoSource, TimelineContentTypeLawo
 } from 'timeline-state-resolver-types'
 import { createContentCam, createContentVT, createContentGraphics } from './content'
 import { getInputValue } from './sources'
@@ -466,6 +466,54 @@ export function createPieceScript (piece: Piece, script: string): IBlueprintPiec
 	}
 
 	p.content = content
+
+	return p
+}
+
+/**
+ * Creates a voiceover piece.
+ * @param {SegmentConf} config Segment config.
+ * @param {Piece} piece Piece to create.
+ * @param {string} context Piece context.
+ * @param {AtemTransitionStyle} transition Transition style.
+ */
+export function createPieceVoiceover (config: SegmentConf, piece: Piece, context: string, transition: AtemTransitionStyle) {
+	let p = createPieceGenericEnable(piece)
+
+	p.sourceLayerId = SourceLayer.PgmScript
+
+	let scriptWords: string[] = []
+	if (piece.script) {
+		scriptWords = piece.script.replace('\n', ' ').split(' ')
+	}
+
+	let content: MicContent = {
+		firstWords: scriptWords.slice(0, Math.min(4, scriptWords.length)).join(' '),
+		lastWords: scriptWords.slice(scriptWords.length - (Math.min(4, scriptWords.length)), (Math.min(4, scriptWords.length))).join(' '),
+		fullScript: piece.script,
+		sourceDuration: Number(p.enable.duration) || 1000,
+		mixConfiguration: {},
+		timelineObjects: _.compact<TSRTimelineObj>([
+			literal<TimelineObjLawoSource>({
+				id: '',
+				enable: { start: 0 },
+				priority: 1,
+				layer: LawoLLayer.LawoSourceAutomix,
+				content: {
+					deviceType: DeviceType.LAWO,
+					type: TimelineContentTypeLawo.SOURCE,
+					'Fader/Motor dB Value': {
+						value: 0,
+						transitionDuration: 1
+					}
+				}
+			})
+		])
+	}
+	p.content = content
+	console.log(config)
+	console.log(context)
+	console.log(transition)
 
 	return p
 }

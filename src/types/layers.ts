@@ -21,6 +21,7 @@ export type LLayer = VirtualAbstractLLayer | AtemLLayer | CasparLLayer
 export function RealLLayers () {
 	return _.values(AtemLLayer)
 		.concat(_.values(CasparLLayer))
+		.concat(_.values(LawoLLayer))
 }
 export function VirtualLLayers () {
 	return _.values(VirtualAbstractLLayer)
@@ -58,4 +59,8 @@ export enum CasparLLayer {
 
 export function HyperdeckLLayer (index: number) {
 	return `hyperdeck${index}`
+}
+
+export enum LawoLLayer {
+	LawoSourceAutomix = 'lawo_source_automix'
 }

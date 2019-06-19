@@ -11,11 +11,10 @@ import { parseConfig } from './helpers/config'
 import { parseSources, getInputValue } from './helpers/sources'
 import { createContentGraphics, createContentVT, createContentCam } from './helpers/content'
 import { getStudioName } from './helpers/studio'
-import { createPieceVideo, createPieceCam, createPieceGraphic, createPieceGraphicOverlay, createPieceInTransition, createPieceScript, createPieceGeneric, createPieceOutTransition } from './helpers/pieces'
+import { createPieceVideo, createPieceCam, createPieceGraphic, createPieceGraphicOverlay, createPieceInTransition, createPieceScript, createPieceGeneric, createPieceOutTransition, createPieceVoiceover } from './helpers/pieces'
 import { createEnableForTimelineObject } from './helpers/timeline'
 
 export function getSegment (context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
-	console.log(context)
 	const config: SegmentConf = {
 		context: context,
 		config: parseConfig(context),
@@ -111,10 +110,13 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 									createPieceByType(config, piece, createPieceGraphic, pieces, adLibPieces, type, transitionType)
 									break
 								case 'overlay':
-									createPieceByType(config, piece, createPieceGraphicOverlay, pieces,adLibPieces, type, transitionType)
+									createPieceByType(config, piece, createPieceGraphicOverlay, pieces, adLibPieces, type, transitionType)
 									break
 								case 'transition':
 									pieces.push(createPieceInTransition(piece, transitionType, piece.duration || 1000))
+									break
+								case 'voiceover':
+									createPieceByType(config, piece, createPieceVoiceover, pieces, adLibPieces, type, transitionType)
 									break
 								default:
 									context.warning(`Missing objectType '${piece.objectType}' for piece: '${piece.clipName || piece.id}'`)
