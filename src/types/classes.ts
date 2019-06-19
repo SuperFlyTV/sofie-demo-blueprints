@@ -1,4 +1,4 @@
-import { SegmentContext } from 'tv-automation-sofie-blueprints-integration'
+import { SegmentContext, SourceLayerType } from 'tv-automation-sofie-blueprints-integration'
 import { BlueprintConfig } from '../blueprint0/helpers/config'
 import { SourceInfo } from '../blueprint0/helpers/sources'
 
@@ -32,4 +32,10 @@ export interface PieceParams {
 	config: SegmentConf
 	piece: Piece
 	context: string
+}
+
+export interface SourceMeta {
+	type: SourceLayerType
+	studioLabel: string
+	switcherInput: number | string
 }
