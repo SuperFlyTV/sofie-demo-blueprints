@@ -206,6 +206,21 @@ export function createPieceCam (config: SegmentConf, piece: Piece, context: stri
 							transition: transition
 						}
 					}
+				}),
+
+				literal<TimelineObjLawoSource>({
+					id: '',
+					enable: { start: 0 },
+					priority: 1,
+					layer: LawoLLayer.LawoSourceAutomix,
+					content: {
+						deviceType: DeviceType.LAWO,
+						type: TimelineContentTypeLawo.SOURCE,
+						'Fader/Motor dB Value': {
+							value: 0,
+							transitionDuration: 1
+						}
+					}
 				})
 			])
 			break
@@ -261,6 +276,22 @@ export function createPieceVideo (config: SegmentConf, piece: Piece, context: st
 					me: {
 						input: config.config.studio.AtemSource.Server1,
 						transition: transition
+					}
+				}
+			})
+		)
+		content.timelineObjects.push(
+			literal<TimelineObjLawoSource>({
+				id: '',
+				enable: { start: 0 },
+				priority: 1,
+				layer: LawoLLayer.LawoSourceAutomix,
+				content: {
+					deviceType: DeviceType.LAWO,
+					type: TimelineContentTypeLawo.SOURCE,
+					'Fader/Motor dB Value': {
+						value: 0,
+						transitionDuration: 500
 					}
 				}
 			})
