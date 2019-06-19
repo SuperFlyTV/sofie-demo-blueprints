@@ -128,6 +128,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 							}
 
 							if (i === 0 && script) {
+								params.piece.script = script
 								pieces.push(createPieceScript(params))
 							}
 						}
