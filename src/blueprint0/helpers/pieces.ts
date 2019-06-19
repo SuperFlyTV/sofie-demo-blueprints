@@ -185,7 +185,7 @@ export function createPieceCam (params: PieceParams, transition: AtemTransitionS
 	let p = createPieceGeneric(params.piece)
 
 	p.sourceLayerId = SourceLayer.PgmCam
-	p.name = params.piece.attributes['attr0'] // TODO: Pull this from attributes?
+	p.name = params.piece.attributes['name']
 	let content: CameraContent = createContentCam(params.config, params.piece)
 
 	switch (params.context) {
@@ -200,7 +200,7 @@ export function createPieceCam (params: PieceParams, transition: AtemTransitionS
 						deviceType: DeviceType.ATEM,
 						type: TimelineContentTypeAtem.ME,
 						me: {
-							input: getInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes['attr0']),
+							input: getInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes['name']),
 							transition: transition
 						}
 					}

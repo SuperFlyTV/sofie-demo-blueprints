@@ -11,7 +11,7 @@ import { getStudioName } from './studio'
 export function createContentCam (config: SegmentConf, piece: Piece): CameraContent {
 	let content: CameraContent = {
 		studioLabel: getStudioName(config.context),
-		switcherInput: getInputValue(config.context, config.sourceConfig, piece.attributes['attr0']),
+		switcherInput: getInputValue(config.context, config.sourceConfig, piece.attributes['name']),
 		timelineObjects: _.compact<TSRTimelineObj>([])
 	}
 

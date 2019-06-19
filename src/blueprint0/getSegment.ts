@@ -92,7 +92,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 
 						for (let i = 0; i < pieceList.length; i++) {
 							if (pieceList[i].objectType.match(/transition/i)) {
-								transitionType = transitionTypeFromString(pieceList[i].attributes['attr0'])
+								transitionType = transitionTypeFromString(pieceList[i].attributes['type'])
 							}
 						}
 
@@ -320,7 +320,7 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
 				newContent = literal<CameraContent & SourceMeta>({...createContentCam(config, piece), ...{
 					type: SourceLayerType.CAMERA,
 					studioLabel: getStudioName(config.context),
-					switcherInput: getInputValue(config.context, config.sourceConfig, piece.attributes['attr0'])
+					switcherInput: getInputValue(config.context, config.sourceConfig, piece.attributes['name'])
 				}})
 				newContent.timelineObjects = [], // TODO
 				sourceConfigurations.push(newContent)
