@@ -27,3 +27,9 @@ export interface SegmentConf {
 	frameWidth: number
 	framesPerSecond: number
 }
+
+export interface PieceParams {
+	config: SegmentConf
+	piece: Piece
+	context: string
+}

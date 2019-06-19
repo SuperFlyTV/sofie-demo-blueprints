@@ -5,7 +5,7 @@ import {
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal, isAdLibPiece } from '../common/util'
 import { SourceLayer, CasparLLayer } from '../types/layers'
-import { Piece, BoxProps, SegmentConf } from '../types/classes'
+import { Piece, BoxProps, SegmentConf, PieceParams } from '../types/classes'
 import { TSRTimelineObj, DeviceType, AtemTransitionStyle, TimelineObjCCGMedia, TimelineContentTypeCasparCg, SuperSourceBox } from 'timeline-state-resolver-types'
 import { parseConfig } from './helpers/config'
 import { parseSources, getInputValue } from './helpers/sources'
@@ -98,33 +98,37 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 
 						// Iterate over pieces + generate.
 						for (let i = 0; i < pieceList.length; i++) {
-							let piece = pieceList[i]
-							switch (piece.objectType) {
+							let params: PieceParams = {
+								config: config,
+								piece: pieceList[i],
+								context: type
+							}
+							switch (params.piece.objectType) {
 								case 'video':
-									createPieceByType(config, piece, createPieceVideo, pieces, adLibPieces, type, transitionType)
+									createPieceByType(params, createPieceVideo, pieces, adLibPieces, transitionType)
 									break
 								case 'camera':
-									createPieceByType(config, piece, createPieceCam, pieces, adLibPieces, type, transitionType)
+									createPieceByType(params, createPieceCam, pieces, adLibPieces, transitionType)
 									break
 								case 'graphic':
-									createPieceByType(config, piece, createPieceGraphic, pieces, adLibPieces, type, transitionType)
+									createPieceByType(params, createPieceGraphic, pieces, adLibPieces, transitionType)
 									break
 								case 'overlay':
-									createPieceByType(config, piece, createPieceGraphicOverlay, pieces, adLibPieces, type, transitionType)
+									createPieceByType(params, createPieceGraphicOverlay, pieces, adLibPieces, transitionType)
 									break
 								case 'transition':
-									pieces.push(createPieceInTransition(piece, transitionType, piece.duration || 1000))
+									pieces.push(createPieceInTransition(params.piece, transitionType, params.piece.duration || 1000))
 									break
 								case 'voiceover':
-									createPieceByType(config, piece, createPieceVoiceover, pieces, adLibPieces, type, transitionType)
+									createPieceByType(params, createPieceVoiceover, pieces, adLibPieces, transitionType)
 									break
 								default:
-									context.warning(`Missing objectType '${piece.objectType}' for piece: '${piece.clipName || piece.id}'`)
+									context.warning(`Missing objectType '${params.piece.objectType}' for piece: '${params.piece.clipName || params.piece.id}'`)
 									break
 							}
 
 							if (i === 0 && script) {
-								pieces.push(createPieceScript(piece, script))
+								pieces.push(createPieceScript(params))
 							}
 						}
 					}
@@ -365,31 +369,30 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
  * @param {AtemTransitionsStyle} transitionType Type of transition to use.
  */
 function createPieceByType (
-		config: SegmentConf,
-		piece: Piece, creator: (config: SegmentConf, p: Piece, context: string, transition: AtemTransitionStyle) => IBlueprintPiece | IBlueprintAdLibPiece,
+		params: PieceParams,
+		creator: (params: PieceParams, transition: AtemTransitionStyle) => IBlueprintPiece | IBlueprintAdLibPiece,
 		pieces: IBlueprintPiece[],
 		adLibPieces: IBlueprintAdLibPiece[],
-		context: string,
 		transitionType?: AtemTransitionStyle
 	) {
-	let p = creator(config, piece, context, transitionType || AtemTransitionStyle.CUT)
+	let p = creator(params, transitionType || AtemTransitionStyle.CUT)
 	if (p.content) {
 		if (isAdLibPiece(p)) {
 			adLibPieces.push(p as IBlueprintAdLibPiece)
 		} else {
 			pieces.push(p as IBlueprintPiece)
 
-			if (context.match(/titles/i) && piece.objectType.match(/(graphic)|(video)/i)) {
-				pieces.push(createPieceOutTransition(piece, transitionType || AtemTransitionStyle.DIP, (1 / config.framesPerSecond) * 150 * 1000)) // TODO: Use actual framerate
+			if (params.context.match(/titles/i) && params.piece.objectType.match(/(graphic)|(video)/i)) {
+				pieces.push(createPieceOutTransition(params.piece, transitionType || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 150 * 1000)) // TODO: Use actual framerate
 			}
 
-			if (context.match(/breaker/i) && piece.objectType.match(/(graphic)|(video)/i)) {
-				pieces.push(createPieceOutTransition(piece, transitionType || AtemTransitionStyle.DIP, (1 / config.framesPerSecond) * 50 * 1000)) // TODO: Use actual framerate
+			if (params.context.match(/breaker/i) && params.piece.objectType.match(/(graphic)|(video)/i)) {
+				pieces.push(createPieceOutTransition(params.piece, transitionType || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 50 * 1000)) // TODO: Use actual framerate
 			}
 
-			if (context.match(/package/i) && piece.objectType.match(/video/i)) {
-				pieces.push(createPieceInTransition(piece, transitionType || AtemTransitionStyle.MIX, (1 / config.framesPerSecond) * 150 * 1000))
-				pieces.push(createPieceOutTransition(piece, transitionType || AtemTransitionStyle.DIP, (1 / config.framesPerSecond) * 50 * 1000)) // TODO: Use actual framerate
+			if (params.context.match(/package/i) && params.piece.objectType.match(/video/i)) {
+				pieces.push(createPieceInTransition(params.piece, transitionType || AtemTransitionStyle.MIX, (1 / params.config.framesPerSecond) * 150 * 1000))
+				pieces.push(createPieceOutTransition(params.piece, transitionType || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 50 * 1000)) // TODO: Use actual framerate
 			}
 		}
 	}
