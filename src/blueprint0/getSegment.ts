@@ -339,6 +339,7 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
 	})
 
 	let p = createPieceGeneric(dvePiece)
+	p.sourceLayerId = SourceLayer.PgmSplit
 
 	let content: SplitsContent = {
 		dveConfiguration: {},
