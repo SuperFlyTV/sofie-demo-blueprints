@@ -8,11 +8,11 @@ import { SourceLayer, CasparLLayer } from '../types/layers'
 import { Piece, BoxProps, SegmentConf, PieceParams } from '../types/classes'
 import { TSRTimelineObj, DeviceType, AtemTransitionStyle, TimelineObjCCGMedia, TimelineContentTypeCasparCg, SuperSourceBox } from 'timeline-state-resolver-types'
 import { parseConfig } from './helpers/config'
-import { parseSources, getInputValue } from './helpers/sources'
-import { createContentGraphics, createContentVT, createContentCam } from './helpers/content'
+import { parseSources, GetInputValue } from './helpers/sources'
+import { CreateContentGraphics, CreateContentVT, CreateContentCam } from './helpers/content'
 import { getStudioName } from './helpers/studio'
-import { createPieceVideo, createPieceCam, createPieceGraphic, createPieceGraphicOverlay, createPieceInTransition, createPieceScript, createPieceGeneric, createPieceOutTransition, createPieceVoiceover } from './helpers/pieces'
-import { createEnableForTimelineObject } from './helpers/timeline'
+import { CreatePieceVideo, CreatePieceCam, CreatePieceGraphic, CreatePieceGraphicOverlay, CreatePieceInTransition, CreatePieceScript, CreatePieceGeneric, CreatePieceOutTransition, CreatePieceVoiceover } from './helpers/pieces'
+import { CreateEnableForTimelineObject } from './helpers/timeline'
 
 export function getSegment (context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
 	const config: SegmentConf = {
@@ -105,22 +105,22 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 							}
 							switch (params.piece.objectType) {
 								case 'video':
-									createPieceByType(params, createPieceVideo, pieces, adLibPieces, transitionType)
+									createPieceByType(params, CreatePieceVideo, pieces, adLibPieces, transitionType)
 									break
 								case 'camera':
-									createPieceByType(params, createPieceCam, pieces, adLibPieces, transitionType)
+									createPieceByType(params, CreatePieceCam, pieces, adLibPieces, transitionType)
 									break
 								case 'graphic':
-									createPieceByType(params, createPieceGraphic, pieces, adLibPieces, transitionType)
+									createPieceByType(params, CreatePieceGraphic, pieces, adLibPieces, transitionType)
 									break
 								case 'overlay':
-									createPieceByType(params, createPieceGraphicOverlay, pieces, adLibPieces, transitionType)
+									createPieceByType(params, CreatePieceGraphicOverlay, pieces, adLibPieces, transitionType)
 									break
 								case 'transition':
-									pieces.push(createPieceInTransition(params.piece, transitionType, params.piece.duration || 1000))
+									pieces.push(CreatePieceInTransition(params.piece, transitionType, params.piece.duration || 1000))
 									break
 								case 'voiceover':
-									createPieceByType(params, createPieceVoiceover, pieces, adLibPieces, transitionType)
+									createPieceByType(params, CreatePieceVoiceover, pieces, adLibPieces, transitionType)
 									break
 								default:
 									context.warning(`Missing objectType '${params.piece.objectType}' for piece: '${params.piece.clipName || params.piece.id}'`)
@@ -129,7 +129,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 
 							if (i === 0 && script) {
 								params.piece.script = script
-								pieces.push(createPieceScript(params))
+								pieces.push(CreatePieceScript(params))
 							}
 						}
 					}
@@ -273,7 +273,7 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
 		let newContent: (VTContent | CameraContent | RemoteContent | GraphicsContent) & SourceMeta
 		switch (piece.objectType) {
 			case 'graphic':
-				newContent = literal<GraphicsContent & SourceMeta>({...createContentGraphics(piece), ...{
+				newContent = literal<GraphicsContent & SourceMeta>({...CreateContentGraphics(piece), ...{
 					type: SourceLayerType.GRAPHICS,
 					studioLabel: getStudioName(config.context),
 					switcherInput: config.config.studio.AtemSource.Server2 // TODO: Get from Sofie.
@@ -281,7 +281,7 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
 				newContent.timelineObjects = _.compact<TSRTimelineObj>([
 					literal<TimelineObjCCGMedia>({
 						id: '',
-						enable: createEnableForTimelineObject(piece),
+						enable: CreateEnableForTimelineObject(piece),
 						priority: 1,
 						layer: CasparLLayer.CasparCGGraphics,
 						content: {
@@ -295,7 +295,7 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
 				sourceBoxes[index].source = newContent.switcherInput as number
 				break
 			case 'video':
-				newContent = literal<VTContent & SourceMeta>({...createContentVT(piece), ...{
+				newContent = literal<VTContent & SourceMeta>({...CreateContentVT(piece), ...{
 					type: SourceLayerType.VT,
 					studioLabel: getStudioName(config.context),
 					switcherInput: config.config.studio.AtemSource.Server1
@@ -303,7 +303,7 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
 				newContent.timelineObjects = _.compact<TSRTimelineObj>([
 					literal<TimelineObjCCGMedia>({
 						id: '',
-						enable: createEnableForTimelineObject(piece),
+						enable: CreateEnableForTimelineObject(piece),
 						priority: 1,
 						layer: CasparLLayer.CasparPlayerClip,
 						content: {
@@ -317,10 +317,10 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
 				sourceBoxes[index].source = newContent.switcherInput as number
 				break
 			case 'camera':
-				newContent = literal<CameraContent & SourceMeta>({...createContentCam(config, piece), ...{
+				newContent = literal<CameraContent & SourceMeta>({...CreateContentCam(config, piece), ...{
 					type: SourceLayerType.CAMERA,
 					studioLabel: getStudioName(config.context),
-					switcherInput: getInputValue(config.context, config.sourceConfig, piece.attributes['name'])
+					switcherInput: GetInputValue(config.context, config.sourceConfig, piece.attributes['name'])
 				}})
 				newContent.timelineObjects = [], // TODO
 				sourceConfigurations.push(newContent)
@@ -343,7 +343,7 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
 		index++
 	})
 
-	let p = createPieceGeneric(dvePiece)
+	let p = CreatePieceGeneric(dvePiece)
 	p.sourceLayerId = SourceLayer.PgmSplit
 
 	let content: SplitsContent = {
@@ -384,16 +384,16 @@ function createPieceByType (
 			pieces.push(p as IBlueprintPiece)
 
 			if (params.context.match(/titles/i) && params.piece.objectType.match(/(graphic)|(video)/i)) {
-				pieces.push(createPieceOutTransition(params.piece, transitionType || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 150 * 1000)) // TODO: Use actual framerate
+				pieces.push(CreatePieceOutTransition(params.piece, transitionType || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 150 * 1000)) // TODO: Use actual framerate
 			}
 
 			if (params.context.match(/breaker/i) && params.piece.objectType.match(/(graphic)|(video)/i)) {
-				pieces.push(createPieceOutTransition(params.piece, transitionType || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 50 * 1000)) // TODO: Use actual framerate
+				pieces.push(CreatePieceOutTransition(params.piece, transitionType || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 50 * 1000)) // TODO: Use actual framerate
 			}
 
 			if (params.context.match(/package/i) && params.piece.objectType.match(/video/i)) {
-				pieces.push(createPieceInTransition(params.piece, transitionType || AtemTransitionStyle.MIX, (1 / params.config.framesPerSecond) * 150 * 1000))
-				pieces.push(createPieceOutTransition(params.piece, transitionType || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 50 * 1000)) // TODO: Use actual framerate
+				pieces.push(CreatePieceInTransition(params.piece, transitionType || AtemTransitionStyle.MIX, (1 / params.config.framesPerSecond) * 150 * 1000))
+				pieces.push(CreatePieceOutTransition(params.piece, transitionType || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 50 * 1000)) // TODO: Use actual framerate
 			}
 		}
 	}

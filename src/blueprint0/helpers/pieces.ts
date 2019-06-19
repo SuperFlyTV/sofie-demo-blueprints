@@ -8,15 +8,15 @@ import { SourceLayer, AtemLLayer, CasparLLayer, LawoLLayer } from '../../types/l
 import {
 	AtemTransitionStyle, TSRTimelineObj, TimelineObjAtemME, DeviceType, TimelineContentTypeAtem, TimelineObjCCGMedia, TimelineContentTypeCasparCg, TimelineObjLawoSource, TimelineContentTypeLawo
 } from 'timeline-state-resolver-types'
-import { createContentCam, createContentVT, createContentGraphics } from './content'
-import { getInputValue } from './sources'
-import { createEnableForTimelineObject } from './timeline'
+import { CreateContentCam, CreateContentVT, CreateContentGraphics } from './content'
+import { GetInputValue } from './sources'
+import { CreateEnableForTimelineObject } from './timeline'
 
 /**
  * Creates a generic adLib piece.
  * @param {Piece} piece Piece properties.
  */
-export function createPieceGenericAdLib (piece: Piece): IBlueprintAdLibPiece {
+export function CreatePieceGenericAdLib (piece: Piece): IBlueprintAdLibPiece {
 	let p = literal<IBlueprintAdLibPiece>({
 		externalId: piece.id,
 		name: piece.clipName,
@@ -37,7 +37,7 @@ export function createPieceGenericAdLib (piece: Piece): IBlueprintAdLibPiece {
  * Creates a generic IBlueprintPiece.
  * @param {Piece} piece Piece properties.
  */
-export function createPieceGenericEnable (piece: Piece): IBlueprintPiece {
+export function CreatePieceGenericEnable (piece: Piece): IBlueprintPiece {
 	let enable: PieceEnable = {}
 	enable.start = piece.objectTime || 0
 
@@ -64,13 +64,13 @@ export function createPieceGenericEnable (piece: Piece): IBlueprintPiece {
  * @param {Piece} piece Piece to evaluate.
  * @returns {IBlueprintPieceGeneric} A possibly infinite, possibly Adlib piece.
  */
-export function createPieceGeneric (piece: Piece): IBlueprintAdLibPiece | IBlueprintPiece {
+export function CreatePieceGeneric (piece: Piece): IBlueprintAdLibPiece | IBlueprintPiece {
 	let p: IBlueprintPiece | IBlueprintAdLibPiece
 
 	if ('adlib' in piece.attributes && piece.attributes['adlib'] === 'true') {
-		p = createPieceGenericAdLib(piece)
+		p = CreatePieceGenericAdLib(piece)
 	} else {
-		p = createPieceGenericEnable(piece)
+		p = CreatePieceGenericEnable(piece)
 	}
 
 	// TODO: This may become context-specific
@@ -87,7 +87,7 @@ export function createPieceGeneric (piece: Piece): IBlueprintAdLibPiece | IBluep
  * @param {AtemTransitionStyle} transition Transition style.
  * @param {number} duration Length of transition.
  */
-export function createPieceInTransition (piece: Piece, transition: AtemTransitionStyle, duration: number): IBlueprintPiece {
+export function CreatePieceInTransition (piece: Piece, transition: AtemTransitionStyle, duration: number): IBlueprintPiece {
 	let p = literal<IBlueprintPiece>({
 		_id: '',
 		externalId: 'T' + piece.id,
@@ -135,7 +135,7 @@ export function createPieceInTransition (piece: Piece, transition: AtemTransitio
  * @param {AtemTransitionStyle} transition Transition type.
  * @param {number} duration Length of transition.
  */
-export function createPieceOutTransition (piece: Piece, transition: AtemTransitionStyle, duration: number): IBlueprintPiece {
+export function CreatePieceOutTransition (piece: Piece, transition: AtemTransitionStyle, duration: number): IBlueprintPiece {
 	let p = literal<IBlueprintPiece>({
 		_id: '',
 		externalId: 'T' + piece.id,
@@ -181,26 +181,26 @@ export function createPieceOutTransition (piece: Piece, transition: AtemTransiti
  * Creates a cam piece.
  * @param {PieceParams} params Piece to create.
  */
-export function createPieceCam (params: PieceParams, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
-	let p = createPieceGeneric(params.piece)
+export function CreatePieceCam (params: PieceParams, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
+	let p = CreatePieceGeneric(params.piece)
 
 	p.sourceLayerId = SourceLayer.PgmCam
 	p.name = params.piece.attributes['name']
-	let content: CameraContent = createContentCam(params.config, params.piece)
+	let content: CameraContent = CreateContentCam(params.config, params.piece)
 
 	switch (params.context) {
 		default:
 			content.timelineObjects = _.compact<TSRTimelineObj>([
 				literal<TimelineObjAtemME>({
 					id: '',
-					enable: createEnableForTimelineObject(params.piece),
+					enable: CreateEnableForTimelineObject(params.piece),
 					priority: 1,
 					layer: AtemLLayer.AtemMEProgram,
 					content: {
 						deviceType: DeviceType.ATEM,
 						type: TimelineContentTypeAtem.ME,
 						me: {
-							input: getInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes['name']),
+							input: GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes['name']),
 							transition: transition
 						}
 					}
@@ -233,19 +233,19 @@ export function createPieceCam (params: PieceParams, transition: AtemTransitionS
  * Creates a cam piece.
  * @param {PieceParams} params Piece to create.
  */
-export function createPieceVideo (params: PieceParams, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
-	let p = createPieceGeneric(params.piece)
+export function CreatePieceVideo (params: PieceParams, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
+	let p = CreatePieceGeneric(params.piece)
 
 	p.sourceLayerId = SourceLayer.PgmClip
 
-	let content: VTContent = createContentVT(params.piece)
+	let content: VTContent = CreateContentVT(params.piece)
 
 	switch (params.context) {
 		default:
 			content.timelineObjects = _.compact<TSRTimelineObj>([
 				literal<TimelineObjCCGMedia>({
 					id: '',
-					enable: createEnableForTimelineObject(params.piece),
+					enable: CreateEnableForTimelineObject(params.piece),
 					priority: 1,
 					layer: CasparLLayer.CasparPlayerClip,
 					content: {
@@ -263,7 +263,7 @@ export function createPieceVideo (params: PieceParams, transition: AtemTransitio
 		content.timelineObjects.push(
 			literal<TimelineObjAtemME>({
 				id: '',
-				enable: createEnableForTimelineObject(params.piece),
+				enable: CreateEnableForTimelineObject(params.piece),
 				priority: 1,
 				layer: AtemLLayer.AtemMEProgram,
 				content: {
@@ -303,19 +303,19 @@ export function createPieceVideo (params: PieceParams, transition: AtemTransitio
  * Creates a cam piece.
  * @param {PieceParams} params Piece to create.
  */
-export function createPieceGraphic (params: PieceParams, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
-	let p = createPieceGeneric(params.piece)
+export function CreatePieceGraphic (params: PieceParams, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
+	let p = CreatePieceGeneric(params.piece)
 
 	p.sourceLayerId = SourceLayer.PgmGraphicsSuper
 
-	let content: GraphicsContent = createContentGraphics(params.piece)
+	let content: GraphicsContent = CreateContentGraphics(params.piece)
 
 	switch (params.context) {
 		case 'HEAD':
 			content.timelineObjects = _.compact<TSRTimelineObj>([
 				literal<TimelineObjCCGMedia>({
 					id: '',
-					enable: createEnableForTimelineObject(params.piece),
+					enable: CreateEnableForTimelineObject(params.piece),
 					priority: 1,
 					layer: CasparLLayer.CasparCGGraphics,
 					content: {
@@ -330,7 +330,7 @@ export function createPieceGraphic (params: PieceParams, transition: AtemTransit
 				content.timelineObjects.push(
 					literal<TimelineObjAtemME>({
 						id: '',
-						enable: createEnableForTimelineObject(params.piece),
+						enable: CreateEnableForTimelineObject(params.piece),
 						priority: 1,
 						layer: AtemLLayer.AtemMEProgram, // TODO: Should be aux?
 						content: {
@@ -352,7 +352,7 @@ export function createPieceGraphic (params: PieceParams, transition: AtemTransit
 				content.timelineObjects.push(
 					literal<TimelineObjAtemME>({
 						id: '',
-						enable: createEnableForTimelineObject(params.piece),
+						enable: CreateEnableForTimelineObject(params.piece),
 						priority: 1,
 						layer: AtemLLayer.AtemMEProgram,
 						content: {
@@ -371,7 +371,7 @@ export function createPieceGraphic (params: PieceParams, transition: AtemTransit
 			content.timelineObjects = _.compact<TSRTimelineObj>([
 				literal<TimelineObjCCGMedia>({
 					id: '',
-					enable: createEnableForTimelineObject(params.piece),
+					enable: CreateEnableForTimelineObject(params.piece),
 					priority: 1,
 					layer: CasparLLayer.CasparCGGraphics,
 					content: {
@@ -386,7 +386,7 @@ export function createPieceGraphic (params: PieceParams, transition: AtemTransit
 				content.timelineObjects.push(
 					literal<TimelineObjAtemME>({
 						id: '',
-						enable: createEnableForTimelineObject(params.piece),
+						enable: CreateEnableForTimelineObject(params.piece),
 						priority: 1,
 						layer: AtemLLayer.AtemMEProgram,
 						content: {
@@ -412,17 +412,17 @@ export function createPieceGraphic (params: PieceParams, transition: AtemTransit
  * Creates a graphics overlay.
  * @param {PieceParams} params Piece to create.
  */
-export function createPieceGraphicOverlay (params: PieceParams, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
-	let p = createPieceGeneric(params.piece)
+export function CreatePieceGraphicOverlay (params: PieceParams, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
+	let p = CreatePieceGeneric(params.piece)
 
 	p.sourceLayerId = SourceLayer.PgmGraphicsSuper
 
-	let content: GraphicsContent = createContentGraphics(params.piece)
+	let content: GraphicsContent = CreateContentGraphics(params.piece)
 
 	content.timelineObjects = _.compact<TSRTimelineObj>([
 		literal<TimelineObjCCGMedia>({
 			id: '',
-			enable: createEnableForTimelineObject(params.piece),
+			enable: CreateEnableForTimelineObject(params.piece),
 			priority: 1,
 			layer: CasparLLayer.CasparCGGraphics,
 			content: {
@@ -437,7 +437,7 @@ export function createPieceGraphicOverlay (params: PieceParams, transition: Atem
 
 		literal<TimelineObjAtemME>({
 			id: '',
-			enable: createEnableForTimelineObject(params.piece),
+			enable: CreateEnableForTimelineObject(params.piece),
 			priority: 1,
 			layer: AtemLLayer.AtemDSKGraphics,
 			content: {
@@ -471,8 +471,8 @@ export function createPieceGraphicOverlay (params: PieceParams, transition: Atem
  * Creates a script piece.
  * @param {PieceParams} params Piece to create.
  */
-export function createPieceScript (params: PieceParams): IBlueprintPiece {
-	let p = createPieceGenericEnable(params.piece)
+export function CreatePieceScript (params: PieceParams): IBlueprintPiece {
+	let p = CreatePieceGenericEnable(params.piece)
 
 	p.sourceLayerId = SourceLayer.PgmScript
 	let scriptWords: string[] = []
@@ -496,8 +496,8 @@ export function createPieceScript (params: PieceParams): IBlueprintPiece {
  * Creates a voiceover piece.
  * @param {PieceParams} params Piece to create.
  */
-export function createPieceVoiceover (params: PieceParams): IBlueprintPiece {
-	let p = createPieceGenericEnable(params.piece)
+export function CreatePieceVoiceover (params: PieceParams): IBlueprintPiece {
+	let p = CreatePieceGenericEnable(params.piece)
 
 	p.sourceLayerId = SourceLayer.PgmScript
 

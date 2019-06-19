@@ -1,17 +1,17 @@
 import _ = require('underscore')
 import { SegmentConf, Piece } from '../../types/classes'
 import { CameraContent, VTContent, GraphicsContent } from 'tv-automation-sofie-blueprints-integration'
-import { getInputValue } from './sources'
+import { GetInputValue } from './sources'
 import { TSRTimelineObj } from 'timeline-state-resolver-types'
 import { getStudioName } from './studio'
 
 /**
  * Creates a base camera content.
  */
-export function createContentCam (config: SegmentConf, piece: Piece): CameraContent {
+export function CreateContentCam (config: SegmentConf, piece: Piece): CameraContent {
 	let content: CameraContent = {
 		studioLabel: getStudioName(config.context),
-		switcherInput: getInputValue(config.context, config.sourceConfig, piece.attributes['name']),
+		switcherInput: GetInputValue(config.context, config.sourceConfig, piece.attributes['name']),
 		timelineObjects: _.compact<TSRTimelineObj>([])
 	}
 
@@ -21,7 +21,7 @@ export function createContentCam (config: SegmentConf, piece: Piece): CameraCont
  * Creates a base VT content.
  * @param piece Piece used to create content.
  */
-export function createContentVT (piece: Piece): VTContent {
+export function CreateContentVT (piece: Piece): VTContent {
 	let content: VTContent = {
 		fileName: piece.clipName,
 		path: piece.clipName,
@@ -38,7 +38,7 @@ export function createContentVT (piece: Piece): VTContent {
  * Creates a base graphics content.
  * @param piece Piece used to create content.
  */
-export function createContentGraphics (piece: Piece): GraphicsContent {
+export function CreateContentGraphics (piece: Piece): GraphicsContent {
 	let content: GraphicsContent = {
 		fileName: piece.clipName,
 		path: piece.clipName,
