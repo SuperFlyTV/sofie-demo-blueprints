@@ -120,6 +120,8 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 								case 'voiceover':
 									createPieceByType(params, CreatePieceVoiceover, pieces, adLibPieces, transitionType)
 									break
+								case 'script':
+									break
 								default:
 									context.warning(`Missing objectType '${params.piece.objectType}' for piece: '${params.piece.clipName || params.piece.id}'`)
 									break
