@@ -262,8 +262,6 @@ function calculateExpectedDuration (pieces: IBlueprintPiece[]): number {
 		let start = (pieces[0].enable.start as number)
 		let end = 0
 
-		console.log(pieces)
-
 		pieces.forEach(piece => {
 			let st = piece.enable.start as number
 			let en = piece.enable.start as number
@@ -281,8 +279,6 @@ function calculateExpectedDuration (pieces: IBlueprintPiece[]): number {
 				end = en
 			}
 		})
-
-		console.log(end - start)
 
 		return end - start
 	}
