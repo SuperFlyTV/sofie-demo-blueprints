@@ -258,11 +258,33 @@ function createPart (ingestPart: IngestPart, pieces: IBlueprintPiece[], adLibPie
  * @param {IBlueprintPiece[]} pieces Pieces to calculate duration for.
  */
 function calculateExpectedDuration (pieces: IBlueprintPiece[]): number {
-	let duration = 0
+	if (pieces.length) {
+		let start = (pieces[0].enable.start as number)
+		let end = 0
 
-	pieces.forEach(piece => {
-		duration += (piece.enable.duration as number) // This will get more complicated as more rules are added
-	})
+		console.log(pieces)
 
-	return duration
+		pieces.forEach(piece => {
+			let st = piece.enable.start as number
+			let en = piece.enable.start as number
+			if (piece.enable.duration) {
+				en = (piece.enable.start as number) + (piece.enable.duration as number)
+			} else if (piece.enable.end) {
+				en = (piece.enable.end as number)
+			}
+
+			if (st < start) {
+				start = st
+			}
+
+			if (en > end) {
+				end = en
+			}
+		})
+
+		console.log(end - start)
+
+		return end - start
+	}
+	return 0
 }
