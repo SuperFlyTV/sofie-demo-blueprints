@@ -480,6 +480,15 @@ export function CreatePieceScript (params: PieceParams): IBlueprintPiece {
 		scriptWords = params.piece.script.replace('\n', ' ').split(' ')
 	}
 
+	let duration = 3000
+	if (p.enable.duration) {
+		duration = Number(p.enable.duration)
+
+		if (isNaN(duration)) {
+			duration = 3000
+		}
+	}
+
 	let content: ScriptContent = {
 		firstWords: scriptWords.slice(0, Math.min(4, scriptWords.length)).join(' '),
 		lastWords: scriptWords.slice(scriptWords.length - (Math.min(4, scriptWords.length)), (Math.min(4, scriptWords.length))).join(' '),
