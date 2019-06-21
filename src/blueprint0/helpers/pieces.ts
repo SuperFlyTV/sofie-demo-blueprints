@@ -4,13 +4,13 @@ import {
 	IBlueprintAdLibPiece, IBlueprintPiece, PieceEnable, PieceLifespan, TransitionContent, CameraContent, VTContent, GraphicsContent, ScriptContent, MicContent
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
-import { SourceLayer, AtemLLayer, CasparLLayer, LawoLLayer } from '../../types/layers'
+import { SourceLayer, AtemLLayer, CasparLLayer } from '../../types/layers'
 import {
-	AtemTransitionStyle, TSRTimelineObj, TimelineObjAtemME, DeviceType, TimelineContentTypeAtem, TimelineObjCCGMedia, TimelineContentTypeCasparCg, TimelineObjLawoSource, TimelineContentTypeLawo
+	AtemTransitionStyle, TSRTimelineObj, TimelineObjAtemME, DeviceType, TimelineContentTypeAtem, TimelineObjCCGMedia, TimelineContentTypeCasparCg
 } from 'timeline-state-resolver-types'
 import { CreateContentCam, CreateContentVT, CreateContentGraphics } from './content'
 import { GetInputValue } from './sources'
-import { CreateEnableForTimelineObject } from './timeline'
+import { CreateEnableForTimelineObject, CreateTransitionAtemTimelineObject, CreateLawoAutomixTimelineObject } from './timeline'
 
 /**
  * Creates a generic adLib piece.
@@ -81,19 +81,12 @@ export function CreatePieceGeneric (piece: Piece): IBlueprintAdLibPiece | IBluep
 	return p
 }
 
-/**
- * Creates a transition piece.
- * @param {Piece} piece Piece to generate.
- * @param {AtemTransitionStyle} transition Transition style.
- * @param {number} duration Length of transition.
- */
-export function CreatePieceInTransition (piece: Piece, transition: AtemTransitionStyle, duration: number): IBlueprintPiece {
+function createPieceTransitionGeneric (piece: Piece, duration: number): IBlueprintPiece {
 	let p = literal<IBlueprintPiece>({
 		_id: '',
 		externalId: 'T' + piece.id,
 		name: 'T' + duration,
 		enable: {
-			start: 0,
 			duration: duration
 		},
 		outputLayerId: 'pgm0',
@@ -101,30 +94,28 @@ export function CreatePieceInTransition (piece: Piece, transition: AtemTransitio
 		isTransition: true,
 		content: literal<TransitionContent>({
 			timelineObjects: _.compact<TSRTimelineObj>([
-				literal<TimelineObjAtemME>({
-					id: '',
-					enable: {
-						start: 0
-					},
-					priority: 5,
-					layer: AtemLLayer.AtemMEProgram,
-					content: {
-						deviceType: DeviceType.ATEM,
-						type: TimelineContentTypeAtem.ME,
-						me: {
-							input: 1000,
-							transition: transition,
-							transitionSettings: {
-								mix: {
-									rate: 0
-								}
-							}
-						}
-					}
-				})
+
 			])
 		})
 	})
+
+	return p
+}
+
+/**
+ * Creates a transition piece.
+ * @param {Piece} piece Piece to generate.
+ * @param {AtemTransitionStyle} transition Transition style.
+ * @param {number} duration Length of transition.
+ */
+export function CreatePieceInTransition (piece: Piece, transition: AtemTransitionStyle, duration: number): IBlueprintPiece {
+	let p = createPieceTransitionGeneric(piece, duration)
+	let content = literal<TransitionContent>({
+		timelineObjects: _.compact<TSRTimelineObj>([
+			CreateTransitionAtemTimelineObject({ start: 0, duration: duration }, transition)
+		])
+	})
+	p.content = content
 
 	return p
 }
@@ -136,43 +127,14 @@ export function CreatePieceInTransition (piece: Piece, transition: AtemTransitio
  * @param {number} duration Length of transition.
  */
 export function CreatePieceOutTransition (piece: Piece, transition: AtemTransitionStyle, duration: number): IBlueprintPiece {
-	let p = literal<IBlueprintPiece>({
-		_id: '',
-		externalId: 'T' + piece.id,
-		name: 'T' + duration,
-		enable: {
-			start: piece.duration - duration,
-			duration: duration
-		},
-		outputLayerId: 'pgm0',
-		sourceLayerId: SourceLayer.PgmTransition,
-		isTransition: true,
-		content: literal<TransitionContent>({
-			timelineObjects: _.compact<TSRTimelineObj>([
-				literal<TimelineObjAtemME>({
-					id: '',
-					enable: {
-						start: piece.duration - duration
-					},
-					priority: 5,
-					layer: AtemLLayer.AtemMEProgram,
-					content: {
-						deviceType: DeviceType.ATEM,
-						type: TimelineContentTypeAtem.ME,
-						me: {
-							input: 1000, // TODO get from Sofie
-							transition: transition,
-							transitionSettings: {
-								mix: {
-									rate: 0
-								}
-							}
-						}
-					}
-				})
-			])
-		})
+	let p = createPieceTransitionGeneric(piece, duration)
+
+	let content = literal<TransitionContent>({
+		timelineObjects: _.compact<TSRTimelineObj>([
+			CreateTransitionAtemTimelineObject({ start: piece.duration - duration, duration: duration }, transition)
+		])
 	})
+	p.content = content
 
 	return p
 }
@@ -262,20 +224,7 @@ export function CreatePieceCam (params: PieceParams, transition: AtemTransitionS
 					}
 				}),
 
-				literal<TimelineObjLawoSource>({
-					id: '',
-					enable: { start: 0 },
-					priority: 1,
-					layer: LawoLLayer.LawoSourceAutomix,
-					content: {
-						deviceType: DeviceType.LAWO,
-						type: TimelineContentTypeLawo.SOURCE,
-						'Fader/Motor dB Value': {
-							value: 0,
-							transitionDuration: 1
-						}
-					}
-				})
+				CreateLawoAutomixTimelineObject({ start: 0 })
 			])
 			break
 	}
@@ -333,20 +282,7 @@ export function CreatePieceVideo (params: PieceParams, transition: AtemTransitio
 			})
 		)
 		content.timelineObjects.push(
-			literal<TimelineObjLawoSource>({
-				id: '',
-				enable: { start: 0 },
-				priority: 1,
-				layer: LawoLLayer.LawoSourceAutomix,
-				content: {
-					deviceType: DeviceType.LAWO,
-					type: TimelineContentTypeLawo.SOURCE,
-					'Fader/Motor dB Value': {
-						value: 0,
-						transitionDuration: 500
-					}
-				}
-			})
+			CreateLawoAutomixTimelineObject({ start: 0 })
 		)
 	}
 
@@ -598,20 +534,7 @@ export function CreatePieceVoiceover (params: PieceParams): IBlueprintPiece {
 		sourceDuration: duration,
 		mixConfiguration: {},
 		timelineObjects: _.compact<TSRTimelineObj>([
-			literal<TimelineObjLawoSource>({
-				id: '',
-				enable: { start: 0 },
-				priority: 1,
-				layer: LawoLLayer.LawoSourceAutomix,
-				content: {
-					deviceType: DeviceType.LAWO,
-					type: TimelineContentTypeLawo.SOURCE,
-					'Fader/Motor dB Value': {
-						value: 0,
-						transitionDuration: 1
-					}
-				}
-			})
+			CreateLawoAutomixTimelineObject({ start: 0 })
 		])
 	}
 	p.content = content
