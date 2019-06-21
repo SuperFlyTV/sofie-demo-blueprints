@@ -103,22 +103,46 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 							}
 							switch (params.piece.objectType) {
 								case 'video':
-									createPieceByType(params, CreatePieceVideo, pieces, adLibPieces, transitionType)
+									if (params.piece.clipName) {
+										createPieceByType(params, CreatePieceVideo, pieces, adLibPieces, transitionType)
+									} else {
+										context.warning(`Missing clip for video: ${params.piece.id}`)
+									}
 									break
 								case 'camera':
-									createPieceByType(params, CreatePieceCam, pieces, adLibPieces, transitionType)
+									if (params.piece.attributes['name']) {
+										createPieceByType(params, CreatePieceCam, pieces, adLibPieces, transitionType)
+									} else {
+										context.warning(`Missing camera for camera: ${params.piece.id}`)
+									}
 									break
 								case 'graphic':
-									createPieceByType(params, CreatePieceGraphic, pieces, adLibPieces, transitionType)
+									if (params.piece.clipName) {
+										createPieceByType(params, CreatePieceGraphic, pieces, adLibPieces, transitionType)
+									} else {
+										context.warning(`Missing clip for graphic: ${params.piece.id}`)
+									}
 									break
 								case 'overlay':
-									createPieceByType(params, CreatePieceGraphicOverlay, pieces, adLibPieces, transitionType)
+									if (params.piece.clipName) {
+										createPieceByType(params, CreatePieceGraphicOverlay, pieces, adLibPieces, transitionType)
+									} else {
+										context.warning(`Missing clip for overlay: ${params.piece.id}`)
+									}
 									break
 								case 'transition':
-									pieces.push(CreatePieceInTransition(params.piece, transitionType, params.piece.duration || 1000))
+									if (params.piece.attributes['type']) {
+										pieces.push(CreatePieceInTransition(params.piece, transitionType, params.piece.duration || 1000))
+									} else {
+										context.warning(`Missing transition for transition: ${params.piece.id}`)
+									}
 									break
 								case 'voiceover':
-									createPieceByType(params, CreatePieceVoiceover, pieces, adLibPieces, transitionType)
+									if (params.piece.script) {
+										createPieceByType(params, CreatePieceVoiceover, pieces, adLibPieces, transitionType)
+									} else {
+										context.warning(`Missing script for voiceover: ${params.piece.id}`)
+									}
 									break
 								case 'script':
 									break
