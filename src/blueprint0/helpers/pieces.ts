@@ -178,6 +178,62 @@ export function CreatePieceOutTransition (piece: Piece, transition: AtemTransiti
 }
 
 /**
+ * Creates a breaker piece.
+ * @param piece Piece to create.
+ * @param duration Transition duraation.
+ */
+export function CreatePieceBreaker (piece: Piece, duration: number): IBlueprintPiece {
+	let p = literal<IBlueprintPiece>({
+		_id: '',
+		externalId: piece.id,
+		name: 'Breaker: ' + (piece.clipName || duration),
+		enable: {
+			start: 0,
+			duration: duration
+		},
+		outputLayerId: 'pgm0',
+		sourceLayerId: SourceLayer.PgmTransition,
+		isTransition: true,
+		content: literal<TransitionContent>({
+			timelineObjects: _.compact<TSRTimelineObj>([
+				literal<TimelineObjCCGMedia>({
+					id: '',
+					enable: {
+						start: 0,
+						duration: duration
+					},
+					priority: 1,
+					layer: CasparLLayer.CasparPlayerWipe,
+					content: {
+						deviceType: DeviceType.CASPARCG,
+						type: TimelineContentTypeCasparCg.MEDIA,
+						file: piece.clipName
+					}
+				}),
+				literal<TimelineObjAtemME>({
+					id: '',
+					enable: {
+						start: 0
+					},
+					priority: 5,
+					layer: AtemLLayer.AtemMEProgram,
+					content: {
+						deviceType: DeviceType.ATEM,
+						type: TimelineContentTypeAtem.ME,
+						me: {
+							input: 1000, // TODO: Get from Sofie
+							transition: AtemTransitionStyle.WIPE
+						}
+					}
+				})
+			])
+		})
+	})
+
+	return p
+}
+
+/**
  * Creates a cam piece.
  * @param {PieceParams} params Piece to create.
  */

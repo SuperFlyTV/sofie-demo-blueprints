@@ -9,7 +9,7 @@ import { Piece, SegmentConf, PieceParams } from '../types/classes'
 import { AtemTransitionStyle } from 'timeline-state-resolver-types'
 import { parseConfig } from './helpers/config'
 import { parseSources } from './helpers/sources'
-import { CreatePieceVideo, CreatePieceCam, CreatePieceGraphic, CreatePieceGraphicOverlay, CreatePieceInTransition, CreatePieceScript, CreatePieceOutTransition, CreatePieceVoiceover } from './helpers/pieces'
+import { CreatePieceVideo, CreatePieceCam, CreatePieceGraphic, CreatePieceGraphicOverlay, CreatePieceInTransition, CreatePieceScript, CreatePieceOutTransition, CreatePieceVoiceover, CreatePieceBreaker } from './helpers/pieces'
 import { CreateDVE } from './helpers/dve'
 
 export function getSegment (context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
@@ -85,6 +85,20 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 								pieces.push(p as IBlueprintPiece)
 							}
 						}
+					} else if (type.match(/breaker/i)) {
+						// Validate breaker.
+						// Don't allow any other pieces to be specified, and don't allow transition type to be changed (for now).
+						if (pieceList.length > 1) {
+							for (let i = 1; i < pieceList.length; i++) {
+								if (pieceList[i].objectType.match(/transition/i)) {
+									context.warning(`Cannot change transition type of Breaker. Wipe transition will be used.`)
+								} else {
+									context.warning(`Only 1 item allowed in Breaker. Move ${pieceList[i].clipName || pieceList[i].id} to new item.`)
+								}
+							}
+						}
+
+						pieces.push(CreatePieceBreaker(pieceList[0], pieceList[0].duration || 1000))
 					} else {
 						let transitionType = AtemTransitionStyle.CUT
 
