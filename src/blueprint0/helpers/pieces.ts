@@ -489,11 +489,17 @@ export function CreatePieceScript (params: PieceParams): IBlueprintPiece {
 		}
 	}
 
+	let firstWords = scriptWords.slice(0, Math.min(4, scriptWords.length)).join(' ')
+	let lastWords = scriptWords.slice(scriptWords.length - (Math.min(4, scriptWords.length)), (Math.min(4, scriptWords.length))).join(' ')
+
+	p.name = (firstWords ? firstWords + '\u2026' : '') + '||' + (lastWords ? '\u2026' + lastWords : '')
+
 	let content: ScriptContent = {
-		firstWords: scriptWords.slice(0, Math.min(4, scriptWords.length)).join(' '),
-		lastWords: scriptWords.slice(scriptWords.length - (Math.min(4, scriptWords.length)), (Math.min(4, scriptWords.length))).join(' '),
+		firstWords: firstWords,
+		lastWords: lastWords,
 		fullScript: params.piece.script || '',
-		sourceDuration: Number(p.enable.duration) || 1000
+		sourceDuration: duration,
+		lastModified: Date.now() // TODO: pull from gateway
 	}
 
 	p.content = content
@@ -515,11 +521,25 @@ export function CreatePieceVoiceover (params: PieceParams): IBlueprintPiece {
 		scriptWords = params.piece.script.replace('\n', ' ').split(' ')
 	}
 
+	let firstWords = scriptWords.slice(0, Math.min(4, scriptWords.length)).join(' ')
+	let lastWords = scriptWords.slice(scriptWords.length - (Math.min(4, scriptWords.length)), (Math.min(4, scriptWords.length))).join(' ')
+
+	p.name = (firstWords ? firstWords + '\u2026' : '') + '||' + (lastWords ? '\u2026' + lastWords : '')
+
+	let duration = 3000
+	if (p.enable.duration) {
+		duration = Number(p.enable.duration)
+
+		if (isNaN(duration)) {
+			duration = 3000
+		}
+	}
+
 	let content: MicContent = {
-		firstWords: scriptWords.slice(0, Math.min(4, scriptWords.length)).join(' '),
-		lastWords: scriptWords.slice(scriptWords.length - (Math.min(4, scriptWords.length)), (Math.min(4, scriptWords.length))).join(' '),
+		firstWords: firstWords,
+		lastWords: lastWords,
 		fullScript: params.piece.script,
-		sourceDuration: Number(p.enable.duration) || 1000,
+		sourceDuration: duration,
 		mixConfiguration: {},
 		timelineObjects: _.compact<TSRTimelineObj>([
 			literal<TimelineObjLawoSource>({
