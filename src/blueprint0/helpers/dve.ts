@@ -1,11 +1,11 @@
 import _ = require('underscore')
 import { Piece, SegmentConf, SourceMeta, BoxProps } from '../../types/classes'
 import { IBlueprintPiece, IBlueprintAdLibPiece, VTContent, CameraContent, RemoteContent, GraphicsContent, SourceLayerType, SplitsContent } from 'tv-automation-sofie-blueprints-integration'
-import { SuperSourceBox, TSRTimelineObj, TimelineObjCCGMedia, DeviceType, TimelineContentTypeCasparCg } from 'timeline-state-resolver-types'
+import { SuperSourceBox, TSRTimelineObj } from 'timeline-state-resolver-types'
 import { literal } from '../../common/util'
 import { CreateContentGraphics, CreateContentVT, CreateContentCam } from './content'
 import { getStudioName } from './studio'
-import { CreateEnableForTimelineObject } from './timeline'
+import { CreateEnableForTimelineObject, CreateCCGMediaTimelineObject } from './timeline'
 import { CasparLLayer, SourceLayer } from '../../types/layers'
 import { GetInputValue } from './sources'
 import { CreatePieceGeneric } from './pieces'
@@ -47,17 +47,7 @@ function createDVESourceConfigurations (config: SegmentConf, pieces: Piece[], so
 					switcherInput: config.config.studio.AtemSource.Server2 // TODO: Get from Sofie.
 				}})
 				newContent.timelineObjects = _.compact<TSRTimelineObj>([
-					literal<TimelineObjCCGMedia>({
-						id: '',
-						enable: CreateEnableForTimelineObject(piece),
-						priority: 1,
-						layer: CasparLLayer.CasparCGGraphics,
-						content: {
-							deviceType: DeviceType.CASPARCG,
-							type: TimelineContentTypeCasparCg.MEDIA,
-							file: piece.clipName
-						}
-					})
+					CreateCCGMediaTimelineObject(CreateEnableForTimelineObject(piece), CasparLLayer.CasparCGGraphics, piece.clipName)
 				]),
 				sourceConfigurations.push(newContent)
 				sourceBoxes[index].source = newContent.switcherInput as number
@@ -69,17 +59,7 @@ function createDVESourceConfigurations (config: SegmentConf, pieces: Piece[], so
 					switcherInput: config.config.studio.AtemSource.Server1
 				}})
 				newContent.timelineObjects = _.compact<TSRTimelineObj>([
-					literal<TimelineObjCCGMedia>({
-						id: '',
-						enable: CreateEnableForTimelineObject(piece),
-						priority: 1,
-						layer: CasparLLayer.CasparPlayerClip,
-						content: {
-							deviceType: DeviceType.CASPARCG,
-							type: TimelineContentTypeCasparCg.MEDIA,
-							file: piece.clipName
-						}
-					})
+					CreateCCGMediaTimelineObject(CreateEnableForTimelineObject(piece), CasparLLayer.CasparPlayerClip, piece.clipName)
 				]), // TODO
 				sourceConfigurations.push(newContent)
 				sourceBoxes[index].source = newContent.switcherInput as number

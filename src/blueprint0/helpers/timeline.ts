@@ -1,8 +1,8 @@
 import { Piece } from '../../types/classes'
 import { TimelineEnable } from 'timeline-state-resolver-types/dist/superfly-timeline'
 import { literal } from '../../common/util'
-import { TimelineObjAtemME, AtemTransitionStyle, DeviceType, TimelineContentTypeAtem, TimelineContentTypeLawo, TimelineObjLawoSource } from 'timeline-state-resolver-types'
-import { AtemLLayer, LawoLLayer } from '../../types/layers'
+import { TimelineObjAtemME, AtemTransitionStyle, DeviceType, TimelineContentTypeAtem, TimelineContentTypeLawo, TimelineObjLawoSource, TimelineContentTypeCasparCg, TimelineObjCCGMedia } from 'timeline-state-resolver-types'
+import { AtemLLayer, LawoLLayer, CasparLLayer } from '../../types/layers'
 
 /**
  * Creates an enable object for a timeline object.
@@ -35,7 +35,7 @@ export function CreateTransitionAtemTimelineObject (enable: TimelineEnable, tran
 			deviceType: DeviceType.ATEM,
 			type: TimelineContentTypeAtem.ME,
 			me: {
-				input: 1000,
+				input: 1000, // TODO: Get from Sofie.
 				transition: transition,
 				transitionSettings: {
 					mix: {
@@ -64,6 +64,26 @@ export function CreateLawoAutomixTimelineObject (enable: TimelineEnable): Timeli
 				value: 0,
 				transitionDuration: 1
 			}
+		}
+	})
+}
+
+/**
+ * Creates a timeline object for a CCG media item
+ * @param {TimelineEnable} enable Timeline object enable.
+ * @param {CasparLLayer} layer Output layer.
+ * @param {string} file File to play.
+ */
+export function CreateCCGMediaTimelineObject (enable: TimelineEnable, layer: CasparLLayer, file: string) {
+	return literal<TimelineObjCCGMedia>({
+		id: '',
+		enable: enable,
+		priority: 1,
+		layer: layer,
+		content: {
+			deviceType: DeviceType.CASPARCG,
+			type: TimelineContentTypeCasparCg.MEDIA,
+			file: file
 		}
 	})
 }

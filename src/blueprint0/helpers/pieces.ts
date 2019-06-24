@@ -6,11 +6,11 @@ import {
 import { literal } from '../../common/util'
 import { SourceLayer, AtemLLayer, CasparLLayer } from '../../types/layers'
 import {
-	AtemTransitionStyle, TSRTimelineObj, TimelineObjAtemME, DeviceType, TimelineContentTypeAtem, TimelineObjCCGMedia, TimelineContentTypeCasparCg
+	AtemTransitionStyle, TSRTimelineObj, TimelineObjAtemME, DeviceType, TimelineContentTypeAtem
 } from 'timeline-state-resolver-types'
 import { CreateContentCam, CreateContentVT, CreateContentGraphics } from './content'
 import { GetInputValue } from './sources'
-import { CreateEnableForTimelineObject, CreateTransitionAtemTimelineObject, CreateLawoAutomixTimelineObject } from './timeline'
+import { CreateEnableForTimelineObject, CreateTransitionAtemTimelineObject, CreateLawoAutomixTimelineObject, CreateCCGMediaTimelineObject } from './timeline'
 
 /**
  * Creates a generic adLib piece.
@@ -158,20 +158,7 @@ export function CreatePieceBreaker (piece: Piece, duration: number): IBlueprintP
 		isTransition: true,
 		content: literal<TransitionContent>({
 			timelineObjects: _.compact<TSRTimelineObj>([
-				literal<TimelineObjCCGMedia>({
-					id: '',
-					enable: {
-						start: 0,
-						duration: duration
-					},
-					priority: 1,
-					layer: CasparLLayer.CasparPlayerWipe,
-					content: {
-						deviceType: DeviceType.CASPARCG,
-						type: TimelineContentTypeCasparCg.MEDIA,
-						file: piece.clipName
-					}
-				}),
+				CreateCCGMediaTimelineObject({ start: 0, duration: duration }, CasparLLayer.CasparPlayerWipe, piece.clipName),
 				literal<TimelineObjAtemME>({
 					id: '',
 					enable: {
@@ -248,17 +235,7 @@ export function CreatePieceVideo (params: PieceParams, transition: AtemTransitio
 	switch (params.context) {
 		default:
 			content.timelineObjects = _.compact<TSRTimelineObj>([
-				literal<TimelineObjCCGMedia>({
-					id: '',
-					enable: CreateEnableForTimelineObject(params.piece),
-					priority: 1,
-					layer: CasparLLayer.CasparPlayerClip,
-					content: {
-						deviceType: DeviceType.CASPARCG,
-						type: TimelineContentTypeCasparCg.MEDIA,
-						file: params.piece.clipName
-					}
-				})
+				CreateCCGMediaTimelineObject(CreateEnableForTimelineObject(params.piece), CasparLLayer.CasparPlayerClip, params.piece.clipName)
 			])
 			break
 	}
@@ -305,17 +282,7 @@ export function CreatePieceGraphic (params: PieceParams, transition: AtemTransit
 	switch (params.context) {
 		case 'HEAD':
 			content.timelineObjects = _.compact<TSRTimelineObj>([
-				literal<TimelineObjCCGMedia>({
-					id: '',
-					enable: CreateEnableForTimelineObject(params.piece),
-					priority: 1,
-					layer: CasparLLayer.CasparCGGraphics,
-					content: {
-						deviceType: DeviceType.CASPARCG,
-						type: TimelineContentTypeCasparCg.MEDIA,
-						file: params.piece.clipName
-					}
-				})
+				CreateCCGMediaTimelineObject(CreateEnableForTimelineObject(params.piece), CasparLLayer.CasparCGGraphics, params.piece.clipName)
 			])
 
 			if (checkAndPlaceOnScreen(p, params.piece.attributes)) {
@@ -361,17 +328,7 @@ export function CreatePieceGraphic (params: PieceParams, transition: AtemTransit
 			break
 		default:
 			content.timelineObjects = _.compact<TSRTimelineObj>([
-				literal<TimelineObjCCGMedia>({
-					id: '',
-					enable: CreateEnableForTimelineObject(params.piece),
-					priority: 1,
-					layer: CasparLLayer.CasparCGGraphics,
-					content: {
-						deviceType: DeviceType.CASPARCG,
-						type: TimelineContentTypeCasparCg.MEDIA,
-						file: params.piece.clipName
-					}
-				})
+				CreateCCGMediaTimelineObject(CreateEnableForTimelineObject(params.piece), CasparLLayer.CasparCGGraphics, params.piece.clipName)
 			])
 
 			if (!checkAndPlaceOnScreen(p, params.piece.attributes)) {
@@ -412,20 +369,7 @@ export function CreatePieceGraphicOverlay (params: PieceParams, transition: Atem
 	let content: GraphicsContent = CreateContentGraphics(params.piece)
 
 	content.timelineObjects = _.compact<TSRTimelineObj>([
-		literal<TimelineObjCCGMedia>({
-			id: '',
-			enable: CreateEnableForTimelineObject(params.piece),
-			priority: 1,
-			layer: CasparLLayer.CasparCGGraphics,
-			content: {
-				deviceType: DeviceType.CASPARCG,
-				type: TimelineContentTypeCasparCg.MEDIA,
-				file: params.piece.clipName,
-				mixer: {
-					keyer: true
-				}
-			}
-		}),
+		CreateCCGMediaTimelineObject(CreateEnableForTimelineObject(params.piece), CasparLLayer.CasparCGGraphics, params.piece.clipName),
 
 		literal<TimelineObjAtemME>({
 			id: '',
