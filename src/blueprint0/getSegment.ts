@@ -299,24 +299,34 @@ function createPart (ingestPart: IngestPart, pieces: IBlueprintPiece[], adLibPie
  */
 function calculateExpectedDuration (pieces: IBlueprintPiece[]): number {
 	if (pieces.length) {
-		let start = (pieces[0].enable.start as number)
+		let start = 0
 		let end = 0
 
 		pieces.forEach(piece => {
-			let st = piece.enable.start as number
-			let en = piece.enable.start as number
-			if (piece.enable.duration) {
-				en = (piece.enable.start as number) + (piece.enable.duration as number)
-			} else if (piece.enable.end) {
-				en = (piece.enable.end as number)
-			}
+			if (!piece.isTransition) {
+				let st = piece.enable.start as number
+				let en = piece.enable.start as number
+				if (piece.enable.duration) {
+					en = (piece.enable.start as number) + (piece.enable.duration as number)
+				} else if (piece.enable.end) {
+					en = (piece.enable.end as number)
+				}
 
-			if (st < start) {
-				start = st
-			}
+				if (piece.infiniteMode) {
+					en = en + 1000
+				}
 
-			if (en > end) {
-				end = en
+				if (st < start) {
+					start = st
+				}
+
+				if (en > end) {
+					end = en
+				}
+
+				if (st > end) {
+					end = st
+				}
 			}
 		})
 
