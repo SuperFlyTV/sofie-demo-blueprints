@@ -1,21 +1,18 @@
 import * as _ from 'underscore'
 import * as objectPath from 'object-path'
 import {
-	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece, IBlueprintAdLibPiece, VTContent, CameraContent, GraphicsContent, SplitsContent, SourceLayerType, RemoteContent
+	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece, IBlueprintAdLibPiece
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal, isAdLibPiece } from '../common/util'
-import { SourceLayer, CasparLLayer } from '../types/layers'
-import { Piece, BoxProps, SegmentConf } from '../types/classes'
-import { TSRTimelineObj, DeviceType, AtemTransitionStyle, TimelineObjCCGMedia, TimelineContentTypeCasparCg, SuperSourceBox } from 'timeline-state-resolver-types'
+import { SourceLayer } from '../types/layers'
+import { Piece, SegmentConf, PieceParams } from '../types/classes'
+import { AtemTransitionStyle } from 'timeline-state-resolver-types'
 import { parseConfig } from './helpers/config'
 import { parseSources } from './helpers/sources'
-import { createContentGraphics, createContentVT, createContentCam } from './helpers/content'
-import { getStudioName } from './helpers/studio'
-import { createPieceVideo, createPieceCam, createPieceGraphic, createPieceGraphicOverlay, createPieceInTransition, createPieceScript, createPieceGeneric, createPieceOutTransition } from './helpers/pieces'
-import { createEnableForTimelineObject } from './helpers/timeline'
+import { CreatePieceVideo, CreatePieceCam, CreatePieceGraphic, CreatePieceGraphicOverlay, CreatePieceInTransition, CreatePieceScript, CreatePieceOutTransition, CreatePieceVoiceover, CreatePieceBreaker } from './helpers/pieces'
+import { CreateDVE } from './helpers/dve'
 
 export function getSegment (context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
-	console.log(context)
 	const config: SegmentConf = {
 		context: context,
 		config: parseConfig(context),
@@ -81,48 +78,96 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 							context.warning('Minimum number of elements in DVE is 2')
 						} else {
 							let sources = Math.min(length, 4)
-							let p = createDVE(config, pieceList, sources, config.frameHeight, config.frameWidth)
+							let p = CreateDVE(config, pieceList, sources, config.frameHeight, config.frameWidth)
 							if (isAdLibPiece(p)) {
 								adLibPieces.push(p as IBlueprintAdLibPiece)
 							} else {
 								pieces.push(p as IBlueprintPiece)
 							}
 						}
+					} else if (type.match(/breaker/i)) {
+						// Validate breaker.
+						// Don't allow any other pieces to be specified, and don't allow transition type to be changed (for now).
+						if (pieceList.length > 1) {
+							for (let i = 1; i < pieceList.length; i++) {
+								if (pieceList[i].objectType.match(/transition/i)) {
+									context.warning(`Cannot change transition type of Breaker. Wipe transition will be used.`)
+								} else {
+									context.warning(`Only 1 item allowed in Breaker. Move ${pieceList[i].clipName || pieceList[i].id} to new item.`)
+								}
+							}
+						}
+
+						pieces.push(CreatePieceBreaker(pieceList[0], pieceList[0].duration || 1000))
 					} else {
 						let transitionType = AtemTransitionStyle.CUT
 
 						for (let i = 0; i < pieceList.length; i++) {
 							if (pieceList[i].objectType.match(/transition/i)) {
-								transitionType = transitionTypeFromString(pieceList[i].attributes['attr0'])
+								transitionType = transitionTypeFromString(pieceList[i].attributes['type'])
 							}
 						}
 
 						// Iterate over pieces + generate.
 						for (let i = 0; i < pieceList.length; i++) {
-							let piece = pieceList[i]
-							switch (piece.objectType) {
+							let params: PieceParams = {
+								config: config,
+								piece: pieceList[i],
+								context: type
+							}
+							switch (params.piece.objectType) {
 								case 'video':
-									createPieceByType(config, piece, createPieceVideo, pieces, adLibPieces, type, transitionType)
+									if (params.piece.clipName) {
+										createPieceByType(params, CreatePieceVideo, pieces, adLibPieces, transitionType)
+									} else {
+										context.warning(`Missing clip for video: ${params.piece.id}`)
+									}
 									break
 								case 'camera':
-									createPieceByType(config, piece, createPieceCam, pieces, adLibPieces, type, transitionType)
+									if (params.piece.attributes['name']) {
+										createPieceByType(params, CreatePieceCam, pieces, adLibPieces, transitionType)
+									} else {
+										context.warning(`Missing camera for camera: ${params.piece.id}`)
+									}
 									break
 								case 'graphic':
-									createPieceByType(config, piece, createPieceGraphic, pieces, adLibPieces, type, transitionType)
+									if (params.piece.clipName) {
+										createPieceByType(params, CreatePieceGraphic, pieces, adLibPieces, transitionType)
+									} else {
+										context.warning(`Missing clip for graphic: ${params.piece.id}`)
+									}
 									break
 								case 'overlay':
-									createPieceByType(config, piece, createPieceGraphicOverlay, pieces,adLibPieces, type, transitionType)
+									if (params.piece.clipName) {
+										createPieceByType(params, CreatePieceGraphicOverlay, pieces, adLibPieces, transitionType)
+									} else {
+										context.warning(`Missing clip for overlay: ${params.piece.id}`)
+									}
 									break
 								case 'transition':
-									pieces.push(createPieceInTransition(piece, transitionType, piece.duration || 1000))
+									if (params.piece.attributes['type']) {
+										pieces.push(CreatePieceInTransition(params.piece, transitionType, params.piece.duration || 1000))
+									} else {
+										context.warning(`Missing transition for transition: ${params.piece.id}`)
+									}
+									break
+								case 'voiceover':
+									if (params.piece.script) {
+										createPieceByType(params, CreatePieceVoiceover, pieces, adLibPieces, transitionType)
+									} else {
+										context.warning(`Missing script for voiceover: ${params.piece.id}`)
+									}
+									break
+								case 'script':
 									break
 								default:
-									context.warning(`Missing objectType '${piece.objectType}' for piece: '${piece.clipName || piece.id}'`)
+									context.warning(`Missing objectType '${params.piece.objectType}' for piece: '${params.piece.clipName || params.piece.id}'`)
 									break
 							}
 
 							if (i === 0 && script) {
-								pieces.push(createPieceScript(piece, script))
+								params.piece.script = script
+								pieces.push(CreatePieceScript(params))
 							}
 						}
 					}
@@ -160,193 +205,6 @@ function transitionTypeFromString (str: string): AtemTransitionStyle {
 }
 
 /**
- * Creates a DVE Piece.
- * Currently only supports split, not PIP.
- * @param {Piece[]} pieces Pieces to insert into the DVE.
- * @param {number} sources Number of sources to display.
- * @param {number} width Screen width.
- * @param {number} height Screen height.
- */
-function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width: number, height: number): IBlueprintPiece | IBlueprintAdLibPiece {
-	let dvePiece = pieces[0] // First piece is always assumed to be the DVE.
-	pieces = pieces.slice(1, sources + 1)
-	let boxes: BoxProps[] = []
-	// Right now there are always half the width/height, but could change!
-	let boxWidth = 0
-	let boxHeight = 0
-
-	switch (sources) {
-		case 2:
-			boxWidth = width / 2
-			boxHeight = height / 2
-			boxes = [
-				{
-					x: -boxWidth,
-					y: boxHeight,
-					size: boxWidth
-				},
-				{
-					x: 0,
-					y: boxHeight,
-					size: boxWidth
-				}
-			]
-			break
-		case 3:
-			boxWidth = width / 2
-			boxHeight = height / 2
-			boxes = [
-				{
-					x: -(boxWidth / 2),
-					y: boxHeight,
-					size: boxWidth
-				},
-				{
-					x: -boxWidth,
-					y: 0,
-					size: boxWidth
-				},
-				{
-					x: 0,
-					y: 0,
-					size: boxWidth
-				}
-			]
-			break
-		case 4:
-			boxWidth = width / 2
-			boxHeight = height / 2
-			boxes = [
-				{
-					x: -boxWidth,
-					y: boxHeight,
-					size: boxWidth
-				},
-				{
-					x: 0,
-					y: boxHeight,
-					size: boxWidth
-				},
-				{
-					x: -boxWidth,
-					y: 0,
-					size: boxWidth
-				},
-				{
-					x: 0,
-					y: 0,
-					size: boxWidth
-				}
-			]
-			break
-	}
-
-	let sourceBoxes: SuperSourceBox[] = []
-
-	for (let i = 0; i < sources; i++) {
-		sourceBoxes.push(literal<SuperSourceBox>({
-			enabled: true,
-			source: 1000, // TODO: Get this from Sofie.
-			x: boxes[i].x,
-			y: boxes[i].y,
-			size: boxes[i].size
-		}))
-	}
-
-	interface SourceMeta {
-		type: SourceLayerType
-		studioLabel: string
-		switcherInput: number | string
-	}
-
-	let sourceConfigurations: Array<(VTContent | CameraContent | RemoteContent | GraphicsContent) & SourceMeta> = []
-
-	pieces.forEach(piece => {
-		let newContent: (VTContent | CameraContent | RemoteContent | GraphicsContent) & SourceMeta
-		switch (piece.objectType) {
-			case 'graphic':
-				newContent = literal<GraphicsContent & SourceMeta>({...createContentGraphics(piece), ...{
-					type: SourceLayerType.GRAPHICS,
-					studioLabel: getStudioName(config.context),
-					switcherInput: 1000 // TODO: Get from Sofie.
-				}})
-				newContent.timelineObjects = _.compact<TSRTimelineObj>([
-					literal<TimelineObjCCGMedia>({
-						id: '',
-						enable: createEnableForTimelineObject(piece),
-						priority: 1,
-						layer: CasparLLayer.CasparCGGraphics,
-						content: {
-							deviceType: DeviceType.CASPARCG,
-							type: TimelineContentTypeCasparCg.MEDIA,
-							file: piece.clipName
-						}
-					})
-				]),
-				sourceConfigurations.push(newContent)
-				break
-			case 'video':
-				newContent = literal<VTContent & SourceMeta>({...createContentVT(piece), ...{
-					type: SourceLayerType.VT,
-					studioLabel: getStudioName(config.context),
-					switcherInput: 1000 // TODO: Get from Sofie.
-				}})
-				newContent.timelineObjects = _.compact<TSRTimelineObj>([
-					literal<TimelineObjCCGMedia>({
-						id: '',
-						enable: createEnableForTimelineObject(piece),
-						priority: 1,
-						layer: CasparLLayer.CasparPlayerClip,
-						content: {
-							deviceType: DeviceType.CASPARCG,
-							type: TimelineContentTypeCasparCg.MEDIA,
-							file: piece.clipName
-						}
-					})
-				]), // TODO
-				sourceConfigurations.push(newContent)
-				break
-			case 'camera':
-				newContent = literal<CameraContent & SourceMeta>({...createContentCam(config, piece), ...{
-					type: SourceLayerType.CAMERA,
-					studioLabel: getStudioName(config.context),
-					switcherInput: 1000 // TODO: Get from Sofie.
-				}})
-				newContent.timelineObjects = [], // TODO
-				sourceConfigurations.push(newContent)
-				break
-			case 'remote':
-				newContent = literal<RemoteContent & SourceMeta>({
-					timelineObjects: [], // TODO
-					type: SourceLayerType.REMOTE,
-					studioLabel: getStudioName(config.context),
-					switcherInput: 1000 // TODO: Get from Sofie.
-				})
-				sourceConfigurations.push(newContent)
-				break
-			default:
-				config.context.warning(`DVE does not support objectType '${piece.objectType}' for piece: '${piece.clipName || piece.id}'`)
-				break
-		}
-	})
-
-	let p = createPieceGeneric(dvePiece)
-
-	let content: SplitsContent = {
-		dveConfiguration: {},
-		boxSourceConfiguration: sourceConfigurations,
-		timelineObjects: _.compact<TSRTimelineObj>([
-
-		])
-	}
-
-	p.content = content
-	p.name = `DVE: ${sources} split`
-
-	return p
-}
-
-/**
  * Creates a piece using a given function.
  * @param {Piece} piece Piece to create.
  * @param {(config: SegmentConf, p: Piece, context: string, transition: AtemTransitionStyle) => IBlueprintPiece | IBlueprintAdLibPiece} creator Function for creating the piece.
@@ -356,31 +214,30 @@ function createDVE (config: SegmentConf, pieces: Piece[], sources: number, width
  * @param {AtemTransitionsStyle} transitionType Type of transition to use.
  */
 function createPieceByType (
-		config: SegmentConf,
-		piece: Piece, creator: (config: SegmentConf, p: Piece, context: string, transition: AtemTransitionStyle) => IBlueprintPiece | IBlueprintAdLibPiece,
+		params: PieceParams,
+		creator: (params: PieceParams, transition: AtemTransitionStyle) => IBlueprintPiece | IBlueprintAdLibPiece,
 		pieces: IBlueprintPiece[],
 		adLibPieces: IBlueprintAdLibPiece[],
-		context: string,
 		transitionType?: AtemTransitionStyle
 	) {
-	let p = creator(config, piece, context, transitionType || AtemTransitionStyle.CUT)
+	let p = creator(params, transitionType || AtemTransitionStyle.CUT)
 	if (p.content) {
 		if (isAdLibPiece(p)) {
 			adLibPieces.push(p as IBlueprintAdLibPiece)
 		} else {
 			pieces.push(p as IBlueprintPiece)
 
-			if (context.match(/titles/i) && piece.objectType.match(/(graphic)|(video)/i)) {
-				pieces.push(createPieceOutTransition(piece, transitionType || AtemTransitionStyle.DIP, (1 / config.framesPerSecond) * 150 * 1000)) // TODO: Use actual framerate
+			if (params.context.match(/titles/i) && params.piece.objectType.match(/(graphic)|(video)/i)) {
+				pieces.push(CreatePieceOutTransition(params.piece, transitionType || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 150 * 1000)) // TODO: Use actual framerate
 			}
 
-			if (context.match(/breaker/i) && piece.objectType.match(/(graphic)|(video)/i)) {
-				pieces.push(createPieceOutTransition(piece, transitionType || AtemTransitionStyle.DIP, (1 / config.framesPerSecond) * 50 * 1000)) // TODO: Use actual framerate
+			if (params.context.match(/breaker/i) && params.piece.objectType.match(/(graphic)|(video)/i)) {
+				pieces.push(CreatePieceOutTransition(params.piece, transitionType || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 50 * 1000)) // TODO: Use actual framerate
 			}
 
-			if (context.match(/package/i) && piece.objectType.match(/video/i)) {
-				pieces.push(createPieceInTransition(piece, transitionType || AtemTransitionStyle.MIX, (1 / config.framesPerSecond) * 150 * 1000))
-				pieces.push(createPieceOutTransition(piece, transitionType || AtemTransitionStyle.DIP, (1 / config.framesPerSecond) * 50 * 1000)) // TODO: Use actual framerate
+			if (params.context.match(/package/i) && params.piece.objectType.match(/video/i)) {
+				pieces.push(CreatePieceInTransition(params.piece, transitionType || AtemTransitionStyle.MIX, (1 / params.config.framesPerSecond) * 150 * 1000))
+				pieces.push(CreatePieceOutTransition(params.piece, transitionType || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 50 * 1000)) // TODO: Use actual framerate
 			}
 		}
 	}
@@ -441,11 +298,39 @@ function createPart (ingestPart: IngestPart, pieces: IBlueprintPiece[], adLibPie
  * @param {IBlueprintPiece[]} pieces Pieces to calculate duration for.
  */
 function calculateExpectedDuration (pieces: IBlueprintPiece[]): number {
-	let duration = 0
+	if (pieces.length) {
+		let start = 0
+		let end = 0
 
-	pieces.forEach(piece => {
-		duration += (piece.enable.duration as number) // This will get more complicated as more rules are added
-	})
+		pieces.forEach(piece => {
+			if (!piece.isTransition) {
+				let st = piece.enable.start as number
+				let en = piece.enable.start as number
+				if (piece.enable.duration) {
+					en = (piece.enable.start as number) + (piece.enable.duration as number)
+				} else if (piece.enable.end) {
+					en = (piece.enable.end as number)
+				}
 
-	return duration
+				if (piece.infiniteMode) {
+					en = en + 1000
+				}
+
+				if (st < start) {
+					start = st
+				}
+
+				if (en > end) {
+					end = en
+				}
+
+				if (st > end) {
+					end = st
+				}
+			}
+		})
+
+		return end - start
+	}
+	return 0
 }
