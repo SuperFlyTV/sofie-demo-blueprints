@@ -386,12 +386,29 @@ export function CreatePieceScript (params: PieceParams): IBlueprintPiece {
 	let firstWords = scriptWords.slice(0, Math.min(4, scriptWords.length)).join(' ')
 	let lastWords = scriptWords.slice(scriptWords.length - (Math.min(4, scriptWords.length)), (Math.min(4, scriptWords.length))).join(' ')
 
+	let scriptParent = ''
+
+	switch (params.piece.objectType) {
+		case 'camera':
+			scriptParent = params.piece.attributes[Attributes.CAMERA]
+			break
+		case 'graphic':
+			scriptParent = 'Super'
+			break
+		case 'video':
+			scriptParent = 'VT'
+			break
+		case 'remote':
+			scriptParent = params.piece.attributes[Attributes.REMOTE]
+			break
+	}
+
 	p.name = (firstWords ? firstWords + '\u2026' : '') + '||' + (lastWords ? '\u2026' + lastWords : '')
 
 	let content: ScriptContent = {
 		firstWords: firstWords,
 		lastWords: lastWords,
-		fullScript: params.piece.script || '',
+		fullScript: scriptParent ? `/${scriptParent}/ ${(params.piece.script || '')} /end-${scriptParent}/` : (params.piece.script || ''),
 		sourceDuration: duration,
 		lastModified: Date.now() // TODO: pull from gateway
 	}
