@@ -1,14 +1,14 @@
 import _ = require('underscore')
 import { Piece, PieceParams } from '../../types/classes'
 import {
-	IBlueprintAdLibPiece, IBlueprintPiece, PieceEnable, PieceLifespan, TransitionContent, CameraContent, VTContent, GraphicsContent, ScriptContent, MicContent
+	IBlueprintAdLibPiece, IBlueprintPiece, PieceEnable, PieceLifespan, TransitionContent, CameraContent, VTContent, GraphicsContent, ScriptContent, MicContent, RemoteContent
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
 import { SourceLayer, AtemLLayer, CasparLLayer } from '../../types/layers'
 import {
 	AtemTransitionStyle, TSRTimelineObj, TimelineObjAtemME, DeviceType, TimelineContentTypeAtem
 } from 'timeline-state-resolver-types'
-import { CreateContentCam, CreateContentVT, CreateContentGraphics } from './content'
+import { CreateContentCam, CreateContentVT, CreateContentGraphics, CreateContentRemote } from './content'
 import { GetInputValue, Attributes } from './sources'
 import { CreateEnableForTimelineObject, CreateTransitionAtemTimelineObject, CreateLawoAutomixTimelineObject, CreateCCGMediaTimelineObject } from './timeline'
 
@@ -349,6 +349,45 @@ export function CreatePieceGraphic (params: PieceParams, transition: AtemTransit
 					})
 				)
 			}
+			break
+	}
+
+	p.content = content
+
+	return p
+}
+
+/**
+ * Creates a remote source.
+ * @param params Piece to create.
+ * @param transition In transition.
+ */
+export function CreatePieceRemote (params: PieceParams, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
+	let p = CreatePieceGeneric(params.piece)
+
+	p.sourceLayerId = SourceLayer.PgmRemote
+	p.name = params.piece.attributes[Attributes.REMOTE]
+
+	let content: RemoteContent = CreateContentRemote(params.config, params.piece)
+
+	switch (params.context) {
+		default:
+			content.timelineObjects = _.compact<TSRTimelineObj>([
+				literal<TimelineObjAtemME>({
+					id: '',
+					enable: CreateEnableForTimelineObject(params.piece),
+					priority: 1,
+					layer: AtemLLayer.AtemMEProgram,
+					content: {
+						deviceType: DeviceType.ATEM,
+						type: TimelineContentTypeAtem.ME,
+						me: {
+							input: GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes[Attributes.REMOTE]),
+							transition: transition
+						}
+					}
+				})
+			])
 			break
 	}
 

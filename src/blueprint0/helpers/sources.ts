@@ -46,7 +46,7 @@ export function parseMapStr (context: NotesContext | undefined, str: string, can
 	return res
 }
 
-type SourceInfoType = SourceLayerType.CAMERA // | SourceLayerType.REMOTE
+type SourceInfoType = SourceLayerType.CAMERA | SourceLayerType.REMOTE
 export interface SourceInfo {
 	type: SourceInfoType
 	id: number
@@ -55,9 +55,18 @@ export interface SourceInfo {
 }
 
 export function parseSources (context: NotesContext | undefined, config: BlueprintConfig): SourceInfo[] {
+	const rmInputMap: { id: number, val: number }[] = parseMapStr(context, config.studio.SourcesRM, false)
 	const kamInputMap: { id: number, val: number }[] = parseMapStr(context, config.studio.SourcesCam, false)
 
 	const res: SourceInfo[] = []
+
+	_.each(rmInputMap, rm => {
+		res.push({
+			type: SourceLayerType.REMOTE,
+			id: rm.id,
+			port: rm.val
+		})
+	})
 
 	_.each(kamInputMap, kam => {
 		res.push({
@@ -93,9 +102,9 @@ export function FindSourceByName (context: NotesContext, sources: SourceInfo[], 
 	if (name.indexOf('k') === 0) {
 		return FindSourceInfoStrict(context, sources, SourceLayerType.CAMERA, name)
 	}
-	// if (name.indexOf('r') === 0) {
-	// 	return findSourceInfoStrict(context, sources, SourceLayerType.REMOTE, name)
-	// }
+	if (name.indexOf('r') === 0) {
+	 	return FindSourceInfoStrict(context, sources, SourceLayerType.REMOTE, name)
+	}
 
 	context.warning(`Invalid source name "${name}"`)
 	return undefined

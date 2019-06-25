@@ -35,7 +35,7 @@ export function CreateTransitionAtemTimelineObject (enable: TimelineEnable, tran
 			deviceType: DeviceType.ATEM,
 			type: TimelineContentTypeAtem.ME,
 			me: {
-				input: input, // TODO: Get from Sofie.
+				input: input,
 				transition: transition,
 				transitionSettings: {
 					mix: {

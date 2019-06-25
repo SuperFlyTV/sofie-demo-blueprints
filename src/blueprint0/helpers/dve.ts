@@ -79,7 +79,7 @@ function createDVESourceConfigurations (config: SegmentConf, pieces: Piece[], so
 					timelineObjects: [], // TODO
 					type: SourceLayerType.REMOTE,
 					studioLabel: getStudioName(config.context),
-					switcherInput: GetInputValue(config.context, config.sourceConfig, piece.attributes[Attributes.TRANSITION]) // TODO: Get from Sofie.
+					switcherInput: GetInputValue(config.context, config.sourceConfig, piece.attributes[Attributes.REMOTE])
 				})
 				sourceConfigurations.push(newContent)
 				sourceBoxes[index].source = newContent.switcherInput as number

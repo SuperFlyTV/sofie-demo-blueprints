@@ -8,8 +8,8 @@ import { SourceLayer } from '../types/layers'
 import { Piece, SegmentConf, PieceParams } from '../types/classes'
 import { AtemTransitionStyle } from 'timeline-state-resolver-types'
 import { parseConfig } from './helpers/config'
-import { parseSources, GetInputValue, Attributes } from './helpers/sources'
-import { CreatePieceVideo, CreatePieceCam, CreatePieceGraphic, CreatePieceGraphicOverlay, CreatePieceInTransition, CreatePieceScript, CreatePieceOutTransition, CreatePieceVoiceover, CreatePieceBreaker } from './helpers/pieces'
+import { parseSources, Attributes } from './helpers/sources'
+import { CreatePieceVideo, CreatePieceCam, CreatePieceGraphic, CreatePieceGraphicOverlay, CreatePieceInTransition, CreatePieceScript, CreatePieceOutTransition, CreatePieceVoiceover, CreatePieceBreaker, CreatePieceRemote } from './helpers/pieces'
 import { CreateDVE } from './helpers/dve'
 
 export function getSegment (context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
@@ -115,7 +115,6 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 								piece: pieceList[i],
 								context: type
 							}
-							let input: number
 							switch (params.piece.objectType) {
 								case 'video':
 									if (params.piece.clipName) {
@@ -147,8 +146,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 									break
 								case 'transition':
 									if (params.piece.attributes[Attributes.TRANSITION]) {
-										input = GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes[Attributes.TRANSITION])
-										pieces.push(CreatePieceInTransition(params.piece, transitionType, params.piece.duration || 1000, input))
+										pieces.push(CreatePieceInTransition(params.piece, transitionType, params.piece.duration || 1000, 1000))
 									} else {
 										context.warning(`Missing transition for transition: ${params.piece.id}`)
 									}
@@ -158,6 +156,13 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 										createPieceByType(params, CreatePieceVoiceover, pieces, adLibPieces, transitionType)
 									} else {
 										context.warning(`Missing script for voiceover: ${params.piece.id}`)
+									}
+									break
+								case 'remote':
+									if (params.piece.attributes[Attributes.REMOTE]) {
+										createPieceByType(params, CreatePieceRemote, pieces, adLibPieces, transitionType)
+									} else {
+										context.warning(`Missing remote source for remote: ${params.piece.id}`)
 									}
 									break
 								case 'script':
@@ -230,17 +235,17 @@ function createPieceByType (
 			pieces.push(p as IBlueprintPiece)
 
 			if (params.context.match(/titles/i) && params.piece.objectType.match(/(graphic)|(video)/i)) {
-				let input = GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes[Attributes.CAMERA])
+				let input = params.config.config.studio.AtemSource.Server1
 				pieces.push(CreatePieceOutTransition(params.piece, transitionType || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 150 * 1000, input)) // TODO: Use actual framerate
 			}
 
 			if (params.context.match(/breaker/i) && params.piece.objectType.match(/(graphic)|(video)/i)) {
-				let input = GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes[Attributes.CAMERA])
+				let input = params.config.config.studio.AtemSource.Server1
 				pieces.push(CreatePieceOutTransition(params.piece, transitionType || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 50 * 1000, input)) // TODO: Use actual framerate
 			}
 
 			if (params.context.match(/package/i) && params.piece.objectType.match(/video/i)) {
-				let input = GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes[Attributes.CAMERA])
+				let input = params.config.config.studio.AtemSource.Server1
 				pieces.push(CreatePieceInTransition(params.piece, transitionType || AtemTransitionStyle.MIX, (1 / params.config.framesPerSecond) * 150 * 1000, input))
 				pieces.push(CreatePieceOutTransition(params.piece, transitionType || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 50 * 1000, input)) // TODO: Use actual framerate
 			}
