@@ -1,7 +1,7 @@
 import { Piece } from '../../types/classes'
 import { TimelineEnable } from 'timeline-state-resolver-types/dist/superfly-timeline'
 import { literal } from '../../common/util'
-import { TimelineObjAtemME, AtemTransitionStyle, DeviceType, TimelineContentTypeAtem, TimelineContentTypeLawo, TimelineObjLawoSource, TimelineContentTypeCasparCg, TimelineObjCCGMedia } from 'timeline-state-resolver-types'
+import { TimelineObjAtemME, AtemTransitionStyle, DeviceType, TimelineContentTypeAtem, TimelineContentTypeLawo, TimelineObjLawoSource, TimelineContentTypeCasparCg, TimelineObjCCGMedia, AtemTransitionSettings } from 'timeline-state-resolver-types'
 import { AtemLLayer, LawoLLayer, CasparLLayer } from '../../types/layers'
 
 /**
@@ -18,6 +18,32 @@ export function CreateEnableForTimelineObject (piece: Piece): TimelineEnable {
 	}
 
 	return piece
+}
+
+/**
+ * Creates a timeline object for switching ATEM sources.
+ * @param {TimelineEnable} enable Timeline object enable.
+ * @param {AtemLLayer} layer Layer to place content onto.
+ * @param {number} input Input to switch to.
+ * @param {AtemTransitionStyle} transition Transition to use.
+ * @param {AtemTransitionSettings} transitionSettings Transition settings.
+ */
+export function CreateAtemTimelineObject (enable: TimelineEnable, layer: AtemLLayer, input: number, transition: AtemTransitionStyle, transitionSettings?: AtemTransitionSettings): TimelineObjAtemME {
+	return literal<TimelineObjAtemME>({
+		id: '',
+		enable: enable,
+		priority: 1,
+		layer: layer,
+		content: {
+			deviceType: DeviceType.ATEM,
+			type: TimelineContentTypeAtem.ME,
+			me: {
+				input: input,
+				transition: transition,
+				transitionSettings: transitionSettings
+			}
+		}
+	})
 }
 
 /**

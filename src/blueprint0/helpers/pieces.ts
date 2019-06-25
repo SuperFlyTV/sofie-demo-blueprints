@@ -10,7 +10,7 @@ import {
 } from 'timeline-state-resolver-types'
 import { CreateContentCam, CreateContentVT, CreateContentGraphics, CreateContentRemote } from './content'
 import { GetInputValue, Attributes } from './sources'
-import { CreateEnableForTimelineObject, CreateTransitionAtemTimelineObject, CreateLawoAutomixTimelineObject, CreateCCGMediaTimelineObject } from './timeline'
+import { CreateEnableForTimelineObject, CreateTransitionAtemTimelineObject, CreateLawoAutomixTimelineObject, CreateCCGMediaTimelineObject, CreateAtemTimelineObject } from './timeline'
 
 /**
  * Creates a generic adLib piece.
@@ -159,22 +159,7 @@ export function CreatePieceBreaker (piece: Piece, duration: number): IBlueprintP
 		content: literal<TransitionContent>({
 			timelineObjects: _.compact<TSRTimelineObj>([
 				CreateCCGMediaTimelineObject({ start: 0, duration: duration }, CasparLLayer.CasparPlayerWipe, piece.clipName),
-				literal<TimelineObjAtemME>({
-					id: '',
-					enable: {
-						start: 0
-					},
-					priority: 5,
-					layer: AtemLLayer.AtemMEProgram,
-					content: {
-						deviceType: DeviceType.ATEM,
-						type: TimelineContentTypeAtem.ME,
-						me: {
-							input: 1000, // TODO: Get from Sofie
-							transition: AtemTransitionStyle.WIPE
-						}
-					}
-				})
+				CreateAtemTimelineObject({ start: 0 }, AtemLLayer.AtemMEProgram, 1000, AtemTransitionStyle.WIPE) // TODO: Get input from Sofie
 			])
 		})
 	})
@@ -243,20 +228,7 @@ export function CreatePieceVideo (params: PieceParams, transition: AtemTransitio
 	// TODO: if it should be placed on a screen, it should probably go out over an aux.
 	if (!checkAndPlaceOnScreen(p, params.piece.attributes)) {
 		content.timelineObjects.push(
-			literal<TimelineObjAtemME>({
-				id: '',
-				enable: CreateEnableForTimelineObject(params.piece),
-				priority: 1,
-				layer: AtemLLayer.AtemMEProgram,
-				content: {
-					deviceType: DeviceType.ATEM,
-					type: TimelineContentTypeAtem.ME,
-					me: {
-						input: params.config.config.studio.AtemSource.Server1,
-						transition: transition
-					}
-				}
-			})
+			CreateAtemTimelineObject(CreateEnableForTimelineObject(params.piece), AtemLLayer.AtemMEProgram, params.config.config.studio.AtemSource.Server1, transition)
 		)
 		content.timelineObjects.push(
 			CreateLawoAutomixTimelineObject({ start: 0 })
@@ -287,42 +259,12 @@ export function CreatePieceGraphic (params: PieceParams, transition: AtemTransit
 
 			if (checkAndPlaceOnScreen(p, params.piece.attributes)) {
 				content.timelineObjects.push(
-					literal<TimelineObjAtemME>({
-						id: '',
-						enable: CreateEnableForTimelineObject(params.piece),
-						priority: 1,
-						layer: AtemLLayer.AtemMEProgram, // TODO: Should be aux?
-						content: {
-							deviceType: DeviceType.ATEM,
-							type: TimelineContentTypeAtem.ME,
-							me: {
-								input: params.config.config.studio.AtemSource.Server1,
-								transition: transition,
-								transitionSettings: {
-									mix: {
-										rate: 100
-									}
-								}
-							}
-						}
-					})
+					// TODO: input should be aux?
+					CreateAtemTimelineObject(CreateEnableForTimelineObject(params.piece), AtemLLayer.AtemMEProgram, params.config.config.studio.AtemSource.Server1, transition, { mix: { rate: 100 } })
 				)
 			} else {
 				content.timelineObjects.push(
-					literal<TimelineObjAtemME>({
-						id: '',
-						enable: CreateEnableForTimelineObject(params.piece),
-						priority: 1,
-						layer: AtemLLayer.AtemMEProgram,
-						content: {
-							deviceType: DeviceType.ATEM,
-							type: TimelineContentTypeAtem.ME,
-							me: {
-								input: params.config.config.studio.AtemSource.Server1,
-								transition: AtemTransitionStyle.WIPE
-							}
-						}
-					})
+					CreateAtemTimelineObject(CreateEnableForTimelineObject(params.piece), AtemLLayer.AtemMEProgram, params.config.config.studio.AtemSource.Server1, AtemTransitionStyle.WIPE)
 				)
 			}
 			break
@@ -332,22 +274,7 @@ export function CreatePieceGraphic (params: PieceParams, transition: AtemTransit
 			])
 
 			if (!checkAndPlaceOnScreen(p, params.piece.attributes)) {
-				content.timelineObjects.push(
-					literal<TimelineObjAtemME>({
-						id: '',
-						enable: CreateEnableForTimelineObject(params.piece),
-						priority: 1,
-						layer: AtemLLayer.AtemMEProgram,
-						content: {
-							deviceType: DeviceType.ATEM,
-							type: TimelineContentTypeAtem.ME,
-							me: {
-								input: params.config.config.studio.AtemSource.Server1,
-								transition: AtemTransitionStyle.CUT
-							}
-						}
-					})
-				)
+				CreateAtemTimelineObject(CreateEnableForTimelineObject(params.piece), AtemLLayer.AtemMEProgram, params.config.config.studio.AtemSource.Server1, AtemTransitionStyle.CUT)
 			}
 			break
 	}
@@ -373,20 +300,12 @@ export function CreatePieceRemote (params: PieceParams, transition: AtemTransiti
 	switch (params.context) {
 		default:
 			content.timelineObjects = _.compact<TSRTimelineObj>([
-				literal<TimelineObjAtemME>({
-					id: '',
-					enable: CreateEnableForTimelineObject(params.piece),
-					priority: 1,
-					layer: AtemLLayer.AtemMEProgram,
-					content: {
-						deviceType: DeviceType.ATEM,
-						type: TimelineContentTypeAtem.ME,
-						me: {
-							input: GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes[Attributes.REMOTE]),
-							transition: transition
-						}
-					}
-				})
+				CreateAtemTimelineObject(
+					CreateEnableForTimelineObject(params.piece),
+					AtemLLayer.AtemMEProgram,
+					GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes[Attributes.REMOTE]),
+					transition
+				)
 			])
 			break
 	}
