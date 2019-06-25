@@ -9,7 +9,7 @@ import {
 	AtemTransitionStyle, TSRTimelineObj, TimelineObjAtemME, DeviceType, TimelineContentTypeAtem
 } from 'timeline-state-resolver-types'
 import { CreateContentCam, CreateContentVT, CreateContentGraphics } from './content'
-import { GetInputValue } from './sources'
+import { GetInputValue, Attributes } from './sources'
 import { CreateEnableForTimelineObject, CreateTransitionAtemTimelineObject, CreateLawoAutomixTimelineObject, CreateCCGMediaTimelineObject } from './timeline'
 
 /**
@@ -108,11 +108,11 @@ function createPieceTransitionGeneric (piece: Piece, duration: number): IBluepri
  * @param {AtemTransitionStyle} transition Transition style.
  * @param {number} duration Length of transition.
  */
-export function CreatePieceInTransition (piece: Piece, transition: AtemTransitionStyle, duration: number): IBlueprintPiece {
+export function CreatePieceInTransition (piece: Piece, transition: AtemTransitionStyle, duration: number, input: number): IBlueprintPiece {
 	let p = createPieceTransitionGeneric(piece, duration)
 	let content = literal<TransitionContent>({
 		timelineObjects: _.compact<TSRTimelineObj>([
-			CreateTransitionAtemTimelineObject({ start: 0, duration: duration }, transition)
+			CreateTransitionAtemTimelineObject({ start: 0, duration: duration }, transition, input)
 		])
 	})
 	p.content = content
@@ -126,12 +126,12 @@ export function CreatePieceInTransition (piece: Piece, transition: AtemTransitio
  * @param {AtemTransitionStyle} transition Transition type.
  * @param {number} duration Length of transition.
  */
-export function CreatePieceOutTransition (piece: Piece, transition: AtemTransitionStyle, duration: number): IBlueprintPiece {
+export function CreatePieceOutTransition (piece: Piece, transition: AtemTransitionStyle, duration: number, input: number): IBlueprintPiece {
 	let p = createPieceTransitionGeneric(piece, duration)
 
 	let content = literal<TransitionContent>({
 		timelineObjects: _.compact<TSRTimelineObj>([
-			CreateTransitionAtemTimelineObject({ start: piece.duration - duration, duration: duration }, transition)
+			CreateTransitionAtemTimelineObject({ start: piece.duration - duration, duration: duration }, transition, input)
 		])
 	})
 	p.content = content
@@ -190,7 +190,7 @@ export function CreatePieceCam (params: PieceParams, transition: AtemTransitionS
 	let p = CreatePieceGeneric(params.piece)
 
 	p.sourceLayerId = SourceLayer.PgmCam
-	p.name = params.piece.attributes['name']
+	p.name = params.piece.attributes[Attributes.CAMERA]
 	let content: CameraContent = CreateContentCam(params.config, params.piece)
 
 	switch (params.context) {
@@ -205,7 +205,7 @@ export function CreatePieceCam (params: PieceParams, transition: AtemTransitionS
 						deviceType: DeviceType.ATEM,
 						type: TimelineContentTypeAtem.ME,
 						me: {
-							input: GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes['name']),
+							input: GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes[Attributes.CAMERA]),
 							transition: transition
 						}
 					}

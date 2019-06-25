@@ -1,7 +1,7 @@
 import _ = require('underscore')
 import { SegmentConf, Piece } from '../../types/classes'
 import { CameraContent, VTContent, GraphicsContent } from 'tv-automation-sofie-blueprints-integration'
-import { GetInputValue } from './sources'
+import { GetInputValue, Attributes } from './sources'
 import { TSRTimelineObj } from 'timeline-state-resolver-types'
 import { getStudioName } from './studio'
 
@@ -11,7 +11,7 @@ import { getStudioName } from './studio'
 export function CreateContentCam (config: SegmentConf, piece: Piece): CameraContent {
 	let content: CameraContent = {
 		studioLabel: getStudioName(config.context),
-		switcherInput: GetInputValue(config.context, config.sourceConfig, piece.attributes['name']),
+		switcherInput: GetInputValue(config.context, config.sourceConfig, piece.attributes[Attributes.CAMERA]),
 		timelineObjects: _.compact<TSRTimelineObj>([])
 	}
 

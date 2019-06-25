@@ -25,7 +25,7 @@ export function CreateEnableForTimelineObject (piece: Piece): TimelineEnable {
  * @param {TimelineEnable} enable Timeline object enable.
  * @param {AtemTransitionStyle} transition Transition to use.
  */
-export function CreateTransitionAtemTimelineObject (enable: TimelineEnable, transition: AtemTransitionStyle): TimelineObjAtemME {
+export function CreateTransitionAtemTimelineObject (enable: TimelineEnable, transition: AtemTransitionStyle, input: number): TimelineObjAtemME {
 	return literal<TimelineObjAtemME>({
 		id: '',
 		enable: enable,
@@ -35,7 +35,7 @@ export function CreateTransitionAtemTimelineObject (enable: TimelineEnable, tran
 			deviceType: DeviceType.ATEM,
 			type: TimelineContentTypeAtem.ME,
 			me: {
-				input: 1000, // TODO: Get from Sofie.
+				input: input, // TODO: Get from Sofie.
 				transition: transition,
 				transitionSettings: {
 					mix: {

@@ -4,6 +4,12 @@ import { BlueprintConfig } from './config'
 import { NotesContext, SourceLayerType } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
 
+export enum Attributes {
+	CAMERA = 'name',
+	TRANSITION = 'type',
+	REMOTE = 'source'
+}
+
 export function parseMapStr (context: NotesContext | undefined, str: string, canBeStrings: boolean): { id: number, val: any }[] {
 	str = str.trim()
 
