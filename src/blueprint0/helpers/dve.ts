@@ -7,7 +7,7 @@ import { CreateContentGraphics, CreateContentVT, CreateContentCam } from './cont
 import { getStudioName } from './studio'
 import { CreateEnableForTimelineObject, CreateCCGMediaTimelineObject } from './timeline'
 import { CasparLLayer, SourceLayer } from '../../types/layers'
-import { GetInputValue } from './sources'
+import { GetInputValue, Attributes } from './sources'
 import { CreatePieceGeneric } from './pieces'
 
 /**
@@ -68,7 +68,7 @@ function createDVESourceConfigurations (config: SegmentConf, pieces: Piece[], so
 				newContent = literal<CameraContent & SourceMeta>({...CreateContentCam(config, piece), ...{
 					type: SourceLayerType.CAMERA,
 					studioLabel: getStudioName(config.context),
-					switcherInput: GetInputValue(config.context, config.sourceConfig, piece.attributes['name'])
+					switcherInput: GetInputValue(config.context, config.sourceConfig, piece.attributes[Attributes.CAMERA])
 				}})
 				newContent.timelineObjects = [], // TODO
 				sourceConfigurations.push(newContent)
@@ -79,7 +79,7 @@ function createDVESourceConfigurations (config: SegmentConf, pieces: Piece[], so
 					timelineObjects: [], // TODO
 					type: SourceLayerType.REMOTE,
 					studioLabel: getStudioName(config.context),
-					switcherInput: 1000 // TODO: Get from Sofie.
+					switcherInput: GetInputValue(config.context, config.sourceConfig, piece.attributes[Attributes.REMOTE])
 				})
 				sourceConfigurations.push(newContent)
 				sourceBoxes[index].source = newContent.switcherInput as number

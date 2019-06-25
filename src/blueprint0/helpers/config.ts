@@ -21,6 +21,7 @@ export interface StudioConfig {
 	// Intended overrides
 	MediaFlowId: string
 	SourcesCam: string
+	SourcesRM: string
 	HyperdeckCount: number
 
 	AtemSource: {

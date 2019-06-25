@@ -1,16 +1,16 @@
 import _ = require('underscore')
 import { Piece, PieceParams } from '../../types/classes'
 import {
-	IBlueprintAdLibPiece, IBlueprintPiece, PieceEnable, PieceLifespan, TransitionContent, CameraContent, VTContent, GraphicsContent, ScriptContent, MicContent
+	IBlueprintAdLibPiece, IBlueprintPiece, PieceEnable, PieceLifespan, TransitionContent, CameraContent, VTContent, GraphicsContent, ScriptContent, MicContent, RemoteContent
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
 import { SourceLayer, AtemLLayer, CasparLLayer } from '../../types/layers'
 import {
 	AtemTransitionStyle, TSRTimelineObj, TimelineObjAtemME, DeviceType, TimelineContentTypeAtem
 } from 'timeline-state-resolver-types'
-import { CreateContentCam, CreateContentVT, CreateContentGraphics } from './content'
-import { GetInputValue } from './sources'
-import { CreateEnableForTimelineObject, CreateTransitionAtemTimelineObject, CreateLawoAutomixTimelineObject, CreateCCGMediaTimelineObject } from './timeline'
+import { CreateContentCam, CreateContentVT, CreateContentGraphics, CreateContentRemote } from './content'
+import { GetInputValue, Attributes } from './sources'
+import { CreateEnableForTimelineObject, CreateTransitionAtemTimelineObject, CreateLawoAutomixTimelineObject, CreateCCGMediaTimelineObject, CreateAtemTimelineObject } from './timeline'
 
 /**
  * Creates a generic adLib piece.
@@ -108,11 +108,11 @@ function createPieceTransitionGeneric (piece: Piece, duration: number): IBluepri
  * @param {AtemTransitionStyle} transition Transition style.
  * @param {number} duration Length of transition.
  */
-export function CreatePieceInTransition (piece: Piece, transition: AtemTransitionStyle, duration: number): IBlueprintPiece {
+export function CreatePieceInTransition (piece: Piece, transition: AtemTransitionStyle, duration: number, input: number): IBlueprintPiece {
 	let p = createPieceTransitionGeneric(piece, duration)
 	let content = literal<TransitionContent>({
 		timelineObjects: _.compact<TSRTimelineObj>([
-			CreateTransitionAtemTimelineObject({ start: 0, duration: duration }, transition)
+			CreateTransitionAtemTimelineObject({ start: 0, duration: duration }, transition, input)
 		])
 	})
 	p.content = content
@@ -126,12 +126,12 @@ export function CreatePieceInTransition (piece: Piece, transition: AtemTransitio
  * @param {AtemTransitionStyle} transition Transition type.
  * @param {number} duration Length of transition.
  */
-export function CreatePieceOutTransition (piece: Piece, transition: AtemTransitionStyle, duration: number): IBlueprintPiece {
+export function CreatePieceOutTransition (piece: Piece, transition: AtemTransitionStyle, duration: number, input: number): IBlueprintPiece {
 	let p = createPieceTransitionGeneric(piece, duration)
 
 	let content = literal<TransitionContent>({
 		timelineObjects: _.compact<TSRTimelineObj>([
-			CreateTransitionAtemTimelineObject({ start: piece.duration - duration, duration: duration }, transition)
+			CreateTransitionAtemTimelineObject({ start: piece.duration - duration, duration: duration }, transition, input)
 		])
 	})
 	p.content = content
@@ -159,22 +159,7 @@ export function CreatePieceBreaker (piece: Piece, duration: number): IBlueprintP
 		content: literal<TransitionContent>({
 			timelineObjects: _.compact<TSRTimelineObj>([
 				CreateCCGMediaTimelineObject({ start: 0, duration: duration }, CasparLLayer.CasparPlayerWipe, piece.clipName),
-				literal<TimelineObjAtemME>({
-					id: '',
-					enable: {
-						start: 0
-					},
-					priority: 5,
-					layer: AtemLLayer.AtemMEProgram,
-					content: {
-						deviceType: DeviceType.ATEM,
-						type: TimelineContentTypeAtem.ME,
-						me: {
-							input: 1000, // TODO: Get from Sofie
-							transition: AtemTransitionStyle.WIPE
-						}
-					}
-				})
+				CreateAtemTimelineObject({ start: 0 }, AtemLLayer.AtemMEProgram, 1000, AtemTransitionStyle.WIPE) // TODO: Get input from Sofie
 			])
 		})
 	})
@@ -190,7 +175,7 @@ export function CreatePieceCam (params: PieceParams, transition: AtemTransitionS
 	let p = CreatePieceGeneric(params.piece)
 
 	p.sourceLayerId = SourceLayer.PgmCam
-	p.name = params.piece.attributes['name']
+	p.name = params.piece.attributes[Attributes.CAMERA]
 	let content: CameraContent = CreateContentCam(params.config, params.piece)
 
 	switch (params.context) {
@@ -205,7 +190,7 @@ export function CreatePieceCam (params: PieceParams, transition: AtemTransitionS
 						deviceType: DeviceType.ATEM,
 						type: TimelineContentTypeAtem.ME,
 						me: {
-							input: GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes['name']),
+							input: GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes[Attributes.CAMERA]),
 							transition: transition
 						}
 					}
@@ -243,20 +228,7 @@ export function CreatePieceVideo (params: PieceParams, transition: AtemTransitio
 	// TODO: if it should be placed on a screen, it should probably go out over an aux.
 	if (!checkAndPlaceOnScreen(p, params.piece.attributes)) {
 		content.timelineObjects.push(
-			literal<TimelineObjAtemME>({
-				id: '',
-				enable: CreateEnableForTimelineObject(params.piece),
-				priority: 1,
-				layer: AtemLLayer.AtemMEProgram,
-				content: {
-					deviceType: DeviceType.ATEM,
-					type: TimelineContentTypeAtem.ME,
-					me: {
-						input: params.config.config.studio.AtemSource.Server1,
-						transition: transition
-					}
-				}
-			})
+			CreateAtemTimelineObject(CreateEnableForTimelineObject(params.piece), AtemLLayer.AtemMEProgram, params.config.config.studio.AtemSource.Server1, transition)
 		)
 		content.timelineObjects.push(
 			CreateLawoAutomixTimelineObject({ start: 0 })
@@ -287,42 +259,12 @@ export function CreatePieceGraphic (params: PieceParams, transition: AtemTransit
 
 			if (checkAndPlaceOnScreen(p, params.piece.attributes)) {
 				content.timelineObjects.push(
-					literal<TimelineObjAtemME>({
-						id: '',
-						enable: CreateEnableForTimelineObject(params.piece),
-						priority: 1,
-						layer: AtemLLayer.AtemMEProgram, // TODO: Should be aux?
-						content: {
-							deviceType: DeviceType.ATEM,
-							type: TimelineContentTypeAtem.ME,
-							me: {
-								input: params.config.config.studio.AtemSource.Server1,
-								transition: transition,
-								transitionSettings: {
-									mix: {
-										rate: 100
-									}
-								}
-							}
-						}
-					})
+					// TODO: input should be aux?
+					CreateAtemTimelineObject(CreateEnableForTimelineObject(params.piece), AtemLLayer.AtemMEProgram, params.config.config.studio.AtemSource.Server1, transition, { mix: { rate: 100 } })
 				)
 			} else {
 				content.timelineObjects.push(
-					literal<TimelineObjAtemME>({
-						id: '',
-						enable: CreateEnableForTimelineObject(params.piece),
-						priority: 1,
-						layer: AtemLLayer.AtemMEProgram,
-						content: {
-							deviceType: DeviceType.ATEM,
-							type: TimelineContentTypeAtem.ME,
-							me: {
-								input: params.config.config.studio.AtemSource.Server1,
-								transition: AtemTransitionStyle.WIPE
-							}
-						}
-					})
+					CreateAtemTimelineObject(CreateEnableForTimelineObject(params.piece), AtemLLayer.AtemMEProgram, params.config.config.studio.AtemSource.Server1, AtemTransitionStyle.WIPE)
 				)
 			}
 			break
@@ -332,23 +274,39 @@ export function CreatePieceGraphic (params: PieceParams, transition: AtemTransit
 			])
 
 			if (!checkAndPlaceOnScreen(p, params.piece.attributes)) {
-				content.timelineObjects.push(
-					literal<TimelineObjAtemME>({
-						id: '',
-						enable: CreateEnableForTimelineObject(params.piece),
-						priority: 1,
-						layer: AtemLLayer.AtemMEProgram,
-						content: {
-							deviceType: DeviceType.ATEM,
-							type: TimelineContentTypeAtem.ME,
-							me: {
-								input: params.config.config.studio.AtemSource.Server1,
-								transition: AtemTransitionStyle.CUT
-							}
-						}
-					})
-				)
+				CreateAtemTimelineObject(CreateEnableForTimelineObject(params.piece), AtemLLayer.AtemMEProgram, params.config.config.studio.AtemSource.Server1, AtemTransitionStyle.CUT)
 			}
+			break
+	}
+
+	p.content = content
+
+	return p
+}
+
+/**
+ * Creates a remote source.
+ * @param params Piece to create.
+ * @param transition In transition.
+ */
+export function CreatePieceRemote (params: PieceParams, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
+	let p = CreatePieceGeneric(params.piece)
+
+	p.sourceLayerId = SourceLayer.PgmRemote
+	p.name = params.piece.attributes[Attributes.REMOTE]
+
+	let content: RemoteContent = CreateContentRemote(params.config, params.piece)
+
+	switch (params.context) {
+		default:
+			content.timelineObjects = _.compact<TSRTimelineObj>([
+				CreateAtemTimelineObject(
+					CreateEnableForTimelineObject(params.piece),
+					AtemLLayer.AtemMEProgram,
+					GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes[Attributes.REMOTE]),
+					transition
+				)
+			])
 			break
 	}
 
@@ -428,12 +386,29 @@ export function CreatePieceScript (params: PieceParams): IBlueprintPiece {
 	let firstWords = scriptWords.slice(0, Math.min(4, scriptWords.length)).join(' ')
 	let lastWords = scriptWords.slice(scriptWords.length - (Math.min(4, scriptWords.length)), (Math.min(4, scriptWords.length))).join(' ')
 
+	let scriptParent = ''
+
+	switch (params.piece.objectType) {
+		case 'camera':
+			scriptParent = params.piece.attributes[Attributes.CAMERA]
+			break
+		case 'graphic':
+			scriptParent = 'Super'
+			break
+		case 'video':
+			scriptParent = 'VT'
+			break
+		case 'remote':
+			scriptParent = params.piece.attributes[Attributes.REMOTE]
+			break
+	}
+
 	p.name = (firstWords ? firstWords + '\u2026' : '') + '||' + (lastWords ? '\u2026' + lastWords : '')
 
 	let content: ScriptContent = {
 		firstWords: firstWords,
 		lastWords: lastWords,
-		fullScript: params.piece.script || '',
+		fullScript: scriptParent ? `/${scriptParent}/ ${(params.piece.script || '')} /end-${scriptParent}/` : (params.piece.script || ''),
 		sourceDuration: duration,
 		lastModified: Date.now() // TODO: pull from gateway
 	}

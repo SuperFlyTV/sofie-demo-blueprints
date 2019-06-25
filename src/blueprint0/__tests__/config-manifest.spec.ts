@@ -10,6 +10,7 @@ const blankStudioConfig: StudioConfig = {
 
 	MediaFlowId: '',
 	SourcesCam: '',
+	SourcesRM: '',
 	HyperdeckCount: 0,
 
 	AtemSource: {
