@@ -1,14 +1,15 @@
 import _ = require('underscore')
 import { Piece, SegmentConf, SourceMeta, BoxProps } from '../../types/classes'
 import { IBlueprintPiece, IBlueprintAdLibPiece, VTContent, CameraContent, RemoteContent, GraphicsContent, SourceLayerType, SplitsContent } from 'tv-automation-sofie-blueprints-integration'
-import { SuperSourceBox, TSRTimelineObj } from 'timeline-state-resolver-types'
+import { SuperSourceBox, TSRTimelineObj, TimelineObjAtemSsrc, DeviceType, TimelineContentTypeAtem, AtemTransitionStyle } from 'timeline-state-resolver-types'
 import { literal } from '../../common/util'
 import { CreateContentGraphics, CreateContentVT, CreateContentCam } from './content'
 import { getStudioName } from './studio'
-import { CreateEnableForTimelineObject, CreateCCGMediaTimelineObject } from './timeline'
-import { CasparLLayer, SourceLayer } from '../../types/layers'
+import { CreateEnableForTimelineObject, CreateCCGMediaTimelineObject, CreateAtemTimelineObject } from './timeline'
+import { CasparLLayer, SourceLayer, AtemLLayer } from '../../types/layers'
 import { GetInputValue, Attributes } from './sources'
 import { CreatePieceGeneric } from './pieces'
+import { AtemSourceIndex } from '../../types/atem'
 
 /**
  * Creates a DVE Piece.
@@ -120,9 +121,23 @@ function createPIP (config: SegmentConf, pieces: Piece[], width: number, height:
 	let sourceBoxes: SuperSourceBox[] = []
 
 	for (let i = 0; i < 2; i++) {
+		let input = 1000
+
+		switch (pieces[i].objectType) {
+			case 'camera':
+				input = GetInputValue(config.context, config.sourceConfig, pieces[i].attributes[Attributes.CAMERA])
+				break
+			case 'remote':
+				input = GetInputValue(config.context, config.sourceConfig, pieces[i].attributes[Attributes.REMOTE])
+				break
+			default:
+				input = config.config.studio.AtemSource.Server1
+				break
+		}
+
 		sourceBoxes.push(literal<SuperSourceBox>({
 			enabled: true,
-			source: 1000, // TODO: Get this from Sofie.
+			source: input,
 			x: boxes[i].x,
 			y: boxes[i].y,
 			size: boxes[i].size
@@ -136,7 +151,21 @@ function createPIP (config: SegmentConf, pieces: Piece[], width: number, height:
 		dveConfiguration: {},
 		boxSourceConfiguration: createDVESourceConfigurations(config, pieces, sourceBoxes),
 		timelineObjects: _.compact<TSRTimelineObj>([
+			literal<TimelineObjAtemSsrc>({
+				id: '',
+				enable: { start: 0 },
+				priority: 1,
+				layer: AtemLLayer.AtemSSrcOverride,
+				content: {
+					deviceType: DeviceType.ATEM,
+					type: TimelineContentTypeAtem.SSRC,
+					ssrc: {
+						boxes : sourceBoxes.map(box => { return { enabled: true, source: box.source } })
+					}
+				}
+			}),
 
+			CreateAtemTimelineObject({ start: 0 }, AtemLLayer.AtemMEProgram, AtemSourceIndex.SSrc, AtemTransitionStyle.CUT)
 		])
 	}
 
