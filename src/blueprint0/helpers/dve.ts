@@ -1,5 +1,5 @@
 import _ = require('underscore')
-import { Piece, SegmentConf, SourceMeta, BoxProps } from '../../types/classes'
+import { Piece, SegmentConf, SourceMeta, BoxProps, ObjectType } from '../../types/classes'
 import { IBlueprintPiece, IBlueprintAdLibPiece, VTContent, CameraContent, RemoteContent, GraphicsContent, SourceLayerType, SplitsContent } from 'tv-automation-sofie-blueprints-integration'
 import { SuperSourceBox, TSRTimelineObj, TimelineObjAtemSsrc, DeviceType, TimelineContentTypeAtem, AtemTransitionStyle } from 'timeline-state-resolver-types'
 import { literal } from '../../common/util'
@@ -41,7 +41,7 @@ function createDVESourceConfigurations (config: SegmentConf, pieces: Piece[], so
 	pieces.forEach(piece => {
 		let newContent: (VTContent | CameraContent | RemoteContent | GraphicsContent) & SourceMeta
 		switch (piece.objectType) {
-			case 'graphic':
+			case ObjectType.GRAPHIC:
 				newContent = literal<GraphicsContent & SourceMeta>({...CreateContentGraphics(piece), ...{
 					type: SourceLayerType.GRAPHICS,
 					studioLabel: getStudioName(config.context),
@@ -53,7 +53,7 @@ function createDVESourceConfigurations (config: SegmentConf, pieces: Piece[], so
 				sourceConfigurations.push(newContent)
 				sourceBoxes[index].source = newContent.switcherInput as number
 				break
-			case 'video':
+			case ObjectType.VIDEO:
 				newContent = literal<VTContent & SourceMeta>({...CreateContentVT(piece), ...{
 					type: SourceLayerType.VT,
 					studioLabel: getStudioName(config.context),
@@ -65,7 +65,7 @@ function createDVESourceConfigurations (config: SegmentConf, pieces: Piece[], so
 				sourceConfigurations.push(newContent)
 				sourceBoxes[index].source = newContent.switcherInput as number
 				break
-			case 'camera':
+			case ObjectType.CAMERA:
 				newContent = literal<CameraContent & SourceMeta>({...CreateContentCam(config, piece), ...{
 					type: SourceLayerType.CAMERA,
 					studioLabel: getStudioName(config.context),
@@ -75,7 +75,7 @@ function createDVESourceConfigurations (config: SegmentConf, pieces: Piece[], so
 				sourceConfigurations.push(newContent)
 				sourceBoxes[index].source = newContent.switcherInput as number
 				break
-			case 'remote':
+			case ObjectType.REMOTE:
 				newContent = literal<RemoteContent & SourceMeta>({
 					timelineObjects: [], // TODO
 					type: SourceLayerType.REMOTE,

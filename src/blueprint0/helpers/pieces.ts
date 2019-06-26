@@ -1,5 +1,5 @@
 import _ = require('underscore')
-import { Piece, PieceParams } from '../../types/classes'
+import { Piece, PieceParams, ObjectType } from '../../types/classes'
 import {
 	IBlueprintAdLibPiece, IBlueprintPiece, PieceEnable, PieceLifespan, TransitionContent, CameraContent, VTContent, GraphicsContent, ScriptContent, MicContent, RemoteContent
 } from 'tv-automation-sofie-blueprints-integration'
@@ -389,16 +389,16 @@ export function CreatePieceScript (params: PieceParams): IBlueprintPiece {
 	let scriptParent = ''
 
 	switch (params.piece.objectType) {
-		case 'camera':
+		case ObjectType.CAMERA:
 			scriptParent = params.piece.attributes[Attributes.CAMERA]
 			break
-		case 'graphic':
+		case ObjectType.GRAPHIC:
 			scriptParent = 'Super'
 			break
-		case 'video':
+		case ObjectType.VIDEO:
 			scriptParent = 'VT'
 			break
-		case 'remote':
+		case ObjectType.REMOTE:
 			scriptParent = params.piece.attributes[Attributes.REMOTE]
 			break
 	}
