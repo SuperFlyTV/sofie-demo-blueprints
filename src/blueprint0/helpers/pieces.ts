@@ -238,7 +238,7 @@ export function CreatePieceVideo (params: PieceParams, transition: AtemTransitio
 				id: '',
 				enable: { start: 0 },
 				priority: 1,
-				layer: LawoLLayer.LawoSourceClip,
+				layer: LawoLLayer.LawoSourceClipStk,
 				content: {
 					deviceType: DeviceType.LAWO,
 					type: TimelineContentTypeLawo.SOURCE,

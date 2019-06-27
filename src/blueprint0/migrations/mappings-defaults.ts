@@ -151,6 +151,13 @@ export default literal<BlueprintMappings>({
 		lookahead: LookaheadMode.NONE,
 		mappingType: MappingLawoType.SOURCE,
 		identifier: 'AMix'
+	}),
+	'lawo_source_clip_stk': literal<MappingLawo & BlueprintMapping>({
+		device: PlayoutDeviceType.LAWO,
+		deviceId: 'lawo0',
+		lookahead: LookaheadMode.NONE,
+		mappingType: MappingLawoType.SOURCE,
+		identifier: 'STK'
 	})
 })
 

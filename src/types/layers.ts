@@ -63,5 +63,5 @@ export function HyperdeckLLayer (index: number) {
 
 export enum LawoLLayer {
 	LawoSourceAutomix = 'lawo_source_automix',
-	LawoSourceClip = 'lawo_source_clip'
+	LawoSourceClipStk = 'lawo_source_clip_stk'
 }

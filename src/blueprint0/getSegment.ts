@@ -8,7 +8,7 @@ import { SourceLayer } from '../types/layers'
 import { Piece, SegmentConf, PieceParams, ObjectType } from '../types/classes'
 import { AtemTransitionStyle } from 'timeline-state-resolver-types'
 import { parseConfig } from './helpers/config'
-import { parseSources, Attributes, GetInputValue, GetInputValueFromPiece } from './helpers/sources'
+import { parseSources, Attributes, GetInputValueFromPiece } from './helpers/sources'
 import { CreatePieceVideo, CreatePieceCam, CreatePieceGraphic, CreatePieceGraphicOverlay, CreatePieceInTransition, CreatePieceScript, CreatePieceOutTransition, CreatePieceVoiceover, CreatePieceBreaker, CreatePieceRemote } from './helpers/pieces'
 import { CreateDVE } from './helpers/dve'
 
