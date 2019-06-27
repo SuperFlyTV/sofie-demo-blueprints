@@ -34,6 +34,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 		}
 	}
 
+	let currentPartIndex = 0
 	for (const part of ingestSegment.parts) {
 		if (!part.payload) {
 			// TODO
@@ -102,6 +103,16 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 					} else {
 						let transitionType = AtemTransitionStyle.CUT
 
+						if (type.match(/head/)) {
+							if (parts[currentPartIndex - 1] && (objectPath.get(parts[currentPartIndex - 1], 'type', '') + '').match(/head/)) {
+								// Rest of clips in head wipes in/out.
+								transitionType = AtemTransitionStyle.WIPE
+							} else {
+								// First clip in head cuts.
+								transitionType = AtemTransitionStyle.CUT
+							}
+						}
+						
 						for (let i = 0; i < pieceList.length; i++) {
 							if (pieceList[i].objectType.match(/transition/i)) {
 								transitionType = transitionTypeFromString(pieceList[i].attributes[Attributes.TRANSITION])
@@ -115,6 +126,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 								piece: pieceList[i],
 								context: type
 							}
+
 							switch (params.piece.objectType) {
 								case ObjectType.VIDEO:
 									if (params.piece.clipName) {
@@ -182,6 +194,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 				parts.push(createPart(part, pieces, adLibPieces))
 			}
 		}
+		currentPartIndex++
 	}
 
 	return {
