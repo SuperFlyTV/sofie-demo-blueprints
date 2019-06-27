@@ -4,9 +4,9 @@ import {
 	IBlueprintAdLibPiece, IBlueprintPiece, PieceEnable, PieceLifespan, TransitionContent, CameraContent, VTContent, GraphicsContent, ScriptContent, MicContent, RemoteContent
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
-import { SourceLayer, AtemLLayer, CasparLLayer } from '../../types/layers'
+import { SourceLayer, AtemLLayer, CasparLLayer, LawoLLayer } from '../../types/layers'
 import {
-	AtemTransitionStyle, TSRTimelineObj, TimelineObjAtemME, DeviceType, TimelineContentTypeAtem
+	AtemTransitionStyle, TSRTimelineObj, TimelineObjAtemME, DeviceType, TimelineContentTypeAtem, TimelineObjLawoSource, TimelineContentTypeLawo
 } from 'timeline-state-resolver-types'
 import { CreateContentCam, CreateContentVT, CreateContentGraphics, CreateContentRemote } from './content'
 import { GetInputValue, Attributes } from './sources'
@@ -233,6 +233,22 @@ export function CreatePieceVideo (params: PieceParams, transition: AtemTransitio
 		content.timelineObjects.push(
 			CreateLawoAutomixTimelineObject({ start: 0 })
 		)
+		content.timelineObjects.push(
+			literal<TimelineObjLawoSource>({
+				id: '',
+				enable: { start: 0 },
+				priority: 1,
+				layer: LawoLLayer.LawoSourceClip,
+				content: {
+					deviceType: DeviceType.LAWO,
+					type: TimelineContentTypeLawo.SOURCE,
+					'Fader/Motor dB Value': {
+						value: 0,
+						transitionDuration: 10
+					}
+				}
+			})
+		)
 	}
 
 	p.content = content
@@ -305,7 +321,8 @@ export function CreatePieceRemote (params: PieceParams, transition: AtemTransiti
 					AtemLLayer.AtemMEProgram,
 					GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes[Attributes.REMOTE]),
 					transition
-				)
+				),
+				CreateLawoAutomixTimelineObject({ start: 0 })
 			])
 			break
 	}
@@ -346,9 +363,8 @@ export function CreatePieceGraphicOverlay (params: PieceParams, transition: Atem
 					},
 					upstreamKeyers: [
 						{
-							upstreamKeyerId: 1000, // TODO: get from Sofie.
-							onAir: true,
-							fillSource: 1000 // TODO: get from Sofie.
+							upstreamKeyerId: 0,
+							onAir: true
 						}
 					]
 				}

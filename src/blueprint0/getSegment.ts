@@ -8,7 +8,7 @@ import { SourceLayer } from '../types/layers'
 import { Piece, SegmentConf, PieceParams, ObjectType } from '../types/classes'
 import { AtemTransitionStyle } from 'timeline-state-resolver-types'
 import { parseConfig } from './helpers/config'
-import { parseSources, Attributes } from './helpers/sources'
+import { parseSources, Attributes, GetInputValue, GetInputValueFromPiece } from './helpers/sources'
 import { CreatePieceVideo, CreatePieceCam, CreatePieceGraphic, CreatePieceGraphicOverlay, CreatePieceInTransition, CreatePieceScript, CreatePieceOutTransition, CreatePieceVoiceover, CreatePieceBreaker, CreatePieceRemote } from './helpers/pieces'
 import { CreateDVE } from './helpers/dve'
 
@@ -146,7 +146,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 									break
 								case ObjectType.TRANSITION:
 									if (params.piece.attributes[Attributes.TRANSITION]) {
-										pieces.push(CreatePieceInTransition(params.piece, transitionType, params.piece.duration || 1000, 1000))
+										pieces.push(CreatePieceInTransition(params.piece, transitionType, params.piece.duration || 1000, GetInputValueFromPiece(params.config, params.piece)))
 									} else {
 										context.warning(`Missing transition for transition: ${params.piece.id}`)
 									}

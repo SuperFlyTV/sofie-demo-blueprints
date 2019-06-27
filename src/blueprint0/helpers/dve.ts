@@ -1,12 +1,12 @@
 import _ = require('underscore')
 import { Piece, SegmentConf, SourceMeta, BoxProps, ObjectType } from '../../types/classes'
 import { IBlueprintPiece, IBlueprintAdLibPiece, VTContent, CameraContent, RemoteContent, GraphicsContent, SourceLayerType, SplitsContent } from 'tv-automation-sofie-blueprints-integration'
-import { SuperSourceBox, TSRTimelineObj, TimelineObjAtemSsrc, DeviceType, TimelineContentTypeAtem, AtemTransitionStyle } from 'timeline-state-resolver-types'
+import { SuperSourceBox, TSRTimelineObj, TimelineObjAtemSsrc, DeviceType, TimelineContentTypeAtem, AtemTransitionStyle, TimelineObjLawoSource, TimelineContentTypeLawo } from 'timeline-state-resolver-types'
 import { literal } from '../../common/util'
 import { CreateContentGraphics, CreateContentVT, CreateContentCam } from './content'
 import { getStudioName } from './studio'
-import { CreateEnableForTimelineObject, CreateCCGMediaTimelineObject, CreateAtemTimelineObject } from './timeline'
-import { CasparLLayer, SourceLayer, AtemLLayer } from '../../types/layers'
+import { CreateEnableForTimelineObject, CreateCCGMediaTimelineObject, CreateAtemTimelineObject, CreateLawoAutomixTimelineObject } from './timeline'
+import { CasparLLayer, SourceLayer, AtemLLayer, LawoLLayer } from '../../types/layers'
 import { GetInputValue, Attributes } from './sources'
 import { CreatePieceGeneric } from './pieces'
 import { AtemSourceIndex } from '../../types/atem'
@@ -60,7 +60,21 @@ function createDVESourceConfigurations (config: SegmentConf, pieces: Piece[], so
 					switcherInput: config.config.studio.AtemSource.Server1
 				}})
 				newContent.timelineObjects = _.compact<TSRTimelineObj>([
-					CreateCCGMediaTimelineObject(CreateEnableForTimelineObject(piece), CasparLLayer.CasparPlayerClip, piece.clipName)
+					CreateCCGMediaTimelineObject(CreateEnableForTimelineObject(piece), CasparLLayer.CasparPlayerClip, piece.clipName),
+					literal<TimelineObjLawoSource>({
+						id: '',
+						enable: { start: 0 },
+						priority: 1,
+						layer: LawoLLayer.LawoSourceClip,
+						content: {
+							deviceType: DeviceType.LAWO,
+							type: TimelineContentTypeLawo.SOURCE,
+							'Fader/Motor dB Value': {
+								value: 0,
+								transitionDuration: 10
+							}
+						}
+					})
 				]), // TODO
 				sourceConfigurations.push(newContent)
 				sourceBoxes[index].source = newContent.switcherInput as number
@@ -71,13 +85,17 @@ function createDVESourceConfigurations (config: SegmentConf, pieces: Piece[], so
 					studioLabel: getStudioName(config.context),
 					switcherInput: GetInputValue(config.context, config.sourceConfig, piece.attributes[Attributes.CAMERA])
 				}})
-				newContent.timelineObjects = [], // TODO
+				newContent.timelineObjects = [
+					CreateLawoAutomixTimelineObject({ start: 0 })
+				], // TODO
 				sourceConfigurations.push(newContent)
 				sourceBoxes[index].source = newContent.switcherInput as number
 				break
 			case ObjectType.REMOTE:
 				newContent = literal<RemoteContent & SourceMeta>({
-					timelineObjects: [], // TODO
+					timelineObjects: [
+						CreateLawoAutomixTimelineObject({ start: 0 })
+					], // TODO
 					type: SourceLayerType.REMOTE,
 					studioLabel: getStudioName(config.context),
 					switcherInput: GetInputValue(config.context, config.sourceConfig, piece.attributes[Attributes.REMOTE])
