@@ -21,6 +21,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 		frameWidth: 1080,
 		framesPerSecond: 50
 	}
+	console.log(config.sourceConfig)
 	const segment = literal<IBlueprintSegment>({
 		name: ingestSegment.name,
 		metaData: {}
@@ -37,7 +38,6 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 	let currentPartIndex = 0
 	for (const part of ingestSegment.parts) {
 		if (!part.payload) {
-			// TODO
 			context.warning(`Missing payload for part: '${part.name || part.externalId}'`)
 		} else if (part.payload['float']) {
 			continue
@@ -112,7 +112,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 								transitionType = AtemTransitionStyle.CUT
 							}
 						}
-						
+
 						for (let i = 0; i < pieceList.length; i++) {
 							if (pieceList[i].objectType.match(/transition/i)) {
 								transitionType = transitionTypeFromString(pieceList[i].attributes[Attributes.TRANSITION])

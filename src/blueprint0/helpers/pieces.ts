@@ -483,6 +483,7 @@ export function CreatePieceVoiceover (params: PieceParams): IBlueprintPiece {
  * @param {any} attr Attributes of the piece.
  */
 function checkAndPlaceOnScreen (p: IBlueprintPiece | IBlueprintAdLibPiece, attr: any): boolean {
+	console.log(attr)
 	if ('attr0' in attr) {
 		if (attr['attr0'].match(/screen \d/i)) {
 			// TODO: this whitespace replacement is due to the current testing environment.
