@@ -5,10 +5,10 @@ import {
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal, isAdLibPiece } from '../common/util'
 import { SourceLayer } from '../types/layers'
-import { Piece, SegmentConf, PieceParams } from '../types/classes'
+import { Piece, SegmentConf, PieceParams, ObjectType } from '../types/classes'
 import { AtemTransitionStyle } from 'timeline-state-resolver-types'
 import { parseConfig } from './helpers/config'
-import { parseSources, Attributes } from './helpers/sources'
+import { parseSources, Attributes, GetInputValueFromPiece } from './helpers/sources'
 import { CreatePieceVideo, CreatePieceCam, CreatePieceGraphic, CreatePieceGraphicOverlay, CreatePieceInTransition, CreatePieceScript, CreatePieceOutTransition, CreatePieceVoiceover, CreatePieceBreaker, CreatePieceRemote } from './helpers/pieces'
 import { CreateDVE } from './helpers/dve'
 
@@ -21,6 +21,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 		frameWidth: 1080,
 		framesPerSecond: 50
 	}
+	console.log(config.sourceConfig)
 	const segment = literal<IBlueprintSegment>({
 		name: ingestSegment.name,
 		metaData: {}
@@ -34,9 +35,9 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 		}
 	}
 
+	let currentPartIndex = 0
 	for (const part of ingestSegment.parts) {
 		if (!part.payload) {
-			// TODO
 			context.warning(`Missing payload for part: '${part.name || part.externalId}'`)
 		} else if (part.payload['float']) {
 			continue
@@ -102,6 +103,16 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 					} else {
 						let transitionType = AtemTransitionStyle.CUT
 
+						if (type.match(/head/)) {
+							if (parts[currentPartIndex - 1] && (objectPath.get(parts[currentPartIndex - 1], 'type', '') + '').match(/head/)) {
+								// Rest of clips in head wipes in/out.
+								transitionType = AtemTransitionStyle.WIPE
+							} else {
+								// First clip in head cuts.
+								transitionType = AtemTransitionStyle.CUT
+							}
+						}
+
 						for (let i = 0; i < pieceList.length; i++) {
 							if (pieceList[i].objectType.match(/transition/i)) {
 								transitionType = transitionTypeFromString(pieceList[i].attributes[Attributes.TRANSITION])
@@ -115,57 +126,58 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 								piece: pieceList[i],
 								context: type
 							}
+
 							switch (params.piece.objectType) {
-								case 'video':
+								case ObjectType.VIDEO:
 									if (params.piece.clipName) {
 										createPieceByType(params, CreatePieceVideo, pieces, adLibPieces, transitionType)
 									} else {
 										context.warning(`Missing clip for video: ${params.piece.id}`)
 									}
 									break
-								case 'camera':
+								case ObjectType.CAMERA:
 									if (params.piece.attributes[Attributes.CAMERA]) {
 										createPieceByType(params, CreatePieceCam, pieces, adLibPieces, transitionType)
 									} else {
 										context.warning(`Missing camera for camera: ${params.piece.id}`)
 									}
 									break
-								case 'graphic':
+								case ObjectType.GRAPHIC:
 									if (params.piece.clipName) {
 										createPieceByType(params, CreatePieceGraphic, pieces, adLibPieces, transitionType)
 									} else {
 										context.warning(`Missing clip for graphic: ${params.piece.id}`)
 									}
 									break
-								case 'overlay':
+								case ObjectType.OVERLAY:
 									if (params.piece.clipName) {
 										createPieceByType(params, CreatePieceGraphicOverlay, pieces, adLibPieces, transitionType)
 									} else {
 										context.warning(`Missing clip for overlay: ${params.piece.id}`)
 									}
 									break
-								case 'transition':
+								case ObjectType.TRANSITION:
 									if (params.piece.attributes[Attributes.TRANSITION]) {
-										pieces.push(CreatePieceInTransition(params.piece, transitionType, params.piece.duration || 1000, 1000))
+										pieces.push(CreatePieceInTransition(params.piece, transitionType, params.piece.duration || 1000, GetInputValueFromPiece(params.config, params.piece)))
 									} else {
 										context.warning(`Missing transition for transition: ${params.piece.id}`)
 									}
 									break
-								case 'voiceover':
+								case ObjectType.VOICEOVER:
 									if (params.piece.script) {
 										createPieceByType(params, CreatePieceVoiceover, pieces, adLibPieces, transitionType)
 									} else {
 										context.warning(`Missing script for voiceover: ${params.piece.id}`)
 									}
 									break
-								case 'remote':
+								case ObjectType.REMOTE:
 									if (params.piece.attributes[Attributes.REMOTE]) {
 										createPieceByType(params, CreatePieceRemote, pieces, adLibPieces, transitionType)
 									} else {
 										context.warning(`Missing remote source for remote: ${params.piece.id}`)
 									}
 									break
-								case 'script':
+								case ObjectType.SCRIPT:
 									break
 								default:
 									context.warning(`Missing objectType '${params.piece.objectType}' for piece: '${params.piece.clipName || params.piece.id}'`)
@@ -182,6 +194,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 				parts.push(createPart(part, pieces, adLibPieces))
 			}
 		}
+		currentPartIndex++
 	}
 
 	return {

@@ -2,9 +2,23 @@ import { SegmentContext, SourceLayerType } from 'tv-automation-sofie-blueprints-
 import { BlueprintConfig } from '../blueprint0/helpers/config'
 import { SourceInfo } from '../blueprint0/helpers/sources'
 
+export enum ObjectType {
+	GRAPHIC = 'graphic',
+	VIDEO = 'video',
+	CAMERA = 'camera',
+	SPLIT = 'split',
+	OVERLAY = 'overlay',
+	LIGHTS = 'lights',
+	TRANSITION = 'transition',
+	REMOTE = 'remote',
+	PIP = 'pip',
+	VOICEOVER = 'voiceover',
+	SCRIPT = 'script'
+}
+
 export interface Piece {
 	id: string
-	objectType: string // TODO: Enum?
+	objectType: ObjectType
 	objectTime: number
 	duration: number
 	clipName: string

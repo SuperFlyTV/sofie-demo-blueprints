@@ -3,6 +3,7 @@ import * as _ from 'underscore'
 import { BlueprintConfig } from './config'
 import { NotesContext, SourceLayerType } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
+import { Piece, ObjectType, SegmentConf } from '../../types/classes'
 
 export enum Attributes {
 	CAMERA = 'name',
@@ -119,4 +120,27 @@ export function GetInputValue (context: NotesContext, sources: SourceInfo[], nam
 	}
 
 	return input
+}
+
+/**
+ * Gets The input number from a piece.
+ * @param params Segment parameters.
+ * @param piece Piece to get input from.
+ */
+export function GetInputValueFromPiece (params: SegmentConf, piece: Piece): number {
+	let name = ''
+
+	switch (piece.objectType) {
+		case ObjectType.VIDEO:
+		case ObjectType.GRAPHIC:
+			return params.config.studio.AtemSource.Server1
+		case ObjectType.CAMERA:
+			name = piece.attributes[Attributes.CAMERA]
+			break
+		case ObjectType.REMOTE:
+			name = piece.attributes[Attributes.REMOTE]
+			break
+	}
+
+	return GetInputValue(params.context, params.sourceConfig, name)
 }

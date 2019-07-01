@@ -1,12 +1,12 @@
 import _ = require('underscore')
-import { Piece, PieceParams } from '../../types/classes'
+import { Piece, PieceParams, ObjectType } from '../../types/classes'
 import {
 	IBlueprintAdLibPiece, IBlueprintPiece, PieceEnable, PieceLifespan, TransitionContent, CameraContent, VTContent, GraphicsContent, ScriptContent, MicContent, RemoteContent
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
-import { SourceLayer, AtemLLayer, CasparLLayer } from '../../types/layers'
+import { SourceLayer, AtemLLayer, CasparLLayer, LawoLLayer } from '../../types/layers'
 import {
-	AtemTransitionStyle, TSRTimelineObj, TimelineObjAtemME, DeviceType, TimelineContentTypeAtem
+	AtemTransitionStyle, TSRTimelineObj, TimelineObjAtemME, DeviceType, TimelineContentTypeAtem, TimelineObjLawoSource, TimelineContentTypeLawo
 } from 'timeline-state-resolver-types'
 import { CreateContentCam, CreateContentVT, CreateContentGraphics, CreateContentRemote } from './content'
 import { GetInputValue, Attributes } from './sources'
@@ -233,6 +233,22 @@ export function CreatePieceVideo (params: PieceParams, transition: AtemTransitio
 		content.timelineObjects.push(
 			CreateLawoAutomixTimelineObject({ start: 0 })
 		)
+		content.timelineObjects.push(
+			literal<TimelineObjLawoSource>({
+				id: '',
+				enable: { start: 0 },
+				priority: 1,
+				layer: LawoLLayer.LawoSourceClipStk,
+				content: {
+					deviceType: DeviceType.LAWO,
+					type: TimelineContentTypeLawo.SOURCE,
+					'Fader/Motor dB Value': {
+						value: 0,
+						transitionDuration: 10
+					}
+				}
+			})
+		)
 	}
 
 	p.content = content
@@ -305,7 +321,8 @@ export function CreatePieceRemote (params: PieceParams, transition: AtemTransiti
 					AtemLLayer.AtemMEProgram,
 					GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes[Attributes.REMOTE]),
 					transition
-				)
+				),
+				CreateLawoAutomixTimelineObject({ start: 0 })
 			])
 			break
 	}
@@ -346,9 +363,8 @@ export function CreatePieceGraphicOverlay (params: PieceParams, transition: Atem
 					},
 					upstreamKeyers: [
 						{
-							upstreamKeyerId: 1000, // TODO: get from Sofie.
-							onAir: true,
-							fillSource: 1000 // TODO: get from Sofie.
+							upstreamKeyerId: 0,
+							onAir: true
 						}
 					]
 				}
@@ -389,16 +405,16 @@ export function CreatePieceScript (params: PieceParams): IBlueprintPiece {
 	let scriptParent = ''
 
 	switch (params.piece.objectType) {
-		case 'camera':
+		case ObjectType.CAMERA:
 			scriptParent = params.piece.attributes[Attributes.CAMERA]
 			break
-		case 'graphic':
+		case ObjectType.GRAPHIC:
 			scriptParent = 'Super'
 			break
-		case 'video':
+		case ObjectType.VIDEO:
 			scriptParent = 'VT'
 			break
-		case 'remote':
+		case ObjectType.REMOTE:
 			scriptParent = params.piece.attributes[Attributes.REMOTE]
 			break
 	}
@@ -467,6 +483,7 @@ export function CreatePieceVoiceover (params: PieceParams): IBlueprintPiece {
  * @param {any} attr Attributes of the piece.
  */
 function checkAndPlaceOnScreen (p: IBlueprintPiece | IBlueprintAdLibPiece, attr: any): boolean {
+	console.log(attr)
 	if ('attr0' in attr) {
 		if (attr['attr0'].match(/screen \d/i)) {
 			// TODO: this whitespace replacement is due to the current testing environment.

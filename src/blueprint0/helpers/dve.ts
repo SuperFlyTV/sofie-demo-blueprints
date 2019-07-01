@@ -1,14 +1,15 @@
 import _ = require('underscore')
-import { Piece, SegmentConf, SourceMeta, BoxProps } from '../../types/classes'
+import { Piece, SegmentConf, SourceMeta, BoxProps, ObjectType } from '../../types/classes'
 import { IBlueprintPiece, IBlueprintAdLibPiece, VTContent, CameraContent, RemoteContent, GraphicsContent, SourceLayerType, SplitsContent } from 'tv-automation-sofie-blueprints-integration'
-import { SuperSourceBox, TSRTimelineObj } from 'timeline-state-resolver-types'
+import { SuperSourceBox, TSRTimelineObj, TimelineObjAtemSsrc, DeviceType, TimelineContentTypeAtem, AtemTransitionStyle, TimelineObjLawoSource, TimelineContentTypeLawo } from 'timeline-state-resolver-types'
 import { literal } from '../../common/util'
 import { CreateContentGraphics, CreateContentVT, CreateContentCam } from './content'
 import { getStudioName } from './studio'
-import { CreateEnableForTimelineObject, CreateCCGMediaTimelineObject } from './timeline'
-import { CasparLLayer, SourceLayer } from '../../types/layers'
+import { CreateEnableForTimelineObject, CreateCCGMediaTimelineObject, CreateAtemTimelineObject, CreateLawoAutomixTimelineObject } from './timeline'
+import { CasparLLayer, SourceLayer, AtemLLayer, LawoLLayer } from '../../types/layers'
 import { GetInputValue, Attributes } from './sources'
 import { CreatePieceGeneric } from './pieces'
+import { AtemSourceIndex } from '../../types/atem'
 
 /**
  * Creates a DVE Piece.
@@ -40,7 +41,7 @@ function createDVESourceConfigurations (config: SegmentConf, pieces: Piece[], so
 	pieces.forEach(piece => {
 		let newContent: (VTContent | CameraContent | RemoteContent | GraphicsContent) & SourceMeta
 		switch (piece.objectType) {
-			case 'graphic':
+			case ObjectType.GRAPHIC:
 				newContent = literal<GraphicsContent & SourceMeta>({...CreateContentGraphics(piece), ...{
 					type: SourceLayerType.GRAPHICS,
 					studioLabel: getStudioName(config.context),
@@ -52,31 +53,49 @@ function createDVESourceConfigurations (config: SegmentConf, pieces: Piece[], so
 				sourceConfigurations.push(newContent)
 				sourceBoxes[index].source = newContent.switcherInput as number
 				break
-			case 'video':
+			case ObjectType.VIDEO:
 				newContent = literal<VTContent & SourceMeta>({...CreateContentVT(piece), ...{
 					type: SourceLayerType.VT,
 					studioLabel: getStudioName(config.context),
 					switcherInput: config.config.studio.AtemSource.Server1
 				}})
 				newContent.timelineObjects = _.compact<TSRTimelineObj>([
-					CreateCCGMediaTimelineObject(CreateEnableForTimelineObject(piece), CasparLLayer.CasparPlayerClip, piece.clipName)
+					CreateCCGMediaTimelineObject(CreateEnableForTimelineObject(piece), CasparLLayer.CasparPlayerClip, piece.clipName),
+					literal<TimelineObjLawoSource>({
+						id: '',
+						enable: { start: 0 },
+						priority: 1,
+						layer: LawoLLayer.LawoSourceClipStk,
+						content: {
+							deviceType: DeviceType.LAWO,
+							type: TimelineContentTypeLawo.SOURCE,
+							'Fader/Motor dB Value': {
+								value: 0,
+								transitionDuration: 10
+							}
+						}
+					})
 				]), // TODO
 				sourceConfigurations.push(newContent)
 				sourceBoxes[index].source = newContent.switcherInput as number
 				break
-			case 'camera':
+			case ObjectType.CAMERA:
 				newContent = literal<CameraContent & SourceMeta>({...CreateContentCam(config, piece), ...{
 					type: SourceLayerType.CAMERA,
 					studioLabel: getStudioName(config.context),
 					switcherInput: GetInputValue(config.context, config.sourceConfig, piece.attributes[Attributes.CAMERA])
 				}})
-				newContent.timelineObjects = [], // TODO
+				newContent.timelineObjects = [
+					CreateLawoAutomixTimelineObject({ start: 0 })
+				], // TODO
 				sourceConfigurations.push(newContent)
 				sourceBoxes[index].source = newContent.switcherInput as number
 				break
-			case 'remote':
+			case ObjectType.REMOTE:
 				newContent = literal<RemoteContent & SourceMeta>({
-					timelineObjects: [], // TODO
+					timelineObjects: [
+						CreateLawoAutomixTimelineObject({ start: 0 })
+					], // TODO
 					type: SourceLayerType.REMOTE,
 					studioLabel: getStudioName(config.context),
 					switcherInput: GetInputValue(config.context, config.sourceConfig, piece.attributes[Attributes.REMOTE])
@@ -120,9 +139,23 @@ function createPIP (config: SegmentConf, pieces: Piece[], width: number, height:
 	let sourceBoxes: SuperSourceBox[] = []
 
 	for (let i = 0; i < 2; i++) {
+		let input = 1000
+
+		switch (pieces[i].objectType) {
+			case 'camera':
+				input = GetInputValue(config.context, config.sourceConfig, pieces[i].attributes[Attributes.CAMERA])
+				break
+			case 'remote':
+				input = GetInputValue(config.context, config.sourceConfig, pieces[i].attributes[Attributes.REMOTE])
+				break
+			default:
+				input = config.config.studio.AtemSource.Server1
+				break
+		}
+
 		sourceBoxes.push(literal<SuperSourceBox>({
 			enabled: true,
-			source: 1000, // TODO: Get this from Sofie.
+			source: input,
 			x: boxes[i].x,
 			y: boxes[i].y,
 			size: boxes[i].size
@@ -136,7 +169,21 @@ function createPIP (config: SegmentConf, pieces: Piece[], width: number, height:
 		dveConfiguration: {},
 		boxSourceConfiguration: createDVESourceConfigurations(config, pieces, sourceBoxes),
 		timelineObjects: _.compact<TSRTimelineObj>([
+			literal<TimelineObjAtemSsrc>({
+				id: '',
+				enable: { start: 0 },
+				priority: 1,
+				layer: AtemLLayer.AtemSSrcOverride,
+				content: {
+					deviceType: DeviceType.ATEM,
+					type: TimelineContentTypeAtem.SSRC,
+					ssrc: {
+						boxes : sourceBoxes.map(box => { return { enabled: true, source: box.source } })
+					}
+				}
+			}),
 
+			CreateAtemTimelineObject({ start: 0 }, AtemLLayer.AtemMEProgram, AtemSourceIndex.SSrc, AtemTransitionStyle.CUT)
 		])
 	}
 
