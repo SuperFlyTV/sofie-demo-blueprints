@@ -87,6 +87,7 @@ function createPieceTransitionGeneric (piece: Piece, duration: number): IBluepri
 		externalId: 'T' + piece.id,
 		name: 'T' + duration,
 		enable: {
+			start: 0,
 			duration: duration
 		},
 		outputLayerId: 'pgm0',
@@ -116,6 +117,7 @@ export function CreatePieceInTransition (piece: Piece, transition: AtemTransitio
 		])
 	})
 	p.content = content
+	p.enable.start = 0
 
 	return p
 }
@@ -135,6 +137,7 @@ export function CreatePieceOutTransition (piece: Piece, transition: AtemTransiti
 		])
 	})
 	p.content = content
+	p.enable.start = piece.duration - duration
 
 	return p
 }

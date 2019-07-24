@@ -17,7 +17,7 @@ export function CreateEnableForTimelineObject (piece: Piece): TimelineEnable {
 		enable.duration = piece.duration
 	}
 
-	return piece
+	return enable
 }
 
 /**
