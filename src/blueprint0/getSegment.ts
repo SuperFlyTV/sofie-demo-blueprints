@@ -21,7 +21,6 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 		frameWidth: 1080,
 		framesPerSecond: 50
 	}
-	console.log(config.sourceConfig)
 	const segment = literal<IBlueprintSegment>({
 		name: ingestSegment.name,
 		metaData: {}
