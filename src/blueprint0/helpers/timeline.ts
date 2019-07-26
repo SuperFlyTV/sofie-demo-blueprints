@@ -100,7 +100,7 @@ export function CreateLawoAutomixTimelineObject (enable: TimelineEnable): Timeli
  * @param {CasparLLayer} layer Output layer.
  * @param {string} file File to play.
  */
-export function CreateCCGMediaTimelineObject (enable: TimelineEnable, layer: CasparLLayer, file: string) {
+export function CreateCCGMediaTimelineObject (enable: TimelineEnable, layer: CasparLLayer, file: string): TimelineObjCCGMedia {
 	return literal<TimelineObjCCGMedia>({
 		id: '',
 		enable: enable,
