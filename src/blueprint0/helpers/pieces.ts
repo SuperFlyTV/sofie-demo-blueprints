@@ -486,11 +486,11 @@ export function CreatePieceVoiceover (params: PieceParams): IBlueprintPiece {
  * @param {any} attr Attributes of the piece.
  */
 function checkAndPlaceOnScreen (p: IBlueprintPiece | IBlueprintAdLibPiece, attr: any): boolean {
-	if ('attr0' in attr) {
-		if (attr['attr0'].match(/screen \d/i)) {
+	if ('screen' in attr) {
+		if (attr['screen'].match(/screen \d/i)) {
 			// TODO: this whitespace replacement is due to the current testing environment.
 			// 		in future, the 'name' attr should be populated such that it is correct at this point, without string manipulation.
-			p.outputLayerId = attr['attr0'].replace(/\s/g, '')
+			p.outputLayerId = (attr['screen'] as string).replace(/\s/g, '').toLowerCase()
 			return true
 		}
 	}
