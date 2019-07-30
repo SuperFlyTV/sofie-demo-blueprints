@@ -181,27 +181,46 @@ export function CreatePieceCam (params: PieceParams, transition: AtemTransitionS
 	p.name = params.piece.attributes[Attributes.CAMERA]
 	let content: CameraContent = CreateContentCam(params.config, params.piece)
 
-	switch (params.context) {
-		default:
-			content.timelineObjects = _.compact<TSRTimelineObj>([
-				literal<TimelineObjAtemME>({
-					id: '',
-					enable: CreateEnableForTimelineObject(params.piece),
-					priority: 1,
-					layer: AtemLLayer.AtemMEProgram,
-					content: {
-						deviceType: DeviceType.ATEM,
-						type: TimelineContentTypeAtem.ME,
-						me: {
-							input: GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes[Attributes.CAMERA]),
-							transition: transition
-						}
+	if (checkAndPlaceOnScreen(p, params.piece.attributes)) {
+		content.timelineObjects = _.compact<TSRTimelineObj>([
+			literal<TimelineObjAtemME>({
+				id: '',
+				enable: CreateEnableForTimelineObject(params.piece),
+				priority: 1,
+				layer: AtemLLayer.AtemAuxScreen,
+				content: {
+					deviceType: DeviceType.ATEM,
+					type: TimelineContentTypeAtem.ME,
+					me: {
+						input: GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes[Attributes.CAMERA]),
+						transition: transition
 					}
-				}),
+				}
+			})
+		])
+	} else {
+		switch (params.context) {
+			default:
+				content.timelineObjects = _.compact<TSRTimelineObj>([
+					literal<TimelineObjAtemME>({
+						id: '',
+						enable: CreateEnableForTimelineObject(params.piece),
+						priority: 1,
+						layer: AtemLLayer.AtemMEProgram,
+						content: {
+							deviceType: DeviceType.ATEM,
+							type: TimelineContentTypeAtem.ME,
+							me: {
+								input: GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes[Attributes.CAMERA]),
+								transition: transition
+							}
+						}
+					}),
 
-				CreateLawoAutomixTimelineObject({ start: 0 })
-			])
-			break
+					CreateLawoAutomixTimelineObject({ start: 0 })
+				])
+				break
+		}
 	}
 
 	p.content = content
