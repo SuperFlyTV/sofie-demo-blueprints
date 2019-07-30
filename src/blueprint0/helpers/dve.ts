@@ -123,6 +123,12 @@ function createDVESourceConfigurations (config: SegmentConf, pieces: Piece[], so
 function createPIP (config: SegmentConf, pieces: Piece[], width: number, height: number) {
 	let dvePiece = pieces[0]
 	pieces = pieces.slice(1, 3)
+
+	if (pieces.length !== 2) {
+		config.context.warning(`Wrong number of sources in DVE for PIP. Need exactly two sources.`)
+		return
+	}
+
 	let boxes: BoxProps[] = [
 		{
 			x: width,
