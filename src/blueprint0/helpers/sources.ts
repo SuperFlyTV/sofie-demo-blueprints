@@ -100,7 +100,7 @@ export function FindSourceInfoStrict (context: NotesContext, sources: SourceInfo
 export function FindSourceByName (context: NotesContext, sources: SourceInfo[], name: string): SourceInfo | undefined {
 	name = (name + '').toLowerCase()
 
-	if (name.indexOf('k') === 0) {
+	if (name.indexOf('k') === 0 || name.indexOf('c') === 0) {
 		return FindSourceInfoStrict(context, sources, SourceLayerType.CAMERA, name)
 	}
 	if (name.indexOf('r') === 0) {

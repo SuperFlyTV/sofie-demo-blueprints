@@ -181,27 +181,46 @@ export function CreatePieceCam (params: PieceParams, transition: AtemTransitionS
 	p.name = params.piece.attributes[Attributes.CAMERA]
 	let content: CameraContent = CreateContentCam(params.config, params.piece)
 
-	switch (params.context) {
-		default:
-			content.timelineObjects = _.compact<TSRTimelineObj>([
-				literal<TimelineObjAtemME>({
-					id: '',
-					enable: CreateEnableForTimelineObject(params.piece),
-					priority: 1,
-					layer: AtemLLayer.AtemMEProgram,
-					content: {
-						deviceType: DeviceType.ATEM,
-						type: TimelineContentTypeAtem.ME,
-						me: {
-							input: GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes[Attributes.CAMERA]),
-							transition: transition
-						}
+	if (checkAndPlaceOnScreen(p, params.piece.attributes)) {
+		content.timelineObjects = _.compact<TSRTimelineObj>([
+			literal<TimelineObjAtemME>({
+				id: '',
+				enable: CreateEnableForTimelineObject(params.piece),
+				priority: 1,
+				layer: AtemLLayer.AtemAuxScreen,
+				content: {
+					deviceType: DeviceType.ATEM,
+					type: TimelineContentTypeAtem.ME,
+					me: {
+						input: GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes[Attributes.CAMERA]),
+						transition: transition
 					}
-				}),
+				}
+			})
+		])
+	} else {
+		switch (params.context) {
+			default:
+				content.timelineObjects = _.compact<TSRTimelineObj>([
+					literal<TimelineObjAtemME>({
+						id: '',
+						enable: CreateEnableForTimelineObject(params.piece),
+						priority: 1,
+						layer: AtemLLayer.AtemMEProgram,
+						content: {
+							deviceType: DeviceType.ATEM,
+							type: TimelineContentTypeAtem.ME,
+							me: {
+								input: GetInputValue(params.config.context, params.config.sourceConfig, params.piece.attributes[Attributes.CAMERA]),
+								transition: transition
+							}
+						}
+					}),
 
-				CreateLawoAutomixTimelineObject({ start: 0 })
-			])
-			break
+					CreateLawoAutomixTimelineObject({ start: 0 })
+				])
+				break
+		}
 	}
 
 	p.content = content
@@ -486,11 +505,9 @@ export function CreatePieceVoiceover (params: PieceParams): IBlueprintPiece {
  * @param {any} attr Attributes of the piece.
  */
 function checkAndPlaceOnScreen (p: IBlueprintPiece | IBlueprintAdLibPiece, attr: any): boolean {
-	if ('attr0' in attr) {
-		if (attr['attr0'].match(/screen \d/i)) {
-			// TODO: this whitespace replacement is due to the current testing environment.
-			// 		in future, the 'name' attr should be populated such that it is correct at this point, without string manipulation.
-			p.outputLayerId = attr['attr0'].replace(/\s/g, '')
+	if ('screen' in attr) {
+		if (attr['screen'] !== '') {
+			p.outputLayerId = attr['screen']
 			return true
 		}
 	}

@@ -110,6 +110,13 @@ export default literal<BlueprintMappings>({
 		mappingType: MappingAtemType.Auxilliary,
 		index: 5
 	}),
+	'atem_aux_screen': literal<MappingAtem & BlueprintMapping>({
+		device: PlayoutDeviceType.ATEM,
+		deviceId: 'atem0',
+		lookahead: LookaheadMode.NONE,
+		mappingType: MappingAtemType.Auxilliary,
+		index: 3
+	}),
 	'atem_dsk_graphics': literal<MappingAtem & BlueprintMapping>({
 		device: PlayoutDeviceType.ATEM,
 		deviceId: 'atem0',
