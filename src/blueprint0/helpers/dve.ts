@@ -19,7 +19,7 @@ import { AtemSourceIndex } from '../../types/atem'
  * @param {number} width Screen width.
  * @param {number} height Screen height.
  */
-export function CreateDVE (config: SegmentConf, pieces: Piece[], sources: number, width: number, height: number): IBlueprintPiece | IBlueprintAdLibPiece {
+export function CreateDVE (config: SegmentConf, pieces: Piece[], sources: number, width: number, height: number): IBlueprintPiece | IBlueprintAdLibPiece | undefined {
 	let dvePiece = pieces[0]
 	if (dvePiece.objectType === 'split') {
 		return createSplit(config, pieces, sources, width, height)
@@ -120,7 +120,7 @@ function createDVESourceConfigurations (config: SegmentConf, pieces: Piece[], so
  * @param {number} width Frame width.
  * @param {number} height Frame height.
  */
-function createPIP (config: SegmentConf, pieces: Piece[], width: number, height: number) {
+function createPIP (config: SegmentConf, pieces: Piece[], width: number, height: number): IBlueprintPiece | IBlueprintAdLibPiece | undefined {
 	let dvePiece = pieces[0]
 	pieces = pieces.slice(1, 3)
 

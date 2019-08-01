@@ -79,10 +79,12 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 						} else {
 							let sources = Math.min(length, 4)
 							let p = CreateDVE(config, pieceList, sources, config.frameHeight, config.frameWidth)
-							if (isAdLibPiece(p)) {
-								adLibPieces.push(p as IBlueprintAdLibPiece)
-							} else {
-								pieces.push(p as IBlueprintPiece)
+							if (p) {
+								if (isAdLibPiece(p)) {
+									adLibPieces.push(p as IBlueprintAdLibPiece)
+								} else {
+									pieces.push(p as IBlueprintPiece)
+								}
 							}
 						}
 					} else if (type.match(/breaker/i)) {
