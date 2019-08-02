@@ -241,7 +241,10 @@ function createPieceByType (
 		adLibPieces: IBlueprintAdLibPiece[],
 		transitionType?: AtemTransitionStyle
 	) {
-	let p = creator(params, transitionType || AtemTransitionStyle.CUT)
+	let transition = transitionType
+	if (params.piece.attributes['transition']) transition = transitionFromString(params.piece.attributes['transition'], transitionType || AtemTransitionStyle.CUT)
+
+	let p = creator(params, transition || AtemTransitionStyle.CUT)
 	if (p.content) {
 		if (isAdLibPiece(p)) {
 			adLibPieces.push(p as IBlueprintAdLibPiece)
@@ -250,18 +253,18 @@ function createPieceByType (
 
 			if (params.context.match(/titles/i) && params.piece.objectType.match(/(graphic)|(video)/i)) {
 				let input = params.config.config.studio.AtemSource.Server1
-				pieces.push(CreatePieceOutTransition(params.piece, transitionType || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 150 * 1000, input)) // TODO: Use actual framerate
+				pieces.push(CreatePieceOutTransition(params.piece, transition || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 150 * 1000, input)) // TODO: Use actual framerate
 			}
 
 			if (params.context.match(/breaker/i) && params.piece.objectType.match(/(graphic)|(video)/i)) {
 				let input = params.config.config.studio.AtemSource.Server1
-				pieces.push(CreatePieceOutTransition(params.piece, transitionType || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 50 * 1000, input)) // TODO: Use actual framerate
+				pieces.push(CreatePieceOutTransition(params.piece, transition || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 50 * 1000, input)) // TODO: Use actual framerate
 			}
 
 			if (params.context.match(/package/i) && params.piece.objectType.match(/video/i)) {
 				let input = params.config.config.studio.AtemSource.Server1
-				pieces.push(CreatePieceInTransition(params.piece, transitionType || AtemTransitionStyle.MIX, (1 / params.config.framesPerSecond) * 150 * 1000, input))
-				pieces.push(CreatePieceOutTransition(params.piece, transitionType || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 50 * 1000, input)) // TODO: Use actual framerate
+				pieces.push(CreatePieceInTransition(params.piece, transition || AtemTransitionStyle.MIX, (1 / params.config.framesPerSecond) * 150 * 1000, input))
+				pieces.push(CreatePieceOutTransition(params.piece, transition || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 50 * 1000, input)) // TODO: Use actual framerate
 			}
 		}
 	}
@@ -357,4 +360,26 @@ function calculateExpectedDuration (pieces: IBlueprintPiece[]): number {
 		return end - start
 	}
 	return 0
+}
+
+/**
+ * Translates the string representation of a transition to an AtemTransitionStyle.
+ * @param transition Transition as string.
+ * @param defaultTransition AtemTransitionStyle.
+ */
+function transitionFromString (transition: string, defaultTransition: AtemTransitionStyle) {
+	switch (transition) {
+		case 'mix':
+			return AtemTransitionStyle.MIX
+		case 'cut':
+			return AtemTransitionStyle.CUT
+		case 'dip':
+			return AtemTransitionStyle.DIP
+		case 'sting':
+			return AtemTransitionStyle.STING
+		case 'wipe':
+			return AtemTransitionStyle.WIPE
+		default:
+			return defaultTransition
+	}
 }
