@@ -13,8 +13,6 @@ export function CreateEnableForTimelineObject (piece: Piece, delay?: number): Ti
 		start: delay ? delay : 0
 	}
 
-	console.log(enable.start)
-
 	if (piece.duration) {
 		enable.duration = piece.duration
 	}
