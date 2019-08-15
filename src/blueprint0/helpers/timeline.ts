@@ -8,10 +8,12 @@ import { AtemLLayer, LawoLLayer, CasparLLayer } from '../../types/layers'
  * Creates an enable object for a timeline object.
  * @param {Piece} piece Piece to create enable for.
  */
-export function CreateEnableForTimelineObject (piece: Piece): TimelineEnable {
+export function CreateEnableForTimelineObject (piece: Piece, delay?: number): TimelineEnable {
 	let enable: TimelineEnable = {
-		start: piece.objectTime ? piece.objectTime : 0
+		start: delay ? delay : 0
 	}
+
+	console.log(enable.start)
 
 	if (piece.duration) {
 		enable.duration = piece.duration
