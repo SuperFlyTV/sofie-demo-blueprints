@@ -11,6 +11,7 @@ import { parseConfig } from './helpers/config'
 import { parseSources, Attributes, GetInputValueFromPiece } from './helpers/sources'
 import { CreatePieceVideo, CreatePieceCam, CreatePieceGraphic, CreatePieceGraphicOverlay, CreatePieceInTransition, CreatePieceScript, CreatePieceOutTransition, CreatePieceVoiceover, CreatePieceBreaker, CreatePieceRemote } from './helpers/pieces'
 import { CreateDVE } from './helpers/dve'
+import { getSegmentVMix } from './getSegmentVMix'
 
 export function getSegment (context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
 	const config: SegmentConf = {
@@ -32,6 +33,10 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 			segment,
 			parts
 		}
+	}
+
+	if (config.config.studio.VMix) {
+		return getSegmentVMix(context, ingestSegment, config, segment, parts)
 	}
 
 	let currentPartIndex = 0
@@ -274,7 +279,7 @@ function createPieceByType (
  * Creates a generic part. Only used as a placeholder for part types that have not been implemented yet.
  * @param {Piece} piece Piece to evaluate.
  */
-function createGeneric (ingestPart: IngestPart): BlueprintResultPart {
+export function createGeneric (ingestPart: IngestPart): BlueprintResultPart {
 	const part = literal<IBlueprintPart>({
 		externalId: ingestPart.externalId,
 		title: ingestPart.name || 'Unknown',
@@ -304,7 +309,7 @@ function createGeneric (ingestPart: IngestPart): BlueprintResultPart {
  * @param {IngestPart} ingestPart Ingest part.
  * @param {IBlueprintPiece[]} pieces Array of pieces.
  */
-function createPart (ingestPart: IngestPart, pieces: IBlueprintPiece[], adLibPieces: IBlueprintAdLibPiece[]): BlueprintResultPart {
+export function createPart (ingestPart: IngestPart, pieces: IBlueprintPiece[], adLibPieces: IBlueprintAdLibPiece[]): BlueprintResultPart {
 	const part = literal<IBlueprintPart>({
 		externalId: ingestPart.externalId,
 		title: ingestPart.name || 'Unknown',
