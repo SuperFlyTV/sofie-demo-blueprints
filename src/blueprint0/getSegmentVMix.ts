@@ -260,7 +260,7 @@ function CreateSwitchToClipTimelineObject (enable: TimelineEnable, layer: VMixLL
 	})
 }
 
-function CreateOverlayTimelineObject (enable: TimelineEnable, layer: VMixLLayer, file: string) {
+function CreateOverlayTimelineObject (enable: TimelineEnable, layer: VMixLLayer, file: string, mediaDirectory: string) {
 	return literal<TimelineObjVMixOverlayInputByNameIn>({
 		id: 'overlayIn1',
 		enable: enable,
@@ -270,6 +270,7 @@ function CreateOverlayTimelineObject (enable: TimelineEnable, layer: VMixLLayer,
 			deviceType: DeviceType.VMIX,
 			type: TimelineContentTypeVMix.OVERLAY_INPUT_BY_NAME_IN,
 			inputName: file,
+			mediaDirectory: mediaDirectory,
 			overlay: 4
 		}
 	})
@@ -287,7 +288,7 @@ export function CreatePieceGraphicOverlay (params: PieceParams): IBlueprintAdLib
 	let content: GraphicsContent = CreateContentGraphics(params.piece)
 
 	content.timelineObjects = _.compact<TSRTimelineObj>([
-		CreateOverlayTimelineObject(CreateEnableForTimelineObject(params.piece, -1), VMixLLayer.VMixProgram, params.piece.clipName),
+		CreateOverlayTimelineObject(CreateEnableForTimelineObject(params.piece, -1), VMixLLayer.VMixProgram, params.piece.clipName, params.config.config.studio.VMixMediaDirectory),
 
 		literal<TimelineObjVMixOverlayInputOFF>({
 			id: 'overlayOff1',
