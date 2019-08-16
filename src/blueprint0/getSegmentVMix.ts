@@ -295,14 +295,15 @@ export function CreatePieceGraphicOverlay (params: PieceParams): IBlueprintAdLib
 	let content: GraphicsContent = CreateContentGraphics(params.piece)
 
 	content.timelineObjects = _.compact<TSRTimelineObj>([
-		CreateOverlayTimelineObject(CreateEnableForTimelineObject(params.piece, -1), VMixLLayer.VMixProgram, params.piece.clipName, params.config.config.studio.VMixMediaDirectory),
+		CreateOverlayTimelineObject(CreateEnableForTimelineObject(params.piece), VMixLLayer.VMixProgram, params.piece.clipName, params.config.config.studio.VMixMediaDirectory),
 
 		literal<TimelineObjVMixOverlayInputOFF>({
-			id: 'overlayOff1',
+			id: '',
 			enable: {
-				start: params.piece.duration - 1,
-				duration: 1
+				start: params.piece.duration - 100,
+				duration: 100
 			},
+			priority: 1,
 			layer: VMixLLayer.VMixProgram,
 			content: {
 				deviceType: DeviceType.VMIX,
