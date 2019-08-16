@@ -2,7 +2,7 @@ import * as _ from 'underscore'
 import * as objectPath from 'object-path'
 import { SegmentConf, Piece, PieceParams, ObjectType } from '../types/classes'
 import { IngestSegment, IBlueprintSegment, BlueprintResultPart, IBlueprintPiece, IBlueprintAdLibPiece, SegmentContext, BlueprintResultSegment, VTContent, CameraContent, GraphicsContent } from 'tv-automation-sofie-blueprints-integration'
-import { VMixTransitionType, TSRTimelineObj, TimelineObjVMixPlayClip, DeviceType, TimelineContentTypeVMix, TimelineObjVMixClipToProgram, VMixTransition, TimelineObjVMixCameraActive } from 'timeline-state-resolver-types'
+import { VMixTransitionType, TSRTimelineObj, TimelineObjVMixPlayClip, DeviceType, TimelineContentTypeVMix, TimelineObjVMixClipToProgram, VMixTransition, TimelineObjVMixCameraActive, TimelineObjVMixOverlayInputByNameIn, TimelineObjVMixOverlayInputOFF } from 'timeline-state-resolver-types'
 import { literal, isAdLibPiece } from '../common/util'
 import { SourceLayer, VMixLLayer } from '../types/layers'
 import { createGeneric, createPart } from './getSegment'
@@ -82,6 +82,13 @@ export function getSegmentVMix (context: SegmentContext, ingestSegment: IngestSe
 										createPieceByType(params, CreatePieceGraphic, pieces, adLibPieces, transitionType)
 									} else {
 										context.warning(`Missing clip for graphic: ${params.piece.id}`)
+									}
+									break
+								case ObjectType.OVERLAY:
+									if (params.piece.clipName) {
+										createPieceByType(params, CreatePieceGraphicOverlay, pieces, adLibPieces, transitionType)
+									} else {
+										context.warning(`Missing clip for overlay: ${params.piece.id}`)
 									}
 									break
 								case ObjectType.SCRIPT:
@@ -251,6 +258,55 @@ function CreateSwitchToClipTimelineObject (enable: TimelineEnable, layer: VMixLL
 			transition: transition
 		}
 	})
+}
+
+function CreateOverlayTimelineObject (enable: TimelineEnable, layer: VMixLLayer, file: string) {
+	return literal<TimelineObjVMixOverlayInputByNameIn>({
+		id: 'overlayIn1',
+		enable: enable,
+		priority: 1,
+		layer: layer,
+		content: {
+			deviceType: DeviceType.VMIX,
+			type: TimelineContentTypeVMix.OVERLAY_INPUT_BY_NAME_IN,
+			inputName: file,
+			overlay: 4
+		}
+	})
+}
+
+/**
+ * Creates a graphics overlay.
+ * @param {PieceParams} params Piece to create.
+ */
+export function CreatePieceGraphicOverlay (params: PieceParams): IBlueprintAdLibPiece | IBlueprintPiece {
+	let p = CreatePieceGeneric(params.piece)
+
+	p.sourceLayerId = SourceLayer.PgmGraphicsSuper
+
+	let content: GraphicsContent = CreateContentGraphics(params.piece)
+
+	content.timelineObjects = _.compact<TSRTimelineObj>([
+		CreateOverlayTimelineObject(CreateEnableForTimelineObject(params.piece, -1), VMixLLayer.VMixProgram, params.piece.clipName),
+
+		literal<TimelineObjVMixOverlayInputOFF>({
+			id: 'overlayOff1',
+			enable: {
+				start: params.piece.duration - 1,
+				duration: 1
+			},
+			layer: VMixLLayer.VMixProgram,
+			content: {
+				deviceType: DeviceType.VMIX,
+				type: TimelineContentTypeVMix.OVERLAY_INPUT_OFF,
+				overlay: 4
+			}
+		})
+	])
+
+	p.content = content
+
+	return p
 }
 
 /**
