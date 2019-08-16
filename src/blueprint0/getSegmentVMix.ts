@@ -56,6 +56,13 @@ export function getSegmentVMix (context: SegmentContext, ingestSegment: IngestSe
 						let transitionType = VMixTransitionType.Cut
 
 						for (let i = 0; i < pieceList.length; i++) {
+							if (pieceList[i].objectType.match(/transition/i)) {
+								let pieceTransition = pieceList[i].transition
+								if (pieceTransition) transitionType = transitionFromString(pieceTransition, VMixTransitionType.Cut)
+							}
+						}
+
+						for (let i = 0; i < pieceList.length; i++) {
 							let params: PieceParams = {
 								config: config,
 								piece: pieceList[i],

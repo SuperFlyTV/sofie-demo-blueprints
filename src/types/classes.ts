@@ -25,6 +25,7 @@ export interface Piece {
 	attributes: any
 	position: string
 	script?: string
+	transition?: string
 }
 
 export interface BoxProps {
