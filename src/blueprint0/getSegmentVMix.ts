@@ -1,13 +1,13 @@
 import * as _ from 'underscore'
 import * as objectPath from 'object-path'
 import { SegmentConf, Piece, PieceParams, ObjectType } from '../types/classes'
-import { IngestSegment, IBlueprintSegment, BlueprintResultPart, IBlueprintPiece, IBlueprintAdLibPiece, SegmentContext, BlueprintResultSegment, VTContent, CameraContent } from 'tv-automation-sofie-blueprints-integration'
+import { IngestSegment, IBlueprintSegment, BlueprintResultPart, IBlueprintPiece, IBlueprintAdLibPiece, SegmentContext, BlueprintResultSegment, VTContent, CameraContent, GraphicsContent } from 'tv-automation-sofie-blueprints-integration'
 import { VMixTransitionType, TSRTimelineObj, TimelineObjVMixPlayClip, DeviceType, TimelineContentTypeVMix, TimelineObjVMixClipToProgram, VMixTransition, TimelineObjVMixCameraActive } from 'timeline-state-resolver-types'
 import { literal, isAdLibPiece } from '../common/util'
 import { SourceLayer, VMixLLayer } from '../types/layers'
 import { createGeneric, createPart } from './getSegment'
 import { CreatePieceGeneric, CreatePieceScript } from './helpers/pieces'
-import { CreateContentVT, CreateContentCam } from './helpers/content'
+import { CreateContentVT, CreateContentCam, CreateContentGraphics } from './helpers/content'
 import { TimelineEnable } from 'timeline-state-resolver-types/dist/superfly-timeline'
 import { CreateEnableForTimelineObject } from './helpers/timeline'
 import { Attributes } from './helpers/sources'
@@ -77,6 +77,13 @@ export function getSegmentVMix (context: SegmentContext, ingestSegment: IngestSe
 										context.warning(`Missing camera for camera: ${params.piece.id}`)
 									}
 									break
+								case ObjectType.GRAPHIC:
+									if (params.piece.clipName) {
+										createPieceByType(params, CreatePieceGraphic, pieces, adLibPieces, transitionType)
+									} else {
+										context.warning(`Missing clip for graphic: ${params.piece.id}`)
+									}
+									break
 								case ObjectType.SCRIPT:
 									break
 								default:
@@ -125,6 +132,43 @@ export function CreatePieceVideo (params: PieceParams, transition: VMixTransitio
 	// TODO: Place on screen
 	/*if (!checkAndPlaceOnScreen(p, params.piece.attributes)) {
 	}*/
+
+	content.timelineObjects.push(
+		CreateSwitchToClipTimelineObject(
+			CreateEnableForTimelineObject(params.piece, 1),
+			VMixLLayer.VMixProgram,
+			params.piece.clipName,
+			{
+				number: 4,
+				effect: transition,
+				duration: 1000
+			}
+		)
+	)
+
+	p.content = content
+
+	return p
+}
+
+/**
+ * Creates a cam piece.
+ * @param {PieceParams} params Piece to create.
+ */
+export function CreatePieceGraphic (params: PieceParams, transition: VMixTransitionType): IBlueprintAdLibPiece | IBlueprintPiece {
+	let p = CreatePieceGeneric(params.piece)
+
+	p.sourceLayerId = SourceLayer.PgmGraphicsSuper
+
+	let content: GraphicsContent = CreateContentGraphics(params.piece)
+
+	switch (params.context) {
+		default:
+			content.timelineObjects = _.compact<TSRTimelineObj>([
+				CreatePlayClipTimelineObject(CreateEnableForTimelineObject(params.piece), VMixLLayer.VMixProgram, params.piece.clipName, params.config.config.studio.VMixMediaDirectory)
+			])
+			break
+	}
 
 	content.timelineObjects.push(
 		CreateSwitchToClipTimelineObject(
