@@ -379,7 +379,7 @@ function createPieceByType (
 	transitionType?: VMixTransitionType
 ) {
 	let transition = transitionType
-	if (params.piece.attributes['transition']) transition = transitionFromString(params.piece.attributes['transition'], transitionType || VMixTransitionType.Cut)
+	if (params.piece.transition) transition = transitionFromString(params.piece.transition, transitionType || VMixTransitionType.Cut)
 
 	let p = creator(params, transition || VMixTransitionType.Cut)
 	if (p.content) {
