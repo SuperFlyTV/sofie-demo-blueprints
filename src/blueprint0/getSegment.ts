@@ -121,7 +121,8 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 
 						for (let i = 0; i < pieceList.length; i++) {
 							if (pieceList[i].objectType.match(/transition/i)) {
-								transitionType = transitionTypeFromString(pieceList[i].attributes[Attributes.TRANSITION])
+								let pieceTransition = pieceList[i].transition
+								if (pieceTransition) transitionType = transitionTypeFromString(pieceTransition)
 							}
 						}
 
@@ -163,7 +164,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 									}
 									break
 								case ObjectType.TRANSITION:
-									if (params.piece.attributes[Attributes.TRANSITION]) {
+									if (params.piece.transition) {
 										pieces.push(CreatePieceInTransition(params.piece, transitionType, params.piece.duration || 1000, GetInputValueFromPiece(params.config, params.piece)))
 									} else {
 										context.warning(`Missing transition for transition: ${params.piece.id}`)
