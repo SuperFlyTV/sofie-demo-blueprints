@@ -2,11 +2,11 @@ import * as _ from 'underscore'
 import * as objectPath from 'object-path'
 import { SegmentConf, Piece, PieceParams, ObjectType } from '../types/classes'
 import { IngestSegment, IBlueprintSegment, BlueprintResultPart, IBlueprintPiece, IBlueprintAdLibPiece, SegmentContext, BlueprintResultSegment, VTContent, CameraContent, GraphicsContent } from 'tv-automation-sofie-blueprints-integration'
-import { VMixTransitionType, TSRTimelineObj, TimelineObjVMixPlayClip, DeviceType, TimelineContentTypeVMix, TimelineObjVMixClipToProgram, VMixTransition, TimelineObjVMixCameraActive, TimelineObjVMixOverlayInputByNameIn, TimelineObjVMixOverlayInputOFF } from 'timeline-state-resolver-types'
+import { VMixTransitionType, TSRTimelineObj, TimelineObjVMixPlayClip, DeviceType, TimelineContentTypeVMix, TimelineObjVMixClipToProgram, VMixTransition, TimelineObjVMixCameraActive, TimelineObjVMixOverlayInputByNameIn, TimelineObjVMixOverlayInputOFF, TimelineObjVMixSetOutput, TimelineObjVMixStartExternal } from 'timeline-state-resolver-types'
 import { literal, isAdLibPiece } from '../common/util'
 import { SourceLayer, VMixLLayer } from '../types/layers'
 import { createGeneric, createPart } from './getSegment'
-import { CreatePieceGeneric, CreatePieceScript } from './helpers/pieces'
+import { CreatePieceGeneric, CreatePieceScript, checkAndPlaceOnScreen } from './helpers/pieces'
 import { CreateContentVT, CreateContentCam, CreateContentGraphics } from './helpers/content'
 import { TimelineEnable } from 'timeline-state-resolver-types/dist/superfly-timeline'
 import { CreateEnableForTimelineObject } from './helpers/timeline'
@@ -135,30 +135,44 @@ export function CreatePieceVideo (params: PieceParams, transition: VMixTransitio
 
 	let content: VTContent = CreateContentVT(params.piece)
 
-	switch (params.context) {
-		default:
-			content.timelineObjects = _.compact<TSRTimelineObj>([
-				CreatePlayClipTimelineObject(CreateEnableForTimelineObject(params.piece), VMixLLayer.VMixProgram, params.piece.clipName, params.config.config.studio.VMixMediaDirectory)
-			])
-			break
-	}
-
 	// TODO: Place on screen
-	/*if (!checkAndPlaceOnScreen(p, params.piece.attributes)) {
-	}*/
-
-	content.timelineObjects.push(
-		CreateSwitchToClipTimelineObject(
-			CreateEnableForTimelineObject(params.piece, 1),
-			VMixLLayer.VMixProgram,
-			params.piece.clipName,
-			{
-				number: 4,
-				effect: transition,
-				duration: 1000
-			}
+	if (checkAndPlaceOnScreen(p, params.piece.attributes)) {
+		content.timelineObjects.push(
+			CreatePlaceOnScreenTimelineObject(
+				CreateEnableForTimelineObject(params.piece),
+				VMixLLayer.VMixScreen,
+				params.piece.clipName
+			)
 		)
-	)
+
+		content.timelineObjects.push(
+			CreateStartExternalTimelineObject(
+				CreateEnableForTimelineObject(params.piece, 1),
+				VMixLLayer.VMixScreen
+			)
+		)
+	} else {
+		switch (params.context) {
+			default:
+				content.timelineObjects = _.compact<TSRTimelineObj>([
+					CreatePlayClipTimelineObject(CreateEnableForTimelineObject(params.piece), VMixLLayer.VMixProgram, params.piece.clipName, params.config.config.studio.VMixMediaDirectory)
+				])
+				break
+		}
+
+		content.timelineObjects.push(
+			CreateSwitchToClipTimelineObject(
+				CreateEnableForTimelineObject(params.piece, 1),
+				VMixLLayer.VMixProgram,
+				params.piece.clipName,
+				{
+					number: 4,
+					effect: transition,
+					duration: 1000
+				}
+			)
+		)
+	}
 
 	p.content = content
 
@@ -176,26 +190,43 @@ export function CreatePieceGraphic (params: PieceParams, transition: VMixTransit
 
 	let content: GraphicsContent = CreateContentGraphics(params.piece)
 
-	switch (params.context) {
-		default:
-			content.timelineObjects = _.compact<TSRTimelineObj>([
-				CreatePlayClipTimelineObject(CreateEnableForTimelineObject(params.piece), VMixLLayer.VMixProgram, params.piece.clipName, params.config.config.studio.VMixMediaDirectory)
-			])
-			break
-	}
-
-	content.timelineObjects.push(
-		CreateSwitchToClipTimelineObject(
-			CreateEnableForTimelineObject(params.piece, 1),
-			VMixLLayer.VMixProgram,
-			params.piece.clipName,
-			{
-				number: 4,
-				effect: transition,
-				duration: 1000
-			}
+	if (checkAndPlaceOnScreen(p, params.piece.attributes)) {
+		content.timelineObjects.push(
+			CreatePlaceOnScreenTimelineObject(
+				CreateEnableForTimelineObject(params.piece),
+				VMixLLayer.VMixScreen,
+				params.piece.clipName
+			)
 		)
-	)
+
+		content.timelineObjects.push(
+			CreateStartExternalTimelineObject(
+				CreateEnableForTimelineObject(params.piece, 1),
+				VMixLLayer.VMixScreen
+			)
+		)
+	} else {
+		switch (params.context) {
+			default:
+				content.timelineObjects = _.compact<TSRTimelineObj>([
+					CreatePlayClipTimelineObject(CreateEnableForTimelineObject(params.piece), VMixLLayer.VMixProgram, params.piece.clipName, params.config.config.studio.VMixMediaDirectory)
+				])
+				break
+		}
+
+		content.timelineObjects.push(
+			CreateSwitchToClipTimelineObject(
+				CreateEnableForTimelineObject(params.piece, 1),
+				VMixLLayer.VMixProgram,
+				params.piece.clipName,
+				{
+					number: 4,
+					effect: transition,
+					duration: 1000
+				}
+			)
+		)
+	}
 
 	p.content = content
 
@@ -213,24 +244,41 @@ export function CreatePieceCam (params: PieceParams, transition: VMixTransitionT
 	p.name = params.piece.attributes[Attributes.CAMERA]
 	let content: CameraContent = CreateContentCam(params.config, params.piece)
 
-	content.timelineObjects = _.compact<TSRTimelineObj>([
-		literal<TimelineObjVMixCameraActive>({
-			id: '',
-			enable: CreateEnableForTimelineObject(params.piece),
-			priority: 1,
-			layer: VMixLLayer.VMixProgram,
-			content: {
-				deviceType: DeviceType.VMIX,
-				type: TimelineContentTypeVMix.CAMERA_ACTIVE,
-				camera: params.piece.attributes[Attributes.CAMERA],
-				transition: {
-					effect: transition,
-					duration: 1000,
-					number: 4
+	if (checkAndPlaceOnScreen(p, params.piece.attributes)) {
+		content.timelineObjects.push(
+			CreatePlaceOnScreenTimelineObject(
+				CreateEnableForTimelineObject(params.piece),
+				VMixLLayer.VMixScreen,
+				params.piece.attributes[Attributes.CAMERA]
+			)
+		)
+
+		content.timelineObjects.push(
+			CreateStartExternalTimelineObject(
+				CreateEnableForTimelineObject(params.piece, 1),
+				VMixLLayer.VMixScreen
+			)
+		)
+	} else {
+		content.timelineObjects = _.compact<TSRTimelineObj>([
+			literal<TimelineObjVMixCameraActive>({
+				id: '',
+				enable: CreateEnableForTimelineObject(params.piece),
+				priority: 1,
+				layer: VMixLLayer.VMixProgram,
+				content: {
+					deviceType: DeviceType.VMIX,
+					type: TimelineContentTypeVMix.CAMERA_ACTIVE,
+					camera: params.piece.attributes[Attributes.CAMERA],
+					transition: {
+						effect: transition,
+						duration: 1000,
+						number: 4
+					}
 				}
-			}
-		})
-	])
+			})
+		])
+	}
 
 	p.content = content
 
@@ -263,6 +311,34 @@ function CreateSwitchToClipTimelineObject (enable: TimelineEnable, layer: VMixLL
 			type: TimelineContentTypeVMix.CLIP_TO_PROGRAM,
 			clipName: file,
 			transition: transition
+		}
+	})
+}
+
+function CreatePlaceOnScreenTimelineObject (enable: TimelineEnable, layer: VMixLLayer, file: string) {
+	return literal<TimelineObjVMixSetOutput>({
+		id: '',
+		enable: enable,
+		priority: 1,
+		layer: layer,
+		content: {
+			deviceType: DeviceType.VMIX,
+			type: TimelineContentTypeVMix.SET_OUTPUT,
+			name: 'External2',
+			output: file
+		}
+	})
+}
+
+function CreateStartExternalTimelineObject (enable: TimelineEnable, layer: VMixLLayer) {
+	return literal<TimelineObjVMixStartExternal>({
+		id: '',
+		enable: enable,
+		priority: 1,
+		layer: layer,
+		content: {
+			deviceType: DeviceType.VMIX,
+			type: TimelineContentTypeVMix.START_EXTERNAL
 		}
 	})
 }

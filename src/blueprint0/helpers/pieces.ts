@@ -504,7 +504,7 @@ export function CreatePieceVoiceover (params: PieceParams): IBlueprintPiece {
  * @param {IBlueprintPiece} p The Piece blueprint to modify.
  * @param {any} attr Attributes of the piece.
  */
-function checkAndPlaceOnScreen (p: IBlueprintPiece | IBlueprintAdLibPiece, attr: any): boolean {
+export function checkAndPlaceOnScreen (p: IBlueprintPiece | IBlueprintAdLibPiece, attr: any): boolean {
 	if ('screen' in attr) {
 		if (attr['screen'] !== '') {
 			p.outputLayerId = attr['screen']

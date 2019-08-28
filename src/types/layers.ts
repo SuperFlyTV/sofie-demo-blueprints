@@ -45,7 +45,8 @@ export enum AtemLLayer {
 }
 
 export enum VMixLLayer {
-	VMixProgram = 'vmix_program'
+	VMixProgram = 'vmix_program',
+	VMixScreen = 'vmix_screen'
 }
 
 export enum CasparLLayer {
