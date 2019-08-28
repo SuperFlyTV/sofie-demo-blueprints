@@ -130,7 +130,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 						for (let i = 0; i < pieceList.length; i++) {
 							let params: PieceParams = {
 								config: config,
-								piece: pieceList[i],
+								piece: ConvertFile(pieceList[i]),
 								context: type
 							}
 
@@ -208,6 +208,13 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 		segment,
 		parts
 	}
+}
+
+function ConvertFile (piece: Piece): Piece {
+	if (piece.clipName.match(/.*\..*/i)) {
+		piece.clipName = piece.clipName.replace(/\..*/g, '')
+	}
+	return piece
 }
 
 /**
