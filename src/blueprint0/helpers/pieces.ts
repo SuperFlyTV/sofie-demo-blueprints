@@ -10,7 +10,8 @@ import {
 } from 'timeline-state-resolver-types'
 import { CreateContentCam, CreateContentVT, CreateContentGraphics, CreateContentRemote } from './content'
 import { GetInputValue, Attributes } from './sources'
-import { CreateEnableForTimelineObject, CreateTransitionAtemTimelineObject, CreateLawoAutomixTimelineObject, CreateCCGMediaTimelineObject, CreateAtemTimelineObject } from './timeline'
+import { CreateTransitionAtemTimelineObject, CreateLawoAutomixTimelineObject, CreateCCGMediaTimelineObject, CreateAtemTimelineObject } from './atem/timeline'
+import { CreateEnableForTimelineObject } from './timeline'
 
 /**
  * Creates a generic adLib piece.
