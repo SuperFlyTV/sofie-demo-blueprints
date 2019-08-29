@@ -7,7 +7,7 @@ import { isAdLibPiece } from '../common/util'
 import { createGeneric, createPart } from './helpers/parts'
 import { CreatePieceScript } from './helpers/pieces'
 import { Attributes } from './helpers/sources'
-import { CreatePieceVideo, CreatePieceCam, CreatePieceGraphicOverlay, CreatePieceGraphic } from './helpers/vmix/pieces';
+import { CreatePieceVideo, CreatePieceCam, CreatePieceGraphicOverlay, CreatePieceGraphic } from './helpers/vmix/pieces'
 
 export function getSegmentVMix (context: SegmentContext, ingestSegment: IngestSegment, config: SegmentConf, segment: IBlueprintSegment, parts: BlueprintResultPart[]): BlueprintResultSegment {
 	if (!config.config.studio.VMixMediaDirectory) {
