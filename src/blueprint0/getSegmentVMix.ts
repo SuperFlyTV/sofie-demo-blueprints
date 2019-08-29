@@ -5,7 +5,7 @@ import { IngestSegment, IBlueprintSegment, BlueprintResultPart, IBlueprintPiece,
 import { VMixTransitionType, TSRTimelineObj, TimelineObjVMixPlayClip, DeviceType, TimelineContentTypeVMix, TimelineObjVMixClipToProgram, VMixTransition, TimelineObjVMixCameraActive, TimelineObjVMixOverlayInputByNameIn, TimelineObjVMixOverlayInputOFF, TimelineObjVMixSetOutput, TimelineObjVMixStartExternal } from 'timeline-state-resolver-types'
 import { literal, isAdLibPiece } from '../common/util'
 import { SourceLayer, VMixLLayer } from '../types/layers'
-import { createGeneric, createPart } from './getSegment'
+import { createGeneric, createPart } from './helpers/parts'
 import { CreatePieceGeneric, CreatePieceScript, checkAndPlaceOnScreen } from './helpers/pieces'
 import { CreateContentVT, CreateContentCam, CreateContentGraphics } from './helpers/content'
 import { TimelineEnable } from 'timeline-state-resolver-types/dist/superfly-timeline'

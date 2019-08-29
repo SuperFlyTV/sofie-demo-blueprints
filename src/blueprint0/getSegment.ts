@@ -1,10 +1,9 @@
 import * as _ from 'underscore'
 import * as objectPath from 'object-path'
 import {
-	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece, IBlueprintAdLibPiece
+	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IBlueprintPiece, IBlueprintAdLibPiece
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal, isAdLibPiece } from '../common/util'
-import { SourceLayer } from '../types/layers'
 import { Piece, SegmentConf, PieceParams, ObjectType } from '../types/classes'
 import { AtemTransitionStyle } from 'timeline-state-resolver-types'
 import { parseConfig } from './helpers/config'
@@ -12,6 +11,7 @@ import { parseSources, Attributes, GetInputValueFromPiece } from './helpers/sour
 import { CreatePieceVideo, CreatePieceCam, CreatePieceGraphic, CreatePieceGraphicOverlay, CreatePieceInTransition, CreatePieceScript, CreatePieceOutTransition, CreatePieceVoiceover, CreatePieceBreaker, CreatePieceRemote } from './helpers/pieces'
 import { CreateDVE } from './helpers/dve'
 import { getSegmentVMix } from './getSegmentVMix'
+import { createGeneric, createPart } from './helpers/parts'
 
 export function getSegment (context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
 	const config: SegmentConf = {
@@ -122,7 +122,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 						for (let i = 0; i < pieceList.length; i++) {
 							if (pieceList[i].objectType.match(/transition/i)) {
 								let pieceTransition = pieceList[i].transition
-								if (pieceTransition) transitionType = transitionTypeFromString(pieceTransition)
+								if (pieceTransition) transitionType = transitionTypeFromString(pieceTransition, AtemTransitionStyle.CUT)
 							}
 						}
 
@@ -222,7 +222,7 @@ function ConvertFile (piece: Piece): Piece {
  * If no match is found, CUT is returned.
  * @param {string} str Transtion style to match.
  */
-function transitionTypeFromString (str: string): AtemTransitionStyle {
+function transitionTypeFromString (str: string, defaultTransition: AtemTransitionStyle): AtemTransitionStyle {
 	if (str.match(/mix/i)) {
 		return AtemTransitionStyle.MIX
 	} else if (str.match(/dip/i)) {
@@ -233,8 +233,10 @@ function transitionTypeFromString (str: string): AtemTransitionStyle {
 		return AtemTransitionStyle.DVE
 	} else if (str.match(/sting/i)) {
 		return AtemTransitionStyle.STING
-	} else {
+	} else if (str.match(/cut/i)) {
 		return AtemTransitionStyle.CUT
+	} else {
+		return defaultTransition
 	}
 }
 
@@ -255,7 +257,7 @@ function createPieceByType (
 		transitionType?: AtemTransitionStyle
 	) {
 	let transition = transitionType
-	if (params.piece.attributes['transition']) transition = transitionFromString(params.piece.attributes['transition'], transitionType || AtemTransitionStyle.CUT)
+	if (params.piece.attributes['transition']) transition = transitionTypeFromString(params.piece.attributes['transition'], transitionType || AtemTransitionStyle.CUT)
 
 	let p = creator(params, transition || AtemTransitionStyle.CUT)
 	if (p.content) {
@@ -280,119 +282,5 @@ function createPieceByType (
 				pieces.push(CreatePieceOutTransition(params.piece, transition || AtemTransitionStyle.DIP, (1 / params.config.framesPerSecond) * 50 * 1000, input)) // TODO: Use actual framerate
 			}
 		}
-	}
-}
-
-/**
- * Creates a generic part. Only used as a placeholder for part types that have not been implemented yet.
- * @param {Piece} piece Piece to evaluate.
- */
-export function createGeneric (ingestPart: IngestPart): BlueprintResultPart {
-	const part = literal<IBlueprintPart>({
-		externalId: ingestPart.externalId,
-		title: ingestPart.name || 'Unknown',
-		metaData: {},
-		typeVariant: '',
-		expectedDuration: 5000
-	})
-
-	const piece = literal<IBlueprintPiece>({
-		_id: '',
-		externalId: ingestPart.externalId,
-		name: part.title,
-		enable: { start: 0, duration: 100 },
-		outputLayerId: 'pgm0',
-		sourceLayerId: SourceLayer.PgmCam
-	})
-
-	return {
-		part,
-		adLibPieces: [],
-		pieces: [piece]
-	}
-}
-
-/**
- * Creates a part from an ingest part and associated pieces.
- * @param {IngestPart} ingestPart Ingest part.
- * @param {IBlueprintPiece[]} pieces Array of pieces.
- */
-export function createPart (ingestPart: IngestPart, pieces: IBlueprintPiece[], adLibPieces: IBlueprintAdLibPiece[]): BlueprintResultPart {
-	const part = literal<IBlueprintPart>({
-		externalId: ingestPart.externalId,
-		title: ingestPart.name || 'Unknown',
-		metaData: {},
-		typeVariant: '',
-		expectedDuration: calculateExpectedDuration(pieces)
-	})
-
-	return {
-		part,
-		adLibPieces: adLibPieces,
-		pieces: pieces
-	}
-}
-
-/**
- * Calculates the expected duration of a part from component pieces.
- * @param {IBlueprintPiece[]} pieces Pieces to calculate duration for.
- */
-function calculateExpectedDuration (pieces: IBlueprintPiece[]): number {
-	if (pieces.length) {
-		let start = 0
-		let end = 0
-
-		pieces.forEach(piece => {
-			if (!piece.isTransition) {
-				let st = piece.enable.start as number
-				let en = piece.enable.start as number
-				if (piece.enable.duration) {
-					en = (piece.enable.start as number) + (piece.enable.duration as number)
-				} else if (piece.enable.end) {
-					en = (piece.enable.end as number)
-				}
-
-				if (piece.infiniteMode) {
-					en = en + 1000
-				}
-
-				if (st < start) {
-					start = st
-				}
-
-				if (en > end) {
-					end = en
-				}
-
-				if (st > end) {
-					end = st
-				}
-			}
-		})
-
-		return end - start
-	}
-	return 0
-}
-
-/**
- * Translates the string representation of a transition to an AtemTransitionStyle.
- * @param transition Transition as string.
- * @param defaultTransition AtemTransitionStyle.
- */
-function transitionFromString (transition: string, defaultTransition: AtemTransitionStyle) {
-	switch (transition) {
-		case 'mix':
-			return AtemTransitionStyle.MIX
-		case 'cut':
-			return AtemTransitionStyle.CUT
-		case 'dip':
-			return AtemTransitionStyle.DIP
-		case 'sting':
-			return AtemTransitionStyle.STING
-		case 'wipe':
-			return AtemTransitionStyle.WIPE
-		default:
-			return defaultTransition
 	}
 }
