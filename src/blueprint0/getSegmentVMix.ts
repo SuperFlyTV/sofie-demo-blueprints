@@ -7,7 +7,7 @@ import { isAdLibPiece } from '../common/util'
 import { createGeneric, createPart } from './helpers/parts'
 import { CreatePieceScript } from './helpers/pieces'
 import { Attributes } from './helpers/sources'
-import { CreatePieceVideo, CreatePieceCam, CreatePieceGraphicOverlay, CreatePieceGraphic } from './helpers/vmix/pieces'
+import { CreatePieceVideo, CreatePieceCam, CreatePieceGraphicOverlay, CreatePieceGraphic, CreatePieceInTransition } from './helpers/vmix/pieces'
 import { CreateDVE } from './helpers/vmix/dve'
 
 export function getSegmentVMix (context: SegmentContext, ingestSegment: IngestSegment, config: SegmentConf, segment: IBlueprintSegment, parts: BlueprintResultPart[]): BlueprintResultSegment {
@@ -116,6 +116,13 @@ export function getSegmentVMix (context: SegmentContext, ingestSegment: IngestSe
 										createPieceByType(params, CreatePieceGraphicOverlay, pieces, adLibPieces, transitionType)
 									} else {
 										context.warning(`Missing clip for overlay: ${params.piece.id}`)
+									}
+									break
+								case ObjectType.TRANSITION:
+									if (params.piece.transition) {
+										pieces.push(CreatePieceInTransition(params.piece, params.piece.duration || 1000))
+									} else {
+										context.warning(`Missing transition for transition: ${params.piece.id}`)
 									}
 									break
 								case ObjectType.SCRIPT:

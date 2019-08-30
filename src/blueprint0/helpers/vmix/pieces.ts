@@ -1,14 +1,30 @@
 import _ = require('underscore')
 import { literal } from '../../../common/util'
-import { CreatePieceGeneric, checkAndPlaceOnScreen } from '../pieces'
+import { CreatePieceGeneric, checkAndPlaceOnScreen, createPieceTransitionGeneric } from '../pieces'
 import { VMixTransitionType, TSRTimelineObj, TimelineObjVMixCameraActive, DeviceType, TimelineContentTypeVMix, TimelineObjVMixOverlayInputOFF } from 'timeline-state-resolver-types'
-import { PieceParams } from '../../../types/classes'
-import { IBlueprintAdLibPiece, IBlueprintPiece, VTContent, GraphicsContent, CameraContent } from 'tv-automation-sofie-blueprints-integration'
+import { PieceParams, Piece } from '../../../types/classes'
+import { IBlueprintAdLibPiece, IBlueprintPiece, VTContent, GraphicsContent, CameraContent, TransitionContent } from 'tv-automation-sofie-blueprints-integration'
 import { SourceLayer, VMixLLayer } from '../../../types/layers'
 import { CreateContentVT, CreateContentGraphics, CreateContentCam } from '../content'
 import { CreateEnableForTimelineObject } from '../timeline'
 import { Attributes } from '../sources'
 import { CreatePlaceOnScreenTimelineObject, CreateStartExternalTimelineObject, CreatePlayClipTimelineObject, CreateSwitchToClipTimelineObject, CreateOverlayTimelineObject } from './timeline'
+
+/**
+ * Creates a transition piece.
+ * @param {Piece} piece Piece to generate.
+ * @param {number} duration Length of transition.
+ */
+export function CreatePieceInTransition (piece: Piece, duration: number): IBlueprintPiece {
+	let p = createPieceTransitionGeneric(piece, duration)
+	let content = literal<TransitionContent>({
+		timelineObjects: _.compact<TSRTimelineObj>([])
+	})
+	p.content = content
+	p.enable.start = 0
+
+	return p
+}
 
 /**
  * Creates a cam piece.
