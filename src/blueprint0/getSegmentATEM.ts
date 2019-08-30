@@ -138,6 +138,7 @@ export function getSegmentATEM (context: SegmentContext, ingestSegment: IngestSe
 								case ObjectType.TRANSITION:
 									if (params.piece.transition) {
 										pieces.push(CreatePieceInTransition(params.piece, transitionType, params.piece.duration || 1000, GetInputValueFromPiece(params.config, params.piece)))
+										pieces.push(CreatePieceInTransition(params.piece, transitionType, params.piece.duration || 1000, GetInputValueFromPiece(params.config, pieceList[i - 1])))
 									} else {
 										context.warning(`Missing transition for transition: ${params.piece.id}`)
 									}
