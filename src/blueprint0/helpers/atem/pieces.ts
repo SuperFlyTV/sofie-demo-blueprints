@@ -205,7 +205,7 @@ export function CreatePieceGraphic (params: PieceParams, transition: AtemTransit
 			if (checkAndPlaceOnScreen(p, params.piece.attributes)) {
 				content.timelineObjects.push(
 					// TODO: input should be aux?
-					CreateAtemTimelineObject(CreateEnableForTimelineObject(params.piece), AtemLLayer.AtemMEProgram, params.config.config.studio.AtemSource.Server1, transition, { mix: { rate: 100 } })
+					CreateAtemTimelineObject(CreateEnableForTimelineObject(params.piece), AtemLLayer.AtemAuxScreen, params.config.config.studio.AtemSource.Server1, transition, { mix: { rate: 100 } })
 				)
 			} else {
 				content.timelineObjects.push(
