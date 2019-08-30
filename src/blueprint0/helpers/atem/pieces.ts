@@ -1,8 +1,8 @@
 import _ = require('underscore')
 import { literal } from '../../../common/util'
 import { AtemTransitionStyle, TSRTimelineObj, TimelineObjAtemME, DeviceType, TimelineContentTypeAtem, TimelineObjLawoSource, TimelineContentTypeLawo } from 'timeline-state-resolver-types'
-import { Piece, PieceParams, ObjectType } from '../../../types/classes'
-import { IBlueprintPiece, TransitionContent, IBlueprintAdLibPiece, CameraContent, VTContent, GraphicsContent, RemoteContent, ScriptContent, MicContent } from 'tv-automation-sofie-blueprints-integration'
+import { Piece, PieceParams } from '../../../types/classes'
+import { IBlueprintPiece, TransitionContent, IBlueprintAdLibPiece, CameraContent, VTContent, GraphicsContent, RemoteContent, MicContent } from 'tv-automation-sofie-blueprints-integration'
 import { createPieceTransitionGeneric, CreatePieceGeneric, checkAndPlaceOnScreen, CreatePieceGenericEnable } from '../pieces'
 import { CreateTransitionAtemTimelineObject, CreateCCGMediaTimelineObject, CreateAtemTimelineObject, CreateLawoAutomixTimelineObject } from './timeline'
 import { SourceLayer, CasparLLayer, AtemLLayer, LawoLLayer } from '../../../types/layers'

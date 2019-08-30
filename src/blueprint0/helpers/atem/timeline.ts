@@ -1,4 +1,3 @@
-import { Piece } from '../../../types/classes'
 import { TimelineEnable } from 'timeline-state-resolver-types/dist/superfly-timeline'
 import { literal } from '../../../common/util'
 import { TimelineObjAtemME, AtemTransitionStyle, DeviceType, TimelineContentTypeAtem, TimelineContentTypeLawo, TimelineObjLawoSource, TimelineContentTypeCasparCg, TimelineObjCCGMedia, AtemTransitionSettings } from 'timeline-state-resolver-types'

@@ -8,6 +8,7 @@ import { createGeneric, createPart } from './helpers/parts'
 import { CreatePieceScript } from './helpers/pieces'
 import { Attributes } from './helpers/sources'
 import { CreatePieceVideo, CreatePieceCam, CreatePieceGraphicOverlay, CreatePieceGraphic } from './helpers/vmix/pieces'
+import { CreateDVE } from './helpers/vmix/dve'
 
 export function getSegmentVMix (context: SegmentContext, ingestSegment: IngestSegment, config: SegmentConf, segment: IBlueprintSegment, parts: BlueprintResultPart[]): BlueprintResultSegment {
 	if (!config.config.studio.VMixMediaDirectory) {
@@ -46,7 +47,29 @@ export function getSegmentVMix (context: SegmentContext, ingestSegment: IngestSe
 					})
 
 					if (type.match(/dve/i)) {
-						continue
+						let length = 0
+
+						for (let i = 0; i < pieceList.length; i++) {
+							if (!pieceList[i].objectType.match(/(transition)|(split)/i)) {
+								length++
+							}
+						}
+
+						if (length > 3) {
+							// TODO: Report this to spreadsheet
+							context.warning('Maximum number of elements in DVE for vMix workflows is 2')
+						} else if (length < 3) {
+							context.warning('Minimum number of elements in DVE is 2')
+						} else {
+							let p = CreateDVE(context, config, pieceList)
+							if (p) {
+								if (isAdLibPiece(p)) {
+									adLibPieces.push(p as IBlueprintAdLibPiece)
+								} else {
+									pieces.push(p as IBlueprintPiece)
+								}
+							}
+						}
 					} else if (type.match(/breaker/i)) {
 						continue
 					} else {
