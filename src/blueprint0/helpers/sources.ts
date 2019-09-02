@@ -134,6 +134,8 @@ export function GetInputValueFromPiece (params: SegmentConf, piece: Piece): numb
 		case ObjectType.VIDEO:
 		case ObjectType.GRAPHIC:
 			return params.config.studio.AtemSource.Server1
+		case ObjectType.OVERLAY:
+			return params.config.studio.AtemSource.Server2
 		case ObjectType.CAMERA:
 			name = piece.attributes[Attributes.CAMERA]
 			break

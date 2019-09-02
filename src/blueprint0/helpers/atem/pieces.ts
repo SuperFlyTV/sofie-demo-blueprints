@@ -1,6 +1,6 @@
 import _ = require('underscore')
 import { literal } from '../../../common/util'
-import { AtemTransitionStyle, TSRTimelineObj, TimelineObjAtemME, DeviceType, TimelineContentTypeAtem, TimelineObjLawoSource, TimelineContentTypeLawo } from 'timeline-state-resolver-types'
+import { AtemTransitionStyle, TSRTimelineObj, TimelineObjAtemME, DeviceType, TimelineContentTypeAtem, TimelineObjLawoSource, TimelineContentTypeLawo, TimelineObjAtemDSK } from 'timeline-state-resolver-types'
 import { Piece, PieceParams } from '../../../types/classes'
 import { IBlueprintPiece, TransitionContent, IBlueprintAdLibPiece, CameraContent, VTContent, GraphicsContent, RemoteContent, MicContent } from 'tv-automation-sofie-blueprints-integration'
 import { createPieceTransitionGeneric, CreatePieceGeneric, checkAndPlaceOnScreen, CreatePieceGenericEnable } from '../pieces'
@@ -205,11 +205,11 @@ export function CreatePieceGraphic (params: PieceParams, transition: AtemTransit
 			if (checkAndPlaceOnScreen(p, params.piece.attributes)) {
 				content.timelineObjects.push(
 					// TODO: input should be aux?
-					CreateAtemTimelineObject(CreateEnableForTimelineObject(params.piece), AtemLLayer.AtemAuxScreen, params.config.config.studio.AtemSource.Server1, transition, { mix: { rate: 100 } })
+					CreateAtemTimelineObject(CreateEnableForTimelineObject(params.piece), AtemLLayer.AtemAuxScreen, params.config.config.studio.AtemSource.DSK1F, transition, { mix: { rate: 100 } })
 				)
 			} else {
 				content.timelineObjects.push(
-					CreateAtemTimelineObject(CreateEnableForTimelineObject(params.piece), AtemLLayer.AtemMEProgram, params.config.config.studio.AtemSource.Server1, AtemTransitionStyle.WIPE)
+					CreateAtemTimelineObject(CreateEnableForTimelineObject(params.piece), AtemLLayer.AtemDSKGraphics, params.config.config.studio.AtemSource.DSK1F, AtemTransitionStyle.WIPE)
 				)
 			}
 			break
@@ -265,7 +265,7 @@ export function CreatePieceRemote (params: PieceParams, transition: AtemTransiti
  * Creates a graphics overlay.
  * @param {PieceParams} params Piece to create.
  */
-export function CreatePieceGraphicOverlay (params: PieceParams, transition: AtemTransitionStyle): IBlueprintAdLibPiece | IBlueprintPiece {
+export function CreatePieceGraphicOverlay (params: PieceParams): IBlueprintAdLibPiece | IBlueprintPiece {
 	let p = CreatePieceGeneric(params.piece)
 
 	p.sourceLayerId = SourceLayer.PgmGraphicsSuper
@@ -275,27 +275,38 @@ export function CreatePieceGraphicOverlay (params: PieceParams, transition: Atem
 	content.timelineObjects = _.compact<TSRTimelineObj>([
 		CreateCCGMediaTimelineObject(CreateEnableForTimelineObject(params.piece), CasparLLayer.CasparCGGraphics, params.piece.clipName),
 
-		literal<TimelineObjAtemME>({
+		literal<TimelineObjAtemDSK>({
 			id: '',
-			enable: CreateEnableForTimelineObject(params.piece),
+			enable: {
+				start: 0,
+				duration: params.piece.duration - 10
+			},
 			priority: 1,
 			layer: AtemLLayer.AtemDSKGraphics,
 			content: {
 				deviceType: DeviceType.ATEM,
-				type: TimelineContentTypeAtem.ME,
-				me: {
-					transition: transition,
-					transitionSettings: {
-						mix: {
-							rate: 100
-						}
-					},
-					upstreamKeyers: [
-						{
-							upstreamKeyerId: 0,
-							onAir: true
-						}
-					]
+				type: TimelineContentTypeAtem.DSK,
+				dsk: {
+					onAir: true,
+					sources: {
+						fillSource: params.config.config.studio.AtemSource.Server2,
+						cutSource: params.config.config.studio.AtemSource.Server3
+					}
+				}
+			}
+		}),
+		literal<TimelineObjAtemDSK>({
+			id: '',
+			enable: {
+				start: params.piece.duration - 5
+			},
+			priority: 1,
+			layer: AtemLLayer.AtemDSKGraphics,
+			content: {
+				deviceType: DeviceType.ATEM,
+				type: TimelineContentTypeAtem.DSK,
+				dsk: {
+					onAir: false
 				}
 			}
 		})
