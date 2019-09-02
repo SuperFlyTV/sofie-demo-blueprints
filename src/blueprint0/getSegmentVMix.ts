@@ -11,6 +11,7 @@ import { CreatePieceVideo, CreatePieceCam, CreatePieceGraphicOverlay, CreatePiec
 import { CreateDVE } from './helpers/vmix/dve'
 
 export function getSegmentVMix (context: SegmentContext, ingestSegment: IngestSegment, config: SegmentConf, segment: IBlueprintSegment, parts: BlueprintResultPart[]): BlueprintResultSegment {
+	let currentPartIndex = 0
 	if (!config.config.studio.VMixMediaDirectory) {
 		context.warning(`The blueprint setting 'VMix Media Directory' must be set for VMix workflows`)
 		return {
@@ -82,6 +83,16 @@ export function getSegmentVMix (context: SegmentContext, ingestSegment: IngestSe
 							}
 						}
 
+						if (type.match(/head/)) {
+							if (parts[currentPartIndex - 1] && (objectPath.get(parts[currentPartIndex - 1], 'type', '') + '').match(/head/)) {
+								// Rest of clips in head wipes in/out.
+								transitionType = VMixTransitionType.Wipe
+							} else {
+								// First clip in head cuts.
+								transitionType = VMixTransitionType.Cube
+							}
+						}
+
 						for (let i = 0; i < pieceList.length; i++) {
 							let params: PieceParams = {
 								config: config,
@@ -143,6 +154,7 @@ export function getSegmentVMix (context: SegmentContext, ingestSegment: IngestSe
 				parts.push(createPart(part, pieces, adLibPieces))
 			}
 		}
+		currentPartIndex++
 	}
 
 	return {

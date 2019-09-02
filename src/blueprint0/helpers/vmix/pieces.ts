@@ -37,7 +37,6 @@ export function CreatePieceVideo (params: PieceParams, transition: VMixTransitio
 
 	let content: VTContent = CreateContentVT(params.piece)
 
-	// TODO: Place on screen
 	if (checkAndPlaceOnScreen(p, params.piece.attributes)) {
 		content.timelineObjects.push(
 			CreatePlaceOnScreenTimelineObject(
@@ -54,14 +53,9 @@ export function CreatePieceVideo (params: PieceParams, transition: VMixTransitio
 			)
 		)
 	} else {
-		switch (params.context) {
-			default:
-				content.timelineObjects = _.compact<TSRTimelineObj>([
-					CreatePlayClipTimelineObject(CreateEnableForTimelineObject(params.piece), VMixLLayer.VMixProgram, params.piece.clipName, params.config.config.studio.VMixMediaDirectory)
-				])
-				break
-		}
-
+		content.timelineObjects = _.compact<TSRTimelineObj>([
+			CreatePlayClipTimelineObject(CreateEnableForTimelineObject(params.piece), VMixLLayer.VMixProgram, params.piece.clipName, params.config.config.studio.VMixMediaDirectory)
+		])
 		content.timelineObjects.push(
 			CreateSwitchToClipTimelineObject(
 				CreateEnableForTimelineObject(params.piece, 1),
