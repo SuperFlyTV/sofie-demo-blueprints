@@ -1,7 +1,7 @@
 import _ = require('underscore')
 import { literal } from '../../../common/util'
 import { CreatePieceGeneric, checkAndPlaceOnScreen, createPieceTransitionGeneric } from '../pieces'
-import { VMixTransitionType, TSRTimelineObj, TimelineObjVMixCameraActive, DeviceType, TimelineContentTypeVMix, TimelineObjVMixOverlayInputOFF } from 'timeline-state-resolver-types'
+import { VMixTransitionType, TSRTimelineObj, TimelineObjVMixCameraActive, DeviceType, TimelineContentTypeVMix, TimelineObjVMixOverlayInputOFF, VMixCommand } from 'timeline-state-resolver-types'
 import { PieceParams, Piece } from '../../../types/classes'
 import { IBlueprintAdLibPiece, IBlueprintPiece, VTContent, GraphicsContent, CameraContent, TransitionContent } from 'tv-automation-sofie-blueprints-integration'
 import { SourceLayer, VMixLLayer } from '../../../types/layers'
@@ -56,23 +56,21 @@ export function CreatePieceVideo (params: PieceParams, transition: VMixTransitio
 		content.timelineObjects = _.compact<TSRTimelineObj>([
 			CreatePlayClipTimelineObject(CreateEnableForTimelineObject(params.piece), VMixLLayer.VMixProgram, params.piece.clipName, params.config.config.studio.VMixMediaDirectory)
 		])
-		content.timelineObjects.push(
-			CreateSwitchToClipTimelineObject(
-				CreateEnableForTimelineObject(params.piece, 1),
-				VMixLLayer.VMixProgram,
-				params.piece.clipName,
-				{
-					number: 4,
-					effect: transition,
-					duration: 1000
-				}
-			)
-		)
 
-		if (params.context.match(/head/i)) {
-			if (transition === VMixTransitionType.Cut) {
-				transition = VMixTransitionType.Wipe
-			}
+		if (params.context.match(/package/i)) {
+			content.timelineObjects.push(
+				CreateSwitchToClipTimelineObject(
+					CreateEnableForTimelineObject(params.piece, 1),
+					VMixLLayer.VMixProgram,
+					params.piece.clipName,
+					{
+						number: 4,
+						effect: VMixTransitionType.Fade,
+						duration: 1000
+					}
+				)
+			)
+
 			content.timelineObjects.push(
 				CreateSwitchToInputTimelineObject(
 					{ start: params.piece.duration - 1000, duration: 1000 },
@@ -80,7 +78,33 @@ export function CreatePieceVideo (params: PieceParams, transition: VMixTransitio
 					'1',
 					{
 						number: 4,
+						effect: VMixTransitionType.Fade,
+						duration: 1000
+					}
+				)
+			)
+		} else if (params.context.match(/head/i)) {
+			content.timelineObjects.push(
+				CreateSwitchToClipTimelineObject(
+					CreateEnableForTimelineObject(params.piece, 1),
+					VMixLLayer.VMixProgram,
+					params.piece.clipName,
+					{
+						number: 4,
 						effect: transition,
+						duration: 1000
+					}
+				)
+			)
+
+			content.timelineObjects.push(
+				CreateSwitchToInputTimelineObject(
+					{ start: params.piece.duration - 1000, duration: 1000 },
+					VMixLLayer.VMixProgram,
+					'1',
+					{
+						number: 4,
+						effect: VMixTransitionType.Wipe,
 						duration: 1000
 					}
 				)
