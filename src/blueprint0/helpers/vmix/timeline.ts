@@ -1,7 +1,7 @@
 import { literal } from '../../../common/util'
 import { TimelineEnable } from 'timeline-state-resolver-types/dist/superfly-timeline'
 import { VMixLLayer } from '../../../types/layers'
-import { TimelineObjVMixPlayClip, DeviceType, TimelineContentTypeVMix, VMixTransition, TimelineObjVMixClipToProgram, TimelineObjVMixSetOutput, TimelineObjVMixStartExternal, TimelineObjVMixOverlayInputByNameIn } from 'timeline-state-resolver-types'
+import { TimelineObjVMixPlayClip, DeviceType, TimelineContentTypeVMix, VMixTransition, TimelineObjVMixClipToProgram, TimelineObjVMixSetOutput, TimelineObjVMixStartExternal, TimelineObjVMixOverlayInputByNameIn, TimelineObjVMixInput } from 'timeline-state-resolver-types'
 
 export function CreatePlayClipTimelineObject (enable: TimelineEnable, layer: VMixLLayer, file: string, mediaDirectory: string): TimelineObjVMixPlayClip {
 	return literal<TimelineObjVMixPlayClip>({
@@ -28,6 +28,21 @@ export function CreateSwitchToClipTimelineObject (enable: TimelineEnable, layer:
 			deviceType: DeviceType.VMIX,
 			type: TimelineContentTypeVMix.CLIP_TO_PROGRAM,
 			clipName: file,
+			transition: transition
+		}
+	})
+}
+
+export function CreateSwitchToInputTimelineObject (enable: TimelineEnable, layer: VMixLLayer, input: string, transition?: VMixTransition) {
+	return literal<TimelineObjVMixInput>({
+		id: '',
+		enable: enable,
+		priority: 1,
+		layer: layer,
+		content: {
+			deviceType: DeviceType.VMIX,
+			type: TimelineContentTypeVMix.INPUT,
+			input: input,
 			transition: transition
 		}
 	})

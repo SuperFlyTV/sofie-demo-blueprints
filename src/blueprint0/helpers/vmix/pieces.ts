@@ -8,7 +8,7 @@ import { SourceLayer, VMixLLayer } from '../../../types/layers'
 import { CreateContentVT, CreateContentGraphics, CreateContentCam } from '../content'
 import { CreateEnableForTimelineObject } from '../timeline'
 import { Attributes } from '../sources'
-import { CreatePlaceOnScreenTimelineObject, CreateStartExternalTimelineObject, CreatePlayClipTimelineObject, CreateSwitchToClipTimelineObject, CreateOverlayTimelineObject } from './timeline'
+import { CreatePlaceOnScreenTimelineObject, CreateStartExternalTimelineObject, CreatePlayClipTimelineObject, CreateSwitchToClipTimelineObject, CreateOverlayTimelineObject, CreateSwitchToInputTimelineObject } from './timeline'
 
 /**
  * Creates a transition piece.
@@ -68,6 +68,24 @@ export function CreatePieceVideo (params: PieceParams, transition: VMixTransitio
 				}
 			)
 		)
+
+		if (params.context.match(/head/i)) {
+			if (transition === VMixTransitionType.Cut) {
+				transition = VMixTransitionType.Wipe
+			}
+			content.timelineObjects.push(
+				CreateSwitchToInputTimelineObject(
+					{ start: params.piece.duration - 1000, duration: 1000 },
+					VMixLLayer.VMixProgram,
+					'1',
+					{
+						number: 4,
+						effect: transition,
+						duration: 1000
+					}
+				)
+			)
+		}
 	}
 
 	p.content = content
@@ -102,14 +120,9 @@ export function CreatePieceGraphic (params: PieceParams, transition: VMixTransit
 			)
 		)
 	} else {
-		switch (params.context) {
-			default:
-				content.timelineObjects = _.compact<TSRTimelineObj>([
-					CreatePlayClipTimelineObject(CreateEnableForTimelineObject(params.piece), VMixLLayer.VMixProgram, params.piece.clipName, params.config.config.studio.VMixMediaDirectory)
-				])
-				break
-		}
-
+		content.timelineObjects = _.compact<TSRTimelineObj>([
+			CreatePlayClipTimelineObject(CreateEnableForTimelineObject(params.piece), VMixLLayer.VMixProgram, params.piece.clipName, params.config.config.studio.VMixMediaDirectory)
+		])
 		content.timelineObjects.push(
 			CreateSwitchToClipTimelineObject(
 				CreateEnableForTimelineObject(params.piece, 1),
@@ -122,6 +135,24 @@ export function CreatePieceGraphic (params: PieceParams, transition: VMixTransit
 				}
 			)
 		)
+
+		if (params.context.match(/head/i)) {
+			if (transition === VMixTransitionType.Cut) {
+				transition = VMixTransitionType.Wipe
+			}
+			content.timelineObjects.push(
+				CreateSwitchToInputTimelineObject(
+					{ start: params.piece.duration - 1000, duration: 1000 },
+					VMixLLayer.VMixProgram,
+					'1',
+					{
+						number: 4,
+						effect: transition,
+						duration: 1000
+					}
+				)
+			)
+		}
 	}
 
 	p.content = content
@@ -174,6 +205,24 @@ export function CreatePieceCam (params: PieceParams, transition: VMixTransitionT
 				}
 			})
 		])
+
+		if (params.context.match(/head/i)) {
+			if (transition === VMixTransitionType.Cut) {
+				transition = VMixTransitionType.Wipe
+			}
+			content.timelineObjects.push(
+				CreateSwitchToInputTimelineObject(
+					{ start: params.piece.duration - 1000, duration: 1000 },
+					VMixLLayer.VMixProgram,
+					'1',
+					{
+						number: 4,
+						effect: transition,
+						duration: 1000
+					}
+				)
+			)
+		}
 	}
 
 	p.content = content
