@@ -89,7 +89,7 @@ export function getSegmentVMix (context: SegmentContext, ingestSegment: IngestSe
 								transitionType = VMixTransitionType.Wipe
 							} else {
 								// First clip in head cuts.
-								transitionType = VMixTransitionType.Cube
+								transitionType = VMixTransitionType.Cut
 							}
 						}
 
