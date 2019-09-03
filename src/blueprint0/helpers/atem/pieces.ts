@@ -289,8 +289,8 @@ export function CreatePieceGraphicOverlay (params: PieceParams): IBlueprintAdLib
 				dsk: {
 					onAir: true,
 					sources: {
-						fillSource: params.config.config.studio.AtemSource.Server2,
-						cutSource: params.config.config.studio.AtemSource.Server3
+						fillSource: params.config.config.studio.AtemSource.DSK1F,
+						cutSource: params.config.config.studio.AtemSource.DSK1K
 					}
 				}
 			}
