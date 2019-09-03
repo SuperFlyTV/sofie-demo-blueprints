@@ -109,6 +109,32 @@ export function CreatePieceVideo (params: PieceParams, transition: VMixTransitio
 					}
 				)
 			)
+		} else if (params.context.match(/titles/i)) {
+			content.timelineObjects.push(
+				CreateSwitchToClipTimelineObject(
+					CreateEnableForTimelineObject(params.piece, 1),
+					VMixLLayer.VMixProgram,
+					params.piece.clipName,
+					{
+						number: 4,
+						effect: transition,
+						duration: 1000
+					}
+				)
+			)
+
+			content.timelineObjects.push(
+				CreateSwitchToInputTimelineObject(
+					{ start: params.piece.duration - 1000, duration: 1000 },
+					VMixLLayer.VMixProgram,
+					'1',
+					{
+						number: 4,
+						effect: VMixTransitionType.Fade,
+						duration: 1000
+					}
+				)
+			)
 		}
 	}
 
