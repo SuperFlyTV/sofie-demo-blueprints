@@ -135,6 +135,32 @@ export function CreatePieceVideo (params: PieceParams, transition: VMixTransitio
 					}
 				)
 			)
+		} else if (params.context.match(/breaker/i)) {
+			content.timelineObjects.push(
+				CreateSwitchToClipTimelineObject(
+					CreateEnableForTimelineObject(params.piece, 1),
+					VMixLLayer.VMixProgram,
+					params.piece.clipName,
+					{
+						number: 4,
+						effect: VMixTransitionType.Wipe,
+						duration: 1000
+					}
+				)
+			)
+
+			content.timelineObjects.push(
+				CreateSwitchToInputTimelineObject(
+					{ start: params.piece.duration - 1000, duration: 1000 },
+					VMixLLayer.VMixProgram,
+					'1',
+					{
+						number: 4,
+						effect: VMixTransitionType.Wipe,
+						duration: 1000
+					}
+				)
+			)
 		} else {
 			content.timelineObjects.push(
 				CreateSwitchToClipTimelineObject(
@@ -239,6 +265,32 @@ export function CreatePieceGraphic (params: PieceParams, transition: VMixTransit
 					{
 						number: 4,
 						effect: VMixTransitionType.Fade,
+						duration: 1000
+					}
+				)
+			)
+		} else if (params.context.match(/breaker/i)) {
+			content.timelineObjects.push(
+				CreateSwitchToClipTimelineObject(
+					CreateEnableForTimelineObject(params.piece, 1),
+					VMixLLayer.VMixProgram,
+					params.piece.clipName,
+					{
+						number: 4,
+						effect: VMixTransitionType.Wipe,
+						duration: 1000
+					}
+				)
+			)
+
+			content.timelineObjects.push(
+				CreateSwitchToInputTimelineObject(
+					{ start: params.piece.duration - 1000, duration: 1000 },
+					VMixLLayer.VMixProgram,
+					'1',
+					{
+						number: 4,
+						effect: VMixTransitionType.Wipe,
 						duration: 1000
 					}
 				)
