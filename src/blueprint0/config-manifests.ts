@@ -128,20 +128,6 @@ export const StudioConfigManifest: ConfigManifestEntry[] = [{
 	type: ConfigManifestEntryType.NUMBER,
 	required: false,
 	defaultVal: 320	// 8 frames (5 in decklinks + casparcg)
-},{
-	id: 'VMix',
-	name: 'Use VMix Workflow',
-	description: 'Whether to use VMix for playout',
-	type: ConfigManifestEntryType.BOOLEAN,
-	required: false,
-	defaultVal: false
-},{
-	id: 'VMixMediaDirectory',
-	name: 'Vmix Media Directory',
-	description: 'Full path to media directory',
-	type: ConfigManifestEntryType.STRING,
-	required: false,
-	defaultVal: ''
 }]
 
 export const ShowStyleConfigManifest: ConfigManifestEntry[] = [

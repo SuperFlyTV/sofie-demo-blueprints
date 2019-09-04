@@ -44,11 +44,6 @@ export enum AtemLLayer {
 	AtemSSrcOverride = 'atem_supersource_override'
 }
 
-export enum VMixLLayer {
-	VMixProgram = 'vmix_program',
-	VMixScreen = 'vmix_screen'
-}
-
 export enum CasparLLayer {
 	CasparPlayerClip = 'casparcg_player_clip',
 	CasparPlayerClipNext = 'casparcg_player_clip_next',

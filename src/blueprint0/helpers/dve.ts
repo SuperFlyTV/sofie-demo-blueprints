@@ -1,16 +1,15 @@
 import _ = require('underscore')
-import { Piece, SegmentConf, SourceMeta, BoxProps, ObjectType } from '../../../types/classes'
+import { Piece, SegmentConf, SourceMeta, BoxProps, ObjectType } from '../../types/classes'
 import { IBlueprintPiece, IBlueprintAdLibPiece, VTContent, CameraContent, RemoteContent, GraphicsContent, SourceLayerType, SplitsContent } from 'tv-automation-sofie-blueprints-integration'
 import { SuperSourceBox, TSRTimelineObj, TimelineObjAtemSsrc, DeviceType, TimelineContentTypeAtem, AtemTransitionStyle, TimelineObjLawoSource, TimelineContentTypeLawo } from 'timeline-state-resolver-types'
-import { literal } from '../../../common/util'
-import { CreateContentGraphics, CreateContentVT, CreateContentCam } from '../content'
-import { getStudioName } from '../studio'
-import { CreateCCGMediaTimelineObject, CreateAtemTimelineObject, CreateLawoAutomixTimelineObject } from './timeline'
-import { CreateEnableForTimelineObject } from '../timeline'
-import { CasparLLayer, SourceLayer, AtemLLayer, LawoLLayer } from '../../../types/layers'
-import { GetInputValue, Attributes } from '../sources'
-import { CreatePieceGeneric } from '../pieces'
-import { AtemSourceIndex } from '../../../types/atem'
+import { literal } from '../../common/util'
+import { CreateContentGraphics, CreateContentVT, CreateContentCam } from './content'
+import { getStudioName } from './studio'
+import { CreateEnableForTimelineObject, CreateCCGMediaTimelineObject, CreateAtemTimelineObject, CreateLawoAutomixTimelineObject } from './timeline'
+import { CasparLLayer, SourceLayer, AtemLLayer, LawoLLayer } from '../../types/layers'
+import { GetInputValue, Attributes } from './sources'
+import { CreatePieceGeneric } from './pieces'
+import { AtemSourceIndex } from '../../types/atem'
 
 /**
  * Creates a DVE Piece.

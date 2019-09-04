@@ -28,9 +28,7 @@ const blankStudioConfig: StudioConfig = {
 	},
 
 	LawoFadeInDuration: 0,
-	CasparOutputDelay: 0,
-	VMix: false,
-	VMixMediaDirectory: ''
+	CasparOutputDelay: 0
 }
 
 function getObjectKeys (obj: any): string[] {

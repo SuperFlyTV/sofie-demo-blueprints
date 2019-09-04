@@ -45,8 +45,6 @@ export interface StudioConfig {
 	// Constants
 	LawoFadeInDuration: number
 	CasparOutputDelay: number
-	VMix: boolean
-	VMixMediaDirectory: string
 }
 
 export function parseConfig (context: ShowStyleContext): BlueprintConfig {
