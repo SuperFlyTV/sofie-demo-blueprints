@@ -84,8 +84,7 @@ jobs:
   #     - persist_to_workspace:
   #         root: .
   #         paths: [.]
-
-  Build dist
+  Build dist:
     <<: *defaults
     steps:
       - attach_workspace:
