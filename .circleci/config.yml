@@ -121,7 +121,7 @@ workflows:
           requires:
             - Checkout Code
       - Build dist:
-        requires:
+          requires:
             - Check for vulnerabilities
             - Test node-8
           filters:
