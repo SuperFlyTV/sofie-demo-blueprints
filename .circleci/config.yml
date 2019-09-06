@@ -101,7 +101,7 @@ jobs:
       - run: git config --global user.name "superflytvab"
       - run: git fetch
       - run: git checkout dist
-      - run: git merge master
+      - run: git merge master --commit
       - run: yarn
       - run: yarn dist
       - run: git add dist/*
