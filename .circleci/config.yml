@@ -101,8 +101,10 @@ jobs:
       - run: git config --global user.name "superflytvab"
       - run: git fetch
       - run: git checkout dist
+      - run: git merge master
       - run: yarn
       - run: yarn dist
+      - run: git add dist/*
       - run: git commit -a -m "dist"
       - run: git push --follow-tags origin HEAD
       - persist_to_workspace:
@@ -111,7 +113,7 @@ jobs:
 
 workflows:
   version: 2
-  Test build and deploy(master only):
+  Test build and deploy:
     jobs:
       - Checkout Code
       - Check for vulnerabilities:
