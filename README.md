@@ -1,14 +1,26 @@
-# Sofie: The Modern TV News Studio Automation System
+# Reference Spreadsheet Blueprints
 
 This is a reference blueprints package for the [Sofie News Studio Automation System](https://github.com/nrkno/Sofie-TV-automation/).
 
-## Installation
+## Features
+
+These blueprints is intended to be used with Spreadsheets based on the template [TODO: LINK](http://spreadsheetsonGoogleDrive)
+
+* 
+
+## Getting started
+
+To start using these blueprints in Sofie, start with going through the [Getting Started guide](https://sofie.gitbook.io/sofie-tv-automation/documentation/getting-started) in the Sofie documentation.
+
+
+
+## Installation (for developers)
 
 For developers installation steps are as following:
 ```sh
 git clone https://github.com/SuperFlyTV/sofie-blueprints-spreadsheet
 yarn
-yarn build
+yarn dist
 ```
 The result dist/*-bundle.js files can be distributed and uploaded in the Sofie UI
 
