@@ -103,7 +103,7 @@ jobs:
       - run: git checkout dist
       - run: yarn
       - run: yarn dist
-      - run: git commit -a -m "chore: dist"
+      - run: git commit -a -m \"chore: dist\"
       - run: git push --follow-tags origin HEAD
       - persist_to_workspace:
           root: .
