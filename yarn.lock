@@ -4760,7 +4760,7 @@ through2@^2.0.0:
     readable-stream "~2.3.6"
     xtend "~4.0.1"
 
-timeline-state-resolver-types@^3.2.0:
+timeline-state-resolver-types@^3.2.0, timeline-state-resolver-types@^3.8.3:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/timeline-state-resolver-types/-/timeline-state-resolver-types-3.8.3.tgz#552cda1dd3e7157fde8ca942f058f8935491715d"
   integrity sha512-AtZZK7YfIwb/xqsKkbYTM/3ds+zOv3uOU5FiRcS+9rLaWf0zp3Jx/lzHVu/KbtzCT+pl/+YFnpdn7EU8/srKWg==
