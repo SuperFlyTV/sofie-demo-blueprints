@@ -2,6 +2,7 @@ import * as _ from 'underscore'
 
 import { BlueprintConfig } from './config'
 import { NotesContext, SourceLayerType } from 'tv-automation-sofie-blueprints-integration'
+import { literal } from '../../common/util'
 
 export function parseMapStr (context: NotesContext | undefined, str: string, canBeStrings: boolean): { id: number, val: any }[] {
 	str = str.trim()
@@ -39,7 +40,7 @@ export function parseMapStr (context: NotesContext | undefined, str: string, can
 	return res
 }
 
-type SourceInfoType = SourceLayerType.CAMERA // | SourceLayerType.REMOTE
+type SourceInfoType = SourceLayerType.CAMERA | SourceLayerType.REMOTE
 export interface SourceInfo {
 	type: SourceInfoType
 	id: number
@@ -48,9 +49,18 @@ export interface SourceInfo {
 }
 
 export function parseSources (context: NotesContext | undefined, config: BlueprintConfig): SourceInfo[] {
+	const rmInputMap: { id: number, val: number }[] = parseMapStr(context, config.studio.SourcesRM, false)
 	const kamInputMap: { id: number, val: number }[] = parseMapStr(context, config.studio.SourcesCam, false)
 
 	const res: SourceInfo[] = []
+
+	_.each(rmInputMap, rm => {
+		res.push({
+			type: SourceLayerType.REMOTE,
+			id: rm.id,
+			port: rm.val
+		})
+	})
 
 	_.each(kamInputMap, kam => {
 		res.push({
@@ -63,7 +73,7 @@ export function parseSources (context: NotesContext | undefined, config: Bluepri
 	return res
 }
 
-export function findSourceInfo (sources: SourceInfo[], type: SourceInfoType, id: number | string): SourceInfo | undefined {
+export function FindSourceInfo (sources: SourceInfo[], type: SourceInfoType, id: number | string): SourceInfo | undefined {
 	if (typeof id !== 'number') {
 		id = (id + '').toLowerCase()
 		id = parseInt(id.replace(/\D/g, ''), 10) || 1
@@ -72,24 +82,35 @@ export function findSourceInfo (sources: SourceInfo[], type: SourceInfoType, id:
 	return _.find(sources, s => s.type === type && s.id === id)
 }
 
-export function findSourceInfoStrict (context: NotesContext, sources: SourceInfo[], type: SourceInfoType, id: number | string): SourceInfo | undefined {
-	const source = findSourceInfo(sources, type, id)
+export function FindSourceInfoStrict (context: NotesContext, sources: SourceInfo[], type: SourceInfoType, id: number | string): SourceInfo | undefined {
+	const source = FindSourceInfo(sources, type, id)
 	if (!source) {
 		context.warning(`Invalid source "${id}" of type "${type}"`)
 	}
 	return source
 }
 
-export function findSourceByName (context: NotesContext, sources: SourceInfo[], name: string): SourceInfo | undefined {
+export function FindSourceByName (context: NotesContext, sources: SourceInfo[], name: string): SourceInfo | undefined {
 	name = (name + '').toLowerCase()
 
-	if (name.indexOf('k') === 0) {
-		return findSourceInfoStrict(context, sources, SourceLayerType.CAMERA, name)
+	if (name.indexOf('k') === 0 || name.indexOf('c') === 0) {
+		return FindSourceInfoStrict(context, sources, SourceLayerType.CAMERA, name)
 	}
-	// if (name.indexOf('r') === 0) {
-	// 	return findSourceInfoStrict(context, sources, SourceLayerType.REMOTE, name)
-	// }
+	if (name.indexOf('r') === 0) {
+	 	return FindSourceInfoStrict(context, sources, SourceLayerType.REMOTE, name)
+	}
 
 	context.warning(`Invalid source name "${name}"`)
 	return undefined
+}
+
+export function GetInputValue (context: NotesContext, sources: SourceInfo[], name: string): number {
+	let input = 1000
+	let source = FindSourceByName(context, sources, name)
+
+	if (source !== undefined) {
+		input = literal<SourceInfo>(source).port
+	}
+
+	return input
 }

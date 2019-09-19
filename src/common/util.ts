@@ -1,26 +1,32 @@
 import {
-	Timeline,
-	IBlueprintSegmentLineItem
+	IBlueprintPiece, IBlueprintAdLibPiece
 } from 'tv-automation-sofie-blueprints-integration'
 import { SourceLayer } from '../types/layers'
-import { TimelineTrigger } from 'timeline-state-resolver-types/dist/superfly-timeline'
+import { TimelineEnable } from 'timeline-state-resolver-types/dist/superfly-timeline'
 
 export function literal<T> (o: T) { return o }
 
-export function createVirtualSli (layer: SourceLayer, trigger: number | TimelineTrigger, mainSli?: IBlueprintSegmentLineItem): IBlueprintSegmentLineItem {
+export function createVirtualPiece (layer: SourceLayer, enable: number | TimelineEnable, mainPiece?: IBlueprintPiece): IBlueprintPiece {
 	return {
 		_id: '', name: '',
-		externalId: (mainSli ? mainSli.externalId : '-'),
-		trigger: typeof trigger === 'number' ? {
-			type: Timeline.TriggerType.TIME_ABSOLUTE,
-			value: trigger
-		} : trigger,
+		externalId: (mainPiece ? mainPiece.externalId : '-'),
+		enable: typeof enable === 'number' ? {
+			start: enable,
+			duration: 0
+		} : enable,
 		sourceLayerId: layer,
 		outputLayerId: 'pgm0',
-		expectedDuration: 0,
 		virtual: true,
 		content: {
 			timelineObjects: []
 		}
 	}
+}
+
+/**
+ * Returs true if the piece is interface IBlueprintAdLibPiece
+ * @param {IBlueprintPiece | IBlueprintAdLibPiece} piece Piece to check
+ */
+export function isAdLibPiece (piece: IBlueprintPiece | IBlueprintAdLibPiece) {
+	return '_rank' in piece
 }

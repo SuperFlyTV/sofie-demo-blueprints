@@ -4,7 +4,7 @@ import {
 	MappingAbstract,
 	MappingCasparCG,
 	MappingAtem, MappingAtemType,
-	MappingHyperdeck, MappingHyperdeckType
+	MappingHyperdeck, MappingHyperdeckType, MappingLawo, MappingLawoType
 } from 'timeline-state-resolver-types'
 import { literal } from '../../common/util'
 import {
@@ -110,6 +110,13 @@ export default literal<BlueprintMappings>({
 		mappingType: MappingAtemType.Auxilliary,
 		index: 5
 	}),
+	'atem_aux_screen': literal<MappingAtem & BlueprintMapping>({
+		device: PlayoutDeviceType.ATEM,
+		deviceId: 'atem0',
+		lookahead: LookaheadMode.NONE,
+		mappingType: MappingAtemType.Auxilliary,
+		index: 3
+	}),
 	'atem_dsk_graphics': literal<MappingAtem & BlueprintMapping>({
 		device: PlayoutDeviceType.ATEM,
 		deviceId: 'atem0',
@@ -144,6 +151,20 @@ export default literal<BlueprintMappings>({
 		lookahead: LookaheadMode.RETAIN,
 		mappingType: MappingAtemType.SuperSourceBox,
 		index: 0 // 0 = SS
+	}),
+	'lawo_source_automix': literal<MappingLawo & BlueprintMapping>({
+		device: PlayoutDeviceType.LAWO,
+		deviceId: 'lawo0',
+		lookahead: LookaheadMode.NONE,
+		mappingType: MappingLawoType.SOURCE,
+		identifier: 'AMix'
+	}),
+	'lawo_source_clip_stk': literal<MappingLawo & BlueprintMapping>({
+		device: PlayoutDeviceType.LAWO,
+		deviceId: 'lawo0',
+		lookahead: LookaheadMode.NONE,
+		mappingType: MappingLawoType.SOURCE,
+		identifier: 'STK'
 	})
 })
 

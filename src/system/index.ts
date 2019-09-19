@@ -12,7 +12,7 @@ const manifest: SystemBlueprintManifest = {
 	integrationVersion: VERSION_INTEGRATION,
 	TSRVersion: VERSION_TSR,
 
-	minimumCoreVersion: '0.24.0'
+	minimumCoreVersion: '1.0.0'
 
 }
 

@@ -14,7 +14,7 @@ const manifest: StudioBlueprintManifest = {
 	integrationVersion: VERSION_INTEGRATION,
 	TSRVersion: VERSION_TSR,
 
-	minimumCoreVersion: '0.24.0',
+	minimumCoreVersion: '1.0.0',
 
 	studioConfigManifest: [], // TODO - some config should be moved here
 	studioMigrations: [], // TODO - device migrations should be moved to be done here

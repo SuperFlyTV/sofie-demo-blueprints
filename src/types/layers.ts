@@ -21,6 +21,7 @@ export type LLayer = VirtualAbstractLLayer | AtemLLayer | CasparLLayer
 export function RealLLayers () {
 	return _.values(AtemLLayer)
 		.concat(_.values(CasparLLayer))
+		.concat(_.values(LawoLLayer))
 }
 export function VirtualLLayers () {
 	return _.values(VirtualAbstractLLayer)
@@ -37,6 +38,7 @@ export enum AtemLLayer {
 	AtemAuxLookahead = 'atem_aux_lookahead',
 	AtemAuxSSrc = 'atem_aux_ssrc',
 	AtemAuxClean = 'atem_aux_clean',
+	AtemAuxScreen = 'atem_aux_screen',
 	AtemSSrcArt = 'atem_supersource_art',
 	AtemSSrcDefault = 'atem_supersource_default',
 	AtemSSrcOverride = 'atem_supersource_override'
@@ -58,4 +60,9 @@ export enum CasparLLayer {
 
 export function HyperdeckLLayer (index: number) {
 	return `hyperdeck${index}`
+}
+
+export enum LawoLLayer {
+	LawoSourceAutomix = 'lawo_source_automix',
+	LawoSourceClipStk = 'lawo_source_clip_stk'
 }
