@@ -19,13 +19,10 @@ export enum ObjectType {
 export interface Piece { // TODO: Customize
 	id: string
 	objectType: ObjectType
-	objectTime: number
 	duration: number
 	clipName: string
-	attributes: any
 	position: string
 	script?: string
-	transition?: string
 }
 
 export interface SegmentConf {

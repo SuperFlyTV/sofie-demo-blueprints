@@ -1,10 +1,10 @@
 import * as _ from 'underscore'
 import * as objectPath from 'object-path'
 import {
-	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece
+	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece, IBlueprintAdLibPiece
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../common/util'
-import { SegmentConf } from '../types/classes'
+import { SegmentConf, Piece } from '../types/classes'
 import { parseConfig } from './helpers/config'
 import { parseSources } from './helpers/sources'
 import { SourceLayer } from '../types/layers'
@@ -43,7 +43,28 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 				context.warning(`Missing type for part: '${part.name || part.externalId}'`)
 				parts.push(createGeneric(part))
 			} else {
-				parts.push(createGeneric(part))
+				let pieces: IBlueprintPiece[] = []
+				let adLibPieces: IBlueprintAdLibPiece[] = []
+				if ('pieces' in part.payload) {
+					let pieceList = part.payload['pieces'] as Piece[]
+					pieceList.forEach((piece) => {
+						if (piece.objectType === 'camera') {
+							pieces.push({
+								_id: piece.id,
+								enable: {
+									start: 0,
+									duration: piece.duration
+								},
+								externalId: piece.id,
+								name: '',
+								sourceLayerId: SourceLayer.PgmCam,
+								outputLayerId: 'pgm0',
+								content: {}
+							})
+						}
+					})
+				}
+				parts.push(createPart(part, pieces, adLibPieces))
 			}
 		}
 	}
@@ -81,4 +102,67 @@ function createGeneric (ingestPart: IngestPart): BlueprintResultPart {
 		adLibPieces: [],
 		pieces: [piece]
 	}
+}
+
+/**
+ * Creates a part from an ingest part and associated pieces.
+ * @param {IngestPart} ingestPart Ingest part.
+ * @param {IBlueprintPiece[]} pieces Array of pieces.
+ */
+function createPart (ingestPart: IngestPart, pieces: IBlueprintPiece[], adLibPieces: IBlueprintAdLibPiece[]): BlueprintResultPart {
+	const part = literal<IBlueprintPart>({
+		externalId: ingestPart.externalId,
+		title: ingestPart.name || 'Unknown',
+		metaData: {},
+		typeVariant: '',
+		expectedDuration: calculateExpectedDuration(pieces)
+	})
+
+	return {
+		part,
+		adLibPieces: adLibPieces,
+		pieces: pieces
+	}
+}
+
+/**
+ * Calculates the expected duration of a part from component pieces.
+ * @param {IBlueprintPiece[]} pieces Pieces to calculate duration for.
+ */
+function calculateExpectedDuration (pieces: IBlueprintPiece[]): number {
+	if (pieces.length) {
+		let start = 0
+		let end = 0
+
+		pieces.forEach(piece => {
+			if (!piece.isTransition) {
+				let st = piece.enable.start as number
+				let en = piece.enable.start as number
+				if (piece.enable.duration) {
+					en = (piece.enable.start as number) + (piece.enable.duration as number)
+				} else if (piece.enable.end) {
+					en = (piece.enable.end as number)
+				}
+
+				if (piece.infiniteMode) {
+					en = en + 1000
+				}
+
+				if (st < start) {
+					start = st
+				}
+
+				if (en > end) {
+					end = en
+				}
+
+				if (st > end) {
+					end = st
+				}
+			}
+		})
+
+		return end - start
+	}
+	return 0
 }
