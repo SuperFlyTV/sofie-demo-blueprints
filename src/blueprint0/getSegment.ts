@@ -8,6 +8,7 @@ import { SegmentConf, Piece } from '../types/classes'
 import { parseConfig } from './helpers/config'
 import { parseSources } from './helpers/sources'
 import { SourceLayer } from '../types/layers'
+import { SplitStoryDataToParts } from './inewsConversion/converters/SplitStoryDataToParts'
 
 export function getSegment (context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
 	const config: SegmentConf = {
@@ -31,6 +32,8 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 			parts
 		}
 	}
+
+	ingestSegment.parts = SplitStoryDataToParts.convert(ingestSegment.payload.iNewsStory)
 
 	for (const part of ingestSegment.parts) {
 		if (!part.payload) {
