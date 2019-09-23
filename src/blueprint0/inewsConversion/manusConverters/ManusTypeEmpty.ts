@@ -1,10 +1,9 @@
-import { IParsedElement } from '../ParsedElementsToSegments'
 
 export class ManusTypeEmpty {
 
-	static convert (story: any, script: string, index: number): IParsedElement[] {
+	static convert (story: any, script: string, index: number): any[] {
 
-		let elements: IParsedElement[] = []
+		let elements: any[] = []
 
 		elements.push({
 			data: {
