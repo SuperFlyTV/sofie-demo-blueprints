@@ -1,7 +1,7 @@
 import * as _ from 'underscore'
 import * as objectPath from 'object-path'
 import {
-	SegmentContext, IngestSegment as IngestPart, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IBlueprintPart, IBlueprintPiece, IBlueprintAdLibPiece
+	SegmentContext, IngestSegment, IngestPart, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IBlueprintPart, IBlueprintPiece, IBlueprintAdLibPiece
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../common/util'
 import { SegmentConf, Piece } from '../types/classes'
@@ -10,7 +10,7 @@ import { parseSources } from './helpers/sources'
 import { SourceLayer } from '../types/layers'
 import { SplitStoryDataToParts } from './inewsConversion/converters/SplitStoryDataToParts'
 
-export function getSegment (context: SegmentContext, ingestSegment: IngestPart): BlueprintResultSegment {
+export function getSegment (context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
 	const config: SegmentConf = {
 		context: context,
 		config: parseConfig(context),
@@ -34,18 +34,25 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestPart):
 	}
 
 	let {allParts} = SplitStoryDataToParts.convert(ingestSegment.payload.iNewsStory)
-	debugger
-	//ToDo: Pass allParts into ingestSegment.parts
-	for (const part of allParts) {
-		const type = objectPath.get(part.data, 'type', '') + ''
+	ingestSegment.parts = allParts.map((part: any) => {
+		return {
+			externalId: part.data.id,
+			name: part.data.name,
+		rank: 0, // ??????
+		payload: part.data
+		}
+	})
+
+	for (const part of ingestSegment.parts) {
+		const type = objectPath.get(part, 'type', '') + ''
 		if (!type) {
-			context.warning(`Missing type for part: '${part.data.name || part.data.externalId}'`)
-			parts.push(createGeneric(part.data))
+			context.warning(`Missing type for part: '${part.name || part.externalId}'`)
+			parts.push(createGeneric(part))
 		} else {
 			let pieces: IBlueprintPiece[] = []
 			let adLibPieces: IBlueprintAdLibPiece[] = []
-			if ('pieces' in part.data) {
-				let pieceList = part.data['pieces'] as Piece[]
+			if ('pieces' in part) {
+				let pieceList = part['pieces'] as Piece[]
 				pieceList.forEach((piece) => {
 					if (piece.objectType === 'camera') {
 						pieces.push({
