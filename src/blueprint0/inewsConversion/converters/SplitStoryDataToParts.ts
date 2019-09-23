@@ -44,7 +44,7 @@ export class SplitStoryDataToParts {
 		}
 
 		return {
-			allParts
+			allParts: allParts
 		}
 	}
 }

@@ -33,42 +33,36 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 		}
 	}
 
-	ingestSegment.parts = SplitStoryDataToParts.convert(ingestSegment.payload.iNewsStory)
-
-	for (const part of ingestSegment.parts) {
-		if (!part.payload) {
-			context.warning(`Missing payload for part: '${part.name || part.externalId}'`)
-		} else if (part.payload['float']) {
-			continue
+	let {allParts} = SplitStoryDataToParts.convert(ingestSegment.payload.iNewsStory)
+	debugger
+	for (const part of allParts) {
+		const type = objectPath.get(part.data, 'type', '') + ''
+		if (!type) {
+			context.warning(`Missing type for part: '${part.data.name || part.data.externalId}'`)
+			parts.push(createGeneric(part.data))
 		} else {
-			const type = objectPath.get(part.payload, 'type', '') + ''
-			if (!type) {
-				context.warning(`Missing type for part: '${part.name || part.externalId}'`)
-				parts.push(createGeneric(part))
-			} else {
-				let pieces: IBlueprintPiece[] = []
-				let adLibPieces: IBlueprintAdLibPiece[] = []
-				if ('pieces' in part.payload) {
-					let pieceList = part.payload['pieces'] as Piece[]
-					pieceList.forEach((piece) => {
-						if (piece.objectType === 'camera') {
-							pieces.push({
-								_id: piece.id,
-								enable: {
-									start: 0,
-									duration: piece.duration
-								},
-								externalId: piece.id,
-								name: '',
-								sourceLayerId: SourceLayer.PgmCam,
-								outputLayerId: 'pgm0',
-								content: {}
-							})
-						}
-					})
-				}
-				parts.push(createPart(part, pieces, adLibPieces))
+			let pieces: IBlueprintPiece[] = []
+			let adLibPieces: IBlueprintAdLibPiece[] = []
+			if ('pieces' in part.data) {
+				let pieceList = part.data['pieces'] as Piece[]
+				pieceList.forEach((piece) => {
+					if (piece.objectType === 'camera') {
+						pieces.push({
+							_id: piece.id,
+							enable: {
+								start: 0,
+								duration: piece.duration
+							},
+							externalId: piece.id,
+							name: '',
+							sourceLayerId: SourceLayer.PgmCam,
+							outputLayerId: 'pgm0',
+							content: {}
+						})
+					}
+				})
 			}
+			parts.push(createPart(part.data, pieces, adLibPieces))
 		}
 	}
 
