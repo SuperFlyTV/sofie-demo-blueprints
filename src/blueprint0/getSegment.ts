@@ -33,13 +33,13 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 		}
 	}
 
-	let {allParts} = SplitStoryDataToParts.convert(ingestSegment.payload.iNewsStory)
+	let { allParts } = SplitStoryDataToParts.convert(ingestSegment.payload.iNewsStory)
 	let ingestParts: IngestPart[] = allParts.map((part: any) => {
 		return {
 			externalId: part.data.id,
 			name: part.data.name,
-		rank: 0, // ??????
-		payload: part.data
+			rank: 0, // ??????
+			payload: part.data
 		}
 	})
 
@@ -118,7 +118,7 @@ function createPart (ingestPart: IngestPart, pieces: IBlueprintPiece[], adLibPie
 	const part = literal<IBlueprintPart>({
 		externalId: ingestPart.externalId,
 		title: ingestPart.name || 'Unknown',
-		metaData: {}, 
+		metaData: {},
 		typeVariant: '',
 		expectedDuration: calculateExpectedDuration(pieces)
 	})
