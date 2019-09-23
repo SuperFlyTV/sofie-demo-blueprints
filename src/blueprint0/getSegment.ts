@@ -1,7 +1,7 @@
 import * as _ from 'underscore'
 import * as objectPath from 'object-path'
 import {
-	SegmentContext, IngestSegment, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IngestPart, IBlueprintPart, IBlueprintPiece, IBlueprintAdLibPiece
+	SegmentContext, IngestSegment as IngestPart, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IBlueprintPart, IBlueprintPiece, IBlueprintAdLibPiece
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../common/util'
 import { SegmentConf, Piece } from '../types/classes'
@@ -10,7 +10,7 @@ import { parseSources } from './helpers/sources'
 import { SourceLayer } from '../types/layers'
 import { SplitStoryDataToParts } from './inewsConversion/converters/SplitStoryDataToParts'
 
-export function getSegment (context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
+export function getSegment (context: SegmentContext, ingestSegment: IngestPart): BlueprintResultSegment {
 	const config: SegmentConf = {
 		context: context,
 		config: parseConfig(context),
@@ -35,6 +35,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 
 	let {allParts} = SplitStoryDataToParts.convert(ingestSegment.payload.iNewsStory)
 	debugger
+	//ToDo: Pass allParts into ingestSegment.parts
 	for (const part of allParts) {
 		const type = objectPath.get(part.data, 'type', '') + ''
 		if (!type) {
@@ -62,7 +63,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 					}
 				})
 			}
-			parts.push(createPart(part.data, pieces, adLibPieces))
+			parts.push(createPart(part, pieces, adLibPieces))
 		}
 	}
 
@@ -110,7 +111,7 @@ function createPart (ingestPart: IngestPart, pieces: IBlueprintPiece[], adLibPie
 	const part = literal<IBlueprintPart>({
 		externalId: ingestPart.externalId,
 		title: ingestPart.name || 'Unknown',
-		metaData: {},
+		metaData: {}, 
 		typeVariant: '',
 		expectedDuration: calculateExpectedDuration(pieces)
 	})
