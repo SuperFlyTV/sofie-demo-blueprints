@@ -34,7 +34,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 	}
 
 	let {allParts} = SplitStoryDataToParts.convert(ingestSegment.payload.iNewsStory)
-	ingestSegment.parts = allParts.map((part: any) => {
+	let ingestParts: IngestPart[] = allParts.map((part: any) => {
 		return {
 			externalId: part.data.id,
 			name: part.data.name,
@@ -43,8 +43,8 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 		}
 	})
 
-	for (const part of ingestSegment.parts) {
-		const type = objectPath.get(part, 'type', '') + ''
+	for (const part of ingestParts) {
+		const type = objectPath.get(part.payload, 'type', '') + ''
 		if (!type) {
 			context.warning(`Missing type for part: '${part.name || part.externalId}'`)
 			parts.push(createGeneric(part))
