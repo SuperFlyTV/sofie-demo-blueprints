@@ -1,9 +1,12 @@
 {
   "extends": "./config/tsconfig.base",
   "exclude": [
-    "node_modules/**",
-    "**/*spec.ts",
-    "src/**/__mocks__/*",
-    "e2e"
-  ]
+    "node_modules/**"
+  ],
+  "compilerOptions": {
+    "types": [
+      "node",
+      "jest"
+    ]
+  }
 }

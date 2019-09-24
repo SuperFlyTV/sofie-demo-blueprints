@@ -13,7 +13,7 @@
     "build-sync-local": "yarn run build --env.server=\"http://localhost:3000\"",
     "watch": "yarn run build-inner --watch",
     "watch-sync-local": "yarn run watch --env.server=\"http://localhost:3000\"",
-    "lint": "tslint --project tsconfig.jest.json --config tslint.json",
+    "lint": "tslint --project tsconfig.json --config tslint.json",
     "unit": "jest",
     "test": "yarn lint && yarn unit",
     "validate:dependencies": "yarn audit && yarn license-validate",
