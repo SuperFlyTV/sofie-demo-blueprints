@@ -59,6 +59,8 @@ export interface PartNote {
 	}
 	message: string
 }
+
+// tslint:disable-next-line: max-classes-per-file
 export class NotesContext extends CommonContext implements INotesContext {
 	private _contextName: string
 	private _rundownId?: string
@@ -105,6 +107,7 @@ export class NotesContext extends CommonContext implements INotesContext {
 	}
 }
 
+// tslint:disable-next-line: max-classes-per-file
 export class ShowStyleContext extends NotesContext implements IShowStyleContext {
 	public studioConfig: { [key: string]: ConfigItemValue } = {}
 	public showStyleConfig: { [key: string]: ConfigItemValue } = {}
@@ -129,6 +132,7 @@ export class ShowStyleContext extends NotesContext implements IShowStyleContext 
 	}
 }
 
+// tslint:disable-next-line: max-classes-per-file
 export class SegmentContext extends ShowStyleContext implements ISegmentContext {
 	public rundownId: string
 	public rundown: IBlueprintRundownDB

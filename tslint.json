@@ -5,6 +5,7 @@
 		"interface-name": false,
 		"object-literal-sort-keys": false,
 		"variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "require-const-for-all-caps"],
-		"no-bitwise": false
+		"no-bitwise": false,
+		"no-console": false
 	}
 }
