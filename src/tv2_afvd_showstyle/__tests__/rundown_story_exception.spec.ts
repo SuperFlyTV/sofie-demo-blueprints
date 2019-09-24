@@ -6,7 +6,7 @@ import {
 	IngestPart,
 	IngestRundown
 } from 'tv-automation-sofie-blueprints-integration'
-import { ConfigMap, DefaultShowStyleConfig, DefaultStudioConfig } from './configs'
+import { ConfigMap, defaultShowStyleConfig, defaultStudioConfig } from './configs'
 import { checkAllLayers } from './layers-check'
 
 // @ts-ignore
@@ -22,7 +22,7 @@ import { SplitStoryDataToParts } from '../inewsConversion/converters/SplitStoryD
 
 // More ROs can be listed here to make them part of the basic blueprint doesnt crash test
 const rundowns: Array<{ ro: string; studioConfig: ConfigMap; showStyleConfig: ConfigMap }> = [
-	{ ro: '../../../rundowns/example.json', studioConfig: DefaultStudioConfig, showStyleConfig: DefaultShowStyleConfig }
+	{ ro: '../../../rundowns/example.json', studioConfig: defaultStudioConfig, showStyleConfig: defaultShowStyleConfig }
 ]
 
 describe('Rundown exceptions', () => {

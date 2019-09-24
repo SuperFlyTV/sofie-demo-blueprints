@@ -36,7 +36,7 @@ import { literal } from '../common/util'
 import { SourceInfo } from '../tv2_afvd_studio/helpers/sources'
 import { AtemLLayer, CasparLLayer, HyperdeckLLayer } from '../tv2_afvd_studio/layers'
 import { AtemSourceIndex } from '../types/atem'
-import { Constants } from '../types/constants'
+import { CONSTANTS } from '../types/constants'
 import { BlueprintConfig, parseConfig } from './helpers/config'
 import { SourceLayer } from './layers'
 
@@ -303,7 +303,7 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 				transitions: {
 					inTransition: {
 						type: Transition.CUT,
-						duration: Constants.DefaultClipFadeOut
+						duration: CONSTANTS.DefaultClipFadeOut
 					}
 				}
 			}

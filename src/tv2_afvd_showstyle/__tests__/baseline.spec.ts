@@ -9,9 +9,9 @@ global.VERSION_TSR = 'test'
 // @ts-ignore
 global.VERSION_INTEGRATION = 'test'
 import Blueprints from '../index'
-import { DefaultShowStyleConfig, DefaultStudioConfig } from './configs'
+import { defaultShowStyleConfig, defaultStudioConfig } from './configs'
 
-const configs = [{ id: 'default', studioConfig: DefaultStudioConfig, showStyleConfig: DefaultShowStyleConfig }]
+const configs = [{ id: 'default', studioConfig: defaultStudioConfig, showStyleConfig: defaultShowStyleConfig }]
 
 describe('Baseline', () => {
 	for (const configSpec of configs) {

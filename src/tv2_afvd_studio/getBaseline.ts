@@ -35,7 +35,7 @@ export function getBaseline(context: IStudioContext): TSRTimelineObjBase[] {
 
 	const atemMeMappings = filterMappings(
 		mappings,
-		(_, v) => v.device === DeviceType.ATEM && (v as any).mappingType === MappingAtemType.MixEffect
+		(_id, v) => v.device === DeviceType.ATEM && (v as any).mappingType === MappingAtemType.MixEffect
 	)
 
 	return [

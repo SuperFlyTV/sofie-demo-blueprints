@@ -13,6 +13,7 @@ export interface BlueprintConfig extends BlueprintConfigBase {
 	showStyle: ShowStyleConfig
 }
 
+// tslint:disable-next-line: no-empty-interface
 export interface ShowStyleConfig {}
 
 function extendWithShowStyleConfig(
