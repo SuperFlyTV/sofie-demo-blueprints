@@ -1,27 +1,33 @@
-// this converts the 'json' format (with comment seperators) from robo3t into json that can be used
+// this converts a snapshot into importable rundown data
 // use with `node convert.js > data/some-file.json`
-// Note: current reads a hardcoded path dump.json
+// Note: current reads a hardcoded path snapshot.json
 
 const fs = require('fs')
 
-const d = fs.readFileSync('dump.json', 'utf8')
-let d2 = d.replace(/\/\* (\d+) \*\//ig, ',')
-let doc = '{"data":[' + d2.substr(1) + ']}'
-let docJ = JSON.parse(doc)
+const snapshot = require('./snapshot.json').ingestData
 
-let resDoc = {
-	type: 'runningOrderCache',
-	data: []
+
+const rundownData = snapshot.filter(e => e.type === 'rundown')
+const segmentData = snapshot.filter(e => e.type === 'segment')
+const partData = snapshot.filter(e => e.type === 'part')
+
+if (rundownData.length !== 1) {
+    console.error(`Got ${rundownData.length} rundown ingest data. Can't continue`)
+    return
 }
 
-docJ.data.forEach(e => {
-	if (e._id.indexOf('roCreate') >= 0) {
-		e.type = 'roCreate'
-		resDoc.data.push(e)
-	} else if (e._id.indexOf('fullStory') >= 0) {
-		e.type = 'fullStory'
-		resDoc.data.push(e)
-	} 
-});
+segmentData.forEach(seg => {
+    let parts = partData.filter(e => e.segmentId === seg.segmentId)
+    parts = parts.map(e => e.data)
+    parts = parts.sort((a, b) => b.rank - a.rank) // TODO - check order
 
-console.log(JSON.stringify(resDoc, undefined, 4))
+    seg.data.parts = parts
+})
+
+let segments = segmentData.map(s => s.data)
+segments = segments.sort((a, b) => b.rank - a.rank) // TODO - check order
+
+const rundown = rundownData[0].data
+rundown.segments = segments
+
+console.log(JSON.stringify(rundown, undefined, 4))
