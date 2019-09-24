@@ -8,9 +8,9 @@ import {
 	TimelineObjectCoreExt
 } from 'tv-automation-sofie-blueprints-integration'
 
-import { SourceLayer } from '../../types/layers'
+import { SourceLayer } from '../../tv2_afvd_studio/layers'
+import mappingsDefaults, { getHyperdeckMappings } from '../../tv2_afvd_studio/migrations/mappings-defaults'
 import { BlueprintConfig, parseConfig } from '../helpers/config'
-import mappingsDefaults, { getHyperdeckMappings } from '../migrations/mappings-defaults'
 import OutputlayerDefaults from '../migrations/outputlayer-defaults'
 
 function getMappingsForSources(config: BlueprintConfig): BlueprintMappings {

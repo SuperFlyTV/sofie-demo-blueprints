@@ -12,17 +12,15 @@ import {
 } from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
 import { literal } from '../common/util'
-import { Piece, SegmentConf } from '../types/classes'
-import { SourceLayer } from '../types/layers'
+import { SegmentConf } from '../types/classes'
 import { parseConfig } from './helpers/config'
-import { parseSources } from './helpers/sources'
 import { SplitStoryDataToParts } from './inewsConversion/converters/SplitStoryDataToParts'
+import { SourceLayer } from './layers'
 
 export function getSegment(context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
 	const config: SegmentConf = {
 		context,
 		config: parseConfig(context),
-		sourceConfig: parseSources(context, parseConfig(context)),
 		frameHeight: 1920,
 		frameWidth: 1080,
 		framesPerSecond: 50
@@ -51,7 +49,7 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 		}
 	})
 
-	for (const part of ingestParts) {
+	ingestParts.forEach(part => {
 		const type = objectPath.get(part.payload, 'type', '') + ''
 		if (!type) {
 			context.warning(`Missing type for part: '${part.name || part.externalId}'`)
@@ -59,7 +57,7 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 		} else {
 			const pieces: IBlueprintPiece[] = []
 			const adLibPieces: IBlueprintAdLibPiece[] = []
-			if ('pieces' in part) {
+			/*if ('pieces' in part) {
 				const pieceList = part.pieces as Piece[]
 				pieceList.forEach(piece => {
 					if (piece.objectType === 'camera') {
@@ -77,10 +75,10 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 						})
 					}
 				})
-			}
+			}*/
 			parts.push(createPart(part, pieces, adLibPieces))
 		}
-	}
+	})
 
 	return {
 		segment,

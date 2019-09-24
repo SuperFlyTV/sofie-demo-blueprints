@@ -1,14 +1,16 @@
-import { TimelineEnable } from 'timeline-state-resolver-types/dist/superfly-timeline'
+import { Timeline } from 'timeline-state-resolver-types'
 import { IBlueprintAdLibPiece, IBlueprintPiece } from 'tv-automation-sofie-blueprints-integration'
-import { SourceLayer } from '../types/layers'
 
 export function literal<T>(o: T) {
 	return o
 }
+export function assertUnreachable(_never: never): never {
+	throw new Error("Didn't expect to get here")
+}
 
 export function createVirtualPiece(
-	layer: SourceLayer,
-	enable: number | TimelineEnable,
+	layer: string,
+	enable: number | Timeline.TimelineEnable,
 	mainPiece?: IBlueprintPiece
 ): IBlueprintPiece {
 	return {

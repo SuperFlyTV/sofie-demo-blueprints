@@ -1,107 +1,39 @@
-import * as objectPath from 'object-path'
+import { ConfigItemValue, NotesContext, ShowStyleContext } from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
-
+import { literal } from '../../common/util'
 import {
-	ConfigItemValue,
-	ConfigManifestEntry,
-	ConfigManifestEntryType,
-	ShowStyleContext
-} from 'tv-automation-sofie-blueprints-integration'
-import { CoreInjectedKeys, ShowStyleConfigManifest, StudioConfigManifest } from '../config-manifests'
+	applyToConfig,
+	BlueprintConfig as BlueprintConfigBase,
+	defaultStudioConfig,
+	parseStudioConfig
+} from '../../tv2_afvd_studio/helpers/config'
+import { showStyleConfigManifest } from '../config-manifests'
 
-export interface BlueprintConfig {
-	studio: StudioConfig
+export interface BlueprintConfig extends BlueprintConfigBase {
 	showStyle: ShowStyleConfig
 }
 
 export interface ShowStyleConfig {}
 
-export interface StudioConfig {
-	// Injected by core
-	SofieHostURL: string
+function extendWithShowStyleConfig(
+	context: NotesContext,
+	baseConfig: BlueprintConfigBase,
+	values: { [key: string]: ConfigItemValue }
+): BlueprintConfig {
+	const config = literal<BlueprintConfig>({
+		...baseConfig,
+		showStyle: {} as any
+	})
 
-	// Must override
+	applyToConfig(context, config.showStyle, showStyleConfigManifest, 'ShowStyle', values)
 
-	// Intended overrides
-	MediaFlowId: string
-	SourcesCam: string
-	SourcesRM: string
-	HyperdeckCount: number
+	return config
+}
 
-	AtemSource: {
-		DSK1F: number
-		DSK1K: number
-		DSK2F: number
-		DSK2K: number
-		Server1: number // Clips
-		Server1Next: number
-		Server2: number // Grafikk
-		Server3: number // Studio
-
-		SplitArtF: number // Atem MP1 Fill
-		SplitArtK: number // Atem MP1 Key
-
-		Default: number
-	}
-
-	// Dev overrides
-
-	// Constants
-	LawoFadeInDuration: number
-	CasparOutputDelay: number
+export function defaultConfig(context: NotesContext): BlueprintConfig {
+	return extendWithShowStyleConfig(context, defaultStudioConfig(context), {})
 }
 
 export function parseConfig(context: ShowStyleContext): BlueprintConfig {
-	const applyToConfig = (
-		config: any,
-		manifest: ConfigManifestEntry[],
-		sourceName: string,
-		overrides: { [key: string]: ConfigItemValue }
-	) => {
-		_.each(manifest, (val: ConfigManifestEntry) => {
-			let newVal = val.defaultVal
-
-			const overrideVal = overrides[val.id] as ConfigItemValue | undefined
-			if (overrideVal !== undefined) {
-				switch (val.type) {
-					case ConfigManifestEntryType.BOOLEAN:
-						newVal = overrideVal as boolean
-						break
-					case ConfigManifestEntryType.NUMBER:
-						newVal = overrideVal as number
-						break
-					case ConfigManifestEntryType.STRING:
-						newVal = overrideVal as string
-						break
-					case ConfigManifestEntryType.ENUM:
-						newVal = overrideVal as string
-						break
-					default:
-						context.warning('Unknown config field type: ' + val.type)
-						break
-				}
-			} else if (val.required) {
-				context.warning(`Required config not defined in ${sourceName}: "${val.name}"`)
-			}
-
-			objectPath.set(config, val.id, newVal)
-		})
-	}
-
-	const config: BlueprintConfig = {
-		studio: {} as any,
-		showStyle: {} as any
-	}
-
-	// Load values injected by core, not via manifest
-	const studioConfig = context.getStudioConfig()
-	_.each(CoreInjectedKeys, (id: string) => {
-		objectPath.set(config.studio, id, studioConfig[id])
-	})
-
-	// Load the config
-	applyToConfig(config.studio, StudioConfigManifest, 'Studio', studioConfig)
-	applyToConfig(config.showStyle, ShowStyleConfigManifest, 'ShowStyle', context.getShowStyleConfig())
-
-	return config
+	return extendWithShowStyleConfig(context, parseStudioConfig(context), context.getShowStyleConfig())
 }

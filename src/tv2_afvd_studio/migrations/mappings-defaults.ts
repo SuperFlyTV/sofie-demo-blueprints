@@ -12,7 +12,7 @@ import {
 import { BlueprintMapping, BlueprintMappings, LookaheadMode } from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
 import { literal } from '../../common/util'
-import { HyperdeckLLayer } from '../../types/layers'
+import { HyperdeckLLayer } from '../layers'
 
 export default literal<BlueprintMappings>({
 	core_abstract: literal<MappingAbstract & BlueprintMapping>({

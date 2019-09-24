@@ -1,6 +1,5 @@
 import { SegmentContext, SourceLayerType } from 'tv-automation-sofie-blueprints-integration'
 import { BlueprintConfig } from '../tv2_afvd_showstyle/helpers/config'
-import { SourceInfo } from '../tv2_afvd_showstyle/helpers/sources'
 
 export enum ObjectType {
 	GRAPHIC = 'graphic',
@@ -29,7 +28,6 @@ export interface Piece {
 export interface SegmentConf {
 	context: SegmentContext
 	config: BlueprintConfig
-	sourceConfig: SourceInfo[]
 	frameHeight: number
 	frameWidth: number
 	framesPerSecond: number

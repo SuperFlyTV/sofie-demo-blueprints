@@ -2,7 +2,7 @@ import * as _ from 'underscore'
 
 import { NotesContext, SourceLayerType } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
-import { BlueprintConfig } from './config'
+import { StudioConfig } from './config'
 
 export function parseMapStr(
 	context: NotesContext | undefined,
@@ -56,9 +56,16 @@ export interface SourceInfo {
 	ptzDevice?: string
 }
 
-export function parseSources(context: NotesContext | undefined, config: BlueprintConfig): SourceInfo[] {
-	const rmInputMap: Array<{ id: number; val: number }> = parseMapStr(context, config.studio.SourcesRM, false)
-	const kamInputMap: Array<{ id: number; val: number }> = parseMapStr(context, config.studio.SourcesCam, false)
+export function parseMediaPlayers(
+	context: NotesContext | undefined,
+	studioConfig: StudioConfig
+): Array<{ id: number; val: number }> {
+	return parseMapStr(context, studioConfig.ABMediaPlayers, false)
+}
+
+export function parseSources(context: NotesContext | undefined, studioConfig: StudioConfig): SourceInfo[] {
+	const rmInputMap: Array<{ id: number; val: number }> = parseMapStr(context, studioConfig.SourcesRM, false)
+	const kamInputMap: Array<{ id: number; val: number }> = parseMapStr(context, studioConfig.SourcesCam, false)
 
 	const res: SourceInfo[] = []
 

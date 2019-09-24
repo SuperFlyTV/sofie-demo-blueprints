@@ -32,15 +32,13 @@ import {
 	ShowStyleContext,
 	SourceLayerType
 } from 'tv-automation-sofie-blueprints-integration'
-import { AtemSourceIndex } from '../types/atem'
-
 import { literal } from '../common/util'
-
+import { SourceInfo } from '../tv2_afvd_studio/helpers/sources'
+import { AtemLLayer, CasparLLayer, HyperdeckLLayer } from '../tv2_afvd_studio/layers'
+import { AtemSourceIndex } from '../types/atem'
 import { Constants } from '../types/constants'
-import { AtemLLayer, CasparLLayer, HyperdeckLLayer, SourceLayer } from '../types/layers'
-
 import { BlueprintConfig, parseConfig } from './helpers/config'
-import { parseSources, SourceInfo } from './helpers/sources'
+import { SourceLayer } from './layers'
 
 export function getShowStyleVariantId(
 	_context: IStudioConfigContext,
@@ -88,9 +86,7 @@ export function getRundown(context: ShowStyleContext, ingestRundown: IngestRundo
 	}
 }
 
-function getGlobalAdLibPieces(context: NotesContext, config: BlueprintConfig): IBlueprintAdLibPiece[] {
-	const sources = parseSources(context, config)
-
+function getGlobalAdLibPieces(_context: NotesContext, config: BlueprintConfig): IBlueprintAdLibPiece[] {
 	function makeCameraAdLib(info: SourceInfo, rank: number): IBlueprintAdLibPiece {
 		return {
 			externalId: 'cam',
@@ -122,7 +118,7 @@ function getGlobalAdLibPieces(context: NotesContext, config: BlueprintConfig): I
 	}
 
 	const adlibItems: IBlueprintAdLibPiece[] = []
-	_.each(sources, v => {
+	_.each(config.sources, v => {
 		if (v.type === SourceLayerType.CAMERA) {
 			adlibItems.push(makeCameraAdLib(v, 100 + v.id))
 		}

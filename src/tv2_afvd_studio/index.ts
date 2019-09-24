@@ -1,7 +1,9 @@
 import { BlueprintManifestType, StudioBlueprintManifest } from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
+import { studioConfigManifest } from './config-manifests'
 import { getBaseline } from './getBaseline'
 import { getShowStyleId } from './getShowStyleId'
+import { studioMigrations } from './migrations'
 
 declare const VERSION: string // Injected by webpack
 declare const VERSION_TSR: string // Injected by webpack
@@ -16,8 +18,8 @@ const manifest: StudioBlueprintManifest = {
 
 	minimumCoreVersion: '1.0.0',
 
-	studioConfigManifest: [], // TODO - some config should be moved here
-	studioMigrations: [], // TODO - device migrations should be moved to be done here
+	studioConfigManifest,
+	studioMigrations, // TODO - device migrations should be moved to be done here
 
 	getBaseline,
 	getShowStyleId
