@@ -1,0 +1,13 @@
+{
+    "externalId": "NYHEDRNE-TEST.SOFIE.NEWS",
+    "name": "NYHEDRNE-TEST.SOFIE.NEWS",
+    "type": "inews",
+    "payload": {
+        "externalId": "NYHEDRNE-TEST.SOFIE.NEWS",
+        "name": "NYHEDRNE-TEST.SOFIE.NEWS",
+        "gatewayVersion": "v0.2",
+        "expectedStart": 0,
+        "expectedEnd": 1
+    },
+    "segments": []
+}

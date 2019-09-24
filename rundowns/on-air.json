@@ -1,0 +1,1434 @@
+{
+    "externalId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+    "name": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+    "type": "inews",
+    "payload": {
+        "externalId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+        "name": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+        "gatewayVersion": "v0.2",
+        "expectedStart": 0,
+        "expectedEnd": 1
+    },
+    "segments": [
+        {
+            "externalId": "351d5799:00e8c48a:5d7b8312",
+            "name": "pingvin vo now s",
+            "rank": 0,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "Pingvin VO NOW S",
+                        "var2": "INDSL",
+                        "tapeTime": "0",
+                        "audioTime": "7",
+                        "totalTime": "7",
+                        "modifyDate": "1568375570",
+                        "modifyBy": "sofie",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "16",
+                        "rate": "140"
+                    },
+                    "cues": [],
+                    "id": "351d5799:00e8c48a:5d7b8312",
+                    "body": "\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p></p>\r\n<p>Før vi fortsætter med udenselsen skal vi lige</p>\r\n<p><pi>***VO*** </pi></p>\r\n<p>se de her billeder fra Pingvin show i hirtshals</p>\r\n<p></p>\r\n"
+                },
+                "externalId": "351d5799:00e8c48a:5d7b8312",
+                "rank": 0,
+                "name": "pingvin vo now s",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "371d5759:00fb86dd:5d88a5ab",
+            "name": "ok ny tekst okno",
+            "rank": 1,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "OK NY TEKST OKNO",
+                        "var2": "INDSL",
+                        "tapeTime": "0",
+                        "audioTime": "22",
+                        "totalTime": "22",
+                        "modifyDate": "1569236395",
+                        "modifyBy": "sofie",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "13",
+                        "rate": "140"
+                    },
+                    "cues": [],
+                    "id": "371d5759:00fb86dd:5d88a5ab",
+                    "body": "\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p><pi>KAM 2 </pi></p>\r\n<p>Og her er der ting og sager</p>\r\n<p>Både til højre og til venstre er der udfordringer</p>\r\n<p></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p></p>\r\n"
+                },
+                "externalId": "371d5759:00fb86dd:5d88a5ab",
+                "rank": 1,
+                "name": "ok ny tekst okno",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "311d51d1:00fb86e1:5d88a59a",
+            "name": "velkommen igen",
+            "rank": 2,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "Velkommen Igen",
+                        "var2": "INDSL",
+                        "videoId": "CG1080i50",
+                        "tapeTime": "30",
+                        "audioTime": "9",
+                        "totalTime": "39",
+                        "modifyDate": "1569236378",
+                        "modifyBy": "sofie",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "16",
+                        "rate": "140"
+                    },
+                    "cues": [],
+                    "id": "311d51d1:00fb86e1:5d88a59a",
+                    "body": "\r\n<p><pi>KAM 1</pi></p>\r\n<p>God morgen og velkommen</p>\r\n<p></p>\r\n<p>Dette er vores standard vrøvl som vi siger i starten af hver udsendelse</p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><pi>***SERVER***</pi></p>\r\n<p></p>\r\n"
+                },
+                "externalId": "311d51d1:00fb86e1:5d88a59a",
+                "rank": 2,
+                "name": "velkommen igen",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "081fe69f:00d8a39c:5d70cb44",
+            "name": "2212 sport 15 juli 2",
+            "rank": 3,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "2212 SPORT 15 juli 2019",
+                        "tapeTime": "0",
+                        "audioTime": "0",
+                        "totalTime": "0",
+                        "modifyDate": "1567673156",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "rate": "140",
+                        "break": "break"
+                    },
+                    "cues": [],
+                    "id": "081fe69f:00d8a39c:5d70cb44",
+                    "body": "\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n"
+                },
+                "externalId": "081fe69f:00d8a39c:5d70cb44",
+                "rank": 3,
+                "name": "2212 sport 15 juli 2",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "091fe69f:00e850f0:5d7b3444",
+            "name": "klar onair sports",
+            "rank": 4,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "01",
+                        "title": "KLAR ONAIR SPORTS",
+                        "tjekSport": "1",
+                        "tapeTime": "0",
+                        "audioTime": "0",
+                        "totalTime": "0",
+                        "skema": "NE",
+                        "modifyDate": "1568355396",
+                        "modifyBy": "sofie",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": ".",
+                        "layout": "s"
+                    },
+                    "meta": {
+                        "rate": "140"
+                    },
+                    "cues": [
+                        [
+                            "STUDIOSETUP=TV 2 Nyhederne",
+                            ";0.00"
+                        ],
+                        [
+                            "KG=sport_logo",
+                            "SPORT LOGO",
+                            ";0.00.01"
+                        ],
+                        [
+                            "KG=altud",
+                            "CLEAR OVERLAY",
+                            ";0.00"
+                        ],
+                        null,
+                        null,
+                        [
+                            "LAYOUT=DIRECTTAKE",
+                            "270",
+                            ";0.00.10"
+                        ],
+                        [
+                            "LAYOUT=DIRECTTAKE",
+                            "253",
+                            ";0.00.10"
+                        ],
+                        [
+                            "LAYOUT=DIRECTTAKE",
+                            "904",
+                            ";0.00.01"
+                        ],
+                        [
+                            "VIZ=3-SPO-LOOP",
+                            ";0.00.01"
+                        ],
+                        [
+                            "LAYOUT=DIRECTTAKE",
+                            "230",
+                            ";0.00.20"
+                        ],
+                        [
+                            "AR_OVL=SPO_AR_OUT",
+                            "AR DIGI OUT",
+                            ";0.00"
+                        ]
+                    ],
+                    "id": "091fe69f:00e850f0:5d7b3444",
+                    "body": "\r\n<p></p>\r\n<p><pi>KAM 3</pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><cc>----SPORT logo --></cc><a idref=\"1\"><cc><------</cc></a></p>\r\n<p><cc>---all out overlay--></cc><a idref=\"2\"><cc><---</cc></a></p>\r\n<p><cc>---overlay AR DIGI OUT (preload ar scene)--></cc><a idref=\"10\"><cc><---</cc></a></p>\r\n<p><cc>--LED:  sluk på 5kant--></cc><a idref=\"5\"><cc><--</cc></a></p>\r\n<p><cc>--LED   blå på GENESIS--></cc><a idref=\"6\"><cc><--</cc></a></p>\r\n<p><a idref=\"7\"> <cc>WO NYH LOOP</cc></a></p>\r\n<p><cc>----ss3 Sport out-></cc><a idref=\"8\"></a></p>\r\n<p><cc>--LYS:  SPORT start --></cc><a idref=\"9\"><cc><--</cc><tab><tab></tab></tab></a></p>\r\n<p></p>\r\n"
+                },
+                "externalId": "091fe69f:00e850f0:5d7b3444",
+                "rank": 4,
+                "name": "klar onair sports",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "0a1fe69f:00d8a399:5d70cb44",
+            "name": "sn start kamera med",
+            "rank": 5,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "02",
+                        "title": "SN START KAMERA med soundbed",
+                        "tjekSport": "1",
+                        "var2": " ",
+                        "tapeTime": "0",
+                        "audioTime": "0",
+                        "totalTime": "0",
+                        "modifyDate": "1567673156",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "rate": "140"
+                    },
+                    "cues": [
+                        null,
+                        [
+                            "LYD=SN_intro_bed",
+                            ";0.00"
+                        ],
+                        [
+                            "VIZ=3-SPO-LOGO",
+                            ";0.00.01"
+                        ]
+                    ],
+                    "id": "0a1fe69f:00d8a399:5d70cb44",
+                    "body": "\r\n<p></p>\r\n<p><pi>KAM 3 minus mic</pi></p>\r\n<p><a idref=\"1\"> <cc>Sport intro soundbed</cc></a></p>\r\n<p><cc>----ss3 Sport med logo-></cc><a idref=\"2\"><cc><-</cc></a></p>\r\n<p></p>\r\n"
+                },
+                "externalId": "0a1fe69f:00d8a399:5d70cb44",
+                "rank": 5,
+                "name": "sn start kamera med",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "0b1fe69f:00d8a398:5d70cb44",
+            "name": "sn intro med still",
+            "rank": 6,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "03",
+                        "title": "SN INTRO med STILL",
+                        "tjekSport": "1",
+                        "var2": " ",
+                        "tapeTime": "5",
+                        "audioTime": "0",
+                        "totalTime": "5",
+                        "modifyDate": "1567673156",
+                        "presenter": " ",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "nej",
+                        "layout": "s"
+                    },
+                    "meta": {
+                        "rate": "160"
+                    },
+                    "cues": [
+                        [
+                            "JINGLE2=SN_intro"
+                        ],
+                        [
+                            "LYD=SN_intro",
+                            ";0.00"
+                        ],
+                        [
+                            "VIZ=3-SPO-WIPE",
+                            ";0.00.01"
+                        ],
+                        [
+                            "KOMMANDO=DIRECTTAKE",
+                            "11",
+                            ";0.00.15"
+                        ],
+                        [
+                            "LAYOUT=DIRECTTAKE",
+                            "252",
+                            ";0.01.12"
+                        ],
+                        [
+                            "VIZ=3-SPO-WIPE-2",
+                            ";0.02.10"
+                        ],
+                        [
+                            "LAYOUT=DIRECTTAKE",
+                            "231",
+                            ";0.00.02"
+                        ],
+                        [
+                            "VIZ=wall",
+                            "INP1=",
+                            "INP2=",
+                            "AR_INP2=",
+                            ";0.01"
+                        ],
+                        [
+                            "]] S3.0 M 0 [[",
+                            "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+                            "SP_ST2_WALL_DIGI/FUGLSANG/15-07-2019_20:00:26",
+                            "VCPID=2540216",
+                            "ContinueCount=-1",
+                            "SP_ST2_WALL_DIGI/FUGLSANG/15-07-2019_20:00:26"
+                        ]
+                    ],
+                    "id": "0b1fe69f:00d8a398:5d70cb44",
+                    "body": "\r\n<p></p>\r\n<p><cc>*****TEKNIK*****</cc></p>\r\n<p><cc>1---JINGLE sport grafisk intro---></cc><a idref=\"0\"><cc><----</cc></a></p>\r\n<p><cc>2---AUDIO til grafisk intro , fortsætter under teasere---></cc><a idref=\"1\"><cc><----</cc></a></p>\r\n<p><cc>3---SS3 Sport WIPE-></cc><a idref=\"2\"></a></p>\r\n<p><cc>4---Sport intro soundbed--></cc><a idref=\"3\"><cc><---</cc></a></p>\r\n<p><cc>5---LED hvid på GENESIS--></cc><a idref=\"4\"><cc><--</cc></a></p>\r\n<p><cc>6---SS3 Sport WIPE-></cc><a idref=\"5\"></a></p>\r\n<p><cc>7---LYS:  SPORT 1 --></cc><a idref=\"6\"><cc><--</cc></a></p>\r\n<p><cc>8---Kalder Viz Wall og kalder inputs-----</cc><a idref=\"7\"><cc>------</cc></a></p>\r\n<p><cc>9---VCP STILL DIGI her-></cc><a idref=\"8\"><cc><---</cc></a></p>\r\n<p></p>\r\n"
+                },
+                "externalId": "0b1fe69f:00d8a398:5d70cb44",
+                "rank": 6,
+                "name": "sn intro med still",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "0c1fe69f:00d8a396:5d70cb44",
+            "name": "sn intro med loop",
+            "rank": 7,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "04",
+                        "title": "SN INTRO med LOOP",
+                        "var2": " ",
+                        "tapeTime": "5",
+                        "audioTime": "0",
+                        "totalTime": "5",
+                        "modifyDate": "1567673156",
+                        "presenter": " ",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "nej",
+                        "layout": "s"
+                    },
+                    "meta": {
+                        "rate": "160",
+                        "float": "float"
+                    },
+                    "cues": [
+                        [
+                            "JINGLE2=SN_intro"
+                        ],
+                        [
+                            "LYD=SN_intro",
+                            ";0.00"
+                        ],
+                        [
+                            "VIZ=3-SPO-WIPE",
+                            ";0.00.01"
+                        ],
+                        [
+                            "VIZ=3-SPO-LOOP",
+                            ";0.01"
+                        ],
+                        [
+                            "KOMMANDO=DIRECTTAKE",
+                            "11",
+                            ";0.00.15"
+                        ],
+                        [
+                            "VIZ=3-SPO-WIPE-2",
+                            ";0.02.10"
+                        ],
+                        [
+                            "LAYOUT=DIRECTTAKE",
+                            "231",
+                            ";0.00.02"
+                        ],
+                        [
+                            "LAYOUT=DIRECTTAKE",
+                            "252",
+                            ";0.01.12"
+                        ]
+                    ],
+                    "id": "0c1fe69f:00d8a396:5d70cb44",
+                    "body": "\r\n<p><cc>---JINGLE sport grafisk intro---></cc><a idref=\"0\"><cc><----</cc></a></p>\r\n<p></p>\r\n<p><cc>---AUDIO til grafisk intro , fortsætter under teasere---></cc><a idref=\"1\"><cc><----</cc></a></p>\r\n<p><cc>----ss3 Sport WIPE-></cc><a idref=\"2\"></a></p>\r\n<p><cc>----ss3 Sport LOOP-></cc><a idref=\"3\"></a></p>\r\n<p><cc>----Sport intro soundbed--></cc><a idref=\"4\"><cc><--- </cc></a></p>\r\n<p><cc>--LED   hvid på GENESIS--></cc><a idref=\"7\"><cc><--</cc></a></p>\r\n<p><cc>----ss3 Sport WIPE-></cc><a idref=\"5\"></a></p>\r\n<p></p>\r\n<p><cc>--LYS:  SPORT 1 --></cc><a idref=\"6\"><cc><--</cc></a></p>\r\n<p></p>\r\n"
+                },
+                "externalId": "0c1fe69f:00d8a396:5d70cb44",
+                "rank": 7,
+                "name": "sn intro med loop",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "0d1fe69f:00d8a394:5d70cb44",
+            "name": "velkommen tour",
+            "rank": 8,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "05",
+                        "title": "VELKOMMEN Tour",
+                        "tjekSport": "1",
+                        "var2": " ",
+                        "tapeTime": "0",
+                        "audioTime": "10",
+                        "totalTime": "10",
+                        "modifyDate": "1567673156",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "22",
+                        "rate": "140"
+                    },
+                    "cues": [
+                        null,
+                        [
+                            "kg bund HEIDI MØLLER ESKILDSEN",
+                            "TV 2 SPORT",
+                            ";0.00-0.04"
+                        ]
+                    ],
+                    "id": "0d1fe69f:00d8a394:5d70cb44",
+                    "body": "\r\n<p></p>\r\n<p><pi>KAM AR</pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><cc>--Værtsbundt--></cc><a idref=\"1\"><cc><---</cc></a></p>\r\n<p></p>\r\n<p><cc>----AR digi-----><----(hvis AR digi ønskes benyttes)</cc></p>\r\n<p><cc>***WALL grafik: STILL eller scene ligges ind i foregående manus - enten i SN INTRO med Scene, eller i SN INTRO med STILL***</cc></p>\r\n<p></p>\r\n<p>Det blev en regulær møg-dag for Jakob Fuglsang på dagens etape af Tour de France - danskeren mistede dyrebar tid til favoritterne.</p>\r\n<p></p>\r\n"
+                },
+                "externalId": "0d1fe69f:00d8a394:5d70cb44",
+                "rank": 8,
+                "name": "velkommen tour",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "0e1fe69f:00d8a392:5d70cb44",
+            "name": "sp kb: glem 2019 haa",
+            "rank": 9,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "06",
+                        "title": "SP KB: Glem 2019 HAAS A",
+                        "tjekSport": "1",
+                        "var2": "VO",
+                        "var3": "sito",
+                        "videoId": "1240226A",
+                        "eventStatus": "ONLINE",
+                        "tapeTime": "0",
+                        "audioTime": "13",
+                        "totalTime": "13",
+                        "modifyDate": "1567673156",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "30",
+                        "rate": "140"
+                    },
+                    "cues": [],
+                    "id": "0e1fe69f:00d8a392:5d70cb44",
+                    "body": "\r\n<p></p>\r\n<p><pi>***VO EFFEKT 11*** </pi></p>\r\n<p></p>\r\n<p><cc>Skriv spib her - ved soundbite i start - husk 25 frames indløb</cc><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p>Der er heller ikke meget at juble over for tiden hos Haas teamet og Kevin Magnussen. Ekspert mener at holdet nu udelukkende skal bruge kræfterne på at kigge frem mod næste sæson.</p>\r\n<p></p>\r\n"
+                },
+                "externalId": "0e1fe69f:00d8a392:5d70cb44",
+                "rank": 9,
+                "name": "sp kb: glem 2019 haa",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "0f1fe69f:00d8a391:5d70cb44",
+            "name": "sp: breaker intro lu",
+            "rank": 10,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "07",
+                        "title": "SP: BREAKER intro lukker",
+                        "tjekSport": "1",
+                        "tapeTime": "2",
+                        "audioTime": "0",
+                        "totalTime": "2",
+                        "modifyDate": "1567673156",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "rate": "140"
+                    },
+                    "cues": [
+                        [
+                            "JINGLE2=SN_breaker_intro_lukker"
+                        ],
+                        [
+                            "LYD=STOP",
+                            ";0.00.12"
+                        ],
+                        [
+                            "VIZ=3-SPO-LOOP",
+                            ";0.00"
+                        ]
+                    ],
+                    "id": "0f1fe69f:00d8a391:5d70cb44",
+                    "body": "\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><cc>INGEN ATTACK ELLER SERVER DIREKTE EFTER EFTER DENNE INTRO SLUT</cc></p>\r\n<p><cc>----ss3 Sport LOOP-></cc><a idref=\"2\"><cc><-</cc></a></p>\r\n<p></p>\r\n"
+                },
+                "externalId": "0f1fe69f:00d8a391:5d70cb44",
+                "rank": 10,
+                "name": "sp: breaker intro lu",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "101fe69f:00d8a390:5d70cb44",
+            "name": "sp: indslag elendige",
+            "rank": 11,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "08",
+                        "title": "SP: INDSLAG Elendige Astana A",
+                        "tjekSport": "1",
+                        "var2": "INDSL",
+                        "var3": "thso",
+                        "videoId": "1240222A",
+                        "eventStatus": "ONLINE",
+                        "tapeTime": "94",
+                        "audioTime": "15",
+                        "totalTime": "109",
+                        "modifyDate": "1567673156",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "35",
+                        "rate": "140"
+                    },
+                    "cues": [
+                        [
+                            "SS=3-SPORTSDIGI",
+                            "INP1=EVS 1",
+                            ";0.00.01"
+                        ],
+                        [
+                            "]] S3.0 M 0 [[",
+                            "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+                            "SP_ST2_WALL_DIGI/FUGLSANG/15-07-2019_20:04:29",
+                            "VCPID=2540218",
+                            "ContinueCount=-1",
+                            "SP_ST2_WALL_DIGI/FUGLSANG/15-07-2019_20:04:29"
+                        ],
+                        [
+                            "VIZ=3-SPO-LOOP",
+                            ";0.00.01"
+                        ],
+                        [
+                            "AR_OVL=SPO_AR_OUT",
+                            "AR DIGI OUT",
+                            ";0.00.12"
+                        ],
+                        [
+                            "kg bund THOMAS SØNNICHSEN",
+                            "Redigering: HENRIK BERRING",
+                            ";0.04"
+                        ],
+                        [
+                            "kg bund JAKOB FUGLSANG",
+                            "Cykelrytter, Astana Pro Team",
+                            ";0.13"
+                        ],
+                        [
+                            "kg bund LARS MICHAELSEN",
+                            "Sportsdirektør, Astana Pro Team",
+                            ";0.25-0.29"
+                        ]
+                    ],
+                    "id": "101fe69f:00d8a390:5d70cb44",
+                    "body": "\r\n<p></p>\r\n<p><cc>KAM 3</cc></p>\r\n<p><pi>KAM AR</pi></p>\r\n<p><cc>---AR VCP DIGI her---><------</cc></p>\r\n<p><a idref=\"0\"><cc>------vcp digi her-></cc><a idref=\"1\"><cc><----</cc></a></a></p>\r\n<p></p>\r\n<p></p>\r\n<p><cc>\"Møg\", \"mareridt\" eller bare \"meget dumt\".</cc></p>\r\n<p></p>\r\n<p><cc>Der var mange reaktioner på Jacob Fuglsangs indsats på dagens tour de france etape</cc></p>\r\n<p><cc>Efter danskerne satte mere end 1 minut til i forhold til sine nærmeste konkurrenter</cc></p>\r\n<p></p>\r\n<p></p>\r\n<p>Vi begynder med tour de france og med hvad der blev en forfædelig etape for Astana og kaptajn Jakob Fuglsang.</p>\r\n<p></p>\r\n<p>Danskeren tabte mere end halvandet minut </p>\r\n<p></p>\r\n<p>Og nu stiller mange spørgsmålet - hvordan kunne det ske?</p>\r\n<p></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p><cc>----ss3 Sport LOOP-></cc><a idref=\"2\"><cc><-</cc></a></p>\r\n<p><cc>---AR DIGI OUT-></cc><a idref=\"3\"><cc><---</cc></a></p>\r\n<p><a idref=\"4\"> <a idref=\"5\"> <a idref=\"6\"></a></a></a></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p> </p>\r\n<p></p>\r\n<p><pi>SLUTORD: ....siddet bedre sammen</pi></p>\r\n<p></p>\r\n"
+                },
+                "externalId": "101fe69f:00d8a390:5d70cb44",
+                "rank": 11,
+                "name": "sp: indslag elendige",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "111fe69f:00d8a38e:5d70cb44",
+            "name": "sp:live rass/nygaard",
+            "rank": 12,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "09",
+                        "title": "SP:LIVE RASS/Nygaard TDF",
+                        "tjekSport": "1",
+                        "var2": "Danmon låne",
+                        "externer": "EX 7",
+                        "tapeTime": "105",
+                        "audioTime": "15",
+                        "totalTime": "120",
+                        "modifyDate": "1567673156",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "endorseBy": "anry",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "19",
+                        "rate": "140"
+                    },
+                    "cues": [
+                        null,
+                        [
+                            "DVE=sommerfugl",
+                            "INP1=KAM 4",
+                            "INP2=LIVE 1",
+                            "BYNAVN=TOULOUSE/ODENSE"
+                        ],
+                        [
+                            "EKSTERN=LIVE 1"
+                        ],
+                        [
+                            "kg direkte TOULOUSE",
+                            ";0.00"
+                        ],
+                        [
+                            "kg bund RASMUS STAGHØJ",
+                            "TV 2 SPORT",
+                            ";x.xx"
+                        ],
+                        [
+                            "kg bund BRIAN NYGAARD",
+                            "TV 2 SPORT",
+                            ";x.xx"
+                        ]
+                    ],
+                    "id": "111fe69f:00d8a38e:5d70cb44",
+                    "body": "\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p>Rasmus Staghøj, således reaktioner fra Astana-lejren, men hvordan bliver der ellers talt om det her nede hos jer?</p>\r\n<p><pi>***LIVE*** </pi></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p><a idref=\"3\"></a></p>\r\n<p><a idref=\"4\"></a></p>\r\n<p><a idref=\"5\"><tab><tab><tab></tab></tab></tab></a></p>\r\n<p></p>\r\n"
+                },
+                "externalId": "111fe69f:00d8a38e:5d70cb44",
+                "rank": 12,
+                "name": "sp:live rass/nygaard",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "121fe69f:00d8a38c:5d70cb44",
+            "name": "grafik: tdf",
+            "rank": 13,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "10",
+                        "title": "GRAFIK: TDF",
+                        "tjekSport": "1",
+                        "var2": "100% VIZ",
+                        "tapeTime": "0",
+                        "audioTime": "0",
+                        "totalTime": "0",
+                        "modifyDate": "1567673156",
+                        "presenter": " ",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "rate": "180"
+                    },
+                    "cues": [
+                        [
+                            "GRAFIK=full",
+                            "INP1= EVS"
+                        ],
+                        [
+                            "]] S3.0 M 0 [[",
+                            "cg4 ]] 3 YNYAB 0 [[ pilotdata",
+                            "TABLE TOUR DE FRANCE/Favoritternes klassement efter 10. Etape",
+                            "VCPID=2540221",
+                            "ContinueCount=-1",
+                            "TABLE TOUR DE FRANCE/Favoritternes klassement efter 10. Etape"
+                        ]
+                    ],
+                    "id": "121fe69f:00d8a38c:5d70cb44",
+                    "body": "\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><pi>************ 100%GRAFIK ***********</pi></p>\r\n<p><cc>Indsæt viz-pilot element her --></cc><a idref=\"1\"><cc><---</cc></a></p>\r\n<p></p>\r\n"
+                },
+                "externalId": "121fe69f:00d8a38c:5d70cb44",
+                "rank": 13,
+                "name": "grafik: tdf",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "131fe69f:00d8a38a:5d70cb44",
+            "name": "web: tdf",
+            "rank": 14,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "11",
+                        "title": "WEB: TDF",
+                        "tjekSport": "1",
+                        "var2": "WEB",
+                        "tapeTime": "0",
+                        "audioTime": "12",
+                        "totalTime": "12",
+                        "modifyDate": "1567673156",
+                        "presenter": " ",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "35",
+                        "rate": "180"
+                    },
+                    "cues": [
+                        null,
+                        [
+                            "DIGI CRAWLTEKST="
+                        ],
+                        [
+                            "SS=3-SPORTSDIGI",
+                            "INP1=EVS 1",
+                            ";0.00.01"
+                        ],
+                        [
+                            "]] S3.0 M 0 [[",
+                            "cg4 ]] 3 YNYAB 0 [[ pilotdata",
+                            "LgfxWeb/STJERNE_15-07-2019_21:09:25/Mosart=L|00:00|S",
+                            "VCPID=2540225",
+                            "ContinueCount=-1",
+                            "LgfxWeb/STJERNE_15-07-2019_21:09:25/Mosart=L|00:00|S"
+                        ]
+                    ],
+                    "id": "131fe69f:00d8a38a:5d70cb44",
+                    "body": "\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"><cc><------------------Reporter skriver digitekst ind i venstre side</cc></a></p>\r\n<p><pi>KAM 4</pi></p>\r\n<p><cc>---SS 3 SPORTS DIGI---></cc><a idref=\"2\"><cc><----</cc></a></p>\r\n<p></p>\r\n<p><a idref=\"3\"></a></p>\r\n<p></p>\r\n<p>Det kan godt være det var en dårlig dag for Fuglsang, men den var endnu værre for Mikel Landa. Han blev simpelthen skubbet ud i grøften af en anden rytter og tabte over to minutter. SE episoden på tour.tv2.dk</p>\r\n<p></p>\r\n"
+                },
+                "externalId": "131fe69f:00d8a38a:5d70cb44",
+                "rank": 14,
+                "name": "web: tdf",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "141fe69f:00d8c757:5d70e2de",
+            "name": "sp: vosb joakim von",
+            "rank": 15,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "12",
+                        "title": "SP: VOSB JOAKIM VON A A",
+                        "tjekSport": "1",
+                        "var2": "VOSB",
+                        "var3": "kabo",
+                        "videoId": "1240224A",
+                        "eventStatus": "ONLINE",
+                        "tapeTime": "6",
+                        "audioTime": "33",
+                        "totalTime": "39",
+                        "modifyDate": "1567679198",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "77",
+                        "rate": "140"
+                    },
+                    "cues": [
+                        [
+                            "SS=3-SPORTSDIGI",
+                            "INP1=EVS 1",
+                            ";0.00.01"
+                        ],
+                        [
+                            "]] S3.0 M 0 [[",
+                            "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+                            "SPO_ST2_FULL_DIGI/TOURVIN/15-07-2019_20:39:26",
+                            "VCPID=2540226",
+                            "ContinueCount=-1",
+                            "SPO_ST2_FULL_DIGI/TOURVIN/15-07-2019_20:39:26"
+                        ],
+                        [
+                            "VIZ=3-SPO-LOOP",
+                            ";0.00.01"
+                        ],
+                        [
+                            "AR_OVL=SPO_AR_OUT",
+                            "AR DIGI OUT",
+                            ";0.00.12"
+                        ]
+                    ],
+                    "id": "141fe69f:00d8c757:5d70e2de",
+                    "body": "\r\n<p><pi>KAM 3</pi></p>\r\n<p><a idref=\"0\"><cc>------vcp digi her-></cc><a idref=\"1\"><cc><----</cc></a></a></p>\r\n<p></p>\r\n<p>Men der var naturligvis også nogle, der kunne juble efter dagens etape - endda rigtig meget. </p>\r\n<p></p>\r\n<p>Belgiske Vaut Van Arrt fra Jumbo-Visma snød topsprinterne og kørte først over målstregen</p>\r\n<p></p>\r\n<p><pi>***VOSB*** </pi></p>\r\n<p><cc>----ss3 Sport LOOP-></cc><a idref=\"2\"><cc><-</cc></a></p>\r\n<p><cc>---AR DIGI OUT-></cc><a idref=\"3\"><cc><---</cc></a></p>\r\n<p></p>\r\n<p><pi>SB: VILD JUBEL !!!!  (6 SEK)</pi></p>\r\n<p></p>\r\n<p>Efter etapen var der meget stort glæde hos 24-årige Van Aarrt - der kører Tour de France for første gang i år. </p>\r\n<p></p>\r\n<p>10. etape blev afgjort i en spurt efter 217 km i målbyen Albí. </p>\r\n<p></p>\r\n<p>Og her var den unge belgier altså hurtigst - han vandt foran blandt andre Elia Viviani og Caleb Jeu-an</p>\r\n<p></p>\r\n"
+                },
+                "externalId": "141fe69f:00d8c757:5d70e2de",
+                "rank": 15,
+                "name": "sp: vosb joakim von",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "151fe69f:00d8a3cc:5d70cb44",
+            "name": "sp: attack vinder a",
+            "rank": 16,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "13",
+                        "title": "SP: ATTACK Vinder A",
+                        "tjekSport": "1",
+                        "var2": "ATTACK",
+                        "var3": "T",
+                        "videoId": "1240225A",
+                        "eventStatus": "ONLINE",
+                        "tapeTime": "15",
+                        "audioTime": "12",
+                        "totalTime": "27",
+                        "modifyDate": "1567673156",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "27",
+                        "rate": "140"
+                    },
+                    "cues": [
+                        null,
+                        [
+                            "VIZ=3-SPO-LOOP",
+                            ";0.00.01"
+                        ],
+                        [
+                            "AR_OVL=SPO_AR_OUT",
+                            "AR DIGI OUT",
+                            ";0.00.12"
+                        ],
+                        [
+                            "kg topt WOUT VAN AERT",
+                            "Cykelrytter, Team Jumbo-Visma",
+                            ";0.01"
+                        ]
+                    ],
+                    "id": "151fe69f:00d8a3cc:5d70cb44",
+                    "body": "\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p><pi>***ATTACK*** </pi></p>\r\n<p><cc>----ss3 Sport LOOP-></cc><a idref=\"1\"><cc><-</cc></a></p>\r\n<p><cc>---AR DIGI OUT-></cc><a idref=\"2\"><cc><---</cc></a></p>\r\n<p><cc>---bundter herunder---></cc></p>\r\n<p><a idref=\"3\"></a></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>SLUTORD:... wauw</pi></p>\r\n<p></p>\r\n<p><pi>KAM 4 </pi></p>\r\n<p><pi>NEDLÆG</pi></p>\r\n<p>I morgen holder rytterne hviledag, men det betyder ikke at vores cykelredaktion gør. Vi sender nemlig et program om doping i cykelsporten her på TV 2 kl. 15.20</p>\r\n<p></p>\r\n"
+                },
+                "externalId": "151fe69f:00d8a3cc:5d70cb44",
+                "rank": 16,
+                "name": "sp: attack vinder a",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "161fe69f:00d8a3ca:5d70cb44",
+            "name": "sp: indslag jw haas",
+            "rank": 17,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "14",
+                        "title": "SP: INDSLAG JW HAAS A",
+                        "var2": "INDSL",
+                        "var3": "sito",
+                        "videoId": "1240228A",
+                        "eventStatus": "ONLINE",
+                        "tapeTime": "61",
+                        "audioTime": "19",
+                        "totalTime": "80",
+                        "modifyDate": "1567673156",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "44",
+                        "rate": "140"
+                    },
+                    "cues": [
+                        null,
+                        [
+                            "SS=3-SPORTSDIGI",
+                            "INP1=EVS 1",
+                            ";0.00.01"
+                        ],
+                        [
+                            "]] S3.0 M 0 [[",
+                            "cg4 ]] 2 YNYAB 0 [[ pilotdata",
+                            "SP_ST2_WALL_DIGI/KEVIN/15-07-2019_22:05:12",
+                            "VCPID=2540238",
+                            "ContinueCount=-1",
+                            "SP_ST2_WALL_DIGI/KEVIN/15-07-2019_22:05:12"
+                        ],
+                        [
+                            "]] S3.0 M 0 [[",
+                            "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+                            "SP_ST2_WALL_DIGI/KEVIN/15-07-2019_16:48:30",
+                            "VCPID=2540180",
+                            "ContinueCount=-1",
+                            "SP_ST2_WALL_DIGI/KEVIN/15-07-2019_16:48:30"
+                        ],
+                        [
+                            "VIZ=3-SPO-LOOP",
+                            ";0.00.01"
+                        ],
+                        [
+                            "AR_OVL=SPO_AR_OUT",
+                            "AR DIGI OUT",
+                            ";0.00.12"
+                        ],
+                        [
+                            "kg bund SIMON TORDRUP",
+                            "sito@tv2.dk",
+                            ";0.01-0.04"
+                        ],
+                        [
+                            "kg bund JENS WINTHER",
+                            "Motorsportsekspert, TV 2 SPORT",
+                            ";0.16"
+                        ],
+                        null,
+                        null,
+                        [
+                            "kg bund Kasper Olsson",
+                            "ud på element (bliver på ind til der skiftes kamera eller anden baggrund)",
+                            ";0.00 - B"
+                        ],
+                        [
+                            "kg bund Kasper Olsson",
+                            "ud på historie (bliver på i hele manus)",
+                            ";0.00 - S"
+                        ],
+                        [
+                            "kg bund Kasper Olsson",
+                            "Aldrig ud (bliver på indtilk manuelt tages af)",
+                            ";0.00 - O"
+                        ]
+                    ],
+                    "id": "161fe69f:00d8a3ca:5d70cb44",
+                    "body": "\r\n<p><a idref=\"10\"></a></p>\r\n<p><a idref=\"11\"></a></p>\r\n<p><a idref=\"12\"></a></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p><cc>KAM 3</cc></p>\r\n<p><pi>KAM AR</pi></p>\r\n<p><cc>---AR VCP DIGI her---><------</cc></p>\r\n<p><a idref=\"1\"><cc>------vcp digi her-></cc><a idref=\"2\"><cc><----</cc></a></a></p>\r\n<p><cc>-></cc><a idref=\"3\"><cc><----</cc></a></p>\r\n<p></p>\r\n<p></p>\r\n<p>Kevin Magnussen og Haas har haft så mange problemer med deres racer i år, at det vil være spild af tid, at gå efter flere resultater i denne sæson.</p>\r\n<p>Sådan lyder det fra en ekspert, der vil have Haas til at bruge alle kræfter på at optimere frem mod næste sæson.</p>\r\n<p></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p><cc>----ss3 Sport LOOP-></cc><a idref=\"4\"><cc><-</cc></a></p>\r\n<p><cc>---AR DIGI OUT-></cc><a idref=\"5\"><cc><---</cc></a></p>\r\n<p><cc>---bundter herunder---></cc></p>\r\n<p><a idref=\"6\"></a></p>\r\n<p><a idref=\"7\"></a></p>\r\n<p><a idref=\"8\"><a idref=\"9\"></a></a></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>SLUTORD: .... det kan det sagtens</pi></p>\r\n<p></p>\r\n"
+                },
+                "externalId": "161fe69f:00d8a3ca:5d70cb44",
+                "rank": 17,
+                "name": "sp: indslag jw haas",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "171fe69f:00d8a3c7:5d70cb44",
+            "name": "sp: indslag kristian",
+            "rank": 18,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "15",
+                        "title": "SP: INDSLAG Kristian KK.",
+                        "tjekSport": "1",
+                        "var2": "INDSL",
+                        "var3": "krib",
+                        "videoId": "1240209A",
+                        "eventStatus": "ONLINE",
+                        "tapeTime": "67",
+                        "audioTime": "21",
+                        "totalTime": "88",
+                        "modifyDate": "1567673156",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "48",
+                        "rate": "140"
+                    },
+                    "cues": [
+                        [
+                            "SS=3-SPORTSDIGI",
+                            "INP1=EVS 1",
+                            ";0.00.01"
+                        ],
+                        [
+                            "VIZ=3-SPO-LOOP",
+                            ";0.00.12"
+                        ],
+                        [
+                            "kg bund KRISTIAN KRISTENSEN ",
+                            "Assistenttræner, Ribe-Esbjerg HH",
+                            ";0.04-0.07"
+                        ],
+                        [
+                            "kg bund KRISTIAN BRØNSBÆK",
+                            "Foto/redigering: JOHAN SVENDSEN",
+                            ";0.07-"
+                        ],
+                        [
+                            "kg bund KRISTIAN KRISTENSEN ",
+                            "Assistenttræner, Ribe-Esbjerg HH",
+                            ";0.15-"
+                        ],
+                        [
+                            "kg bund LARS WALTHER",
+                            "Cheftræner, Ribe-Esbjerg HH",
+                            ";0.25-"
+                        ],
+                        [
+                            "kg ARKIV ",
+                            "; 0.37-0.48",
+                            "^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+                        ],
+                        [
+                            "kg bund KRISTIAN KRISTENSEN ",
+                            "Assistenttræner, Ribe-Esbjerg HH",
+                            ";1.00-"
+                        ],
+                        [
+                            "]] S3.0 M 0 [[",
+                            "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+                            "SPO_ST2_FULL_DIGI/KRISTIAN/15-07-2019_17:35:22",
+                            "VCPID=2540187",
+                            "ContinueCount=-1",
+                            "SPO_ST2_FULL_DIGI/KRISTIAN/15-07-2019_17:35:22"
+                        ]
+                    ],
+                    "id": "171fe69f:00d8a3c7:5d70cb44",
+                    "body": "\r\n<p><pi>KAM AR</pi></p>\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><cc>------vcp digi her-></cc><a idref=\"8\"><cc><----</cc></a></p>\r\n<p></p>\r\n<p>Det blev en turbulent sidste sæson for håndboldtræner Kristian Kristensen i Herning Ikast. Et anstrengt forhold til klubbens ledelse endte med et DM-sølv. Nu venter så nye udfordringer i en ny klub og i en ny liga - for i dag blev præsenteret som assistent i Ribe Esbjerg. </p>\r\n<p></p>\r\n<p>***<pi>SERVER*** </pi></p>\r\n<p><cc>----ss3 Sport LOOP-></cc><a idref=\"1\"><cc><-</cc></a></p>\r\n<p><cc>---bundter herunder---></cc></p>\r\n<p> </p>\r\n<p><a idref=\"2\">   </a></p>\r\n<p><a idref=\"3\"></a></p>\r\n<p> <a idref=\"4\">  </a></p>\r\n<p><a idref=\"5\"></a></p>\r\n<p><a idref=\"6\"></a></p>\r\n<p><a idref=\"7\"></a></p>\r\n<p><pi>SLUTORD: ... ekstra kick</pi></p>\r\n<p></p>\r\n"
+                },
+                "externalId": "171fe69f:00d8a3c7:5d70cb44",
+                "rank": 18,
+                "name": "sp: indslag kristian",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "181fe69f:00d8a3c5:5d70cb44",
+            "name": "farvel med sport log",
+            "rank": 19,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "16",
+                        "title": "FARVEL med SPORT logo",
+                        "tapeTime": "0",
+                        "audioTime": "5",
+                        "totalTime": "5",
+                        "modifyDate": "1567673156",
+                        "presenter": " ",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "15",
+                        "rate": "180"
+                    },
+                    "cues": [
+                        [
+                            "LYD=SN_soundbed_1",
+                            ";0.00"
+                        ],
+                        [
+                            "AR_OVL=SPO_AR_OUT",
+                            "AR DIGI OUT",
+                            ";0.00.12"
+                        ],
+                        [
+                            "VIZ=3-SPO-LOGO",
+                            ";0.00.01"
+                        ]
+                    ],
+                    "id": "181fe69f:00d8a3c5:5d70cb44",
+                    "body": "\r\n<p><pi>KAM 3</pi></p>\r\n<p><a idref=\"0\"> <cc>Sport intro soundbed</cc></a></p>\r\n<p></p>\r\n<p><cc>---AR DIGI OUT-></cc><a idref=\"1\"><cc><---</cc></a></p>\r\n<p><cc>---bundter herunder---></cc></p>\r\n<p></p>\r\n<p><cc>----ss3 Sport med logo-></cc><a idref=\"2\"><cc><-</cc></a></p>\r\n<p></p>\r\n<p>Nu overlader jeg sendefladen til Verdens vildeste hoteller - tak for nu og på gensyn.</p>\r\n<p></p>\r\n"
+                },
+                "externalId": "181fe69f:00d8a3c5:5d70cb44",
+                "rank": 19,
+                "name": "farvel med sport log",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "191fe69f:00d8a3c2:5d70cb44",
+            "name": "farvel med henvisnin",
+            "rank": 20,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "17",
+                        "title": "FARVEL med Henvisning",
+                        "tapeTime": "0",
+                        "audioTime": "0",
+                        "totalTime": "0",
+                        "modifyDate": "1567673156",
+                        "presenter": " ",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "2",
+                        "rate": "180",
+                        "float": "float"
+                    },
+                    "cues": [
+                        [
+                            "LYD=SN_soundbed_1",
+                            ";0.00"
+                        ],
+                        [
+                            "SS=3-SPORTSDIGI",
+                            "INP1=EVS 1",
+                            ";0.00.01"
+                        ]
+                    ],
+                    "id": "191fe69f:00d8a3c2:5d70cb44",
+                    "body": "\r\n<p><pi>KAM 3</pi></p>\r\n<p><a idref=\"0\"> <cc>Sport intro soundbed</cc></a></p>\r\n<p><a idref=\"1\"><cc> Kalder sportsbaggrunden</cc></a></p>\r\n<p><cc>-----VCP med henvisning her-><----</cc></p>\r\n<p></p>\r\n<p>Spib her....</p>\r\n<p></p>\r\n"
+                },
+                "externalId": "191fe69f:00d8a3c2:5d70cb44",
+                "rank": 20,
+                "name": "farvel med henvisnin",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "1a1fe69f:00d8a3c1:5d70cb44",
+            "name": "farvel med full vide",
+            "rank": 21,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "18",
+                        "title": "FARVEL med FULL VIDEO",
+                        "tapeTime": "0",
+                        "audioTime": "0",
+                        "totalTime": "0",
+                        "modifyDate": "1567673156",
+                        "presenter": " ",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "2",
+                        "rate": "180",
+                        "float": "float"
+                    },
+                    "cues": [
+                        [
+                            "LYD=SN_soundbed_1",
+                            ";0.00"
+                        ],
+                        [
+                            "VIZ=3-SPO-FULL-VIDEO",
+                            "inp=EVS 1",
+                            ";0.00.01"
+                        ],
+                        [
+                            "AR_OVL=SPO_AR_OUT",
+                            "AR DIGI OUT",
+                            ";0.00.12"
+                        ]
+                    ],
+                    "id": "1a1fe69f:00d8a3c1:5d70cb44",
+                    "body": "\r\n<p></p>\r\n<p><pi>KAM 3</pi></p>\r\n<p><a idref=\"0\"> <cc>Sport intro soundbed</cc></a></p>\r\n<p><cc>----ss3 FULL VIDEO-></cc><a idref=\"1\"></a></p>\r\n<p></p>\r\n<p><cc>---AR DIGI OUT-></cc><a idref=\"2\"><cc><---</cc></a></p>\r\n<p></p>\r\n<p></p>\r\n<p>Spib her....</p>\r\n<p></p>\r\n"
+                },
+                "externalId": "1a1fe69f:00d8a3c1:5d70cb44",
+                "rank": 21,
+                "name": "farvel med full vide",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "1b1fe69f:00d8a3c0:5d70cb44",
+            "name": "sp: outro",
+            "rank": 22,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "19",
+                        "title": "SP: OUTRO",
+                        "var2": " ",
+                        "tapeTime": "5",
+                        "audioTime": "0",
+                        "totalTime": "5",
+                        "modifyDate": "1567673156",
+                        "presenter": " ",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "nej"
+                    },
+                    "meta": {
+                        "rate": "180"
+                    },
+                    "cues": [
+                        [
+                            "JINGLE2=SN_outro"
+                        ],
+                        [
+                            "LYD=STOP",
+                            ";0.00.20"
+                        ],
+                        [
+                            "VIZ=3-SPO-WIPE",
+                            ";0.00.10"
+                        ],
+                        [
+                            "VIZ=3-SPO-WIPE-2",
+                            ";0.02"
+                        ]
+                    ],
+                    "id": "1b1fe69f:00d8a3c0:5d70cb44",
+                    "body": "\r\n<p><a idref=\"0\"></a></p>\r\n<p><cc>BREAKER</cc></p>\r\n<p><cc>------></cc><a idref=\"1\"><cc><----</cc></a></p>\r\n<p><cc>----ss3 Sport WIPE-></cc><a idref=\"2\"><cc><-</cc></a></p>\r\n<p><cc>----ss3 Sport WIPE-></cc><a idref=\"3\"><cc><-</cc></a></p>\r\n<p></p>\r\n"
+                },
+                "externalId": "1b1fe69f:00d8a3c0:5d70cb44",
+                "rank": 22,
+                "name": "sp: outro",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "1c1fe69f:00d8a3bf:5d70cb44",
+            "name": "continuity",
+            "rank": 23,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": " ",
+                        "title": "CONTINUITY",
+                        "tapeTime": "0",
+                        "audioTime": "0",
+                        "totalTime": "0",
+                        "backTime": "@80398",
+                        "modifyDate": "1567673156",
+                        "presenter": " ",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "rate": "180",
+                        "break": "break"
+                    },
+                    "cues": [],
+                    "id": "1c1fe69f:00d8a3bf:5d70cb44",
+                    "body": "\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n"
+                },
+                "externalId": "1c1fe69f:00d8a3bf:5d70cb44",
+                "rank": 23,
+                "name": "continuity",
+                "float": false
+            },
+            "parts": []
+        }
+    ]
+}
