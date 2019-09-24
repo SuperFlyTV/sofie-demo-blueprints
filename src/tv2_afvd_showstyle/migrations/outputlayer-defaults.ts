@@ -25,8 +25,7 @@ export default literal<IOutputLayer[]>([
 		name: 'Screen 2',
 		isPGM: false,
 		_rank: 2
-	}
-	,
+	},
 	{
 		_id: 'screen3',
 		name: 'Screen 3',

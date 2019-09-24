@@ -18,12 +18,12 @@ export enum SourceLayer {
 export type LLayer = VirtualAbstractLLayer | AtemLLayer | CasparLLayer
 
 /** Get all the Real LLayers (map to devices). Note: Does not include some which are dynamically generated */
-export function RealLLayers () {
+export function RealLLayers() {
 	return _.values(AtemLLayer)
 		.concat(_.values(CasparLLayer))
 		.concat(_.values(LawoLLayer))
 }
-export function VirtualLLayers () {
+export function VirtualLLayers() {
 	return _.values(VirtualAbstractLLayer)
 }
 
@@ -58,7 +58,7 @@ export enum CasparLLayer {
 	CasparCountdown = 'casparcg_cg_countdown'
 }
 
-export function HyperdeckLLayer (index: number) {
+export function HyperdeckLLayer(index: number) {
 	return `hyperdeck${index}`
 }
 

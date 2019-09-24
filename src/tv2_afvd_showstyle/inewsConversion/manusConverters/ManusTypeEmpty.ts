@@ -1,9 +1,6 @@
-
 export class ManusTypeEmpty {
-
-	static convert (story: any, script: string, index: number): any[] {
-
-		let elements: any[] = []
+	public static convert(story: any, script: string, index: number): any[] {
+		const elements: any[] = []
 
 		elements.push({
 			data: {
@@ -11,9 +8,9 @@ export class ManusTypeEmpty {
 				name: story.fields.title,
 				type: 'CAM',
 				float: 'false',
-				script: script,
+				script,
 				objectType: 'camera',
-				duration: '10', /* audioTime, */
+				duration: '10' /* audioTime, */,
 				clipName: 'stringManusEmpty'
 			}
 		})

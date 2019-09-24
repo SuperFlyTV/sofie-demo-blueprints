@@ -1,13 +1,13 @@
-import * as _ from 'underscore'
 import {
-	IBlueprintExternalMessageQueueObj,
+	AsRunEventContext,
 	EventContext,
-	AsRunEventContext
+	IBlueprintExternalMessageQueueObj
 } from 'tv-automation-sofie-blueprints-integration'
+import * as _ from 'underscore'
 
 /**
  * This function is called whenever an item in the as-run-log is created
  */
-export default function (_context: EventContext & AsRunEventContext): Promise<IBlueprintExternalMessageQueueObj[]> {
+export default function(_context: EventContext & AsRunEventContext): Promise<IBlueprintExternalMessageQueueObj[]> {
 	return Promise.resolve([])
 }

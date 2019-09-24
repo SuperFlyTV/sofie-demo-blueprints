@@ -1,9 +1,8 @@
 import * as _ from 'underscore'
-import { StudioConfig, ShowStyleConfig } from '../helpers/config'
-import { StudioConfigManifest, ShowStyleConfigManifest, CoreInjectedKeys } from '../config-manifests'
+import { CoreInjectedKeys, ShowStyleConfigManifest, StudioConfigManifest } from '../config-manifests'
+import { ShowStyleConfig, StudioConfig } from '../helpers/config'
 
-const blankShowStyleConfig: ShowStyleConfig = {
-}
+const blankShowStyleConfig: ShowStyleConfig = {}
 
 const blankStudioConfig: StudioConfig = {
 	SofieHostURL: '',
@@ -31,9 +30,9 @@ const blankStudioConfig: StudioConfig = {
 	CasparOutputDelay: 0
 }
 
-function getObjectKeys (obj: any): string[] {
+function getObjectKeys(obj: any): string[] {
 	const definedKeys: string[] = []
-	let processObj = (prefix: string, obj: any) => {
+	const processObj = (prefix: string, obj: any) => {
 		_.each(_.keys(obj), k => {
 			if (_.isObject(obj[k])) {
 				processObj(prefix + k + '.', obj[k])

@@ -1,10 +1,8 @@
-
 export class ManusTypeServer {
-
-	static convert (story: any, script: string, index: number): any[] {
+	public static convert(story: any, script: string, index: number): any[] {
 		console.log('DUMMY LOG :', script)
 
-		let elements: any[] = []
+		const elements: any[] = []
 
 		elements.push({
 			data: {

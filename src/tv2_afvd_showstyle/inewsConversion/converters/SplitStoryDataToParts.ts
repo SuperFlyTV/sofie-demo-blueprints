@@ -1,27 +1,26 @@
 import { BodyCodes } from './BodyCodesToJS'
 
 import {
-	ManusTypeServer,
+	ELEMENT_CODE_TYPES,
 	ManusTypeEmpty,
 	ManusTypeKam,
 	ManusTypeRemote,
-	ManusTypeVO,
-	ELEMENT_CODE_TYPES
+	ManusTypeServer,
+	ManusTypeVO
 } from '../manusConverters/ManusIndex'
 
 export class SplitStoryDataToParts {
+	public static convert(story: any): any {
+		const allParts: any[] = []
 
-	static convert (story: any): any {
-		let allParts: any[] = []
-
-		let { elementCodes: segmentCodes, script } = BodyCodes.extract(story.body)
+		const { elementCodes: segmentCodes, script } = BodyCodes.extract(story.body)
 
 		segmentCodes.forEach((code: string, index: number) => {
-			for (let type of ELEMENT_CODE_TYPES) {
+			for (const type of ELEMENT_CODE_TYPES) {
 				if (code.includes(type.code)) {
 					switch (type.type) {
 						case 1:
-							allParts.push(...ManusTypeKam.convert(story, script,index))
+							allParts.push(...ManusTypeKam.convert(story, script, index))
 							break
 						case 2:
 							allParts.push(...ManusTypeServer.convert(story, script, index))
@@ -44,7 +43,7 @@ export class SplitStoryDataToParts {
 		}
 
 		return {
-			allParts: allParts
+			allParts
 		}
 	}
 }

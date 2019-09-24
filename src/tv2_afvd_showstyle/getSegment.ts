@@ -1,18 +1,26 @@
-import * as _ from 'underscore'
 import * as objectPath from 'object-path'
 import {
-	SegmentContext, IngestSegment, IngestPart, BlueprintResultSegment, IBlueprintSegment, BlueprintResultPart, IBlueprintPart, IBlueprintPiece, IBlueprintAdLibPiece
+	BlueprintResultPart,
+	BlueprintResultSegment,
+	IBlueprintAdLibPiece,
+	IBlueprintPart,
+	IBlueprintPiece,
+	IBlueprintSegment,
+	IngestPart,
+	IngestSegment,
+	SegmentContext
 } from 'tv-automation-sofie-blueprints-integration'
+import * as _ from 'underscore'
 import { literal } from '../common/util'
-import { SegmentConf, Piece } from '../types/classes'
+import { Piece, SegmentConf } from '../types/classes'
+import { SourceLayer } from '../types/layers'
 import { parseConfig } from './helpers/config'
 import { parseSources } from './helpers/sources'
-import { SourceLayer } from '../types/layers'
 import { SplitStoryDataToParts } from './inewsConversion/converters/SplitStoryDataToParts'
 
-export function getSegment (context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
+export function getSegment(context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
 	const config: SegmentConf = {
-		context: context,
+		context,
 		config: parseConfig(context),
 		sourceConfig: parseSources(context, parseConfig(context)),
 		frameHeight: 1920,
@@ -26,15 +34,15 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 	const parts: BlueprintResultPart[] = []
 	console.log(config)
 
-	if (ingestSegment.payload ['float'] === 'true') {
+	if (ingestSegment.payload.float === 'true') {
 		return {
 			segment,
 			parts
 		}
 	}
 
-	let { allParts } = SplitStoryDataToParts.convert(ingestSegment.payload.iNewsStory)
-	let ingestParts: IngestPart[] = allParts.map((part: any) => {
+	const { allParts } = SplitStoryDataToParts.convert(ingestSegment.payload.iNewsStory)
+	const ingestParts: IngestPart[] = allParts.map((part: any) => {
 		return {
 			externalId: part.data.id,
 			name: part.data.name,
@@ -49,11 +57,11 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 			context.warning(`Missing type for part: '${part.name || part.externalId}'`)
 			parts.push(createGeneric(part))
 		} else {
-			let pieces: IBlueprintPiece[] = []
-			let adLibPieces: IBlueprintAdLibPiece[] = []
+			const pieces: IBlueprintPiece[] = []
+			const adLibPieces: IBlueprintAdLibPiece[] = []
 			if ('pieces' in part) {
-				let pieceList = part['pieces'] as Piece[]
-				pieceList.forEach((piece) => {
+				const pieceList = part.pieces as Piece[]
+				pieceList.forEach(piece => {
 					if (piece.objectType === 'camera') {
 						pieces.push({
 							_id: piece.id,
@@ -84,7 +92,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
  * Creates a generic part. Only used as a placeholder for part types that have not been implemented yet.
  * @param {Piece} piece Piece to evaluate.
  */
-function createGeneric (ingestPart: IngestPart): BlueprintResultPart {
+function createGeneric(ingestPart: IngestPart): BlueprintResultPart {
 	const part = literal<IBlueprintPart>({
 		externalId: ingestPart.externalId,
 		title: ingestPart.name || 'Unknown',
@@ -114,7 +122,11 @@ function createGeneric (ingestPart: IngestPart): BlueprintResultPart {
  * @param {IngestPart} ingestPart Ingest part.
  * @param {IBlueprintPiece[]} pieces Array of pieces.
  */
-function createPart (ingestPart: IngestPart, pieces: IBlueprintPiece[], adLibPieces: IBlueprintAdLibPiece[]): BlueprintResultPart {
+function createPart(
+	ingestPart: IngestPart,
+	pieces: IBlueprintPiece[],
+	adLibPieces: IBlueprintAdLibPiece[]
+): BlueprintResultPart {
 	const part = literal<IBlueprintPart>({
 		externalId: ingestPart.externalId,
 		title: ingestPart.name || 'Unknown',
@@ -125,8 +137,8 @@ function createPart (ingestPart: IngestPart, pieces: IBlueprintPiece[], adLibPie
 
 	return {
 		part,
-		adLibPieces: adLibPieces,
-		pieces: pieces
+		adLibPieces,
+		pieces
 	}
 }
 
@@ -134,19 +146,19 @@ function createPart (ingestPart: IngestPart, pieces: IBlueprintPiece[], adLibPie
  * Calculates the expected duration of a part from component pieces.
  * @param {IBlueprintPiece[]} pieces Pieces to calculate duration for.
  */
-function calculateExpectedDuration (pieces: IBlueprintPiece[]): number {
+function calculateExpectedDuration(pieces: IBlueprintPiece[]): number {
 	if (pieces.length) {
 		let start = 0
 		let end = 0
 
 		pieces.forEach(piece => {
 			if (!piece.isTransition) {
-				let st = piece.enable.start as number
+				const st = piece.enable.start as number
 				let en = piece.enable.start as number
 				if (piece.enable.duration) {
 					en = (piece.enable.start as number) + (piece.enable.duration as number)
 				} else if (piece.enable.end) {
-					en = (piece.enable.end as number)
+					en = piece.enable.end as number
 				}
 
 				if (piece.infiniteMode) {

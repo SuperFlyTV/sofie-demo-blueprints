@@ -1,5 +1,5 @@
-import { ShowStyleContext } from '../../__mocks__/context'
 import { IngestRundown } from 'tv-automation-sofie-blueprints-integration'
+import { ShowStyleContext } from '../../__mocks__/context'
 import { checkAllLayers } from './layers-check'
 
 // @ts-ignore
@@ -9,14 +9,12 @@ global.VERSION_TSR = 'test'
 // @ts-ignore
 global.VERSION_INTEGRATION = 'test'
 import Blueprints from '../index'
-import { DefaultStudioConfig, DefaultShowStyleConfig } from './configs'
+import { DefaultShowStyleConfig, DefaultStudioConfig } from './configs'
 
-const configs = [
-	{ id: 'default', studioConfig: DefaultStudioConfig, showStyleConfig: DefaultShowStyleConfig }
-]
+const configs = [{ id: 'default', studioConfig: DefaultStudioConfig, showStyleConfig: DefaultShowStyleConfig }]
 
 describe('Baseline', () => {
-	for (let configSpec of configs) {
+	for (const configSpec of configs) {
 		test('Config: ' + configSpec.id, () => {
 			expect(configSpec.studioConfig).toBeTruthy()
 			expect(configSpec.showStyleConfig).toBeTruthy()

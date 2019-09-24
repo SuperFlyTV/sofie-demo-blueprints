@@ -1,48 +1,52 @@
 import * as _ from 'underscore'
 
 import {
-	IBlueprintAdLibPiece,
-	PieceLifespan,
-	SourceLayerType,
-	ShowStyleContext,
-	IngestRundown,
-	BlueprintResultRundown,
-	IBlueprintRundown,
-	NotesContext,
-	IBlueprintShowStyleVariant,
-	IStudioConfigContext
-} from 'tv-automation-sofie-blueprints-integration'
-import { AtemSourceIndex } from '../types/atem'
-import {
-	TimelineContentTypeCasparCg,
-	TimelineObjCCGHTMLPage,
-	TimelineObjCCGRoute,
-	TimelineObjCCGMedia,
-	TimelineContentTypeAtem,
 	AtemTransitionStyle,
-	TimelineObjAtemME,
+	DeviceType,
+	TimelineContentTypeAtem,
+	TimelineContentTypeCasparCg,
+	TimelineContentTypeHyperdeck,
 	TimelineObjAtemAUX,
 	TimelineObjAtemDSK,
+	TimelineObjAtemME,
 	TimelineObjAtemSsrc,
 	TimelineObjAtemSsrcProps,
-	TSRTimelineObj,
-	TimelineContentTypeHyperdeck,
+	TimelineObjCCGHTMLPage,
+	TimelineObjCCGMedia,
+	TimelineObjCCGRoute,
 	TimelineObjHyperdeckTransport,
-	TransportStatus,
 	Transition,
-	DeviceType,
+	TransportStatus,
+	TSRTimelineObj,
 	TSRTimelineObjBase
 } from 'timeline-state-resolver-types'
+import {
+	BlueprintResultRundown,
+	IBlueprintAdLibPiece,
+	IBlueprintRundown,
+	IBlueprintShowStyleVariant,
+	IngestRundown,
+	IStudioConfigContext,
+	NotesContext,
+	PieceLifespan,
+	ShowStyleContext,
+	SourceLayerType
+} from 'tv-automation-sofie-blueprints-integration'
+import { AtemSourceIndex } from '../types/atem'
 
 import { literal } from '../common/util'
 
-import { CasparLLayer, SourceLayer, AtemLLayer, HyperdeckLLayer } from '../types/layers'
 import { Constants } from '../types/constants'
+import { AtemLLayer, CasparLLayer, HyperdeckLLayer, SourceLayer } from '../types/layers'
 
-import { parseConfig, BlueprintConfig } from './helpers/config'
+import { BlueprintConfig, parseConfig } from './helpers/config'
 import { parseSources, SourceInfo } from './helpers/sources'
 
-export function getShowStyleVariantId (_context: IStudioConfigContext, showStyleVariants: Array<IBlueprintShowStyleVariant>, _ingestRundown: IngestRundown): string | null {
+export function getShowStyleVariantId(
+	_context: IStudioConfigContext,
+	showStyleVariants: IBlueprintShowStyleVariant[],
+	_ingestRundown: IngestRundown
+): string | null {
 	const variant = _.first(showStyleVariants)
 	if (variant) {
 		return variant._id
@@ -50,7 +54,7 @@ export function getShowStyleVariantId (_context: IStudioConfigContext, showStyle
 	return null
 }
 
-export function getRundown (context: ShowStyleContext, ingestRundown: IngestRundown): BlueprintResultRundown {
+export function getRundown(context: ShowStyleContext, ingestRundown: IngestRundown): BlueprintResultRundown {
 	const config = parseConfig(context)
 
 	let startTime: number = 0
@@ -58,12 +62,12 @@ export function getRundown (context: ShowStyleContext, ingestRundown: IngestRund
 
 	// Set start / end times
 	if ('payload' in ingestRundown) {
-		if (ingestRundown['payload'].expectedStart) {
-			startTime = Number(ingestRundown['payload'].expectedStart)
+		if (ingestRundown.payload.expectedStart) {
+			startTime = Number(ingestRundown.payload.expectedStart)
 		}
 
-		if (ingestRundown['payload'].expectedEnd) {
-			endTime = Number(ingestRundown['payload'].expectedEnd)
+		if (ingestRundown.payload.expectedEnd) {
+			endTime = Number(ingestRundown.payload.expectedEnd)
 		}
 	}
 
@@ -84,10 +88,10 @@ export function getRundown (context: ShowStyleContext, ingestRundown: IngestRund
 	}
 }
 
-function getGlobalAdLibPieces (context: NotesContext, config: BlueprintConfig): IBlueprintAdLibPiece[] {
+function getGlobalAdLibPieces(context: NotesContext, config: BlueprintConfig): IBlueprintAdLibPiece[] {
 	const sources = parseSources(context, config)
 
-	function makeCameraAdLib (info: SourceInfo, rank: number): IBlueprintAdLibPiece {
+	function makeCameraAdLib(info: SourceInfo, rank: number): IBlueprintAdLibPiece {
 		return {
 			externalId: 'cam',
 			name: info.id + '',
@@ -117,16 +121,16 @@ function getGlobalAdLibPieces (context: NotesContext, config: BlueprintConfig): 
 		}
 	}
 
-	let adlibItems: IBlueprintAdLibPiece[] = []
+	const adlibItems: IBlueprintAdLibPiece[] = []
 	_.each(sources, v => {
 		if (v.type === SourceLayerType.CAMERA) {
-			adlibItems.push(makeCameraAdLib(v, (100 + v.id)))
+			adlibItems.push(makeCameraAdLib(v, 100 + v.id))
 		}
 	})
 	return adlibItems
 }
 
-function getBaseline (config: BlueprintConfig): TSRTimelineObjBase[] {
+function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 	return [
 		// Default timeline
 		literal<TimelineObjAtemME>({
@@ -256,7 +260,8 @@ function getBaseline (config: BlueprintConfig): TSRTimelineObjBase[] {
 				type: TimelineContentTypeAtem.SSRC,
 				ssrc: {
 					boxes: [
-						{ // left
+						{
+							// left
 							enabled: true,
 							source: AtemSourceIndex.Bars,
 							size: 580,
@@ -265,7 +270,8 @@ function getBaseline (config: BlueprintConfig): TSRTimelineObjBase[] {
 							cropped: true,
 							cropRight: 2000
 						},
-						{ // right
+						{
+							// right
 							enabled: true,
 							source: AtemSourceIndex.Bars,
 							size: 580,
@@ -273,10 +279,12 @@ function getBaseline (config: BlueprintConfig): TSRTimelineObjBase[] {
 							y: 50
 							// note: this sits behind box1, so don't crop it to ensure there is no gap between
 						},
-						{ // box 3
+						{
+							// box 3
 							enabled: false
 						},
-						{ // box 4
+						{
+							// box 4
 							enabled: false
 						}
 					]
@@ -341,17 +349,18 @@ function getBaseline (config: BlueprintConfig): TSRTimelineObjBase[] {
 			}
 		}),
 
-		..._.range(config.studio.HyperdeckCount).map(i => literal<TimelineObjHyperdeckTransport>({
-			id: '',
-			enable: { while: '1', duration: 0 },
-			priority: 0,
-			layer: HyperdeckLLayer(i),
-			content: {
-				deviceType: DeviceType.HYPERDECK,
-				type: TimelineContentTypeHyperdeck.TRANSPORT,
-				status: TransportStatus.PREVIEW
-			}
-		}))
-
+		..._.range(config.studio.HyperdeckCount).map(i =>
+			literal<TimelineObjHyperdeckTransport>({
+				id: '',
+				enable: { while: '1', duration: 0 },
+				priority: 0,
+				layer: HyperdeckLLayer(i),
+				content: {
+					deviceType: DeviceType.HYPERDECK,
+					type: TimelineContentTypeHyperdeck.TRANSPORT,
+					status: TransportStatus.PREVIEW
+				}
+			})
+		)
 	]
 }

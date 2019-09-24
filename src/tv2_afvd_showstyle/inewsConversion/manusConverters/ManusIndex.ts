@@ -1,8 +1,8 @@
 import { ManusTypeEmpty } from './ManusTypeEmpty'
 import { ManusTypeKam } from './ManusTypeKam'
+import { ManusTypeRemote } from './ManusTypeRemote'
 import { ManusTypeServer } from './ManusTypeServer'
 import { ManusTypeVO } from './ManusTypeVO'
-import { ManusTypeRemote } from './ManusTypeRemote'
 
 /* THIS IS THE LIST OF BODY CODES THAT WE NEED TO SPLIT INTO SEGMENTS:
  * GROUPED INTO:

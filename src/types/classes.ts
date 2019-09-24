@@ -16,7 +16,8 @@ export enum ObjectType {
 	SCRIPT = 'script'
 }
 
-export interface Piece { // TODO: Customize
+export interface Piece {
+	// TODO: Customize
 	id: string
 	objectType: ObjectType
 	duration: number

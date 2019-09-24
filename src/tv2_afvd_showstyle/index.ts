@@ -1,6 +1,6 @@
-import { ShowStyleBlueprintManifest, BlueprintManifestType } from 'tv-automation-sofie-blueprints-integration'
-import { StudioConfigManifest, ShowStyleConfigManifest } from './config-manifests'
-import { studioMigrations, showStyleMigrations } from './migrations'
+import { BlueprintManifestType, ShowStyleBlueprintManifest } from 'tv-automation-sofie-blueprints-integration'
+import { ShowStyleConfigManifest, StudioConfigManifest } from './config-manifests'
+import { showStyleMigrations, studioMigrations } from './migrations'
 
 import { getRundown, getShowStyleVariantId } from './getRundown'
 import { getSegment } from './getSegment'
@@ -19,16 +19,16 @@ const manifest: ShowStyleBlueprintManifest = {
 
 	minimumCoreVersion: '1.0.0',
 
-	getShowStyleVariantId: getShowStyleVariantId,
-	getRundown: getRundown,
-	getSegment: getSegment,
+	getShowStyleVariantId,
+	getRundown,
+	getSegment,
 
-	onAsRunEvent: onAsRunEvent,
+	onAsRunEvent,
 
 	studioConfigManifest: StudioConfigManifest,
 	showStyleConfigManifest: ShowStyleConfigManifest,
-	studioMigrations: studioMigrations,
-	showStyleMigrations: showStyleMigrations
+	studioMigrations,
+	showStyleMigrations
 }
 
 export default manifest

@@ -1,46 +1,46 @@
-import * as _ from 'underscore'
 import * as crypto from 'crypto'
+import * as _ from 'underscore'
 
 import {
-	ConfigItemValue,
-	ICommonContext,
-	NotesContext as INotesContext,
-	ShowStyleContext as IShowStyleContext,
-	SegmentContext as ISegmentContext,
 	BlueprintMappings,
 	BlueprintRuntimeArguments,
-	IBlueprintRundownDB
+	ConfigItemValue,
+	IBlueprintRundownDB,
+	ICommonContext,
+	NotesContext as INotesContext,
+	SegmentContext as ISegmentContext,
+	ShowStyleContext as IShowStyleContext
 } from 'tv-automation-sofie-blueprints-integration'
 import mappingsDefaults from '../tv2_afvd_showstyle/migrations/mappings-defaults'
 
-export function getHash (str: string): string {
+export function getHash(str: string): string {
 	const hash = crypto.createHash('sha1')
-	return hash.update(str).digest('base64').replace(/[\+\/\=]/g, '_') // remove +/= from strings, because they cause troubles
+	return hash
+		.update(str)
+		.digest('base64')
+		.replace(/[\+\/\=]/g, '_') // remove +/= from strings, because they cause troubles
 }
 
 export class CommonContext implements ICommonContext {
-
 	private _idPrefix: string = ''
 	private hashI = 0
-	private hashed: {[hash: string]: string} = {}
+	private hashed: { [hash: string]: string } = {}
 
-	constructor (idPrefix: string) {
+	constructor(idPrefix: string) {
 		this._idPrefix = idPrefix
 	}
-	getHashId (str?: any) {
-
-		if (!str) str = 'hash' + (this.hashI++)
+	public getHashId(str?: any) {
+		if (!str) {
+			str = 'hash' + this.hashI++
+		}
 
 		let id
-		id = getHash(
-			this._idPrefix + '_' +
-			str.toString()
-		)
+		id = getHash(this._idPrefix + '_' + str.toString())
 		this.hashed[id] = str
 		return id
 		// return Random.id()
 	}
-	unhashId (hash: string): string {
+	public unhashId(hash: string): string {
 		return this.hashed[hash] || hash
 	}
 }
@@ -49,123 +49,100 @@ export enum NoteType {
 	ERROR = 2
 }
 export interface PartNote {
-	type: NoteType,
+	type: NoteType
 	origin: {
-		name: string,
-		roId?: string,
-		segmentId?: string,
-		partId?: string,
+		name: string
+		roId?: string
+		segmentId?: string
+		partId?: string
 		pieceId?: string
-	},
+	}
 	message: string
-
 }
 export class NotesContext extends CommonContext implements INotesContext {
-
 	private _contextName: string
 	private _rundownId?: string
 	private _segmentId?: string
 	private _partId?: string
 
-	private savedNotes: Array<PartNote> = []
+	private savedNotes: PartNote[] = []
 
-	constructor (
-		contextName: string,
-		rundownId?: string,
-		segmentId?: string,
-		partId?: string
-	) {
-		super(
-			rundownId +
-			(
-				partId ? '_' + partId :
-				(
-					segmentId ? '_' + segmentId : ''
-				)
-			)
-		)
+	constructor(contextName: string, rundownId?: string, segmentId?: string, partId?: string) {
+		super(rundownId + (partId ? '_' + partId : segmentId ? '_' + segmentId : ''))
 		this._contextName = contextName
-		this._rundownId	= rundownId
+		this._rundownId = rundownId
 		this._segmentId = segmentId
 		this._partId = partId
-
 	}
 	/** Throw Error and display message to the user in the GUI */
-	error (message: string) {
+	public error(message: string) {
 		// logger.error('Error from blueprint: ' + message)
-		this._pushNote(
-			NoteType.ERROR,
-			message
-		)
+		this._pushNote(NoteType.ERROR, message)
 		throw new Error(message)
 	}
 	/** Save note, which will be displayed to the user in the GUI */
-	warning (message: string) {
-		this._pushNote(
-			NoteType.WARNING,
-			message
-		)
+	public warning(message: string) {
+		this._pushNote(NoteType.WARNING, message)
 	}
-	getNotes () {
+	public getNotes() {
 		return this.savedNotes
 	}
-	private _pushNote (type: NoteType, message: string) {
+	private _pushNote(type: NoteType, message: string) {
 		// console.log(message)
 		this.savedNotes.push({
-			type: type,
+			type,
 			origin: {
 				name: this._getLoggerName(),
 				roId: this._rundownId,
 				segmentId: this._segmentId,
 				partId: this._partId
 			},
-			message: message
+			message
 		})
 	}
-	private _getLoggerName () {
+	private _getLoggerName() {
 		return this._contextName
-
 	}
 }
 
 export class ShowStyleContext extends NotesContext implements IShowStyleContext {
-	studioConfig: {[key: string]: ConfigItemValue} = {}
-	showStyleConfig: {[key: string]: ConfigItemValue} = {}
+	public studioConfig: { [key: string]: ConfigItemValue } = {}
+	public showStyleConfig: { [key: string]: ConfigItemValue } = {}
 
-	constructor (contextName: string, rundownId?: string) {
+	constructor(contextName: string, rundownId?: string) {
 		super(contextName, rundownId)
 	}
-	getStudioConfig (): {[key: string]: ConfigItemValue} {
+	public getStudioConfig(): { [key: string]: ConfigItemValue } {
 		return this.studioConfig
 	}
-	getStudioConfigRef (configKey: string): string {
+	public getStudioConfigRef(configKey: string): string {
 		return 'studio.mock.' + configKey // just a placeholder
 	}
-	getShowStyleConfig (): {[key: string]: ConfigItemValue} {
+	public getShowStyleConfig(): { [key: string]: ConfigItemValue } {
 		return this.showStyleConfig
 	}
-	getShowStyleConfigRef (configKey: string): string {
+	public getShowStyleConfigRef(configKey: string): string {
 		return 'showStyle.mock.' + configKey // just a placeholder
 	}
-	getStudioMappings (): BlueprintMappings {
+	public getStudioMappings(): BlueprintMappings {
 		return _.clone(mappingsDefaults)
 	}
 }
 
 export class SegmentContext extends ShowStyleContext implements ISegmentContext {
-	rundownId: string
-	rundown: IBlueprintRundownDB
+	public rundownId: string
+	public rundown: IBlueprintRundownDB
 
-	runtimeArguments: {[key: string]: BlueprintRuntimeArguments} = {}
+	public runtimeArguments: { [key: string]: BlueprintRuntimeArguments } = {}
 
-	constructor (rundown: IBlueprintRundownDB, contextName?: string) {
+	constructor(rundown: IBlueprintRundownDB, contextName?: string) {
 		super(contextName || rundown.name, rundown._id)
 
 		this.rundownId = rundown._id
 		this.rundown = rundown
 	}
 
-	getRuntimeArguments (externalId: string): BlueprintRuntimeArguments | undefined {
+	public getRuntimeArguments(externalId: string): BlueprintRuntimeArguments | undefined {
 		return this.runtimeArguments[externalId]
 	}
 }

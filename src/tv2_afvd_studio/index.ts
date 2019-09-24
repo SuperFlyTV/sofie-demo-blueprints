@@ -1,4 +1,4 @@
-import { StudioBlueprintManifest, BlueprintManifestType } from 'tv-automation-sofie-blueprints-integration'
+import { BlueprintManifestType, StudioBlueprintManifest } from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
 import { getBaseline } from './getBaseline'
 import { getShowStyleId } from './getShowStyleId'
@@ -19,8 +19,8 @@ const manifest: StudioBlueprintManifest = {
 	studioConfigManifest: [], // TODO - some config should be moved here
 	studioMigrations: [], // TODO - device migrations should be moved to be done here
 
-	getBaseline: getBaseline,
-	getShowStyleId: getShowStyleId
+	getBaseline,
+	getShowStyleId
 }
 
 export default manifest

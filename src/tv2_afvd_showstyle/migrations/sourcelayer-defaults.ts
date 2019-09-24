@@ -1,4 +1,4 @@
-import { SourceLayerType, ISourceLayer } from 'tv-automation-sofie-blueprints-integration'
+import { ISourceLayer, SourceLayerType } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
 import { SourceLayer } from '../../types/layers'
 

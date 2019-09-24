@@ -1,14 +1,14 @@
 interface IBodyCodes {
-	elementCodes: string[],
+	elementCodes: string[]
 	script: string
 }
 
 export class BodyCodes {
-	static extract (bodyString: string): IBodyCodes {
-		let elementCodes: string[] = []
+	public static extract(bodyString: string): IBodyCodes {
+		const elementCodes: string[] = []
 
 		// Split tags into objects:
-		let bodyArray: string[] = bodyString.split('\n') || []
+		const bodyArray: string[] = bodyString.split('\n') || []
 
 		let script = ''
 		bodyArray.forEach((line: string) => {
@@ -27,9 +27,9 @@ export class BodyCodes {
 			}
 		})
 
-		return ({
-			elementCodes: elementCodes,
-			script: script
-		})
+		return {
+			elementCodes,
+			script
+		}
 	}
 }

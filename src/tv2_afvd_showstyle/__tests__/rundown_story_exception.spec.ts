@@ -1,7 +1,12 @@
 import * as _ from 'underscore'
 
-import { ConfigMap, DefaultStudioConfig, DefaultShowStyleConfig } from './configs'
-import { IngestRundown, IBlueprintRundownDB, IBlueprintPieceGeneric, IngestPart } from 'tv-automation-sofie-blueprints-integration'
+import {
+	IBlueprintPieceGeneric,
+	IBlueprintRundownDB,
+	IngestPart,
+	IngestRundown
+} from 'tv-automation-sofie-blueprints-integration'
+import { ConfigMap, DefaultShowStyleConfig, DefaultStudioConfig } from './configs'
 import { checkAllLayers } from './layers-check'
 
 // @ts-ignore
@@ -10,18 +15,18 @@ global.VERSION = 'test'
 global.VERSION_TSR = 'test'
 // @ts-ignore
 global.VERSION_INTEGRATION = 'test'
-import Blueprints from '../index'
-import { ShowStyleContext, SegmentContext } from '../../__mocks__/context'
+import { SegmentContext, ShowStyleContext } from '../../__mocks__/context'
 import { literal } from '../../common/util'
+import Blueprints from '../index'
 import { SplitStoryDataToParts } from '../inewsConversion/converters/SplitStoryDataToParts'
 
 // More ROs can be listed here to make them part of the basic blueprint doesnt crash test
-const rundowns: { ro: string, studioConfig: ConfigMap, showStyleConfig: ConfigMap }[] = [
+const rundowns: Array<{ ro: string; studioConfig: ConfigMap; showStyleConfig: ConfigMap }> = [
 	{ ro: '../../../rundowns/example.json', studioConfig: DefaultStudioConfig, showStyleConfig: DefaultShowStyleConfig }
 ]
 
 describe('Rundown exceptions', () => {
-	for (let roSpec of rundowns) {
+	for (const roSpec of rundowns) {
 		const roData = require(roSpec.ro) as IngestRundown
 		test('Valid file: ' + roSpec.ro, () => {
 			expect(roData).toBeTruthy()
@@ -37,7 +42,7 @@ describe('Rundown exceptions', () => {
 			showStyleVariantId: 'mock'
 		})
 
-		for (let segment of roData.segments) {
+		for (const segment of roData.segments) {
 			test('Rundown segment: ' + roSpec.ro + ' - ' + rundown.externalId, async () => {
 				const mockContext = new SegmentContext(rundown)
 				mockContext.studioConfig = roSpec.studioConfig
@@ -45,8 +50,8 @@ describe('Rundown exceptions', () => {
 
 				const res = Blueprints.getSegment(mockContext, segment)
 				expect(res.segment.name).toEqual(segment.name)
-				let { allParts } = SplitStoryDataToParts.convert(segment.payload.iNewsStory)
-				let ingestParts: IngestPart[] = allParts.map((part: any) => {
+				const { allParts } = SplitStoryDataToParts.convert(segment.payload.iNewsStory)
+				const ingestParts: IngestPart[] = allParts.map((part: any) => {
 					return {
 						externalId: part.data.id,
 						name: part.data.name,
@@ -56,7 +61,7 @@ describe('Rundown exceptions', () => {
 				})
 				let floated = 0
 				ingestParts.forEach(part => {
-					if (part.payload['float'] === 'true') {
+					if (part.payload.float === 'true') {
 						floated++
 					}
 				})

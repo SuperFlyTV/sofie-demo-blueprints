@@ -1,34 +1,38 @@
 import * as _ from 'underscore'
 
-import {
-	IBlueprintPieceGeneric,
-	TimelineObjectCoreExt,
-	ShowStyleContext,
-	BlueprintMappings
-} from 'tv-automation-sofie-blueprints-integration'
 import { DeviceType, TSRTimelineObjBase } from 'timeline-state-resolver-types'
+import {
+	BlueprintMappings,
+	IBlueprintPieceGeneric,
+	ShowStyleContext,
+	TimelineObjectCoreExt
+} from 'tv-automation-sofie-blueprints-integration'
 
 import { SourceLayer } from '../../types/layers'
-import OutputlayerDefaults from '../migrations/outputlayer-defaults'
-import { parseConfig, BlueprintConfig } from '../helpers/config'
+import { BlueprintConfig, parseConfig } from '../helpers/config'
 import mappingsDefaults, { getHyperdeckMappings } from '../migrations/mappings-defaults'
+import OutputlayerDefaults from '../migrations/outputlayer-defaults'
 
-function getMappingsForSources (config: BlueprintConfig): BlueprintMappings {
+function getMappingsForSources(config: BlueprintConfig): BlueprintMappings {
 	if (!config) {
 		// No config defined, so skip
 		return {}
 	}
 
-	let res: BlueprintMappings = {}
+	const res: BlueprintMappings = {}
 
 	return res
 }
 
-export function checkAllLayers (context: ShowStyleContext, pieces: IBlueprintPieceGeneric[], otherObjs?: TSRTimelineObjBase[]) {
+export function checkAllLayers(
+	context: ShowStyleContext,
+	pieces: IBlueprintPieceGeneric[],
+	otherObjs?: TSRTimelineObjBase[]
+) {
 	const missingSourceLayers: string[] = []
 	const missingOutputLayers: string[] = []
-	const missingLayers: (string | number)[] = []
-	const wrongDeviceLayers: (string | number)[] = []
+	const missingLayers: Array<string | number> = []
+	const wrongDeviceLayers: Array<string | number> = []
 
 	const config = parseConfig(context)
 
@@ -52,7 +56,7 @@ export function checkAllLayers (context: ShowStyleContext, pieces: IBlueprintPie
 		}
 	}
 
-	for (let sli of pieces) {
+	for (const sli of pieces) {
 		if (allSourceLayers.indexOf(sli.sourceLayerId) === -1) {
 			missingSourceLayers.push(sli.sourceLayerId)
 		}
@@ -61,7 +65,7 @@ export function checkAllLayers (context: ShowStyleContext, pieces: IBlueprintPie
 		}
 
 		if (sli.content && sli.content.timelineObjects) {
-			for (let obj of sli.content.timelineObjects as TimelineObjectCoreExt[]) {
+			for (const obj of sli.content.timelineObjects as TimelineObjectCoreExt[]) {
 				validateObject(obj)
 			}
 		}

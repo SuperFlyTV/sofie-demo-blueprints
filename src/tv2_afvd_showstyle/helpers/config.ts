@@ -1,16 +1,20 @@
-import * as _ from 'underscore'
 import * as objectPath from 'object-path'
+import * as _ from 'underscore'
 
-import { ShowStyleContext, ConfigManifestEntryType, ConfigManifestEntry, ConfigItemValue } from 'tv-automation-sofie-blueprints-integration'
-import { StudioConfigManifest, ShowStyleConfigManifest, CoreInjectedKeys } from '../config-manifests'
+import {
+	ConfigItemValue,
+	ConfigManifestEntry,
+	ConfigManifestEntryType,
+	ShowStyleContext
+} from 'tv-automation-sofie-blueprints-integration'
+import { CoreInjectedKeys, ShowStyleConfigManifest, StudioConfigManifest } from '../config-manifests'
 
 export interface BlueprintConfig {
 	studio: StudioConfig
 	showStyle: ShowStyleConfig
 }
 
-export interface ShowStyleConfig {
-}
+export interface ShowStyleConfig {}
 
 export interface StudioConfig {
 	// Injected by core
@@ -47,8 +51,13 @@ export interface StudioConfig {
 	CasparOutputDelay: number
 }
 
-export function parseConfig (context: ShowStyleContext): BlueprintConfig {
-	const applyToConfig = (config: any, manifest: ConfigManifestEntry[], sourceName: string, overrides: { [key: string]: ConfigItemValue }) => {
+export function parseConfig(context: ShowStyleContext): BlueprintConfig {
+	const applyToConfig = (
+		config: any,
+		manifest: ConfigManifestEntry[],
+		sourceName: string,
+		overrides: { [key: string]: ConfigItemValue }
+	) => {
 		_.each(manifest, (val: ConfigManifestEntry) => {
 			let newVal = val.defaultVal
 
