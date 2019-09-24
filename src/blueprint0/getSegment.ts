@@ -26,7 +26,7 @@ export function getSegment (context: SegmentContext, ingestSegment: IngestSegmen
 	const parts: BlueprintResultPart[] = []
 	console.log(config)
 
-	if (ingestSegment.payload['float']) {
+	if (ingestSegment.payload ['float'] === 'true') {
 		return {
 			segment,
 			parts

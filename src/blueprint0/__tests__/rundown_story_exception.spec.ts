@@ -1,7 +1,7 @@
 import * as _ from 'underscore'
 
 import { ConfigMap, DefaultStudioConfig, DefaultShowStyleConfig } from './configs'
-import { IngestRundown, IBlueprintRundownDB, IBlueprintPieceGeneric } from 'tv-automation-sofie-blueprints-integration'
+import { IngestRundown, IBlueprintRundownDB, IBlueprintPieceGeneric, IngestPart } from 'tv-automation-sofie-blueprints-integration'
 import { checkAllLayers } from './layers-check'
 
 // @ts-ignore
@@ -13,6 +13,7 @@ global.VERSION_INTEGRATION = 'test'
 import Blueprints from '../index'
 import { ShowStyleContext, SegmentContext } from '../../__mocks__/context'
 import { literal } from '../../common/util'
+import { SplitStoryDataToParts } from '../inewsConversion/converters/SplitStoryDataToParts'
 
 // More ROs can be listed here to make them part of the basic blueprint doesnt crash test
 const rundowns: { ro: string, studioConfig: ConfigMap, showStyleConfig: ConfigMap }[] = [
@@ -44,13 +45,22 @@ describe('Rundown exceptions', () => {
 
 				const res = Blueprints.getSegment(mockContext, segment)
 				expect(res.segment.name).toEqual(segment.name)
+				let { allParts } = SplitStoryDataToParts.convert(segment.payload.iNewsStory)
+				let ingestParts: IngestPart[] = allParts.map((part: any) => {
+					return {
+						externalId: part.data.id,
+						name: part.data.name,
+						rank: 0,
+						payload: part.data
+					}
+				})
 				let floated = 0
-				segment.parts.forEach(part => {
-					if (part.payload['float']) {
+				ingestParts.forEach(part => {
+					if (part.payload['float'] === 'true') {
 						floated++
 					}
 				})
-				expect(res.parts).toHaveLength(segment.parts.length - floated)
+				expect(res.parts.length).toEqual(ingestParts.length - floated)
 
 				const allPieces: IBlueprintPieceGeneric[] = []
 				_.each(res.parts, part => {
