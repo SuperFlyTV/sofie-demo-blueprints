@@ -1,6 +1,6 @@
 import * as _ from 'underscore'
 
-import { SourceLayer } from '../../tv2_afvd_studio/layers'
+import { SourceLayer } from '../layers'
 import SourcelayerDefaults from '../migrations/sourcelayer-defaults'
 
 describe('Migration Defaults', () => {

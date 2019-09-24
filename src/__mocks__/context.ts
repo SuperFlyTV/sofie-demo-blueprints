@@ -11,7 +11,6 @@ import {
 	SegmentContext as ISegmentContext,
 	ShowStyleContext as IShowStyleContext
 } from 'tv-automation-sofie-blueprints-integration'
-import mappingsDefaults from '../tv2_afvd_showstyle/migrations/mappings-defaults'
 
 export function getHash(str: string): string {
 	const hash = crypto.createHash('sha1')
@@ -112,8 +111,11 @@ export class ShowStyleContext extends NotesContext implements IShowStyleContext 
 	public studioConfig: { [key: string]: ConfigItemValue } = {}
 	public showStyleConfig: { [key: string]: ConfigItemValue } = {}
 
-	constructor(contextName: string, rundownId?: string) {
+	private mappingsDefaults: BlueprintMappings
+
+	constructor(contextName: string, mappingsDefaults: BlueprintMappings, rundownId?: string) {
 		super(contextName, rundownId)
+		this.mappingsDefaults = mappingsDefaults
 	}
 	public getStudioConfig(): { [key: string]: ConfigItemValue } {
 		return this.studioConfig
@@ -128,7 +130,7 @@ export class ShowStyleContext extends NotesContext implements IShowStyleContext 
 		return 'showStyle.mock.' + configKey // just a placeholder
 	}
 	public getStudioMappings(): BlueprintMappings {
-		return _.clone(mappingsDefaults)
+		return _.clone(this.mappingsDefaults)
 	}
 }
 
@@ -139,8 +141,8 @@ export class SegmentContext extends ShowStyleContext implements ISegmentContext 
 
 	public runtimeArguments: { [key: string]: BlueprintRuntimeArguments } = {}
 
-	constructor(rundown: IBlueprintRundownDB, contextName?: string) {
-		super(contextName || rundown.name, rundown._id)
+	constructor(rundown: IBlueprintRundownDB, mappings: BlueprintMappings, contextName?: string) {
+		super(contextName || rundown.name, mappings, rundown._id)
 
 		this.rundownId = rundown._id
 		this.rundown = rundown
@@ -150,63 +152,3 @@ export class SegmentContext extends ShowStyleContext implements ISegmentContext 
 		return this.runtimeArguments[externalId]
 	}
 }
-
-// export class EventContext extends CommonContext implements IEventContext {
-// 	// TDB: Certain actions that can be triggered in Core by the Blueprint
-// }
-
-// export class AsRunEventContext extends RunningOrderContext implements IAsRunEventContext {
-
-// 	public asRunEvent: AsRunLogEvent
-
-// 	public mockAsRunEvents: AsRunLogEvent[]
-// 	public mockSegments: Segment[]
-// 	public mockRoStory?: MOS.IMOSRunningOrder
-// 	public mockSegmentLineStories: {[id: string]: MOS.IMOSROFullStory} = {}
-
-// 	constructor (runningOrder: RunningOrder, asRunEvent: AsRunLogEvent) {
-// 		super(runningOrder)
-// 		this.asRunEvent = asRunEvent
-// 	}
-// 	getAllAsRunEvents (): Array<AsRunLogEvent> {
-// 		return this.mockAsRunEvents
-// 	}
-// 	getSegments (): Array<Segment> {
-// 		return this.mockSegments
-// 	}
-// 	/** Get the segmentLine related to this AsRunEvent */
-// 	getSegment (id?: string): Segment | undefined {
-// 		return _.find(this.mockSegments, segment => segment._id === (id || this.asRunEvent.segmentId))
-// 	}
-// 	getSegmentLines (): Array<SegmentLine> {
-// 		return super.getSegmentLines()
-// 	}
-// 	/** Get the segmentLine related to this AsRunEvent */
-// 	getSegmentLine (id?: string): SegmentLine | undefined {
-// 		return _.find(super.getSegmentLines(), sl => sl._id === (id || this.asRunEvent.segmentLineId))
-// 	}
-// 	getSegmentLineItem (segmentLineItemId?: string): IBlueprintPiece | undefined {
-// 		return _.find(super.getSegmentLinesItems(), sli => sli._id === (segmentLineItemId || this.asRunEvent.segmentLineItemId))
-// 	}
-// 	getSegmentLineItems (segmentLineId: string): Array<IBlueprintPiece> {
-// 		return _.filter(super.getSegmentLinesItems(), sli => sli.segmentLineId === segmentLineId)
-// 	}
-// 	/** Get the mos story related to a segmentLine */
-// 	getStoryForSegmentLine (segmentLine: SegmentLine): MOS.IMOSROFullStory {
-// 		return this.mockSegmentLineStories[segmentLine._id]
-// 	}
-// 	/** Get the mos story related to the runningOrder */
-// 	getStoryForRunningOrder (): MOS.IMOSRunningOrder {
-// 		return this.mockRoStory || {
-// 			ID: new MOS.MosString128('ID'),
-// 			Slug: new MOS.MosString128('Slug'),
-// 			Stories: []
-// 		}
-// 	}
-// 	formatDateAsTimecode (time: number): string {
-// 		return 'dateTimecode_' + time
-// 	}
-// 	formatDurationAsTimecode (time: number): string {
-// 		return 'durationTimecode_' + time
-// 	}
-// }

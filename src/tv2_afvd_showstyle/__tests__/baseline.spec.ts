@@ -8,6 +8,7 @@ global.VERSION = 'test'
 global.VERSION_TSR = 'test'
 // @ts-ignore
 global.VERSION_INTEGRATION = 'test'
+import mappingsDefaults from '../../tv2_afvd_studio/migrations/mappings-defaults'
 import Blueprints from '../index'
 import { defaultShowStyleConfig, defaultStudioConfig } from './configs'
 
@@ -27,7 +28,7 @@ describe('Baseline', () => {
 				segments: []
 			}
 
-			const mockContext = new ShowStyleContext(rundown.name)
+			const mockContext = new ShowStyleContext(rundown.name, mappingsDefaults)
 			mockContext.studioConfig = configSpec.studioConfig
 			mockContext.showStyleConfig = configSpec.showStyleConfig
 
