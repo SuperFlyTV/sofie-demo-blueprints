@@ -1,6 +1,6 @@
 import { SegmentContext, SourceLayerType } from 'tv-automation-sofie-blueprints-integration'
-import { BlueprintConfig } from '../blueprint0/helpers/config'
-import { SourceInfo } from '../blueprint0/helpers/sources'
+import { BlueprintConfig } from '../tv2_afvd_showstyle/helpers/config'
+import { SourceInfo } from '../tv2_afvd_showstyle/helpers/sources'
 
 export enum ObjectType {
 	GRAPHIC = 'graphic',

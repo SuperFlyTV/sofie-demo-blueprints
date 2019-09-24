@@ -11,7 +11,7 @@ import {
 	BlueprintRuntimeArguments,
 	IBlueprintRundownDB
 } from 'tv-automation-sofie-blueprints-integration'
-import mappingsDefaults from '../blueprint0/migrations/mappings-defaults'
+import mappingsDefaults from '../tv2_afvd_showstyle/migrations/mappings-defaults'
 
 export function getHash (str: string): string {
 	const hash = crypto.createHash('sha1')

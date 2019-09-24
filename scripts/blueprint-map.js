@@ -1,13 +1,13 @@
 const _ = require('underscore')
 
 const BlueprintEntrypoints = {
-	blueprint0: './src/blueprint0/index.ts',
-	studio0: './src/studio0/index.ts',
-	system: './src/system/index.ts'
+	tv2_afvd_showstyle: './src/tv2_afvd_showstyle/index.ts',
+	tv2_afvd_studio: './src/tv2_afvd_studio/index.ts',
+	tv2_system: './src/tv2_system/index.ts'
 }
 
 const BlueprintBundles = {
-	blueprint0: ['blueprint0', 'studio0', 'system']
+	tv2_afvd_blueprints: ['tv2_afvd_showstyle', 'tv2_afvd_studio', 'tv2_system']
 }
 
 function GetEntrypointsForBundle(id) {

@@ -4,6 +4,7 @@ export class ManusTypeKam {
 	static convert (story: any, script: string, index: number): any[] {
 
 		let elements: any[] = []
+		// Loop through .cues and look for #kg codes and add as pieces
 
 		elements.push({
 			data: {
