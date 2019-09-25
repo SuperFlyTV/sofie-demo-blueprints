@@ -1,5 +1,5 @@
 import { literal } from '../../../../common/util'
-import { ParseBody, PartDefinition } from '../BodyCodesToJS'
+import { ParseBody, PartDefinition } from '../ParseBody'
 
 describe('Body parser', () => {
 	test('test1', () => {
