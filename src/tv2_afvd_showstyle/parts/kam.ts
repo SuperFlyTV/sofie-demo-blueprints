@@ -1,0 +1,43 @@
+import {
+	BlueprintResultPart,
+	IBlueprintAdLibPiece,
+	IBlueprintPart,
+	IBlueprintPiece
+} from 'tv-automation-sofie-blueprints-integration'
+import { literal } from '../../common/util'
+import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
+import { SourceLayer } from '../layers'
+
+export function CreateKam(partDefinition: PartDefinition): BlueprintResultPart {
+	const part = literal<IBlueprintPart>({
+		externalId: partDefinition.externalId,
+		title: PartType[partDefinition.type] + ' - ' + partDefinition.rawType,
+		metaData: {},
+		typeVariant: '',
+		expectedDuration: 0
+	})
+
+	const adLibPieces: IBlueprintAdLibPiece[] = []
+	const pieces: IBlueprintPiece[] = []
+
+	partDefinition.cues.forEach(cue => {
+		console.log(cue)
+	})
+
+	pieces.push(
+		literal<IBlueprintPiece>({
+			_id: '',
+			externalId: partDefinition.externalId,
+			name: part.title,
+			enable: { start: 0, duration: 100 },
+			outputLayerId: 'pgm0',
+			sourceLayerId: SourceLayer.PgmCam
+		})
+	)
+
+	return {
+		part,
+		adLibPieces,
+		pieces
+	}
+}

@@ -8,10 +8,10 @@ export function parseMapStr(
 	context: NotesContext | undefined,
 	str: string,
 	canBeStrings: boolean
-): Array<{ id: number; val: any }> {
+): Array<{ id: string; val: any }> {
 	str = str.trim()
 
-	const res: Array<{ id: number; val: number | string }> = []
+	const res: Array<{ id: string; val: number | string }> = []
 
 	const inputs = str.split(',')
 	inputs.forEach(i => {
@@ -22,12 +22,8 @@ export function parseMapStr(
 		try {
 			const p = i.split(':')
 			if (p.length === 2) {
-				const ind = parseInt(p[0], 10)
+				const ind = p[0]
 				const val = parseInt(p[1], 10)
-
-				if (isNaN(ind)) {
-					throw new Error()
-				}
 
 				if (!canBeStrings && !isNaN(val)) {
 					res.push({ id: ind, val: parseInt(p[1], 10) })
@@ -51,7 +47,7 @@ export function parseMapStr(
 type SourceInfoType = SourceLayerType.CAMERA | SourceLayerType.REMOTE
 export interface SourceInfo {
 	type: SourceInfoType
-	id: number
+	id: string
 	port: number
 	ptzDevice?: string
 }
@@ -59,13 +55,13 @@ export interface SourceInfo {
 export function parseMediaPlayers(
 	context: NotesContext | undefined,
 	studioConfig: StudioConfig
-): Array<{ id: number; val: number }> {
+): Array<{ id: string; val: number }> {
 	return parseMapStr(context, studioConfig.ABMediaPlayers, false)
 }
 
 export function parseSources(context: NotesContext | undefined, studioConfig: StudioConfig): SourceInfo[] {
-	const rmInputMap: Array<{ id: number; val: number }> = parseMapStr(context, studioConfig.SourcesRM, false)
-	const kamInputMap: Array<{ id: number; val: number }> = parseMapStr(context, studioConfig.SourcesCam, false)
+	const rmInputMap: Array<{ id: string; val: number }> = parseMapStr(context, studioConfig.SourcesRM, true)
+	const kamInputMap: Array<{ id: string; val: number }> = parseMapStr(context, studioConfig.SourcesCam, true)
 
 	const res: SourceInfo[] = []
 
