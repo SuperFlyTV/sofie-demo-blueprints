@@ -46,7 +46,7 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 	parsedParts.forEach(part => {
 		switch (part.type) {
 			case PartType.Kam:
-				blueprintParts.push(createGeneric(part))
+				blueprintParts.push(CreateKam(part))
 				break
 			case PartType.Server:
 			case PartType.VO:
