@@ -16,20 +16,20 @@
     "lint": "tslint --project tsconfig.json --config tslint.json",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "unit": "jest",
-    "test": "yarn lint && yarn unit",
+    "test": "yarn lint --fix && yarn unit",
     "validate:dependencies": "yarn audit && yarn license-validate",
     "license-validate": "node-license-validator -p -d --allow-licenses MIT BSD BSD-3-Clause ISC Apache Unlicense"
   },
   "husky": {
-   "hooks": {
-    "pre-commit": "lint-staged"
-   }
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
-   "*.{js,ts,css,json,md}": [
-    "prettier --write",
-    "git add"
-   ]
+    "*.{js,ts,css,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "devDependencies": {
     "@types/jasmine": "^3.3.15",

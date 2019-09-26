@@ -1,0 +1,683 @@
+[
+    [
+        "kg bund HELENE RØNBJERG KRISTENSEN",
+        "herk@tv2.dk",
+        ";0.02"
+    ],
+    [
+        "kg bund STIG NIKOLAJ BLOMBERG",
+        "Forsker, Akutberedskabet, Region Hovedstaden",
+        ";0.11"
+    ],
+    [
+        "kg bund STIG NIKOLAJ BLOMBERG",
+        "Forsker, Akutberedskabet, Region Hovedstaden",
+        ";0.27-0.31"
+    ],
+    [
+        "kg bund JEPPE HOLM GUDMANDSEN",
+        "Pressekonsulent, Rådet for Sikker Trafik",
+        ";0.40"
+    ],
+    [
+        "kg bund KARINA VESTERGÅRD MADSEN",
+        "Fungerende Miljø- og Teknikborgmester, Københavns Kommune, Enhedslisten",
+        ";0.54"
+    ],
+    [
+        "kg bund JEPPE HOLM GUDMANDSEN",
+        "Pressekonsulent, Rådet for Sikker Trafik",
+        ";1.08-1.13"
+    ],
+    [
+        "kg bund KARINA VESTERGÅRD MADSEN",
+        "Fungerende Miljø- og Teknikborgmester, Københavns Kommune, Enhedslisten",
+        ";1.15"
+    ],
+    [
+        "kg bund HELENE RØNBJERG KRISTENSEN",
+        "herk@tv2.dk",
+        ";0.02"
+    ],
+    [
+        "kg bund STIG NIKOLAJ BLOMBERG",
+        "Forsker, Akutberedskabet, Region Hovedstaden",
+        ";0.11"
+    ],
+    [
+        "kg bund STIG NIKOLAJ BLOMBERG",
+        "Forsker, Akutberedskabet, Region Hovedstaden",
+        ";0.27-0.31"
+    ],
+    [
+        "kg bund JEPPE HOLM GUDMANDSEN",
+        "Pressekonsulent, Rådet for Sikker Trafik",
+        ";0.40"
+    ],
+    [
+        "kg bund KARINA VESTERGÅRD MADSEN",
+        "Fungerende Miljø- og Teknikborgmester, Københavns Kommune, Enhedslisten",
+        ";0.54"
+    ],
+    [
+        "kg bund JEPPE HOLM GUDMANDSEN",
+        "Pressekonsulent, Rådet for Sikker Trafik",
+        ";1.08-1.13"
+    ],
+    [
+        "kg bund KARINA VESTERGÅRD MADSEN",
+        "Fungerende Miljø- og Teknikborgmester, Københavns Kommune, Enhedslisten",
+        ";1.15"
+    ],
+    [
+        "kg bund HELENE RØNBJERG KRISTENSEN",
+        "herk@tv2.dk",
+        ";0.02"
+    ],
+    [
+        "kg bund STIG NIKOLAJ BLOMBERG",
+        "Forsker, Akutberedskabet, Region Hovedstaden",
+        ";0.11"
+    ],
+    [
+        "kg bund STIG NIKOLAJ BLOMBERG",
+        "Forsker, Akutberedskabet, Region Hovedstaden",
+        ";0.27-0.31"
+    ],
+    [
+        "kg bund JEPPE HOLM GUDMANDSEN",
+        "Pressekonsulent, Rådet for Sikker Trafik",
+        ";0.40"
+    ],
+    [
+        "kg bund KARINA VESTERGÅRD MADSEN",
+        "Fungerende Miljø- og Teknikborgmester, Københavns Kommune, Enhedslisten",
+        ";0.54"
+    ],
+    [
+        "kg bund JEPPE HOLM GUDMANDSEN",
+        "Pressekonsulent, Rådet for Sikker Trafik",
+        ";1.08-1.13"
+    ],
+    [
+        "kg bund KARINA VESTERGÅRD MADSEN",
+        "Fungerende Miljø- og Teknikborgmester, Københavns Kommune, Enhedslisten",
+        ";1.15"
+    ],
+    [
+        "STUDIOSETUP=afvikling C",
+        ";0.00"
+    ],
+    [
+        "KOMMANDO=GRAPHICSPROFILE",
+        "TV2 SPORT 2016",
+        ";0.00"
+    ],
+    [
+        "VIZ=grafik-design",
+        "triopage=DESIGN_SC",
+        ";0.00.04"
+    ],
+    [
+        "STUDIE=ST4p",
+        ";0.01"
+    ],
+    [
+        "VIZ=dve-triopage",
+        "GRAFIK=BG_LOADER_VUELTA_A",
+        ";0.00.01"
+    ],
+    [
+        "VIZ=full-triopage",
+        "GRAFIK=BG_LOADER_VUELTA_A",
+        ";0.00.01"
+    ],
+    [
+        "kg ovl-all-out",
+        "CLEAR OVERLAY",
+        ";0.00"
+    ],
+    [
+        "STUDIE=MIC ON OFF",
+        "ST2vrt1=OFF",
+        "ST2vrt2=OFF",
+        "ST2gst1=OFF",
+        "ST2gst2=OFF",
+        "kom1=OFF",
+        "kom2=OFF",
+        "ST4vrt=ON",
+        "ST4gst=",
+        ";0.00"
+    ],
+    [
+        "WATCHOUT=WO INPUT",
+        "inp1=LIVE 1",
+        "inp2=EVS 1",
+        "inp3=FULL",
+        "inp4=FULLK",
+        ";0.00"
+    ],
+    [
+        "KG=DESIGN_FODBOLD",
+        ";0.00.01"
+    ],
+    [
+        "KG=DESIGN_SC",
+        ";0.00.01"
+    ],
+    [
+        "kg altud",
+        ";0.00"
+    ],
+    [
+        "kg temaud",
+        ";0.00"
+    ],
+    [
+        "kg topt Test Testersen",
+        "Tester",
+        ";0.00"
+    ],
+    [
+        "kg bund TEST TESTERSEN",
+        "tester",
+        ";0.00"
+    ],
+    [
+        "kg ident_blank",
+        "LINJE 1",
+        "LINJE 2",
+        ";0.00"
+    ],
+    [
+        "kg direkte KØBENHAVN",
+        ";0.00"
+    ],
+    [
+        "kg arkiv skriv her",
+        ";0.00"
+    ],
+    [
+        "kg billederfra_txt skriv her",
+        ";0.00"
+    ],
+    [
+        "kg ident_nyhederne ",
+        "Ident Nyhederne",
+        ";0.00"
+    ],
+    [
+        "kg ident_news",
+        "Ident News",
+        ";0.00"
+    ],
+    [
+        "kg ident_ tv2sport",
+        "Ident TV2sport",
+        ";0.00"
+    ],
+    [
+        "kg BillederFra_txt",
+        "TV 2/Bornholm",
+        ";0.01"
+    ],
+    [
+        "kg BillederFra_txt",
+        "TV 2/FYN",
+        ";0.01"
+    ],
+    [
+        "kg BillederFra_txt",
+        "TV 2 Lorry",
+        ";0.01"
+    ],
+    [
+        "kg BillederFra_txt",
+        "TV MIDTVEST",
+        ";0.01"
+    ],
+    [
+        "kg BillederFra_logo",
+        "6eren ",
+        ";0.01"
+    ],
+    [
+        "kg BillederFra_logo",
+        "Canal9 ",
+        ";0.01"
+    ],
+    [
+        "kg BillederFra_logo",
+        "DK4 ",
+        ";0.01"
+    ],
+    [
+        "kg BillederFra_logo",
+        "DR ",
+        ";0.01"
+    ],
+    [
+        "kg BillederFra_logo",
+        "Eurosport1 ",
+        ";0.01"
+    ],
+    [
+        "kg BillederFra_logo",
+        "Eurosport2 ",
+        ";0.01"
+    ],
+    [
+        "kg BillederFra_logo",
+        "Kanal5 ",
+        ";0.01"
+    ],
+    [
+        "kg BillederFra_logo",
+        "TV3 ",
+        ";0.01"
+    ],
+    [
+        "kg BillederFra_logo",
+        "TV3plus ",
+        ";0.01"
+    ],
+    [
+        "kg BillederFra_logo",
+        "TV3sport1 ",
+        ";0.01"
+    ],
+    [
+        "kg BillederFra_logo",
+        "TV3sport2",
+        ";0.01"
+    ],
+    [
+        "kg BillederFra_logo",
+        "ViaPlay ",
+        ";0.01"
+    ],
+    [
+        "kg BillederFra_logo",
+        "ViaSatGolf ",
+        ";0.01"
+    ],
+    [
+        "kg tlftopt Dette er tlf top",
+        "Tester",
+        ";0.00"
+    ],
+    [
+        "kg tlftoptlive Dette er tlf top",
+        "Tester",
+        ";0.00"
+    ],
+    [
+        "GRAFIK=full"
+    ],
+    [
+        "kg tlfdirekte KØBENHAVN",
+        ";0.00"
+    ],
+    [
+        "]] S3.0 M 0 [[",
+        "cg4 ]] 2 YNYAB 0 [[ pilotdata",
+        "TELEFON/KORT//LIVE_KABUL",
+        "VCPID=2552305",
+        "ContinueCount=3",
+        "TELEFON/KORT//LIVE_KABUL"
+    ],
+    [
+        "DIGI=VO",
+        "Dette er en VO tekst",
+        "Dette er linje 2",
+        ";0.00"
+    ],
+    [
+        "DIGI=TROMPET",
+        "Dette er en VO tekst",
+        "Dette er linje 2",
+        ";0.00"
+    ],
+    [
+        "kg vaerter Vært 1",
+        "test 1",
+        "vært 2",
+        "test 2",
+        ";0.00"
+    ],
+    [
+        "GRAFIK=full",
+        "INP1=",
+        "INP2="
+    ],
+    [
+        "]] S3.0 M 0 [[",
+        "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+        "News/Citat/ELLENTR/LIVE/stoppoints_2",
+        "VCPID=2552761",
+        "ContinueCount=6",
+        "News/Citat/ELLENTR/LIVE/stoppoints_2"
+    ],
+    [
+        "GRAFIK=full_live",
+        "INP1=",
+        "INP2="
+    ],
+    [
+        "]] S3.0 M 0 [[",
+        "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+        "DeskStillGrafik/VENSTRE_30-08-2019",
+        "VCPID=2549825",
+        "ContinueCount=-1",
+        "DeskStillGrafik/VENSTRE_30-08-2019"
+    ],
+    [
+        "]] S3.0 M 0 [[",
+        "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+        "TEMA_VUELTA_2016/Mosart=L|00:00|S",
+        "VCPID=2241144",
+        "ContinueCount=1",
+        "TEMA_VUELTA_2016/Mosart=L|00:00|S"
+    ],
+    [
+        "]] S3.0 M 0 [[",
+        "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+        "TEST/Fakta//Mosart=L|00:00|00:10",
+        "VCPID=2241130",
+        "ContinueCount=-1",
+        "TEST/Fakta//Mosart=L|00:00|00:10"
+    ],
+    [
+        "]] S3.0 M 0 [[",
+        "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+        "TEST/Sendeplan i dag/Mosart=L|00:00|00:10",
+        "VCPID=2241129",
+        "ContinueCount=-1",
+        "TEST/Sendeplan i dag/Mosart=L|00:00|00:10"
+    ],
+    [
+        "]] S3.0 M 0 [[",
+        "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+        "TEST/WebHen/03-11-2015/Mosart=L|00:00|S",
+        "VCPID=2241141",
+        "ContinueCount=1",
+        "TEST/WebHen/03-11-2015/Mosart=L|00:00|S"
+    ],
+    [
+        "]] S3.0 M 0 [[",
+        "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+        "TEST/SPO/RESULT/Mosart=L|00:00|S",
+        "VCPID=2241139",
+        "ContinueCount=1",
+        "TEST/SPO/RESULT/Mosart=L|00:00|S"
+    ],
+    [
+        "]] S3.0 M 0 [[",
+        "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+        "TESTLOWER/TABLE/Mosart=L|00:00|S",
+        "VCPID=2241138",
+        "ContinueCount=1",
+        "TESTLOWER/TABLE/Mosart=L|00:00|S"
+    ],
+    [
+        "]] S3.0 M 0 [[",
+        "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+        "TEST/Stilling/Mosart=L|00:00|B",
+        "VCPID=2241128",
+        "ContinueCount=-1",
+        "TEST/Stilling/Mosart=L|00:00|B"
+    ],
+    [
+        "]] S3.0 M 0 [[",
+        "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+        "TEST/PLAYOFF/VM 2015",
+        "VCPID=2241137",
+        "ContinueCount=3",
+        "TEST/PLAYOFF/VM 2015"
+    ],
+    [
+        "GRAFIK=full"
+    ],
+    [
+        "GRAFIK=full"
+    ],
+    [
+        "]] S3.0 M 0 [[",
+        "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+        "TEST/TELEFON/KORT//LIVE",
+        "VCPID=2241143",
+        "ContinueCount=-1",
+        "TEST/TELEFON/KORT//LIVE"
+    ],
+    [
+        "GRAFIK=full"
+    ],
+    [
+        "]] S3.0 M 0 [[",
+        "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+        "test/fullPROFILE/18-08-2016",
+        "VCPID=2241131",
+        "ContinueCount=2",
+        "test/fullPROFILE/18-08-2016"
+    ],
+    [
+        "]] S3.0 M 0 [[",
+        "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+        "TEST/Citat//LIVE/stoppoints_1",
+        "VCPID=2241127",
+        "ContinueCount=6",
+        "TEST/Citat//LIVE/stoppoints_1"
+    ],
+    [
+        "GRAFIK=full"
+    ],
+    [
+        "GRAFIK=full"
+    ],
+    [
+        "]] S3.0 M 0 [[",
+        "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+        "TEST_TENNIS_FULLSCREEN_TEST",
+        "VCPID=2241136",
+        "ContinueCount=2",
+        "TEST_TENNIS_FULLSCREEN_TEST"
+    ],
+    [
+        "]] S3.0 M 0 [[",
+        "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+        "TEST/FULL/COMPARE/",
+        "VCPID=2241135",
+        "ContinueCount=2",
+        "TEST/FULL/COMPARE/"
+    ],
+    [
+        "GRAFIK=full"
+    ],
+    [
+        "]] S3.0 M 0 [[",
+        "cg4 ]] 17 YNYAB 0 [[ pilotdata",
+        "TEST/FULL/RESULTAT",
+        "VCPID=2241133",
+        "ContinueCount=2",
+        "TEST/FULL/RESULTAT"
+    ],
+    [
+        "GRAFIK=full"
+    ],
+    [
+        "DVE=sommerfugl",
+        "INP1=KAM 1",
+        "INP2=LIVE ",
+        "BYNAVN=Odense"
+    ],
+    [
+        "EKSTERN=LIVE 1"
+    ],
+    [
+        "#kg direkte Odense",
+        "; 0.00"
+    ],
+    [
+        "DVE=morbarn",
+        "INP1=KAM 1",
+        "INP2=LIVE ",
+        "BYNAVN=København"
+    ],
+    [
+        "EKSTERN=LIVE 1"
+    ],
+    [
+        "#kg direkte København",
+        "; 0.00"
+    ],
+    [
+        "DVE=barnmor",
+        "INP1=KAM 1",
+        "INP2=LIVE ",
+        "BYNAVN=København"
+    ],
+    [
+        "EKSTERN=LIVE 1"
+    ],
+    [
+        "#kg direkte København",
+        "; 0.00"
+    ],
+    [
+        "DVE=1til2",
+        "INP1=KAM 1",
+        "INP2=LIVE ",
+        "BYNAVN=København"
+    ],
+    [
+        "EKSTERN=LIVE 1"
+    ],
+    [
+        "#kg direkte København",
+        "; 0.00"
+    ],
+    [
+        "DVE=2til1",
+        "INP1=KAM 1",
+        "INP2=LIVE ",
+        "BYNAVN=København"
+    ],
+    [
+        "EKSTERN=LIVE 1"
+    ],
+    [
+        "#kg direkte København",
+        "; 0.00"
+    ],
+    [
+        "DVE=2gæst",
+        "INP1=KAM 1",
+        "INP2=LIVE ",
+        "BYNAVN=København"
+    ],
+    [
+        "EKSTERN=LIVE 1"
+    ],
+    [
+        "#kg direkte København",
+        "; 0.00"
+    ],
+    [
+        "TELEFON=TLF 2",
+        "(Gem VIZ navn her)"
+    ],
+    [
+        "kg tlfdirekte Odense",
+        ";0.00-S"
+    ],
+    [
+        "kg tlftoptlive",
+        "Navn Navnesen",
+        "Numerolog",
+        ";0.00-S"
+    ],
+    [
+        "EKSTERN=LIVE 1 spor 2"
+    ],
+    [
+        "EKSTERN=LIVE 1 stereo"
+    ],
+    [
+        "ADLIBPIX=server"
+    ],
+    [
+        "DVE=1til2",
+        "INP1=KAM 1",
+        "INP2=EVS 1",
+        "BYNAVN="
+    ],
+    [
+        "DVE=1til2",
+        "INP1=KAM 1",
+        "INP2=FULL",
+        "BYNAVN="
+    ],
+    [
+        "VIZ=full",
+        ";0.00"
+    ],
+    [
+        "DVE=1til2",
+        "INP1=KAM 1",
+        "INP2=FULL",
+        "BYNAVN="
+    ],
+    [
+        "VIZ=full",
+        "GRAFIK=sceneloadernavn",
+        "INP1=",
+        ";0.00"
+    ],
+    [
+        "DVE=1til2",
+        "INP1=KAM 1",
+        "INP2=FULL",
+        "BYNAVN="
+    ],
+    [
+        "VIZ=full",
+        "INP1=EVS 1",
+        ";0.00"
+    ],
+    [
+        "DVE=1til2",
+        "INP1=KAM 1",
+        "INP2=FULL",
+        "BYNAVN="
+    ],
+    [
+        "VIZ=full",
+        ";0.00"
+    ],
+    [
+        "ADLIBPIX=MORBARN",
+        "INP1=LIVE 1",
+        "BYNAVN="
+    ],
+    [
+        "ADLIBPIX=MORBARNEVS1",
+        "INP1=LIVE 1",
+        "BYNAVN="
+    ],
+    [
+        "ADLIBPIX=1til2EVS1",
+        "INP1=LIVE 1",
+        "BYNAVN="
+    ],
+    [
+        "ADLIBPIX=LIVE",
+        "INP1=LIVE",
+        "INP2=LIVE ",
+        "BYNAVN="
+    ],
+    [
+        "ADLIBPIX=2til1EVS1",
+        "INP2=LIVE ",
+        "BYNAVN="
+    ]
+]
