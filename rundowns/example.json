@@ -3000,6 +3000,131 @@
                 "float": false
             },
             "parts": []
+        },
+        {
+            "externalId": "2e1d3ecb:00d210ee:5d6cc0f3",
+            "name": "testmanus bede",
+            "rank": 59,
+            "payload": {
+                "rundownId": "2e1d3ecb:00d210ee:5d6cc0f3",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "TESTMANUS BEDE",
+                        "var2": "INDSL",
+                        "tapeTime": "0",
+                        "audioTime": "2",
+                        "totalTime": "2",
+                        "modifyDate": "1567408371",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "4",
+                        "rate": "140"
+                    },
+                    "cues": [],
+                    "id": "2e1d3ecb:00d210ee:5d6cc0f3",
+                    "body": "\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><pi>CAMERA 1</pi></p>\r\n<p>Her står em masse tekst</p>\r\n"
+                },
+                "externalId": "2e1d3ecb:00d210ee:5d6cc0f3",
+                "rank": 59,
+                "name": "testmanus bede",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "0b1fe69f:00d8a398:5d70cb44",
+            "name": "sn intro med still",
+            "rank": 6,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.ON-AIR",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": "03",
+                        "title": "SN INTRO med STILL",
+                        "tjekSport": "1",
+                        "var2": " ",
+                        "tapeTime": "5",
+                        "audioTime": "0",
+                        "totalTime": "5",
+                        "modifyDate": "1567673156",
+                        "presenter": " ",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 22:12",
+                        "noarchive": "nej",
+                        "layout": "s"
+                    },
+                    "meta": {
+                        "rate": "160"
+                    },
+                    "cues": [
+                        [
+                            "JINGLE2=SN_intro"
+                        ],
+                        [
+                            "LYD=SN_intro",
+                            ";0.00"
+                        ],
+                        [
+                            "VIZ=3-SPO-WIPE",
+                            ";0.00.01"
+                        ],
+                        [
+                            "KOMMANDO=DIRECTTAKE",
+                            "11",
+                            ";0.00.15"
+                        ],
+                        [
+                            "LAYOUT=DIRECTTAKE",
+                            "252",
+                            ";0.01.12"
+                        ],
+                        [
+                            "VIZ=3-SPO-WIPE-2",
+                            ";0.02.10"
+                        ],
+                        [
+                            "LAYOUT=DIRECTTAKE",
+                            "231",
+                            ";0.00.02"
+                        ],
+                        [
+                            "VIZ=wall",
+                            "INP1=",
+                            "INP2=",
+                            "AR_INP2=",
+                            ";0.01"
+                        ],
+                        [
+                            "]] S3.0 M 0 [[",
+                            "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+                            "SP_ST2_WALL_DIGI/FUGLSANG/15-07-2019_20:00:26",
+                            "VCPID=2540216",
+                            "ContinueCount=-1",
+                            "SP_ST2_WALL_DIGI/FUGLSANG/15-07-2019_20:00:26"
+                        ]
+                    ],
+                    "id": "0b1fe69f:00d8a398:5d70cb44",
+                    "body": "\r\n<p></p>\r\n<p><pi>*****TEKNIK*****</pi></p>\r\n<p><cc>1---JINGLE sport grafisk intro---></cc><a idref=\"0\"><cc><----</cc></a></p>\r\n<p><cc>2---AUDIO til grafisk intro , fortsætter under teasere---></cc><a idref=\"1\"><cc><----</cc></a></p>\r\n<p><cc>3---SS3 Sport WIPE-></cc><a idref=\"2\"></a></p>\r\n<p><cc>4---Sport intro soundbed--></cc><a idref=\"3\"><cc><---</cc></a></p>\r\n<p><cc>5---LED hvid på GENESIS--></cc><a idref=\"4\"><cc><--</cc></a></p>\r\n<p><cc>6---SS3 Sport WIPE-></cc><a idref=\"5\"></a></p>\r\n<p><cc>7---LYS:  SPORT 1 --></cc><a idref=\"6\"><cc><--</cc></a></p>\r\n<p><cc>8---Kalder Viz Wall og kalder inputs-----</cc><a idref=\"7\"><cc>------</cc></a></p>\r\n<p><cc>9---VCP STILL DIGI her-></cc><a idref=\"8\"><cc><---</cc></a></p>\r\n<p></p>\r\n"
+                },
+                "externalId": "0b1fe69f:00d8a398:5d70cb44",
+                "rank": 6,
+                "name": "sn intro med still",
+                "float": false
+            },
+            "parts": []
         }
     ]
 }

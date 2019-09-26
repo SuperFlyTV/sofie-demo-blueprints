@@ -5,7 +5,7 @@ export function literal<T>(o: T) {
 	return o
 }
 export function assertUnreachable(_never: never): never {
-	throw new Error("Didn't expect to get here")
+	throw new Error('Switch validation failed, look for assertUnreachable(...)')
 }
 
 export function createVirtualPiece(

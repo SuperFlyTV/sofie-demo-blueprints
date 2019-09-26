@@ -48,3 +48,127 @@
 \r\n<p><pi>SLUTORD: ... ekstra kick</pi></p>
 \r\n<p></p>
 \r\n
+
+<!-- test4 -->
+\r\n<p></p>
+\r\n<p><a idref='0'></a></p>
+\r\n<p><pi>CAMERA 1</pi></p>
+\r\n<p>Her står em masse tekst</p>
+\r\n
+
+<!-- test5 -->
+\r\n<p></p>
+\r\n<p></p>
+\r\n<p><pi>KAM 1 </pi></p>
+\r\n<p><cc>--tlftopt-></cc><a idref="0"><cc><--</cc></a></p>
+\r\n<p></p>
+\r\n<p></p>
+\r\n<p><a idref="1"><pi>************ 100%GRAFIK ***********</pi></a></p>
+\r\n<p><a idref="4"></a></p>
+\r\n<p><a idref="3"></a></p>
+\r\n<p></p>
+\r\n
+
+<!-- test6 -->
+\r\n<p><pi></pi></p>
+\r\n<p><pi></pi></p>
+\r\n<p><pi>KAM 1 </pi></p>
+\r\n<p><cc>--værter-></cc><a idref=\"0\"><cc><--</cc><pi></pi></a></p>
+\r\n
+
+<!-- test7 -->
+\r\n<p></p>
+\r\n<p><a idref=\"0\"></a></p>
+\r\n<p></p>
+\r\n<p><pi>***ATTACK*** </pi></p>
+\r\n<p><cc>----ss3 Sport LOOP-></cc><a idref=\"1\"><cc><-</cc></a></p>
+\r\n<p><cc>---AR DIGI OUT-></cc><a idref=\"2\"><cc><---</cc></a></p>
+\r\n<p><cc>---bundter herunder---></cc></p>
+\r\n<p><a idref=\"3\"></a></p>
+\r\n<p></p>\r\n<p></p>
+\r\n<p><pi>SLUTORD:... wauw</pi></p>
+\r\n<p></p>\r\n<p><pi>KAM 4 </pi></p>
+\r\n<p><pi>NEDLÆG</pi></p>
+\r\n<p>I morgen holder rytterne hviledag, men det betyder ikke at vores cykelredaktion gør. Vi sender nemlig et program om doping i cykelsporten her på TV 2 kl. 15.20</p>
+\r\n<p></p>
+\r\n
+
+<!-- test8 -->
+\r\n<p><cc>HUSK AT BOOKE DENNE LIVE!!</cc></p>
+\r\n<p><pi>KAM 2</pi></p>
+\r\n<p><pi>KADA</pi></p>
+\r\n<p><a idref=\"0\"></a></p>
+\r\n<p><a idref=\"1\"><a idref=\"2\"></a></a></p>
+\r\n<p><cc>Husk at skrive bynavn med VERSALER efter \"BYNAVN=\" og efter \"#kg direkte\"</cc></p>
+\r\n<p></p>
+\r\n<p><a idref=\"3\"> <cc>Kilde til optagelse på select-feed.</cc></a></p>
+\r\n<p></p>
+\r\n<p>Divya Das med fra London</p>
+\r\n<p></p>
+\r\n<p><pi>***LIVE*** </pi></p>
+\r\n<p><cc>Husk at lave en BUNDT. Opret den med tidsangivelse x.xx.</cc></p>
+\r\n<p><a idref=\"4\"></a></p>
+\r\n<p></p>
+\r\n<p><pi>- Angela Merkel har accepteret at give Johnson 30 dage til at løse problemet med den såkaldte backstop. Hvordan er den udmelding blevet modtaget i Storbritannien?</pi></p>
+\r\n<p></p>
+\r\n<p><pi>- Emmanuel Macron har indtil nu afvist at genforhandle brexit-aftalen. Så hvad skal Boris Johnson have ud af dagens besøg i Paris?</pi></p>
+\r\n<p></p>
+\r\n<p><pi>- Hvad skal ændre sig, hvis briterne ikke skal forlade EU uden en aftale den 31. oktober? </pi></p>
+\r\n<p></p>
+\r\n
+
+<!-- TODO: Test 9 -->
+<!-- test9 -->
+\r\n<p><cc>HUSK AT BOOKE DENNE LIVE!!</cc></p>
+\r\n<p><pi>KAM 2</pi></p>
+\r\n<p><a idref=\"0\"></a></p>
+\r\n<p><a idref=\"1\"><a idref=\"2\"></a></a></p>
+\r\n<p><cc>Husk at skrive bynavn med VERSALER efter \"BYNAVN=\" og efter \"#kg direkte\"</cc></p>
+\r\n<p></p>
+\r\n<p><a idref=\"3\"> <cc>Kilde til optagelse på select-feed.</cc></a></p>
+\r\n<p></p>
+\r\n<p>Vi har også dig, Kristian Mouritzen, Sikkerhedspolitisk korrespondent på Berlingske med på en forbindelse. </p>
+\r\n<p></p>
+\r\n<p>Du har skrevet en analyse af forholdet mellem USA og Danmark efter Trump i et interview kalder Mette Frederiksens kommentare for \"nasty\". </p>
+\r\n<p></p>
+\r\n<p>Nogle politiske analystikere er ude og hylde Mette Frederiksen for sine handlinger, mens andre kalder det usmart. Er det her udelukkende en retorisk armlægningskonkurrence, eller skal vi forvente, at det udskudte besøg også vil få konsekvenser for forholdet mellem Danmark og USA på længere sigt? </p>
+\r\n<p></p>
+\r\n<p><pi>***LIVE*** </pi></p>
+\r\n<p><cc>Husk at lave en BUNDT. Opret den med tidsangivelse x.xx.</cc></p>
+\r\n<p><a idref=\"4\"></a></p>
+\r\n<p></p>
+\r\n<p><pi>Skal vi forvente at Mette Frederiksen vil forsøge at glatte den nuværende konflikt ud, så Trump på et tidspunkt vil genoverveje besøget til Danmark? </pi></p>
+\r\n<p></p>
+\r\n<p><pi>Vi har set flere andre politiske ledere agere mindre konfronterende og i stedet være imødekommende, når den amerikanske præsident har været på besøg. Hvad får Mette Frederiksen ud af at bruge en retorik, hvor hun eksempelvis kalder købet af Grønland en \"absurd diskussion\"? </pi></p>
+\r\n<p></p>
+\r\n<p></p>
+\r\n
+
+<!-- TODO: Test 10 -->
+<!-- test10 -->
+\r\n<p><cc>HUSK AT BOOKE DENNE LIVE!!</cc></p>
+\r\n<p><pi>KAM 2</pi></p>
+\r\n<p><a idref=\"0\"></a></p>
+\r\n<p><a idref=\"1\"><a idref=\"2\"></a></a></p>
+\r\n<p><cc>Husk at skrive bynavn med VERSALER efter \"BYNAVN=\" og efter \"#kg direkte\"</cc></p>
+\r\n<p></p>
+\r\n<p><a idref=\"3\"> <cc>Kilde til optagelse på select-feed.</cc></a></p>
+\r\n<p>Som lovet -med os igen har vi nu </p>\r\n<p>Udenrigsminister Jeppe Kofod. </p>
+\r\n<p></p>
+\r\n<p>Trump valgte at aflyse besøget i danmark - og igår aftes førte det til, at du havde en samtale med den amerikanske udenrigsminster Mike Pompeo. Hvorfor talte i sammen?</p>
+\r\n<p></p>
+\r\n<p><pi>Hvordan forholdt den amerikanske udenrigsminster sig til den diplomatiske diskussion der er opstået?</pi></p>
+\r\n<p></p>
+\r\n<p><pi>Hvordan ser i på det nuværende forhold mellem USA og Danmark?</pi></p>
+\r\n<p></p>
+\r\n<p><pi>***LIVE*** </pi></p>
+\r\n<p><cc>Husk at lave en BUNDT. Opret den med tidsangivelse x.xx.</cc></p>
+\r\n<p><a idref=\"4\"></a></p>
+\r\n<p><pi>Hvordan kan et godt fortsat strategisk samarbejde fortsætte, når Trump langer ud efter Danmark og drager forsvarsbudgettet ind i diskussionen?</pi></p>
+\r\n<p></p>
+\r\n<p><pi>Er amerikanerne med Trump i spidsen fortsat interessedeed i at komme på besøg - Trump skrev selv at hans besøg blot var udsat - ikke aflyst?</pi></p>
+\r\n<p></p>
+\r\n<p><cc>Aftalen er at vi spørger til hans reaktion på aflysningen og hvad han mener dette betyder både ift DKs forhold til USA og til Grønland. </cc></p>
+\r\n<p><cc>Og har også varslet at vi vil spørge til det faktum at Trump har \"udsat\" besøget og ikke aflyst det. Så hvor langt er de nået ift at finde en ny dato?</cc></p>
+\r\n<p><cc></cc></p>
+\r\n

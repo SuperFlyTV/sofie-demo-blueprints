@@ -11,7 +11,7 @@ import { assertUnreachable } from '../../common/util'
 import { CORE_INJECTED_KEYS, studioConfigManifest } from '../config-manifests'
 import { parseMediaPlayers, parseSources, SourceInfo } from './sources'
 
-export type MediaPlayerConfig = Array<{ id: number; val: number }>
+export type MediaPlayerConfig = Array<{ id: string; val: string }>
 
 export interface BlueprintConfig {
 	studio: StudioConfig

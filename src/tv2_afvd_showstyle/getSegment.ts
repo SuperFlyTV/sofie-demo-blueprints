@@ -1,38 +1,32 @@
-// import * as objectPath from 'object-path'
 import {
 	BlueprintResultPart,
 	BlueprintResultSegment,
-	// IBlueprintAdLibPiece,
 	IBlueprintPart,
-	IBlueprintPiece,
 	IBlueprintSegment,
-	// IngestPart,
 	IngestSegment,
 	SegmentContext
 } from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
 import { assertUnreachable, literal } from '../common/util'
-import { INewsIngestSegment, ParseBody, PartDefinition, PartType } from './inewsConversion/converters/ParseBody'
-// import { SegmentConf } from '../types/classes'
-// import { parseConfig } from './helpers/config'
-// import { SplitStoryDataToParts } from './inewsConversion/converters/SplitStoryDataToParts'
-import { SourceLayer } from './layers'
-// import { GetTimeFromPart } from './helpers/time'
+import { ParseBody, PartDefinition, PartType } from './inewsConversion/converters/ParseBody'
+import { CreatePartAttack } from './parts/attack'
+import { CreatePartGrafik } from './parts/grafik'
+import { CreatePartKada } from './parts/kada'
+import { CreatePartKam } from './parts/kam'
+import { CreatePartLive } from './parts/live'
+import { CreatePartNedlæg } from './parts/nedlæg'
+import { CreatePartSB } from './parts/sb'
+import { CreatePartServer } from './parts/server'
+import { CreatePartSlutord } from './parts/slutord'
+import { CreatePartStep } from './parts/step'
+import { CreatePartTeknik } from './parts/teknik'
+import { CreatePartVO } from './parts/vo'
 
 export function getSegment(context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
-	// const config: SegmentConf = {
-	// 	context,
-	// 	config: parseConfig(context),
-	// 	frameHeight: 1920,
-	// 	frameWidth: 1080,
-	// 	framesPerSecond: 50
-	// }
 	const segment = literal<IBlueprintSegment>({
 		name: ingestSegment.name,
 		metaData: {}
 	})
-
-	// console.log(config)
 
 	if (ingestSegment.payload.float === 'true') {
 		return {
@@ -42,21 +36,55 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 	}
 
 	const blueprintParts: BlueprintResultPart[] = []
-	const parsedParts = ParseBody(ingestSegment as INewsIngestSegment)
+	const parsedParts = ParseBody(
+		ingestSegment.externalId,
+		ingestSegment.payload.iNewsStory.body,
+		ingestSegment.payload.iNewsStory.cues
+	)
 	parsedParts.forEach(part => {
 		switch (part.type) {
 			case PartType.Kam:
-				blueprintParts.push(CreateKam(part))
+				blueprintParts.push(CreatePartKam(part))
 				break
 			case PartType.Server:
-			case PartType.VO:
+				blueprintParts.push(CreatePartServer(part))
+				break
 			case PartType.Live:
+				blueprintParts.push(CreatePartLive(part))
+				break
+			case PartType.Teknik:
+				blueprintParts.push(CreatePartTeknik(part))
+				break
+			case PartType.Slutord:
+				blueprintParts.push(CreatePartSlutord(part))
+				break
+			case PartType.Grafik:
+				blueprintParts.push(CreatePartGrafik(part))
+				break
+			case PartType.VO:
+				blueprintParts.push(CreatePartVO(part))
+				break
+			case PartType.Attack:
+				blueprintParts.push(CreatePartAttack(part))
+				break
+			case PartType.NEDLÆG:
+				blueprintParts.push(CreatePartNedlæg(part))
+				break
+			case PartType.SB:
+				blueprintParts.push(CreatePartSB(part))
+				break
+			case PartType.STEP:
+				blueprintParts.push(CreatePartStep(part))
+				break
+			case PartType.KADA:
+				blueprintParts.push(CreatePartKada(part))
+				break
 			case PartType.Unknown:
-				context.warning(`Unknown part type for part ${part.rawType}`)
+				context.warning(`Unknown part type for part ${part.rawType} with id ${part.externalId}`)
 				blueprintParts.push(createInvalidPart(part))
 				break
 			default:
-				assertUnreachable(part.type)
+				assertUnreachable(part)
 				break
 		}
 	})
@@ -91,35 +119,6 @@ function createInvalidPart(ingestPart: PartDefinition): BlueprintResultPart {
 		part,
 		adLibPieces: [],
 		pieces: []
-	}
-}
-
-/**
- * Creates a generic part. Only used as a placeholder for part types that have not been implemented yet.
- * @param {Piece} piece Piece to evaluate.
- */
-function createGeneric(ingestPart: PartDefinition): BlueprintResultPart {
-	const part = literal<IBlueprintPart>({
-		externalId: ingestPart.externalId,
-		title: PartType[ingestPart.type] + ' - ' + ingestPart.rawType,
-		metaData: {},
-		typeVariant: '',
-		expectedDuration: 0
-	})
-
-	const piece = literal<IBlueprintPiece>({
-		_id: '',
-		externalId: ingestPart.externalId,
-		name: part.title,
-		enable: { start: 0, duration: 100 },
-		outputLayerId: 'pgm0',
-		sourceLayerId: SourceLayer.PgmCam
-	})
-
-	return {
-		part,
-		adLibPieces: [],
-		pieces: [piece]
 	}
 }
 

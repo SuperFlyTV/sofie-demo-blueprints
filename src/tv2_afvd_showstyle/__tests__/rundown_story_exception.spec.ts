@@ -1,11 +1,6 @@
 import * as _ from 'underscore'
 
-import {
-	IBlueprintPieceGeneric,
-	IBlueprintRundownDB,
-	IngestPart,
-	IngestRundown
-} from 'tv-automation-sofie-blueprints-integration'
+import { IBlueprintPieceGeneric, IBlueprintRundownDB, IngestRundown } from 'tv-automation-sofie-blueprints-integration'
 import { ConfigMap, defaultShowStyleConfig, defaultStudioConfig } from './configs'
 import { checkAllLayers } from './layers-check'
 
@@ -19,11 +14,13 @@ import { SegmentContext, ShowStyleContext } from '../../__mocks__/context'
 import { literal } from '../../common/util'
 import mappingsDefaults from '../../tv2_afvd_studio/migrations/mappings-defaults'
 import Blueprints from '../index'
-import { SplitStoryDataToParts } from '../inewsConversion/converters/SplitStoryDataToParts'
 
 // More ROs can be listed here to make them part of the basic blueprint doesnt crash test
 const rundowns: Array<{ ro: string; studioConfig: ConfigMap; showStyleConfig: ConfigMap }> = [
-	{ ro: '../../../rundowns/example.json', studioConfig: defaultStudioConfig, showStyleConfig: defaultShowStyleConfig }
+	{ ro: '../../../rundowns/example.json', studioConfig: defaultStudioConfig, showStyleConfig: defaultShowStyleConfig },
+	{ ro: '../../../rundowns/news.json', studioConfig: defaultStudioConfig, showStyleConfig: defaultShowStyleConfig },
+	{ ro: '../../../rundowns/sports.json', studioConfig: defaultStudioConfig, showStyleConfig: defaultShowStyleConfig },
+	{ ro: '../../../rundowns/on-air.json', studioConfig: defaultStudioConfig, showStyleConfig: defaultShowStyleConfig }
 ]
 
 describe('Rundown exceptions', () => {
@@ -51,22 +48,6 @@ describe('Rundown exceptions', () => {
 
 				const res = Blueprints.getSegment(mockContext, segment)
 				expect(res.segment.name).toEqual(segment.name)
-				const { allParts } = SplitStoryDataToParts.convert(segment.payload.iNewsStory)
-				const ingestParts: IngestPart[] = allParts.map((part: any) => {
-					return {
-						externalId: part.data.id,
-						name: part.data.name,
-						rank: 0,
-						payload: part.data
-					}
-				})
-				let floated = 0
-				ingestParts.forEach(part => {
-					if (part.payload.float === 'true') {
-						floated++
-					}
-				})
-				expect(res.parts.length).toEqual(ingestParts.length - floated)
 
 				const allPieces: IBlueprintPieceGeneric[] = []
 				_.each(res.parts, part => {

@@ -9,7 +9,7 @@ import { literal } from '../../common/util'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
 
-export function CreatePartKam(partDefinition: PartDefinition): BlueprintResultPart {
+export function CreatePartVO(partDefinition: PartDefinition): BlueprintResultPart {
 	const part = literal<IBlueprintPart>({
 		externalId: partDefinition.externalId,
 		title: PartType[partDefinition.type] + ' - ' + partDefinition.rawType,
@@ -28,7 +28,7 @@ export function CreatePartKam(partDefinition: PartDefinition): BlueprintResultPa
 			name: part.title,
 			enable: { start: 0 },
 			outputLayerId: 'pgm0',
-			sourceLayerId: SourceLayer.PgmCam,
+			sourceLayerId: SourceLayer.PgmAudioBed,
 			infiniteMode: PieceLifespan.OutOnNextPart
 		})
 	)

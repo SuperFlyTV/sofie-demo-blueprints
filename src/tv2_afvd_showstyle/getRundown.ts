@@ -120,7 +120,7 @@ function getGlobalAdLibPieces(_context: NotesContext, config: BlueprintConfig): 
 	const adlibItems: IBlueprintAdLibPiece[] = []
 	_.each(config.sources, v => {
 		if (v.type === SourceLayerType.CAMERA) {
-			adlibItems.push(makeCameraAdLib(v, 100 + v.id))
+			adlibItems.push(makeCameraAdLib(v, 100))
 		}
 	})
 	return adlibItems

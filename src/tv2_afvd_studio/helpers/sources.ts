@@ -55,7 +55,7 @@ export interface SourceInfo {
 export function parseMediaPlayers(
 	context: NotesContext | undefined,
 	studioConfig: StudioConfig
-): Array<{ id: string; val: number }> {
+): Array<{ id: string; val: string }> {
 	return parseMapStr(context, studioConfig.ABMediaPlayers, false)
 }
 
