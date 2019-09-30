@@ -1,14 +1,14 @@
 export enum SourceLayer {
-	// Graphics
-	PgmGraphicsSuper = 'studio0_graphics_super',
-
 	// Pgm
-	PgmTransition = 'studio0_transition0',
-	PgmClip = 'studio0_clip0',
 	PgmCam = 'studio0_camera0',
-	PgmSplit = 'studio0_split0',
-	PgmRemote = 'studio0_remote0',
-	PgmHyperdeck = 'studio0_hyperdeck0',
-	PgmAudioBed = 'studio0_audio_bed',
-	PgmScript = 'studio0_script'
+	PgmServer = 'studio0_clip0',
+	PgmVoiceOver = 'studio0_voiceover0',
+	PgmGraphics = 'studio0_graphics0',
+	PgmJingle = 'studio0_jingle0',
+	PgmLive = 'studio0_live0',
+	PgmDVE = 'studio0_dev0',
+	PgmTelephone = 'studio0_telephone0',
+	PgmBreak = 'pgm0_break0',
+	PgmScript = 'studio0_script',
+	PgmAudioBed = 'studio0_audio_bed'
 }

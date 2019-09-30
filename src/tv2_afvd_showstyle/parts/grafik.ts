@@ -28,7 +28,7 @@ export function CreatePartGrafik(partDefinition: PartDefinition): BlueprintResul
 			name: part.title,
 			enable: { start: 0 },
 			outputLayerId: 'pgm0',
-			sourceLayerId: SourceLayer.PgmGraphicsSuper,
+			sourceLayerId: SourceLayer.PgmGraphics,
 			infiniteMode: PieceLifespan.OutOnNextPart
 		})
 	)

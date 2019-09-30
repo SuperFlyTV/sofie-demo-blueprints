@@ -12,7 +12,6 @@ export enum PartType {
 	Slutord,
 	Grafik,
 	Attack,
-	NEDLÆG,
 	SB,
 	STEP,
 	KADA
@@ -95,11 +94,6 @@ export interface PartDefinitionAttack extends PartDefinitionBase {
 	variant: {}
 }
 
-export interface PartDefinitionNEDLÆG extends PartDefinitionBase {
-	type: PartType.NEDLÆG
-	variant: {}
-}
-
 export interface PartDefinitionSB extends PartDefinitionBase {
 	type: PartType.SB
 	variant: {}
@@ -125,7 +119,6 @@ export type PartDefinition =
 	| PartDefinitionGrafik
 	| PartDefinitionVO
 	| PartDefinitionAttack
-	| PartDefinitionNEDLÆG
 	| PartDefinitionSB
 	| PartDefinitionStep
 	| PartDefinitionKada
@@ -139,7 +132,6 @@ export type PartdefinitionTypes =
 	| Pick<PartDefinitionGrafik, 'type' | 'variant'>
 	| Pick<PartDefinitionVO, 'type' | 'variant'>
 	| Pick<PartDefinitionAttack, 'type' | 'variant'>
-	| Pick<PartDefinitionNEDLÆG, 'type' | 'variant'>
 	| Pick<PartDefinitionSB, 'type' | 'variant'>
 	| Pick<PartDefinitionStep, 'type' | 'variant'>
 	| Pick<PartDefinitionKada, 'type' | 'variant'>
@@ -172,7 +164,7 @@ export function ParseBody(segmentId: string, body: string, cues: UnparsedCue[]):
 				.trim()
 
 			if (typeStr) {
-				if (!typeStr.match(/(KAM|CAM|SERVER|TEKNIK|SLUTORD|[S\s]lutord|LIVE|GRAFIK|VO|ATTACK|NEDLÆG|STEP|KADA|SB)+/g)) {
+				if (!typeStr.match(/(KAM|CAM|SERVER|TEKNIK|SLUTORD|[S\s]lutord|LIVE|GRAFIK|VO|ATTACK|STEP|KADA|SB)+/g)) {
 					const scriptBullet = line.match(/<p><pi>(.*)?<\/pi><\/p>/)
 					if (scriptBullet) {
 						const trimscript = scriptBullet[1].trim()
@@ -277,11 +269,6 @@ function extractTypeProperties(typeStr: string): PartdefinitionTypes {
 	} else if (firstToken.match(/ATTACK/)) {
 		return {
 			type: PartType.Attack,
-			variant: {}
-		}
-	} else if (firstToken.match(/NEDLÆG/)) {
-		return {
-			type: PartType.NEDLÆG,
 			variant: {}
 		}
 	} else if (firstToken.match(/STEP/)) {

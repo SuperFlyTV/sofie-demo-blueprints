@@ -28,7 +28,7 @@ export function CreatePartAttack(partDefinition: PartDefinition): BlueprintResul
 			name: part.title,
 			enable: { start: 0 },
 			outputLayerId: 'pgm0',
-			sourceLayerId: SourceLayer.PgmRemote,
+			sourceLayerId: SourceLayer.PgmLive,
 			infiniteMode: PieceLifespan.OutOnNextPart
 		})
 	)

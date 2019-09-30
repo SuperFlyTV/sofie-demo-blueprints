@@ -10,11 +10,11 @@ import * as _ from 'underscore'
 import { assertUnreachable, literal } from '../common/util'
 import { ParseBody, PartDefinition, PartType } from './inewsConversion/converters/ParseBody'
 import { CreatePartAttack } from './parts/attack'
+import { CreatePartFake } from './parts/fake'
 import { CreatePartGrafik } from './parts/grafik'
 import { CreatePartKada } from './parts/kada'
 import { CreatePartKam } from './parts/kam'
 import { CreatePartLive } from './parts/live'
-import { CreatePartNedlæg } from './parts/nedlæg'
 import { CreatePartSB } from './parts/sb'
 import { CreatePartServer } from './parts/server'
 import { CreatePartSlutord } from './parts/slutord'
@@ -41,7 +41,10 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 		ingestSegment.payload.iNewsStory.body,
 		ingestSegment.payload.iNewsStory.cues
 	)
-	parsedParts.forEach(part => {
+	parsedParts.forEach((part, i) => {
+		if (i === 0) {
+			blueprintParts.push(CreatePartFake(part))
+		}
 		switch (part.type) {
 			case PartType.Kam:
 				blueprintParts.push(CreatePartKam(part))
@@ -66,9 +69,6 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 				break
 			case PartType.Attack:
 				blueprintParts.push(CreatePartAttack(part))
-				break
-			case PartType.NEDLÆG:
-				blueprintParts.push(CreatePartNedlæg(part))
 				break
 			case PartType.SB:
 				blueprintParts.push(CreatePartSB(part))
