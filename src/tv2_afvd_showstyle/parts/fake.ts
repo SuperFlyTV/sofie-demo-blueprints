@@ -101,7 +101,12 @@ export function CreatePartFake(partDefinition: PartDefinition): BlueprintResultP
 			enable: { start: 0 },
 			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmScript,
-			infiniteMode: PieceLifespan.OutOnNextPart
+			infiniteMode: PieceLifespan.OutOnNextPart,
+			content: {
+				firstWords: 'Fake',
+				lastWords: 'Piece',
+				fullScript: 'Fake Piece'
+			}
 		}),
 		literal<IBlueprintPiece>({
 			_id: '',
