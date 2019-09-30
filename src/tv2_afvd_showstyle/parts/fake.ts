@@ -25,7 +25,7 @@ export function CreatePartFake(partDefinition: PartDefinition): BlueprintResultP
 		literal<IBlueprintPiece>({
 			_id: '',
 			externalId: partDefinition.externalId,
-			name: part.title,
+			name: 'Fake Piece',
 			enable: { start: 0 },
 			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmCam,
@@ -34,7 +34,7 @@ export function CreatePartFake(partDefinition: PartDefinition): BlueprintResultP
 		literal<IBlueprintPiece>({
 			_id: '',
 			externalId: partDefinition.externalId,
-			name: part.title,
+			name: 'Fake Piece',
 			enable: { start: 0 },
 			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmServer,
@@ -43,7 +43,7 @@ export function CreatePartFake(partDefinition: PartDefinition): BlueprintResultP
 		literal<IBlueprintPiece>({
 			_id: '',
 			externalId: partDefinition.externalId,
-			name: part.title,
+			name: 'Fake Piece',
 			enable: { start: 0 },
 			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmVoiceOver,
@@ -52,7 +52,7 @@ export function CreatePartFake(partDefinition: PartDefinition): BlueprintResultP
 		literal<IBlueprintPiece>({
 			_id: '',
 			externalId: partDefinition.externalId,
-			name: part.title,
+			name: 'Fake Piece',
 			enable: { start: 0 },
 			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmGraphics,
@@ -61,7 +61,7 @@ export function CreatePartFake(partDefinition: PartDefinition): BlueprintResultP
 		literal<IBlueprintPiece>({
 			_id: '',
 			externalId: partDefinition.externalId,
-			name: part.title,
+			name: 'Fake Piece',
 			enable: { start: 0 },
 			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmJingle,
@@ -70,7 +70,7 @@ export function CreatePartFake(partDefinition: PartDefinition): BlueprintResultP
 		literal<IBlueprintPiece>({
 			_id: '',
 			externalId: partDefinition.externalId,
-			name: part.title,
+			name: 'Fake Piece',
 			enable: { start: 0 },
 			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmDVE,
@@ -79,7 +79,7 @@ export function CreatePartFake(partDefinition: PartDefinition): BlueprintResultP
 		literal<IBlueprintPiece>({
 			_id: '',
 			externalId: partDefinition.externalId,
-			name: part.title,
+			name: 'Fake Piece',
 			enable: { start: 0 },
 			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmTelephone,
@@ -88,7 +88,7 @@ export function CreatePartFake(partDefinition: PartDefinition): BlueprintResultP
 		literal<IBlueprintPiece>({
 			_id: '',
 			externalId: partDefinition.externalId,
-			name: part.title,
+			name: 'Fake Piece',
 			enable: { start: 0 },
 			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmBreak,
@@ -97,7 +97,7 @@ export function CreatePartFake(partDefinition: PartDefinition): BlueprintResultP
 		literal<IBlueprintPiece>({
 			_id: '',
 			externalId: partDefinition.externalId,
-			name: part.title,
+			name: 'Fake Piece',
 			enable: { start: 0 },
 			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmScript,
@@ -111,7 +111,7 @@ export function CreatePartFake(partDefinition: PartDefinition): BlueprintResultP
 		literal<IBlueprintPiece>({
 			_id: '',
 			externalId: partDefinition.externalId,
-			name: part.title,
+			name: 'Fake Piece',
 			enable: { start: 0 },
 			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmAudioBed,
