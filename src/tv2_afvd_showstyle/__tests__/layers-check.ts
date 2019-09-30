@@ -8,6 +8,7 @@ import {
 	TimelineObjectCoreExt
 } from 'tv-automation-sofie-blueprints-integration'
 
+import { VirtualLLayers } from '../../tv2_afvd_studio/layers'
 import mappingsDefaults, { getHyperdeckMappings } from '../../tv2_afvd_studio/migrations/mappings-defaults'
 import { BlueprintConfig, parseConfig } from '../helpers/config'
 import { SourceLayer } from '../layers'
@@ -79,4 +80,6 @@ export function checkAllLayers(
 	expect(_.unique(missingSourceLayers)).toHaveLength(0)
 	expect(_.unique(missingLayers)).toHaveLength(0)
 	expect(_.unique(wrongDeviceLayers)).toHaveLength(0)
+
+	expect(VirtualLLayers()).toEqual(['record_control'])
 }
