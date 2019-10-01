@@ -19,7 +19,7 @@ import { CreatePartVO } from './parts/vo'
 
 const DEBUG_LAYERS = false // TODO: Remove for production, used show all source layers even without parts.
 
-export function getSegment(context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
+export function getSegment(_context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
 	const segment = literal<IBlueprintSegment>({
 		name: ingestSegment.name,
 		metaData: {}
@@ -62,7 +62,7 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 				blueprintParts.push(CreatePartVO(part))
 				break
 			case PartType.Unknown:
-				context.warning(`Unknown part type for part ${part.rawType} with id ${part.externalId}`)
+				// context.warning(`Unknown part type for part ${part.rawType} with id ${part.externalId}`)
 				blueprintParts.push(createInvalidPart(part))
 				break
 			default:

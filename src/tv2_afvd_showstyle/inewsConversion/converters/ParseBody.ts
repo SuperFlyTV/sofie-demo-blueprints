@@ -106,7 +106,6 @@ export function ParseBody(segmentId: string, body: string, cues: UnparsedCue[]):
 		cues: [],
 		script: ''
 	}
-	let definitionIsValid = false
 	let lines = body.split('\r\n')
 
 	for (let i = 0; i < lines.length; i++) {
@@ -119,6 +118,8 @@ export function ParseBody(segmentId: string, body: string, cues: UnparsedCue[]):
 
 		if (type) {
 			const typeStr = type[1]
+				.replace(/<[a-z]+>/g, '')
+				.replace(/<\/[a-z]+>/g, '')
 				.replace(/[^\w\s]*\B[^\w\s]/g, '')
 				.replace(/[\s]+/, ' ')
 				.trim()
@@ -134,28 +135,28 @@ export function ParseBody(segmentId: string, body: string, cues: UnparsedCue[]):
 								definition.script += `${trimscript}\n`
 							}
 						}
+					} else {
+						definition.externalId = `${segmentId}-${definitions.length}`
+						definitions.push(definition)
+
+						definition = makeDefinition(segmentId, definitions.length, typeStr)
 					}
 					return
 				}
-				if (definitionIsValid) {
+				if (definition.rawType) {
 					definitions.push(definition)
 				}
 
-				definitionIsValid = true
-
 				definition = makeDefinition(segmentId, definitions.length, typeStr)
+
+				// check for cues inline with the type definition
+				addCue(definition, line, cues)
+
 				return
 			}
 		}
 
-		// TODO - multiple cues on one line, maybe with script?
-		const cue = line.match(/<a idref="(\d+)">/)
-		if (cue) {
-			const realCue = cues[Number(cue[1])]
-			if (realCue) {
-				definition.cues.push(realCue)
-			}
-		}
+		addCue(definition, line, cues)
 
 		const script = line.match(/<p>(.*)?<\/p>/)
 		if (script) {
@@ -168,11 +169,24 @@ export function ParseBody(segmentId: string, body: string, cues: UnparsedCue[]):
 			}
 		}
 	})
-	if (definitionIsValid) {
-		definitions.push(definition)
-	}
+	definitions.push(definition)
 
 	return definitions
+}
+
+function addCue(definition: PartDefinition, line: string, cues: UnparsedCue[]) {
+	const cue = line.match(/<a idref=["|'](\d+)["|']>/g)
+	if (cue) {
+		cue.forEach(c => {
+			const value = c.match(/<a idref=["|'](\d+)["|']>/)
+			if (value) {
+				const realCue = cues[Number(value[1])]
+				if (realCue) {
+					definition.cues.push(realCue)
+				}
+			}
+		})
+	}
 }
 
 function makeDefinition(segmentId: string, i: number, typeStr: string): PartDefinition {

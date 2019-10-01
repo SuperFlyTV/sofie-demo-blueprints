@@ -1,17 +1,3 @@
-<!-- test2 -->
-\r\n<p></p>
-\r\n<p>Thid id thr trext for the next DVE</p>
-\r\n<p></p>
-\r\n<p><pi>***LIVE*** </pi></p>
-\r\n<p><a idref=\"0\"></a></p>
-\r\n<p><a idref=\"1\"></a></p>
-\r\n<p><a idref=\"4\"></a></p>
-\r\n<p><cc>Spib her</cc></p>
-\r\n<p></p>
-\r\n<p>Script here</p>
-\r\n
-
-
 <!-- test1 -->
 \r\n<p></p>
 \r\n<p><cc>*****TEKNIK*****</cc></p>
@@ -25,6 +11,19 @@
 \r\n<p><cc>8---Kalder Viz Wall og kalder inputs-----</cc><a idref=\"7\"><cc>------</cc></a></p>
 \r\n<p><cc>9---VCP STILL DIGI her-></cc><a idref=\"8\"><cc><---</cc></a></p>
 \r\n<p></p>
+\r\n
+
+<!-- test2 -->
+\r\n<p></p>
+\r\n<p>Thid id thr trext for the next DVE</p>
+\r\n<p></p>
+\r\n<p><pi>***LIVE*** </pi></p>
+\r\n<p><a idref=\"0\"></a></p>
+\r\n<p><a idref=\"1\"></a></p>
+\r\n<p><a idref=\"4\"></a></p>
+\r\n<p><cc>Spib her</cc></p>
+\r\n<p></p>
+\r\n<p>Script here</p>
 \r\n
 
 <!-- test3 -->
@@ -117,7 +116,6 @@
 \r\n<p></p>
 \r\n
 
-<!-- TODO: Test 9 -->
 <!-- test9 -->
 \r\n<p><cc>HUSK AT BOOKE DENNE LIVE!!</cc></p>
 \r\n<p><pi>KAM 2</pi></p>
@@ -144,7 +142,6 @@
 \r\n<p></p>
 \r\n
 
-<!-- TODO: Test 10 -->
 <!-- test10 -->
 \r\n<p><cc>HUSK AT BOOKE DENNE LIVE!!</cc></p>
 \r\n<p><pi>KAM 2</pi></p>
@@ -173,7 +170,6 @@
 \r\n<p><cc></cc></p>
 \r\n
 
-<!-- TODO: Test 11 -->
 <!-- test11 -->
 \r\n<p><pi>KAM 1</pi></p>
 \r\n<p></p>
@@ -194,7 +190,6 @@
 \r\n<p></p>
 \r\n
 
-<!-- TODO: Test 12 -->
 <!-- test12 -->
 \r\n<p><cc>Hvad er vinklen på dette interview: Trumps brug af sociale medier er unikke for en amerikansk præsident.</cc></p>
 \r\n<p></p>
