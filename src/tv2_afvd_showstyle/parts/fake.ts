@@ -73,6 +73,15 @@ export function CreatePartFake(partDefinition: PartDefinition): BlueprintResultP
 			name: 'Fake Piece',
 			enable: { start: 0 },
 			outputLayerId: 'pgm0',
+			sourceLayerId: SourceLayer.PgmLive,
+			infiniteMode: PieceLifespan.OutOnNextPart
+		}),
+		literal<IBlueprintPiece>({
+			_id: '',
+			externalId: partDefinition.externalId,
+			name: 'Fake Piece',
+			enable: { start: 0 },
+			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmDVE,
 			infiniteMode: PieceLifespan.OutOnNextPart
 		}),
@@ -83,15 +92,6 @@ export function CreatePartFake(partDefinition: PartDefinition): BlueprintResultP
 			enable: { start: 0 },
 			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmTelephone,
-			infiniteMode: PieceLifespan.OutOnNextPart
-		}),
-		literal<IBlueprintPiece>({
-			_id: '',
-			externalId: partDefinition.externalId,
-			name: 'Fake Piece',
-			enable: { start: 0 },
-			outputLayerId: 'pgm0',
-			sourceLayerId: SourceLayer.PgmBreak,
 			infiniteMode: PieceLifespan.OutOnNextPart
 		}),
 		literal<IBlueprintPiece>({

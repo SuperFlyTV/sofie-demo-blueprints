@@ -9,12 +9,7 @@ export enum PartType {
 	VO,
 	Live,
 	Teknik,
-	Slutord,
-	Grafik,
-	Attack,
-	SB,
-	STEP,
-	KADA
+	Grafik
 }
 
 export interface INewsStory {
@@ -74,11 +69,6 @@ export interface PartDefinitionLive extends PartDefinitionBase {
 	variant: {}
 }
 
-export interface PartDefinitionSlutord extends PartDefinitionBase {
-	type: PartType.Slutord
-	variant: {}
-}
-
 export interface PartDefinitionGrafik extends PartDefinitionBase {
 	type: PartType.Grafik
 	variant: {}
@@ -89,52 +79,22 @@ export interface PartDefinitionVO extends PartDefinitionBase {
 	variant: {}
 }
 
-export interface PartDefinitionAttack extends PartDefinitionBase {
-	type: PartType.Attack
-	variant: {}
-}
-
-export interface PartDefinitionSB extends PartDefinitionBase {
-	type: PartType.SB
-	variant: {}
-}
-
-export interface PartDefinitionStep extends PartDefinitionBase {
-	type: PartType.STEP
-	variant: {}
-}
-
-export interface PartDefinitionKada extends PartDefinitionBase {
-	type: PartType.KADA
-	variant: {}
-}
-
 export type PartDefinition =
 	| PartDefinitionUnknown
 	| PartDefinitionKam
 	| PartDefinitionServer
 	| PartDefinitionTeknik
 	| PartDefinitionLive
-	| PartDefinitionSlutord
 	| PartDefinitionGrafik
 	| PartDefinitionVO
-	| PartDefinitionAttack
-	| PartDefinitionSB
-	| PartDefinitionStep
-	| PartDefinitionKada
 export type PartdefinitionTypes =
 	| Pick<PartDefinitionUnknown, 'type' | 'variant'>
 	| Pick<PartDefinitionKam, 'type' | 'variant'>
 	| Pick<PartDefinitionServer, 'type' | 'variant'>
 	| Pick<PartDefinitionTeknik, 'type' | 'variant'>
 	| Pick<PartDefinitionLive, 'type' | 'variant'>
-	| Pick<PartDefinitionSlutord, 'type' | 'variant'>
 	| Pick<PartDefinitionGrafik, 'type' | 'variant'>
 	| Pick<PartDefinitionVO, 'type' | 'variant'>
-	| Pick<PartDefinitionAttack, 'type' | 'variant'>
-	| Pick<PartDefinitionSB, 'type' | 'variant'>
-	| Pick<PartDefinitionStep, 'type' | 'variant'>
-	| Pick<PartDefinitionKada, 'type' | 'variant'>
 
 export function ParseBody(segmentId: string, body: string, cues: UnparsedCue[]): PartDefinition[] {
 	const definitions: PartDefinition[] = []
@@ -152,7 +112,7 @@ export function ParseBody(segmentId: string, body: string, cues: UnparsedCue[]):
 	for (let i = 0; i < lines.length; i++) {
 		lines[i] = lines[i].replace(/<cc>(.*?)<\/cc>/g, '')
 	}
-	lines = lines.filter(line => line !== '<p></p>')
+	lines = lines.filter(line => line !== '<p></p>' && line !== '<p><pi></pi></p>')
 
 	lines.forEach(line => {
 		const type = line.match(/<pi>(.*?)<\/pi>/)
@@ -164,16 +124,16 @@ export function ParseBody(segmentId: string, body: string, cues: UnparsedCue[]):
 				.trim()
 
 			if (typeStr) {
-				if (!typeStr.match(/(KAM|CAM|SERVER|TEKNIK|SLUTORD|[S\s]lutord|LIVE|GRAFIK|VO|ATTACK|STEP|KADA|SB)+/g)) {
-					const scriptBullet = line.match(/<p><pi>(.*)?<\/pi><\/p>/)
-					if (scriptBullet) {
-						const trimscript = scriptBullet[1].trim()
-						if (trimscript) {
-							definition.script += `${trimscript}\n`
+				if (!typeStr.match(/\b(KAM|CAM|KAMERA|CAMERA|SERVER|TEKNIK|LIVE|GRAFIK|VO)+\b/gi)) {
+					// Live types have bullet points (usually questions to ask)
+					if (definition.type === PartType.Live) {
+						const scriptBullet = line.match(/<p><pi>(.*)?<\/pi><\/p>/)
+						if (scriptBullet) {
+							const trimscript = scriptBullet[1].trim()
+							if (trimscript) {
+								definition.script += `${trimscript}\n`
+							}
 						}
-					}
-					if (!typeStr.match(/.\w*\?/g)) {
-						console.log(`This might contain a new type: ${typeStr}`)
 					}
 					return
 				}
@@ -195,12 +155,14 @@ export function ParseBody(segmentId: string, body: string, cues: UnparsedCue[]):
 			if (realCue) {
 				definition.cues.push(realCue)
 			}
-			return
 		}
 
 		const script = line.match(/<p>(.*)?<\/p>/)
 		if (script) {
-			const trimscript = script[1].trim()
+			const trimscript = script[1]
+				.replace(/<.*?>/g, '')
+				.replace('\n\r', '')
+				.trim()
 			if (trimscript) {
 				definition.script += `${trimscript}\n`
 			}
@@ -246,11 +208,6 @@ function extractTypeProperties(typeStr: string): PartdefinitionTypes {
 			type: PartType.Teknik,
 			variant: {}
 		}
-	} else if (firstToken.match(/SLUTORD/i)) {
-		return {
-			type: PartType.Slutord,
-			variant: {}
-		}
 	} else if (firstToken.match(/LIVE/)) {
 		return {
 			type: PartType.Live,
@@ -264,26 +221,6 @@ function extractTypeProperties(typeStr: string): PartdefinitionTypes {
 	} else if (firstToken.match(/VO/)) {
 		return {
 			type: PartType.VO,
-			variant: {}
-		}
-	} else if (firstToken.match(/ATTACK/)) {
-		return {
-			type: PartType.Attack,
-			variant: {}
-		}
-	} else if (firstToken.match(/STEP/)) {
-		return {
-			type: PartType.STEP,
-			variant: {}
-		}
-	} else if (firstToken.match(/SB/)) {
-		return {
-			type: PartType.SB,
-			variant: {}
-		}
-	} else if (firstToken.match(/KADA/)) {
-		return {
-			type: PartType.KADA,
 			variant: {}
 		}
 	} else {

@@ -68,14 +68,6 @@ describe('Body parser', () => {
 					script: '',
 					variant: {},
 					externalId: '00000000001-1'
-				},
-				{
-					type: PartType.Slutord,
-					rawType: 'SLUTORD: ekstra kick',
-					cues: [],
-					script: '',
-					variant: {},
-					externalId: '00000000001-2'
 				}
 			])
 		)
@@ -147,6 +139,37 @@ describe('Body parser', () => {
 						name: '1'
 					},
 					externalId: '00000000001-0'
+				}
+			])
+		)
+	})
+
+	test('test12', () => {
+		const body12 =
+			'\r\n<p><cc>Hvad er vinklen på dette interview: Trumps brug af sociale medier er unikke for en amerikansk præsident.</cc></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>KAM 3</pi></p>\r\n<p></p>\r\n<p><a idref="0"><cc> GÆSTEBAGGRUND</cc></a></p>\r\n<p></p>\r\n<p><a idref="1"> <cc>Kilde til optagelse på select-feed. </cc></a></p>\r\n<p></p>\r\n<p><cc>Manus herunder:</cc></p>\r\n<p></p>\r\n<p>Og så kan vi byde velkommen til Kaare Sørensen, digital udviklingsredaktør her på TV 2 og tidligere USA-korrespondent. </p>\r\n<p></p>\r\n<p>Du har fulgt Trumps brug af sociale medier og herunder særligt præsidentens brug af Twitter. Hvad kendetegner Donald Trumps brug af sociale medier? </p>\r\n<p></p>\r\n<p><pi>***LIVE*** </pi></p>\r\n<p><cc>Husk at lave en BUNDT. Opret den med tidsangivelse x.xx.</cc></p>\r\n<p>.</p>\r\n<p></p>\r\n<p><pi>Hvis vi kigger specifikt på Twitter, hvordan skiller Trump sig ud fra tidligere præsidenter, når det kommer til brugen af det her? </pi></p>\r\n<p></p>\r\n<p><pi>Hvad får præsidenten ud af den her adfærd på de sociale medier?</pi></p>\r\n<p></p>\r\n<p><pi>Har han en særlig strategi med den her måde at bruge twitter på? </pi></p>\r\n<p></p>\r\n<p><pi>Vi har med en præsident at gøre, der konstant laver overskrifter med brugen af sociale medier. Hvad det, der gør, at medier over hele kloden bliver ved med at beskæftige sig med de her tweets? </pi></p>\r\n<p></p>\r\n<p><a idref="2"></a></p>\r\n<p></p>\r\n'
+		const cues12 = [['1'], ['2'], ['3']]
+		const result = ParseBody('00000000001', body12, cues12)
+		expect(result).toEqual(
+			literal<PartDefinition[]>([
+				{
+					type: PartType.Kam,
+					rawType: 'KAM 3',
+					cues: [['1'], ['2']],
+					script:
+						'Og så kan vi byde velkommen til Kaare Sørensen, digital udviklingsredaktør her på TV 2 og tidligere USA-korrespondent.\nDu har fulgt Trumps brug af sociale medier og herunder særligt præsidentens brug af Twitter. Hvad kendetegner Donald Trumps brug af sociale medier?\n',
+					variant: {
+						name: '3'
+					},
+					externalId: '00000000001-0'
+				},
+				{
+					type: PartType.Live,
+					rawType: 'LIVE',
+					cues: [['3']],
+					script:
+						'.\nHvis vi kigger specifikt på Twitter, hvordan skiller Trump sig ud fra tidligere præsidenter, når det kommer til brugen af det her?\nHvad får præsidenten ud af den her adfærd på de sociale medier?\nHar han en særlig strategi med den her måde at bruge twitter på?\nVi har med en præsident at gøre, der konstant laver overskrifter med brugen af sociale medier. Hvad det, der gør, at medier over hele kloden bliver ved med at beskæftige sig med de her tweets?\n',
+					variant: {},
+					externalId: '00000000001-1'
 				}
 			])
 		)
