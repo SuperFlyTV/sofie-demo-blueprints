@@ -9,20 +9,17 @@ import {
 import * as _ from 'underscore'
 import { assertUnreachable, literal } from '../common/util'
 import { ParseBody, PartDefinition, PartType } from './inewsConversion/converters/ParseBody'
-import { CreatePartAttack } from './parts/attack'
+import { CreatePartFake } from './parts/fake'
 import { CreatePartGrafik } from './parts/grafik'
-import { CreatePartKada } from './parts/kada'
 import { CreatePartKam } from './parts/kam'
 import { CreatePartLive } from './parts/live'
-import { CreatePartNedlæg } from './parts/nedlæg'
-import { CreatePartSB } from './parts/sb'
 import { CreatePartServer } from './parts/server'
-import { CreatePartSlutord } from './parts/slutord'
-import { CreatePartStep } from './parts/step'
 import { CreatePartTeknik } from './parts/teknik'
 import { CreatePartVO } from './parts/vo'
 
-export function getSegment(context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
+const DEBUG_LAYERS = false // TODO: Remove for production, used show all source layers even without parts.
+
+export function getSegment(_context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
 	const segment = literal<IBlueprintSegment>({
 		name: ingestSegment.name,
 		metaData: {}
@@ -41,7 +38,10 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 		ingestSegment.payload.iNewsStory.body,
 		ingestSegment.payload.iNewsStory.cues
 	)
-	parsedParts.forEach(part => {
+	parsedParts.forEach((part, i) => {
+		if (i === 0 && DEBUG_LAYERS) {
+			blueprintParts.push(CreatePartFake(part))
+		}
 		switch (part.type) {
 			case PartType.Kam:
 				blueprintParts.push(CreatePartKam(part))
@@ -55,32 +55,14 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 			case PartType.Teknik:
 				blueprintParts.push(CreatePartTeknik(part))
 				break
-			case PartType.Slutord:
-				blueprintParts.push(CreatePartSlutord(part))
-				break
 			case PartType.Grafik:
 				blueprintParts.push(CreatePartGrafik(part))
 				break
 			case PartType.VO:
 				blueprintParts.push(CreatePartVO(part))
 				break
-			case PartType.Attack:
-				blueprintParts.push(CreatePartAttack(part))
-				break
-			case PartType.NEDLÆG:
-				blueprintParts.push(CreatePartNedlæg(part))
-				break
-			case PartType.SB:
-				blueprintParts.push(CreatePartSB(part))
-				break
-			case PartType.STEP:
-				blueprintParts.push(CreatePartStep(part))
-				break
-			case PartType.KADA:
-				blueprintParts.push(CreatePartKada(part))
-				break
 			case PartType.Unknown:
-				context.warning(`Unknown part type for part ${part.rawType} with id ${part.externalId}`)
+				// context.warning(`Unknown part type for part ${part.rawType} with id ${part.externalId}`)
 				blueprintParts.push(createInvalidPart(part))
 				break
 			default:

@@ -28,7 +28,7 @@ export function CreatePartServer(partDefinition: PartDefinition): BlueprintResul
 			name: part.title,
 			enable: { start: 0 },
 			outputLayerId: 'pgm0',
-			sourceLayerId: SourceLayer.PgmClip,
+			sourceLayerId: SourceLayer.PgmServer,
 			infiniteMode: PieceLifespan.OutOnNextPart
 		})
 	)

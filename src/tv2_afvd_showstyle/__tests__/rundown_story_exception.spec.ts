@@ -2,6 +2,7 @@ import * as _ from 'underscore'
 
 import { IBlueprintPieceGeneric, IBlueprintRundownDB, IngestRundown } from 'tv-automation-sofie-blueprints-integration'
 import { ConfigMap, defaultShowStyleConfig, defaultStudioConfig } from './configs'
+// import { ConfigMap } from './configs'
 import { checkAllLayers } from './layers-check'
 
 // @ts-ignore
