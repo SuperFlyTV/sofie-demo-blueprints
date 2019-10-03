@@ -4,7 +4,6 @@ test
 src/**.js
 
 /coverage
-/docs
 .nyc_output
 *.log
 
