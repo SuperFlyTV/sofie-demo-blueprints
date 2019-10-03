@@ -82,11 +82,35 @@ describe('Cue parser', () => {
 		)
 	})
 
+	test('DIGI', () => {
+		const cueDigi = ['DIGI=VO', 'Dette er en VO tekst', 'Dette er linje 2', ';0.00']
+		const result = ParseCue(cueDigi)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.Grafik,
+				start: {
+					seconds: 0
+				},
+				template: 'VO',
+				textFields: ['Dette er en VO tekst', 'Dette er linje 2']
+			})
+		)
+	})
+
 	test('KG=DESIGN_FODBOLD', () => {
 		const cueGrafik = ['KG=DESIGN_FODBOLD', ';0.00.01']
 		const result = ParseCue(cueGrafik)
-		// expect(result).toEqual(literal<CueDefinition>({}))
-		// TODO: This test
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.Grafik,
+				start: {
+					frames: 1,
+					seconds: 0
+				},
+				template: 'DESIGN_FODBOLD',
+				textFields: []
+			})
+		)
 		expect(result).toBeTruthy()
 	})
 
@@ -149,6 +173,81 @@ describe('Cue parser', () => {
 					template: 'bund',
 					textFields: ['HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk']
 				}
+			})
+		)
+	})
+
+	test('TELEFON without Grafik', () => {
+		const cueTelefon = ['TELEFON=TLF 2']
+		const result = ParseCue(cueTelefon)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.Telefon,
+				source: 'TLF 2'
+			})
+		)
+	})
+
+	test('VIZ Cue', () => {
+		const cueViz = ['VIZ=grafik-design', 'triopage=DESIGN_SC', ';0.00.04']
+		const result = ParseCue(cueViz)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.VIZ,
+				content: {
+					triopage: 'DESIGN_SC'
+				},
+				start: {
+					frames: 4,
+					seconds: 0
+				}
+			})
+		)
+	})
+
+	test('Mics', () => {
+		const cueMic = [
+			'STUDIE=MIC ON OFF',
+			'ST2vrt1=OFF',
+			'ST2vrt2=OFF',
+			'ST2gst1=OFF',
+			'ST2gst2=OFF',
+			'kom1=OFF',
+			'kom2=OFF',
+			'ST4vrt=ON',
+			'ST4gst=',
+			';0.00'
+		]
+		const result = ParseCue(cueMic)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.Mic,
+				start: {
+					seconds: 0
+				},
+				mics: {
+					ST2vrt1: false,
+					ST2vrt2: false,
+					ST2gst1: false,
+					ST2gst2: false,
+					kom1: false,
+					kom2: false,
+					ST4vrt: true,
+					ST4gst: false
+				}
+			})
+		)
+	})
+
+	test('AdLib', () => {
+		const cueAdLib = ['ADLIBPIX=MORBARN', 'INP1=LIVE 1', 'BYNAVN=']
+		const result = ParseCue(cueAdLib)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.AdLib,
+				variant: 'MORBARN',
+				input: 'LIVE 1',
+				bynavn: ''
 			})
 		)
 	})

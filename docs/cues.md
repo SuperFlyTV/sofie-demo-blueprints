@@ -112,25 +112,7 @@ CueDefinitionVIZ {
     start: {
         frames: 4
     },
-    vizCue: VizCueType.GrafikDesign,
     content: {'triopage': 'DESIGN_SC'}
-}
-```
-
-Example:
-
-```JS
-"KG=DESIGN_FODBOLD",
-";0.00.01"
-```
-
-```JS
-CueDefinitionVIZ {
-    type: CueType.VIZ,
-    start: {
-        frames: 1
-    },
-    // Need help here
 }
 ```
 
@@ -317,7 +299,8 @@ Example:
 ```JS
 CueDefinitionAdLib {
     type: CueType.AdLib,
-    variant: 'morbarn', // Possible values: morbarn, server, barnmor, 1til2,  2til1
-    input: 'LIVE 1'
+    variant: 'MORBARN', // Possible values: morbarn, server, barnmor, 1til2,  2til1
+    input: 'LIVE 1',
+    bynavn: ''
 }
 ```
