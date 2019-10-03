@@ -7,7 +7,10 @@ export enum CueType {
 	MOS,
 	Ekstern,
 	DVE,
-	Telefon
+	Telefon,
+	VIZ,
+	Mic,
+	AdLib
 }
 
 export interface CueTime {
@@ -61,6 +64,27 @@ export interface CueDefinitionTelefon extends CueDefinitionBase {
 	vizObj?: CueDefinitionGrafik
 }
 
+export interface CueDefinitionVIZ extends CueDefinitionBase {
+	type: CueType.VIZ
+	content: {
+		[key: string]: string
+	}
+}
+
+export interface CueDefinitionMic extends CueDefinitionBase {
+	type: CueType.Mic
+	mics: {
+		[key: string]: boolean
+	}
+}
+
+export interface CueDefinitionAdLib extends CueDefinitionBase {
+	type: CueType.AdLib
+	variant: string
+	input: string
+	bynavn: string
+}
+
 export type CueDefinition =
 	| CueDefinitionUnknown
 	| CueDefinitionIgnoredMOS
@@ -69,6 +93,9 @@ export type CueDefinition =
 	| CueDefinitionEkstern
 	| CueDefinitionDVE
 	| CueDefinitionTelefon
+	| CueDefinitionVIZ
+	| CueDefinitionMic
+	| CueDefinitionAdLib
 
 export function ParseCue(cue: UnparsedCue): CueDefinition {
 	if (!cue) {
@@ -83,7 +110,7 @@ export function ParseCue(cue: UnparsedCue): CueDefinition {
 			type: CueType.Ignored_MOS,
 			command: cue
 		}
-	} else if (cue[0].match(/^kg/i)) {
+	} else if (cue[0].match(/^(?:kg)|(?:digi)/i)) {
 		// kg (Grafik)
 		return parsekg(cue as string[])
 	} else if (cue[0].match(/^]] [a-z]\d\.\d [a-z] \d \[\[$/i)) {
@@ -104,6 +131,12 @@ export function ParseCue(cue: UnparsedCue): CueDefinition {
 	} else if (cue[0].match(/^TELEFON=/)) {
 		// Telefon
 		return parseTelefon(cue)
+	} else if (cue[0].match(/^VIZ=/)) {
+		return parseVIZCues(cue)
+	} else if (cue[0].match(/^STUDIE=MIC ON OFF$/)) {
+		return parseMic(cue)
+	} else if (cue[0].match(/^ADLIBPIX=/)) {
+		return parseAdLib(cue)
 	}
 	return {
 		type: CueType.Unknown
@@ -117,23 +150,28 @@ function parsekg(cue: string[]): CueDefinitionGrafik {
 		textFields: []
 	}
 
-	const firstLineValues = cue[0].match(/^kg ([\w|\d]+)( (.+))*$/)
+	const firstLineValues = cue[0].match(/^kg[ |=]([\w|\d]+)( (.+))*$/i)
 	if (firstLineValues) {
 		kgCue.template = firstLineValues[1]
 		if (firstLineValues[3]) {
 			kgCue.textFields.push(firstLineValues[3])
 		}
-
-		let textFields = cue.length - 1
-		if (isTime(cue[cue.length - 1])) {
-			kgCue = { ...kgCue, ...parseTime(cue[cue.length - 1]) }
-		} else {
-			textFields += 1
+	} else if (cue[0].match(/^DIGI=/)) {
+		const templateType = cue[0].match(/^DIGI=(.+)$/)
+		if (templateType) {
+			kgCue.template = templateType[1]
 		}
+	}
 
-		for (let i = 1; i < textFields; i++) {
-			kgCue.textFields.push(cue[i])
-		}
+	let textFields = cue.length - 1
+	if (isTime(cue[cue.length - 1])) {
+		kgCue = { ...kgCue, ...parseTime(cue[cue.length - 1]) }
+	} else {
+		textFields += 1
+	}
+
+	for (let i = 1; i < textFields; i++) {
+		kgCue.textFields.push(cue[i])
 	}
 
 	return kgCue
@@ -195,15 +233,83 @@ function parseDVE(cue: string[]): CueDefinitionDVE {
 function parseTelefon(cue: string[]): CueDefinitionTelefon {
 	const telefonCue: CueDefinitionTelefon = {
 		type: CueType.Telefon,
-		source: '',
-		vizObj: parsekg(cue.slice(1, cue.length))
+		source: ''
 	}
 	const source = cue[0].match(/^TELEFON=(.+)$/)
 	if (source) {
 		telefonCue.source = source[1]
 	}
 
+	if (cue.length > 1) {
+		telefonCue.vizObj = parsekg(cue.slice(1, cue.length))
+	}
+
 	return telefonCue
+}
+
+function parseVIZCues(cue: string[]): CueDefinitionVIZ {
+	let vizCues: CueDefinitionVIZ = {
+		type: CueType.VIZ,
+		content: {}
+	}
+
+	for (let i = 1; i < cue.length; i++) {
+		if (isTime(cue[i])) {
+			vizCues = { ...vizCues, ...parseTime(cue[i]) }
+		} else {
+			const c = cue[i].split('=')
+			vizCues.content[c[0].toString()] = c[1]
+		}
+	}
+
+	return vizCues
+}
+
+function parseMic(cue: string[]): CueDefinitionMic {
+	let micCue: CueDefinitionMic = {
+		type: CueType.Mic,
+		mics: {}
+	}
+	cue.forEach(c => {
+		if (!c.match(/^STUDIE=MIC ON OFF$/)) {
+			if (isTime(c)) {
+				micCue = { ...micCue, ...parseTime(c) }
+			} else {
+				const micState = c.match(/^(.+)=((?:ON)|(?:OFF))?$/)
+				if (micState) {
+					micCue.mics[micState[1].toString()] = micState[2] ? micState[2] === 'ON' : false
+				}
+			}
+		}
+	})
+
+	return micCue
+}
+
+function parseAdLib(cue: string[]) {
+	const adlib: CueDefinitionAdLib = {
+		type: CueType.AdLib,
+		variant: '',
+		input: '',
+		bynavn: ''
+	}
+
+	const variant = cue[0].match(/^ADLIBPIX=(.+)$/)
+	if (variant) {
+		adlib.variant = variant[1]
+	}
+
+	const input = cue[1].match(/^INP\d+=(.+)$/)
+	if (input) {
+		adlib.input = input[1]
+	}
+
+	const bynavn = cue[2].match(/^BYNAVN=(.)$/)
+	if (bynavn) {
+		adlib.bynavn = bynavn[1]
+	}
+
+	return adlib
 }
 
 function isTime(line: string) {
