@@ -1,6 +1,5 @@
 import { IngestSegment } from 'tv-automation-sofie-blueprints-integration'
-
-export type UnparsedCue = string[] | null
+import { UnparsedCue } from './ParseCue'
 
 export enum PartType {
 	Unknown,

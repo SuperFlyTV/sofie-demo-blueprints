@@ -155,8 +155,8 @@ Example:
 CueDefinitionMOS {
     type: CueType.MOS,
     name: "TELEFON/KORT//LIVE_KABUL",
-    vcpid: "2552305",
-    continuecount: 3
+    vcpid: 2552305,
+    continueCount: 3
 }
 ```
 
