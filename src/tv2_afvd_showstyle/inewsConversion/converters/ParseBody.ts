@@ -168,6 +168,9 @@ export function ParseBody(segmentId: string, body: string, cues: UnparsedCue[]):
 			}
 		}
 	})
+	if (!definition.externalId) {
+		definition.externalId = `${segmentId}-${definitions.length}`
+	}
 	definitions.push(definition)
 
 	return definitions

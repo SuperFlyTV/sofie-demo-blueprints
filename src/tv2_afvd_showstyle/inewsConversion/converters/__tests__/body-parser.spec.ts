@@ -394,4 +394,23 @@ describe('Body parser', () => {
 			])
 		)
 	})
+
+	test('test13', () => {
+		const body13 =
+			'\r\n<p><a idref="0"></a></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n'
+		const cues13 = [['1']]
+		const result = ParseBody('00000000001', body13, cues13)
+		expect(result).toEqual(
+			literal<PartDefinition[]>([
+				{
+					type: PartType.Unknown,
+					rawType: '',
+					cues: [['1']],
+					script: '',
+					variant: {},
+					externalId: '00000000001-0'
+				}
+			])
+		)
+	})
 })
