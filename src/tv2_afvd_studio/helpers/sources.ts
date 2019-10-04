@@ -90,7 +90,7 @@ export function FindSourceInfo(sources: SourceInfo[], type: SourceInfoType, id: 
 		return undefined
 	}
 
-	return _.find(sources, s => s.type === type && s.id === name[1])
+	return _.find(sources, s => s.type === type && s.id === name[1].replace(/minus mic/, '').trim())
 }
 
 export function FindSourceInfoStrict(
