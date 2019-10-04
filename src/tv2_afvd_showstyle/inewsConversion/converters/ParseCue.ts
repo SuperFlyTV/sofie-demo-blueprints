@@ -137,6 +137,8 @@ export function ParseCue(cue: UnparsedCue): CueDefinition {
 		return parseMic(cue)
 	} else if (cue[0].match(/^ADLIBPIX=/)) {
 		return parseAdLib(cue)
+	} else if (cue[0].match(/^KOMMANDO=/)) {
+		return parseKommando(cue)
 	}
 	return {
 		type: CueType.Unknown
@@ -310,6 +312,24 @@ function parseAdLib(cue: string[]) {
 	}
 
 	return adlib
+}
+
+function parseKommando(cue: string[]) {
+	let kommandoCue: CueDefinitionVIZ = {
+		type: CueType.VIZ,
+		content: {}
+	}
+
+	const command = cue[0].match(/^KOMMANDO=(.*)$/)
+	if (command) {
+		kommandoCue.content[command[1].toString()] = cue[1]
+	}
+
+	if (cue[2] && isTime(cue[2])) {
+		kommandoCue = { ...kommandoCue, ...parseTime(cue[2]) }
+	}
+
+	return kommandoCue
 }
 
 function isTime(line: string) {

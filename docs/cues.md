@@ -202,7 +202,7 @@ CueDefinitionTelefon {
 
 ## Kommando
 
-Effect: Sends commands to Mosart
+Effect: Sends commands to VIZ
 
 Example:
 
@@ -218,7 +218,7 @@ CueDefinitionVIZ {
     start: {
         seconds: 0
     },
-    // Need help here
+    content: { 'GRAPHICSPROFILE': 'TV2 SPORT 2016' }
 }
 ```
 

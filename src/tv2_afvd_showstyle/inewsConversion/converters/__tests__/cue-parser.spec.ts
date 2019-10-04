@@ -251,4 +251,18 @@ describe('Cue parser', () => {
 			})
 		)
 	})
+
+	test('Kommando', () => {
+		const cueKommando = ['KOMMANDO=GRAPHICSPROFILE', 'TV2 SPORT 2016', ';0.00']
+		const result = ParseCue(cueKommando)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.VIZ,
+				start: {
+					seconds: 0
+				},
+				content: { GRAPHICSPROFILE: 'TV2 SPORT 2016' }
+			})
+		)
+	})
 })
