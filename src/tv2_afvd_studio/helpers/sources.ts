@@ -84,24 +84,20 @@ export function parseSources(context: NotesContext | undefined, studioConfig: St
 	return res
 }
 
-export function FindSourceInfo(
-	sources: SourceInfo[],
-	type: SourceInfoType,
-	id: number | string
-): SourceInfo | undefined {
-	if (typeof id !== 'number') {
-		id = (id + '').toLowerCase()
-		id = parseInt(id.replace(/\D/g, ''), 10) || 1
+export function FindSourceInfo(sources: SourceInfo[], type: SourceInfoType, id: string): SourceInfo | undefined {
+	const name = id.match(/^(?:KAM|CAM)(?:ERA)? (.+)$/i)
+	if (!name) {
+		return undefined
 	}
 
-	return _.find(sources, s => s.type === type && s.id === id)
+	return _.find(sources, s => s.type === type && s.id === name[1])
 }
 
 export function FindSourceInfoStrict(
 	context: NotesContext,
 	sources: SourceInfo[],
 	type: SourceInfoType,
-	id: number | string
+	id: string
 ): SourceInfo | undefined {
 	const source = FindSourceInfo(sources, type, id)
 	if (!source) {
@@ -116,6 +112,8 @@ export function FindSourceByName(context: NotesContext, sources: SourceInfo[], n
 	if (name.indexOf('k') === 0 || name.indexOf('c') === 0) {
 		return FindSourceInfoStrict(context, sources, SourceLayerType.CAMERA, name)
 	}
+
+	// TODO: This will be different for TV 2
 	if (name.indexOf('r') === 0) {
 		return FindSourceInfoStrict(context, sources, SourceLayerType.REMOTE, name)
 	}

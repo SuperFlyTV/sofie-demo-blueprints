@@ -1,16 +1,19 @@
 import {
 	BlueprintResultPart,
 	BlueprintResultSegment,
-	IBlueprintPart,
+	IBlueprintRundownDB,
 	IBlueprintSegment,
 	IngestSegment,
+	PartContext,
 	SegmentContext
 } from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
 import { assertUnreachable, literal } from '../common/util'
-import { ParseBody, PartDefinition, PartType } from './inewsConversion/converters/ParseBody'
+import { parseConfig } from './helpers/config'
+import { ParseBody, PartType } from './inewsConversion/converters/ParseBody'
 import { CreatePartFake } from './parts/fake'
 import { CreatePartGrafik } from './parts/grafik'
+import { CreatePartInvalid } from './parts/invalid'
 import { CreatePartKam } from './parts/kam'
 import { CreatePartLive } from './parts/live'
 import { CreatePartServer } from './parts/server'
@@ -19,11 +22,12 @@ import { CreatePartVO } from './parts/vo'
 
 const DEBUG_LAYERS = false // TODO: Remove for production, used show all source layers even without parts.
 
-export function getSegment(_context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
+export function getSegment(context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
 	const segment = literal<IBlueprintSegment>({
 		name: ingestSegment.name,
 		metaData: {}
 	})
+	const config = parseConfig(context)
 
 	if (ingestSegment.payload.float === 'true') {
 		return {
@@ -42,9 +46,10 @@ export function getSegment(_context: SegmentContext, ingestSegment: IngestSegmen
 		if (i === 0 && DEBUG_LAYERS) {
 			blueprintParts.push(CreatePartFake(part))
 		}
+		const partContext = new PartContext2(context, part.externalId)
 		switch (part.type) {
 			case PartType.Kam:
-				blueprintParts.push(CreatePartKam(part))
+				blueprintParts.push(CreatePartKam(partContext, config, part))
 				break
 			case PartType.Server:
 				blueprintParts.push(CreatePartServer(part))
@@ -63,7 +68,7 @@ export function getSegment(_context: SegmentContext, ingestSegment: IngestSegmen
 				break
 			case PartType.Unknown:
 				// context.warning(`Unknown part type for part ${part.rawType} with id ${part.externalId}`)
-				blueprintParts.push(createInvalidPart(part))
+				blueprintParts.push(CreatePartInvalid(part))
 				break
 			default:
 				assertUnreachable(part)
@@ -88,19 +93,63 @@ export function getSegment(_context: SegmentContext, ingestSegment: IngestSegmen
 	}
 }
 
-function createInvalidPart(ingestPart: PartDefinition): BlueprintResultPart {
-	const part = literal<IBlueprintPart>({
-		externalId: ingestPart.externalId,
-		title: ingestPart.rawType || 'Unknown',
-		metaData: {},
-		typeVariant: '',
-		invalid: true
-	})
+class PartContext2 implements PartContext {
+	public readonly rundownId: string
+	public readonly rundown: IBlueprintRundownDB
+	private baseContext: SegmentContext
+	private externalId: string
 
-	return {
-		part,
-		adLibPieces: [],
-		pieces: []
+	constructor(baseContext: SegmentContext, externalId: string) {
+		this.baseContext = baseContext
+		this.externalId = externalId
+
+		this.rundownId = baseContext.rundownId
+		this.rundown = baseContext.rundown
+	}
+
+	/** PartContext */
+	public getRuntimeArguments() {
+		return this.baseContext.getRuntimeArguments(this.externalId) || {}
+	}
+
+	/** IShowStyleConfigContext */
+	public getShowStyleConfig() {
+		return this.baseContext.getShowStyleConfig()
+	}
+	public getShowStyleConfigRef(configKey: string) {
+		return this.baseContext.getShowStyleConfigRef(configKey)
+	}
+
+	/** IStudioContext */
+	public getStudioMappings() {
+		return this.baseContext.getStudioMappings()
+	}
+
+	/** IStudioConfigContext */
+	public getStudioConfig() {
+		return this.baseContext.getStudioConfig()
+	}
+	public getStudioConfigRef(configKey: string) {
+		return this.baseContext.getStudioConfigRef(configKey)
+	}
+
+	/** NotesContext */
+	public error(message: string) {
+		return this.baseContext.error(message)
+	}
+	public warning(message: string) {
+		return this.baseContext.warning(message)
+	}
+	public getNotes() {
+		return this.baseContext.getNotes()
+	}
+
+	/** ICommonContext */
+	public getHashId(originString: string, originIsNotUnique?: boolean) {
+		return this.baseContext.getHashId(`${this.externalId}_${originString}`, originIsNotUnique)
+	}
+	public unhashId(hash: string) {
+		return this.baseContext.unhashId(hash)
 	}
 }
 
