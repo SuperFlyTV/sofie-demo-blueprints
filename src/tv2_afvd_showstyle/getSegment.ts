@@ -21,6 +21,7 @@ import { CreatePartTeknik } from './parts/teknik'
 import { CreatePartVO } from './parts/vo'
 
 const DEBUG_LAYERS = false // TODO: Remove for production, used show all source layers even without parts.
+let playbackServerA = true
 
 export function getSegment(context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
 	const segment = literal<IBlueprintSegment>({
@@ -40,7 +41,8 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 	const parsedParts = ParseBody(
 		ingestSegment.externalId,
 		ingestSegment.payload.iNewsStory.body,
-		ingestSegment.payload.iNewsStory.cues
+		ingestSegment.payload.iNewsStory.cues,
+		ingestSegment.payload.iNewsStory.fields
 	)
 	parsedParts.forEach((part, i) => {
 		if (i === 0 && DEBUG_LAYERS) {
@@ -52,7 +54,8 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 				blueprintParts.push(CreatePartKam(partContext, config, part))
 				break
 			case PartType.Server:
-				blueprintParts.push(CreatePartServer(part))
+				blueprintParts.push(CreatePartServer(config, part, playbackServerA))
+				playbackServerA = !playbackServerA
 				break
 			case PartType.Live:
 				blueprintParts.push(CreatePartLive(part))
@@ -76,7 +79,7 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 		}
 	})
 
-	if (blueprintParts.length > 1) {
+	/*if (blueprintParts.length > 1) {
 		blueprintParts.forEach((part, i) => {
 			if (i === 0) {
 				part.part.displayDuration = parseInt(ingestSegment.payload.iNewsStory.fields.totalTime, 10) * 1000 || 10000
@@ -85,7 +88,7 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 
 			part.part.displayDurationGroup = ingestSegment.externalId
 		})
-	}
+	}*/
 
 	return {
 		segment,

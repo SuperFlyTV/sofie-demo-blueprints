@@ -30,6 +30,8 @@ export enum AtemLLayer {
 }
 
 export enum CasparLLayer {
+	CasparClipPlaybackA = 'casparcg_player_clip_playback_a',
+	CasparClipPlaybackB = 'casparcg_player_clip_playback_b',
 	CasparPlayerClip = 'casparcg_player_clip',
 	CasparPlayerClipNext = 'casparcg_player_clip_next',
 	CasparPlayerClipNextWarning = 'casparcg_player_clip_next_warning',
