@@ -21,7 +21,6 @@ import { CreatePartTeknik } from './parts/teknik'
 import { CreatePartVO } from './parts/vo'
 
 const DEBUG_LAYERS = false // TODO: Remove for production, used show all source layers even without parts.
-let playbackServerA = true
 
 export function getSegment(context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
 	const segment = literal<IBlueprintSegment>({
@@ -54,8 +53,7 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 				blueprintParts.push(CreatePartKam(partContext, config, part))
 				break
 			case PartType.Server:
-				blueprintParts.push(CreatePartServer(config, part, playbackServerA))
-				playbackServerA = !playbackServerA
+				blueprintParts.push(CreatePartServer(config, part))
 				break
 			case PartType.Live:
 				blueprintParts.push(CreatePartLive(part))

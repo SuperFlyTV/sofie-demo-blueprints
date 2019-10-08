@@ -41,18 +41,11 @@ export default literal<BlueprintMappings>({
 		channel: 4,
 		layer: 99
 	}),
-	casparcg_player_clip_playback_a: literal<MappingCasparCG & BlueprintMapping>({
+	casparcg_player_clip_pending: literal<MappingCasparCG & BlueprintMapping>({
 		device: PlayoutDeviceType.CASPARCG,
 		deviceId: 'caspar01',
 		lookahead: LookaheadMode.NONE,
 		channel: 5,
-		layer: 100
-	}),
-	casparcg_player_clip_playback_b: literal<MappingCasparCG & BlueprintMapping>({
-		device: PlayoutDeviceType.CASPARCG,
-		deviceId: 'caspar01',
-		lookahead: LookaheadMode.NONE,
-		channel: 6,
 		layer: 100
 	}),
 	casparcg_player_clip: literal<MappingCasparCG & BlueprintMapping>({

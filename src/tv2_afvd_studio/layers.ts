@@ -30,19 +30,22 @@ export enum AtemLLayer {
 }
 
 export enum CasparLLayer {
-	CasparClipPlaybackA = 'casparcg_player_clip_playback_a',
-	CasparClipPlaybackB = 'casparcg_player_clip_playback_b',
 	CasparPlayerClip = 'casparcg_player_clip',
 	CasparPlayerClipNext = 'casparcg_player_clip_next',
 	CasparPlayerClipNextWarning = 'casparcg_player_clip_next_warning',
 	CasparPlayerClipNextCustom = 'casparcg_player_clip_next_custom',
 	CasparPlayerWipe = 'casparcg_player_wipe',
 	CasparPlayerSoundEffect = 'casparcg_player_soundeffect',
+	CasparPlayerClipPending = 'casparcg_player_clip_pending',
 
 	CasparCGGraphics = 'casparcg_cg_graphics',
 	CasparCGEffects = 'casparcg_cg_effects',
 
 	CasparCountdown = 'casparcg_cg_countdown'
+}
+
+export function CasparPlayerClip(i: number) {
+	return `casparcg_player_clip_${i}`
 }
 
 export function HyperdeckLLayer(index: number) {

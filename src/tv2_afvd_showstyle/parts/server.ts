@@ -4,10 +4,10 @@ import {
 	IBlueprintAdLibPiece,
 	IBlueprintPart,
 	IBlueprintPiece,
+	IBlueprintPieceDB,
 	PieceLifespan,
 	TimelineObjectCoreExt,
-	VTContent,
-	IBlueprintPieceDB
+	VTContent
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
 import { CasparLLayer } from '../../tv2_afvd_studio/layers'
@@ -16,11 +16,7 @@ import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBod
 import { SourceLayer } from '../layers'
 import { CreatePartInvalid } from './invalid'
 
-export function CreatePartServer(
-	_config: BlueprintConfig,
-	partDefinition: PartDefinition,
-	playbackServerA: boolean
-): BlueprintResultPart {
+export function CreatePartServer(_config: BlueprintConfig, partDefinition: PartDefinition): BlueprintResultPart {
 	if (partDefinition.fields === undefined) {
 		return CreatePartInvalid(partDefinition)
 	}
@@ -69,7 +65,7 @@ export function CreatePartServer(
 							duration
 						},
 						priority: 1,
-						layer: playbackServerA ? CasparLLayer.CasparClipPlaybackA : CasparLLayer.CasparClipPlaybackB,
+						layer: CasparLLayer.CasparPlayerClipPending,
 						content: {
 							deviceType: DeviceType.CASPARCG,
 							type: TimelineContentTypeCasparCg.MEDIA,

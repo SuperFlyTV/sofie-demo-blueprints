@@ -107,6 +107,31 @@ export class NotesContext extends CommonContext implements INotesContext {
 }
 
 // tslint:disable-next-line: max-classes-per-file
+export class LoggingNotesContext extends CommonContext implements INotesContext {
+	constructor(id?: string) {
+		super(id || 'LoggingNotesContext')
+	}
+
+	public getNotes() {
+		// We log it instead of returning notes
+		return []
+	}
+
+	/** Throw Error and display message to the user in the GUI */
+	public error(message: string) {
+		// logger.error('Error from blueprint: ' + message)
+		// tslint:disable-next-line: no-console
+		console.error(message)
+		throw new Error(message)
+	}
+	/** Save note, which will be displayed to the user in the GUI */
+	public warning(message: string) {
+		// tslint:disable-next-line: no-console
+		console.log(message)
+	}
+}
+
+// tslint:disable-next-line: max-classes-per-file
 export class ShowStyleContext extends NotesContext implements IShowStyleContext {
 	public studioConfig: { [key: string]: ConfigItemValue } = {}
 	public showStyleConfig: { [key: string]: ConfigItemValue } = {}
