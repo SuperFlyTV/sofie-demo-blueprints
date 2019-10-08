@@ -9,7 +9,7 @@ import {
 import { IBlueprintPieceDB, NotesContext, OnGenerateTimelineObj } from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
 import { MEDIA_PLAYER_AUTO } from '../../types/constants'
-import { CasparLLayer, CasparPlayerClip } from '../layers'
+import { CasparLLayer, CasparPlayerClip, SisyfosLLAyer, SisyfosSourceClip } from '../layers'
 import {
 	MediaPlayerClaim,
 	PieceMetaData,
@@ -295,6 +295,13 @@ function updateObjectsToMediaPlayer(
 				context.warning(
 					`Trying to move ATEM object of unknown type (${atemObj.content.type}) for media player assignment`
 				)
+			}
+		} else if (obj.content.deviceType === DeviceType.SISYFOS) {
+			if (obj.layer === SisyfosLLAyer.SisyfosSourceClipPending) {
+				obj.layer = SisyfosSourceClip(playerId)
+			} else {
+				context.warning(`Moving object to mediaPlayer that probably shouldnt be? (from layer: ${obj.layer})`)
+				// context.warning(obj)
 			}
 		} else {
 			context.warning(`Trying to move object of unknown type (${obj.content.deviceType}) for media player assignment`)

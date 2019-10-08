@@ -1,4 +1,10 @@
-import { DeviceType, TimelineContentTypeCasparCg, TimelineObjCCGMedia } from 'timeline-state-resolver-types'
+import {
+	DeviceType,
+	TimelineContentTypeCasparCg,
+	TimelineObjCCGMedia,
+	TimelineObjSisyfosAny,
+	TimelineContentTypeSisyfos
+} from 'timeline-state-resolver-types'
 import {
 	BlueprintResultPart,
 	IBlueprintAdLibPiece,
@@ -10,7 +16,7 @@ import {
 	VTContent
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
-import { CasparLLayer } from '../../tv2_afvd_studio/layers'
+import { CasparLLayer, SisyfosLLAyer } from '../../tv2_afvd_studio/layers'
 import { BlueprintConfig } from '../helpers/config'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
@@ -71,6 +77,22 @@ export function CreatePartServer(_config: BlueprintConfig, partDefinition: PartD
 							type: TimelineContentTypeCasparCg.MEDIA,
 							file,
 							length: duration
+						}
+					}),
+
+					literal<TimelineObjSisyfosAny>({
+						id: '',
+						enable: {
+							start: 0,
+							duration
+						},
+						priority: 1,
+						layer: SisyfosLLAyer.SisyfosSourceClipPending,
+						content: {
+							deviceType: DeviceType.SISYFOS,
+							type: TimelineContentTypeSisyfos.SISYFOS,
+							isPgm: true,
+							faderLevel: 0
 						}
 					})
 				])

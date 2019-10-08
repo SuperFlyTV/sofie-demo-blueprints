@@ -44,8 +44,16 @@ export enum CasparLLayer {
 	CasparCountdown = 'casparcg_cg_countdown'
 }
 
+export enum SisyfosLLAyer {
+	SisyfosSourceClipPending = 'sisyfos_source_clip_pending'
+}
+
 export function CasparPlayerClip(i: number) {
 	return `casparcg_player_clip_${i}`
+}
+
+export function SisyfosSourceClip(i: number) {
+	return `sisyfos_player_clip_${i}`
 }
 
 export function HyperdeckLLayer(index: number) {
