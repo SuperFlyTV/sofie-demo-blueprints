@@ -3,6 +3,11 @@ import * as _ from 'underscore'
 
 export const CORE_INJECTED_KEYS = ['SofieHostURL']
 
+export enum MediaPlayerType {
+	CasparWithNext = 'CasparWithNext',
+	CasparAB = 'CasparAB'
+}
+
 export const studioConfigManifest: ConfigManifestEntry[] = [
 	{
 		id: 'MediaFlowId',
@@ -35,6 +40,15 @@ export const studioConfigManifest: ConfigManifestEntry[] = [
 		type: ConfigManifestEntryType.NUMBER,
 		required: false,
 		defaultVal: 1
+	},
+	{
+		id: 'MediaPlayerType',
+		name: 'Media player type',
+		description: 'Type of media player to use',
+		type: ConfigManifestEntryType.ENUM,
+		options: _.values(MediaPlayerType),
+		required: true,
+		defaultVal: MediaPlayerType.CasparWithNext
 	},
 	{
 		id: 'ABMediaPlayers',

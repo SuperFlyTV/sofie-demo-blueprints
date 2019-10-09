@@ -1,12 +1,13 @@
 import * as _ from 'underscore'
 
-export type LLayer = VirtualAbstractLLayer | AtemLLayer | CasparLLayer
+export type LLayer = VirtualAbstractLLayer | AtemLLayer | CasparLLayer | SisyfosLLAyer
 
 /** Get all the Real LLayers (map to devices). Note: Does not include some which are dynamically generated */
 export function RealLLayers() {
 	return _.values(AtemLLayer)
 		.concat(_.values(CasparLLayer))
 		.concat(_.values(LawoLLayer))
+		.concat(_.values(SisyfosLLAyer))
 }
 export function VirtualLLayers() {
 	return _.values(VirtualAbstractLLayer)

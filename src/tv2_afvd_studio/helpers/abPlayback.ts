@@ -299,6 +299,11 @@ function updateObjectsToMediaPlayer(
 		} else if (obj.content.deviceType === DeviceType.SISYFOS) {
 			if (obj.layer === SisyfosLLAyer.SisyfosSourceClipPending) {
 				obj.layer = SisyfosSourceClip(playerId)
+			} else if (obj.lookaheadForLayer === SisyfosLLAyer.SisyfosSourceClipPending) {
+				// This works on the assumption that layer will contain lookaheadForLayer, but not the exact syntax.
+				// Hopefully this will be durable to any potential future core changes
+				obj.layer = (obj.layer + '').replace(obj.lookaheadForLayer.toString(), SisyfosSourceClip(playerId))
+				obj.lookaheadForLayer = SisyfosSourceClip(playerId)
 			} else {
 				context.warning(`Moving object to mediaPlayer that probably shouldnt be? (from layer: ${obj.layer})`)
 				// context.warning(obj)

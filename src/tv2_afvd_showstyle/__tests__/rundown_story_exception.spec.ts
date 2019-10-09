@@ -1,7 +1,7 @@
 import * as _ from 'underscore'
 
 import { IBlueprintPieceGeneric, IBlueprintRundownDB, IngestRundown } from 'tv-automation-sofie-blueprints-integration'
-import { ConfigMap, defaultShowStyleConfig, defaultStudioConfig } from './configs'
+import { casparABPlaybackConfig, ConfigMap, defaultShowStyleConfig } from './configs'
 // import { ConfigMap } from './configs'
 import { checkAllLayers } from './layers-check'
 
@@ -18,10 +18,18 @@ import Blueprints from '../index'
 
 // More ROs can be listed here to make them part of the basic blueprint doesnt crash test
 const rundowns: Array<{ ro: string; studioConfig: ConfigMap; showStyleConfig: ConfigMap }> = [
-	{ ro: '../../../rundowns/example.json', studioConfig: defaultStudioConfig, showStyleConfig: defaultShowStyleConfig },
-	{ ro: '../../../rundowns/news.json', studioConfig: defaultStudioConfig, showStyleConfig: defaultShowStyleConfig },
-	{ ro: '../../../rundowns/sports.json', studioConfig: defaultStudioConfig, showStyleConfig: defaultShowStyleConfig },
-	{ ro: '../../../rundowns/on-air.json', studioConfig: defaultStudioConfig, showStyleConfig: defaultShowStyleConfig }
+	{
+		ro: '../../../rundowns/example.json',
+		studioConfig: casparABPlaybackConfig,
+		showStyleConfig: defaultShowStyleConfig
+	},
+	{ ro: '../../../rundowns/news.json', studioConfig: casparABPlaybackConfig, showStyleConfig: defaultShowStyleConfig },
+	{
+		ro: '../../../rundowns/sports.json',
+		studioConfig: casparABPlaybackConfig,
+		showStyleConfig: defaultShowStyleConfig
+	},
+	{ ro: '../../../rundowns/on-air.json', studioConfig: casparABPlaybackConfig, showStyleConfig: defaultShowStyleConfig }
 ]
 
 describe('Rundown exceptions', () => {

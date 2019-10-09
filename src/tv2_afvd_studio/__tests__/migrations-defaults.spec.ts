@@ -1,11 +1,18 @@
 import * as _ from 'underscore'
 
-import { RealLLayers } from '../../tv2_afvd_studio/layers'
-import MappingsDefaults from '../migrations/mappings-defaults'
+import { MediaPlayerType } from '../config-manifests'
+import { RealLLayers } from '../layers'
+import MappingsDefaults, { getMediaPlayerMappings } from '../migrations/mappings-defaults'
 
 describe('Migration Defaults', () => {
 	test('MappingsDefaults', () => {
-		const defaultsIds = _.map(MappingsDefaults, (v, id) => {
+		const allMappings = {
+			...MappingsDefaults,
+			// Inject MediaPlayer ones, as they are used directly and part of the enum
+			...getMediaPlayerMappings(MediaPlayerType.CasparAB, []),
+			...getMediaPlayerMappings(MediaPlayerType.CasparWithNext, [])
+		}
+		const defaultsIds = _.map(allMappings, (v, id) => {
 			v = v
 			return id
 		}).sort()
