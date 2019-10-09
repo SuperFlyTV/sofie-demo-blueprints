@@ -6,7 +6,6 @@ export type LLayer = VirtualAbstractLLayer | AtemLLayer | CasparLLayer | Sisyfos
 export function RealLLayers() {
 	return _.values(AtemLLayer)
 		.concat(_.values(CasparLLayer))
-		.concat(_.values(LawoLLayer))
 		.concat(_.values(SisyfosLLAyer))
 }
 export function VirtualLLayers() {
@@ -59,9 +58,4 @@ export function SisyfosSourceClip(i: number) {
 
 export function HyperdeckLLayer(index: number) {
 	return `hyperdeck${index}`
-}
-
-export enum LawoLLayer {
-	LawoSourceAutomix = 'lawo_source_automix',
-	LawoSourceClipStk = 'lawo_source_clip_stk'
 }

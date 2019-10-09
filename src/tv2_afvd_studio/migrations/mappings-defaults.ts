@@ -6,8 +6,7 @@ import {
 	MappingCasparCG,
 	MappingHyperdeck,
 	MappingHyperdeckType,
-	MappingLawo,
-	MappingLawoType
+	MappingSisyfos
 } from 'timeline-state-resolver-types'
 import { BlueprintMapping, BlueprintMappings, LookaheadMode } from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
@@ -155,20 +154,6 @@ export default literal<BlueprintMappings>({
 		lookahead: LookaheadMode.RETAIN,
 		mappingType: MappingAtemType.SuperSourceBox,
 		index: 0 // 0 = SS
-	}),
-	lawo_source_automix: literal<MappingLawo & BlueprintMapping>({
-		device: PlayoutDeviceType.LAWO,
-		deviceId: 'lawo0',
-		lookahead: LookaheadMode.NONE,
-		mappingType: MappingLawoType.SOURCE,
-		identifier: 'AMix'
-	}),
-	lawo_source_clip_stk: literal<MappingLawo & BlueprintMapping>({
-		device: PlayoutDeviceType.LAWO,
-		deviceId: 'lawo0',
-		lookahead: LookaheadMode.NONE,
-		mappingType: MappingLawoType.SOURCE,
-		identifier: 'STK'
 	})
 })
 
@@ -230,12 +215,11 @@ export function getMediaPlayerMappings(mode: MediaPlayerType, mediaPlayers: Blue
 					channel: 0, // TODO?
 					layer: 100
 				})
-				res[`sisyfos_source_clip_${mp.id}`] = literal<MappingLawo & BlueprintMapping>({
-					device: PlayoutDeviceType.LAWO,
+				res[`sisyfos_source_clip_${mp.id}`] = literal<MappingSisyfos & BlueprintMapping>({
+					device: PlayoutDeviceType.SISYFOS,
 					deviceId: 'sisyfos0',
 					lookahead: LookaheadMode.NONE,
-					mappingType: MappingLawoType.SOURCE,
-					identifier: `CLIP${mp.id}` // TODO
+					channel: Number(mp.id) || 0
 				})
 			}
 

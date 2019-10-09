@@ -147,15 +147,6 @@ export const studioConfigManifest: ConfigManifestEntry[] = [
 		defaultVal: 2001
 	},
 	{
-		// Constants
-		id: 'LawoFadeInDuration',
-		name: 'Default Lawo fade in duration',
-		description: 'in ms',
-		type: ConfigManifestEntryType.NUMBER,
-		required: false,
-		defaultVal: 500 // 12,5 frames (minimum Lawo fade duration)
-	},
-	{
 		id: 'CasparOutputDelay',
 		name: 'CasparCG Output latency',
 		description: 'Delay between playback and output on SDI (ms)',
