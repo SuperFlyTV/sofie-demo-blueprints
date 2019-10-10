@@ -12,7 +12,8 @@ import { literal } from '../../common/util'
 import mappingsDefaults, {
 	getCameraSisyfosMappings,
 	getHyperdeckMappings,
-	getMediaPlayerMappings
+	getMediaPlayerMappings,
+	getRemoteSisyfosMappings
 } from '../../tv2_afvd_studio/migrations/mappings-defaults'
 import { parseConfig } from '../helpers/config'
 import { SourceLayer } from '../layers'
@@ -39,7 +40,8 @@ export function checkAllLayers(
 		...getMediaPlayerMappings(config.studio.MediaPlayerType, config.mediaPlayers),
 		...getCameraSisyfosMappings(
 			'1:1,2:2,3:3,4:4,5:5,CS 3:6,AR:7,HVID:8,1S:1,3S:3,X8:8,11:11,12:12,13:13,14:14,15:15,SORT:1,CS1:1,CS2:2'
-		)
+		),
+		...getRemoteSisyfosMappings('1:1')
 	})
 
 	const validateObject = (obj: TimelineObjectCoreExt) => {

@@ -3,13 +3,18 @@ import {
 	IBlueprintAdLibPiece,
 	IBlueprintPart,
 	IBlueprintPiece,
-	PieceLifespan
+	PartContext
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
+import { BlueprintConfig } from '../../tv2_afvd_studio/helpers/config'
+import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
-import { SourceLayer } from '../layers'
 
-export function CreatePartLive(partDefinition: PartDefinition): BlueprintResultPart {
+export function CreatePartLive(
+	context: PartContext,
+	config: BlueprintConfig,
+	partDefinition: PartDefinition
+): BlueprintResultPart {
 	const part = literal<IBlueprintPart>({
 		externalId: partDefinition.externalId,
 		title: PartType[partDefinition.type] + ' - ' + partDefinition.rawType,
@@ -21,17 +26,7 @@ export function CreatePartLive(partDefinition: PartDefinition): BlueprintResultP
 	const adLibPieces: IBlueprintAdLibPiece[] = []
 	const pieces: IBlueprintPiece[] = []
 
-	pieces.push(
-		literal<IBlueprintPiece>({
-			_id: '',
-			externalId: partDefinition.externalId,
-			name: part.title,
-			enable: { start: 0 },
-			outputLayerId: 'pgm0',
-			sourceLayerId: SourceLayer.PgmLive,
-			infiniteMode: PieceLifespan.OutOnNextPart
-		})
-	)
+	EvaluateCues(context, config, pieces, partDefinition.cues, part.externalId)
 
 	return {
 		part,

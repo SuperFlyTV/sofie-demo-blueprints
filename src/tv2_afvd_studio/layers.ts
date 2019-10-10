@@ -4,9 +4,12 @@ export type LLayer = VirtualAbstractLLayer | AtemLLayer | CasparLLayer | Sisyfos
 
 /** Get all the Real LLayers (map to devices). Note: Does not include some which are dynamically generated */
 export function RealLLayers() {
-	return _.values(AtemLLayer)
-		.concat(_.values(CasparLLayer))
-		.concat(_.values(SisyfosLLAyer))
+	return (
+		_.values(AtemLLayer)
+			// @ts-ignore
+			.concat(_.values(CasparLLayer))
+			.concat(_.values(SisyfosLLAyer))
+	)
 }
 export function VirtualLLayers() {
 	return _.values(VirtualAbstractLLayer)
@@ -58,6 +61,14 @@ export function SisyfosSourceClip(i: number) {
 
 export function SisyfosSourceCamera(name: string) {
 	return `sisyfos_camera_active_${name}`
+}
+
+export function SisyfosSourceRemote(name: string, variant?: string) {
+	let source = `sisyfos_remote_source_${name}`
+	if (variant) {
+		source = `${source}_${variant.replace(' ', '_')}`
+	}
+	return source
 }
 
 export function HyperdeckLLayer(index: number) {
