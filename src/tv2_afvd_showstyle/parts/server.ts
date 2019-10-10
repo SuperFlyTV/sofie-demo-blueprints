@@ -36,7 +36,7 @@ export function CreatePartServer(
 	}
 
 	const file = partDefinition.fields.videoId
-	const duration = Number(partDefinition.fields.totalTime) * 1000 || 0
+	const duration = Number(partDefinition.fields.tapeTime) * 1000 || 0
 
 	const part = literal<IBlueprintPart>({
 		externalId: partDefinition.externalId,
