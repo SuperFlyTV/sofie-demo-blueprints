@@ -4,7 +4,9 @@ import {
 	MappingAtemType,
 	TimelineContentTypeAtem,
 	TimelineObjAtemME,
-	TSRTimelineObjBase
+	TSRTimelineObjBase,
+	TimelineObjSisyfosAny,
+	TimelineContentTypeSisyfos
 } from 'timeline-state-resolver-types'
 import { BlueprintMapping, BlueprintMappings, IStudioContext } from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
@@ -38,6 +40,8 @@ export function getBaseline(context: IStudioContext): TSRTimelineObjBase[] {
 		(_id, v) => v.device === DeviceType.ATEM && (v as any).mappingType === MappingAtemType.MixEffect
 	)
 
+	const sisyfosMappings = filterMappings(mappings, (_id, v) => v.device === DeviceType.SISYFOS)
+
 	return [
 		...convertMappings(atemMeMappings, id =>
 			literal<TimelineObjAtemME>({
@@ -52,6 +56,20 @@ export function getBaseline(context: IStudioContext): TSRTimelineObjBase[] {
 						input: AtemSourceIndex.Bars,
 						transition: AtemTransitionStyle.CUT
 					}
+				}
+			})
+		),
+		...convertMappings(sisyfosMappings, id =>
+			literal<TimelineObjSisyfosAny>({
+				id: '',
+				enable: { while: '1', duration: 0 },
+				priority: 0,
+				layer: id,
+				content: {
+					deviceType: DeviceType.SISYFOS,
+					type: TimelineContentTypeSisyfos.SISYFOS,
+					isPgm: 0,
+					faderLevel: -1
 				}
 			})
 		)
