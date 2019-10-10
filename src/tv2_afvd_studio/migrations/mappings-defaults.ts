@@ -12,7 +12,7 @@ import { BlueprintMapping, BlueprintMappings, LookaheadMode } from 'tv-automatio
 import * as _ from 'underscore'
 import { literal } from '../../common/util'
 import { MediaPlayerType } from '../config-manifests'
-import { BlueprintConfig } from '../helpers/config'
+import { BlueprintConfig, StudioConfig } from '../helpers/config'
 import { HyperdeckLLayer } from '../layers'
 
 export default literal<BlueprintMappings>({
@@ -169,6 +169,24 @@ export function getHyperdeckMappings(count: number) {
 			lookahead: LookaheadMode.NONE
 		})
 	}
+
+	return res
+}
+
+export function getCameraSisyfosMappings(cameras: StudioConfig['SourcesCam']) {
+	const res: BlueprintMappings = {}
+	const cams = cameras.split(',')
+	cams.forEach(cam => {
+		const props = cam.split(':')
+		if (props[0] && props[1]) {
+			res[`sisyfos_camera_active_${props[0]}`] = literal<MappingSisyfos & BlueprintMapping>({
+				device: PlayoutDeviceType.SISYFOS,
+				deviceId: 'sisyfos0',
+				lookahead: LookaheadMode.NONE,
+				channel: Number(props[1]) || 0
+			})
+		}
+	})
 
 	return res
 }

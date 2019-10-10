@@ -25,8 +25,6 @@ const blankStudioConfig: StudioConfig = {
 		SplitArtK: 0,
 		Default: 0
 	},
-
-	LawoFadeInDuration: 0,
 	CasparOutputDelay: 0
 }
 

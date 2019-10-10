@@ -52,7 +52,6 @@ export interface StudioConfig {
 	// Dev overrides
 
 	// Constants
-	LawoFadeInDuration: number
 	CasparOutputDelay: number
 }
 

@@ -3,10 +3,10 @@ import {
 	DeviceType,
 	MappingAtemType,
 	TimelineContentTypeAtem,
+	TimelineContentTypeSisyfos,
 	TimelineObjAtemME,
-	TSRTimelineObjBase,
 	TimelineObjSisyfosAny,
-	TimelineContentTypeSisyfos
+	TSRTimelineObjBase
 } from 'timeline-state-resolver-types'
 import { BlueprintMapping, BlueprintMappings, IStudioContext } from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'

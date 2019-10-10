@@ -56,6 +56,10 @@ export function SisyfosSourceClip(i: number) {
 	return `sisyfos_player_clip_${i}`
 }
 
+export function SisyfosSourceCamera(name: string) {
+	return `sisyfos_camera_active_${name}`
+}
+
 export function HyperdeckLLayer(index: number) {
 	return `hyperdeck${index}`
 }

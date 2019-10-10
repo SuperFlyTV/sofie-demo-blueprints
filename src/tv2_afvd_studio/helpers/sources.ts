@@ -44,7 +44,7 @@ export function parseMapStr(
 	return res
 }
 
-type SourceInfoType = SourceLayerType.CAMERA | SourceLayerType.REMOTE
+type SourceInfoType = SourceLayerType.CAMERA | SourceLayerType.REMOTE | SourceLayerType.AUDIO
 export interface SourceInfo {
 	type: SourceInfoType
 	id: string
@@ -85,12 +85,17 @@ export function parseSources(context: NotesContext | undefined, studioConfig: St
 }
 
 export function FindSourceInfo(sources: SourceInfo[], type: SourceInfoType, id: string): SourceInfo | undefined {
-	const name = id.match(/^(?:KAM|CAM)(?:ERA)? (.+)$/i)
-	if (!name) {
-		return undefined
-	}
+	switch (type) {
+		case SourceLayerType.CAMERA:
+			const name = id.match(/^(?:KAM|CAM)(?:ERA)? (.+)$/i)
+			if (!name) {
+				return undefined
+			}
 
-	return _.find(sources, s => s.type === type && s.id === name[1].replace(/minus mic/, '').trim())
+			return _.find(sources, s => s.type === type && s.id === name[1].replace(/minus mic/, '').trim())
+		default:
+			return undefined
+	}
 }
 
 export function FindSourceInfoStrict(

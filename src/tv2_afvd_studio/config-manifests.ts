@@ -22,7 +22,7 @@ export const studioConfigManifest: ConfigManifestEntry[] = [
 		name: 'Camera Mapping',
 		description: 'Camera number to ATEM input (eg 1:1,9:2)',
 		type: ConfigManifestEntryType.STRING,
-		required: false,
+		required: true,
 		defaultVal: '1:1,2:2,3:3,4:4,5:5'
 	},
 	{
