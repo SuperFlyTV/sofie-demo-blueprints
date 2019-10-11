@@ -45,7 +45,7 @@ export function EvaluateCues(
 				case CueType.Ekstern:
 					console.log(`CUE: ${JSON.stringify(parsedCue)}`)
 					const eksternProps = ((parsedCue as unknown) as CueDefinitionEkstern).source.match(
-						/^LIVE ([^\s]+)(?: (spor 2|stereo))?$/i
+						/^LIVE ([^\s]+)(?: (.+))?$/i
 					)
 					console.log(`Props: ${eksternProps}`)
 					if (!eksternProps) {
@@ -102,24 +102,8 @@ export function EvaluateCues(
 									}),
 
 									...(variant
-										? variant.match(/spor 2/gi) // TODO: Be more variant agnostic
+										? variant.match(/stereo/gi)
 											? [
-													literal<TimelineObjSisyfosMessage>({
-														id: '',
-														enable: {
-															start: 0
-														},
-														priority: 1,
-														layer: SisyfosSourceRemote(source, 'spor 2'),
-														content: {
-															deviceType: DeviceType.SISYFOS,
-															type: TimelineContentTypeSisyfos.SISYFOS,
-															isPgm: 1,
-															faderLevel: 0.75
-														}
-													})
-											  ]
-											: [
 													literal<TimelineObjSisyfosMessage>({
 														id: '',
 														enable: {
@@ -141,6 +125,22 @@ export function EvaluateCues(
 														},
 														priority: 1,
 														layer: SisyfosSourceRemote(source, 'stereo_2'),
+														content: {
+															deviceType: DeviceType.SISYFOS,
+															type: TimelineContentTypeSisyfos.SISYFOS,
+															isPgm: 1,
+															faderLevel: 0.75
+														}
+													})
+											  ]
+											: [
+													literal<TimelineObjSisyfosMessage>({
+														id: '',
+														enable: {
+															start: 0
+														},
+														priority: 1,
+														layer: SisyfosSourceRemote(source, variant),
 														content: {
 															deviceType: DeviceType.SISYFOS,
 															type: TimelineContentTypeSisyfos.SISYFOS,
