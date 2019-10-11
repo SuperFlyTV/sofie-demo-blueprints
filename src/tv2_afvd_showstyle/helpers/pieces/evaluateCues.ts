@@ -45,7 +45,7 @@ export function EvaluateCues(
 				case CueType.Ekstern:
 					console.log(`CUE: ${JSON.stringify(parsedCue)}`)
 					const eksternProps = ((parsedCue as unknown) as CueDefinitionEkstern).source.match(
-						/^LIVE (\d+)(?: (spor 2|stereo))?$/i
+						/^LIVE ([^\s]+)(?: (spor 2|stereo))?$/i
 					)
 					console.log(`Props: ${eksternProps}`)
 					if (!eksternProps) {
@@ -102,7 +102,7 @@ export function EvaluateCues(
 									}),
 
 									...(variant
-										? variant.match(/spor 2/gi)
+										? variant.match(/spor 2/gi) // TODO: Be more variant agnostic
 											? [
 													literal<TimelineObjSisyfosMessage>({
 														id: '',
