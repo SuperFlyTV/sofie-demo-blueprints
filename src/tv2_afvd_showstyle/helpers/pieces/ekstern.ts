@@ -31,15 +31,18 @@ export function EvaluateEkstern(
 ) {
 	const eksternProps = parsedCue.source.match(/^LIVE ([^\s]+)(?: (.+))?$/i)
 	if (!eksternProps) {
+		context.warning(`Could not find live source for ${parsedCue.source}`)
 		return
 	}
 	const source = eksternProps[1]
 	const variant = eksternProps[2]
 	if (!source) {
+		context.warning(`Could not find live source for ${parsedCue.source}`)
 		return
 	}
-	const sourceInfoCam = FindSourceInfoStrict(context, config.sources, SourceLayerType.REMOTE, (parsedCue as any).source)
+	const sourceInfoCam = FindSourceInfoStrict(context, config.sources, SourceLayerType.REMOTE, parsedCue.source)
 	if (sourceInfoCam === undefined) {
+		context.warning(`Could not find ATEM input for source ${parsedCue.source}`)
 		return
 	}
 	const atemInput = sourceInfoCam.port
