@@ -10,6 +10,7 @@ import {
 	IBlueprintAdLibPiece,
 	IBlueprintPart,
 	IBlueprintPiece,
+	PartContext,
 	PieceLifespan,
 	TimelineObjectCoreExt,
 	VTContent
@@ -18,12 +19,14 @@ import { literal } from '../../common/util'
 import { CasparLLayer, SisyfosLLAyer } from '../../tv2_afvd_studio/layers'
 import { PieceMetaData, TimelineBlueprintExt } from '../../tv2_afvd_studio/onTimelineGenerate'
 import { BlueprintConfig } from '../helpers/config'
+import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
 import { CreatePartInvalid } from './invalid'
 
 export function CreatePartServer(
-	_config: BlueprintConfig,
+	context: PartContext,
+	config: BlueprintConfig,
 	partDefinition: PartDefinition,
 	mediaPlayerSessionId: string
 ): BlueprintResultPart {
@@ -109,6 +112,8 @@ export function CreatePartServer(
 			})
 		})
 	)
+
+	EvaluateCues(context, config, pieces, partDefinition.cues, part.externalId)
 
 	return {
 		part,
