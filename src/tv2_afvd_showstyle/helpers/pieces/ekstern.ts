@@ -18,13 +18,7 @@ import { literal } from '../../../common/util'
 import { BlueprintConfig } from '../../../tv2_afvd_studio/helpers/config'
 import { FindSourceInfoStrict } from '../../../tv2_afvd_studio/helpers/sources'
 import { AtemLLayer, SisyfosSourceRemote } from '../../../tv2_afvd_studio/layers'
-import {
-	CueDefinitionEkstern,
-	CueTime,
-	CueType,
-	ParseCue,
-	UnparsedCue
-} from '../../inewsConversion/converters/ParseCue'
+import { CueDefinitionEkstern } from '../../inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../layers'
 import { CalculateTime } from './evaluateCues'
 
@@ -35,7 +29,7 @@ export function EvaluateEkstern(
 	partId: string,
 	parsedCue: CueDefinitionEkstern
 ) {
-	const eksternProps = ((parsedCue as unknown) as CueDefinitionEkstern).source.match(/^LIVE ([^\s]+)(?: (.+))?$/i)
+	const eksternProps = parsedCue.source.match(/^LIVE ([^\s]+)(?: (.+))?$/i)
 	if (!eksternProps) {
 		return
 	}
