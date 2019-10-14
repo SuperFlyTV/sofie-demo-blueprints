@@ -20,7 +20,9 @@ export function EvaluateCues(
 					EvaluateEkstern(context, config, pieces, partId, parsedCue)
 					break
 				default:
-					context.warning(`Unknown cue type: ${CueType[parsedCue.type]}`)
+					if (parsedCue.type !== CueType.Unknown) {
+						context.warning(`Unknown cue type: ${CueType[parsedCue.type]}`)
+					}
 					break
 			}
 		}
