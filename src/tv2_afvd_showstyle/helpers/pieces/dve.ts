@@ -1,4 +1,12 @@
 import {
+	AtemTransitionStyle,
+	DeviceType,
+	TimelineContentTypeAtem,
+	TimelineObjAtemME,
+	TimelineObjAtemSsrc,
+	TSRTimelineObj
+} from 'timeline-state-resolver-types'
+import {
 	IBlueprintPiece,
 	PartContext,
 	PieceLifespan,
@@ -9,14 +17,14 @@ import * as _ from 'underscore'
 import { literal } from '../../../common/util'
 import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
 import { BlueprintConfig } from '../../../tv2_afvd_studio/helpers/config'
+import { atemNextObject } from '../../../tv2_afvd_studio/helpers/objects'
 import { FindSourceInfoStrict, SourceInfo } from '../../../tv2_afvd_studio/helpers/sources'
+import { AtemLLayer } from '../../../tv2_afvd_studio/layers'
+import { AtemSourceIndex } from '../../../types/atem'
 import { CueDefinitionDVE } from '../../inewsConversion/converters/ParseCue'
 import { CalculateTime } from './evaluateCues'
-// import { TSRTimelineObj } from 'timeline-state-resolver-types'
 
-// {"boxes":{"0":{"enabled":true,"source":0,"x":0,"y":450,"size":500,"cropped":false,"cropTop":0,"cropBottom":0,"cropLeft":0,"cropRight":0},"1":{"enabled":true,"source":0,"x":50,"y":580,"size":256,"cropped":false,"cropTop":0,"cropBottom":0,"cropLeft":0,"cropRight":0},"2":{"enabled":true,"source":0,"x":-800,"y":-450,"size":500,"cropped":false,"cropTop":0,"cropBottom":0,"cropLeft":0,"cropRight":0},"3":{"enabled":true,"source":0,"x":800,"y":-450,"size":500,"cropped":false,"cropTop":0,"cropBottom":0,"cropLeft":0,"cropRight":0}},"index":0,"properties":{"artFillSource":3010,"artCutSource":3011,"artOption":0,"artPreMultiplied":false,"artClip":500,"artGain":700,"artInvertKey":false},"border":{"borderEnabled":false,"borderBevel":1,"borderOuterWidth":50,"borderInnerWidth":50,"borderOuterSoftness":0,"borderInnerSoftness":0,"borderBevelSoftness":0,"borderBevelPosition":50,"borderHue":0,"borderSaturation":0,"borderLuma":1000,"borderLightSourceDirection":360,"borderLightSourceAltitude":25}}
-
-/*interface DVEConfigBox {
+interface DVEConfigBox {
 	enabled: boolean
 	source: number
 	x: number
@@ -31,10 +39,7 @@ import { CalculateTime } from './evaluateCues'
 
 interface DVEConfig {
 	boxes: {
-		0: DVEConfigBox
-		1: DVEConfigBox
-		2: DVEConfigBox
-		3: DVEConfigBox
+		[key: number]: DVEConfigBox
 	}
 	index: number
 	properties: {
@@ -61,7 +66,7 @@ interface DVEConfig {
 		borderLightSourceDirection: number
 		borderLightSourceAltitude: number
 	}
-}*/
+}
 
 const exampleJSON = {
 	boxes: {
@@ -171,7 +176,40 @@ export function EvaluateDVE(
 		}
 	}
 
-	parsedCue.sources.forEach(source => {
+	function makeBox(
+		configBox: DVEConfigBox
+	): {
+		x: number
+		y: number
+		scale: number
+		crop?: {
+			left: number
+			top: number
+			right: number
+			bottom: number
+		}
+	} {
+		return {
+			x: configBox.x,
+			y: configBox.y,
+			scale: configBox.size,
+			...(configBox.cropped
+				? {
+						crop: {
+							left: configBox.cropLeft,
+							top: configBox.cropTop,
+							right: configBox.cropRight,
+							bottom: configBox.cropBottom
+						}
+				  }
+				: {})
+		}
+	}
+
+	const template: DVEConfig = rawTemplate as DVEConfig
+	const boxes: DVEConfigBox[] = []
+
+	parsedCue.sources.forEach((source, index) => {
 		const props = source.split(' ')
 		const sourceType = props[0]
 		const sourceInput = props[1]
@@ -186,7 +224,11 @@ export function EvaluateDVE(
 				valid = false
 				return
 			}
-			boxSources.push(boxSource(sourceInfoCam, source))
+			boxSources.push({
+				...boxSource(sourceInfoCam, source),
+				geometry: makeBox(template.boxes[index])
+			})
+			boxes.push(template.boxes[index])
 		} else if (sourceType.match(/LIVE/i)) {
 			const sourceInfoLive = FindSourceInfoStrict(context, config.sources, SourceLayerType.REMOTE, source)
 			if (sourceInfoLive === undefined) {
@@ -194,13 +236,15 @@ export function EvaluateDVE(
 				valid = false
 				return
 			}
-			boxSources.push(boxSource(sourceInfoLive, source))
+			boxSources.push({
+				...boxSource(sourceInfoLive, source),
+				geometry: makeBox(template.boxes[index])
+			})
+			boxes.push(template.boxes[index])
 		} else {
 			context.warning(`Unknown source type: ${source}`)
 		}
 	})
-
-	/*const template: DVEConfig = rawTemplate as DVEConfig*/
 
 	if (valid) {
 		pieces.push(
@@ -218,8 +262,37 @@ export function EvaluateDVE(
 				content: literal<SplitsContent>({
 					boxSourceConfiguration: boxSources,
 					dveConfiguration: {},
-					// timelineObjects: literal<TSRTimelineObj>([])
-					timelineObjects: []
+					timelineObjects: _.compact<TSRTimelineObj>([
+						// setup ssrc
+						literal<TimelineObjAtemSsrc>({
+							id: `${partId}_DVE_ATEMSSRC`,
+							enable: { start: 0 },
+							priority: 1,
+							layer: AtemLLayer.AtemSSrcDefault,
+							content: {
+								deviceType: DeviceType.ATEM,
+								type: TimelineContentTypeAtem.SSRC,
+								ssrc: { boxes }
+							}
+						}),
+
+						literal<TimelineObjAtemME>({
+							id: '',
+							enable: { start: `#${partId}_DVE_ATEMSSRC.start + 80` }, // give the ssrc 2 frames to get configured
+							priority: 1,
+							layer: AtemLLayer.AtemMEProgram,
+							content: {
+								deviceType: DeviceType.ATEM,
+								type: TimelineContentTypeAtem.ME,
+								me: {
+									input: AtemSourceIndex.SSrc,
+									transition: AtemTransitionStyle.CUT
+								}
+							}
+						}),
+
+						atemNextObject(AtemSourceIndex.SSrc)
+					])
 				})
 			})
 		)
