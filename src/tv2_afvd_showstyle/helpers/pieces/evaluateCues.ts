@@ -1,6 +1,7 @@
 import { IBlueprintPiece, PartContext } from 'tv-automation-sofie-blueprints-integration'
 import { BlueprintConfig } from '../../../tv2_afvd_studio/helpers/config'
 import { CueTime, CueType, ParseCue, UnparsedCue } from '../../inewsConversion/converters/ParseCue'
+import { EvaluateDVE } from './dve'
 import { EvaluateEkstern } from './ekstern'
 
 const FRAME_TIME = 1000 / 25 // TODO: This should be pulled from config.
@@ -18,6 +19,9 @@ export function EvaluateCues(
 			switch (parsedCue.type) {
 				case CueType.Ekstern:
 					EvaluateEkstern(context, config, pieces, partId, parsedCue)
+					break
+				case CueType.DVE:
+					EvaluateDVE(context, config, pieces, partId, parsedCue)
 					break
 				default:
 					if (parsedCue.type !== CueType.Unknown) {
