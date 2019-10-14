@@ -4,7 +4,8 @@ import {
 	ConfigManifestEntry,
 	ConfigManifestEntryType,
 	NotesContext,
-	ShowStyleContext
+	ShowStyleContext,
+	TableConfigItemValue
 } from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
 import { assertUnreachable } from '../../common/util'
@@ -80,9 +81,12 @@ export function applyToConfig(
 				case ConfigManifestEntryType.ENUM:
 					newVal = overrideVal as string
 					break
+				case ConfigManifestEntryType.TABLE:
+					newVal = overrideVal as TableConfigItemValue
+					break
 				default:
-					assertUnreachable(val.type)
-					context.warning('Unknown config field type: ' + val.type)
+					assertUnreachable(val)
+					context.warning('Unknown config field type: ' + val)
 					break
 			}
 		} else if (val.required) {

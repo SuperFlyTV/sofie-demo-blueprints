@@ -4946,10 +4946,10 @@ tunnel-agent@^0.6.0:
   dependencies:
     safe-buffer "^5.0.1"
 
-tv-automation-sofie-blueprints-integration@^0.24.1:
-  version "0.24.1"
-  resolved "https://registry.yarnpkg.com/tv-automation-sofie-blueprints-integration/-/tv-automation-sofie-blueprints-integration-0.24.1.tgz#d2f7fe4408e0c5278be17bc1b5f943e75f4a0d25"
-  integrity sha512-Irq+MmW+94UDps0GAFbNy6//ba0mQXLlfCTwgGYb+FIY5hZGttOnw97dn4gV2p/8J7ZiD95RH17dYHyiw/+Lxw==
+tv-automation-sofie-blueprints-integration@^1.0.1:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/tv-automation-sofie-blueprints-integration/-/tv-automation-sofie-blueprints-integration-1.1.0.tgz#43af07640c471657c92c503956b289186d3bef69"
+  integrity sha512-pKPzbFz9rfTMqYAtsdF73i1Qb4gDpn+z3Cq+/WkQF4QLQUP60CnchNZ24YYXMiuaxEaoZqoNsRqeQU0wgyuTdA==
   dependencies:
     moment "^2.22.2"
     timeline-state-resolver-types "^3.2.0"

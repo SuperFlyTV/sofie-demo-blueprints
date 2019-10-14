@@ -28,10 +28,7 @@ const manifest: ShowStyleBlueprintManifest = {
 	onTimelineGenerate,
 
 	showStyleConfigManifest,
-	showStyleMigrations,
-
-	studioConfigManifest: [], // Should not be used
-	studioMigrations: [] // Should not be used
+	showStyleMigrations
 }
 
 export default manifest
