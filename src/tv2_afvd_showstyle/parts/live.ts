@@ -6,7 +6,7 @@ import {
 	PartContext
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
-import { BlueprintConfig } from '../../tv2_afvd_studio/helpers/config'
+import { BlueprintConfig } from '../../tv2_afvd_showstyle/helpers/config'
 import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 

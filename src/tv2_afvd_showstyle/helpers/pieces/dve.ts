@@ -7,16 +7,18 @@ import {
 	TSRTimelineObj
 } from 'timeline-state-resolver-types'
 import {
+	BasicConfigItemValue,
 	IBlueprintPiece,
 	PartContext,
 	PieceLifespan,
 	SourceLayerType,
-	SplitsContent
+	SplitsContent,
+	TableConfigItemValue
 } from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
 import { literal } from '../../../common/util'
+import { BlueprintConfig } from '../../../tv2_afvd_showstyle/helpers/config'
 import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
-import { BlueprintConfig } from '../../../tv2_afvd_studio/helpers/config'
 import { atemNextObject } from '../../../tv2_afvd_studio/helpers/objects'
 import { FindSourceInfoStrict, SourceInfo } from '../../../tv2_afvd_studio/helpers/sources'
 import { AtemLLayer } from '../../../tv2_afvd_studio/layers'
@@ -158,10 +160,16 @@ export function EvaluateDVE(
 		return
 	}
 
-	const rawTemplate = exampleJSON // TODO: pull from config
+	const rawTemplate = getDVETemplate(config.showStyle.DVEStyles, parsedCue.template) // TODO: pull from config
+	if (!rawTemplate) {
+		context.warning(`Could not find template ${parsedCue.template}`)
+		return
+	}
+	/*const background = rawTemplate.BackgroundLoop
+	console.log(background)*/
 
-	if (!templateIsValid(rawTemplate)) {
-		context.warning(`Invalid DVE template ${'EXAMPLE DVE'}`)
+	if (!templateIsValid(JSON.parse(rawTemplate.DVEJSON as string))) {
+		context.warning(`Invalid DVE template ${parsedCue.template}`)
 		return
 	}
 
@@ -169,7 +177,8 @@ export function EvaluateDVE(
 
 	const boxSources: any[] = []
 
-	const template: DVEConfig = rawTemplate as DVEConfig
+	// const template: DVEConfig = JSON.parse(rawTemplate.DVEJSON as string) as DVEConfig
+	const template: DVEConfig = exampleJSON as DVEConfig
 	const boxes: DVEConfigBox[] = []
 	let audioTimeline: TSRTimelineObj[] = []
 
@@ -211,6 +220,7 @@ export function EvaluateDVE(
 			audioTimeline = [...audioTimeline, ...GetSisyfosTimelineObjForEkstern(source)]
 		} else {
 			context.warning(`Unknown source type for DVE: ${source}`)
+			valid = false
 		}
 	})
 
@@ -356,7 +366,7 @@ function makeBox(
 	return {
 		x: configBox.x,
 		y: configBox.y,
-		scale: configBox.size,
+		scale: configBox.size / 1000,
 		...(configBox.cropped
 			? {
 					crop: {
@@ -368,4 +378,17 @@ function makeBox(
 			  }
 			: {})
 	}
+}
+
+function getDVETemplate(
+	config: TableConfigItemValue,
+	templateName: string
+):
+	| {
+			_id: string
+			[key: string]: BasicConfigItemValue
+	  }
+	| undefined {
+	const conf = config.find(c => c.DVEName === templateName)
+	return conf
 }

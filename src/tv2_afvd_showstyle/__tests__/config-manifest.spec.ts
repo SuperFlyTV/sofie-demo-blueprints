@@ -2,28 +2,16 @@ import * as _ from 'underscore'
 import { showStyleConfigManifest } from '../config-manifests'
 import { ShowStyleConfig } from '../helpers/config'
 
-const blankShowStyleConfig: ShowStyleConfig = {}
-
-function getObjectKeys(obj: any): string[] {
-	const definedKeys: string[] = []
-	const processObj = (prefix: string, o: any) => {
-		_.each(_.keys(o), k => {
-			if (_.isObject(o[k])) {
-				processObj(prefix + k + '.', o[k])
-			} else {
-				definedKeys.push(prefix + k)
-			}
-		})
-	}
-	processObj('', obj)
-	return definedKeys
+const blankShowStyleConfig: ShowStyleConfig = {
+	DVEStyles: []
 }
 
 describe('Config Manifest', () => {
 	test('Exposed ShowStyle Keys', () => {
-		const manifestKeys = _.map(showStyleConfigManifest, e => e.id).sort()
+		const showStyleManifestKeys = _.map(showStyleConfigManifest, e => e.id)
+		const manifestKeys = showStyleManifestKeys.sort()
 
-		const definedKeys = getObjectKeys(blankShowStyleConfig)
+		const definedKeys = Object.keys(blankShowStyleConfig)
 
 		expect(manifestKeys).toEqual(definedKeys.sort())
 	})

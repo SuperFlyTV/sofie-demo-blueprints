@@ -1,4 +1,9 @@
-import { ConfigItemValue, NotesContext, ShowStyleContext } from 'tv-automation-sofie-blueprints-integration'
+import {
+	ConfigItemValue,
+	NotesContext,
+	ShowStyleContext,
+	TableConfigItemValue
+} from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
 import { literal } from '../../common/util'
 import {
@@ -13,8 +18,9 @@ export interface BlueprintConfig extends BlueprintConfigBase {
 	showStyle: ShowStyleConfig
 }
 
-// tslint:disable-next-line: no-empty-interface
-export interface ShowStyleConfig {}
+export interface ShowStyleConfig {
+	DVEStyles: TableConfigItemValue
+}
 
 function extendWithShowStyleConfig(
 	context: NotesContext,
