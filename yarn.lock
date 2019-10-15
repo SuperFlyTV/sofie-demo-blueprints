@@ -4946,7 +4946,7 @@ tunnel-agent@^0.6.0:
   dependencies:
     safe-buffer "^5.0.1"
 
-tv-automation-sofie-blueprints-integration@^1.0.1:
+tv-automation-sofie-blueprints-integration@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/tv-automation-sofie-blueprints-integration/-/tv-automation-sofie-blueprints-integration-1.1.0.tgz#43af07640c471657c92c503956b289186d3bef69"
   integrity sha512-pKPzbFz9rfTMqYAtsdF73i1Qb4gDpn+z3Cq+/WkQF4QLQUP60CnchNZ24YYXMiuaxEaoZqoNsRqeQU0wgyuTdA==
