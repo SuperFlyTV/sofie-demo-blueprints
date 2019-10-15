@@ -2,9 +2,7 @@ import {
 	AtemTransitionStyle,
 	DeviceType,
 	TimelineContentTypeAtem,
-	TimelineContentTypeSisyfos,
-	TimelineObjAtemME,
-	TimelineObjSisyfosMessage
+	TimelineObjAtemME
 } from 'timeline-state-resolver-types'
 import {
 	BlueprintResultPart,
@@ -18,8 +16,9 @@ import {
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
 import { FindSourceInfoStrict } from '../../tv2_afvd_studio/helpers/sources'
-import { AtemLLayer, SisyfosSourceCamera } from '../../tv2_afvd_studio/layers'
+import { AtemLLayer } from '../../tv2_afvd_studio/layers'
 import { BlueprintConfig } from '../helpers/config'
+import { GetSisyfosTimelineObjForCamera } from '../helpers/sisyfos/sisyfos'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
 import { CreatePartInvalid } from './invalid'
@@ -44,8 +43,6 @@ export function CreatePartKam(
 		return CreatePartInvalid(partDefinition)
 	}
 	const atemInput = sourceInfoCam.port
-	const useMic = !partDefinition.rawType.match(/^(?:KAM|CAM)(?:ERA)? (.+) minus mic(.*)$/i)
-	const camName = partDefinition.rawType.match(/^(?:KAM|CAM)(?:ERA)? (.+)$/i)
 
 	pieces.push(
 		literal<IBlueprintPiece>({
@@ -77,23 +74,7 @@ export function CreatePartKam(
 						}
 					}),
 
-					...(useMic && camName
-						? [
-								literal<TimelineObjSisyfosMessage>({
-									id: '',
-									enable: {
-										start: 0
-									},
-									priority: 1,
-									layer: SisyfosSourceCamera(camName[1]),
-									content: {
-										deviceType: DeviceType.SISYFOS,
-										type: TimelineContentTypeSisyfos.SISYFOS,
-										isPgm: 1
-									}
-								})
-						  ]
-						: [])
+					...GetSisyfosTimelineObjForCamera(partDefinition.rawType)
 				])
 			}
 		})

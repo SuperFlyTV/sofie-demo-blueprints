@@ -22,6 +22,7 @@ import { FindSourceInfoStrict, SourceInfo } from '../../../tv2_afvd_studio/helpe
 import { AtemLLayer } from '../../../tv2_afvd_studio/layers'
 import { AtemSourceIndex } from '../../../types/atem'
 import { CueDefinitionDVE } from '../../inewsConversion/converters/ParseCue'
+import { GetSisyfosTimelineObjForCamera, GetSisyfosTimelineObjForEkstern } from '../sisyfos/sisyfos'
 import { CalculateTime } from './evaluateCues'
 
 interface DVEConfigBox {
@@ -168,46 +169,9 @@ export function EvaluateDVE(
 
 	const boxSources: any[] = []
 
-	function boxSource(info: SourceInfo, label: string): any {
-		return {
-			studioLabel: label,
-			switcherInput: info.port,
-			type: info.type
-		}
-	}
-
-	function makeBox(
-		configBox: DVEConfigBox
-	): {
-		x: number
-		y: number
-		scale: number
-		crop?: {
-			left: number
-			top: number
-			right: number
-			bottom: number
-		}
-	} {
-		return {
-			x: configBox.x,
-			y: configBox.y,
-			scale: configBox.size,
-			...(configBox.cropped
-				? {
-						crop: {
-							left: configBox.cropLeft,
-							top: configBox.cropTop,
-							right: configBox.cropRight,
-							bottom: configBox.cropBottom
-						}
-				  }
-				: {})
-		}
-	}
-
 	const template: DVEConfig = rawTemplate as DVEConfig
 	const boxes: DVEConfigBox[] = []
+	let audioTimeline: TSRTimelineObj[] = []
 
 	parsedCue.sources.forEach((source, index) => {
 		const props = source.split(' ')
@@ -229,6 +193,8 @@ export function EvaluateDVE(
 				geometry: makeBox(template.boxes[index])
 			})
 			boxes.push(template.boxes[index])
+
+			audioTimeline = [...audioTimeline, ...GetSisyfosTimelineObjForCamera(source)]
 		} else if (sourceType.match(/LIVE/i)) {
 			const sourceInfoLive = FindSourceInfoStrict(context, config.sources, SourceLayerType.REMOTE, source)
 			if (sourceInfoLive === undefined) {
@@ -241,6 +207,8 @@ export function EvaluateDVE(
 				geometry: makeBox(template.boxes[index])
 			})
 			boxes.push(template.boxes[index])
+
+			audioTimeline = [...audioTimeline, ...GetSisyfosTimelineObjForEkstern(source)]
 		} else {
 			context.warning(`Unknown source type: ${source}`)
 		}
@@ -291,12 +259,16 @@ export function EvaluateDVE(
 							}
 						}),
 
+						...audioTimeline,
+
 						atemNextObject(AtemSourceIndex.SSrc)
 					])
 				})
 			})
 		)
 	}
+
+	console.log(JSON.stringify(pieces))
 }
 
 /**
@@ -360,4 +332,42 @@ function templateIsValid(template: any): boolean {
 		return true
 	}
 	return false
+}
+
+function boxSource(info: SourceInfo, label: string): any {
+	return {
+		studioLabel: label,
+		switcherInput: info.port,
+		type: info.type
+	}
+}
+
+function makeBox(
+	configBox: DVEConfigBox
+): {
+	x: number
+	y: number
+	scale: number
+	crop?: {
+		left: number
+		top: number
+		right: number
+		bottom: number
+	}
+} {
+	return {
+		x: configBox.x,
+		y: configBox.y,
+		scale: configBox.size,
+		...(configBox.cropped
+			? {
+					crop: {
+						left: configBox.cropLeft,
+						top: configBox.cropTop,
+						right: configBox.cropRight,
+						bottom: configBox.cropBottom
+					}
+			  }
+			: {})
+	}
 }

@@ -2,9 +2,7 @@ import {
 	AtemTransitionStyle,
 	DeviceType,
 	TimelineContentTypeAtem,
-	TimelineContentTypeSisyfos,
-	TimelineObjAtemME,
-	TimelineObjSisyfosMessage
+	TimelineObjAtemME
 } from 'timeline-state-resolver-types'
 import {
 	IBlueprintPiece,
@@ -17,9 +15,10 @@ import {
 import { literal } from '../../../common/util'
 import { BlueprintConfig } from '../../../tv2_afvd_studio/helpers/config'
 import { FindSourceInfoStrict } from '../../../tv2_afvd_studio/helpers/sources'
-import { AtemLLayer, SisyfosSourceRemote } from '../../../tv2_afvd_studio/layers'
+import { AtemLLayer } from '../../../tv2_afvd_studio/layers'
 import { CueDefinitionEkstern } from '../../inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../layers'
+import { GetSisyfosTimelineObjForEkstern } from '../sisyfos/sisyfos'
 import { CalculateTime } from './evaluateCues'
 
 export function EvaluateEkstern(
@@ -35,7 +34,6 @@ export function EvaluateEkstern(
 		return
 	}
 	const source = eksternProps[1]
-	const variant = eksternProps[2]
 	if (!source) {
 		context.warning(`Could not find live source for ${parsedCue.source}`)
 		return
@@ -79,70 +77,7 @@ export function EvaluateEkstern(
 						}
 					}),
 
-					...(variant
-						? variant.match(/stereo/gi)
-							? [
-									literal<TimelineObjSisyfosMessage>({
-										id: '',
-										enable: {
-											start: 0
-										},
-										priority: 1,
-										layer: SisyfosSourceRemote(source, 'stereo_1'),
-										content: {
-											deviceType: DeviceType.SISYFOS,
-											type: TimelineContentTypeSisyfos.SISYFOS,
-											isPgm: 1,
-											faderLevel: 0.75
-										}
-									}),
-									literal<TimelineObjSisyfosMessage>({
-										id: '',
-										enable: {
-											start: 0
-										},
-										priority: 1,
-										layer: SisyfosSourceRemote(source, 'stereo_2'),
-										content: {
-											deviceType: DeviceType.SISYFOS,
-											type: TimelineContentTypeSisyfos.SISYFOS,
-											isPgm: 1,
-											faderLevel: 0.75
-										}
-									})
-							  ]
-							: [
-									literal<TimelineObjSisyfosMessage>({
-										id: '',
-										enable: {
-											start: 0
-										},
-										priority: 1,
-										layer: SisyfosSourceRemote(source, variant),
-										content: {
-											deviceType: DeviceType.SISYFOS,
-											type: TimelineContentTypeSisyfos.SISYFOS,
-											isPgm: 1,
-											faderLevel: 0.75
-										}
-									})
-							  ]
-						: [
-								literal<TimelineObjSisyfosMessage>({
-									id: '',
-									enable: {
-										start: 0
-									},
-									priority: 1,
-									layer: SisyfosSourceRemote(source),
-									content: {
-										deviceType: DeviceType.SISYFOS,
-										type: TimelineContentTypeSisyfos.SISYFOS,
-										isPgm: 1,
-										faderLevel: 0.75
-									}
-								})
-						  ])
+					...GetSisyfosTimelineObjForEkstern(parsedCue.source)
 				])
 			})
 		})
