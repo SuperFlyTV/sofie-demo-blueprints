@@ -28,7 +28,7 @@ export function EvaluateEkstern(
 	partId: string,
 	parsedCue: CueDefinitionEkstern
 ) {
-	const eksternProps = parsedCue.source.match(/^LIVE ([^\s]+)(?: (.+))?$/i)
+	const eksternProps = parsedCue.source.match(/^(?:LIVE|SKYPE) ([^\s]+)(?: (.+))?$/i)
 	if (!eksternProps) {
 		context.warning(`Could not find live source for ${parsedCue.source}`)
 		return

@@ -195,7 +195,7 @@ export function EvaluateDVE(
 			boxes.push(template.boxes[index])
 
 			audioTimeline = [...audioTimeline, ...GetSisyfosTimelineObjForCamera(source)]
-		} else if (sourceType.match(/LIVE/i)) {
+		} else if (sourceType.match(/LIVE/i) || sourceType.match(/SKYPE/i)) {
 			const sourceInfoLive = FindSourceInfoStrict(context, config.sources, SourceLayerType.REMOTE, source)
 			if (sourceInfoLive === undefined) {
 				context.warning(`Invalid source: ${source}`)
@@ -210,7 +210,7 @@ export function EvaluateDVE(
 
 			audioTimeline = [...audioTimeline, ...GetSisyfosTimelineObjForEkstern(source)]
 		} else {
-			context.warning(`Unknown source type: ${source}`)
+			context.warning(`Unknown source type for DVE: ${source}`)
 		}
 	})
 
@@ -267,8 +267,6 @@ export function EvaluateDVE(
 			})
 		)
 	}
-
-	console.log(JSON.stringify(pieces))
 }
 
 /**

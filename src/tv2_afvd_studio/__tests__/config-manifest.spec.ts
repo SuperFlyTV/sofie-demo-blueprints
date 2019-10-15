@@ -8,6 +8,7 @@ const blankStudioConfig: StudioConfig = {
 	MediaFlowId: '',
 	SourcesCam: '',
 	SourcesRM: '',
+	SourcesSkype: '',
 	HyperdeckCount: 0,
 	ABMediaPlayers: '',
 	MediaPlayerType: MediaPlayerType.CasparAB,

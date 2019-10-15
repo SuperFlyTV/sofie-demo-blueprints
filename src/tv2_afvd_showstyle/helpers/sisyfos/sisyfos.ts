@@ -33,10 +33,11 @@ export function GetSisyfosTimelineObjForCamera(sourceType: string): TSRTimelineO
 export function GetSisyfosTimelineObjForEkstern(sourceType: string): TSRTimelineObj[] {
 	let audioTimeline: TSRTimelineObj[] = []
 
-	const eksternProps = sourceType.match(/^LIVE ([^\s]+)(?: (.+))?$/i)
+	const eksternProps = sourceType.match(/^(?:LIVE|SKYPE) ([^\s]+)(?: (.+))?$/i)
 	if (eksternProps) {
 		const source = eksternProps[1]
 		const variant = eksternProps[2]
+		const isSkype = !!sourceType.match(/^SKYPE/)
 
 		if (source) {
 			audioTimeline = [
@@ -49,7 +50,9 @@ export function GetSisyfosTimelineObjForEkstern(sourceType: string): TSRTimeline
 										start: 0
 									},
 									priority: 1,
-									layer: SisyfosSourceRemote(source, 'stereo_1'),
+									layer: isSkype
+										? SisyfosSourceRemote(`skype_${source}`, 'stereo_1')
+										: SisyfosSourceRemote(source, 'stereo_1'),
 									content: {
 										deviceType: DeviceType.SISYFOS,
 										type: TimelineContentTypeSisyfos.SISYFOS,
@@ -63,7 +66,9 @@ export function GetSisyfosTimelineObjForEkstern(sourceType: string): TSRTimeline
 										start: 0
 									},
 									priority: 1,
-									layer: SisyfosSourceRemote(source, 'stereo_2'),
+									layer: isSkype
+										? SisyfosSourceRemote(`skype_${source}`, 'stereo_2')
+										: SisyfosSourceRemote(source, 'stereo_2'),
 									content: {
 										deviceType: DeviceType.SISYFOS,
 										type: TimelineContentTypeSisyfos.SISYFOS,
@@ -79,7 +84,9 @@ export function GetSisyfosTimelineObjForEkstern(sourceType: string): TSRTimeline
 										start: 0
 									},
 									priority: 1,
-									layer: SisyfosSourceRemote(source, variant),
+									layer: isSkype
+										? SisyfosSourceRemote(`skype_${source}`, variant)
+										: SisyfosSourceRemote(source, variant),
 									content: {
 										deviceType: DeviceType.SISYFOS,
 										type: TimelineContentTypeSisyfos.SISYFOS,

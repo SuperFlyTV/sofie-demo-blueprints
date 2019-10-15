@@ -62,6 +62,7 @@ export function parseMediaPlayers(
 export function parseSources(context: NotesContext | undefined, studioConfig: StudioConfig): SourceInfo[] {
 	const rmInputMap: Array<{ id: string; val: number }> = parseMapStr(context, studioConfig.SourcesRM, true)
 	const kamInputMap: Array<{ id: string; val: number }> = parseMapStr(context, studioConfig.SourcesCam, true)
+	const skypeInputMap: Array<{ id: string; val: number }> = parseMapStr(context, studioConfig.SourcesSkype, true)
 
 	const res: SourceInfo[] = []
 
@@ -81,6 +82,14 @@ export function parseSources(context: NotesContext | undefined, studioConfig: St
 		})
 	})
 
+	_.each(skypeInputMap, sk => {
+		res.push({
+			type: SourceLayerType.REMOTE,
+			id: `S${sk.id}`,
+			port: sk.val
+		})
+	})
+
 	return res
 }
 
@@ -94,11 +103,16 @@ export function FindSourceInfo(sources: SourceInfo[], type: SourceInfoType, id: 
 
 			return _.find(sources, s => s.type === type && s.id === cameraName[1].replace(/minus mic/, '').trim())
 		case SourceLayerType.REMOTE:
-			const remoteName = id.match(/^LIVE (\d+).*$/)
+			const remoteName = id.match(/^(?:LIVE|SKYPE) (\d+).*$/)
 			if (!remoteName) {
 				return undefined
 			}
-			return _.find(sources, s => s.type === type && s.id === remoteName[1])
+			if (id.match(/^LIVE/)) {
+				return _.find(sources, s => s.type === type && s.id === remoteName[1])
+			} else {
+				// Skype
+				return _.find(sources, s => s.type === type && s.id === `S${remoteName[1]}`)
+			}
 		default:
 			return undefined
 	}
