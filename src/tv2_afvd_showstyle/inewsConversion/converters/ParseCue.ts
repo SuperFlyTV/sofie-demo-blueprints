@@ -299,18 +299,22 @@ function parseAdLib(cue: string[]) {
 		adlib.variant = variant[1]
 	}
 
-	const input = cue[1].match(/^INP\d+=(.+)$/)
-	if (input) {
-		if (adlib.inputs) {
-			adlib.inputs.push(input[1])
-		} else {
-			adlib.inputs = [input[1]]
+	if (cue[1]) {
+		const input = cue[1].match(/^INP\d+=(.+)$/)
+		if (input) {
+			if (adlib.inputs) {
+				adlib.inputs.push(input[1])
+			} else {
+				adlib.inputs = [input[1]]
+			}
 		}
 	}
 
-	const bynavn = cue[2].match(/^BYNAVN=(.)$/)
-	if (bynavn) {
-		adlib.bynavn = bynavn[1]
+	if (cue[2]) {
+		const bynavn = cue[2].match(/^BYNAVN=(.)$/)
+		if (bynavn) {
+			adlib.bynavn = bynavn[1]
+		}
 	}
 
 	return adlib

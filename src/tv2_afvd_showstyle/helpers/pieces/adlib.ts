@@ -1,7 +1,9 @@
-import { IBlueprintAdLibPiece, PartContext } from 'tv-automation-sofie-blueprints-integration'
+import { IBlueprintAdLibPiece, PartContext, PieceLifespan } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../../common/util'
 import { BlueprintConfig } from '../../../tv2_afvd_showstyle/helpers/config'
 import { PartDefinition } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseBody'
+import { PieceMetaData } from '../../../tv2_afvd_studio/onTimelineGenerate'
+import { MEDIA_PLAYER_AUTO } from '../../../types/constants'
 import { CueDefinitionAdLib, CueDefinitionDVE, CueType } from '../../inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../layers'
 import { MakeContentDVE } from '../content/dve'
@@ -29,7 +31,12 @@ export function EvaluateAdLib(
 				name: `Server: ${file}`,
 				sourceLayerId: SourceLayer.PgmServer,
 				outputLayerId: 'pgm0',
-				content: MakeContentServer(file, duration, partId)
+				expectedDuration: duration,
+				infiniteMode: PieceLifespan.OutOnNextPart,
+				metaData: literal<PieceMetaData>({
+					mediaPlayerSessions: [MEDIA_PLAYER_AUTO]
+				}),
+				content: MakeContentServer(file, duration, partId, true)
 			})
 		)
 	} else {

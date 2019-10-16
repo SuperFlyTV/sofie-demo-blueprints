@@ -18,6 +18,7 @@ import { literal } from '../../common/util'
 import { FindSourceInfoStrict } from '../../tv2_afvd_studio/helpers/sources'
 import { AtemLLayer } from '../../tv2_afvd_studio/layers'
 import { BlueprintConfig } from '../helpers/config'
+import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { GetSisyfosTimelineObjForCamera } from '../helpers/sisyfos/sisyfos'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
@@ -79,6 +80,8 @@ export function CreatePartKam(
 			}
 		})
 	)
+
+	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
 
 	return {
 		part,

@@ -9,8 +9,14 @@ import { TimelineObjectCoreExt, VTContent } from 'tv-automation-sofie-blueprints
 import { literal } from '../../../common/util'
 import { CasparLLayer, SisyfosLLAyer } from '../../../tv2_afvd_studio/layers'
 import { TimelineBlueprintExt } from '../../../tv2_afvd_studio/onTimelineGenerate'
+import { MEDIA_PLAYER_AUTO } from '../../../types/constants'
 
-export function MakeContentServer(file: string, duration: number, mediaPlayerSessionId: string): VTContent {
+export function MakeContentServer(
+	file: string,
+	duration: number,
+	mediaPlayerSessionId: string,
+	adLib?: boolean
+): VTContent {
 	return literal<VTContent>({
 		studioLabel: '',
 		fileName: file,
@@ -33,7 +39,7 @@ export function MakeContentServer(file: string, duration: number, mediaPlayerSes
 					length: duration
 				},
 				metaData: {
-					mediaPlayerSession: mediaPlayerSessionId
+					mediaPlayerSession: adLib ? MEDIA_PLAYER_AUTO : mediaPlayerSessionId
 				}
 			}),
 
@@ -51,7 +57,7 @@ export function MakeContentServer(file: string, duration: number, mediaPlayerSes
 					faderLevel: 0.75
 				},
 				metaData: {
-					mediaPlayerSession: mediaPlayerSessionId
+					mediaPlayerSession: adLib ? MEDIA_PLAYER_AUTO : mediaPlayerSessionId
 				}
 			})
 		])
