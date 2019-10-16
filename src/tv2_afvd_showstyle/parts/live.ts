@@ -26,7 +26,7 @@ export function CreatePartLive(
 	const adLibPieces: IBlueprintAdLibPiece[] = []
 	const pieces: IBlueprintPiece[] = []
 
-	EvaluateCues(context, config, pieces, partDefinition.cues, part.externalId)
+	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
 
 	return {
 		part,

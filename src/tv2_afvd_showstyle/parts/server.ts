@@ -1,24 +1,15 @@
 import {
-	DeviceType,
-	TimelineContentTypeCasparCg,
-	TimelineContentTypeSisyfos,
-	TimelineObjCCGMedia,
-	TimelineObjSisyfosAny
-} from 'timeline-state-resolver-types'
-import {
 	BlueprintResultPart,
 	IBlueprintAdLibPiece,
 	IBlueprintPart,
 	IBlueprintPiece,
 	PartContext,
-	PieceLifespan,
-	TimelineObjectCoreExt,
-	VTContent
+	PieceLifespan
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
-import { CasparLLayer, SisyfosLLAyer } from '../../tv2_afvd_studio/layers'
-import { PieceMetaData, TimelineBlueprintExt } from '../../tv2_afvd_studio/onTimelineGenerate'
+import { PieceMetaData } from '../../tv2_afvd_studio/onTimelineGenerate'
 import { BlueprintConfig } from '../helpers/config'
+import { MakeContentServer } from '../helpers/content/server'
 import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
@@ -65,55 +56,11 @@ export function CreatePartServer(
 			metaData: literal<PieceMetaData>({
 				mediaPlayerSessions: [mediaPlayerSessionId]
 			}),
-			content: literal<VTContent>({
-				studioLabel: '',
-				fileName: file,
-				path: file,
-				firstWords: '',
-				lastWords: '',
-				sourceDuration: duration,
-				timelineObjects: literal<TimelineObjectCoreExt[]>([
-					literal<TimelineObjCCGMedia & TimelineBlueprintExt>({
-						id: '',
-						enable: {
-							start: 0
-						},
-						priority: 1,
-						layer: CasparLLayer.CasparPlayerClipPending,
-						content: {
-							deviceType: DeviceType.CASPARCG,
-							type: TimelineContentTypeCasparCg.MEDIA,
-							file,
-							length: duration
-						},
-						metaData: {
-							mediaPlayerSession: mediaPlayerSessionId
-						}
-					}),
-
-					literal<TimelineObjSisyfosAny & TimelineBlueprintExt>({
-						id: '',
-						enable: {
-							start: 0
-						},
-						priority: 1,
-						layer: SisyfosLLAyer.SisyfosSourceClipPending,
-						content: {
-							deviceType: DeviceType.SISYFOS,
-							type: TimelineContentTypeSisyfos.SISYFOS,
-							isPgm: 1,
-							faderLevel: 0.75
-						},
-						metaData: {
-							mediaPlayerSession: mediaPlayerSessionId
-						}
-					})
-				])
-			})
+			content: MakeContentServer(file, duration, mediaPlayerSessionId)
 		})
 	)
 
-	EvaluateCues(context, config, pieces, partDefinition.cues, part.externalId)
+	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
 
 	return {
 		part,

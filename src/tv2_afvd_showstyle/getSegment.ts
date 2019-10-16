@@ -59,7 +59,7 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 				blueprintParts.push(CreatePartLive(partContext, config, part))
 				break
 			case PartType.Teknik:
-				blueprintParts.push(CreatePartTeknik(part))
+				blueprintParts.push(CreatePartTeknik(partContext, config, part))
 				break
 			case PartType.Grafik:
 				blueprintParts.push(CreatePartGrafik(part))

@@ -81,8 +81,8 @@ export interface CueDefinitionMic extends CueDefinitionBase {
 export interface CueDefinitionAdLib extends CueDefinitionBase {
 	type: CueType.AdLib
 	variant: string
-	input: string
-	bynavn: string
+	inputs?: string[]
+	bynavn?: string
 }
 
 export type CueDefinition =
@@ -291,9 +291,7 @@ function parseMic(cue: string[]): CueDefinitionMic {
 function parseAdLib(cue: string[]) {
 	const adlib: CueDefinitionAdLib = {
 		type: CueType.AdLib,
-		variant: '',
-		input: '',
-		bynavn: ''
+		variant: ''
 	}
 
 	const variant = cue[0].match(/^ADLIBPIX=(.+)$/)
@@ -303,7 +301,11 @@ function parseAdLib(cue: string[]) {
 
 	const input = cue[1].match(/^INP\d+=(.+)$/)
 	if (input) {
-		adlib.input = input[1]
+		if (adlib.inputs) {
+			adlib.inputs.push(input[1])
+		} else {
+			adlib.inputs = [input[1]]
+		}
 	}
 
 	const bynavn = cue[2].match(/^BYNAVN=(.)$/)

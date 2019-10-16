@@ -246,8 +246,7 @@ describe('Cue parser', () => {
 			literal<CueDefinition>({
 				type: CueType.AdLib,
 				variant: 'MORBARN',
-				input: 'LIVE 1',
-				bynavn: ''
+				inputs: ['LIVE 1']
 			})
 		)
 	})
