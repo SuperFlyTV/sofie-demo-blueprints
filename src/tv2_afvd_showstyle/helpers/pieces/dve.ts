@@ -2,8 +2,11 @@ import {
 	AtemTransitionStyle,
 	DeviceType,
 	TimelineContentTypeAtem,
+	TimelineContentTypeCasparCg,
 	TimelineObjAtemME,
 	TimelineObjAtemSsrc,
+	TimelineObjAtemSsrcProps,
+	TimelineObjCCGMedia,
 	TSRTimelineObj
 } from 'timeline-state-resolver-types'
 import {
@@ -21,7 +24,7 @@ import { BlueprintConfig } from '../../../tv2_afvd_showstyle/helpers/config'
 import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
 import { atemNextObject } from '../../../tv2_afvd_studio/helpers/objects'
 import { FindSourceInfoStrict, SourceInfo } from '../../../tv2_afvd_studio/helpers/sources'
-import { AtemLLayer } from '../../../tv2_afvd_studio/layers'
+import { AtemLLayer, CasparLLayer } from '../../../tv2_afvd_studio/layers'
 import { AtemSourceIndex } from '../../../types/atem'
 import { CueDefinitionDVE } from '../../inewsConversion/converters/ParseCue'
 import { GetSisyfosTimelineObjForCamera, GetSisyfosTimelineObjForEkstern } from '../sisyfos/sisyfos'
@@ -87,8 +90,7 @@ export function EvaluateDVE(
 		context.warning(`Could not find template ${parsedCue.template}`)
 		return
 	}
-	/*const background = rawTemplate.BackgroundLoop
-	console.log(background)*/
+	const background: string = rawTemplate.BackgroundLoop as string
 
 	if (!templateIsValid(JSON.parse(rawTemplate.DVEJSON as string))) {
 		context.warning(`Invalid DVE template ${parsedCue.template}`)
@@ -190,6 +192,41 @@ export function EvaluateDVE(
 								}
 							}
 						}),
+
+						...(background
+							? [
+									literal<TimelineObjCCGMedia>({
+										id: '',
+										enable: { start: 0 },
+										priority: 1,
+										layer: CasparLLayer.CasparCGDVELoop,
+										content: {
+											deviceType: DeviceType.CASPARCG,
+											type: TimelineContentTypeCasparCg.MEDIA,
+											file: background,
+											loop: true
+										}
+									}),
+									literal<TimelineObjAtemSsrcProps>({
+										id: '',
+										enable: { start: 0 },
+										priority: 1,
+										layer: AtemLLayer.AtemSSrcArt,
+										content: {
+											deviceType: DeviceType.ATEM,
+											type: TimelineContentTypeAtem.SSRCPROPS,
+											ssrcProps: {
+												artFillSource: config.studio.AtemSource.SplitArtF,
+												artCutSource: config.studio.AtemSource.SplitArtK,
+												artOption: 0, // Background
+												artPreMultiplied: false
+											}
+										}
+									})
+							  ]
+							: []),
+
+						// TODO: Graphic overlay
 
 						...audioTimeline,
 
