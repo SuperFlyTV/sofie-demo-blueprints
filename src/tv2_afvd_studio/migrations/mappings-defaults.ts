@@ -84,6 +84,13 @@ export default literal<BlueprintMappings>({
 		channel: 3,
 		layer: 120
 	}),
+	casparcg_dve_loop: literal<MappingCasparCG & BlueprintMapping>({
+		device: PlayoutDeviceType.CASPARCG,
+		deviceId: 'caspar01',
+		lookahead: LookaheadMode.NONE,
+		channel: 5,
+		layer: 100
+	}),
 	atem_me_program: literal<MappingAtem & BlueprintMapping>({
 		device: PlayoutDeviceType.ATEM,
 		deviceId: 'atem0',
