@@ -9,7 +9,15 @@ import {
 	TimelineObjCCGMedia,
 	TSRTimelineObj
 } from 'timeline-state-resolver-types'
-import { PartContext, SourceLayerType, SplitsContent } from 'tv-automation-sofie-blueprints-integration'
+import {
+	CameraContent,
+	GraphicsContent,
+	PartContext,
+	RemoteContent,
+	SourceLayerType,
+	SplitsContent,
+	VTContent
+} from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
 import { literal } from '../../../common/util'
 import { BlueprintConfig } from '../../../tv2_afvd_showstyle/helpers/config'
@@ -31,7 +39,25 @@ export function MakeContentDVE(
 ): { content: SplitsContent; valid: boolean } {
 	const boxes: DVEConfigBox[] = []
 	let audioTimeline: TSRTimelineObj[] = []
-	const boxSources: any[] = []
+	const boxSources: Array<
+		(VTContent | CameraContent | RemoteContent | GraphicsContent) & {
+			type: SourceLayerType
+			studioLabel: string
+			switcherInput: number | string
+			/** Geometry information for a given box item in the Split. X,Y are relative to center of Box, Scale is 0...1, where 1 is Full-Screen */
+			geometry?: {
+				x: number
+				y: number
+				scale: number
+				crop?: {
+					left: number
+					top: number
+					right: number
+					bottom: number
+				}
+			}
+		}
+	> = []
 
 	let valid = true
 
@@ -52,9 +78,13 @@ export function MakeContentDVE(
 			}
 			boxSources.push({
 				...boxSource(sourceInfoCam, source),
-				geometry: makeBox(template.boxes[index])
+				...literal<CameraContent>({
+					studioLabel: '',
+					switcherInput: sourceInfoCam.port,
+					timelineObjects: []
+				})
 			})
-			boxes.push(template.boxes[index])
+			boxes.push({ ...template.boxes[index], ...{ source: sourceInfoCam.port } })
 
 			audioTimeline = [...audioTimeline, ...GetSisyfosTimelineObjForCamera(source)]
 		} else if (sourceType.match(/LIVE/i) || sourceType.match(/SKYPE/i)) {
@@ -66,9 +96,13 @@ export function MakeContentDVE(
 			}
 			boxSources.push({
 				...boxSource(sourceInfoLive, source),
-				geometry: makeBox(template.boxes[index])
+				...literal<RemoteContent>({
+					studioLabel: '',
+					switcherInput: sourceInfoLive.port,
+					timelineObjects: []
+				})
 			})
-			boxes.push(template.boxes[index])
+			boxes.push({ ...template.boxes[index], ...{ source: sourceInfoLive.port } })
 
 			audioTimeline = [...audioTimeline, ...GetSisyfosTimelineObjForEkstern(source)]
 		} else {
@@ -153,7 +187,14 @@ export function MakeContentDVE(
 	}
 }
 
-function boxSource(info: SourceInfo, label: string): any {
+function boxSource(
+	info: SourceInfo,
+	label: string
+): {
+	studioLabel: string
+	switcherInput: number
+	type: SourceLayerType.CAMERA | SourceLayerType.REMOTE | SourceLayerType.AUDIO
+} {
 	return {
 		studioLabel: label,
 		switcherInput: info.port,
@@ -161,7 +202,7 @@ function boxSource(info: SourceInfo, label: string): any {
 	}
 }
 
-function makeBox(
+/*function makeBox(
 	configBox: DVEConfigBox
 ): {
 	x: number
@@ -189,4 +230,4 @@ function makeBox(
 			  }
 			: {})
 	}
-}
+}*/

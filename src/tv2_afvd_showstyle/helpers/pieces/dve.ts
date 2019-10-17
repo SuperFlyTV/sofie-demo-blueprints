@@ -68,7 +68,7 @@ export function EvaluateDVE(
 		return
 	}
 
-	const rawTemplate = GetDVETemplate(config.showStyle.DVEStyles, parsedCue.template) // TODO: pull from config
+	const rawTemplate = GetDVETemplate(config.showStyle.DVEStyles, parsedCue.template)
 	if (!rawTemplate) {
 		context.warning(`Could not find template ${parsedCue.template}`)
 		return
