@@ -144,7 +144,10 @@ export function ParseBody(segmentId: string, body: string, cues: UnparsedCue[], 
 					}
 					return
 				}
-				if (definition.rawType) {
+				if (definition.rawType || definition.cues.length || definition.script) {
+					if (!definition.externalId) {
+						definition.externalId = `${segmentId}-${definitions.length}`
+					}
 					definitions.push(definition)
 				}
 

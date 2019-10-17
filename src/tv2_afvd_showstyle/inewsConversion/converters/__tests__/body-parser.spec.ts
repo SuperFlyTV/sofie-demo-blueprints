@@ -34,11 +34,20 @@ describe('Body parser', () => {
 		expect(result).toEqual(
 			literal<PartDefinition[]>([
 				{
+					type: PartType.Unknown,
+					cues: [],
+					script: 'Thid id thr trext for the next DVE\n',
+					variant: {},
+					externalId: '00000000001-0',
+					rawType: '',
+					fields: {}
+				},
+				{
 					type: PartType.Live,
 					cues: [['1'], ['2'], ['5']],
 					script: 'Script here\n',
 					variant: {},
-					externalId: '00000000001-0',
+					externalId: '00000000001-1',
 					rawType: 'LIVE',
 					fields: {}
 				}
@@ -96,6 +105,15 @@ describe('Body parser', () => {
 		expect(result).toEqual(
 			literal<PartDefinition[]>([
 				{
+					type: PartType.Unknown,
+					rawType: '',
+					cues: [['1']],
+					script: '',
+					variant: {},
+					externalId: '00000000001-0',
+					fields: {}
+				},
+				{
 					type: PartType.Kam,
 					rawType: 'CAMERA 1',
 					cues: [], // TODO: Cue outside part
@@ -103,7 +121,7 @@ describe('Body parser', () => {
 					variant: {
 						name: '1'
 					},
-					externalId: '00000000001-0',
+					externalId: '00000000001-1',
 					fields: {}
 				}
 			])
@@ -439,6 +457,36 @@ describe('Body parser', () => {
 					script: '',
 					variant: {},
 					externalId: '00000000001-0',
+					fields: {}
+				}
+			])
+		)
+	})
+
+	test('test14', () => {
+		const body14 =
+			'\r\n<p></p>\r\n<p><a idref="0"></a></p>\r\n<p>Rasmus Staghøj, således reaktioner fra Astana-lejren, men hvordan bliver der ellers talt om det her nede hos jer?</p>\r\n<p><pi>***LIVE*** </pi></p>\r\n<p><a idref="1"></a></p>\r\n<p><a idref="2"></a></p>\r\n<p><a idref="3"></a></p>\r\n<p><a idref="4"></a></p>\r\n<p><a idref="5"><tab><tab><tab></tab></tab></tab></a></p>\r\n<p></p>\r\n'
+		const cues14 = [['1'], ['2'], ['3'], ['4'], ['5'], ['6']]
+		const result = ParseBody('00000000001', body14, cues14, fields)
+		expect(result).toEqual(
+			literal<PartDefinition[]>([
+				{
+					type: PartType.Unknown,
+					rawType: '',
+					cues: [['1']],
+					script:
+						'Rasmus Staghøj, således reaktioner fra Astana-lejren, men hvordan bliver der ellers talt om det her nede hos jer?\n',
+					variant: {},
+					externalId: '00000000001-0',
+					fields: {}
+				},
+				{
+					type: PartType.Live,
+					rawType: 'LIVE',
+					cues: [['2'], ['3'], ['4'], ['5'], ['6']],
+					script: '',
+					variant: {},
+					externalId: '00000000001-1',
 					fields: {}
 				}
 			])
