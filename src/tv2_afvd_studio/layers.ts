@@ -56,12 +56,12 @@ export function CasparPlayerClip(i: number) {
 	return `casparcg_player_clip_${i}`
 }
 
-export function SisyfosSourceClip(i: number) {
+export function SisyfosSourceClip(i: number | string) {
 	return `sisyfos_player_clip_${i}`
 }
 
 export function SisyfosSourceCamera(name: string) {
-	return `sisyfos_camera_active_${name}`
+	return `sisyfos_camera_active_${name.replace(' ', '_').trim()}`
 }
 
 export function SisyfosSourceRemote(name: string, variant?: string) {

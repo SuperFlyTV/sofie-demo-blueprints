@@ -186,7 +186,7 @@ export function getCameraSisyfosMappings(cameras: StudioConfig['SourcesCam']) {
 	cams.forEach(cam => {
 		const props = cam.split(':')
 		if (props[0] && props[1]) {
-			res[`sisyfos_camera_active_${props[0]}`] = literal<MappingSisyfos & BlueprintMapping>({
+			res[`sisyfos_camera_active_${props[0].replace(' ', '_').trim()}`] = literal<MappingSisyfos & BlueprintMapping>({
 				device: PlayoutDeviceType.SISYFOS,
 				deviceId: 'sisyfos0',
 				lookahead: LookaheadMode.NONE,
@@ -293,6 +293,12 @@ export function getMediaPlayerMappings(mode: MediaPlayerType, mediaPlayers: Blue
 					lookahead: LookaheadMode.NONE,
 					channel: 4,
 					layer: 110
+				}),
+				sisyfos_source_clip_pending: literal<MappingSisyfos & BlueprintMapping>({
+					device: PlayoutDeviceType.SISYFOS,
+					deviceId: 'sisyfos0',
+					lookahead: LookaheadMode.NONE,
+					channel: 1
 				})
 			}
 		case MediaPlayerType.CasparAB: {
@@ -318,7 +324,7 @@ export function getMediaPlayerMappings(mode: MediaPlayerType, mediaPlayers: Blue
 					channel: 0, // TODO?
 					layer: 100
 				})
-				res[`sisyfos_source_clip_${mp.id}`] = literal<MappingSisyfos & BlueprintMapping>({
+				res[`sisyfos_player_clip_${mp.id}`] = literal<MappingSisyfos & BlueprintMapping>({
 					device: PlayoutDeviceType.SISYFOS,
 					deviceId: 'sisyfos0',
 					lookahead: LookaheadMode.NONE,

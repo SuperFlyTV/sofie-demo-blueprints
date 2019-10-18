@@ -6,6 +6,7 @@ import {
 	TimelineContentTypeAtem,
 	TimelineContentTypeCasparCg,
 	TimelineContentTypeHyperdeck,
+	TimelineContentTypeSisyfos,
 	TimelineObjAtemAUX,
 	TimelineObjAtemDSK,
 	TimelineObjAtemME,
@@ -15,6 +16,7 @@ import {
 	TimelineObjCCGMedia,
 	TimelineObjCCGRoute,
 	TimelineObjHyperdeckTransport,
+	TimelineObjSisyfosMessage,
 	Transition,
 	TransportStatus,
 	TSRTimelineObj,
@@ -33,8 +35,17 @@ import {
 	SourceLayerType
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../common/util'
+import { MediaPlayerType } from '../tv2_afvd_studio/config-manifests'
 import { SourceInfo } from '../tv2_afvd_studio/helpers/sources'
-import { AtemLLayer, CasparLLayer, HyperdeckLLayer } from '../tv2_afvd_studio/layers'
+import {
+	AtemLLayer,
+	CasparLLayer,
+	HyperdeckLLayer,
+	SisyfosLLAyer,
+	SisyfosSourceCamera,
+	SisyfosSourceClip,
+	SisyfosSourceRemote
+} from '../tv2_afvd_studio/layers'
 import { AtemSourceIndex } from '../types/atem'
 import { CONSTANTS } from '../types/constants'
 import { BlueprintConfig, parseConfig } from './helpers/config'
@@ -357,6 +368,76 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 					status: TransportStatus.PREVIEW
 				}
 			})
-		)
+		),
+
+		...config.studio.SourcesCam.split(',').map(props =>
+			literal<TimelineObjSisyfosMessage>({
+				id: '',
+				enable: { while: '1' },
+				priority: 0,
+				layer: SisyfosSourceCamera(props.split(':')[0]),
+				content: {
+					deviceType: DeviceType.SISYFOS,
+					type: TimelineContentTypeSisyfos.SISYFOS,
+					isPgm: 0
+				}
+			})
+		),
+
+		...config.studio.SourcesRM.split(',').map(props =>
+			literal<TimelineObjSisyfosMessage>({
+				id: '',
+				enable: { while: '1' },
+				priority: 0,
+				layer: SisyfosSourceRemote(props.split(':')[0]),
+				content: {
+					deviceType: DeviceType.SISYFOS,
+					type: TimelineContentTypeSisyfos.SISYFOS,
+					isPgm: 0
+				}
+			})
+		),
+
+		...config.studio.SourcesSkype.split(',').map(props =>
+			literal<TimelineObjSisyfosMessage>({
+				id: '',
+				enable: { while: '1' },
+				priority: 0,
+				layer: SisyfosSourceRemote(`skype_${props.split(':')[0]}`),
+				content: {
+					deviceType: DeviceType.SISYFOS,
+					type: TimelineContentTypeSisyfos.SISYFOS,
+					isPgm: 0
+				}
+			})
+		),
+
+		...(config.studio.MediaPlayerType === MediaPlayerType.CasparAB
+			? config.studio.ABMediaPlayers.split(',').map(props =>
+					literal<TimelineObjSisyfosMessage>({
+						id: '',
+						enable: { while: '1' },
+						priority: 0,
+						layer: SisyfosSourceClip(props.split(':')[0]),
+						content: {
+							deviceType: DeviceType.SISYFOS,
+							type: TimelineContentTypeSisyfos.SISYFOS,
+							isPgm: 0
+						}
+					})
+			  )
+			: [
+					literal<TimelineObjSisyfosMessage>({
+						id: '',
+						enable: { while: '1' },
+						priority: 0,
+						layer: SisyfosLLAyer.SisyfosSourceClipPending,
+						content: {
+							deviceType: DeviceType.SISYFOS,
+							type: TimelineContentTypeSisyfos.SISYFOS,
+							isPgm: 0
+						}
+					})
+			  ])
 	]
 }
