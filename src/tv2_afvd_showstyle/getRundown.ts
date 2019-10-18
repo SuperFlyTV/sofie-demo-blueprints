@@ -100,7 +100,7 @@ function getGlobalAdLibPieces(_context: NotesContext, config: BlueprintConfig): 
 				timelineObjects: _.compact<TSRTimelineObj>([
 					literal<TimelineObjAtemME>({
 						id: '',
-						enable: { while: 0, duration: 0 },
+						enable: { while: 0 },
 						priority: 1,
 						layer: AtemLLayer.AtemMEProgram,
 						content: {
@@ -131,7 +131,7 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 		// Default timeline
 		literal<TimelineObjAtemME>({
 			id: '',
-			enable: { while: 1, duration: 0 },
+			enable: { while: 1 },
 			priority: 0,
 			layer: AtemLLayer.AtemMEProgram,
 			content: {
@@ -145,7 +145,7 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 		}),
 		literal<TimelineObjAtemAUX>({
 			id: '',
-			enable: { while: '1', duration: 0 },
+			enable: { while: '1' },
 			priority: 0,
 			layer: AtemLLayer.AtemAuxLookahead,
 			content: {
@@ -158,7 +158,7 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 		}),
 		literal<TimelineObjAtemAUX>({
 			id: '',
-			enable: { while: '1', duration: 0 },
+			enable: { while: '1' },
 			priority: 0,
 			layer: AtemLLayer.AtemAuxSSrc,
 			content: {
@@ -171,7 +171,7 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 		}),
 		literal<TimelineObjAtemAUX>({
 			id: '',
-			enable: { while: '1', duration: 0 },
+			enable: { while: '1' },
 			priority: 0,
 			layer: AtemLLayer.AtemAuxClean,
 			content: {
@@ -184,7 +184,7 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 		}),
 		literal<TimelineObjAtemDSK>({
 			id: '',
-			enable: { while: '1', duration: 0 },
+			enable: { while: '1' },
 			priority: 0,
 			layer: AtemLLayer.AtemDSKGraphics,
 			content: {
@@ -208,7 +208,7 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 		}),
 		literal<TimelineObjAtemDSK>({
 			id: '',
-			enable: { while: '1', duration: 0 },
+			enable: { while: '1' },
 			priority: 0,
 			layer: AtemLLayer.AtemDSKEffect,
 			content: {
@@ -232,7 +232,7 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 		}),
 		literal<TimelineObjAtemSsrcProps>({
 			id: '',
-			enable: { while: '1', duration: 0 },
+			enable: { while: '1' },
 			priority: 0,
 			layer: AtemLLayer.AtemSSrcArt,
 			content: {
@@ -248,7 +248,7 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 		}),
 		literal<TimelineObjAtemSsrc>({
 			id: '',
-			enable: { while: '1', duration: 0 },
+			enable: { while: '1' },
 			priority: 0,
 			layer: AtemLLayer.AtemSSrcDefault,
 			content: {
@@ -290,7 +290,7 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 
 		literal<TimelineObjCCGMedia>({
 			id: '',
-			enable: { while: '1', duration: 0 },
+			enable: { while: '1' },
 			priority: 0,
 			layer: CasparLLayer.CasparPlayerClip,
 			content: {
@@ -310,7 +310,7 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 		}),
 		literal<TimelineObjCCGRoute>({
 			id: '',
-			enable: { while: '1', duration: 0 },
+			enable: { while: '1' },
 			priority: 0,
 			layer: CasparLLayer.CasparPlayerClipNext,
 			content: {
@@ -322,7 +322,7 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 		}),
 		literal<TimelineObjCCGMedia>({
 			id: '',
-			enable: { while: '1', duration: 0 },
+			enable: { while: '1' },
 			priority: 0,
 			layer: CasparLLayer.CasparPlayerClipNextWarning,
 			content: {
@@ -335,7 +335,7 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 
 		literal<TimelineObjCCGHTMLPage>({
 			id: '',
-			enable: { while: '1', duration: 0 },
+			enable: { while: '1' },
 			priority: 0,
 			layer: CasparLLayer.CasparCountdown,
 			content: {
@@ -348,7 +348,7 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 		..._.range(config.studio.HyperdeckCount).map(i =>
 			literal<TimelineObjHyperdeckTransport>({
 				id: '',
-				enable: { while: '1', duration: 0 },
+				enable: { while: '1' },
 				priority: 0,
 				layer: HyperdeckLLayer(i),
 				content: {
