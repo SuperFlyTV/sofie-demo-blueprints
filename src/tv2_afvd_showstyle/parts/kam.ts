@@ -29,12 +29,15 @@ export function CreatePartKam(
 	config: BlueprintConfig,
 	partDefinition: PartDefinition
 ): BlueprintResultPart {
+	const duration = Number(partDefinition.fields.audioTime) * 1000 || 0
+
 	const part = literal<IBlueprintPart>({
 		externalId: partDefinition.externalId,
 		title: PartType[partDefinition.type] + ' - ' + partDefinition.rawType,
 		metaData: {},
 		typeVariant: '',
-		expectedDuration: 0
+		expectedDuration: duration,
+		displayDuration: duration
 	})
 
 	const adLibPieces: IBlueprintAdLibPiece[] = []
