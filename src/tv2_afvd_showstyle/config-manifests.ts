@@ -57,7 +57,8 @@ export const showStyleConfigManifest: ConfigManifestEntry[] = [
 				INewsCode: '',
 				INewsName: '',
 				VizTemplate: '',
-				OutType: '', // (default, S, B, O)
+				VizDestination: '',
+				OutType: '', // (default(''), S, B, O)
 				Argument1: '',
 				Argument2: ''
 			}
@@ -73,8 +74,8 @@ export const showStyleConfigManifest: ConfigManifestEntry[] = [
 			},
 			{
 				id: 'iNewsName',
-				name: 'iNews Command Argument',
-				description: 'The argument after the Code',
+				name: 'iNews Argument',
+				description: 'The argument after the code',
 				type: ConfigManifestEntryType.STRING,
 				required: true,
 				defaultVal: ''
@@ -88,9 +89,17 @@ export const showStyleConfigManifest: ConfigManifestEntry[] = [
 				defaultVal: ''
 			},
 			{
+				id: 'VizDestination',
+				name: 'Viz Destination',
+				description: 'The name of the Viz Engine',
+				type: ConfigManifestEntryType.STRING,
+				required: true,
+				defaultVal: ''
+			},
+			{
 				id: 'OutType',
 				name: 'Out type',
-				description: 'The type of out, default follow timecode, S stays on to ??, B stays on to ??, O stays on to ??',
+				description: 'The type of out, none follow timecode, S stays on to ??, B stays on to ??, O stays on to ??',
 				type: ConfigManifestEntryType.STRING,
 				required: true,
 				defaultVal: ''
