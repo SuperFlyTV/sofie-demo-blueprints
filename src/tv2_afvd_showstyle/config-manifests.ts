@@ -34,5 +34,92 @@ export const showStyleConfigManifest: ConfigManifestEntry[] = [
 				defaultVal: ''
 			}
 		]
+	},
+	{
+		/*
+		Graphic template setup								
+		inews code	
+		inews name	
+		Grafik template (viz)	
+		destination	default out (default, S, B, O)	
+		var 1 name	
+		var 2 name 	
+		note
+		*/
+		id: 'GFXtemplates',
+		name: 'GFX Templates',
+		description: 'Graphics Template Setup',
+		type: ConfigManifestEntryType.TABLE,
+		required: false,
+		defaultVal: [
+			{
+				_id: '',
+				INewsCode: '',
+				INewsName: '',
+				VizTemplate: '',
+				VizDestination: '',
+				OutType: '', // (default(''), S, B, O)
+				Argument1: '',
+				Argument2: ''
+			}
+		],
+		columns: [
+			{
+				id: 'INewsCode',
+				name: 'iNews Command',
+				description: 'The code as it will appear in iNews',
+				type: ConfigManifestEntryType.STRING,
+				required: true,
+				defaultVal: ''
+			},
+			{
+				id: 'iNewsName',
+				name: 'iNews Argument',
+				description: 'The argument after the code',
+				type: ConfigManifestEntryType.STRING,
+				required: true,
+				defaultVal: ''
+			},
+			{
+				id: 'VizTemplate',
+				name: 'Viz Template Name',
+				description: 'The name of the Viz Template',
+				type: ConfigManifestEntryType.STRING,
+				required: true,
+				defaultVal: ''
+			},
+			{
+				id: 'VizDestination',
+				name: 'Viz Destination',
+				description: 'The name of the Viz Engine',
+				type: ConfigManifestEntryType.STRING,
+				required: true,
+				defaultVal: ''
+			},
+			{
+				id: 'OutType',
+				name: 'Out type',
+				description: 'The type of out, none follow timecode, S stays on to ??, B stays on to ??, O stays on to ??',
+				type: ConfigManifestEntryType.STRING,
+				required: true,
+				defaultVal: ''
+			},
+			{
+				id: 'Argument1',
+				name: 'Variable 1',
+				description: 'Argument passed to Viz',
+				type: ConfigManifestEntryType.STRING,
+				required: true,
+				defaultVal: ''
+			},
+			{
+				id: 'Argument2',
+				name: 'Variable 2',
+				description: 'Argument passed to Viz',
+				type: ConfigManifestEntryType.STRING,
+				required: true,
+				defaultVal: ''
+			}
+		]
 	}
 ]
