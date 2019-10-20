@@ -11,6 +11,7 @@
     "build-now": "yarn run build-inner --env.production",
     "build-inner": "webpack --config config/webpack.config.js",
     "build-sync-local": "yarn run build --env.server=\"http://localhost:3000\"",
+    "build-sync-local-now": "yarn run build-now --env.server=\"http://localhost:3000\"",
     "watch": "yarn run build-inner --watch",
     "watch-sync-local": "yarn run watch --env.server=\"http://localhost:3000\"",
     "lint": "tslint --project tsconfig.json --config tslint.json",
