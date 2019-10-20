@@ -7,7 +7,7 @@ import {
 import { literal } from '../../../common/util'
 import { SisyfosSourceCamera, SisyfosSourceRemote } from '../../../tv2_afvd_studio/layers'
 
-export function GetSisyfosTimelineObjForCamera(sourceType: string): TSRTimelineObj[] {
+export function GetSisyfosTimelineObjForCamera(sourceType: string, voiceOverLevel: boolean): TSRTimelineObj[] {
 	const audioTimeline: TSRTimelineObj[] = []
 	const useMic = !sourceType.match(/^(?:KAM|CAM)(?:ERA)? (.+) minus mic(.*)$/i)
 	const camName = sourceType.match(/^(?:KAM|CAM)(?:ERA)? (.+)$/i)
@@ -23,14 +23,14 @@ export function GetSisyfosTimelineObjForCamera(sourceType: string): TSRTimelineO
 				content: {
 					deviceType: DeviceType.SISYFOS,
 					type: TimelineContentTypeSisyfos.SISYFOS,
-					isPgm: 1
+					isPgm: voiceOverLevel ? 2 : 1
 				}
 			})
 		)
 	}
 	return audioTimeline
 }
-export function GetSisyfosTimelineObjForEkstern(sourceType: string): TSRTimelineObj[] {
+export function GetSisyfosTimelineObjForEkstern(sourceType: string, voiceOverLevel: boolean): TSRTimelineObj[] {
 	let audioTimeline: TSRTimelineObj[] = []
 
 	const eksternProps = sourceType.match(/^(?:LIVE|SKYPE) ([^\s]+)(?: (.+))?$/i)
@@ -51,29 +51,12 @@ export function GetSisyfosTimelineObjForEkstern(sourceType: string): TSRTimeline
 									},
 									priority: 1,
 									layer: isSkype
-										? SisyfosSourceRemote(`skype_${source}`, 'stereo_1')
-										: SisyfosSourceRemote(source, 'stereo_1'),
+										? SisyfosSourceRemote(`skype_${source}`, 'stereo')
+										: SisyfosSourceRemote(source, 'stereo'),
 									content: {
 										deviceType: DeviceType.SISYFOS,
 										type: TimelineContentTypeSisyfos.SISYFOS,
-										isPgm: 1,
-										faderLevel: 0.75
-									}
-								}),
-								literal<TimelineObjSisyfosMessage>({
-									id: '',
-									enable: {
-										start: 0
-									},
-									priority: 1,
-									layer: isSkype
-										? SisyfosSourceRemote(`skype_${source}`, 'stereo_2')
-										: SisyfosSourceRemote(source, 'stereo_2'),
-									content: {
-										deviceType: DeviceType.SISYFOS,
-										type: TimelineContentTypeSisyfos.SISYFOS,
-										isPgm: 1,
-										faderLevel: 0.75
+										isPgm: voiceOverLevel ? 2 : 1
 									}
 								})
 						  ]
@@ -90,8 +73,7 @@ export function GetSisyfosTimelineObjForEkstern(sourceType: string): TSRTimeline
 									content: {
 										deviceType: DeviceType.SISYFOS,
 										type: TimelineContentTypeSisyfos.SISYFOS,
-										isPgm: 1,
-										faderLevel: 0.75
+										isPgm: voiceOverLevel ? 2 : 1
 									}
 								})
 						  ]
@@ -106,14 +88,32 @@ export function GetSisyfosTimelineObjForEkstern(sourceType: string): TSRTimeline
 								content: {
 									deviceType: DeviceType.SISYFOS,
 									type: TimelineContentTypeSisyfos.SISYFOS,
-									isPgm: 1,
-									faderLevel: 0.75
+									isPgm: voiceOverLevel ? 2 : 1
 								}
 							})
 					  ])
 			]
 		}
 	}
+	return audioTimeline
+}
 
+export function GetSisyfosTimelineObjFadeToBlack(): TSRTimelineObj[] {
+	const audioTimeline: TSRTimelineObj[] = [
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: {
+				start: 0
+			},
+			priority: 1,
+			// TODO: Add to correct layer, an overall for all channels
+			layer: '',
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				fadeToBlack: true
+			}
+		})
+	]
 	return audioTimeline
 }
