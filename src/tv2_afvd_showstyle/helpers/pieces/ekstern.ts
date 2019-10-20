@@ -77,7 +77,7 @@ export function EvaluateEkstern(
 						}
 					}),
 
-					...GetSisyfosTimelineObjForEkstern(parsedCue.source)
+					...GetSisyfosTimelineObjForEkstern(parsedCue.source, false)
 				])
 			})
 		})

@@ -86,7 +86,7 @@ export function MakeContentDVE(
 			})
 			boxes.push({ ...template.boxes[index], ...{ source: sourceInfoCam.port } })
 
-			audioTimeline = [...audioTimeline, ...GetSisyfosTimelineObjForCamera(source)]
+			audioTimeline = [...audioTimeline, ...GetSisyfosTimelineObjForCamera(source, false)]
 		} else if (sourceType.match(/LIVE/i) || sourceType.match(/SKYPE/i)) {
 			const sourceInfoLive = FindSourceInfoStrict(context, config.sources, SourceLayerType.REMOTE, source)
 			if (sourceInfoLive === undefined) {
@@ -104,7 +104,7 @@ export function MakeContentDVE(
 			})
 			boxes.push({ ...template.boxes[index], ...{ source: sourceInfoLive.port } })
 
-			audioTimeline = [...audioTimeline, ...GetSisyfosTimelineObjForEkstern(source)]
+			audioTimeline = [...audioTimeline, ...GetSisyfosTimelineObjForEkstern(source, false)]
 		} else {
 			context.warning(`Unknown source type for DVE: ${source}`)
 			valid = false
