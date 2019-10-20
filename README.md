@@ -2,15 +2,16 @@
 
 This is a reference blueprints package for the [Sofie News Studio Automation System](https://github.com/nrkno/Sofie-TV-automation/).
 
-## How to Use the Spreadsheet Gateway
+## How to Use the TV2 Blueprints
 
-See the [User Guide](docs/Spreadsheet_User_Guide.md)
+These blueprints are meant for use at TV 2 Denmark and are written for that purpose. How ever they arew free to be used as a base for building new Blueprints.
 
-## Features
-
-These blueprints is intended to be used with Spreadsheets based on the template [TODO: LINK](http://spreadsheetsonGoogleDrive)
-
-* 
+They are based on:
+* iNews
+* Atem Constellation VMX
+* CasparCG playout
+* VizRt graphics
+* Sisyfos Audio controller
 
 ## Getting started
 
@@ -22,17 +23,13 @@ To start using these blueprints in Sofie, start with going through the [Getting 
 
 For developers installation steps are as following:
 ```sh
-git clone https://github.com/SuperFlyTV/sofie-blueprints-spreadsheet
+git clone https://github.com/olzzon/tv2-sofie-blueprints-inews.git
 yarn
 yarn dist
 ```
 The result dist/*-bundle.js files can be distributed and uploaded in the Sofie UI
 
 TODO - bundle.json is a valid distribution format
-
-## vMix setup
-
-See [vMix](docs/vMix.md)
 
 ## Development
 
