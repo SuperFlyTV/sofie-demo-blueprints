@@ -32,7 +32,9 @@ export function EvaluateCues(
 					adLibRank++
 					break
 				default:
-					if (parsedCue.type !== CueType.Unknown) {
+					if (parsedCue.type === CueType.Unknown) {
+						context.warning(`Unknown cue: ${cue}`)
+					} else {
 						context.warning(`Unknown cue type: ${CueType[parsedCue.type]}`)
 					}
 					break

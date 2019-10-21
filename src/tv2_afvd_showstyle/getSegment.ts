@@ -13,11 +13,11 @@ import { parseConfig } from './helpers/config'
 import { ParseBody, PartType } from './inewsConversion/converters/ParseBody'
 import { CreatePartFake } from './parts/fake'
 import { CreatePartGrafik } from './parts/grafik'
-import { CreatePartInvalid } from './parts/invalid'
 import { CreatePartKam } from './parts/kam'
 import { CreatePartLive } from './parts/live'
 import { CreatePartServer } from './parts/server'
 import { CreatePartTeknik } from './parts/teknik'
+import { CreatePartUnknown } from './parts/unknown'
 import { CreatePartVO } from './parts/vo'
 
 const DEBUG_LAYERS = false // TODO: Remove for production, used show all source layers even without parts.
@@ -69,7 +69,7 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 				break
 			case PartType.Unknown:
 				// context.warning(`Unknown part type for part ${part.rawType} with id ${part.externalId}`)
-				blueprintParts.push(CreatePartInvalid(part))
+				blueprintParts.push(CreatePartUnknown(partContext, config, part))
 				break
 			default:
 				assertUnreachable(part)
