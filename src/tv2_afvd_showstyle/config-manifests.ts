@@ -74,8 +74,8 @@ export const showStyleConfigManifest: ConfigManifestEntry[] = [
 			},
 			{
 				id: 'iNewsName',
-				name: 'iNews Argument',
-				description: 'The argument after the code',
+				name: 'iNews Name',
+				description: 'The name after the code',
 				type: ConfigManifestEntryType.STRING,
 				required: true,
 				defaultVal: ''
