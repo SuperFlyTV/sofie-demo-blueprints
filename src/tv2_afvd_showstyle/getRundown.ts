@@ -379,7 +379,8 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 				content: {
 					deviceType: DeviceType.SISYFOS,
 					type: TimelineContentTypeSisyfos.SISYFOS,
-					isPgm: 0
+					isPgm: 0,
+					fadeToBlack: true
 				}
 			})
 		),
@@ -393,7 +394,8 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 				content: {
 					deviceType: DeviceType.SISYFOS,
 					type: TimelineContentTypeSisyfos.SISYFOS,
-					isPgm: 0
+					isPgm: 0,
+					fadeToBlack: true
 				}
 			})
 		),
@@ -407,7 +409,8 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 				content: {
 					deviceType: DeviceType.SISYFOS,
 					type: TimelineContentTypeSisyfos.SISYFOS,
-					isPgm: 0
+					isPgm: 0,
+					fadeToBlack: true
 				}
 			})
 		),
@@ -422,7 +425,8 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 						content: {
 							deviceType: DeviceType.SISYFOS,
 							type: TimelineContentTypeSisyfos.SISYFOS,
-							isPgm: 0
+							isPgm: 0,
+							fadeToBlack: true
 						}
 					})
 			  )
@@ -435,7 +439,8 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 						content: {
 							deviceType: DeviceType.SISYFOS,
 							type: TimelineContentTypeSisyfos.SISYFOS,
-							isPgm: 0
+							isPgm: 0,
+							fadeToBlack: true
 						}
 					})
 			  ])
