@@ -23,8 +23,7 @@ export function GetSisyfosTimelineObjForCamera(sourceType: string, voiceOverLeve
 				content: {
 					deviceType: DeviceType.SISYFOS,
 					type: TimelineContentTypeSisyfos.SISYFOS,
-					isPgm: voiceOverLevel ? 2 : 1,
-					fadeToBlack: false
+					isPgm: voiceOverLevel ? 2 : 1
 				}
 			})
 		)
@@ -57,8 +56,7 @@ export function GetSisyfosTimelineObjForEkstern(sourceType: string, voiceOverLev
 									content: {
 										deviceType: DeviceType.SISYFOS,
 										type: TimelineContentTypeSisyfos.SISYFOS,
-										isPgm: voiceOverLevel ? 2 : 1,
-										fadeToBlack: false
+										isPgm: voiceOverLevel ? 2 : 1
 									}
 								})
 						  ]
@@ -75,8 +73,7 @@ export function GetSisyfosTimelineObjForEkstern(sourceType: string, voiceOverLev
 									content: {
 										deviceType: DeviceType.SISYFOS,
 										type: TimelineContentTypeSisyfos.SISYFOS,
-										isPgm: voiceOverLevel ? 2 : 1,
-										fadeToBlack: false
+										isPgm: voiceOverLevel ? 2 : 1
 									}
 								})
 						  ]
@@ -91,8 +88,7 @@ export function GetSisyfosTimelineObjForEkstern(sourceType: string, voiceOverLev
 								content: {
 									deviceType: DeviceType.SISYFOS,
 									type: TimelineContentTypeSisyfos.SISYFOS,
-									isPgm: voiceOverLevel ? 2 : 1,
-									fadeToBlack: false
+									isPgm: voiceOverLevel ? 2 : 1
 								}
 							})
 					  ])

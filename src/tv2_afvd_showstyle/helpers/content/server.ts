@@ -54,8 +54,7 @@ export function MakeContentServer(
 					deviceType: DeviceType.SISYFOS,
 					type: TimelineContentTypeSisyfos.SISYFOS,
 					isPgm: 1,
-					faderLevel: 0.75,
-					fadeToBlack: false
+					faderLevel: 0.75
 				},
 				metaData: {
 					mediaPlayerSession: adLib ? MEDIA_PLAYER_AUTO : mediaPlayerSessionId
