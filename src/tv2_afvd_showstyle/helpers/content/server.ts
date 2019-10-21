@@ -3,11 +3,14 @@ import {
 	TimelineContentTypeCasparCg,
 	TimelineContentTypeSisyfos,
 	TimelineObjCCGMedia,
-	TimelineObjSisyfosAny
+	TimelineObjSisyfosAny,
+	TimelineObjAtemME,
+	TimelineContentTypeAtem,
+	AtemTransitionStyle
 } from 'timeline-state-resolver-types'
 import { TimelineObjectCoreExt, VTContent } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../../common/util'
-import { CasparLLayer, SisyfosLLAyer } from '../../../tv2_afvd_studio/layers'
+import { CasparLLayer, SisyfosLLAyer, AtemLLayer } from '../../../tv2_afvd_studio/layers'
 import { TimelineBlueprintExt } from '../../../tv2_afvd_studio/onTimelineGenerate'
 import { MEDIA_PLAYER_AUTO } from '../../../types/constants'
 
@@ -37,6 +40,26 @@ export function MakeContentServer(
 					type: TimelineContentTypeCasparCg.MEDIA,
 					file,
 					length: duration
+				},
+				metaData: {
+					mediaPlayerSession: adLib ? MEDIA_PLAYER_AUTO : mediaPlayerSessionId
+				}
+			}),
+
+			literal<TimelineObjAtemME & TimelineBlueprintExt>({
+				id: '',
+				enable: {
+					start: 0
+				},
+				priority: 1,
+				layer: AtemLLayer.AtemMEProgram,
+				content: {
+					deviceType: DeviceType.ATEM,
+					type: TimelineContentTypeAtem.ME,
+					me: {
+						input: undefined,
+						transition: AtemTransitionStyle.CUT
+					}
 				},
 				metaData: {
 					mediaPlayerSession: adLib ? MEDIA_PLAYER_AUTO : mediaPlayerSessionId
