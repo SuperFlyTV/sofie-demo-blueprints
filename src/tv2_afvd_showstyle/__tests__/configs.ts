@@ -19,4 +19,6 @@ export const casparABPlaybackConfig: ConfigMap = {
 	MediaPlayerType: MediaPlayerType.CasparAB
 }
 
-export const defaultShowStyleConfig: ConfigMap = {}
+export const defaultShowStyleConfig: ConfigMap = {
+	DefaultTemplateDuration: 4
+}

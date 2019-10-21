@@ -3,7 +3,9 @@ import { showStyleConfigManifest } from '../config-manifests'
 import { ShowStyleConfig } from '../helpers/config'
 
 const blankShowStyleConfig: ShowStyleConfig = {
-	DVEStyles: []
+	DVEStyles: [],
+	GFXTemplates: [],
+	DefaultTemplateDuration: 4
 }
 
 describe('Config Manifest', () => {

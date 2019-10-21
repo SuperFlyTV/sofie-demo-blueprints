@@ -46,7 +46,7 @@ export const showStyleConfigManifest: ConfigManifestEntry[] = [
 		var 2 name 	
 		note
 		*/
-		id: 'GFXtemplates',
+		id: 'GFXTemplates',
 		name: 'GFX Templates',
 		description: 'Graphics Template Setup',
 		type: ConfigManifestEntryType.TABLE,
@@ -121,5 +121,13 @@ export const showStyleConfigManifest: ConfigManifestEntry[] = [
 				defaultVal: ''
 			}
 		]
+	},
+	{
+		id: 'DefaultTemplateDuration',
+		name: 'Default Template Duration',
+		description: 'Default Template Duration',
+		type: ConfigManifestEntryType.NUMBER,
+		required: true,
+		defaultVal: 4
 	}
 ]
