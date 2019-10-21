@@ -1,0 +1,56 @@
+import { DeviceType, TimelineContentTypeSisyfos, TimelineObjSisyfosMessage } from 'timeline-state-resolver-types'
+import {
+	BaseContent,
+	IBlueprintPiece,
+	PartContext,
+	PieceLifespan,
+	TimelineObjectCoreExt
+} from 'tv-automation-sofie-blueprints-integration'
+import { literal } from '../../../common/util'
+import { CueDefinitionTelefon } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseCue'
+import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
+import { BlueprintConfig } from '../../../tv2_afvd_studio/helpers/config'
+import { SisyfosSourceTelefon } from '../../../tv2_afvd_studio/layers'
+import { CalculateTime } from './evaluateCues'
+
+export function EvaluateTelefon(
+	_context: PartContext,
+	_config: BlueprintConfig,
+	pieces: IBlueprintPiece[],
+	partId: string,
+	parsedCue: CueDefinitionTelefon
+) {
+	// TODO: Grafik
+	pieces.push(
+		literal<IBlueprintPiece>({
+			_id: '',
+			externalId: partId,
+			name: parsedCue.source,
+			enable: {
+				start: parsedCue.start ? CalculateTime(parsedCue.start) : 0,
+				...(parsedCue.end ? { end: CalculateTime(parsedCue.end) } : {})
+			},
+			outputLayerId: 'pgm0',
+			sourceLayerId: SourceLayer.PgmTelephone,
+			infiniteMode: PieceLifespan.OutOnNextPart,
+			content: literal<BaseContent>({
+				timelineObjects: literal<TimelineObjectCoreExt[]>([
+					literal<TimelineObjSisyfosMessage>({
+						id: '',
+						enable: {
+							start: 0
+						},
+						priority: 1,
+						layer: SisyfosSourceTelefon(parsedCue.source),
+						content: {
+							deviceType: DeviceType.SISYFOS,
+							type: TimelineContentTypeSisyfos.SISYFOS,
+							isPgm: 1,
+							faderLevel: 0.75
+						}
+					})
+				])
+			})
+		})
+	)
+}

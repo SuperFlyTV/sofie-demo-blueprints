@@ -218,14 +218,14 @@ export function getRemoteSisyfosMappings(remotes: StudioConfig['SourcesRM']) {
 				channel: Number(props[1]) || 0
 			})
 
-			res[`sisyfos_remote_source_${props[0]}_stereo_1`] = literal<MappingSisyfos & BlueprintMapping>({
+			res[`sisyfos_remote_source_${props[0]}_stereo`] = literal<MappingSisyfos & BlueprintMapping>({
 				device: PlayoutDeviceType.SISYFOS,
 				deviceId: 'sisyfos0',
 				lookahead: LookaheadMode.NONE,
 				channel: Number(props[1]) || 0
 			})
 
-			res[`sisyfos_remote_source_${props[0]}_stereo_2`] = literal<MappingSisyfos & BlueprintMapping>({
+			res[`sisyfos_remote_source_${props[0]}_stereo`] = literal<MappingSisyfos & BlueprintMapping>({
 				device: PlayoutDeviceType.SISYFOS,
 				deviceId: 'sisyfos0',
 				lookahead: LookaheadMode.NONE,
@@ -257,14 +257,25 @@ export function getSkypeSisyfosMappings(remotes: StudioConfig['SourcesSkype']) {
 				channel: Number(props[1]) || 0
 			})
 
-			res[`sisyfos_remote_source_skype_${props[0]}_stereo_1`] = literal<MappingSisyfos & BlueprintMapping>({
+			res[`sisyfos_remote_source_skype_${props[0]}_stereo`] = literal<MappingSisyfos & BlueprintMapping>({
 				device: PlayoutDeviceType.SISYFOS,
 				deviceId: 'sisyfos0',
 				lookahead: LookaheadMode.NONE,
 				channel: Number(props[1]) || 0
 			})
+		}
+	})
 
-			res[`sisyfos_remote_source_skype_${props[0]}_stereo_2`] = literal<MappingSisyfos & BlueprintMapping>({
+	return res
+}
+
+export function getTelefonSisyfosMappings(mappings: StudioConfig['TelefonSources']) {
+	const res: BlueprintMappings = {}
+	const telefons = mappings.split(',')
+	telefons.forEach(tlf => {
+		const props = tlf.split(':')
+		if (props[0] && props[1]) {
+			res[`sisyfos_telefon_source_${props[0].replace(' ', '_').trim()}`] = literal<MappingSisyfos & BlueprintMapping>({
 				device: PlayoutDeviceType.SISYFOS,
 				deviceId: 'sisyfos0',
 				lookahead: LookaheadMode.NONE,

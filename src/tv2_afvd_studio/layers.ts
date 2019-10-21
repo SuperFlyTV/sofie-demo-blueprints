@@ -72,6 +72,10 @@ export function SisyfosSourceRemote(name: string, variant?: string) {
 	return source
 }
 
+export function SisyfosSourceTelefon(i: string) {
+	return `sisyfos_telefon_source_${i.replace(' ', '_').trim()}`
+}
+
 export function HyperdeckLLayer(index: number) {
 	return `hyperdeck${index}`
 }

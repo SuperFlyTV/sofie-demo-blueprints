@@ -5,7 +5,8 @@ import { RealLLayers } from '../layers'
 import MappingsDefaults, {
 	getCameraSisyfosMappings,
 	getMediaPlayerMappings,
-	getRemoteSisyfosMappings
+	getRemoteSisyfosMappings,
+	getTelefonSisyfosMappings
 } from '../migrations/mappings-defaults'
 
 describe('Migration Defaults', () => {
@@ -16,7 +17,8 @@ describe('Migration Defaults', () => {
 			...getMediaPlayerMappings(MediaPlayerType.CasparAB, []),
 			...getMediaPlayerMappings(MediaPlayerType.CasparWithNext, []),
 			...getCameraSisyfosMappings(''),
-			...getRemoteSisyfosMappings('')
+			...getRemoteSisyfosMappings(''),
+			...getTelefonSisyfosMappings('')
 		}
 		const defaultsIds = _.map(allMappings, (v, id) => {
 			v = v
