@@ -18,7 +18,7 @@ They are based on:
 
 To start using these blueprints in Sofie, start with going through the [Getting Started guide](https://sofie.gitbook.io/sofie-tv-automation/documentation/getting-started) in the Sofie documentation.
 
-Then see the [setup guide](#docs/Setup.md) to configure the blueprints.
+Then see the [setup guide](docs/Setup.md) to configure the blueprints.
 
 ## Installation (for developers)
 
