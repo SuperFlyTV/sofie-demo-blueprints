@@ -23,7 +23,7 @@ export function EvaluateCues(
 	const filteredCues = parsedCues.filter(cue => cue.type !== CueType.Grafik)
 	const grafikCues = parsedCues.filter(cue => cue.type === CueType.Grafik)
 	const isDVE = containsDVE(parsedCues)
-	;(isDVE ? filteredCues : parsedCues).forEach(parsedCue => {
+	filteredCues.forEach(parsedCue => {
 		if (parsedCue) {
 			switch (parsedCue.type) {
 				case CueType.Ekstern:
@@ -39,9 +39,6 @@ export function EvaluateCues(
 				case CueType.Telefon:
 					EvaluateTelefon(context, config, pieces, adLibPieces, part.externalId, parsedCue)
 					break
-				case CueType.Grafik:
-					EvaluateGrafik(context, config, pieces, adLibPieces, part.externalId, parsedCue)
-					break
 				default:
 					if (parsedCue.type === CueType.Unknown) {
 						context.warning(`Unknown cue: ${JSON.stringify(parsedCue)}`)
@@ -54,7 +51,16 @@ export function EvaluateCues(
 	})
 
 	if (isDVE) {
-		grafikCues.forEach(parsedCue => {
+		// All cues are AdLibs
+		grafikCues.forEach((parsedCue, i) => {
+			EvaluateGrafik(context, config, pieces, adLibPieces, part.externalId, parsedCue as any, true, i)
+		})
+	} else {
+		// First cue is not AdLib, but also an AdLib
+		grafikCues.forEach((parsedCue, i) => {
+			if (i === 0) {
+				EvaluateGrafik(context, config, pieces, adLibPieces, part.externalId, parsedCue as any)
+			}
 			EvaluateGrafik(context, config, pieces, adLibPieces, part.externalId, parsedCue as any, true)
 		})
 	}
