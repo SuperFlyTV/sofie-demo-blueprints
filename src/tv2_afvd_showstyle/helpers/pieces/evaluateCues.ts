@@ -1,7 +1,7 @@
 import { IBlueprintAdLibPiece, IBlueprintPiece, PartContext } from 'tv-automation-sofie-blueprints-integration'
 import { BlueprintConfig } from '../../../tv2_afvd_showstyle/helpers/config'
 import { PartDefinition } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseBody'
-import { CueTime, CueType, ParseCue, UnparsedCue } from '../../inewsConversion/converters/ParseCue'
+import { CueDefinition, CueTime, CueType, ParseCue, UnparsedCue } from '../../inewsConversion/converters/ParseCue'
 import { EvaluateAdLib } from './adlib'
 import { EvaluateDVE } from './dve'
 import { EvaluateEkstern } from './ekstern'
@@ -19,9 +19,12 @@ export function EvaluateCues(
 	part: PartDefinition
 ) {
 	let adLibRank = 0
-	cues.forEach(cue => {
-		if (cue) {
-			const parsedCue = ParseCue(cue)
+	const parsedCues = cues.map(cue => ParseCue(cue))
+	const filteredCues = parsedCues.filter(cue => cue.type !== CueType.Grafik)
+	const grafikCues = parsedCues.filter(cue => cue.type === CueType.Grafik)
+	const isDVE = containsDVE(parsedCues)
+	;(isDVE ? filteredCues : parsedCues).forEach(parsedCue => {
+		if (parsedCue) {
 			switch (parsedCue.type) {
 				case CueType.Ekstern:
 					EvaluateEkstern(context, config, pieces, part.externalId, parsedCue)
@@ -34,14 +37,14 @@ export function EvaluateCues(
 					adLibRank++
 					break
 				case CueType.Telefon:
-					EvaluateTelefon(context, config, pieces, part.externalId, parsedCue)
+					EvaluateTelefon(context, config, pieces, adLibPieces, part.externalId, parsedCue)
 					break
 				case CueType.Grafik:
-					EvaluateGrafik(context, config, pieces, part.externalId, parsedCue)
+					EvaluateGrafik(context, config, pieces, adLibPieces, part.externalId, parsedCue)
 					break
 				default:
 					if (parsedCue.type === CueType.Unknown) {
-						context.warning(`Unknown cue: ${cue}`)
+						context.warning(`Unknown cue: ${JSON.stringify(parsedCue)}`)
 					} else {
 						context.warning(`Unknown cue type: ${CueType[parsedCue.type]}`)
 					}
@@ -49,6 +52,12 @@ export function EvaluateCues(
 			}
 		}
 	})
+
+	if (isDVE) {
+		grafikCues.forEach(parsedCue => {
+			EvaluateGrafik(context, config, pieces, adLibPieces, part.externalId, parsedCue as any, true)
+		})
+	}
 }
 
 export function CalculateTime(time: CueTime) {
@@ -62,4 +71,8 @@ export function CalculateTime(time: CueTime) {
 	}
 
 	return result
+}
+
+function containsDVE(cues: CueDefinition[]) {
+	return !!cues.filter(cue => cue.type === CueType.DVE).length
 }

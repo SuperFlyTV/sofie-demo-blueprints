@@ -1,6 +1,7 @@
 import { DeviceType, TimelineContentTypeSisyfos, TimelineObjSisyfosMessage } from 'timeline-state-resolver-types'
 import {
 	BaseContent,
+	IBlueprintAdLibPiece,
 	IBlueprintPiece,
 	PartContext,
 	PieceLifespan,
@@ -18,6 +19,7 @@ export function EvaluateTelefon(
 	_context: PartContext,
 	_config: BlueprintConfig,
 	pieces: IBlueprintPiece[],
+	adlibPieces: IBlueprintAdLibPiece[],
 	partId: string,
 	parsedCue: CueDefinitionTelefon
 ) {
@@ -56,6 +58,6 @@ export function EvaluateTelefon(
 	)
 
 	if (parsedCue.vizObj) {
-		EvaluateGrafik(_context, _config, pieces, partId, parsedCue.vizObj)
+		EvaluateGrafik(_context, _config, pieces, adlibPieces, partId, parsedCue.vizObj)
 	}
 }
