@@ -161,6 +161,16 @@ export default literal<BlueprintMappings>({
 		lookahead: LookaheadMode.RETAIN,
 		mappingType: MappingAtemType.SuperSourceBox,
 		index: 0 // 0 = SS
+	}),
+	casparcg_player_clip_pending: literal<MappingAbstract & BlueprintMapping>({
+		device: PlayoutDeviceType.ABSTRACT,
+		deviceId: 'abstract0',
+		lookahead: LookaheadMode.PRELOAD
+	}),
+	sisyfos_source_clip_pending: literal<MappingAbstract & BlueprintMapping>({
+		device: PlayoutDeviceType.ABSTRACT,
+		deviceId: 'abstract0',
+		lookahead: LookaheadMode.NONE
 	})
 })
 
@@ -212,13 +222,6 @@ export function getRemoteSisyfosMappings(remotes: StudioConfig['SourcesRM']) {
 			})
 
 			res[`sisyfos_remote_source_${props[0]}_spor_2`] = literal<MappingSisyfos & BlueprintMapping>({
-				device: PlayoutDeviceType.SISYFOS,
-				deviceId: 'sisyfos0',
-				lookahead: LookaheadMode.NONE,
-				channel: Number(props[1]) || 0
-			})
-
-			res[`sisyfos_remote_source_${props[0]}_stereo`] = literal<MappingSisyfos & BlueprintMapping>({
 				device: PlayoutDeviceType.SISYFOS,
 				deviceId: 'sisyfos0',
 				lookahead: LookaheadMode.NONE,
