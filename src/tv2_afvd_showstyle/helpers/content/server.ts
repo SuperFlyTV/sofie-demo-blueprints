@@ -1,16 +1,16 @@
 import {
+	AtemTransitionStyle,
 	DeviceType,
+	TimelineContentTypeAtem,
 	TimelineContentTypeCasparCg,
 	TimelineContentTypeSisyfos,
-	TimelineObjCCGMedia,
-	TimelineObjSisyfosAny,
 	TimelineObjAtemME,
-	TimelineContentTypeAtem,
-	AtemTransitionStyle
+	TimelineObjCCGMedia,
+	TimelineObjSisyfosAny
 } from 'timeline-state-resolver-types'
 import { TimelineObjectCoreExt, VTContent } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../../common/util'
-import { CasparLLayer, SisyfosLLAyer, AtemLLayer } from '../../../tv2_afvd_studio/layers'
+import { AtemLLayer, CasparLLayer, SisyfosLLAyer } from '../../../tv2_afvd_studio/layers'
 import { TimelineBlueprintExt } from '../../../tv2_afvd_studio/onTimelineGenerate'
 import { MEDIA_PLAYER_AUTO } from '../../../types/constants'
 

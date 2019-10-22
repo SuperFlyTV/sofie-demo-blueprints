@@ -5,6 +5,7 @@ import { CueTime, CueType, ParseCue, UnparsedCue } from '../../inewsConversion/c
 import { EvaluateAdLib } from './adlib'
 import { EvaluateDVE } from './dve'
 import { EvaluateEkstern } from './ekstern'
+import { EvaluateGrafik } from './grafik'
 import { EvaluateTelefon } from './telefon'
 
 const FRAME_TIME = 1000 / 25 // TODO: This should be pulled from config.
@@ -34,6 +35,9 @@ export function EvaluateCues(
 					break
 				case CueType.Telefon:
 					EvaluateTelefon(context, config, pieces, part.externalId, parsedCue)
+					break
+				case CueType.Grafik:
+					EvaluateGrafik(context, config, pieces, part.externalId, parsedCue)
 					break
 				default:
 					if (parsedCue.type === CueType.Unknown) {
