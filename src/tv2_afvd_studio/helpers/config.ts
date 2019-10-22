@@ -31,7 +31,6 @@ export interface StudioConfig {
 	SourcesCam: string
 	SourcesRM: string
 	SourcesSkype: string
-	TelefonSources: string
 	HyperdeckCount: number
 	ABMediaPlayers: string
 	MediaPlayerType: MediaPlayerType

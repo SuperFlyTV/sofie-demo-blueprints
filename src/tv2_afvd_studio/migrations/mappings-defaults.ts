@@ -269,7 +269,7 @@ export function getSkypeSisyfosMappings(remotes: StudioConfig['SourcesSkype']) {
 	return res
 }
 
-export function getTelefonSisyfosMappings(mappings: StudioConfig['TelefonSources']) {
+export function getTelefonSisyfosMappings(mappings: string) {
 	const res: BlueprintMappings = {}
 	const telefons = mappings.split(',')
 	telefons.forEach(tlf => {
