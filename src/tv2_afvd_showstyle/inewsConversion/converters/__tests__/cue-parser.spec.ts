@@ -194,6 +194,7 @@ describe('Cue parser', () => {
 		expect(result).toEqual(
 			literal<CueDefinition>({
 				type: CueType.VIZ,
+				rawType: 'VIZ=grafik-design',
 				content: {
 					triopage: 'DESIGN_SC'
 				},
@@ -268,6 +269,7 @@ describe('Cue parser', () => {
 		expect(result).toEqual(
 			literal<CueDefinition>({
 				type: CueType.VIZ,
+				rawType: 'KOMMANDO=GRAPHICSPROFILE',
 				start: {
 					seconds: 0
 				},

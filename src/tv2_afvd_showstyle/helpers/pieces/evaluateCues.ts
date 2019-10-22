@@ -7,6 +7,7 @@ import { EvaluateDVE } from './dve'
 import { EvaluateEkstern } from './ekstern'
 import { EvaluateGrafik } from './grafik'
 import { EvaluateTelefon } from './telefon'
+import { EvaluateVIZ } from './viz'
 
 const FRAME_TIME = 1000 / 25 // TODO: This should be pulled from config.
 
@@ -38,6 +39,9 @@ export function EvaluateCues(
 					break
 				case CueType.Telefon:
 					EvaluateTelefon(context, config, pieces, adLibPieces, part.externalId, parsedCue)
+					break
+				case CueType.VIZ:
+					EvaluateVIZ(context, config, pieces, adLibPieces, part.externalId, parsedCue)
 					break
 				default:
 					if (parsedCue.type !== CueType.Unknown) {

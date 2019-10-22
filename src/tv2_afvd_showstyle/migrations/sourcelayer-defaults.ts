@@ -110,6 +110,14 @@ export default literal<ISourceLayer[]>([
 		unlimited: false
 	},
 	{
+		_id: SourceLayer.PgmVIZ,
+		_rank: 3000,
+		name: 'VIZ',
+		type: SourceLayerType.GRAPHICS,
+		onPGMClean: true,
+		unlimited: false
+	},
+	{
 		_id: SourceLayer.PgmAudioBed,
 		_rank: 0,
 		name: 'Bed',

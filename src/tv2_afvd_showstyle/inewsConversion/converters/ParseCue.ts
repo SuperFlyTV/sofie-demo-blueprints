@@ -66,6 +66,7 @@ export interface CueDefinitionTelefon extends CueDefinitionBase {
 
 export interface CueDefinitionVIZ extends CueDefinitionBase {
 	type: CueType.VIZ
+	rawType: string
 	content: {
 		[key: string]: string
 	}
@@ -254,6 +255,7 @@ function parseTelefon(cue: string[]): CueDefinitionTelefon {
 function parseVIZCues(cue: string[]): CueDefinitionVIZ {
 	let vizCues: CueDefinitionVIZ = {
 		type: CueType.VIZ,
+		rawType: cue[0],
 		content: {}
 	}
 
@@ -325,6 +327,7 @@ function parseAdLib(cue: string[]) {
 function parseKommando(cue: string[]) {
 	let kommandoCue: CueDefinitionVIZ = {
 		type: CueType.VIZ,
+		rawType: cue[0],
 		content: {}
 	}
 
