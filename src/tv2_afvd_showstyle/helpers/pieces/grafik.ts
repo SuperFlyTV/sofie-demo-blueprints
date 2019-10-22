@@ -31,7 +31,7 @@ export function EvaluateGrafik(
 			literal<IBlueprintAdLibPiece>({
 				_rank: rank || 0,
 				externalId: partId,
-				name: parsedCue.template || 'Grafik',
+				name: `Grafik - ${parsedCue.template} - ${parsedCue.textFields.filter(txt => !txt.match(/^;.\.../))}`,
 				sourceLayerId: SourceLayer.PgmGraphics,
 				outputLayerId: 'pgm0',
 				expectedDuration: 0,
@@ -43,7 +43,7 @@ export function EvaluateGrafik(
 			literal<IBlueprintPiece>({
 				_id: '',
 				externalId: partId,
-				name: parsedCue.template || 'Grafik',
+				name: `Grafik - ${parsedCue.template} - ${parsedCue.textFields.filter(txt => !txt.match(/^;.\.../))}`,
 				enable: { start: 0 },
 				outputLayerId: 'pgm0',
 				sourceLayerId: SourceLayer.PgmGraphics,
