@@ -31,7 +31,7 @@ export function EvaluateGrafik(
 			literal<IBlueprintAdLibPiece>({
 				_rank: rank || 0,
 				externalId: partId,
-				name: `Grafik - ${parsedCue.template} - ${parsedCue.textFields.filter(txt => !txt.match(/^;.\.../))}`,
+				name: grafikName(parsedCue),
 				sourceLayerId: SourceLayer.PgmGraphics,
 				outputLayerId: 'pgm0',
 				expectedDuration: 0,
@@ -43,7 +43,7 @@ export function EvaluateGrafik(
 			literal<IBlueprintPiece>({
 				_id: '',
 				externalId: partId,
-				name: `Grafik - ${parsedCue.template} - ${parsedCue.textFields.filter(txt => !txt.match(/^;.\.../))}`,
+				name: grafikName(parsedCue),
 				enable: { start: 0 },
 				outputLayerId: 'pgm0',
 				sourceLayerId: SourceLayer.PgmGraphics,
@@ -51,4 +51,10 @@ export function EvaluateGrafik(
 			})
 		) // TODO: Timeline objects
 	}
+}
+
+function grafikName(parsedCue: CueDefinitionGrafik) {
+	return `Grafik${parsedCue.template ? ` - ${parsedCue.template}` : ''}${parsedCue.textFields
+		.filter(txt => !txt.match(/^;.\.../))
+		.map(txt => ` - ${txt}`)}`
 }
