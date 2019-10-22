@@ -110,7 +110,7 @@ export function ParseCue(cue: UnparsedCue): CueDefinition {
 			type: CueType.Ignored_MOS,
 			command: cue
 		}
-	} else if (cue[0].match(/^(?:kg)|(?:digi)/i)) {
+	} else if (cue[0].match(/(?:^kg)|(?:^digi)/i)) {
 		// kg (Grafik)
 		return parsekg(cue as string[])
 	} else if (cue[0].match(/^]] [a-z]\d\.\d [a-z] \d \[\[$/i)) {
@@ -125,7 +125,7 @@ export function ParseCue(cue: UnparsedCue): CueDefinition {
 				source: eksternSource[1]
 			}
 		}
-	} else if (cue[0].match(/^DVE=/)) {
+	} else if (cue[0].match(/^DVE=/) || cue[0].match(/^SS=/)) {
 		// DVE
 		return parseDVE(cue)
 	} else if (cue[0].match(/^TELEFON=/)) {
@@ -203,7 +203,7 @@ function parseMOS(cue: string[]): CueDefinitionMOS {
 }
 
 function parseDVE(cue: string[]): CueDefinitionDVE {
-	const dvecue: CueDefinitionDVE = {
+	let dvecue: CueDefinitionDVE = {
 		type: CueType.DVE,
 		template: '',
 		sources: [],
@@ -211,8 +211,8 @@ function parseDVE(cue: string[]): CueDefinitionDVE {
 	}
 
 	cue.forEach(c => {
-		if (c.match(/^DVE=/)) {
-			const template = c.match(/^DVE=(.+)$/)
+		if (c.match(/^DVE=/) || c.match(/^SS=/)) {
+			const template = c.match(/(?:(?:^DVE)|(?:^SS))=(.+)$/)
 			if (template) {
 				dvecue.template = template[1]
 			}
@@ -226,6 +226,8 @@ function parseDVE(cue: string[]): CueDefinitionDVE {
 			if (labels) {
 				dvecue.labels = labels[1].split('/')
 			}
+		} else if (isTime(c)) {
+			dvecue = { ...dvecue, ...parseTime(c) }
 		}
 	})
 

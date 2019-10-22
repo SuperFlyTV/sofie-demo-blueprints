@@ -275,4 +275,21 @@ describe('Cue parser', () => {
 			})
 		)
 	})
+
+	test('SS=', () => {
+		const cueSS = ['SS=3-SPORTSDIGI', 'INP1=EVS 1', ';0.00.01']
+		const result = ParseCue(cueSS)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.DVE,
+				start: {
+					seconds: 0,
+					frames: 1
+				},
+				template: '3-SPORTSDIGI',
+				sources: ['EVS 1'],
+				labels: []
+			})
+		)
+	})
 })
