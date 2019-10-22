@@ -40,9 +40,7 @@ export function EvaluateCues(
 					EvaluateTelefon(context, config, pieces, adLibPieces, part.externalId, parsedCue)
 					break
 				default:
-					if (parsedCue.type === CueType.Unknown) {
-						context.warning(`Unknown cue: ${JSON.stringify(parsedCue)}`)
-					} else {
+					if (parsedCue.type !== CueType.Unknown) {
 						context.warning(`Unknown cue type: ${CueType[parsedCue.type]}`)
 					}
 					break
