@@ -12,6 +12,7 @@ import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
 import { BlueprintConfig } from '../../../tv2_afvd_studio/helpers/config'
 import { SisyfosSourceTelefon } from '../../../tv2_afvd_studio/layers'
 import { CalculateTime } from './evaluateCues'
+import { EvaluateGrafik } from './grafik'
 
 export function EvaluateTelefon(
 	_context: PartContext,
@@ -53,4 +54,8 @@ export function EvaluateTelefon(
 			})
 		})
 	)
+
+	if (parsedCue.vizObj) {
+		EvaluateGrafik(_context, _config, pieces, partId, parsedCue.vizObj)
+	}
 }
