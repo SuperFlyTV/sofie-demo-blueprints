@@ -134,6 +134,60 @@ function getGlobalAdLibPieces(_context: NotesContext, config: BlueprintConfig): 
 			adlibItems.push(makeCameraAdLib(v, 100))
 		}
 	})
+	adlibItems.push({
+		externalId: 'cam',
+		name: `Delayed Playback`,
+		_rank: 100,
+		sourceLayerId: SourceLayer.PgmCam,
+		outputLayerId: 'pgm0',
+		expectedDuration: 0,
+		infiniteMode: PieceLifespan.OutOnNextPart,
+		content: {
+			timelineObjects: _.compact<TSRTimelineObj>([
+				literal<TimelineObjAtemME>({
+					id: '',
+					enable: { while: 0 },
+					priority: 1,
+					layer: AtemLLayer.AtemMEProgram,
+					content: {
+						deviceType: DeviceType.ATEM,
+						type: TimelineContentTypeAtem.ME,
+						me: {
+							input: 22,
+							transition: AtemTransitionStyle.CUT
+						}
+					}
+				})
+			])
+		}
+	})
+	adlibItems.push({
+		externalId: 'cam',
+		name: `Delayed Playback +`,
+		_rank: 100,
+		sourceLayerId: SourceLayer.PgmCam,
+		outputLayerId: 'pgm0',
+		expectedDuration: 0,
+		infiniteMode: PieceLifespan.OutOnNextPart,
+		content: {
+			timelineObjects: _.compact<TSRTimelineObj>([
+				literal<TimelineObjAtemME>({
+					id: '',
+					enable: { while: 0 },
+					priority: 1,
+					layer: AtemLLayer.AtemMEProgram,
+					content: {
+						deviceType: DeviceType.ATEM,
+						type: TimelineContentTypeAtem.ME,
+						me: {
+							input: 35,
+							transition: AtemTransitionStyle.CUT
+						}
+					}
+				})
+			])
+		}
+	})
 	return adlibItems
 }
 
