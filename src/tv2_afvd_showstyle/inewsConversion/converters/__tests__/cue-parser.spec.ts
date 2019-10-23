@@ -19,6 +19,13 @@ describe('Cue parser', () => {
 		)
 	})
 
+	test('Empty Cue', () => {
+		const result = ParseCue([])
+		expect(result).toEqual({
+			type: CueType.Unknown
+		})
+	})
+
 	test('Time with symbolic out', () => {
 		let time = ';0.01-S'
 		let result = isTime(time)

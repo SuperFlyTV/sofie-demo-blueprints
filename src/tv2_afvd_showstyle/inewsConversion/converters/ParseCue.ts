@@ -107,7 +107,7 @@ export type CueDefinition =
 	| CueDefinitionLYD
 
 export function ParseCue(cue: UnparsedCue): CueDefinition {
-	if (!cue) {
+	if (!cue || cue.length === 0) {
 		return {
 			type: CueType.Unknown
 		}
