@@ -50,6 +50,21 @@ describe('Cue parser', () => {
 		})
 	})
 
+	test('Time with spaces', () => {
+		const time = ';0.01 - B'
+		let result = isTime(time)
+		expect(result).toBe(true)
+		result = parseTime(time)
+		expect(result).toEqual({
+			start: {
+				seconds: 1
+			},
+			end: {
+				infiniteMode: 'B'
+			}
+		})
+	})
+
 	test('Grafik (kg) - Inline first text field', () => {
 		const cueGrafik = ['kg bund HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk', ';0.02']
 		const result = ParseCue(cueGrafik)
