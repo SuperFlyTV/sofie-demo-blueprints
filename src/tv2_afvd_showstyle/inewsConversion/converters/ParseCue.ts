@@ -16,6 +16,7 @@ export enum CueType {
 export interface CueTime {
 	frames?: number
 	seconds?: number
+	infiniteMode?: 'B' | 'S' | 'O'
 }
 
 export interface CueDefinitionBase {
@@ -343,11 +344,13 @@ function parseKommando(cue: string[]) {
 	return kommandoCue
 }
 
-function isTime(line: string) {
-	return line.match(/^;\d{1,2}(?:(?:\.\d{1,2}){0,1}){0,2}(?:-\d{1,2}(?:(?:\.\d{1,2}){0,1}){0,2}){0,1}$/)
+export function isTime(line: string) {
+	return !!line.match(
+		/^;\d{1,2}(?:(?:\.\d{1,2}){0,1}){0,2}(?:(?:-\d{1,2}(?:(?:\.\d{1,2}){0,1}){0,2}){0,1}|(?:-[BSO]))$/
+	)
 }
 
-function parseTime(line: string) {
+export function parseTime(line: string) {
 	const retTime: any = {
 		start: {},
 		end: {}
@@ -356,18 +359,22 @@ function parseTime(line: string) {
 	startAndEnd[0] = startAndEnd[0].replace(';', '')
 	startAndEnd.forEach((time, i) => {
 		const field = i === 0 ? 'start' : 'end'
-		const timeSegments = time.split('.')
+		if (time.match(/^[BSO]$/) && i !== 0) {
+			retTime[field].infiniteMode = time
+		} else {
+			const timeSegments = time.split('.')
 
-		if (timeSegments[0]) {
-			retTime[field].seconds = (Number(timeSegments[0]) || 0) * 60
-		}
+			if (timeSegments[0]) {
+				retTime[field].seconds = (Number(timeSegments[0]) || 0) * 60
+			}
 
-		if (timeSegments[1]) {
-			retTime[field].seconds += Number(timeSegments[1].replace('.', '')) || 0
-		}
+			if (timeSegments[1]) {
+				retTime[field].seconds += Number(timeSegments[1].replace('.', '')) || 0
+			}
 
-		if (timeSegments[2]) {
-			retTime[field].frames = Number(timeSegments[2].replace('.', '')) || 0
+			if (timeSegments[2]) {
+				retTime[field].frames = Number(timeSegments[2].replace('.', '')) || 0
+			}
 		}
 	})
 

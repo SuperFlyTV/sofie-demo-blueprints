@@ -1,5 +1,5 @@
 import { literal } from '../../../../common/util'
-import { CueDefinition, CueType, ParseCue } from '../ParseCue'
+import { CueDefinition, CueType, isTime, ParseCue, parseTime } from '../ParseCue'
 
 describe('Cue parser', () => {
 	test('Null Cue', () => {
@@ -9,6 +9,45 @@ describe('Cue parser', () => {
 				type: CueType.Unknown
 			})
 		)
+	})
+
+	test('Time with symbolic out', () => {
+		let time = ';0.01-S'
+		let result = isTime(time)
+		expect(result).toBe(true)
+		result = parseTime(time)
+		expect(result).toEqual({
+			start: {
+				seconds: 1
+			},
+			end: {
+				infiniteMode: 'S'
+			}
+		})
+		time = ';0.01-B'
+		result = isTime(time)
+		expect(result).toBe(true)
+		result = parseTime(time)
+		expect(result).toEqual({
+			start: {
+				seconds: 1
+			},
+			end: {
+				infiniteMode: 'B'
+			}
+		})
+		time = ';0.01-O'
+		result = isTime(time)
+		expect(result).toBe(true)
+		result = parseTime(time)
+		expect(result).toEqual({
+			start: {
+				seconds: 1
+			},
+			end: {
+				infiniteMode: 'O'
+			}
+		})
 	})
 
 	test('Grafik (kg) - Inline first text field', () => {
