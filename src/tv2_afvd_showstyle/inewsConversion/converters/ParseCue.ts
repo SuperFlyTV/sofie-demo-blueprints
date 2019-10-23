@@ -10,7 +10,8 @@ export enum CueType {
 	Telefon,
 	VIZ,
 	Mic,
-	AdLib
+	AdLib,
+	LYD
 }
 
 export interface CueTime {
@@ -87,6 +88,11 @@ export interface CueDefinitionAdLib extends CueDefinitionBase {
 	bynavn?: string
 }
 
+export interface CueDefinitionLYD extends CueDefinitionBase {
+	type: CueType.LYD
+	variant: string
+}
+
 export type CueDefinition =
 	| CueDefinitionUnknown
 	| CueDefinitionIgnoredMOS
@@ -98,6 +104,7 @@ export type CueDefinition =
 	| CueDefinitionVIZ
 	| CueDefinitionMic
 	| CueDefinitionAdLib
+	| CueDefinitionLYD
 
 export function ParseCue(cue: UnparsedCue): CueDefinition {
 	if (!cue) {
@@ -143,6 +150,8 @@ export function ParseCue(cue: UnparsedCue): CueDefinition {
 		return parseAdLib(cue)
 	} else if (cue[0].match(/^KOMMANDO=/)) {
 		return parseKommando(cue)
+	} else if (cue[0].match(/^LYD=/)) {
+		return parseLYD(cue)
 	}
 	return {
 		type: CueType.Unknown
@@ -356,6 +365,24 @@ function parseKommando(cue: string[]) {
 	}
 
 	return kommandoCue
+}
+
+export function parseLYD(cue: string[]) {
+	let lydCue: CueDefinitionLYD = {
+		type: CueType.LYD,
+		variant: ''
+	}
+
+	const command = cue[0].match(/^LYD=(.*)$/)
+	if (command) {
+		lydCue.variant = command[1]
+	}
+
+	if (isTime(cue[1])) {
+		lydCue = { ...lydCue, ...parseTime(cue[1]) }
+	}
+
+	return lydCue
 }
 
 export function isTime(line: string) {

@@ -1,5 +1,13 @@
 import { literal } from '../../../../common/util'
-import { CueDefinition, CueType, isTime, ParseCue, parseTime } from '../ParseCue'
+import {
+	CueDefinition,
+	CueDefinitionLYD,
+	CueDefinitionUnknown,
+	CueType,
+	isTime,
+	ParseCue,
+	parseTime
+} from '../ParseCue'
 
 describe('Cue parser', () => {
 	test('Null Cue', () => {
@@ -345,9 +353,17 @@ describe('Cue parser', () => {
 			})
 		)
 	})
+
+	test('LYD', () => {
+		const cueLYD = ['LYD=SPORT_BED', ';0.35']
+		const result = ParseCue(cueLYD)
+		expect(result).toEqual(
+			literal<CueDefinitionLYD>({
+				type: CueType.LYD,
+				start: {
+					seconds: 35
 				},
-				template: '3-SPORTSDIGI',
-				textFields: []
+				variant: 'SPORT_BED'
 			})
 		)
 	})
