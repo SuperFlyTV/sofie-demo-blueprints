@@ -12,7 +12,7 @@
     "segments": [
         {
             "externalId": "121ff9bb:00db0673:5d722bcd",
-            "name": "klar on air",
+            "name": "KLAR ON AIR",
             "rank": 0,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
@@ -88,16 +88,17 @@
                     "id": "121ff9bb:00db0673:5d722bcd",
                     "body": "\r\n<p><pi>KAM CS 3</pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"><cc>----all out overlay--></cc><a idref=\"2\"><cc><---</cc></a></a></p>\r\n<p><cc>---grafik design på overlay------></cc><a idref=\"3\"><cc><------</cc></a></p>\r\n<p></p>\r\n<p><cc>---VALG AF STUDIE PRIMÆR--></cc><a idref=\"4\"><cc><--(ST4p, ST2p)</cc></a></p>\r\n<p></p>\r\n<p><cc>---load background on DVE------></cc><a idref=\"5\"><cc><------</cc></a></p>\r\n<p><cc>---load background on FULL------></cc><a idref=\"6\"><cc><------</cc></a></p>\r\n<p></p>\r\n<p><cc>-----tænder mikrofoner--></cc><a idref=\"7\"><cc><-----</cc><tab><tab><tab><tab></tab></tab></tab></tab></a></p>\r\n<p></p>\r\n<p></p>\r\n<p><a idref=\"9\"></a></p>\r\n<p><a idref=\"10\"> <cc>Load SC start loop ST 4</cc><tab><tab><tab><tab></tab></tab></tab></tab></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:50:00.000Z",
                 "externalId": "121ff9bb:00db0673:5d722bcd",
                 "rank": 0,
-                "name": "klar on air",
+                "name": "KLAR ON AIR",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "131ff9bb:00db0671:5d722bce",
-            "name": "kam 2 start",
+            "name": "KAM 2 START",
             "rank": 1,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
@@ -136,16 +137,17 @@
                     "id": "131ff9bb:00db0671:5d722bce",
                     "body": "\r\n<p></p>\r\n<p><pi>KAM 2 </pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p>STORT BILLEDE AF STUDIE</p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:50:00.000Z",
                 "externalId": "131ff9bb:00db0671:5d722bce",
                 "rank": 1,
-                "name": "kam 2 start",
+                "name": "KAM 2 START",
                 "float": false
             },
             "parts": []
         },
         {
-            "externalId": "141ff9bb:00db0670:5d722bce",
-            "name": "intro",
+            "externalId": "141ff9bb:01019808:5db036de",
+            "name": "INTRO",
             "rank": 2,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
@@ -157,9 +159,9 @@
                         "tapeTime": "5",
                         "audioTime": "0",
                         "totalTime": "5",
-                        "modifyDate": "1567763406",
+                        "modifyDate": "1571829470",
                         "presenter": "henh",
-                        "modifyBy": "flow",
+                        "modifyBy": "bede",
                         "var16": "ååmmdd",
                         "ready": "KLAR",
                         "runsTime": "0",
@@ -175,30 +177,22 @@
                     "cues": [
                         [
                             "JINGLE2=SN_intro_19"
-                        ],
-                        [
-                            "KOMMANDO=DIRECTTAKE",
-                            "7",
-                            ";0.01"
-                        ],
-                        [
-                            "LYD=SN_intro",
-                            ";0.00"
                         ]
                     ],
-                    "id": "141ff9bb:00db0670:5d722bce",
-                    "body": "\r\n<p><cc>---JINGLE sport grafisk intro---></cc><a idref=\"0\"><cc><----</cc></a></p>\r\n<p></p>\r\n<p><cc>---AUDIO til grafisk intro , fortsætter under teasere---></cc><a idref=\"2\"><cc><----</cc></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n"
+                    "id": "141ff9bb:01019808:5db036de",
+                    "body": "\r\n<p><cc>---INTRO JINGLE ---></cc><a idref=\"0\"><cc><----</cc></a></p>\r\n<p></p>\r\n<p></p>\r\n"
                 },
-                "externalId": "141ff9bb:00db0670:5d722bce",
+                "modified": "2019-10-23T11:17:00.000Z",
+                "externalId": "141ff9bb:01019808:5db036de",
                 "rank": 2,
-                "name": "intro",
+                "name": "INTRO",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "151ff9bb:00db066f:5d722bce",
-            "name": "sp: velkommen",
+            "name": "SP: VELKOMMEN",
             "rank": 3,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
@@ -239,16 +233,17 @@
                     "id": "151ff9bb:00db066f:5d722bce",
                     "body": "\r\n<p><pi>KAM 1</pi></p>\r\n<p></p>\r\n<p><pi>***</pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p></p>\r\n<p>14-15 mellem Sønderjyske og TTH Holstebro efter 1. halvleg.  Vi har vi lidt sportsnyheder til jer i pausen </p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:50:00.000Z",
                 "externalId": "151ff9bb:00db066f:5d722bce",
                 "rank": 3,
-                "name": "sp: velkommen",
+                "name": "SP: VELKOMMEN",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "091ff9bd:00db079b:5d722c16",
-            "name": "sp: breaker intro lu",
+            "name": "SP: BREAKER intro lukker",
             "rank": 4,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
@@ -284,16 +279,17 @@
                     "id": "091ff9bd:00db079b:5d722c16",
                     "body": "\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><cc>INGEN ATTACK ELLER SERVER DIREKTE EFTER EFTER DENNE INTRO SLUT</cc></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:51:00.000Z",
                 "externalId": "091ff9bd:00db079b:5d722c16",
                 "rank": 4,
-                "name": "sp: breaker intro lu",
+                "name": "SP: BREAKER intro lukker",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "161ff9bb:00db066e:5d722bce",
-            "name": "sp: vo grytebust til",
+            "name": "SP: VO Grytebust til FCK",
             "rank": 5,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
@@ -349,17 +345,72 @@
                     "id": "161ff9bb:00db066e:5d722bce",
                     "body": "\r\n<p><pi>KAM 1</pi><a idref=\"0\"></a></p>\r\n<p><cc>DIGI----vcp her--></cc><a idref=\"1\"><cc><----</cc></a></p>\r\n<p></p>\r\n<p>FC København har i dag sikret sig en ny målmand.</p>\r\n<p></p>\r\n<p>Det er OB's Sten Grytebust der efter sæsonen skifter til de nykårede danske mestre.</p>\r\n<p></p>\r\n<p><pi>***VO*** </pi></p>\r\n<p><a idref=\"2\"><a idref=\"3\"></a></a></p>\r\n<p>Nordmanden Grytebust er de seneste to sæsoner blevet kåret til Superligaens bedste målmand. </p>\r\n<p>Hans kontrakt med OB udløber efter denne sæson og derfor skifter han på en fri transfer til FC København. </p>\r\n<p></p>\r\n<p>Han har underskrevet en tre et halvt-årig kontrakt. </p>\r\n<p></p>\r\n<p>Sten Grytebust ønsker ikke i dag at udtale sig til TV 2, da han vil holde fokus på at spille sæsonen færdig for OB.</p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:50:00.000Z",
                 "externalId": "161ff9bb:00db066e:5d722bce",
                 "rank": 5,
-                "name": "sp: vo grytebust til",
+                "name": "SP: VO Grytebust til FCK",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "221e719c:00f6319e:5db036cb",
+            "name": "INTRO",
+            "rank": 6,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": " ",
+                        "title": "INTRO",
+                        "var2": " ",
+                        "tapeTime": "5",
+                        "audioTime": "0",
+                        "totalTime": "5",
+                        "modifyDate": "1571829451",
+                        "presenter": "henh",
+                        "modifyBy": "flow",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "nyx",
+                        "programtitle": "Nyhederne 17:00",
+                        "noarchive": "nej",
+                        "layout": "s"
+                    },
+                    "meta": {
+                        "rate": "165"
+                    },
+                    "cues": [
+                        [
+                            "JINGLE2=SN_intro_19"
+                        ],
+                        [
+                            "KOMMANDO=DIRECTTAKE",
+                            "7",
+                            ";0.01"
+                        ],
+                        [
+                            "LYD=SN_intro",
+                            ";0.00"
+                        ]
+                    ],
+                    "id": "221e719c:00f6319e:5db036cb",
+                    "body": "\r\n<p><cc>---JINGLE sport grafisk intro---></cc><a idref=\"0\"><cc><----</cc></a></p>\r\n<p></p>\r\n<p><cc>---AUDIO til grafisk intro , fortsætter under teasere---></cc><a idref=\"2\"><cc><----</cc></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n"
+                },
+                "modified": "2019-10-23T11:18:00.000Z",
+                "externalId": "221e719c:00f6319e:5db036cb",
+                "rank": 6,
+                "name": "INTRO",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "171ff9bb:00db066c:5d722bce",
-            "name": "sp: vo city - leices",
-            "rank": 6,
+            "name": "SP: VO City - Leicester",
+            "rank": 7,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
                 "iNewsStory": {
@@ -417,17 +468,18 @@
                     "id": "171ff9bb:00db066c:5d722bce",
                     "body": "\r\n<p><pi>KAM 1</pi><a idref=\"0\"></a></p>\r\n<p><cc>DIGI----vcp her--></cc><a idref=\"1\"><cc><----</cc></a></p>\r\n<p></p>\r\n<p>I England har Manchester City's anfører Vincent Kompany modtaget masser af ros i dag.</p>\r\n<p></p>\r\n<p>Hans mål i aftes mod Leicester betyder at City nu blot er en sejr fra at genvinde det engelske mesterskab </p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>***VO*** </pi></p>\r\n<p><a idref=\"2\"><a idref=\"3\"></a></a></p>\r\n<p>Kasper Schmeichel - gjorde ellers sit til at Leicester længe så ud til spænde ben for  Manchester City. </p>\r\n<p></p>\r\n<p>Men med 20 min tilbage af opgøret hamrede Vincent Kompany hjemmeholdet foran 1-0</p>\r\n<p></p>\r\n<p>Forsvarsspilleren har aldrig tidligere scoret på langskud i Premier League. og det er mere end seks år siden han sidst har haft et langskud indenfor målrammen.</p>\r\n<p></p>\r\n<p>Målet betyder at Manchester City nu er ét point foran Liverpool før sidste spillerunde på søndag</p>\r\n<p></p>\r\n<p><cc>---<b>BUNDTER HERUNDER</b> ---></cc></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:50:00.000Z",
                 "externalId": "171ff9bb:00db066c:5d722bce",
-                "rank": 6,
-                "name": "sp: vo city - leices",
+                "rank": 7,
+                "name": "SP: VO City - Leicester",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "181ff9bb:00db066a:5d722bce",
-            "name": "sp: attack pep om se",
-            "rank": 7,
+            "name": "SP: ATTACK Pep om sejr",
+            "rank": 8,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
                 "iNewsStory": {
@@ -472,17 +524,18 @@
                     "id": "181ff9bb:00db066a:5d722bce",
                     "body": "\r\n<p><pi>***SERVER*** </pi></p>\r\n<p><a idref=\"1\"><a idref=\"2\"></a></a></p>\r\n<p><cc>---bundter herunder ---></cc></p>\r\n<p></p>\r\n<p><pi>SLUTORD: we did it</pi></p>\r\n<p><pi></pi></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:50:00.000Z",
                 "externalId": "181ff9bb:00db066a:5d722bce",
-                "rank": 7,
-                "name": "sp: attack pep om se",
+                "rank": 8,
+                "name": "SP: ATTACK Pep om sejr",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "191ff9bb:00db0669:5d722bce",
-            "name": "sp: vo bjorkstrand e",
-            "rank": 8,
+            "name": "SP: VO Bjorkstrand er ude",
+            "rank": 9,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
                 "iNewsStory": {
@@ -540,17 +593,18 @@
                     "id": "191ff9bb:00db0669:5d722bce",
                     "body": "\r\n<p><pi>KAM 1</pi><a idref=\"0\"></a></p>\r\n<p><cc>DIGI----vcp her--></cc><a idref=\"1\"><cc><----</cc></a></p>\r\n<p></p>\r\n<p>I Ishockey er der nu ikke flere danskere med i årets slutspil i NHL </p>\r\n<p></p>\r\n<p>Det er realitet efter Oliver Bjørkstrand og Columbus Blue Jackets i nat tabte til Boston Bruins for fjerde gang </p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>***VO*** </pi></p>\r\n<p><a idref=\"2\"><a idref=\"3\"></a></a></p>\r\n<p><cc>---<b>BUNDTER HERUNDER</b> ---></cc></p>\r\n<p>Danskeren fik næsten 12 minutters istid, og havde flere gode forsøg. Dog uden at få scoret</p>\r\n<p></p>\r\n<p>Faktisk formåede Blue Jackets slet ikke at lave mål mod Boston Bruin, der til gengæld scorede tre gange. og vandt 3-0 og dermed serien med 4-2. </p>\r\n<p></p>\r\n<p></p>\r\n<p> </p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:50:00.000Z",
                 "externalId": "191ff9bb:00db0669:5d722bce",
-                "rank": 8,
-                "name": "sp: vo bjorkstrand e",
+                "rank": 9,
+                "name": "SP: VO Bjorkstrand er ude",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "1a1ff9bb:00db0666:5d722bce",
-            "name": "vo houston slÃ¥r gold",
-            "rank": 9,
+            "name": "VO Houston slår Golden State",
+            "rank": 10,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
                 "iNewsStory": {
@@ -599,17 +653,18 @@
                     "id": "1a1ff9bb:00db0666:5d722bce",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p><pi>KAM 1</pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p><cc>DIGI----vcp her--></cc><a idref=\"1\"><cc><----</cc></a></p>\r\n<p></p>\r\n<p></p>\r\n<p>Vi bliver i USA men hopper til basketball, hvor de forsvarende NBA-mestre, Golden State Worriors, i nat tabte i slutspillet til Houston Rockets</p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>***VO*** </pi></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p></p>\r\n<p>Houstons James Harden, der blev kåret til MVP sidste år, var igen sit holds helt store profil</p>\r\n<p></p>\r\n<p>Flere gange straffede han Worriors' forsvar med trepoints scoringer, og endte med at lave hele 38 point.</p>\r\n<p></p>\r\n<p>Omvendt havde Golden State muligheden for at udligne til sidst i kampen, men stjernerne Kevin Durant og Steph Curry missede, og så vandt Houston Rockets med 112-108.</p>\r\n<p></p>\r\n<p>Stillingen er nu 2-2, i det der svarer til kvartfinalen i NBAs slutspil. Der spilles bedst af syv kampe.</p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:50:00.000Z",
                 "externalId": "1a1ff9bb:00db0666:5d722bce",
-                "rank": 9,
-                "name": "vo houston slÃ¥r gold",
+                "rank": 10,
+                "name": "VO Houston slår Golden State",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "1b1ff9bb:00db0664:5d722bce",
-            "name": "attack james harden",
-            "rank": 10,
+            "name": "ATTACK James Harden",
+            "rank": 11,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
                 "iNewsStory": {
@@ -651,17 +706,18 @@
                     "id": "1b1ff9bb:00db0664:5d722bce",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><cc>---bundter herunder ---></cc></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p></p>\r\n<p><pi>SLUTORD: fire quatere (tekstet)</pi></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:50:00.000Z",
                 "externalId": "1b1ff9bb:00db0664:5d722bce",
-                "rank": 10,
-                "name": "attack james harden",
+                "rank": 11,
+                "name": "ATTACK James Harden",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "1c1ff9bb:00db06a9:5d722bce",
-            "name": "vo liverpool-barca o",
-            "rank": 11,
+            "name": "VO Liverpool-Barca optakt",
+            "rank": 12,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
                 "iNewsStory": {
@@ -712,17 +768,18 @@
                     "id": "1c1ff9bb:00db06a9:5d722bce",
                     "body": "\r\n<p><pi>KAM 1</pi><a idref=\"0\"></a></p>\r\n<p><cc>DIGI----vcp her--></cc><a idref=\"3\"><cc><----</cc></a></p>\r\n<p></p>\r\n<p></p>\r\n<p>Vi slutter med fodbold hvor Luis Suarez i aften er tilbage på sin gamle hjemmebane, når Barcelona møder Liverpool i returkampen i semifinalen af Champions League. </p>\r\n<p>.</p>\r\n<p><pi>***VO*** </pi></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p></p>\r\n<p>I tre år spillede Luis Suarez for Liverpool, inden han i 2014 blev tvunget til at skifte til Barcelona efter bide skandalen ved VM i Braslien.</p>\r\n<p></p>\r\n<p>Inden da scorede angriberen fra Uruguay 82 mål i 133 kampe og vandt ligacuppen med Liverpool i 2012.</p>\r\n<p></p>\r\n<p>Men selv om bruddet med Liverpool var barskt, så glæder han sig til gensynet.</p>\r\n<p></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:50:00.000Z",
                 "externalId": "1c1ff9bb:00db06a9:5d722bce",
-                "rank": 11,
-                "name": "vo liverpool-barca o",
+                "rank": 12,
+                "name": "VO Liverpool-Barca optakt",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "1d1ff9bb:00db06a7:5d722bce",
-            "name": "attack suarez",
-            "rank": 12,
+            "name": "ATTACK Suarez",
+            "rank": 13,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
                 "iNewsStory": {
@@ -764,17 +821,18 @@
                     "id": "1d1ff9bb:00db06a7:5d722bce",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><cc>---bundter herunder ---></cc></p>\r\n<p><cc>---bundter herunder ---></cc></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p></p>\r\n<p><pi>SLUTORD: taknemmelig for (tekstet)</pi></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:50:00.000Z",
                 "externalId": "1d1ff9bb:00db06a7:5d722bce",
-                "rank": 12,
-                "name": "attack suarez",
+                "rank": 13,
+                "name": "ATTACK Suarez",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "1e1ff9bb:00db06a6:5d722bce",
-            "name": "sp:riwal a",
-            "rank": 13,
+            "name": "SP:Riwal A",
+            "rank": 14,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
                 "iNewsStory": {
@@ -833,17 +891,18 @@
                     "id": "1e1ff9bb:00db06a6:5d722bce",
                     "body": "\r\n<p><pi>KAM 1</pi><a idref=\"0\"></a></p>\r\n<p><cc>DIGI----vcp her--></cc><a idref=\"1\"><cc><----</cc></a></p>\r\n<p></p>\r\n<p>Det danske cykelhold Riwal Readynez har nu udsigt til at komme med i flere større løb i denne sæson.</p>\r\n<p></p>\r\n<p>Det sker efter at holdet i sidste uge leverede sit bedste resultat, da Alexander Kamp vandt en etape og endte på en samlet fjerdeplads i Tour de Yorkshire.</p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p><cc>---<b>BUNDTER HERUNDER</b> ---></cc><a idref=\"3\"></a></p>\r\n<p><a idref=\"4\"></a></p>\r\n<p></p>\r\n<p><pi>SLUTORD: ....deltage</pi></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:50:00.000Z",
                 "externalId": "1e1ff9bb:00db06a6:5d722bce",
-                "rank": 13,
-                "name": "sp:riwal a",
+                "rank": 14,
+                "name": "SP:Riwal A",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "0a1ff9be:00db0733:5d722bfb",
-            "name": "sp: kortnyt start",
-            "rank": 14,
+            "name": "SP: Kortnyt START",
+            "rank": 15,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
                 "iNewsStory": {
@@ -888,17 +947,18 @@
                     "id": "0a1ff9be:00db0733:5d722bfb",
                     "body": "\r\n<p><a idref=\"0\"><cc>BREAKER</cc></a></p>\r\n<p></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:51:00.000Z",
                 "externalId": "0a1ff9be:00db0733:5d722bfb",
-                "rank": 14,
-                "name": "sp: kortnyt start",
+                "rank": 15,
+                "name": "SP: Kortnyt START",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "1f1ff9bb:00db06a4:5d722bce",
-            "name": "sp: vosb sÃ¸nderjyske",
-            "rank": 15,
+            "name": "SP: VOSB Sønderjyske - TTH ",
+            "rank": 16,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
                 "iNewsStory": {
@@ -948,17 +1008,18 @@
                     "id": "1f1ff9bb:00db06a4:5d722bce",
                     "body": "\r\n<p><pi>KAM 1</pi><a idref=\"2\"></a></p>\r\n<p><cc>DIGI----vcp her--><----</cc></p>\r\n<p></p>\r\n<p>I den anden slutspilsgruppe vandt Sønderjyske over TTH Holstebro - og er stadig i spil til DM-semifinalerne: </p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>***VO*** </pi></p>\r\n<p><a idref=\"3\"></a></p>\r\n<p><pi><b>SB: Sønderjyske vinder 29-28. Kæmpe, kæmpe præstation af sønderjyderne... ! (7 SEK)</b></pi></p>\r\n<p></p>\r\n<p>Det var i de allersidste minutter at Sønderjyske afgjorde kampen. </p>\r\n<p></p>\r\n<p>Med et minut igen sendte Sønderjyskes målmand, Kristian Pedersen,bolden afsted mod et tomt mål - og så var de foran med 29-28. </p>\r\n<p></p>\r\n<p>Det lykkedes ikke TTH Holstebro at udnytte den sidste mulighed for et afgjort resultat. </p>\r\n<p></p>\r\n<p>Sejren betyder, at Sønderjyske overhaler TTH Holstebro og kravler op på en 3. plads i deres slutspilgruppe: </p>\r\n<p><cc>---<b>BUNDTER HERUNDER</b> ---></cc></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:50:00.000Z",
                 "externalId": "1f1ff9bb:00db06a4:5d722bce",
-                "rank": 15,
-                "name": "sp: vosb sÃ¸nderjyske",
+                "rank": 16,
+                "name": "SP: VOSB Sønderjyske - TTH ",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "001ff9bc:00db06a2:5d722bce",
-            "name": "sp: attack sÃ¸nderjys",
-            "rank": 16,
+            "name": "SP: ATTACK Sønderjyske Reax",
+            "rank": 17,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
                 "iNewsStory": {
@@ -998,17 +1059,18 @@
                     "id": "001ff9bc:00db06a2:5d722bce",
                     "body": "\r\n<p><tab></tab></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p><a idref=\"0\"><a idref=\"1\"></a></a></p>\r\n<p></p>\r\n<p><pi>SLUTORD:...bare videre</pi></p>\r\n<p></p>\r\n<p><cc>SYNC: Jeg er bare tilfreds - og vi har fået to point mand.. Og to point her og to point der. Der er to kampe endnu. kan I nå det? Nå ja, jamen så meget - altså vi laver ikke om på tingene. Det har vi ikke gjort selvom vi har haft et hold, der har haft det lidt vanskeligt. Vi kæmper bare videre. </cc></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:50:00.000Z",
                 "externalId": "001ff9bc:00db06a2:5d722bce",
-                "rank": 16,
-                "name": "sp: attack sÃ¸nderjys",
+                "rank": 17,
+                "name": "SP: ATTACK Sønderjyske Reax",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "011ff9bc:00db06a0:5d722bce",
-            "name": "sp: attack tth reax",
-            "rank": 17,
+            "name": "SP: ATTACK TTH Reax",
+            "rank": 18,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
                 "iNewsStory": {
@@ -1043,17 +1105,18 @@
                     "id": "011ff9bc:00db06a0:5d722bce",
                     "body": "\r\n<p><tab></tab></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p></p>\r\n<p></p>\r\n<p><cc>Husk at lave en DIGI=vo</cc></p>\r\n<p></p>\r\n<p><cc>Hvis attack er TEKSTET, skal der IKKE være en digi!!!</cc></p>\r\n<p></p>\r\n<p><cc>Husk at lave en bundt eller topt med tidskode</cc></p>\r\n<p></p>\r\n<p></p>\r\n<p><cc>Husk båndtid.</cc></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p><a idref=\"0\"> <cc>Load SC loop ST 4</cc></a></p>\r\n<p><pi>SLUTORD:</pi></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:50:00.000Z",
                 "externalId": "011ff9bc:00db06a0:5d722bce",
-                "rank": 17,
-                "name": "sp: attack tth reax",
+                "rank": 18,
+                "name": "SP: ATTACK TTH Reax",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "0c1ff9be:00db0731:5d722c01",
-            "name": "sp: kortnyt slut",
-            "rank": 18,
+            "name": "SP: Kortnyt SLUT",
+            "rank": 19,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
                 "iNewsStory": {
@@ -1092,17 +1155,18 @@
                     "id": "0c1ff9be:00db0731:5d722c01",
                     "body": "\r\n<p><a idref=\"0\"></a></p>\r\n<p><cc>INGEN ATTACK ELLER SERVER DIREKTE EFTER EFTER KORT NYT SLUT</cc></p>\r\n<p><cc>all out overlay--></cc><a idref=\"1\"><cc><---</cc><tab></tab></a></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:51:00.000Z",
                 "externalId": "0c1ff9be:00db0731:5d722c01",
-                "rank": 18,
-                "name": "sp: kortnyt slut",
+                "rank": 19,
+                "name": "SP: Kortnyt SLUT",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "021ff9bc:00db069f:5d722bce",
-            "name": "webhenvisning",
-            "rank": 19,
+            "name": "WEBHENVISNING",
+            "rank": 20,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
                 "iNewsStory": {
@@ -1141,17 +1205,18 @@
                     "id": "021ff9bc:00db069f:5d722bce",
                     "body": "\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p></p>\r\n<p></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p>Lige nu kan du læse om Niklas Bendtner. En fodboldekspert kalder ham et kæmpe problem. Læs hvorfor på sport.tv2.dk  </p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:50:00.000Z",
                 "externalId": "021ff9bc:00db069f:5d722bce",
-                "rank": 19,
-                "name": "webhenvisning",
+                "rank": 20,
+                "name": "WEBHENVISNING",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "031ff9bc:00db069d:5d722bce",
-            "name": "farvel",
-            "rank": 20,
+            "name": "FARVEL",
+            "rank": 21,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
                 "iNewsStory": {
@@ -1184,17 +1249,18 @@
                     "id": "031ff9bc:00db069d:5d722bce",
                     "body": "\r\n<p><pi>KAM 1</pi></p>\r\n<p><a idref=\"0\"> <cc>Sport intro soundbed</cc></a></p>\r\n<p></p>\r\n<p></p>\r\n<p>Men nu skal vi tilbage til håndbold og slutspilsgruppe A, hvor Skjerns sejr over Aalborg i aftes har skabt ny spænding om hvem der går videre til semifinalen.   </p>\r\n<p>Lige nu er stillingen mellem Sønderjyske - TTH Holstebro - 14-15</p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:50:00.000Z",
                 "externalId": "031ff9bc:00db069d:5d722bce",
-                "rank": 20,
-                "name": "farvel",
+                "rank": 21,
+                "name": "FARVEL",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "041ff9bc:00db069c:5d722bce",
-            "name": "sp: outro",
-            "rank": 21,
+            "name": "SP: OUTRO",
+            "rank": 22,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
                 "iNewsStory": {
@@ -1231,17 +1297,18 @@
                     "id": "041ff9bc:00db069c:5d722bce",
                     "body": "\r\n<p><a idref=\"0\"><cc>BREAKER</cc></a></p>\r\n<p><cc>------></cc><a idref=\"1\"><cc><----</cc></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:50:00.000Z",
                 "externalId": "041ff9bc:00db069c:5d722bce",
-                "rank": 21,
-                "name": "sp: outro",
+                "rank": 22,
+                "name": "SP: OUTRO",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "071ff9bc:00db0699:5d722bce",
-            "name": "continuity",
-            "rank": 22,
+            "name": "CONTINUITY",
+            "rank": 23,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
                 "iNewsStory": {
@@ -1268,9 +1335,549 @@
                     "id": "071ff9bc:00db0699:5d722bce",
                     "body": "\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-26T13:10:00.000Z",
                 "externalId": "071ff9bc:00db0699:5d722bce",
-                "rank": 22,
-                "name": "continuity",
+                "rank": 23,
+                "name": "CONTINUITY",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "02214205:0102d711:5d8cb8af",
+            "name": "SP: VO Asgreen skuffer",
+            "rank": 24,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": " ",
+                        "title": "SP: VO Asgreen skuffer",
+                        "tjekSport": "1",
+                        "var2": "VO",
+                        "tjekLyd": "false",
+                        "tjekCoprod": "1",
+                        "videoId": "1258719A",
+                        "eventStatus": "ONLINE",
+                        "tapeTime": "0",
+                        "audioTime": "40",
+                        "totalTime": "40",
+                        "modifyDate": "1569503407",
+                        "presenter": "std-read",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "redOk": "false",
+                        "onair": "ON-AIR",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": ".",
+                        "aendret": "false",
+                        "aflyst": "false",
+                        "layout": "s"
+                    },
+                    "meta": {
+                        "words": "105",
+                        "rate": "160"
+                    },
+                    "cues": [
+                        [
+                            "LYD=STOP",
+                            ";0.00.20"
+                        ],
+                        [
+                            "SS=SC-STILLS",
+                            ";0.00.01"
+                        ],
+                        [
+                            "]] S3.0 M 0 [[",
+                            "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+                            "ST4_WALL/_25-09-2019_17:47:29",
+                            "VCPID=2556966",
+                            "ContinueCount=-1",
+                            "ST4_WALL/_25-09-2019_17:47:29"
+                        ],
+                        [
+                            "SS=SC-LOOP",
+                            ";0.00.01"
+                        ]
+                    ],
+                    "id": "02214205:0102d711:5d8cb8af",
+                    "body": "\r\n<p><a idref=\"0\"></a></p>\r\n<p><pi>KAM 1</pi><a idref=\"1\"> </a></p>\r\n<p> <cc>DIGI----vcp her--></cc><a idref=\"2\"><cc><----</cc></a></p>\r\n<p></p>\r\n<p>Men vi starter på cyklen. </p>\r\n<p></p>\r\n<p>Danske Kasper Asgreen skuffede ved VM i enkeltstart, som australske Rohan Dennis genvandt  i yderst overbevisende stil.</p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>***VO***</pi></p>\r\n<p><a idref=\"3\"> </a></p>\r\n<p></p>\r\n<p>Rohan Dennis knuste ganske enkelt alle sine konkurrenter på de 54 kilometer i det engelske tærren og vandt med over et minut ned til nummer to.</p>\r\n<p><pi>-----></pi></p>\r\n<p>Dermed kunne australieren træde op på podiet iklædt regnbuetrøjen for andet år  i træk - her fik han selskab af  den bare 19-årige Remco Evenepoel og italienske Filipo Ganna.</p>\r\n<p><pi>-----></pi></p>\r\n<p>Danske Kasper Asgreen havde drømt om en topplacering, men sluttede mere end 3 minutter efter den australske vinder - hvilket bare rakte til en plads som nummer 17 .</p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-26T13:10:00.000Z",
+                "externalId": "02214205:0102d711:5d8cb8af",
+                "rank": 24,
+                "name": "SP: VO Asgreen skuffer",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "03214205:0102d70f:5d8cb8b0",
+            "name": "SP: ATTACK Asgreen",
+            "rank": 25,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "SP: ATTACK Asgreen",
+                        "tjekSport": "1",
+                        "var2": "ATTAC",
+                        "videoId": "1258733A",
+                        "eventStatus": "ONLINE",
+                        "tapeTime": "16",
+                        "audioTime": "0",
+                        "totalTime": "16",
+                        "modifyDate": "1569503408",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": ".",
+                        "layout": "s"
+                    },
+                    "meta": {
+                        "rate": "140"
+                    },
+                    "cues": [
+                        null,
+                        null,
+                        null,
+                        [
+                            "SS=SC-LOOP",
+                            ";0.00.01"
+                        ],
+                        [
+                            "kg bund KASPER ASGREEN",
+                            "Cykelrytter, Danmark",
+                            ";0.01"
+                        ]
+                    ],
+                    "id": "03214205:0102d70f:5d8cb8b0",
+                    "body": "\r\n<p><pi></pi></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p><a idref=\"3\"></a></p>\r\n<p><cc>---bundter herunder ---></cc></p>\r\n<p><a idref=\"4\"></a></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>SLUTORD:det er klart, ja.</pi></p>\r\n<p></p>\r\n<p><pi></pi></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-26T13:10:00.000Z",
+                "externalId": "03214205:0102d70f:5d8cb8b0",
+                "rank": 25,
+                "name": "SP: ATTACK Asgreen",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "04214205:0102d74c:5d8cb8b2",
+            "name": "SP: ATTACK Landstræner",
+            "rank": 26,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "SP: ATTACK Landstræner",
+                        "tjekSport": "1",
+                        "var2": "ATTAC",
+                        "videoId": "1258734A",
+                        "eventStatus": "ONLINE",
+                        "tapeTime": "18",
+                        "audioTime": "0",
+                        "totalTime": "18",
+                        "modifyDate": "1569503410",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": ".",
+                        "layout": "s"
+                    },
+                    "meta": {
+                        "rate": "140"
+                    },
+                    "cues": [
+                        [
+                            "SS=SC-LOOP",
+                            ";0.00.01"
+                        ],
+                        [
+                            "kg bund ANDERS LUND",
+                            "Landstræner, Danmark",
+                            ";0.01"
+                        ]
+                    ],
+                    "id": "04214205:0102d74c:5d8cb8b2",
+                    "body": "\r\n<p><tab></tab></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p><a idref=\"0\"> </a></p>\r\n<p><cc>---bundter herunder ---></cc></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p></p>\r\n<p><pi>SLUTORD: Bare ikke dagen</pi></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-26T13:10:00.000Z",
+                "externalId": "04214205:0102d74c:5d8cb8b2",
+                "rank": 26,
+                "name": "SP: ATTACK Landstræner",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "05214205:0102d74b:5d8cb8b2",
+            "name": "SP: VO Challenge-halløj",
+            "rank": 27,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": " ",
+                        "title": "SP: VO Challenge-halløj",
+                        "tjekSport": "1",
+                        "var2": "VO",
+                        "tjekLyd": "false",
+                        "tjekCoprod": "1",
+                        "videoId": "1258659A",
+                        "eventStatus": "ONLINE",
+                        "tapeTime": "0",
+                        "audioTime": "38",
+                        "totalTime": "39",
+                        "modifyDate": "1569503410",
+                        "presenter": "std-read",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "1",
+                        "redOk": "false",
+                        "onair": "ON-AIR",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": ".",
+                        "aendret": "false",
+                        "aflyst": "false",
+                        "layout": "s"
+                    },
+                    "meta": {
+                        "words": "102",
+                        "rate": "160"
+                    },
+                    "cues": [
+                        [
+                            "SS=SC-STILLS",
+                            ";0.00.01"
+                        ],
+                        [
+                            "SS=SC-LOOP",
+                            ";0.00.01"
+                        ],
+                        [
+                            "]] S3.0 M 0 [[",
+                            "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+                            "ST4_WALL/_25-09-2019_17:19:56",
+                            "VCPID=2556959",
+                            "ContinueCount=-1",
+                            "ST4_WALL/_25-09-2019_17:19:56"
+                        ]
+                    ],
+                    "id": "05214205:0102d74b:5d8cb8b2",
+                    "body": "\r\n<p><pi>KAM 1</pi><a idref=\"0\"></a></p>\r\n<p><cc>DIGI----vcp her--></cc><a idref=\"2\"><cc><----</cc></a></p>\r\n<p></p>\r\n<p>I aften mødes de danske håndboldklubber sammen med udvalget for professionel håndbold for at diskutere og finde en løsning på den problemfyldte video challenge-regel.</p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>***VO***</pi></p>\r\n<p><a idref=\"1\"> </a></p>\r\n<p><cc>---<b>BUNDTER HERUNDER</b> ---></cc></p>\r\n<p></p>\r\n<p>Det sorte challenge-kort blev indført i dansk håndbold forud for denne sæson.</p>\r\n<p><pi>-----></pi></p>\r\n<p>Med det fik trænerne mulighed for en enkelt gang i løbet af en kamp at få dommerne til at kigge en situation igennem på video for en eventuel fejldom.</p>\r\n<p><pi>-----></pi></p>\r\n<p>Men efter misbrug af kortet, lange pauser og fejltolkninger af reglerne i flere kampe, vil udvalget for professionel håndbold efter et møde med de danske klubber i aften tage stilling til challenge-reglens fremtid. </p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-26T13:10:00.000Z",
+                "externalId": "05214205:0102d74b:5d8cb8b2",
+                "rank": 27,
+                "name": "SP: VO Challenge-halløj",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "06214205:0102d749:5d8cb8b2",
+            "name": "SP: ATTACK Jesper Schou",
+            "rank": 28,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "SP: ATTACK Jesper Schou",
+                        "tjekSport": "1",
+                        "var2": "ATTAC",
+                        "videoId": "1258740A",
+                        "eventStatus": "ONLINE",
+                        "tapeTime": "9",
+                        "audioTime": "0",
+                        "totalTime": "9",
+                        "modifyDate": "1569503410",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": ".",
+                        "layout": "s"
+                    },
+                    "meta": {
+                        "rate": "140"
+                    },
+                    "cues": [
+                        [
+                            "SS=SC-LOOP",
+                            ";0.00.01"
+                        ],
+                        [
+                            "kg bund JESPER SCHOU",
+                            "Direktør, Bjerringbro-Silkeborg",
+                            ";0.01"
+                        ]
+                    ],
+                    "id": "06214205:0102d749:5d8cb8b2",
+                    "body": "\r\n<p><tab></tab></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><cc>---bundter herunder ---></cc></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p></p>\r\n<p><pi>SLUTORD: op og ned.</pi></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-26T13:10:00.000Z",
+                "externalId": "06214205:0102d749:5d8cb8b2",
+                "rank": 28,
+                "name": "SP: ATTACK Jesper Schou",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "08214205:0102d746:5d8cb8b3",
+            "name": "SP: VO Kvitova",
+            "rank": 29,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": " ",
+                        "title": "SP: VO Kvitova",
+                        "tjekSport": "1",
+                        "var2": "VO",
+                        "tjekLyd": "false",
+                        "tjekCoprod": "1",
+                        "videoId": "1258700A",
+                        "eventStatus": "ONLINE",
+                        "tapeTime": "0",
+                        "audioTime": "36",
+                        "totalTime": "36",
+                        "modifyDate": "1569503411",
+                        "presenter": "std-read",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "redOk": "false",
+                        "onair": "ON-AIR",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": ".",
+                        "aendret": "false",
+                        "aflyst": "false",
+                        "layout": "s"
+                    },
+                    "meta": {
+                        "words": "95",
+                        "rate": "160"
+                    },
+                    "cues": [
+                        [
+                            "SS=SC-STILLS",
+                            ";0.00.01"
+                        ],
+                        [
+                            "]] S3.0 M 0 [[",
+                            "cg4 ]] 1 YNYAB 0 [[ pilotdata",
+                            "ST4_WALL/_25-09-2019_17:21:50",
+                            "VCPID=2556961",
+                            "ContinueCount=-1",
+                            "ST4_WALL/_25-09-2019_17:21:50"
+                        ],
+                        [
+                            "SS=SC-LOOP",
+                            ";0.00.01"
+                        ]
+                    ],
+                    "id": "08214205:0102d746:5d8cb8b3",
+                    "body": "\r\n<p><pi>KAM 1</pi><a idref=\"0\"></a></p>\r\n<p> <cc>DIGI----vcp her--></cc><a idref=\"1\"><cc><----</cc></a></p>\r\n<p> Og så til lidt Tennis</p>\r\n<p></p>\r\n<p>Petra Kvitovaspillede sig  uden problemer i kvartfinalen ved WTA-turneringen i kinesisike Wuhan efter en sikker sejr i to sæt over Sloane Stephens.</p>\r\n<p></p>\r\n<p><pi>***VO***</pi></p>\r\n<p><a idref=\"2\"> </a></p>\r\n<p><cc>---<b>BUNDTER HERUNDER</b> ---></cc></p>\r\n<p></p>\r\n<p>Der skulle ikke gå meget mere end en time før verdensranglistens nummer 7 kunne fejre sejren.</p>\r\n<p><pi>-----></pi></p>\r\n<p>Allerede i første sæt viste Kvitova sig et par niveauer over sin amerikanske modstander.</p>\r\n<p><pi>-----></pi></p>\r\n<p>Lidt gode råd fra træneren hjalp ikke for Sloane Stephens, der ganske enkelt ikke kunne matche Petra Kvitovas spil.</p>\r\n<p><pi>-----></pi></p>\r\n<p>Kvitova vinder kampen med 6-3, 6-3.</p>\r\n<p><pi>-----></pi></p>\r\n<p>I kvartfinalen torsdag møder hun ukrainske Dayana Ya-strem-ska.</p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-26T13:10:00.000Z",
+                "externalId": "08214205:0102d746:5d8cb8b3",
+                "rank": 29,
+                "name": "SP: VO Kvitova",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "09214205:0102d744:5d8cb8b3",
+            "name": "SP: VOV Barty",
+            "rank": 30,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": " ",
+                        "title": "SP: VOV Barty",
+                        "tjekSport": "1",
+                        "var2": "VOV",
+                        "tjekLyd": "false",
+                        "tjekCoprod": "1",
+                        "videoId": "1258669A",
+                        "eventStatus": "ONLINE",
+                        "tapeTime": "0",
+                        "audioTime": "18",
+                        "totalTime": "18",
+                        "modifyDate": "1569503411",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "redOk": "false",
+                        "onair": "ON-AIR",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": ".",
+                        "aendret": "false",
+                        "aflyst": "false",
+                        "layout": "s"
+                    },
+                    "meta": {
+                        "words": "52",
+                        "rate": "180"
+                    },
+                    "cues": [
+                        [
+                            "SS=SC-LOOP",
+                            ";0.00.01"
+                        ]
+                    ],
+                    "id": "09214205:0102d744:5d8cb8b3",
+                    "body": "\r\n<p></p>\r\n<p><pi>***VOV EFFEKT 01*** </pi><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p>En anden der er videre til kvartifinalen i Wuhan er nummer 1 på verdensranglisten Asleigh Barty.</p>\r\n<p><pi>-----></pi></p>\r\n<p>Australieren havde ikke de store problemer mod amerikanske Sofia Kenin og vandt sikkert i to sæt med 6-3, 7-5.</p>\r\n<p><pi>-----></pi></p>\r\n<p>I kvartfinalen af turneringen som Barty aldrig har vundet før venter verdens nummer 22 - Petra Matic.</p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-26T13:10:00.000Z",
+                "externalId": "09214205:0102d744:5d8cb8b3",
+                "rank": 30,
+                "name": "SP: VOV Barty",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "0a214205:0102d743:5d8cb8b3",
+            "name": "SP: ATTACK Barty",
+            "rank": 31,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "SP: ATTACK Barty",
+                        "tjekSport": "1",
+                        "var2": "ATTAC",
+                        "videoId": "1258676A",
+                        "eventStatus": "ONLINE",
+                        "tapeTime": "11",
+                        "audioTime": "0",
+                        "totalTime": "11",
+                        "modifyDate": "1569503411",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "var9": "T",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": ".",
+                        "layout": "s"
+                    },
+                    "meta": {
+                        "rate": "140"
+                    },
+                    "cues": [
+                        [
+                            "SS=SC-LOOP",
+                            ";0.00.01"
+                        ],
+                        [
+                            "kg topt ASHLEIGH BARTY",
+                            "Tennisspiller",
+                            ";0.01"
+                        ]
+                    ],
+                    "id": "0a214205:0102d743:5d8cb8b3",
+                    "body": "\r\n<p><tab></tab></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><cc>---bundter herunder ---></cc></p>\r\n<p></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>SLUTORD: i Wuhan</pi></p>\r\n<p></p>\r\n<p></p>\r\n<p><cc><b>Barty taler om, at hun aldrig har vundet turneringen før</b></cc></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-26T13:10:00.000Z",
+                "externalId": "0a214205:0102d743:5d8cb8b3",
+                "rank": 31,
+                "name": "SP: ATTACK Barty",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "0b214205:0102d742:5d8cb8b3",
+            "name": "SP: VO Eriksen-exit",
+            "rank": 32,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.SPORTSNYHEDER",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": " ",
+                        "title": "SP: VO Eriksen-exit",
+                        "tjekSport": "1",
+                        "var2": "VO",
+                        "tjekLyd": "false",
+                        "tjekCoprod": "1",
+                        "videoId": "1258487A",
+                        "eventStatus": "ONLINE",
+                        "tapeTime": "0",
+                        "audioTime": "34",
+                        "totalTime": "35",
+                        "modifyDate": "1569503411",
+                        "presenter": "std-read",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "1",
+                        "redOk": "false",
+                        "onair": "ON-AIR",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": ".",
+                        "starttid": "05.41",
+                        "aendret": "false",
+                        "aflyst": "false",
+                        "layout": "s"
+                    },
+                    "meta": {
+                        "words": "89",
+                        "rate": "160"
+                    },
+                    "cues": [
+                        [
+                            "SS=SC-STILLS",
+                            ";0.00.01"
+                        ],
+                        [
+                            "]] S3.0 M 0 [[",
+                            "cg4 ]] 2 YNYAB 0 [[ pilotdata",
+                            "ST4_WALL/_24-09-2019_23:05:34",
+                            "VCPID=2556760",
+                            "ContinueCount=-1",
+                            "ST4_WALL/_24-09-2019_23:05:34"
+                        ],
+                        [
+                            "SS=SC-LOOP",
+                            ";0.00.01"
+                        ]
+                    ],
+                    "id": "0b214205:0102d742:5d8cb8b3",
+                    "body": "\r\n<p><pi>KAM 1</pi><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p><cc>DIGI----vcp her--></cc><a idref=\"1\"><cc><----</cc></a></p>\r\n<p> </p>\r\n<p>Christian Eriksen blev skurken, da Tottenham sensationelt røg ud af liga-cuppen i aftes - til et hold fra den fjerde bedste række... og det hele skulle afgøres på straffe. Og Eriksen gjorde sådan her. <cc> </cc></p>\r\n<p></p>\r\n<p><pi>***VO***</pi></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p><cc><b>BUNDTER HERUNDER</b> --->---</cc></p>\r\n<p> </p>\r\n<p><a idref=\"3\"></a></p>\r\n<p></p>\r\n<p>....Den danske landsholdsspiller skulle sparke først - men det var måske ik' så god en ide.... </p>\r\n<p><pi>-----></pi></p>\r\n<p>Eriksens holdkammerat Lucas Moura havde heller ikke mål i benene...</p>\r\n<p><pi>-----></pi></p>\r\n<p>Og så kunne Colchester, fra den 4. bedste række, i stedet sparke sig videre til 16.-delsfinalen af Liga-cuppen - til stor begejstring for holdet og de mange tusinde fans.</p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-26T13:10:00.000Z",
+                "externalId": "0b214205:0102d742:5d8cb8b3",
+                "rank": 32,
+                "name": "SP: VO Eriksen-exit",
                 "float": false
             },
             "parts": []

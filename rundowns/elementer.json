@@ -12,7 +12,7 @@
     "segments": [
         {
             "externalId": "161ff9a1:00db04d1:5d7229e8",
-            "name": "kameraer",
+            "name": "KAMERAER",
             "rank": 0,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -40,16 +40,17 @@
                     "id": "161ff9a1:00db04d1:5d7229e8",
                     "body": "\r\n<p></p>\r\n<p><pi>KAM 1</pi></p>\r\n<p><pi>KAM 1 minus mic</pi></p>\r\n<p></p>\r\n<p><pi>KAM 2 </pi></p>\r\n<p><pi>KAM 2 minus mic</pi></p>\r\n<p></p>\r\n<p><pi>KAM 3 </pi></p>\r\n<p><pi>KAM 3 minus mic</pi></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>KAM 4 </pi></p>\r\n<p><pi>KAM 4 minus mic</pi></p>\r\n<p></p>\r\n<p><pi>KAM 5</pi></p>\r\n<p></p>\r\n<p><pi>KAM 11</pi></p>\r\n<p><pi>KAM 11 minus mic </pi></p>\r\n<p></p>\r\n<p><pi>KAM 12</pi></p>\r\n<p><pi>KAM 12 minus mic </pi></p>\r\n<p></p>\r\n<p><pi>KAM 13</pi></p>\r\n<p><pi>KAM 13 minus mic </pi></p>\r\n<p></p>\r\n<p><pi>KAM 14</pi></p>\r\n<p><pi>KAM 14 minus mic </pi></p>\r\n<p></p>\r\n<p><pi>KAM 15</pi></p>\r\n<p><pi>KAM 15 minus mic </pi></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>KAM SORT</pi></p>\r\n<p><pi>KAM HVID</pi></p>\r\n<p></p>\r\n<p><pi>KAM CS1</pi></p>\r\n<p><pi>KAM CS2</pi></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:42:00.000Z",
                 "externalId": "161ff9a1:00db04d1:5d7229e8",
                 "rank": 0,
-                "name": "kameraer",
+                "name": "KAMERAER",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "081ff9ab:00db040c:5d722970",
-            "name": "indslag",
+            "name": "INDSLAG",
             "rank": 1,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -120,16 +121,17 @@
                     "id": "081ff9ab:00db040c:5d722970",
                     "body": "\r\n<p></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><a idref=\"2\"><pi>KAM 1</pi></a></p>\r\n<p></p>\r\n<p>Siden nytår er over 100 mennesker kommet til skade på et el-løbehjul i Københavnsområdet.</p>\r\n<p></p>\r\n<p>Det fremgår af en opgørelse fra Region Hovedstaden, hvor enten akutmodtagelsen eller en ambulance har været involveret i en løbehjuls-skade. </p>\r\n<p></p>\r\n<p>De gange, hvor det er gået galt, er der typisk tale om ansigtsskader, og det er især gået ud over dem i alderen 18 til 25 år:</p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p></p>\r\n<p><a idref=\"4\"></a></p>\r\n<p><a idref=\"5\"></a></p>\r\n<p><a idref=\"6\"></a></p>\r\n<p><a idref=\"7\"></a></p>\r\n<p><a idref=\"8\"></a></p>\r\n<p><a idref=\"9\"></a></p>\r\n<p><a idref=\"10\"></a></p>\r\n<p></p>\r\n<p><pi>SLUTORD:</pi></p>\r\n<p></p>\r\n<p><pi>Slutord:... Skarpere regler.</pi></p>\r\n<p></p>\r\n<p><pi>KAM 2</pi></p>\r\n<p></p>\r\n<p>Transportminister Benny Engelbrecht siger at han afventer den igangværende evaluering, der er færdig i januar 2020. Herefter vil han sammen med de andre partiet vurdere, om noget skal ændres i forsøgsordningen.</p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:40:00.000Z",
                 "externalId": "081ff9ab:00db040c:5d722970",
                 "rank": 1,
-                "name": "indslag",
+                "name": "INDSLAG",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "091ff9ab:00db04df:5d7229ae",
-            "name": "attack",
+            "name": "ATTACK",
             "rank": 2,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -196,16 +198,17 @@
                     "id": "091ff9ab:00db04df:5d7229ae",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p><pi>***ATTACK*** </pi></p>\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p><a idref=\"3\"></a></p>\r\n<p><a idref=\"4\"></a></p>\r\n<p><a idref=\"5\"></a></p>\r\n<p><a idref=\"6\"></a></p>\r\n<p></p>\r\n<p><pi>SLUTORD:</pi></p>\r\n<p></p>\r\n<p><pi>Slutord:... Skarpere regler.</pi></p>\r\n<p></p>\r\n<p>.</p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:41:00.000Z",
                 "externalId": "091ff9ab:00db04df:5d7229ae",
                 "rank": 2,
-                "name": "attack",
+                "name": "ATTACK",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "0a1ff9ab:00db0d49:5d722ef7",
-            "name": "vo",
+            "name": "VO",
             "rank": 3,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -236,16 +239,17 @@
                     "id": "0a1ff9ab:00db0d49:5d722ef7",
                     "body": "\r\n<p><a idref=\"0\"><pi>VO </pi><cc>VOSB VOV</cc></a></p>\r\n<p></p>\r\n<p>Siden nytår er over 100 mennesker kommet til skade på et el-løbehjul i Københavnsområdet.</p>\r\n<p></p>\r\n<p>Det fremgår af en opgørelse fra Region Hovedstaden, hvor enten akutmodtagelsen eller en ambulance har været involveret i en løbehjuls-skade. </p>\r\n<p></p>\r\n<p>De gange, hvor det er gået galt, er der typisk tale om ansigtsskader, og det er især gået ud over dem i alderen 18 til 25 år:</p>\r\n<p></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T10:03:00.000Z",
                 "externalId": "0a1ff9ab:00db0d49:5d722ef7",
                 "rank": 3,
-                "name": "vo",
+                "name": "VO",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "0e1ff998:00db015e:5d722767",
-            "name": "mosart ur speak",
+            "name": "MOSART UR SPEAK",
             "rank": 4,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -316,16 +320,17 @@
                     "id": "0e1ff998:00db015e:5d722767",
                     "body": "\r\n<p></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><a idref=\"2\"><pi>KAM 1</pi></a></p>\r\n<p></p>\r\n<p>Siden nytår er over 100 mennesker kommet til skade på et el-løbehjul i Københavnsområdet.</p>\r\n<p></p>\r\n<p>Det fremgår af en opgørelse fra Region Hovedstaden, hvor enten akutmodtagelsen eller en ambulance har været involveret i en løbehjuls-skade. </p>\r\n<p></p>\r\n<p>De gange, hvor det er gået galt, er der typisk tale om ansigtsskader, og det er især gået ud over dem i alderen 18 til 25 år:</p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p></p>\r\n<p><a idref=\"4\"></a></p>\r\n<p><a idref=\"5\"></a></p>\r\n<p><a idref=\"6\"></a></p>\r\n<p><a idref=\"7\"></a></p>\r\n<p><a idref=\"8\"></a></p>\r\n<p><a idref=\"9\"></a></p>\r\n<p><a idref=\"10\"></a></p>\r\n<p></p>\r\n<p><pi>SLUTORD:</pi></p>\r\n<p></p>\r\n<p><pi>Slutord:... Skarpere regler.</pi></p>\r\n<p></p>\r\n<p><pi>KAM 2</pi></p>\r\n<p></p>\r\n<p>Transportminister Benny Engelbrecht siger at han afventer den igangværende evaluering, der er færdig i januar 2020. Herefter vil han sammen med de andre partiet vurdere, om noget skal ændres i forsøgsordningen.</p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:31:00.000Z",
                 "externalId": "0e1ff998:00db015e:5d722767",
                 "rank": 4,
-                "name": "mosart ur speak",
+                "name": "MOSART UR SPEAK",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "031ff9e1:00db0d4d:5d722ee9",
-            "name": "evs vo",
+            "name": "EVS VO",
             "rank": 5,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -353,16 +358,17 @@
                     "id": "031ff9e1:00db0d4d:5d722ee9",
                     "body": "\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><pi>EVS1VO</pi></p>\r\n<p><pi>EVS1VO_spor3</pi></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T10:03:00.000Z",
                 "externalId": "031ff9e1:00db0d4d:5d722ee9",
                 "rank": 5,
-                "name": "evs vo",
+                "name": "EVS VO",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "091ff99e:00db018e:5d7227ba",
-            "name": "klar on air",
+            "name": "KLAR ON AIR",
             "rank": 6,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -440,16 +446,17 @@
                     "id": "091ff99e:00db018e:5d7227ba",
                     "body": "\r\n<p><pi>KAM CS 3</pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><cc>---grafik design på overlay------></cc><a idref=\"2\"><cc><------</cc></a></p>\r\n<p></p>\r\n<p><cc>---VALG AF STUDIE PRIMÆR--></cc><a idref=\"3\"><cc><--(ST4p, ST2p)</cc></a></p>\r\n<p></p>\r\n<p><cc>---load background on DVE------></cc><a idref=\"4\"><cc><------</cc></a></p>\r\n<p><cc>---load background on FULL------></cc><a idref=\"5\"><cc><------</cc></a></p>\r\n<p><cc>----all out overlay--></cc><a idref=\"6\"><cc><---</cc></a></p>\r\n<p><cc>-----tænder mikrofoner--></cc><a idref=\"7\"><cc><-----</cc><tab><tab><tab><tab></tab></tab></tab></tab></a></p>\r\n<p><cc>-----Watchout input--></cc><a idref=\"8\"><cc><-----</cc></a></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p><tab><tab><tab><tab></tab></tab></tab></tab></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "091ff99e:00db018e:5d7227ba",
                 "rank": 6,
-                "name": "klar on air",
+                "name": "KLAR ON AIR",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "0a1ff99e:00db052a:5d722a2e",
-            "name": "overlay styles",
+            "name": "Overlay styles",
             "rank": 7,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -487,16 +494,17 @@
                     "id": "0a1ff99e:00db052a:5d722a2e",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p></p>\r\n<p><cc>---grafik design på overlay------></cc><a idref=\"0\"><cc><------</cc></a></p>\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p></p>\r\n<p><cc>---grafik design på overlay------></cc><a idref=\"1\"><cc><------</cc></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:43:00.000Z",
                 "externalId": "0a1ff99e:00db052a:5d722a2e",
                 "rank": 7,
-                "name": "overlay styles",
+                "name": "Overlay styles",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "0c1ff99e:00db018a:5d7227ba",
-            "name": "alt ud",
+            "name": "ALT UD",
             "rank": 8,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -529,16 +537,17 @@
                     "id": "0c1ff99e:00db018a:5d7227ba",
                     "body": "\r\n<p><pi>KAM 2</pi></p>\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "0c1ff99e:00db018a:5d7227ba",
                 "rank": 8,
-                "name": "alt ud",
+                "name": "ALT UD",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "0d1ff99e:00db0189:5d7227ba",
-            "name": "tema ud",
+            "name": "TEMA UD",
             "rank": 9,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -573,16 +582,17 @@
                     "id": "0d1ff99e:00db0189:5d7227ba",
                     "body": "\r\n<p><pi></pi></p>\r\n<p><pi></pi></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"0\"><pi></pi></a></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "0d1ff99e:00db0189:5d7227ba",
                 "rank": 9,
-                "name": "tema ud",
+                "name": "TEMA UD",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "0e1ff99e:00db0188:5d7227ba",
-            "name": "bundter, topter",
+            "name": "Bundter, topter",
             "rank": 10,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -621,16 +631,17 @@
                     "id": "0e1ff99e:00db0188:5d7227ba",
                     "body": "\r\n<p><pi>KAM 1 </pi></p>\r\n<p><cc>--bund-></cc><a idref=\"1\"><cc><--</cc></a></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><cc>--topt-></cc><a idref=\"0\"><cc><--</cc></a></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "0e1ff99e:00db0188:5d7227ba",
                 "rank": 10,
-                "name": "bundter, topter",
+                "name": "Bundter, topter",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "0f1ff99e:00db0187:5d7227ba",
-            "name": "identer",
+            "name": "IDENTER",
             "rank": 11,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -692,16 +703,17 @@
                     "id": "0f1ff99e:00db0187:5d7227ba",
                     "body": "\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><cc>--arkiv--></cc><a idref=\"2\"><cc><--</cc></a></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><cc>--billederfra_txt-></cc><a idref=\"3\"><cc><--</cc></a></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><cc>--Ident nyhederne-></cc><a idref=\"4\"><cc><--</cc></a></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><cc>--Ident News-></cc><a idref=\"5\"><cc><--</cc></a></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><cc>--Ident Tv2Sport-></cc><a idref=\"6\"><cc><--</cc></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "0f1ff99e:00db0187:5d7227ba",
                 "rank": 11,
-                "name": "identer",
+                "name": "IDENTER",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "101ff99e:00db0185:5d7227ba",
-            "name": "billeder fra regione",
+            "name": "BILLEDER fra Regioner",
             "rank": 12,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -750,16 +762,17 @@
                     "id": "101ff99e:00db0185:5d7227ba",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"3\"></a></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "101ff99e:00db0185:5d7227ba",
                 "rank": 12,
-                "name": "billeder fra regione",
+                "name": "BILLEDER fra Regioner",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "111ff99e:00db0184:5d7227ba",
-            "name": "billeder fra logo",
+            "name": "BILLEDER FRA logo",
             "rank": 13,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -853,16 +866,17 @@
                     "id": "111ff99e:00db0184:5d7227ba",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"3\"></a></p>\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"4\"></a></p>\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"5\"></a></p>\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"6\"></a></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"7\"></a></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"8\"></a></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"9\"></a></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"10\"></a></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"11\"></a></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"12\"></a></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "111ff99e:00db0184:5d7227ba",
                 "rank": 13,
-                "name": "billeder fra logo",
+                "name": "BILLEDER FRA logo",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "121ff99e:00db0182:5d7227ba",
-            "name": "telefon til indslag",
+            "name": "TELEFON til indslag",
             "rank": 14,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -896,16 +910,17 @@
                     "id": "121ff99e:00db0182:5d7227ba",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><cc>--tlftopt-></cc><a idref=\"0\"><cc><--</cc></a></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "121ff99e:00db0182:5d7227ba",
                 "rank": 14,
-                "name": "telefon til indslag",
+                "name": "TELEFON til indslag",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "131ff99e:00e240c8:5d7787a6",
-            "name": "telefon til live",
+            "name": "TELEFON til LIVE",
             "rank": 15,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -955,16 +970,17 @@
                     "id": "131ff99e:00e240c8:5d7787a6",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><cc>--tlftopt-></cc><a idref=\"0\"><cc><--</cc></a></p>\r\n<p></p>\r\n<p></p>\r\n<p><a idref=\"1\"><pi>************ 100%GRAFIK ***********</pi></a></p>\r\n<p><a idref=\"4\"></a></p>\r\n<p><a idref=\"3\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-10T11:23:00.000Z",
                 "externalId": "131ff99e:00e240c8:5d7787a6",
                 "rank": 15,
-                "name": "telefon til live",
+                "name": "TELEFON til LIVE",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "141ff99e:00db017f:5d7227ba",
-            "name": "vo test",
+            "name": "VO test",
             "rank": 16,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -999,16 +1015,17 @@
                     "id": "141ff99e:00db017f:5d7227ba",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p><pi>KAM 1</pi></p>\r\n<p><cc>--vo-></cc><a idref=\"0\"><cc><--</cc></a></p>\r\n<p></p>\r\n<p><pi>KAM 2 </pi></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "141ff99e:00db017f:5d7227ba",
                 "rank": 16,
-                "name": "vo test",
+                "name": "VO test",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "151ff99e:00db017e:5d7227ba",
-            "name": "trumpet test",
+            "name": "Trumpet test",
             "rank": 17,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -1043,16 +1060,17 @@
                     "id": "151ff99e:00db017e:5d7227ba",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p><pi>KAM 1</pi></p>\r\n<p><cc>--vo-></cc><a idref=\"0\"><cc><--</cc></a></p>\r\n<p></p>\r\n<p><pi>KAM 2 </pi></p>\r\n<p></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "151ff99e:00db017e:5d7227ba",
                 "rank": 17,
-                "name": "trumpet test",
+                "name": "Trumpet test",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "161ff99e:00db017d:5d7227ba",
-            "name": "vÃ¦rter",
+            "name": "værter",
             "rank": 18,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -1088,16 +1106,17 @@
                     "id": "161ff99e:00db017d:5d7227ba",
                     "body": "\r\n<p><pi></pi></p>\r\n<p><pi></pi></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><cc>--værter-></cc><a idref=\"0\"><cc><--</cc><pi></pi></a></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "161ff99e:00db017d:5d7227ba",
                 "rank": 18,
-                "name": "vÃ¦rter",
+                "name": "værter",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "161ff9b2:00db0540:5d722a70",
-            "name": "pilot elementer",
+            "name": "PILOT ELEMENTER",
             "rank": 19,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -1126,9 +1145,10 @@
                     "id": "161ff9b2:00db0540:5d722a70",
                     "body": "\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:44:00.000Z",
                 "externalId": "161ff9b2:00db0540:5d722a70",
                 "rank": 19,
-                "name": "pilot elementer",
+                "name": "PILOT ELEMENTER",
                 "float": false
             },
             "parts": []
@@ -1163,6 +1183,7 @@
                     "id": "361d7fec:00e1fe47:5d775886",
                     "body": "\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-10T08:02:00.000Z",
                 "externalId": "361d7fec:00e1fe47:5d775886",
                 "rank": 20,
                 "name": "load grafik",
@@ -1172,7 +1193,7 @@
         },
         {
             "externalId": "021ff9e9:00e240d1:5d77875b",
-            "name": "grafik:",
+            "name": "GRAFIK:",
             "rank": 21,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -1214,16 +1235,17 @@
                     "id": "021ff9e9:00e240d1:5d77875b",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p><pi>************ 100%GRAFIK ***********</pi></p>\r\n<p><a idref=\"0\"><cc>LOAD GRAFIK PÅ FULLSCREEN</cc></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n"
                 },
+                "modified": "2019-09-10T11:22:00.000Z",
                 "externalId": "021ff9e9:00e240d1:5d77875b",
                 "rank": 21,
-                "name": "grafik:",
+                "name": "GRAFIK:",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "1d1ff9a0:00e24103:5d7787be",
-            "name": "grafik over live:",
+            "name": "GRAFIK over live:",
             "rank": 22,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -1265,16 +1287,17 @@
                     "id": "1d1ff9a0:00e24103:5d7787be",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p><pi>************ 100%GRAFIK ***********</pi></p>\r\n<p><a idref=\"0\"><cc>LOAD GRAFIK PÅ FULLSCREEN</cc></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n"
                 },
+                "modified": "2019-09-10T11:23:00.000Z",
                 "externalId": "1d1ff9a0:00e24103:5d7787be",
                 "rank": 22,
-                "name": "grafik over live:",
+                "name": "GRAFIK over live:",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "171ff99e:00db017c:5d7227ba",
-            "name": "tema",
+            "name": "TEMA",
             "rank": 23,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -1311,16 +1334,17 @@
                     "id": "171ff99e:00db017c:5d7227ba",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "171ff99e:00db017c:5d7227ba",
                 "rank": 23,
-                "name": "tema",
+                "name": "TEMA",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "181ff99e:00db017a:5d7227ba",
-            "name": "fakta boks",
+            "name": "Fakta boks",
             "rank": 24,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -1357,9 +1381,10 @@
                     "id": "181ff99e:00db017a:5d7227ba",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "181ff99e:00db017a:5d7227ba",
                 "rank": 24,
-                "name": "fakta boks",
+                "name": "Fakta boks",
                 "float": false
             },
             "parts": []
@@ -1403,6 +1428,7 @@
                     "id": "191ff99e:00db0178:5d7227ba",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "191ff99e:00db0178:5d7227ba",
                 "rank": 25,
                 "name": "gfx popup sendeplan",
@@ -1449,6 +1475,7 @@
                     "id": "1a1ff99e:00db01bc:5d7227ba",
                     "body": "\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "1a1ff99e:00db01bc:5d7227ba",
                 "rank": 26,
                 "name": "gfx popup webhen",
@@ -1458,7 +1485,7 @@
         },
         {
             "externalId": "1b1ff99e:00db01ba:5d7227ba",
-            "name": "gfx popup sports res",
+            "name": "gfx popup sports resultat",
             "rank": 27,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -1495,9 +1522,10 @@
                     "id": "1b1ff99e:00db01ba:5d7227ba",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "1b1ff99e:00db01ba:5d7227ba",
                 "rank": 27,
-                "name": "gfx popup sports res",
+                "name": "gfx popup sports resultat",
                 "float": false
             },
             "parts": []
@@ -1541,6 +1569,7 @@
                     "id": "1c1ff99e:00db01b8:5d7227ba",
                     "body": "\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "1c1ff99e:00db01b8:5d7227ba",
                 "rank": 28,
                 "name": "gfx popup resultat",
@@ -1588,6 +1617,7 @@
                     "id": "1d1ff99e:00db01b6:5d7227ba",
                     "body": "\r\n<p></p>\r\n<p><pi>KAM 1 </pi></p>\r\n<p></p>\r\n<p></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "1d1ff99e:00db01b6:5d7227ba",
                 "rank": 29,
                 "name": "gfx pop stilling",
@@ -1637,6 +1667,7 @@
                     "id": "1e1ff99e:00db01b4:5d7227ba",
                     "body": "\r\n<p></p>\r\n<p><a idref=\"1\"><pi>************ 100%GRAFIK ***********</pi></a></p>\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "1e1ff99e:00db01b4:5d7227ba",
                 "rank": 30,
                 "name": "gfx full playoff",
@@ -1686,6 +1717,7 @@
                     "id": "1f1ff99e:00db01b1:5d7227ba",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p><a idref=\"0\"><pi>************ 100%GRAFIK ***********</pi></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "1f1ff99e:00db01b1:5d7227ba",
                 "rank": 31,
                 "name": "gfx full telefonkort",
@@ -1735,6 +1767,7 @@
                     "id": "001ff99f:00db01af:5d7227ba",
                     "body": "\r\n<p></p>\r\n<p><a idref=\"0\"><pi>************ 100%GRAFIK ***********</pi></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "001ff99f:00db01af:5d7227ba",
                 "rank": 32,
                 "name": "gfx full profil",
@@ -1784,6 +1817,7 @@
                     "id": "011ff99f:00db01ad:5d7227ba",
                     "body": "\r\n<p><a idref=\"1\"><pi>************ 100%GRAFIK ***********</pi></a></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "011ff99f:00db01ad:5d7227ba",
                 "rank": 33,
                 "name": "gfx full sendeplan",
@@ -1833,6 +1867,7 @@
                     "id": "021ff99f:00db01f0:5d7227ba",
                     "body": "\r\n<p><a idref=\"0\"><pi>************ 100%GRAFIK ***********</pi></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "021ff99f:00db01f0:5d7227ba",
                 "rank": 34,
                 "name": "gfx full test",
@@ -1882,6 +1917,7 @@
                     "id": "031ff99f:00db01ee:5d7227ba",
                     "body": "\r\n<p><a idref=\"1\"><pi>************ 100%GRAFIK ***********</pi></a></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "031ff99f:00db01ee:5d7227ba",
                 "rank": 35,
                 "name": "gfx full compare",
@@ -1931,6 +1967,7 @@
                     "id": "041ff99f:00db01ec:5d7227ba",
                     "body": "\r\n<p><a idref=\"1\"><pi>************ 100%GRAFIK ***********</pi></a></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:32:00.000Z",
                 "externalId": "041ff99f:00db01ec:5d7227ba",
                 "rank": 36,
                 "name": "gfx full resultat",
@@ -1940,7 +1977,7 @@
         },
         {
             "externalId": "1a1ff99f:00db0fe1:5d723002",
-            "name": "dve / live",
+            "name": "DVE / LIVE",
             "rank": 37,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -1969,16 +2006,17 @@
                     "id": "1a1ff99f:00db0fe1:5d723002",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T10:08:00.000Z",
                 "externalId": "1a1ff99f:00db0fe1:5d723002",
                 "rank": 37,
-                "name": "dve / live",
+                "name": "DVE / LIVE",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "121ff9a6:00fd925b:5d89caad",
-            "name": "live sommerfugl",
+            "name": "LIVE sommerfugl",
             "rank": 38,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2030,16 +2068,17 @@
                     "id": "121ff9a6:00fd925b:5d89caad",
                     "body": "\r\n<p></p>\r\n<p>Thid id thr trext for the next DVE</p>\r\n<p></p>\r\n<p><pi>***LIVE*** </pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><a idref=\"4\"></a></p>\r\n<p><cc>Spib her</cc></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-24T07:50:00.000Z",
                 "externalId": "121ff9a6:00fd925b:5d89caad",
                 "rank": 38,
-                "name": "live sommerfugl",
+                "name": "LIVE sommerfugl",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "061ff9a7:00db0399:5d722913",
-            "name": "live morbarn",
+            "name": "LIVE morbarn",
             "rank": 39,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2088,16 +2127,17 @@
                     "id": "061ff9a7:00db0399:5d722913",
                     "body": "\r\n<p></p>\r\n<p><pi>***LIVE*** </pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p><cc>Spib her</cc></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:38:00.000Z",
                 "externalId": "061ff9a7:00db0399:5d722913",
                 "rank": 39,
-                "name": "live morbarn",
+                "name": "LIVE morbarn",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "051ff9eb:00db07ba:5d722fa0",
-            "name": "live barnmor",
+            "name": "LIVE barnmor",
             "rank": 40,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2146,16 +2186,17 @@
                     "id": "051ff9eb:00db07ba:5d722fa0",
                     "body": "\r\n<p></p>\r\n<p><pi>***LIVE*** </pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p><cc>Spib her</cc></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T10:06:00.000Z",
                 "externalId": "051ff9eb:00db07ba:5d722fa0",
                 "rank": 40,
-                "name": "live barnmor",
+                "name": "LIVE barnmor",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "0a1ff9eb:00db07e9:5d722fac",
-            "name": "live 1til2",
+            "name": "LIVE 1til2",
             "rank": 41,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2204,16 +2245,17 @@
                     "id": "0a1ff9eb:00db07e9:5d722fac",
                     "body": "\r\n<p></p>\r\n<p><pi>***LIVE*** </pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p><cc>Spib her</cc></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T10:06:00.000Z",
                 "externalId": "0a1ff9eb:00db07e9:5d722fac",
                 "rank": 41,
-                "name": "live 1til2",
+                "name": "LIVE 1til2",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "0f1ff9eb:00db0f57:5d722fc0",
-            "name": "live 2til1",
+            "name": "LIVE 2til1",
             "rank": 42,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2262,16 +2304,17 @@
                     "id": "0f1ff9eb:00db0f57:5d722fc0",
                     "body": "\r\n<p></p>\r\n<p><pi>***LIVE*** </pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p><cc>Spib her</cc></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T10:06:00.000Z",
                 "externalId": "0f1ff9eb:00db0f57:5d722fc0",
                 "rank": 42,
-                "name": "live 2til1",
+                "name": "LIVE 2til1",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "081ff9a3:00db0fa4:5d722fe8",
-            "name": "live 2gÃ¦st",
+            "name": "LIVE 2gæst",
             "rank": 43,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2320,16 +2363,17 @@
                     "id": "081ff9a3:00db0fa4:5d722fe8",
                     "body": "\r\n<p></p>\r\n<p><pi>***LIVE*** </pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p><cc>Spib her</cc></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T10:07:00.000Z",
                 "externalId": "081ff9a3:00db0fa4:5d722fe8",
                 "rank": 43,
-                "name": "live 2gÃ¦st",
+                "name": "LIVE 2gæst",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "171ff9a2:00db03c9:5d72292f",
-            "name": "live-tlf",
+            "name": "LIVE-TLF ",
             "rank": 44,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2377,16 +2421,17 @@
                     "id": "171ff9a2:00db03c9:5d72292f",
                     "body": "\r\n<p><cc>Tlf nummer på gæst:</cc></p>\r\n<p><cc>By/land:</cc></p>\r\n<p></p>\r\n<p><pi>KAM 1</pi></p>\r\n<p></p>\r\n<p>Skriv spib her</p>\r\n<p></p>\r\n<p></p>\r\n<p><cc>-----></cc><a idref=\"0\"><cc><-----Skriv navnet på Viz-scenen ind på anden linje i TELEFON=TLF </cc></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p></p>\r\n<p><pi>***LIVE*** </pi></p>\r\n<p></p>\r\n<p><cc>-----></cc><a idref=\"2\"><cc><----- Skriv </cc></a></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p><cc>Vejledning til grafik:</cc></p>\r\n<p><cc>(Grafik laves i VCP, vælg baggrund AVID. Tid i direkte skal være ;0.00-S</cc></p>\r\n<p><cc>Så bliver tlfdirekte og tlftoplive på indtil der klippes til næste punkt.)</cc></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:38:00.000Z",
                 "externalId": "171ff9a2:00db03c9:5d72292f",
                 "rank": 44,
-                "name": "live-tlf",
+                "name": "LIVE-TLF ",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "141ff9e5:00db0eb6:5d722f45",
-            "name": "live spor 2",
+            "name": "LIVE spor 2",
             "rank": 45,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2419,16 +2464,17 @@
                     "id": "141ff9e5:00db0eb6:5d722f45",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p><a idref=\"1\"></a></p>\r\n"
                 },
+                "modified": "2019-09-06T10:04:00.000Z",
                 "externalId": "141ff9e5:00db0eb6:5d722f45",
                 "rank": 45,
-                "name": "live spor 2",
+                "name": "LIVE spor 2",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "131ff9e3:00db0efa:5d722f4d",
-            "name": "live stereo",
+            "name": "LIVE stereo",
             "rank": 46,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2460,16 +2506,17 @@
                     "id": "131ff9e3:00db0efa:5d722f4d",
                     "body": "\r\n<p></p>\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T10:05:00.000Z",
                 "externalId": "131ff9e3:00db0efa:5d722f4d",
                 "rank": 46,
-                "name": "live stereo",
+                "name": "LIVE stereo",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "131ff9ed:00db0f9d:5d722ff7",
-            "name": "adlib",
+            "name": "ADLIB",
             "rank": 47,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2498,9 +2545,10 @@
                     "id": "131ff9ed:00db0f9d:5d722ff7",
                     "body": "\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T10:07:00.000Z",
                 "externalId": "131ff9ed:00db0f9d:5d722ff7",
                 "rank": 47,
-                "name": "adlib",
+                "name": "ADLIB",
                 "float": false
             },
             "parts": []
@@ -2541,6 +2589,7 @@
                     "id": "1b1ff99f:00db01cd:5d7227f1",
                     "body": "\r\n<p><a idref=\"0\"><a idref=\"1\"></a></a></p>\r\n<p><cc>HUSK at ADLIBs ID-nummer skal begynde med A</cc></p>\r\n<p></p>\r\n<p><cc><b><u>HUSK AT UDFYLDE FØLGENDE MED GRØNT</u></b></cc></p>\r\n<p></p>\r\n<p><cc><b>Varighed: </b></cc></p>\r\n<p><cc>.</cc></p>\r\n<p></p>\r\n<p><cc><b>Dato for optagelse:</b></cc></p>\r\n<p><cc>.</cc></p>\r\n<p></p>\r\n<p><cc><b>HUSK AT LAVE EN IDENT</b></cc></p>\r\n<p><cc>.</cc></p>\r\n<p></p>\r\n<p><cc><b>Hvem med navns nævne og titel:</b></cc></p>\r\n<p><cc>.</cc></p>\r\n<p></p>\r\n<p><cc><b>Billedebeskrivelse + stedangivelse (præciser adlib kort):</b></cc></p>\r\n<p><cc>.</cc></p>\r\n<p><cc>.</cc></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:33:00.000Z",
                 "externalId": "1b1ff99f:00db01cd:5d7227f1",
                 "rank": 48,
                 "name": "100% adlib",
@@ -2550,7 +2599,7 @@
         },
         {
             "externalId": "1c1ff99f:00db01cb:5d7227f1",
-            "name": "1til2 med evs 1",
+            "name": "1til2 med EVS 1",
             "rank": 49,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2587,16 +2636,17 @@
                     "id": "1c1ff99f:00db01cb:5d7227f1",
                     "body": "\r\n<p><pi>KAM 1</pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:33:00.000Z",
                 "externalId": "1c1ff99f:00db01cb:5d7227f1",
                 "rank": 49,
-                "name": "1til2 med evs 1",
+                "name": "1til2 med EVS 1",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "1d1ff99f:00db01ca:5d7227f1",
-            "name": "1til2 med grafik",
+            "name": "1til2 med GRAFIK",
             "rank": 50,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2634,16 +2684,17 @@
                     "id": "1d1ff99f:00db01ca:5d7227f1",
                     "body": "\r\n<p><pi>KAM 1</pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:33:00.000Z",
                 "externalId": "1d1ff99f:00db01ca:5d7227f1",
                 "rank": 50,
-                "name": "1til2 med grafik",
+                "name": "1til2 med GRAFIK",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "1e1ff99f:00db01c9:5d7227f1",
-            "name": "1til2 med grafik+vid",
+            "name": "1til2 med GRAFIK+VIDEOHUL",
             "rank": 51,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2683,16 +2734,17 @@
                     "id": "1e1ff99f:00db01c9:5d7227f1",
                     "body": "\r\n<p><pi>KAM 1</pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:33:00.000Z",
                 "externalId": "1e1ff99f:00db01c9:5d7227f1",
                 "rank": 51,
-                "name": "1til2 med grafik+vid",
+                "name": "1til2 med GRAFIK+VIDEOHUL",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "1f1ff99f:00db01c8:5d7227f1",
-            "name": "1til2 med grafik og",
+            "name": "1til2 med GRAFIK og EVS",
             "rank": 52,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2732,16 +2784,17 @@
                     "id": "1f1ff99f:00db01c8:5d7227f1",
                     "body": "\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n"
                 },
+                "modified": "2019-09-06T09:33:00.000Z",
                 "externalId": "1f1ff99f:00db01c8:5d7227f1",
                 "rank": 52,
-                "name": "1til2 med grafik og",
+                "name": "1til2 med GRAFIK og EVS",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "001ff9a0:00db01c7:5d7227f1",
-            "name": "1til2 med grafik",
+            "name": "1til2 med GRAFIK",
             "rank": 53,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2779,16 +2832,17 @@
                     "id": "001ff9a0:00db01c7:5d7227f1",
                     "body": "\r\n<p><pi>KAM 1</pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:33:00.000Z",
                 "externalId": "001ff9a0:00db01c7:5d7227f1",
                 "rank": 53,
-                "name": "1til2 med grafik",
+                "name": "1til2 med GRAFIK",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "011ff9a0:00db01c6:5d7227f1",
-            "name": "adlib morbarn",
+            "name": "ADLIB MORBARN",
             "rank": 54,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2822,16 +2876,17 @@
                     "id": "011ff9a0:00db01c6:5d7227f1",
                     "body": "\r\n<p><cc>ADBLIB</cc></p>\r\n<p><cc>HUSK AT SKRIVE \"LIVE IND\"</cc></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><cc>HVER OPMÆRKSOM PÅ AT MOSART VISER AT ADLIBKLIPPET ER OFFLINE PÅ GUI'EN.</cc></p>\r\n<p></p>\r\n<p></p>\r\n<p><cc>VAR: x.xx</cc></p>\r\n<p></p>\r\n<p><cc><b>Billeder af ...</b></cc></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:33:00.000Z",
                 "externalId": "011ff9a0:00db01c6:5d7227f1",
                 "rank": 54,
-                "name": "adlib morbarn",
+                "name": "ADLIB MORBARN",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "021ff9a0:00db01c5:5d7227f1",
-            "name": "adlib morbarn evs1",
+            "name": "ADLIB MORBARN EVS1",
             "rank": 55,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2866,16 +2921,17 @@
                     "id": "021ff9a0:00db01c5:5d7227f1",
                     "body": "\r\n<p><cc>ADBLIB MED EVS 1 HUSK AT SKRIVE \"LIVE IND\"</cc></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><cc>HVER OPMÆRKSOM PÅ AT MOSART VISER AT ADLIBKLIPPET ER OFFLINE PÅ GUI'EN.</cc></p>\r\n<p></p>\r\n<p></p>\r\n<p><cc>VAR: x.xx</cc></p>\r\n<p></p>\r\n<p><cc><b>Billeder af ...</b></cc></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:33:00.000Z",
                 "externalId": "021ff9a0:00db01c5:5d7227f1",
                 "rank": 55,
-                "name": "adlib morbarn evs1",
+                "name": "ADLIB MORBARN EVS1",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "031ff9a0:00db01c4:5d7227f1",
-            "name": "adlib 1til2 evs1",
+            "name": "ADLIB 1TIL2 EVS1",
             "rank": 56,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2909,16 +2965,17 @@
                     "id": "031ff9a0:00db01c4:5d7227f1",
                     "body": "\r\n<p><cc>ADBLIB MED EVS 1 HUSK AT SKRIVE \"LIVE IND\"</cc></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><cc>HVER OPMÆRKSOM PÅ AT MOSART VISER AT ADLIBKLIPPET ER OFFLINE PÅ GUI'EN.</cc></p>\r\n<p></p>\r\n<p></p>\r\n<p><cc>VAR: x.xx</cc></p>\r\n<p></p>\r\n<p><cc><b>Billeder af ...</b></cc></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:33:00.000Z",
                 "externalId": "031ff9a0:00db01c4:5d7227f1",
                 "rank": 56,
-                "name": "adlib 1til2 evs1",
+                "name": "ADLIB 1TIL2 EVS1",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "041ff9a0:00db01c3:5d7227f1",
-            "name": "adlib live morbarn",
+            "name": "ADLIB LIVE MORBARN",
             "rank": 57,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2953,16 +3010,17 @@
                     "id": "041ff9a0:00db01c3:5d7227f1",
                     "body": "\r\n<p><a idref=\"0\"></a></p>\r\n<p><cc>INP1: STUDIE</cc></p>\r\n<p><cc>INP2: LIVE BILLEDER F.EKS FRA REUTERS</cc></p>\r\n<p></p>\r\n<p></p>\r\n<p><cc>VAR: x.xx</cc></p>\r\n<p></p>\r\n<p><cc><b>Billeder af ...</b></cc></p>\r\n<p></p>\r\n"
                 },
+                "modified": "2019-09-06T09:33:00.000Z",
                 "externalId": "041ff9a0:00db01c3:5d7227f1",
                 "rank": 57,
-                "name": "adlib live morbarn",
+                "name": "ADLIB LIVE MORBARN",
                 "float": false
             },
             "parts": []
         },
         {
             "externalId": "051ff9a0:00db01c2:5d7227f1",
-            "name": "adlib 2til1 evs",
+            "name": "ADLIB 2til1 EVS",
             "rank": 58,
             "payload": {
                 "rundownId": "NYHEDERNE-TEST.SOFIE.ELEMENTER",
@@ -2997,9 +3055,10 @@
                     "id": "051ff9a0:00db01c2:5d7227f1",
                     "body": "\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n"
                 },
+                "modified": "2019-09-06T09:33:00.000Z",
                 "externalId": "051ff9a0:00db01c2:5d7227f1",
                 "rank": 58,
-                "name": "adlib 2til1 evs",
+                "name": "ADLIB 2til1 EVS",
                 "float": false
             },
             "parts": []

@@ -1,0 +1,1187 @@
+{
+    "externalId": "NYHEDERNE-TEST.SOFIE.WTA",
+    "name": "NYHEDERNE-TEST.SOFIE.WTA",
+    "type": "inews",
+    "payload": {
+        "externalId": "NYHEDERNE-TEST.SOFIE.WTA",
+        "name": "NYHEDERNE-TEST.SOFIE.WTA",
+        "gatewayVersion": "v0.2",
+        "expectedStart": 0,
+        "expectedEnd": 1
+    },
+    "segments": [
+        {
+            "externalId": "0f1ff9c0:00db0806:5d722c5c",
+            "name": "KLAR ON AIR",
+            "rank": 0,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": " ",
+                        "title": "KLAR ON AIR",
+                        "audioTime": "0",
+                        "modifyDate": "1567763548",
+                        "modifyBy": "anry",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "typecode": "spx",
+                        "programtitle": "Vuelta"
+                    },
+                    "meta": {
+                        "rate": "165"
+                    },
+                    "cues": [
+                        [
+                            "STUDIOSETUP=afvikling C",
+                            ";0.00"
+                        ],
+                        [
+                            "KOMMANDO=GRAPHICSPROFILE",
+                            "TV2 SPORT 2016",
+                            ";0.00"
+                        ],
+                        [
+                            "kg ovl-all-out",
+                            "CLEAR OVERLAY",
+                            ";0.00"
+                        ],
+                        [
+                            "KG=DESIGN_WTA",
+                            ";0.00.01"
+                        ],
+                        [
+                            "STUDIE=ST2p",
+                            ";0.00"
+                        ],
+                        [
+                            "STUDIE=ST4s",
+                            ";0.0x"
+                        ],
+                        [
+                            "VIZ=dve-triopage",
+                            "GRAFIK=BG_LOADER_WTA",
+                            ";0.00.01"
+                        ],
+                        [
+                            "VIZ=full-triopage",
+                            "GRAFIK=BG_LOADER_WTA",
+                            ";0.00.01"
+                        ],
+                        [
+                            "STUDIE=MIC ON OFF",
+                            "ST2vrt1=OFF",
+                            "ST2vrt2=OFF",
+                            "ST2gst1=OFF",
+                            "ST2gst2=OFF",
+                            "ST4vrt=OFF",
+                            "ST4gst=OFF",
+                            ";0.00"
+                        ],
+                        [
+                            "WATCHOUT=WO INPUT",
+                            "inp1=EVS 1",
+                            "inp2=EVS 1",
+                            "inp3=EVS 1",
+                            "inp4=EVS 1",
+                            ";0.0x"
+                        ]
+                    ],
+                    "id": "0f1ff9c0:00db0806:5d722c5c",
+                    "body": "\r\n<p><pi>KAM CS3</pi></p>\r\n<p><cc>KAM HVID</cc></p>\r\n<p><a idref=\"0\"><a idref=\"1\"><cc>----all out overlay--></cc><a idref=\"2\"><cc><---</cc></a></a></a></p>\r\n<p><cc>---grafik design på overlay------></cc><a idref=\"3\"><cc><------</cc></a></p>\r\n<p></p>\r\n<p><cc>---VALG AF STUDIE PRIMÆR--></cc><a idref=\"4\"><cc><--(ST4p, ST2p)</cc></a></p>\r\n<p><cc>--VALG AF STUDIE SEKUNDÆR--></cc><a idref=\"5\"><cc><---(ST4s, ST2s)</cc></a></p>\r\n<p><tab></tab></p>\r\n<p></p>\r\n<p><cc>---load background on DVE------></cc><a idref=\"6\"><cc><------</cc></a></p>\r\n<p><cc>---load background on FULL------></cc><a idref=\"7\"><cc><------</cc></a></p>\r\n<p></p>\r\n<p></p>\r\n<p><cc>-----tænder mikrofoner--></cc><a idref=\"8\"><cc><-----</cc><tab><tab><tab><tab></tab></tab></tab></tab></a></p>\r\n<p><cc>-----Watchout input--></cc><a idref=\"9\"><cc><-----</cc><tab><tab><tab><tab></tab></tab></tab></tab></a></p>\r\n<p><cc>vcp concept </cc></p>\r\n<p><cc>template: INTROTEKST FRONTLAYER</cc></p>\r\n<p><cc>---vcp element HER---><------</cc></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "0f1ff9c0:00db0806:5d722c5c",
+                "rank": 0,
+                "name": "KLAR ON AIR",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "151ff9c2:00db082f:5d722c8c",
+            "name": "WTA INTRO",
+            "rank": 1,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "WTA INTRO",
+                        "var2": "intro",
+                        "tapeTime": "11",
+                        "audioTime": "0",
+                        "totalTime": "11",
+                        "modifyDate": "1567763596",
+                        "presenter": "std-read",
+                        "modifyBy": "anry",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "Vuelta",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "rate": "160"
+                    },
+                    "cues": [
+                        [
+                            "JINGLE2=WTA-INTRO"
+                        ]
+                    ],
+                    "id": "151ff9c2:00db082f:5d722c8c",
+                    "body": "\r\n<p></p>\r\n<p><cc>OBS: der skal være 2 primære templates mellem 2 breakere</cc></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p><tab></tab></p>\r\n<p><tab><tab><tab><tab><tab><tab></tab></tab></tab></tab></tab></tab></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:54:00.000Z",
+                "externalId": "151ff9c2:00db082f:5d722c8c",
+                "rank": 1,
+                "name": "WTA INTRO",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "101ff9c0:00db0804:5d722c5c",
+            "name": "LIVE",
+            "rank": 2,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "LIVE",
+                        "externer": "live 1",
+                        "tapeTime": "0",
+                        "audioTime": "0",
+                        "totalTime": "0",
+                        "modifyDate": "1567763548",
+                        "modifyBy": "flow",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "endorseBy": "anry",
+                        "runsTime": "0",
+                        "redOk": " ",
+                        "onair": "ONAIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 17:00",
+                        "noarchive": ".",
+                        "livetype": "SNG/QL",
+                        "ikbook": "X",
+                        "kilde": "xborg",
+                        "kanal": "NEWS"
+                    },
+                    "meta": {
+                        "rate": "140"
+                    },
+                    "cues": [
+                        [
+                            "EKSTERN=LIVE 1 STEREO"
+                        ],
+                        [
+                            "kg bund KRISTOFFER MØLDRUP &amp; PATRIK WOZNIACKI",
+                            "KOMMENTATORER, TV 2 SPORT",
+                            ";x.xx"
+                        ],
+                        [
+                            "kg bund ULRIK JÖNSSON &amp; PATRIK WOZNIACKI",
+                            "KOMMENTATORER, TV 2 SPORT",
+                            ";x.xx"
+                        ],
+                        [
+                            "kg bund HENRIK JENSEN &amp; PETER BASTIANSEN",
+                            "KOMMENTATORER, TV 2 SPORT",
+                            ";x.xx"
+                        ]
+                    ],
+                    "id": "101ff9c0:00db0804:5d722c5c",
+                    "body": "\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>***LIVE*** </pi></p>\r\n<p><a idref=\"1\"><a idref=\"2\"><a idref=\"3\"></a></a></a></p>\r\n<p></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "101ff9c0:00db0804:5d722c5c",
+                "rank": 2,
+                "name": "LIVE",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "111ff9c0:00db0802:5d722c5c",
+            "name": "SP: SYNC Kuznetsova",
+            "rank": 3,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "SP: SYNC Kuznetsova",
+                        "var2": "INDSL",
+                        "videoId": "1248582A",
+                        "eventStatus": "OFFLINE",
+                        "tapeTime": "31",
+                        "audioTime": "0",
+                        "totalTime": "31",
+                        "modifyDate": "1567763548",
+                        "presenter": "std-read",
+                        "modifyBy": "lyth",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "redOk": " ",
+                        "onair": "ONAIR",
+                        "var9": "T",
+                        "typecode": "nwx",
+                        "programtitle": "TV2NEWS",
+                        "noarchive": ".",
+                        "layout": "n"
+                    },
+                    "meta": {
+                        "rate": "160"
+                    },
+                    "cues": [
+                        [
+                            "kg topt SVETLANA KUZNETSOVA",
+                            "Rusland",
+                            ";0.01"
+                        ]
+                    ],
+                    "id": "111ff9c0:00db0802:5d722c5c",
+                    "body": "\r\n<p></p>\r\n<p></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><pi>SLUTORD: TXT hård modstander</pi></p>\r\n<p></p>\r\n<p></p>\r\n<p><cc>Det forventede jeg ikke. At stille op og spille så godt. Jeg havde det fint, men forventede ikke at nå finalen. Jeg er virkelig glad. Jeg kæmpede hårdt. Det er utroligt, jeg har aldrig før slået tre Top 10 spillere i træk. Det er super. Jeg havde ikke forventet det og kunne ikke være gladere. Madison slår meget hårdt til bolden. Hun server godt og bevæger sig godt, så hun bliver en hård modstander. </cc></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "111ff9c0:00db0802:5d722c5c",
+                "rank": 3,
+                "name": "SP: SYNC Kuznetsova",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "121ff9c0:00db0800:5d722c5c",
+            "name": "SP: SYNC Keys",
+            "rank": 4,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "SP: SYNC Keys",
+                        "var2": "INDSL",
+                        "videoId": "1248583A",
+                        "eventStatus": "OFFLINE",
+                        "tapeTime": "25",
+                        "audioTime": "0",
+                        "totalTime": "25",
+                        "modifyDate": "1567763548",
+                        "presenter": "std-read",
+                        "modifyBy": "lyth",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "redOk": " ",
+                        "onair": "ONAIR",
+                        "var9": "T",
+                        "typecode": "nwx",
+                        "programtitle": "TV2NEWS",
+                        "noarchive": ".",
+                        "layout": "m"
+                    },
+                    "meta": {
+                        "rate": "160"
+                    },
+                    "cues": [
+                        [
+                            "kg topt MADISON KEYS",
+                            "USA",
+                            ";0.01"
+                        ]
+                    ],
+                    "id": "121ff9c0:00db0800:5d722c5c",
+                    "body": "\r\n<p></p>\r\n<p></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><cc>Husk båndtid.</cc></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>SLUTORD: TXT hård modstander</pi></p>\r\n<p></p>\r\n<p><cc>Det er fantastisk. Jeg elsker at spille i Cincinatti, og nu har jeg en finale her med i baglommen. Det er dejligt. Kuznetsova er lidt anderledes end de fleste af de piger, vi spiller imod på touren. Hun varierer sit spil en masse, sætter meget spin i bolden og kan få en væk fra ens eget spil. Hun bliver en hård modstander.</cc></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "121ff9c0:00db0800:5d722c5c",
+                "rank": 4,
+                "name": "SP: SYNC Keys",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "061ff9c6:00db0a21:5d722d21",
+            "name": "BREAKER WTA",
+            "rank": 5,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "BREAKER WTA",
+                        "tapeTime": "0",
+                        "audioTime": "0",
+                        "totalTime": "0",
+                        "modifyDate": "1567763745",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "rate": "140"
+                    },
+                    "cues": [
+                        [
+                            "JINGLE2=WTA-breaker01"
+                        ]
+                    ],
+                    "id": "061ff9c6:00db0a21:5d722d21",
+                    "body": "\r\n<p></p>\r\n<p><cc>BREAKER LA LIGA</cc></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:55:00.000Z",
+                "externalId": "061ff9c6:00db0a21:5d722d21",
+                "rank": 5,
+                "name": "BREAKER WTA",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "131ff9c0:00db07ff:5d722c5c",
+            "name": "LIVE",
+            "rank": 6,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "LIVE",
+                        "externer": "live 1",
+                        "tapeTime": "0",
+                        "audioTime": "0",
+                        "totalTime": "0",
+                        "modifyDate": "1567763548",
+                        "modifyBy": "flow",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "endorseBy": "anry",
+                        "runsTime": "0",
+                        "redOk": " ",
+                        "onair": "ONAIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 17:00",
+                        "noarchive": ".",
+                        "livetype": "SNG/QL",
+                        "ikbook": "X",
+                        "kilde": "xborg",
+                        "kanal": "NEWS"
+                    },
+                    "meta": {
+                        "rate": "140"
+                    },
+                    "cues": [
+                        [
+                            "EKSTERN=LIVE 1 STEREO"
+                        ],
+                        [
+                            "kg bund KRISTOFFER MØLDRUP &amp; MICHAEL TAUSON",
+                            "KOMMENTATORER, TV 2 SPORT",
+                            ";x.xx"
+                        ],
+                        [
+                            "kg bund HENRIK JENSEN &amp; MICHAEL TAUSON",
+                            "KOMMENTATORER, TV 2 SPORT",
+                            ";x.xx"
+                        ],
+                        [
+                            "kg bund HENRIK JENSEN &amp; MICHAEL TAUSON",
+                            "KOMMENTATORER, TV 2 SPORT",
+                            ";x.xx"
+                        ]
+                    ],
+                    "id": "131ff9c0:00db07ff:5d722c5c",
+                    "body": "\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>***LIVE*** </pi></p>\r\n<p><a idref=\"1\"><a idref=\"2\"></a></a></p>\r\n<p></p>\r\n<p><a idref=\"3\"></a></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "131ff9c0:00db07ff:5d722c5c",
+                "rank": 6,
+                "name": "LIVE",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "141ff9c0:00db07fd:5d722c5c",
+            "name": "LIVE",
+            "rank": 7,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "LIVE",
+                        "externer": "live 1",
+                        "tapeTime": "0",
+                        "audioTime": "0",
+                        "totalTime": "0",
+                        "modifyDate": "1567763548",
+                        "modifyBy": "flow",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "endorseBy": "anry",
+                        "runsTime": "0",
+                        "redOk": " ",
+                        "onair": "ONAIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 17:00",
+                        "noarchive": ".",
+                        "livetype": "SNG/QL",
+                        "ikbook": "X",
+                        "kilde": "xborg",
+                        "kanal": "NEWS"
+                    },
+                    "meta": {
+                        "rate": "140"
+                    },
+                    "cues": [
+                        [
+                            "EKSTERN=LIVE 1 STEREO"
+                        ],
+                        [
+                            "kg bund KRISTOFFER MØLDRUP &amp; MICHAEL TAUSON",
+                            "KOMMENTATORER, TV 2 SPORT",
+                            ";x.xx"
+                        ],
+                        [
+                            "kg bund HENRIK JENSEN &amp; MICHAEL TAUSON",
+                            "KOMMENTATORER, TV 2 SPORT",
+                            ";x.xx"
+                        ]
+                    ],
+                    "id": "141ff9c0:00db07fd:5d722c5c",
+                    "body": "\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>***LIVE*** </pi></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "141ff9c0:00db07fd:5d722c5c",
+                "rank": 7,
+                "name": "LIVE",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "151ff9c0:00db07fc:5d722c5c",
+            "name": "DVE, BLANK",
+            "rank": 8,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "DVE, BLANK",
+                        "externer": "EX",
+                        "tapeTime": "0",
+                        "audioTime": "0",
+                        "totalTime": "0",
+                        "modifyDate": "1567763548",
+                        "modifyBy": "flow",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "endorseBy": "anry",
+                        "runsTime": "0",
+                        "onair": "ONAIR",
+                        "typecode": "spx",
+                        "programtitle": "Badminton",
+                        "noarchive": ".",
+                        "livetype": "SNG/QL",
+                        "ikbook": "X",
+                        "kilde": "xborg",
+                        "kanal": "NEWS"
+                    },
+                    "meta": {
+                        "rate": "140"
+                    },
+                    "cues": [
+                        [
+                            "DVE=SOMMERFUGL",
+                            "INP1=LIVE 1",
+                            "INP2=LIVE 3",
+                            "BYNAVN=TV 2 PLAY/TV 2 SPORT"
+                        ],
+                        [
+                            "EKSTERN=LIVE 1 STEREO"
+                        ],
+                        [
+                            "kg bund ",
+                            ";x.xx"
+                        ]
+                    ],
+                    "id": "151ff9c0:00db07fc:5d722c5c",
+                    "body": "\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p><pi>***LIVE*** </pi></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "151ff9c0:00db07fc:5d722c5c",
+                "rank": 8,
+                "name": "DVE, BLANK",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "161ff9c0:00d33d77:5d722c6d",
+            "name": "SKILT 100 %",
+            "rank": 9,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "SKILT 100 %",
+                        "var2": "SKILT",
+                        "tapeTime": "0",
+                        "audioTime": "0",
+                        "totalTime": "0",
+                        "modifyDate": "1567763565",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "spx",
+                        "programtitle": "NBA",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "rate": "140"
+                    },
+                    "cues": [
+                        [
+                            "GRAFIK=FULL"
+                        ],
+                        null,
+                        [
+                            "]] S3.0 M 0 [[",
+                            "cg4 ]] 4 YNYAB 0 [[ pilotdata",
+                            "Senderplan/15-08-2019_TENNIS_1",
+                            "VCPID=2546319",
+                            "ContinueCount=-1",
+                            "Senderplan/15-08-2019_TENNIS_1"
+                        ]
+                    ],
+                    "id": "161ff9c0:00d33d77:5d722c6d",
+                    "body": "\r\n<p><pi>***100% GRAFIK***</pi></p>\r\n<p><cc>START MUSIK MED Directtake 53</cc></p>\r\n<p><cc>Fade musik ud med Directtake 59</cc><a idref=\"0\"></a></p>\r\n<p><cc>Indsæt viz-pilot koden her --></cc><a idref=\"2\"><cc><---.</cc></a></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "161ff9c0:00d33d77:5d722c6d",
+                "rank": 9,
+                "name": "SKILT 100 %",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "171ff9c0:00db07f9:5d722c5c",
+            "name": "DVE, WF/CENTRE",
+            "rank": 10,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "DVE, WF/CENTRE",
+                        "externer": "EX",
+                        "tapeTime": "0",
+                        "audioTime": "0",
+                        "totalTime": "0",
+                        "modifyDate": "1567763548",
+                        "modifyBy": "flow",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "endorseBy": "anry",
+                        "runsTime": "0",
+                        "onair": "ONAIR",
+                        "typecode": "spx",
+                        "programtitle": "Badminton",
+                        "noarchive": ".",
+                        "livetype": "SNG/QL",
+                        "ikbook": "X",
+                        "kilde": "xborg",
+                        "kanal": "NEWS"
+                    },
+                    "meta": {
+                        "rate": "140"
+                    },
+                    "cues": [
+                        [
+                            "DVE=SOMMERFUGL",
+                            "INP1=LIVE 1",
+                            "INP2=LIVE 2",
+                            "BYNAVN=CENTRECOURT/GRANDSTAND"
+                        ],
+                        [
+                            "EKSTERN=LIVE 1 STEREO"
+                        ],
+                        [
+                            "kg bund ",
+                            ";x.xx"
+                        ]
+                    ],
+                    "id": "171ff9c0:00db07f9:5d722c5c",
+                    "body": "\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p><pi>***LIVE*** </pi></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "171ff9c0:00db07f9:5d722c5c",
+                "rank": 10,
+                "name": "DVE, WF/CENTRE",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "181ff9c0:00db07f8:5d722c5c",
+            "name": "DVE, WF/reporter",
+            "rank": 11,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "DVE, WF/reporter",
+                        "externer": "EX",
+                        "tapeTime": "0",
+                        "audioTime": "0",
+                        "totalTime": "0",
+                        "modifyDate": "1567763548",
+                        "modifyBy": "flow",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "endorseBy": "anry",
+                        "runsTime": "0",
+                        "redOk": " ",
+                        "onair": "ONAIR",
+                        "typecode": "spx",
+                        "programtitle": "Badminton",
+                        "noarchive": ".",
+                        "livetype": "SNG/QL",
+                        "ikbook": "X",
+                        "kilde": "xborg",
+                        "kanal": "NEWS"
+                    },
+                    "meta": {
+                        "rate": "140"
+                    },
+                    "cues": [
+                        [
+                            "DVE=SOMMERFUGL",
+                            "INP1=LIVE 1",
+                            "INP2=LIVE 3",
+                            "BYNAVN=CENTRECOURT/GRANDSTAND"
+                        ],
+                        [
+                            "EKSTERN=LIVE 1 STEREO"
+                        ],
+                        [
+                            "kg bund ",
+                            ";x.xx"
+                        ]
+                    ],
+                    "id": "181ff9c0:00db07f8:5d722c5c",
+                    "body": "\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p><pi>***LIVE*** </pi></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "181ff9c0:00db07f8:5d722c5c",
+                "rank": 11,
+                "name": "DVE, WF/reporter",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "191ff9c0:00db07f7:5d722c5c",
+            "name": "Coaches feature A",
+            "rank": 12,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "Coaches feature A",
+                        "var2": "INDSL",
+                        "videoId": "SPK1298A",
+                        "tapeTime": "0",
+                        "audioTime": "0",
+                        "totalTime": "0",
+                        "modifyDate": "1567763548",
+                        "modifyBy": "mema",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "rate": "140"
+                    },
+                    "cues": [
+                        null,
+                        [
+                            "Kunstner: ",
+                            "Komponist: ",
+                            "Titel: ",
+                            "Album titel: ",
+                            "Pladeselskab: ",
+                            "Track nr.: ",
+                            "Katalognummer: ",
+                            "Varighed i sekunder:"
+                        ]
+                    ],
+                    "id": "191ff9c0:00db07f7:5d722c5c",
+                    "body": "\r\n<p></p>\r\n<p></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p></p>\r\n<p><a idref=\"2\"></a></p>\r\n<p></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p></p>\r\n<p><cc>---<b>BUNDTER HERUNDER</b> ---></cc></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>SLUTORD: </pi></p>\r\n<p></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "191ff9c0:00db07f7:5d722c5c",
+                "rank": 12,
+                "name": "Coaches feature A",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "1a1ff9c0:00db07f6:5d722c5c",
+            "name": "WTA Sloane Stephens 2018 A",
+            "rank": 13,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "WTA Sloane Stephens 2018 A",
+                        "tjekSport": "1",
+                        "var2": " ",
+                        "videoId": "SPK0739A",
+                        "tapeTime": "122",
+                        "audioTime": "0",
+                        "totalTime": "122",
+                        "modifyDate": "1567763548",
+                        "modifyBy": "tmon",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "rate": "140"
+                    },
+                    "cues": [
+                        [
+                            "Kunstner: ",
+                            "Komponist: ",
+                            "Titel: ",
+                            "Album titel: ",
+                            "Pladeselskab: ",
+                            "Track nr.: ",
+                            "Katalognummer: ",
+                            "Varighed i sekunder:"
+                        ]
+                    ],
+                    "id": "1a1ff9c0:00db07f6:5d722c5c",
+                    "body": "\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p></p>\r\n<p><cc>---<b>BUNDTER HERUNDER</b> ---></cc></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>SLUTORD: </pi></p>\r\n<p><pi></pi></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "1a1ff9c0:00db07f6:5d722c5c",
+                "rank": 13,
+                "name": "WTA Sloane Stephens 2018 A",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "1b1ff9c0:00db07f5:5d722c5c",
+            "name": "Goddag",
+            "rank": 14,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "Goddag",
+                        "var8": " ",
+                        "tapeTime": "0",
+                        "audioTime": "30",
+                        "totalTime": "30",
+                        "modifyDate": "1567763548",
+                        "presenter": "thkr",
+                        "modifyBy": "flow",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "typecode": "spx",
+                        "programtitle": "Cykling",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "3",
+                        "rate": "180"
+                    },
+                    "cues": [
+                        [
+                            "kg bund THOMAS BILDE",
+                            "TV 2 SPORT",
+                            ";x.xx"
+                        ],
+                        [
+                            "kg bund PATRIK WOZNIACKI",
+                            "Tennisekspert, TV 2 SPORT",
+                            ";x.xx"
+                        ],
+                        [
+                            "kg bund MICHAEL TAUSON",
+                            "Tennisekspert, TV 2 SPORT",
+                            ";x.xx"
+                        ]
+                    ],
+                    "id": "1b1ff9c0:00db07f5:5d722c5c",
+                    "body": "\r\n<p></p>\r\n<p></p>\r\n<p><pi>EVS1</pi></p>\r\n<p></p>\r\n<p></p>\r\n<p><a idref=\"0\"><a idref=\"1\"><a idref=\"2\"></a></a></a></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p>Skriv din spib her</p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "1b1ff9c0:00db07f5:5d722c5c",
+                "rank": 14,
+                "name": "Goddag",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "1c1ff9c0:00db083a:5d722c5c",
+            "name": "EVS AFMELDING",
+            "rank": 15,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "EVS AFMELDING",
+                        "var2": "INDSL",
+                        "tapeTime": "0",
+                        "audioTime": "0",
+                        "totalTime": "0",
+                        "modifyDate": "1567763548",
+                        "modifyBy": "flow",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "rate": "140"
+                    },
+                    "cues": [
+                        []
+                    ],
+                    "id": "1c1ff9c0:00db083a:5d722c5c",
+                    "body": "\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "1c1ff9c0:00db083a:5d722c5c",
+                "rank": 15,
+                "name": "EVS AFMELDING",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "1d1ff9c0:00db0839:5d722c5c",
+            "name": "Sync Bouzkova",
+            "rank": 16,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": " ",
+                        "title": "Sync Bouzkova",
+                        "var2": "INDSLAG",
+                        "videoId": "1246507A",
+                        "tapeTime": "62",
+                        "audioTime": "1",
+                        "totalTime": "63",
+                        "modifyDate": "1567763548",
+                        "presenter": "thkr",
+                        "modifyBy": "jonk",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "var9": "T",
+                        "typecode": "spx",
+                        "programtitle": "Cykling",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "3",
+                        "rate": "180"
+                    },
+                    "cues": [
+                        [
+                            "kg topt MARIE BOUZKOVA",
+                            "Tennisspiller",
+                            ";0.02"
+                        ]
+                    ],
+                    "id": "1d1ff9c0:00db0839:5d722c5c",
+                    "body": "\r\n<p> </p>\r\n<p></p>\r\n<p>Skriv din spib her</p>\r\n<p></p>\r\n<p><pi>********SERVER*********</pi></p>\r\n<p><cc><b>----   BUNDTER HERUNDER  -------</b></cc> </p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><pi><b>SLUTORD: ...much as i can</b></pi></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "1d1ff9c0:00db0839:5d722c5c",
+                "rank": 16,
+                "name": "Sync Bouzkova",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "1e1ff9c0:00db0838:5d722c5c",
+            "name": "Finalesync Williams",
+            "rank": 17,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "Finalesync Williams",
+                        "var2": "INDSL",
+                        "var3": "jonk",
+                        "videoId": "1246647A",
+                        "tapeTime": "70",
+                        "audioTime": "1",
+                        "totalTime": "71",
+                        "modifyDate": "1567763548",
+                        "modifyBy": "jonk",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "var9": "T",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "3",
+                        "rate": "140"
+                    },
+                    "cues": [
+                        null,
+                        [
+                            "kg topt SERENA WILLIAMS",
+                            "Tennisspiller",
+                            ";0.10"
+                        ]
+                    ],
+                    "id": "1e1ff9c0:00db0838:5d722c5c",
+                    "body": "\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p>Skriv din spib her</p>\r\n<p></p>\r\n<p><pi>********SERVER*********</pi></p>\r\n<p><cc><b>----   BUNDTER HERUNDER  -------</b></cc> </p>\r\n<p><a idref=\"1\"></a></p>\r\n<p><pi><b>SLUTORD: ...a good match</b></pi></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "1e1ff9c0:00db0838:5d722c5c",
+                "rank": 17,
+                "name": "Finalesync Williams",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "1f1ff9c0:00db0837:5d722c5c",
+            "name": "Finalesync Andrescu",
+            "rank": 18,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "Finalesync Andrescu",
+                        "var2": "INDSL",
+                        "var3": "jonk",
+                        "videoId": "1246648A",
+                        "tapeTime": "72",
+                        "audioTime": "1",
+                        "totalTime": "73",
+                        "modifyDate": "1567763548",
+                        "modifyBy": "jonk",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "var9": "T",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "3",
+                        "rate": "140"
+                    },
+                    "cues": [
+                        null,
+                        null,
+                        [
+                            "kg topt BIANCA ANDRESCU",
+                            "Tennisspiller",
+                            ";0.01"
+                        ]
+                    ],
+                    "id": "1f1ff9c0:00db0837:5d722c5c",
+                    "body": "\r\n<p></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p>Skriv din spib her</p>\r\n<p></p>\r\n<p><pi>********SERVER*********</pi></p>\r\n<p><cc><b>----   BUNDTER HERUNDER  -------</b></cc> </p>\r\n<p><a idref=\"2\"></a></p>\r\n<p><pi><b>SLUTORD: ...before she retires</b></pi></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "1f1ff9c0:00db0837:5d722c5c",
+                "rank": 18,
+                "name": "Finalesync Andrescu",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "001ff9c1:00d352c6:5d722c7b",
+            "name": "LIVE",
+            "rank": 19,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "LIVE",
+                        "externer": "live 4",
+                        "tapeTime": "0",
+                        "audioTime": "0",
+                        "totalTime": "0",
+                        "modifyDate": "1567763579",
+                        "modifyBy": "bede",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "endorseBy": "anry",
+                        "runsTime": "0",
+                        "redOk": " ",
+                        "onair": "ONAIR",
+                        "typecode": "spx",
+                        "programtitle": "Nyhederne 17:00",
+                        "noarchive": ".",
+                        "livetype": "SNG/QL",
+                        "ikbook": "X",
+                        "kilde": "xborg",
+                        "kanal": "NEWS"
+                    },
+                    "meta": {
+                        "rate": "140"
+                    },
+                    "cues": [
+                        [
+                            "EKSTERN=LIVE 4 STEREO"
+                        ],
+                        [
+                            "kg bund ULRIK JÖNSSON &amp; MICHAEL TAUSON",
+                            "KOMMENTATORER, TV 2 SPORT",
+                            ";x.xx"
+                        ],
+                        [
+                            "kg bund HENRIK JENSEN &amp; PATRIK WOZNIACKI",
+                            "KOMMENTATORER, TV 2 SPORT",
+                            ";x.xx"
+                        ],
+                        [
+                            "kg bund ULRIK JÖNSSON &amp; PETER BASTIANSEN",
+                            "Kommentatorer, TV 2 SPORT",
+                            ";x.xx"
+                        ]
+                    ],
+                    "id": "001ff9c1:00d352c6:5d722c7b",
+                    "body": "\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>***LIVE*** </pi></p>\r\n<p><a idref=\"1\"><a idref=\"3\"><a idref=\"2\"></a></a></a></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "001ff9c1:00d352c6:5d722c7b",
+                "rank": 19,
+                "name": "LIVE",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "011ff9c1:00db0834:5d722c5c",
+            "name": "Sync Williams",
+            "rank": 20,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "pageNumber": " ",
+                        "title": "Sync Williams",
+                        "var2": "INDSLAG",
+                        "videoId": "1246508A",
+                        "tapeTime": "44",
+                        "audioTime": "1",
+                        "totalTime": "45",
+                        "modifyDate": "1567763548",
+                        "presenter": "thkr",
+                        "modifyBy": "jonk",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "var9": "T",
+                        "typecode": "spx",
+                        "programtitle": "Cykling",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "words": "3",
+                        "rate": "180"
+                    },
+                    "cues": [
+                        [
+                            "kg topt SERENA WILLIAMS",
+                            "Tennisspiller",
+                            ";0.04"
+                        ]
+                    ],
+                    "id": "011ff9c1:00db0834:5d722c5c",
+                    "body": "\r\n<p> </p>\r\n<p></p>\r\n<p>Skriv din spib her</p>\r\n<p></p>\r\n<p><pi>********SERVER*********</pi></p>\r\n<p><cc><b>----   BUNDTER HERUNDER  -------</b></cc> </p>\r\n<p><a idref=\"0\"></a></p>\r\n<p></p>\r\n<p><pi><b>SLUTORD: ...forward to do</b></pi></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "011ff9c1:00db0834:5d722c5c",
+                "rank": 20,
+                "name": "Sync Williams",
+                "float": false
+            },
+            "parts": []
+        },
+        {
+            "externalId": "021ff9c1:00db0833:5d722c5c",
+            "name": "CONTINUITY",
+            "rank": 21,
+            "payload": {
+                "rundownId": "NYHEDERNE-TEST.SOFIE.WTA",
+                "iNewsStory": {
+                    "fields": {
+                        "title": "CONTINUITY",
+                        "var2": "INDSL",
+                        "tapeTime": "0",
+                        "audioTime": "0",
+                        "totalTime": "0",
+                        "modifyDate": "1567763548",
+                        "modifyBy": "flow",
+                        "var16": "ååmmdd",
+                        "ready": "KLAR",
+                        "runsTime": "0",
+                        "onair": "ON-AIR",
+                        "typecode": "nyx",
+                        "programtitle": ".",
+                        "noarchive": "."
+                    },
+                    "meta": {
+                        "rate": "140",
+                        "break": "break"
+                    },
+                    "cues": [],
+                    "id": "021ff9c1:00db0833:5d722c5c",
+                    "body": "\r\n<p><pi></pi></p>\r\n<p><pi></pi></p>\r\n"
+                },
+                "modified": "2019-09-06T09:52:00.000Z",
+                "externalId": "021ff9c1:00db0833:5d722c5c",
+                "rank": 21,
+                "name": "CONTINUITY",
+                "float": false
+            },
+            "parts": []
+        }
+    ]
+}
