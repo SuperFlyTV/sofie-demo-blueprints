@@ -40,10 +40,7 @@ export interface StudioConfig {
 		DSK1K: number
 		DSK2F: number
 		DSK2K: number
-		Server1: number // Clips
-		Server1Next: number
-		Server2: number // Grafikk
-		Server3: number // Studio
+		ServerC: number // Studio
 
 		SplitArtF: number // Atem MP1 Fill
 		SplitArtK: number // Atem MP1 Key
