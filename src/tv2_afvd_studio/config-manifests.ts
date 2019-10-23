@@ -23,7 +23,7 @@ export const studioConfigManifest: ConfigManifestEntry[] = [
 		description: 'Camera number to ATEM input (eg 1:1,9:2)',
 		type: ConfigManifestEntryType.STRING,
 		required: true,
-		defaultVal: '1:1,2:2,3:3,4:4,5:5'
+		defaultVal: '1:11,2:12,3:13,4:14,5:15,1S:16,2S:17,3S:18,4S:19,5S:20'
 	},
 	{
 		id: 'SourcesRM',
@@ -31,7 +31,7 @@ export const studioConfigManifest: ConfigManifestEntry[] = [
 		description: 'RM number to ATEM input (eg 1:6,2:7)',
 		type: ConfigManifestEntryType.STRING,
 		required: false,
-		defaultVal: '1:6,2:7,3:8,4:9,5:10,6:11,7:12'
+		defaultVal: '1:1,2:2,3:3,4:4,5:5,6:6,7:7,8:8,9:9,10:10'
 	},
 	{
 		id: 'SourcesSkype',
@@ -64,7 +64,7 @@ export const studioConfigManifest: ConfigManifestEntry[] = [
 		description: 'ATEM inputs for A/B media players',
 		type: ConfigManifestEntryType.STRING,
 		required: false,
-		defaultVal: '1:17,2:18'
+		defaultVal: '1:26,2:27'
 	},
 	{
 		id: 'AtemSource.DSK1F',
@@ -99,36 +99,12 @@ export const studioConfigManifest: ConfigManifestEntry[] = [
 		defaultVal: 16
 	},
 	{
-		id: 'AtemSource.Server1',
-		name: 'ATEM Server1',
-		description: 'ATEM vision mixer input for Server1',
+		id: 'AtemSource.ServerC',
+		name: 'CasparCG Server C',
+		description: 'ATEM vision mixer input for ServerC',
 		type: ConfigManifestEntryType.NUMBER,
 		required: false,
 		defaultVal: 17
-	},
-	{
-		id: 'AtemSource.Server1Next',
-		name: 'ATEM Server1-Next',
-		description: 'ATEM vision mixer input for Server1-Next',
-		type: ConfigManifestEntryType.NUMBER,
-		required: false,
-		defaultVal: 18
-	},
-	{
-		id: 'AtemSource.Server2',
-		name: 'ATEM Server2',
-		description: 'ATEM vision mixer input for Server2',
-		type: ConfigManifestEntryType.NUMBER,
-		required: false,
-		defaultVal: 19
-	},
-	{
-		id: 'AtemSource.Server3',
-		name: 'ATEM Server3',
-		description: 'ATEM vision mixer input for Server3',
-		type: ConfigManifestEntryType.NUMBER,
-		required: false,
-		defaultVal: 20
 	},
 	{
 		id: 'AtemSource.SplitArtF',

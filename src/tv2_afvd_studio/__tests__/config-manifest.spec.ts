@@ -18,10 +18,7 @@ const blankStudioConfig: StudioConfig = {
 		DSK1K: 0,
 		DSK2F: 0,
 		DSK2K: 0,
-		Server1: 0,
-		Server1Next: 0,
-		Server2: 0,
-		Server3: 0,
+		ServerC: 0,
 		SplitArtF: 0,
 		SplitArtK: 0,
 		Default: 0
