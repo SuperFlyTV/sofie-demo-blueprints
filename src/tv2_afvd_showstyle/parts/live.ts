@@ -11,6 +11,7 @@ import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { AddScript } from '../helpers/pieces/script'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { CueType, ParseCue } from '../inewsConversion/converters/ParseCue'
+import { CreatePartInvalid } from './invalid'
 import { PartTime } from './time/partTime'
 
 export function CreatePartLive(
@@ -42,6 +43,10 @@ export function CreatePartLive(
 
 	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
 	AddScript(partDefinition, pieces)
+
+	if (pieces.length === 0) {
+		return CreatePartInvalid(partDefinition)
+	}
 
 	return {
 		part,

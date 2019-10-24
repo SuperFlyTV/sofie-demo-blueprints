@@ -63,6 +63,10 @@ export function CreatePartServer(
 	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
 	AddScript(partDefinition, pieces)
 
+	if (pieces.length === 0) {
+		return CreatePartInvalid(partDefinition)
+	}
+
 	return {
 		part,
 		adLibPieces,

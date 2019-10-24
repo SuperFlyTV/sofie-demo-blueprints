@@ -9,6 +9,7 @@ import { BlueprintConfig } from '../helpers/config'
 import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { AddScript } from '../helpers/pieces/script'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
+import { CreatePartInvalid } from './invalid'
 
 export function CreatePartUnknown(context: PartContext, config: BlueprintConfig, partDefinition: PartDefinition) {
 	const duration = Number(partDefinition.fields.audioTime) * 1000 || 0
@@ -27,6 +28,10 @@ export function CreatePartUnknown(context: PartContext, config: BlueprintConfig,
 
 	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
 	AddScript(partDefinition, pieces)
+
+	if (pieces.length === 0) {
+		return CreatePartInvalid(partDefinition)
+	}
 
 	return {
 		part,

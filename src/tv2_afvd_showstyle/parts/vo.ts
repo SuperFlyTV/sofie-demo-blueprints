@@ -9,6 +9,7 @@ import { literal } from '../../common/util'
 import { AddScript } from '../helpers/pieces/script'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
+import { CreatePartInvalid } from './invalid'
 
 export function CreatePartVO(partDefinition: PartDefinition): BlueprintResultPart {
 	const part = literal<IBlueprintPart>({
@@ -35,6 +36,10 @@ export function CreatePartVO(partDefinition: PartDefinition): BlueprintResultPar
 	)
 
 	AddScript(partDefinition, pieces)
+
+	if (pieces.length === 0) {
+		return CreatePartInvalid(partDefinition)
+	}
 
 	return {
 		part,

@@ -8,7 +8,8 @@ export function CreatePartInvalid(ingestPart: PartDefinition): BlueprintResultPa
 		title: ingestPart.rawType || 'Unknown',
 		metaData: {},
 		typeVariant: '',
-		invalid: true
+		invalid: true,
+		autoNext: true
 	})
 
 	return {
