@@ -11,16 +11,15 @@ import { PieceMetaData } from '../../tv2_afvd_studio/onTimelineGenerate'
 import { BlueprintConfig } from '../helpers/config'
 import { MakeContentServer } from '../helpers/content/server'
 import { EvaluateCues } from '../helpers/pieces/evaluateCues'
+import { AddScript } from '../helpers/pieces/script'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
 import { CreatePartInvalid } from './invalid'
-import { AddScript } from '../helpers/pieces/script'
 
 export function CreatePartServer(
 	context: PartContext,
 	config: BlueprintConfig,
-	partDefinition: PartDefinition,
-	mediaPlayerSessionId: string
+	partDefinition: PartDefinition
 ): BlueprintResultPart {
 	if (partDefinition.fields === undefined) {
 		return CreatePartInvalid(partDefinition)
@@ -55,9 +54,9 @@ export function CreatePartServer(
 			sourceLayerId: SourceLayer.PgmServer,
 			infiniteMode: PieceLifespan.OutOnNextPart,
 			metaData: literal<PieceMetaData>({
-				mediaPlayerSessions: [mediaPlayerSessionId]
+				mediaPlayerSessions: [part.externalId]
 			}),
-			content: MakeContentServer(file, duration, mediaPlayerSessionId)
+			content: MakeContentServer(file, duration, part.externalId)
 		})
 	)
 

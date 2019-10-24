@@ -10,18 +10,21 @@ import { BlueprintConfig } from '../helpers/config'
 import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { AddScript } from '../helpers/pieces/script'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
+import { PartTime } from './time/partTime'
 
 export function CreatePartTeknik(
 	context: PartContext,
 	config: BlueprintConfig,
-	partDefinition: PartDefinition
+	partDefinition: PartDefinition,
+	totalWords: number
 ): BlueprintResultPart {
+	const partTime = PartTime(partDefinition, totalWords)
 	const part = literal<IBlueprintPart>({
 		externalId: partDefinition.externalId,
 		title: PartType[partDefinition.type] + ' - ' + partDefinition.rawType,
 		metaData: {},
 		typeVariant: '',
-		expectedDuration: 0
+		expectedDuration: partTime
 	})
 
 	const adLibPieces: IBlueprintAdLibPiece[] = []

@@ -19,26 +19,28 @@ import { FindSourceInfoStrict } from '../../tv2_afvd_studio/helpers/sources'
 import { AtemLLayer } from '../../tv2_afvd_studio/layers'
 import { BlueprintConfig } from '../helpers/config'
 import { EvaluateCues } from '../helpers/pieces/evaluateCues'
+import { AddScript } from '../helpers/pieces/script'
 import { GetSisyfosTimelineObjForCamera } from '../helpers/sisyfos/sisyfos'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
 import { CreatePartInvalid } from './invalid'
-import { AddScript } from '../helpers/pieces/script'
+import { PartTime } from './time/partTime'
 
 export function CreatePartKam(
 	context: PartContext,
 	config: BlueprintConfig,
-	partDefinition: PartDefinition
+	partDefinition: PartDefinition,
+	totalWords: number
 ): BlueprintResultPart {
-	const duration = Number(partDefinition.fields.audioTime) * 1000 || 0
+	const partTime = PartTime(partDefinition, totalWords)
 
 	const part = literal<IBlueprintPart>({
 		externalId: partDefinition.externalId,
 		title: PartType[partDefinition.type] + ' - ' + partDefinition.rawType,
 		metaData: {},
 		typeVariant: '',
-		expectedDuration: duration,
-		displayDuration: duration
+		expectedDuration: partTime,
+		displayDuration: partTime
 	})
 
 	const adLibPieces: IBlueprintAdLibPiece[] = []

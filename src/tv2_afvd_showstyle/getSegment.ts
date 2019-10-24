@@ -44,6 +44,7 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 		ingestSegment.payload.iNewsStory.fields,
 		ingestSegment.payload.iNewsStory.fields.modifyDate
 	)
+	const totalWords = ingestSegment.payload.iNewsStory.meta.words || 0
 	parsedParts.forEach((part, i) => {
 		if (i === 0 && DEBUG_LAYERS) {
 			blueprintParts.push(CreatePartFake(part))
@@ -51,16 +52,16 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 		const partContext = new PartContext2(context, part.externalId)
 		switch (part.type) {
 			case PartType.Kam:
-				blueprintParts.push(CreatePartKam(partContext, config, part))
+				blueprintParts.push(CreatePartKam(partContext, config, part, totalWords))
 				break
 			case PartType.Server:
-				blueprintParts.push(CreatePartServer(partContext, config, part, part.externalId))
+				blueprintParts.push(CreatePartServer(partContext, config, part))
 				break
 			case PartType.Live:
-				blueprintParts.push(CreatePartLive(partContext, config, part))
+				blueprintParts.push(CreatePartLive(partContext, config, part, totalWords))
 				break
 			case PartType.Teknik:
-				blueprintParts.push(CreatePartTeknik(partContext, config, part))
+				blueprintParts.push(CreatePartTeknik(partContext, config, part, totalWords))
 				break
 			case PartType.Grafik:
 				blueprintParts.push(CreatePartGrafik(part))
