@@ -7,7 +7,6 @@ export function PartTime(partDefinition: PartDefinition, totalWords: number): nu
 	if (partDefinition.script) {
 		if (partDefinition.script) {
 			Countable.count(partDefinition.script, (data: any) => {
-				console.log(data)
 				wordCount = data.words
 			})
 		}
