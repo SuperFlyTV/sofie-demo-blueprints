@@ -6,9 +6,9 @@ import {
 	PieceLifespan
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
+import { AddScript } from '../helpers/pieces/script'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
-import { AddScript } from '../helpers/pieces/script'
 
 export function CreatePartVO(partDefinition: PartDefinition): BlueprintResultPart {
 	const part = literal<IBlueprintPart>({
