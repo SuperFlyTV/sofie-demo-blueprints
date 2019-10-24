@@ -8,6 +8,7 @@ import {
 import { literal } from '../../common/util'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
+import { AddScript } from '../helpers/pieces/script'
 
 export function CreatePartVO(partDefinition: PartDefinition): BlueprintResultPart {
 	const part = literal<IBlueprintPart>({
@@ -32,6 +33,8 @@ export function CreatePartVO(partDefinition: PartDefinition): BlueprintResultPar
 			infiniteMode: PieceLifespan.OutOnNextPart
 		})
 	)
+
+	AddScript(partDefinition, pieces)
 
 	return {
 		part,

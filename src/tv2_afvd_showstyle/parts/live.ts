@@ -10,6 +10,7 @@ import { BlueprintConfig } from '../../tv2_afvd_showstyle/helpers/config'
 import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { CueType, ParseCue } from '../inewsConversion/converters/ParseCue'
+import { AddScript } from '../helpers/pieces/script'
 
 export function CreatePartLive(
 	context: PartContext,
@@ -37,6 +38,7 @@ export function CreatePartLive(
 	} // TODO: Make AdLib live cue
 
 	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
+	AddScript(partDefinition, pieces)
 
 	return {
 		part,

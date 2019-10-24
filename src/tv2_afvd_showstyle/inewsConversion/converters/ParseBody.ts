@@ -40,6 +40,7 @@ export interface PartDefinitionBase {
 	cues: UnparsedCue[]
 	script: string
 	fields: { [key: string]: string }
+	modified: number
 }
 
 export interface PartDefinitionUnknown extends PartDefinitionBase {
@@ -96,7 +97,13 @@ export type PartdefinitionTypes =
 	| Pick<PartDefinitionGrafik, 'type' | 'variant'>
 	| Pick<PartDefinitionVO, 'type' | 'variant'>
 
-export function ParseBody(segmentId: string, body: string, cues: UnparsedCue[], fields: any): PartDefinition[] {
+export function ParseBody(
+	segmentId: string,
+	body: string,
+	cues: UnparsedCue[],
+	fields: any,
+	modified: number
+): PartDefinition[] {
 	const definitions: PartDefinition[] = []
 	let definition: PartDefinition = {
 		externalId: '',
@@ -105,7 +112,8 @@ export function ParseBody(segmentId: string, body: string, cues: UnparsedCue[], 
 		variant: {},
 		cues: [],
 		script: '',
-		fields
+		fields,
+		modified
 	}
 	let lines = body.split('\r\n')
 
@@ -140,7 +148,7 @@ export function ParseBody(segmentId: string, body: string, cues: UnparsedCue[], 
 						definition.externalId = `${segmentId}-${definitions.length}`
 						definitions.push(definition)
 
-						definition = makeDefinition(segmentId, definitions.length, typeStr, fields)
+						definition = makeDefinition(segmentId, definitions.length, typeStr, fields, modified)
 					}
 					return
 				}
@@ -151,7 +159,7 @@ export function ParseBody(segmentId: string, body: string, cues: UnparsedCue[], 
 					definitions.push(definition)
 				}
 
-				definition = makeDefinition(segmentId, definitions.length, typeStr, fields)
+				definition = makeDefinition(segmentId, definitions.length, typeStr, fields, modified)
 
 				// check for cues inline with the type definition
 				addCue(definition, line, cues)
@@ -196,14 +204,15 @@ function addCue(definition: PartDefinition, line: string, cues: UnparsedCue[]) {
 	}
 }
 
-function makeDefinition(segmentId: string, i: number, typeStr: string, fields: any): PartDefinition {
+function makeDefinition(segmentId: string, i: number, typeStr: string, fields: any, modified: number): PartDefinition {
 	const part: PartDefinition = {
 		externalId: `${segmentId}-${i}`, // TODO - this should be something that sticks when inserting a part before the current part
 		...extractTypeProperties(typeStr),
 		rawType: typeStr,
 		cues: [],
 		script: '',
-		fields
+		fields,
+		modified
 	}
 
 	return part

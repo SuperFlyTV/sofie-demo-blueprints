@@ -41,7 +41,8 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 		ingestSegment.externalId,
 		ingestSegment.payload.iNewsStory.body,
 		ingestSegment.payload.iNewsStory.cues,
-		ingestSegment.payload.iNewsStory.fields
+		ingestSegment.payload.iNewsStory.fields,
+		ingestSegment.payload.iNewsStory.fields.modifyDate
 	)
 	parsedParts.forEach((part, i) => {
 		if (i === 0 && DEBUG_LAYERS) {

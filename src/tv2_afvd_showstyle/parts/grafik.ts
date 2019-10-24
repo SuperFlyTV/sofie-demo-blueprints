@@ -6,6 +6,7 @@ import {
 	PieceLifespan
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
+import { AddScript } from '../helpers/pieces/script'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
 
@@ -32,6 +33,8 @@ export function CreatePartGrafik(partDefinition: PartDefinition): BlueprintResul
 			infiniteMode: PieceLifespan.OutOnNextPart
 		})
 	)
+
+	AddScript(partDefinition, pieces)
 
 	return {
 		part,

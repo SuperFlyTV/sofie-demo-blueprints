@@ -8,6 +8,7 @@ import {
 import { literal } from '../../common/util'
 import { BlueprintConfig } from '../helpers/config'
 import { EvaluateCues } from '../helpers/pieces/evaluateCues'
+import { AddScript } from '../helpers/pieces/script'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 
 export function CreatePartTeknik(
@@ -27,6 +28,7 @@ export function CreatePartTeknik(
 	const pieces: IBlueprintPiece[] = []
 
 	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
+	AddScript(partDefinition, pieces)
 
 	return {
 		part,

@@ -23,6 +23,7 @@ import { GetSisyfosTimelineObjForCamera } from '../helpers/sisyfos/sisyfos'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
 import { CreatePartInvalid } from './invalid'
+import { AddScript } from '../helpers/pieces/script'
 
 export function CreatePartKam(
 	context: PartContext,
@@ -85,6 +86,7 @@ export function CreatePartKam(
 	)
 
 	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
+	AddScript(partDefinition, pieces)
 
 	return {
 		part,
