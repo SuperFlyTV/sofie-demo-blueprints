@@ -1,7 +1,19 @@
-import { IBlueprintAdLibPiece, IBlueprintPiece, PartContext } from 'tv-automation-sofie-blueprints-integration'
+import {
+	IBlueprintAdLibPiece,
+	IBlueprintPiece,
+	PartContext,
+	PieceLifespan
+} from 'tv-automation-sofie-blueprints-integration'
 import { BlueprintConfig } from '../../../tv2_afvd_showstyle/helpers/config'
 import { PartDefinition } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseBody'
-import { CueDefinition, CueTime, CueType, ParseCue, UnparsedCue } from '../../inewsConversion/converters/ParseCue'
+import {
+	CueDefinition,
+	CueDefinitionBase,
+	CueTime,
+	CueType,
+	ParseCue,
+	UnparsedCue
+} from '../../inewsConversion/converters/ParseCue'
 import { EvaluateAdLib } from './adlib'
 import { EvaluateDVE } from './dve'
 import { EvaluateEkstern } from './ekstern'
@@ -66,6 +78,40 @@ export function EvaluateCues(
 			EvaluateGrafik(context, config, pieces, adLibPieces, part.externalId, parsedCue as any, true)
 		})
 	}
+}
+
+export function CreateTiming(cue: CueDefinitionBase): Pick<IBlueprintPiece, 'enable' | 'infiniteMode'> {
+	const result: Pick<IBlueprintPiece, 'enable' | 'infiniteMode'> = {
+		enable: {},
+		infiniteMode: PieceLifespan.Normal
+	}
+	if (cue.start) {
+		;(result.enable as any).start = CalculateTime(cue.start)
+	} else {
+		;(result.enable as any).start = 0
+	}
+
+	if (cue.end) {
+		if (cue.end.infiniteMode) {
+			switch (cue.end.infiniteMode) {
+				case 'B':
+					result.infiniteMode = PieceLifespan.OutOnNextPart
+					break
+				case 'S':
+					result.infiniteMode = PieceLifespan.OutOnNextSegment
+					break
+				case 'O':
+					result.infiniteMode = PieceLifespan.Infinite
+					break
+			}
+		} else {
+			;(result.enable as any).end = CalculateTime(cue.end)
+		}
+	} else {
+		result.infiniteMode = PieceLifespan.Normal
+	}
+
+	return result
 }
 
 export function CalculateTime(time: CueTime) {

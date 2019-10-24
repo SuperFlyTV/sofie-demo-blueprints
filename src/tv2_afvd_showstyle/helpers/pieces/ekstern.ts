@@ -7,7 +7,6 @@ import {
 import {
 	IBlueprintPiece,
 	PartContext,
-	PieceLifespan,
 	RemoteContent,
 	SourceLayerType,
 	TimelineObjectCoreExt
@@ -19,7 +18,7 @@ import { AtemLLayer } from '../../../tv2_afvd_studio/layers'
 import { CueDefinitionEkstern } from '../../inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../layers'
 import { GetSisyfosTimelineObjForEkstern } from '../sisyfos/sisyfos'
-import { CalculateTime } from './evaluateCues'
+import { CreateTiming } from './evaluateCues'
 
 export function EvaluateEkstern(
 	context: PartContext,
@@ -49,13 +48,9 @@ export function EvaluateEkstern(
 			_id: '',
 			externalId: partId,
 			name: eksternProps[0],
-			enable: {
-				start: parsedCue.start ? CalculateTime(parsedCue.start) : 0,
-				...(parsedCue.end ? { end: CalculateTime(parsedCue.end) } : {})
-			},
+			...CreateTiming(parsedCue),
 			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmLive,
-			infiniteMode: PieceLifespan.OutOnNextPart,
 			content: literal<RemoteContent>({
 				studioLabel: '',
 				switcherInput: atemInput,

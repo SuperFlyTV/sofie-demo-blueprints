@@ -4,7 +4,6 @@ import {
 	IBlueprintAdLibPiece,
 	IBlueprintPiece,
 	PartContext,
-	PieceLifespan,
 	TimelineObjectCoreExt
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../../common/util'
@@ -12,7 +11,7 @@ import { CueDefinitionTelefon } from '../../../tv2_afvd_showstyle/inewsConversio
 import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
 import { BlueprintConfig } from '../../../tv2_afvd_studio/helpers/config'
 import { SisyfosSourceTelefon } from '../../../tv2_afvd_studio/layers'
-import { CalculateTime } from './evaluateCues'
+import { CreateTiming } from './evaluateCues'
 import { EvaluateGrafik } from './grafik'
 
 export function EvaluateTelefon(
@@ -29,13 +28,9 @@ export function EvaluateTelefon(
 			_id: '',
 			externalId: partId,
 			name: parsedCue.source,
-			enable: {
-				start: parsedCue.start ? CalculateTime(parsedCue.start) : 0,
-				...(parsedCue.end ? { end: CalculateTime(parsedCue.end) } : {})
-			},
+			...CreateTiming(parsedCue),
 			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmTelephone,
-			infiniteMode: PieceLifespan.OutOnNextPart,
 			content: literal<BaseContent>({
 				timelineObjects: literal<TimelineObjectCoreExt[]>([
 					literal<TimelineObjSisyfosMessage>({

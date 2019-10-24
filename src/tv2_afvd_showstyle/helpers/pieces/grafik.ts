@@ -8,6 +8,7 @@ import { literal } from '../../../common/util'
 import { CueDefinitionGrafik } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
 import { BlueprintConfig } from '../../../tv2_afvd_studio/helpers/config'
+import { CreateTiming } from './evaluateCues'
 
 /**
  * @returns {true} If a cue is a grafik
@@ -44,10 +45,9 @@ export function EvaluateGrafik(
 				_id: '',
 				externalId: partId,
 				name: grafikName(parsedCue),
-				enable: { start: 0 },
+				...CreateTiming(parsedCue),
 				outputLayerId: 'pgm0',
-				sourceLayerId: SourceLayer.PgmGraphics,
-				infiniteMode: PieceLifespan.OutOnNextPart
+				sourceLayerId: SourceLayer.PgmGraphics
 			})
 		) // TODO: Timeline objects
 	}
