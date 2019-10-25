@@ -20,5 +20,6 @@ export const casparABPlaybackConfig: ConfigMap = {
 }
 
 export const defaultShowStyleConfig: ConfigMap = {
-	DefaultTemplateDuration: 4
+	DefaultTemplateDuration: 4,
+	JingleTimings: ''
 }

@@ -123,6 +123,14 @@ export const showStyleConfigManifest: ConfigManifestEntry[] = [
 		]
 	},
 	{
+		id: 'JingleTimings',
+		name: 'Jingle Timings',
+		description: 'Number of frames of alpha at the end of jingles.',
+		type: ConfigManifestEntryType.STRING,
+		required: false,
+		defaultVal: '2019_sport:25,2019_nba:100'
+	},
+	{
 		id: 'DefaultTemplateDuration',
 		name: 'Default Template Duration',
 		description: 'Default Template Duration',

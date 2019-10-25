@@ -21,6 +21,7 @@ export interface BlueprintConfig extends BlueprintConfigBase {
 export interface ShowStyleConfig {
 	DVEStyles: TableConfigItemValue
 	GFXTemplates: TableConfigItemValue
+	JingleTimings: string
 	DefaultTemplateDuration: number
 }
 
