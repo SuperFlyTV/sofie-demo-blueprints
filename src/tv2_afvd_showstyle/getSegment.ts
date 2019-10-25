@@ -39,6 +39,7 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 	const blueprintParts: BlueprintResultPart[] = []
 	const parsedParts = ParseBody(
 		ingestSegment.externalId,
+		ingestSegment.name,
 		ingestSegment.payload.iNewsStory.body,
 		ingestSegment.payload.iNewsStory.cues,
 		ingestSegment.payload.iNewsStory.fields,
@@ -51,6 +52,9 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 		}
 		const partContext = new PartContext2(context, part.externalId)
 		switch (part.type) {
+			case PartType.INTRO:
+				context.warning('INTRO, not implemented')
+				break
 			case PartType.Kam:
 				blueprintParts.push(CreatePartKam(partContext, config, part, totalWords))
 				break

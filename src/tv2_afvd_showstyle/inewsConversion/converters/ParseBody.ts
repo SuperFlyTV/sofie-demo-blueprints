@@ -8,7 +8,8 @@ export enum PartType {
 	VO,
 	Live,
 	Teknik,
-	Grafik
+	Grafik,
+	INTRO
 }
 
 export interface INewsStory {
@@ -80,6 +81,11 @@ export interface PartDefinitionVO extends PartDefinitionBase {
 	variant: {}
 }
 
+export interface PartDefinitionIntro extends PartDefinitionBase {
+	type: PartType.INTRO
+	variant: {}
+}
+
 export type PartDefinition =
 	| PartDefinitionUnknown
 	| PartDefinitionKam
@@ -88,6 +94,7 @@ export type PartDefinition =
 	| PartDefinitionLive
 	| PartDefinitionGrafik
 	| PartDefinitionVO
+	| PartDefinitionIntro
 export type PartdefinitionTypes =
 	| Pick<PartDefinitionUnknown, 'type' | 'variant'>
 	| Pick<PartDefinitionKam, 'type' | 'variant'>
@@ -96,9 +103,11 @@ export type PartdefinitionTypes =
 	| Pick<PartDefinitionLive, 'type' | 'variant'>
 	| Pick<PartDefinitionGrafik, 'type' | 'variant'>
 	| Pick<PartDefinitionVO, 'type' | 'variant'>
+	| Pick<PartDefinitionIntro, 'type' | 'variant'>
 
 export function ParseBody(
 	segmentId: string,
+	segmentName: string,
 	body: string,
 	cues: UnparsedCue[],
 	fields: any,
@@ -115,6 +124,16 @@ export function ParseBody(
 		fields,
 		modified
 	}
+
+	if (segmentName === 'INTRO') {
+		definition.cues = cues
+		;((definition as unknown) as PartDefinitionIntro).type = PartType.INTRO
+		definition.rawType = 'INTRO'
+		definition.externalId = `${segmentId}-${definitions.length}`
+		definitions.push(definition)
+		return definitions
+	}
+
 	let lines = body.split('\r\n')
 
 	for (let i = 0; i < lines.length; i++) {
