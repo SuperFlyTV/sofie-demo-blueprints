@@ -1,6 +1,7 @@
 import { literal } from '../../../../common/util'
 import {
 	CueDefinition,
+	CueDefinitionJingle,
 	CueDefinitionLYD,
 	CueDefinitionUnknown,
 	CueType,
@@ -371,6 +372,17 @@ describe('Cue parser', () => {
 					seconds: 35
 				},
 				variant: 'SPORT_BED'
+			})
+		)
+	})
+
+	test('JINGLE', () => {
+		const cueJingle = ['JINGLE2=SN_intro_19']
+		const result = ParseCue(cueJingle)
+		expect(result).toEqual(
+			literal<CueDefinitionJingle>({
+				type: CueType.Jingle,
+				clip: 'SN_intro_19'
 			})
 		)
 	})

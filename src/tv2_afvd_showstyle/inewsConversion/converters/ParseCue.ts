@@ -11,7 +11,8 @@ export enum CueType {
 	VIZ,
 	Mic,
 	AdLib,
-	LYD
+	LYD,
+	Jingle
 }
 
 export interface CueTime {
@@ -93,6 +94,11 @@ export interface CueDefinitionLYD extends CueDefinitionBase {
 	variant: string
 }
 
+export interface CueDefinitionJingle extends CueDefinitionBase {
+	type: CueType.Jingle
+	clip: string
+}
+
 export type CueDefinition =
 	| CueDefinitionUnknown
 	| CueDefinitionIgnoredMOS
@@ -105,6 +111,7 @@ export type CueDefinition =
 	| CueDefinitionMic
 	| CueDefinitionAdLib
 	| CueDefinitionLYD
+	| CueDefinitionJingle
 
 export function ParseCue(cue: UnparsedCue): CueDefinition {
 	if (!cue || cue.length === 0) {
@@ -152,6 +159,8 @@ export function ParseCue(cue: UnparsedCue): CueDefinition {
 		return parseKommando(cue)
 	} else if (cue[0].match(/^LYD=/)) {
 		return parseLYD(cue)
+	} else if (cue[0].match(/^JINGLE\d+=/)) {
+		return parseJingle(cue)
 	}
 	return {
 		type: CueType.Unknown
@@ -367,7 +376,7 @@ function parseKommando(cue: string[]) {
 	return kommandoCue
 }
 
-export function parseLYD(cue: string[]) {
+function parseLYD(cue: string[]) {
 	let lydCue: CueDefinitionLYD = {
 		type: CueType.LYD,
 		variant: ''
@@ -383,6 +392,19 @@ export function parseLYD(cue: string[]) {
 	}
 
 	return lydCue
+}
+
+function parseJingle(cue: string[]) {
+	const jingleCue: CueDefinitionJingle = {
+		type: CueType.Jingle,
+		clip: ''
+	}
+	const clip = cue[0].match(/^JINGLE\d+=(.*)$/)
+	if (clip && clip[1]) {
+		jingleCue.clip = clip[1]
+	}
+
+	return jingleCue
 }
 
 export function isTime(line: string) {
