@@ -79,17 +79,6 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 		}
 	})
 
-	/*if (blueprintParts.length > 1) {
-		blueprintParts.forEach((part, i) => {
-			if (i === 0) {
-				part.part.displayDuration = parseInt(ingestSegment.payload.iNewsStory.fields.totalTime, 10) * 1000 || 10000
-				// TODO - remove this default time
-			}
-
-			part.part.displayDurationGroup = ingestSegment.externalId
-		})
-	}*/
-
 	return {
 		segment,
 		parts: blueprintParts
@@ -155,70 +144,3 @@ class PartContext2 implements PartContext {
 		return this.baseContext.unhashId(hash)
 	}
 }
-
-// /**
-//  * Creates a part from an ingest part and associated pieces.
-//  * @param {IngestPart} ingestPart Ingest part.
-//  * @param {IBlueprintPiece[]} pieces Array of pieces.
-//  */
-// function createPart(
-// 	ingestPart: IngestPart,
-// 	pieces: IBlueprintPiece[],
-// 	adLibPieces: IBlueprintAdLibPiece[]
-// ): BlueprintResultPart {
-// 	const part = literal<IBlueprintPart>({
-// 		externalId: ingestPart.externalId,
-// 		title: ingestPart.name || 'Unknown',
-// 		metaData: {},
-// 		typeVariant: '',
-// 		expectedDuration: calculateExpectedDuration(pieces)
-// 	})
-
-// 	return {
-// 		part,
-// 		adLibPieces,
-// 		pieces
-// 	}
-// }
-
-// /**
-//  * Calculates the expected duration of a part from component pieces.
-//  * @param {IBlueprintPiece[]} pieces Pieces to calculate duration for.
-//  */
-// function calculateExpectedDuration(pieces: IBlueprintPiece[]): number {
-// 	if (pieces.length) {
-// 		let start = 0
-// 		let end = 0
-
-// 		pieces.forEach(piece => {
-// 			if (!piece.isTransition) {
-// 				const st = piece.enable.start as number
-// 				let en = piece.enable.start as number
-// 				if (piece.enable.duration) {
-// 					en = (piece.enable.start as number) + (piece.enable.duration as number)
-// 				} else if (piece.enable.end) {
-// 					en = piece.enable.end as number
-// 				}
-
-// 				if (piece.infiniteMode) {
-// 					en = en + 1000
-// 				}
-
-// 				if (st < start) {
-// 					start = st
-// 				}
-
-// 				if (en > end) {
-// 					end = en
-// 				}
-
-// 				if (st > end) {
-// 					end = st
-// 				}
-// 			}
-// 		})
-
-// 		return end - start
-// 	}
-// 	return 0
-// }
