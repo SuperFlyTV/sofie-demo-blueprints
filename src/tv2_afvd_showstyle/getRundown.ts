@@ -129,15 +129,17 @@ function getGlobalAdLibPieces(_context: NotesContext, config: BlueprintConfig): 
 	}
 
 	const adlibItems: IBlueprintAdLibPiece[] = []
+	let cameras = 0
 	_.each(config.sources, v => {
 		if (v.type === SourceLayerType.CAMERA) {
-			adlibItems.push(makeCameraAdLib(v, 100))
+			adlibItems.push(makeCameraAdLib(v, 100 + cameras))
+			cameras++
 		}
 	})
 	adlibItems.push({
 		externalId: 'cam',
 		name: `Delayed Playback`,
-		_rank: 100,
+		_rank: 200,
 		sourceLayerId: SourceLayer.PgmCam,
 		outputLayerId: 'pgm0',
 		expectedDuration: 0,
@@ -164,7 +166,7 @@ function getGlobalAdLibPieces(_context: NotesContext, config: BlueprintConfig): 
 	adlibItems.push({
 		externalId: 'cam',
 		name: `Delayed Playback +`,
-		_rank: 100,
+		_rank: 300,
 		sourceLayerId: SourceLayer.PgmCam,
 		outputLayerId: 'pgm0',
 		expectedDuration: 0,
