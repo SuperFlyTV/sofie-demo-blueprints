@@ -91,6 +91,13 @@ export default literal<BlueprintMappings>({
 		channel: 5,
 		layer: 100
 	}),
+	casparcg_player_jingle: literal<MappingCasparCG & BlueprintMapping>({
+		device: PlayoutDeviceType.CASPARCG,
+		deviceId: 'caspar02',
+		lookahead: LookaheadMode.PRELOAD,
+		channel: 1,
+		layer: 100
+	}),
 	atem_me_program: literal<MappingAtem & BlueprintMapping>({
 		device: PlayoutDeviceType.ATEM,
 		deviceId: 'atem0',
@@ -171,6 +178,12 @@ export default literal<BlueprintMappings>({
 		device: PlayoutDeviceType.ABSTRACT,
 		deviceId: 'abstract0',
 		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_jingle: literal<MappingSisyfos & BlueprintMapping>({
+		device: PlayoutDeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 1,
+		lookahead: LookaheadMode.PRELOAD
 	})
 })
 

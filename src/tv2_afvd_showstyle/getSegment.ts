@@ -13,6 +13,7 @@ import { parseConfig } from './helpers/config'
 import { ParseBody, PartType } from './inewsConversion/converters/ParseBody'
 import { CreatePartFake } from './parts/fake'
 import { CreatePartGrafik } from './parts/grafik'
+import { CreatePartIntro } from './parts/intro'
 import { CreatePartKam } from './parts/kam'
 import { CreatePartLive } from './parts/live'
 import { CreatePartServer } from './parts/server'
@@ -53,7 +54,7 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 		const partContext = new PartContext2(context, part.externalId)
 		switch (part.type) {
 			case PartType.INTRO:
-				context.warning('INTRO, not implemented')
+				blueprintParts.push(CreatePartIntro(partContext, config, part, totalWords))
 				break
 			case PartType.Kam:
 				blueprintParts.push(CreatePartKam(partContext, config, part, totalWords))

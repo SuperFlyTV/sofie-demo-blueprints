@@ -18,6 +18,7 @@ import { EvaluateAdLib } from './adlib'
 import { EvaluateDVE } from './dve'
 import { EvaluateEkstern } from './ekstern'
 import { EvaluateGrafik } from './grafik'
+import { EvaluateJingle } from './jingle'
 import { EvaluateTelefon } from './telefon'
 import { EvaluateVIZ } from './viz'
 
@@ -54,6 +55,9 @@ export function EvaluateCues(
 					break
 				case CueType.VIZ:
 					EvaluateVIZ(context, config, pieces, adLibPieces, part.externalId, parsedCue)
+					break
+				case CueType.Jingle:
+					EvaluateJingle(pieces, parsedCue, part)
 					break
 				default:
 					if (parsedCue.type !== CueType.Unknown) {

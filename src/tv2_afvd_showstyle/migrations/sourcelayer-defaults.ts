@@ -52,7 +52,7 @@ export default literal<ISourceLayer[]>([
 		_id: SourceLayer.PgmJingle,
 		_rank: 9000,
 		name: 'Jingle',
-		type: SourceLayerType.TRANSITION,
+		type: SourceLayerType.VT,
 		onPGMClean: true,
 		activateKeyboardHotkeys: '',
 		assignHotkeysToGlobalAdlibs: false,

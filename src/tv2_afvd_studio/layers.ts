@@ -40,6 +40,7 @@ export enum CasparLLayer {
 	CasparPlayerWipe = 'casparcg_player_wipe',
 	CasparPlayerSoundEffect = 'casparcg_player_soundeffect',
 	CasparPlayerClipPending = 'casparcg_player_clip_pending',
+	CasparPlayerJingle = 'casparcg_player_jingle',
 
 	CasparCGGraphics = 'casparcg_cg_graphics',
 	CasparCGEffects = 'casparcg_cg_effects',
@@ -49,7 +50,8 @@ export enum CasparLLayer {
 }
 
 export enum SisyfosLLAyer {
-	SisyfosSourceClipPending = 'sisyfos_source_clip_pending'
+	SisyfosSourceClipPending = 'sisyfos_source_clip_pending',
+	SisyfosSourceJingle = 'sisyfos_source_jingle'
 }
 
 export function CasparPlayerClip(i: number) {
