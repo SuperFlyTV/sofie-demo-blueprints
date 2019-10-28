@@ -30,7 +30,7 @@ export function CreatePartVO(partDefinition: PartDefinition): BlueprintResultPar
 			name: part.title,
 			enable: { start: 0 },
 			outputLayerId: 'pgm0',
-			sourceLayerId: SourceLayer.PgmAudioBed,
+			sourceLayerId: SourceLayer.PgmVoiceOver,
 			infiniteMode: PieceLifespan.OutOnNextPart
 		})
 	)
