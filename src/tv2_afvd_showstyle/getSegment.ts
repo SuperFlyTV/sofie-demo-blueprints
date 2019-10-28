@@ -1,19 +1,23 @@
 import {
 	BlueprintResultPart,
 	BlueprintResultSegment,
+	IBlueprintPiece,
 	IBlueprintRundownDB,
 	IBlueprintSegment,
 	IngestSegment,
 	PartContext,
+	ScriptContent,
 	SegmentContext
 } from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
 import { assertUnreachable, literal } from '../common/util'
 import { parseConfig } from './helpers/config'
-import { ParseBody, PartType } from './inewsConversion/converters/ParseBody'
+import { ParseBody, PartDefinition, PartDefinitionSlutord, PartType } from './inewsConversion/converters/ParseBody'
+import { SourceLayer } from './layers'
 import { CreatePartFake } from './parts/fake'
 import { CreatePartGrafik } from './parts/grafik'
 import { CreatePartIntro } from './parts/intro'
+import { CreatePartInvalid } from './parts/invalid'
 import { CreatePartKam } from './parts/kam'
 import { CreatePartLive } from './parts/live'
 import { CreatePartServer } from './parts/server'
@@ -47,7 +51,8 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 		ingestSegment.payload.iNewsStory.fields.modifyDate
 	)
 	const totalWords = ingestSegment.payload.iNewsStory.meta.words || 0
-	parsedParts.forEach((part, i) => {
+	for (let i = 0; i < parsedParts.length; i++) {
+		const part = parsedParts[i]
 		if (i === 0 && DEBUG_LAYERS) {
 			blueprintParts.push(CreatePartFake(part))
 		}
@@ -69,28 +74,73 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 				blueprintParts.push(CreatePartTeknik(partContext, config, part, totalWords))
 				break
 			case PartType.Grafik:
+				// TODO: This part
 				blueprintParts.push(CreatePartGrafik(part))
+				context.warning(`GRAFIK Part, not implemented yet`)
 				break
 			case PartType.VO:
+				// TODO: This part
 				blueprintParts.push(CreatePartVO(part))
+				context.warning(`VO Part, not implemented yet`)
 				break
 			case PartType.Unknown:
 				// context.warning(`Unknown part type for part ${part.rawType} with id ${part.externalId}`)
 				blueprintParts.push(CreatePartUnknown(partContext, config, part))
+				context.warning('Unknown part type')
 				break
 			case PartType.Slutord:
+				blueprintParts.push(CreatePartInvalid(part))
 				context.warning('Slutord should have been filtered out by now, something may have gone wrong')
 				break
 			default:
 				assertUnreachable(part)
 				break
 		}
-	})
+		if (SlutordLookahead(parsedParts, i, blueprintParts)) {
+			i++
+		}
+	}
 
 	return {
 		segment,
 		parts: blueprintParts
 	}
+}
+
+function SlutordLookahead(
+	parsedParts: PartDefinition[],
+	currentIndex: number,
+	blueprintParts: BlueprintResultPart[]
+): boolean {
+	// Check if next part is Slutord
+	if (currentIndex + 1 < parsedParts.length) {
+		if (parsedParts[currentIndex + 1].type === PartType.Slutord) {
+			const part = (parsedParts[currentIndex + 1] as unknown) as PartDefinitionSlutord
+			// If it's attached to a server and has some content
+			if (parsedParts[currentIndex].type === PartType.Server && part.variant.endWords) {
+				blueprintParts[blueprintParts.length - 1].pieces.push(
+					literal<IBlueprintPiece>({
+						_id: '',
+						name: `Slutord: ${part.variant.endWords}`,
+						sourceLayerId: SourceLayer.PgmScript,
+						outputLayerId: 'pgm0',
+						externalId: parsedParts[currentIndex].externalId,
+						enable: {
+							start: 0
+						},
+						content: literal<ScriptContent>({
+							firstWords: '',
+							lastWords: part.variant.endWords,
+							fullScript: part.variant.endWords
+						})
+					})
+				)
+			}
+			return true
+		}
+	}
+
+	return false
 }
 
 class PartContext2 implements PartContext {
