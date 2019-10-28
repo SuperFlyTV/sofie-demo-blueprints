@@ -12,9 +12,9 @@ import { EvaluateDVE } from './dve'
 import { EvaluateEkstern } from './ekstern'
 import { EvaluateGrafik } from './grafik'
 import { EvaluateJingle } from './jingle'
+import { EvaluateLYD } from './lyd'
 import { EvaluateTelefon } from './telefon'
 import { EvaluateVIZ } from './viz'
-import { EvaluateLYD } from './lyd'
 
 const FRAME_TIME = 1000 / 25 // TODO: This should be pulled from config.
 
