@@ -1,5 +1,5 @@
 import { IngestSegment } from 'tv-automation-sofie-blueprints-integration'
-import { UnparsedCue } from './ParseCue'
+import { CueDefinition, ParseCue, UnparsedCue } from './ParseCue'
 
 export enum PartType {
 	Unknown,
@@ -38,7 +38,7 @@ export interface PartDefinitionBase {
 	type: PartType
 	rawType: string
 	variant: {}
-	cues: UnparsedCue[]
+	cues: CueDefinition[]
 	script: string
 	fields: { [key: string]: string }
 	modified: number
@@ -126,8 +126,12 @@ export function ParseBody(
 	}
 
 	if (segmentName === 'INTRO') {
-		definition.cues = cues
 		;((definition as unknown) as PartDefinitionIntro).type = PartType.INTRO
+		cues.forEach(cue => {
+			if (cue !== null) {
+				definition.cues.push(ParseCue(cue))
+			}
+		})
 		definition.rawType = 'INTRO'
 		definition.externalId = `${segmentId}-${definitions.length}`
 		definitions.push(definition)
@@ -216,7 +220,7 @@ function addCue(definition: PartDefinition, line: string, cues: UnparsedCue[]) {
 			if (value) {
 				const realCue = cues[Number(value[1])]
 				if (realCue) {
-					definition.cues.push(realCue)
+					definition.cues.push(ParseCue(realCue))
 				}
 			}
 		})

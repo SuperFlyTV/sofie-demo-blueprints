@@ -10,7 +10,7 @@ import { BlueprintConfig } from '../../tv2_afvd_showstyle/helpers/config'
 import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { AddScript } from '../helpers/pieces/script'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
-import { CueType, ParseCue } from '../inewsConversion/converters/ParseCue'
+import { CueType } from '../inewsConversion/converters/ParseCue'
 import { CreatePartInvalid } from './invalid'
 import { PartTime } from './time/partTime'
 
@@ -33,8 +33,7 @@ export function CreatePartLive(
 	const pieces: IBlueprintPiece[] = []
 
 	const liveCue = partDefinition.cues.find(cue => {
-		const parsedCue = ParseCue(cue)
-		return parsedCue.type === CueType.Ekstern
+		return cue.type === CueType.Ekstern
 	})
 
 	if (liveCue) {

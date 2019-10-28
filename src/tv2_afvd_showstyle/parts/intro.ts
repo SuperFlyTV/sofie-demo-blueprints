@@ -10,7 +10,7 @@ import { BlueprintConfig } from '../helpers/config'
 import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { AddScript } from '../helpers/pieces/script'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
-import { CueDefinitionJingle, CueType, ParseCue } from '../inewsConversion/converters/ParseCue'
+import { CueDefinitionJingle, CueType } from '../inewsConversion/converters/ParseCue'
 import { CreatePartInvalid } from './invalid'
 import { PartTime } from './time/partTime'
 
@@ -23,7 +23,7 @@ export function CreatePartIntro(
 	const partTime = PartTime(partDefinition, totalWords)
 
 	const jingleCue = partDefinition.cues.find(cue => {
-		const parsedCue = ParseCue(cue)
+		const parsedCue = cue
 		return parsedCue.type === CueType.Jingle
 	})
 
@@ -32,7 +32,7 @@ export function CreatePartIntro(
 		return CreatePartInvalid(partDefinition)
 	}
 
-	const parsedJingle = ParseCue(jingleCue) as CueDefinitionJingle
+	const parsedJingle = jingleCue as CueDefinitionJingle
 
 	const timings = config.showStyle.JingleTimings.split(',')
 	let overlapFrames = -1

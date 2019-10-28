@@ -6,14 +6,7 @@ import {
 } from 'tv-automation-sofie-blueprints-integration'
 import { BlueprintConfig } from '../../../tv2_afvd_showstyle/helpers/config'
 import { PartDefinition } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseBody'
-import {
-	CueDefinition,
-	CueDefinitionBase,
-	CueTime,
-	CueType,
-	ParseCue,
-	UnparsedCue
-} from '../../inewsConversion/converters/ParseCue'
+import { CueDefinition, CueDefinitionBase, CueTime, CueType } from '../../inewsConversion/converters/ParseCue'
 import { EvaluateAdLib } from './adlib'
 import { EvaluateDVE } from './dve'
 import { EvaluateEkstern } from './ekstern'
@@ -29,39 +22,38 @@ export function EvaluateCues(
 	config: BlueprintConfig,
 	pieces: IBlueprintPiece[],
 	adLibPieces: IBlueprintAdLibPiece[],
-	cues: Array<UnparsedCue | null>,
+	cues: CueDefinition[],
 	part: PartDefinition
 ) {
 	let adLibRank = 0
-	const parsedCues = cues.map(cue => ParseCue(cue))
-	const filteredCues = parsedCues.filter(cue => cue.type !== CueType.Grafik)
-	const grafikCues = parsedCues.filter(cue => cue.type === CueType.Grafik)
-	const isDVE = containsDVE(parsedCues)
-	filteredCues.forEach(parsedCue => {
-		if (parsedCue) {
-			switch (parsedCue.type) {
+	const filteredCues = cues.filter(cue => cue.type !== CueType.Grafik)
+	const grafikCues = cues.filter(cue => cue.type === CueType.Grafik)
+	const isDVE = containsDVE(cues)
+	filteredCues.forEach(cue => {
+		if (cue) {
+			switch (cue.type) {
 				case CueType.Ekstern:
-					EvaluateEkstern(context, config, pieces, part.externalId, parsedCue)
+					EvaluateEkstern(context, config, pieces, part.externalId, cue)
 					break
 				case CueType.DVE:
-					EvaluateDVE(context, config, pieces, part.externalId, parsedCue)
+					EvaluateDVE(context, config, pieces, part.externalId, cue)
 					break
 				case CueType.AdLib:
-					EvaluateAdLib(context, config, adLibPieces, part.externalId, parsedCue, part, adLibRank)
+					EvaluateAdLib(context, config, adLibPieces, part.externalId, cue, part, adLibRank)
 					adLibRank++
 					break
 				case CueType.Telefon:
-					EvaluateTelefon(context, config, pieces, adLibPieces, part.externalId, parsedCue)
+					EvaluateTelefon(context, config, pieces, adLibPieces, part.externalId, cue)
 					break
 				case CueType.VIZ:
-					EvaluateVIZ(context, config, pieces, adLibPieces, part.externalId, parsedCue)
+					EvaluateVIZ(context, config, pieces, adLibPieces, part.externalId, cue)
 					break
 				case CueType.Jingle:
-					EvaluateJingle(pieces, parsedCue, part)
+					EvaluateJingle(pieces, cue, part)
 					break
 				default:
-					if (parsedCue.type !== CueType.Unknown) {
-						context.warning(`Unknown cue type: ${CueType[parsedCue.type]}`)
+					if (cue.type !== CueType.Unknown) {
+						context.warning(`Unknown cue type: ${CueType[cue.type]}`)
 					}
 					break
 			}
@@ -70,16 +62,16 @@ export function EvaluateCues(
 
 	if (isDVE) {
 		// All cues are AdLibs
-		grafikCues.forEach((parsedCue, i) => {
-			EvaluateGrafik(context, config, pieces, adLibPieces, part.externalId, parsedCue as any, true, i)
+		grafikCues.forEach((cue, i) => {
+			EvaluateGrafik(context, config, pieces, adLibPieces, part.externalId, cue as any, true, i)
 		})
 	} else {
 		// First cue is not AdLib, but also an AdLib
-		grafikCues.forEach((parsedCue, i) => {
+		grafikCues.forEach((cue, i) => {
 			if (i === 0) {
-				EvaluateGrafik(context, config, pieces, adLibPieces, part.externalId, parsedCue as any)
+				EvaluateGrafik(context, config, pieces, adLibPieces, part.externalId, cue as any)
 			}
-			EvaluateGrafik(context, config, pieces, adLibPieces, part.externalId, parsedCue as any, true)
+			EvaluateGrafik(context, config, pieces, adLibPieces, part.externalId, cue as any, true)
 		})
 	}
 }
