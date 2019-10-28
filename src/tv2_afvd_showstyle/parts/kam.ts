@@ -21,7 +21,7 @@ import { BlueprintConfig } from '../helpers/config'
 import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { AddScript } from '../helpers/pieces/script'
 import { GetSisyfosTimelineObjForCamera } from '../helpers/sisyfos/sisyfos'
-import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
+import { PartDefinition } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
 import { CreatePartInvalid } from './invalid'
 import { PartTime } from './time/partTime'
@@ -36,7 +36,7 @@ export function CreatePartKam(
 
 	const part = literal<IBlueprintPart>({
 		externalId: partDefinition.externalId,
-		title: PartType[partDefinition.type] + ' - ' + partDefinition.rawType,
+		title: partDefinition.rawType,
 		metaData: {},
 		typeVariant: '',
 		expectedDuration: partTime,

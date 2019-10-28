@@ -54,7 +54,7 @@ export function EvaluateGrafik(
 }
 
 function grafikName(parsedCue: CueDefinitionGrafik) {
-	return `Grafik${parsedCue.template ? ` - ${parsedCue.template}` : ''}${parsedCue.textFields
+	return `${parsedCue.template ? `${parsedCue.template}` : ''}${parsedCue.textFields
 		.filter(txt => !txt.match(/^;.\.../))
 		.map(txt => ` - ${txt}`)}`
 }

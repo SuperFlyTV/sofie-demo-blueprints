@@ -13,7 +13,7 @@ export function AddScript(part: PartDefinition, pieces: IBlueprintPiece[]) {
 			literal<IBlueprintPiece>({
 				_id: '',
 				externalId: part.externalId,
-				name: `Script: ${script.slice(0, stripLength)}`,
+				name: script.slice(0, stripLength),
 				enable: {
 					start: 0,
 					end: part.fields.audioTime
