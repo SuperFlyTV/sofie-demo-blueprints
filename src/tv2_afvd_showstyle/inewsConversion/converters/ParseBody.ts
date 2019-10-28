@@ -9,7 +9,8 @@ export enum PartType {
 	Live,
 	Teknik,
 	Grafik,
-	INTRO
+	INTRO,
+	Slutord
 }
 
 export interface INewsStory {
@@ -86,6 +87,13 @@ export interface PartDefinitionIntro extends PartDefinitionBase {
 	variant: {}
 }
 
+export interface PartDefinitionSlutord extends PartDefinitionBase {
+	type: PartType.Slutord
+	variant: {
+		endWords: string
+	}
+}
+
 export type PartDefinition =
 	| PartDefinitionUnknown
 	| PartDefinitionKam
@@ -95,6 +103,7 @@ export type PartDefinition =
 	| PartDefinitionGrafik
 	| PartDefinitionVO
 	| PartDefinitionIntro
+	| PartDefinitionSlutord
 export type PartdefinitionTypes =
 	| Pick<PartDefinitionUnknown, 'type' | 'variant'>
 	| Pick<PartDefinitionKam, 'type' | 'variant'>
@@ -104,6 +113,7 @@ export type PartdefinitionTypes =
 	| Pick<PartDefinitionGrafik, 'type' | 'variant'>
 	| Pick<PartDefinitionVO, 'type' | 'variant'>
 	| Pick<PartDefinitionIntro, 'type' | 'variant'>
+	| Pick<PartDefinitionSlutord, 'type' | 'variant'>
 
 export function ParseBody(
 	segmentId: string,
@@ -157,7 +167,7 @@ export function ParseBody(
 				.trim()
 
 			if (typeStr) {
-				if (!typeStr.match(/\b(KAM|CAM|KAMERA|CAMERA|SERVER|TEKNIK|LIVE|GRAFIK|VO)+\b/gi)) {
+				if (!typeStr.match(/\b(KAM|CAM|KAMERA|CAMERA|SERVER|TEKNIK|LIVE|GRAFIK|VO|SLUTORD)+\b/gi)) {
 					// Live types have bullet points (usually questions to ask)
 					if (definition.type === PartType.Live) {
 						const scriptBullet = line.match(/<p><pi>(.*)?<\/pi><\/p>/)
@@ -276,6 +286,13 @@ function extractTypeProperties(typeStr: string): PartdefinitionTypes {
 		return {
 			type: PartType.VO,
 			variant: {}
+		}
+	} else if (firstToken.match(/SLUTORD/i)) {
+		return {
+			type: PartType.Slutord,
+			variant: {
+				endWords: tokens.slice(1, tokens.length).join(' ')
+			}
 		}
 	} else {
 		return {

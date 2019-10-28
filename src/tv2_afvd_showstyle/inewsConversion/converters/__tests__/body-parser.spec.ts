@@ -1,9 +1,18 @@
 import { literal } from '../../../../common/util'
-import { ParseBody, PartDefinition, PartType } from '../ParseBody'
+import {
+	ParseBody,
+	PartDefinition,
+	PartDefinitionKam,
+	PartDefinitionServer,
+	PartDefinitionSlutord,
+	PartDefinitionUnknown,
+	PartType
+} from '../ParseBody'
 import {
 	CueDefinitionEkstern,
 	CueDefinitionGrafik,
 	CueDefinitionJingle,
+	CueDefinitionTelefon,
 	CueDefinitionUnknown,
 	CueType,
 	UnparsedCue
@@ -75,6 +84,20 @@ const cueJingle3: CueDefinitionJingle = {
 }
 
 const unparsedJingle3 = ['JINGLE2=3']
+
+const cueTelefon1: CueDefinitionTelefon = {
+	type: CueType.Telefon,
+	source: 'TLF 1'
+}
+
+const unparsedTelefon1 = ['TELEFON=TLF 1']
+
+const cueTelefon2: CueDefinitionTelefon = {
+	type: CueType.Telefon,
+	source: 'TLF 2'
+}
+
+const unparsedTelefon2 = ['TELEFON=TLF 2']
 
 describe('Body parser', () => {
 	test('test1', () => {
@@ -193,11 +216,13 @@ describe('Body parser', () => {
 					modified: 0
 				},
 				{
-					type: PartType.Unknown,
+					type: PartType.Slutord,
 					rawType: 'SLUTORD: ekstra kick',
 					cues: [],
 					script: '',
-					variant: {},
+					variant: {
+						endWords: 'ekstra kick'
+					},
 					externalId: '00000000001-2',
 					fields: {},
 					modified: 0
@@ -323,11 +348,13 @@ describe('Body parser', () => {
 					modified: 0
 				},
 				{
-					type: PartType.Unknown,
+					type: PartType.Slutord,
 					rawType: 'SLUTORD wauw',
 					cues: [],
 					script: '',
-					variant: {},
+					variant: {
+						endWords: 'wauw'
+					},
 					externalId: '00000000001-2',
 					fields: {},
 					modified: 0
@@ -653,6 +680,176 @@ describe('Body parser', () => {
 					fields: {},
 					modified: 0
 				}
+			])
+		)
+	})
+
+	test('test16', () => {
+		const body16 =
+			'\r\n<p><a idref="0"><pi>KAM 2</pi></a></p>\r\n<p><cc>Husk at lave en DIGI=trompet</cc></p>\r\n<p><cc>OBS: Udfyld kun linje </cc></p>\r\n<p></p>\r\n<p></p>\r\n<p>Hallo, I wnat to tell you......</p>\r\n<p></p>\r\n<p></p>\r\n<p><a idref="1"></a></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p></p>\r\n<p><a idref="2"><a idref="3"><a idref="4"><a idref="5"></a></a></a></a></p>\r\n<p><cc>---SS3 19 NYH LOOP--></cc><a idref="6"><cc><----</cc></a></p>\r\n<p></p>\r\n<p></p>\r\n<p><cc>---<b>BUNDTER HERUNDER</b> ---></cc></p>\r\n<p><pi>KAM 2</pi></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>SLUTORD:</pi></p>\r\n<p></p>\r\n<p><pi>KAM 2</pi></p>\r\n<p><cc>SLET KAMERA HVIS INGEN NEDLÆG</cc></p>\r\n<p></p>\r\n'
+		const cues16 = [
+			unparsedUnknown,
+			unparsedGrafik1,
+			unparsedGrafik2,
+			unparsedGrafik3,
+			unparsedJingle1,
+			unparsedJingle2,
+			unparsedJingle3
+		]
+		const result = ParseBody('00000000001', '', body16, cues16, fields, 0)
+		expect(result).toEqual(
+			literal<PartDefinition[]>([
+				literal<PartDefinitionKam>({
+					externalId: '00000000001-0',
+					type: PartType.Kam,
+					rawType: 'KAM 2',
+					script: 'Hallo, I wnat to tell you......\n',
+					variant: {
+						name: '2'
+					},
+					cues: [cueUnknown, cueGrafik1],
+					fields,
+					modified: 0
+				}),
+				literal<PartDefinitionServer>({
+					externalId: '00000000001-1',
+					type: PartType.Server,
+					rawType: 'SERVER',
+					script: '',
+					variant: {},
+					cues: [cueGrafik2, cueGrafik3, cueJingle1, cueJingle2, cueJingle3],
+					fields,
+					modified: 0
+				}),
+				literal<PartDefinitionKam>({
+					externalId: '00000000001-2',
+					type: PartType.Kam,
+					rawType: 'KAM 2',
+					script: '',
+					variant: {
+						name: '2'
+					},
+					cues: [],
+					fields,
+					modified: 0
+				}),
+				literal<PartDefinitionSlutord>({
+					externalId: '00000000001-3',
+					type: PartType.Slutord,
+					rawType: 'SLUTORD:',
+					script: '',
+					variant: {
+						endWords: ''
+					},
+					cues: [],
+					fields,
+					modified: 0
+				}),
+				literal<PartDefinitionKam>({
+					externalId: '00000000001-4',
+					type: PartType.Kam,
+					rawType: 'KAM 2',
+					script: '',
+					variant: {
+						name: '2'
+					},
+					cues: [],
+					fields,
+					modified: 0
+				})
+			])
+		)
+	})
+
+	test('test17', () => {
+		const body17 =
+			'\r\n<p></p>\r\n<p><a idref="1"></a></p>\r\n<p><a idref="2"><pi>KAM 1</pi></a></p>\r\n<p></p>\r\n<p>Siden nytår er over 100 mennesker kommet til skade på et el-løbehjul i Københavnsområdet.</p>\r\n<p></p>\r\n<p>Det fremgår af en opgørelse fra Region Hovedstaden, hvor enten akutmodtagelsen eller en ambulance har været involveret i en løbehjuls-skade. </p>\r\n<p></p>\r\n<p>De gange, hvor det er gået galt, er der typisk tale om ansigtsskader, og det er især gået ud over dem i alderen 18 til 25 år:</p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p></p>\r\n<p><a idref="4"></a></p>\r\n<p><a idref="5"></a></p>\r\n<p><a idref="6"></a></p>\r\n<p><a idref="7"></a></p>\r\n<p><a idref="8"></a></p>\r\n<p><a idref="9"></a></p>\r\n<p><a idref="10"></a></p>\r\n<p></p>\r\n<p><pi>SLUTORD:</pi></p>\r\n<p></p>\r\n<p><pi>Slutord:... Skarpere regler.</pi></p>\r\n<p></p>\r\n<p><pi>KAM 2</pi></p>\r\n<p></p>\r\n<p>Transportminister Benny Engelbrecht siger at han afventer den igangværende evaluering, der er færdig i januar 2020. Herefter vil han sammen med de andre partiet vurdere, om noget skal ændres i forsøgsordningen.</p>\r\n<p></p>\r\n'
+		const cues17 = [
+			unparsedUnknown,
+			unparsedEkstern1,
+			unparsedEkstern2,
+			unparsedGrafik1,
+			unparsedGrafik2,
+			unparsedGrafik3,
+			unparsedJingle1,
+			unparsedJingle2,
+			unparsedJingle3,
+			unparsedTelefon1,
+			unparsedTelefon2
+		]
+		const result = ParseBody('00000000001', '', body17, cues17, fields, 0)
+		expect(result).toEqual(
+			literal<PartDefinition[]>([
+				literal<PartDefinitionUnknown>({
+					externalId: '00000000001-0',
+					type: PartType.Unknown,
+					variant: {},
+					rawType: '',
+					cues: [cueEkstern1],
+					script: '',
+					fields,
+					modified: 0
+				}),
+				literal<PartDefinitionKam>({
+					externalId: '00000000001-1',
+					type: PartType.Kam,
+					variant: {
+						name: '1'
+					},
+					rawType: 'KAM 1',
+					cues: [cueEkstern2],
+					script:
+						'Siden nytår er over 100 mennesker kommet til skade på et el-løbehjul i Københavnsområdet.\nDet fremgår af en opgørelse fra Region Hovedstaden, hvor enten akutmodtagelsen eller en ambulance har været involveret i en løbehjuls-skade.\nDe gange, hvor det er gået galt, er der typisk tale om ansigtsskader, og det er især gået ud over dem i alderen 18 til 25 år:\n',
+					fields,
+					modified: 0
+				}),
+				literal<PartDefinitionServer>({
+					externalId: '00000000001-2',
+					type: PartType.Server,
+					variant: {},
+					rawType: 'SERVER',
+					cues: [cueGrafik2, cueGrafik3, cueJingle1, cueJingle2, cueJingle3, cueTelefon1, cueTelefon2],
+					script: '',
+					fields,
+					modified: 0
+				}),
+				literal<PartDefinitionSlutord>({
+					externalId: '00000000001-3',
+					type: PartType.Slutord,
+					variant: {
+						endWords: ''
+					},
+					rawType: 'SLUTORD:',
+					cues: [],
+					script: '',
+					fields,
+					modified: 0
+				}),
+				literal<PartDefinitionSlutord>({
+					externalId: '00000000001-4',
+					type: PartType.Slutord,
+					variant: {
+						endWords: 'Skarpere regler.'
+					},
+					rawType: 'Slutord Skarpere regler.',
+					cues: [],
+					script: '',
+					fields,
+					modified: 0
+				}),
+				literal<PartDefinitionKam>({
+					externalId: '00000000001-5',
+					type: PartType.Kam,
+					variant: {
+						name: '2'
+					},
+					rawType: 'KAM 2',
+					cues: [],
+					script:
+						'Transportminister Benny Engelbrecht siger at han afventer den igangværende evaluering, der er færdig i januar 2020. Herefter vil han sammen med de andre partiet vurdere, om noget skal ændres i forsøgsordningen.\n',
+					fields,
+					modified: 0
+				})
 			])
 		)
 	})

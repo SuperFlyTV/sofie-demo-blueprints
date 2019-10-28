@@ -78,6 +78,9 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 				// context.warning(`Unknown part type for part ${part.rawType} with id ${part.externalId}`)
 				blueprintParts.push(CreatePartUnknown(partContext, config, part))
 				break
+			case PartType.Slutord:
+				context.warning('Slutord should have been filtered out by now, something may have gone wrong')
+				break
 			default:
 				assertUnreachable(part)
 				break
