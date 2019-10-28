@@ -131,6 +131,63 @@ export const showStyleConfigManifest: ConfigManifestEntry[] = [
 		defaultVal: '2019_sport:25,2019_nba:100'
 	},
 	{
+		/*
+		Wipes Config
+		Effekt number
+		Clip name
+		Alpha at start
+		Alpha at end
+		*/
+		id: 'WipesConfig',
+		name: 'Wipes Configuration',
+		description: 'Wipes effekts configuration',
+		type: ConfigManifestEntryType.TABLE,
+		required: false,
+		defaultVal: [
+			{
+				_id: '',
+				EffektNumber: 0,
+				ClipName: '',
+				StartAlpha: 0,
+				EndAlpha: 0
+			}
+		],
+		columns: [
+			{
+				id: 'EffektNumber',
+				name: 'Effekt Number',
+				description: 'The Effect Number',
+				type: ConfigManifestEntryType.NUMBER,
+				required: true,
+				defaultVal: 0
+			},
+			{
+				id: 'ClipName',
+				name: 'Clip Name',
+				description: 'The name of the wipe clip',
+				type: ConfigManifestEntryType.STRING,
+				required: true,
+				defaultVal: ''
+			},
+			{
+				id: 'StartAlpha',
+				name: 'Alpha at Start',
+				description: 'Number of frames of alpha at start',
+				type: ConfigManifestEntryType.NUMBER,
+				required: true,
+				defaultVal: 0
+			},
+			{
+				id: 'EndAlpha',
+				name: 'Alpha at End',
+				description: 'Number of frames of alpha at end',
+				type: ConfigManifestEntryType.NUMBER,
+				required: true,
+				defaultVal: 0
+			}
+		]
+	},
+	{
 		id: 'DefaultTemplateDuration',
 		name: 'Default Template Duration',
 		description: 'Default Template Duration',

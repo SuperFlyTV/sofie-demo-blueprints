@@ -5,6 +5,7 @@ import { ShowStyleConfig } from '../helpers/config'
 const blankShowStyleConfig: ShowStyleConfig = {
 	DVEStyles: [],
 	GFXTemplates: [],
+	WipesConfig: [],
 	DefaultTemplateDuration: 4,
 	JingleTimings: ''
 }
