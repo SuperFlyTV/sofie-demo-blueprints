@@ -98,6 +98,13 @@ export default literal<BlueprintMappings>({
 		channel: 1,
 		layer: 100
 	}),
+	casparcg_audio_lyd: literal<MappingCasparCG & BlueprintMapping>({
+		device: PlayoutDeviceType.CASPARCG,
+		deviceId: 'caspar02',
+		lookahead: LookaheadMode.PRELOAD,
+		channel: 1,
+		layer: 101
+	}),
 	atem_me_program: literal<MappingAtem & BlueprintMapping>({
 		device: PlayoutDeviceType.ATEM,
 		deviceId: 'atem0',
@@ -183,6 +190,12 @@ export default literal<BlueprintMappings>({
 		device: PlayoutDeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
 		channel: 1,
+		lookahead: LookaheadMode.PRELOAD
+	}),
+	sisyfos_source_audio: literal<MappingSisyfos & BlueprintMapping>({
+		device: PlayoutDeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 2,
 		lookahead: LookaheadMode.PRELOAD
 	})
 })

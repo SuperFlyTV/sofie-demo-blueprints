@@ -45,13 +45,15 @@ export enum CasparLLayer {
 	CasparCGGraphics = 'casparcg_cg_graphics',
 	CasparCGEffects = 'casparcg_cg_effects',
 	CasparCGDVELoop = 'casparcg_dve_loop',
+	CasparCGLYD = 'casparcg_audio_lyd',
 
 	CasparCountdown = 'casparcg_cg_countdown'
 }
 
 export enum SisyfosLLAyer {
 	SisyfosSourceClipPending = 'sisyfos_source_clip_pending',
-	SisyfosSourceJingle = 'sisyfos_source_jingle'
+	SisyfosSourceJingle = 'sisyfos_source_jingle',
+	SisyfosSourceAudio = 'sisyfos_source_audio'
 }
 
 export function CasparPlayerClip(i: number) {

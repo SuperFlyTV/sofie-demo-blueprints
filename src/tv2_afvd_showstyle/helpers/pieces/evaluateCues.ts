@@ -14,6 +14,7 @@ import { EvaluateGrafik } from './grafik'
 import { EvaluateJingle } from './jingle'
 import { EvaluateTelefon } from './telefon'
 import { EvaluateVIZ } from './viz'
+import { EvaluateLYD } from './lyd'
 
 const FRAME_TIME = 1000 / 25 // TODO: This should be pulled from config.
 
@@ -50,6 +51,9 @@ export function EvaluateCues(
 					break
 				case CueType.Jingle:
 					EvaluateJingle(pieces, cue, part)
+					break
+				case CueType.LYD:
+					EvaluateLYD(pieces, cue, part)
 					break
 				default:
 					if (cue.type !== CueType.Unknown) {

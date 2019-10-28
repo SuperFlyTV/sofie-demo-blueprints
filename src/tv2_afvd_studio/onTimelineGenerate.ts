@@ -56,7 +56,6 @@ export function onTimelineGenerate(
 	previousPartEndState: PartEndState | undefined,
 	resolvedPieces: IBlueprintPieceDB[]
 ): Promise<BlueprintResultTimeline> {
-	setLawoObjectsTriggerValue(context, timeline, context.part._id)
 	timeline = validateNoraPreload(timeline)
 
 	// // TODO - remove this HACK!
@@ -142,24 +141,6 @@ function isLawoSource(obj: Partial<TimelineObjLawoSource & TimelineObjectCoreExt
 	return (
 		obj.content && obj.content.deviceType === DeviceType.LAWO && obj.content.type === TimelineContentTypeLawo.SOURCE
 	)
-}
-
-export function setLawoObjectsTriggerValue(
-	context: PartEventContext,
-	timelineObjs: TSRTimelineObjBase[],
-	currentPartId: string | undefined
-) {
-	forEachOfType<TimelineObjLawoSource & TimelineObjectCoreExt>(timelineObjs, isLawoSource, lawoObj => {
-		_.each(lawoObj.content, (_val, key) => {
-			if (key === 'deviceType' || key === 'type') {
-				// Ignore
-			} else if (key === 'Fader/Motor dB Value') {
-				lawoObj.content[key].triggerValue = currentPartId || ''
-			} else {
-				context.warning(`Unknown lawo object key "${key}". triggerValue will not be set`)
-			}
-		})
-	})
 }
 
 export function validateNoraPreload(timelineObjs: OnGenerateTimelineObj[]) {
