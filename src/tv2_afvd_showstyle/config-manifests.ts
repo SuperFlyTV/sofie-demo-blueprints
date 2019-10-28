@@ -148,6 +148,7 @@ export const showStyleConfigManifest: ConfigManifestEntry[] = [
 				_id: '',
 				EffektNumber: 0,
 				ClipName: '',
+				Duration: 0,
 				StartAlpha: 0,
 				EndAlpha: 0
 			}
@@ -168,6 +169,14 @@ export const showStyleConfigManifest: ConfigManifestEntry[] = [
 				type: ConfigManifestEntryType.STRING,
 				required: true,
 				defaultVal: ''
+			},
+			{
+				id: 'Duration',
+				name: 'Effekt Duration',
+				description: 'Duration of the effekt',
+				type: ConfigManifestEntryType.NUMBER,
+				required: true,
+				defaultVal: 0
 			},
 			{
 				id: 'StartAlpha',
