@@ -50,7 +50,7 @@ export function EvaluateCues(
 					EvaluateVIZ(context, config, pieces, adLibPieces, part.externalId, cue)
 					break
 				case CueType.Jingle:
-					EvaluateJingle(pieces, cue, part)
+					EvaluateJingle(config, pieces, cue, part)
 					break
 				case CueType.LYD:
 					EvaluateLYD(pieces, cue, part)

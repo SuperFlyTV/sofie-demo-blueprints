@@ -107,6 +107,22 @@ export const studioConfigManifest: ConfigManifestEntry[] = [
 		defaultVal: 17
 	},
 	{
+		id: 'AtemSource.JingleFill',
+		name: 'Jingle Fill Source',
+		description: 'ATEM vision mixer input for Jingle Fill',
+		type: ConfigManifestEntryType.NUMBER,
+		required: false,
+		defaultVal: 29
+	},
+	{
+		id: 'AtemSource.JingleKey',
+		name: 'Jingle Key Source',
+		description: 'ATEM vision mixer input for Jingle Source',
+		type: ConfigManifestEntryType.NUMBER,
+		required: false,
+		defaultVal: 31
+	},
+	{
 		id: 'AtemSource.SplitArtF',
 		name: 'ATEM Split Screen Art Fill',
 		description: 'ATEM vision mixer input for Split Screen Art Fill',

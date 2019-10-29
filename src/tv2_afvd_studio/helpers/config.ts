@@ -41,6 +41,8 @@ export interface StudioConfig {
 		DSK2F: number
 		DSK2K: number
 		ServerC: number // Studio
+		JingleFill: number
+		JingleKey: number
 
 		SplitArtF: number // Atem MP1 Fill
 		SplitArtK: number // Atem MP1 Key

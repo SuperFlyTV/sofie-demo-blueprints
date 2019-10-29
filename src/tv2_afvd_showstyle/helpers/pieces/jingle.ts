@@ -19,8 +19,14 @@ import { CueDefinitionJingle } from '../../../tv2_afvd_showstyle/inewsConversion
 import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
 import { AtemLLayer, CasparLLayer, SisyfosLLAyer } from '../../../tv2_afvd_studio/layers'
 import { TimelineBlueprintExt } from '../../../tv2_afvd_studio/onTimelineGenerate'
+import { BlueprintConfig } from '../config'
 
-export function EvaluateJingle(pieces: IBlueprintPiece[], parsedCue: CueDefinitionJingle, part: PartDefinition) {
+export function EvaluateJingle(
+	config: BlueprintConfig,
+	pieces: IBlueprintPiece[],
+	parsedCue: CueDefinitionJingle,
+	part: PartDefinition
+) {
 	const duration = Number(part.fields.tapeTime) * 1000 || 0
 	pieces.push(
 		literal<IBlueprintPiece>({
@@ -69,8 +75,8 @@ export function EvaluateJingle(pieces: IBlueprintPiece[], parsedCue: CueDefiniti
 							dsk: {
 								onAir: true,
 								sources: {
-									fillSource: 29,
-									cutSource: 31
+									fillSource: config.studio.AtemSource.JingleFill,
+									cutSource: config.studio.AtemSource.JingleKey
 								}
 							}
 						}
