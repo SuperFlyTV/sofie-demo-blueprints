@@ -25,6 +25,7 @@ export interface CueDefinitionBase {
 	type: CueType
 	start?: CueTime
 	end?: CueTime
+	adlib?: boolean
 }
 
 export interface CueDefinitionUnknown extends CueDefinitionBase {
@@ -222,7 +223,8 @@ function parseMOS(cue: string[]): CueDefinitionMOS {
 	}
 	if (cue.length === 6) {
 		const vcpid = cue[3].match(/^VCPID=(\d+)$/i)
-		const continueCount = cue[4].match(/^ContinueCount=(\d+)$/i)
+		const continueCount = cue[4].match(/^ContinueCount=(-?\d+)$/i)
+		const timing = cue[2].match(/L\|(M|;\d{1,2}(?:\.\d{1,2}){0,2})\|([SBO])$/)
 
 		if (vcpid && continueCount) {
 			mosCue = {
@@ -230,6 +232,20 @@ function parseMOS(cue: string[]): CueDefinitionMOS {
 				name: cue[2],
 				vcpid: Number(vcpid[1]),
 				continueCount: Number(continueCount[1])
+			}
+
+			if (timing) {
+				if (isTime(timing[1])) {
+					mosCue.start = parseTime(timing[1]).start
+				} else if (timing[1] === 'M') {
+					mosCue.adlib = true
+				}
+
+				if (timing[2].match(/[SBO]/)) {
+					mosCue.end = {
+						infiniteMode: timing[2] as keyof { B: any; S: any; O: any }
+					}
+				}
 			}
 		}
 	}
@@ -413,7 +429,7 @@ export function isTime(line: string) {
 		.match(/^;\d{1,2}(?:(?:\.\d{1,2}){0,1}){0,2}(?:(?:-\d{1,2}(?:(?:\.\d{1,2}){0,1}){0,2}){0,1}|(?:-[BSO]))$/)
 }
 
-export function parseTime(line: string) {
+export function parseTime(line: string): Pick<CueDefinitionBase, 'start' | 'end'> {
 	const retTime: any = {
 		start: {},
 		end: {}

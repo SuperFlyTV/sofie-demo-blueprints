@@ -29,7 +29,7 @@ describe('Cue parser', () => {
 
 	test('Time with symbolic out', () => {
 		let time = ';0.01-S'
-		let result = isTime(time)
+		let result: any = isTime(time)
 		expect(result).toBe(true)
 		result = parseTime(time)
 		expect(result).toEqual({
@@ -68,7 +68,7 @@ describe('Cue parser', () => {
 
 	test('Time with spaces', () => {
 		const time = ';0.01 - B'
-		let result = isTime(time)
+		let result: any = isTime(time)
 		expect(result).toBe(true)
 		result = parseTime(time)
 		expect(result).toEqual({
@@ -202,6 +202,28 @@ describe('Cue parser', () => {
 				continueCount: 3
 			})
 		)
+	})
+
+	test('MOS object with timing', () => {
+		const cueMOS = [
+			']] S3.0 M 0 [[',
+			'cg4 ]] 1 YNYAB 0 [[ pilotdata',
+			'LgfxWeb/-ETKAEM_07-05-2019_17:55:42/Mosart=L|M|O',
+			'VCPID=2520177',
+			'ContinueCount=-1',
+			'LgfxWeb/-ETKAEM_07-05-2019_17:55:42/Mosart=L|M|O'
+		]
+		const result = ParseCue(cueMOS)
+		expect(result).toEqual({
+			type: CueType.MOS,
+			name: 'LgfxWeb/-ETKAEM_07-05-2019_17:55:42/Mosart=L|M|O',
+			vcpid: 2520177,
+			continueCount: -1,
+			adlib: true,
+			end: {
+				infiniteMode: 'O'
+			}
+		})
 	})
 
 	test('EKSTERN', () => {
