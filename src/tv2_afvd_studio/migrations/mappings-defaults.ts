@@ -197,6 +197,12 @@ export default literal<BlueprintMappings>({
 		deviceId: 'sisyfos0',
 		channel: 2,
 		lookahead: LookaheadMode.PRELOAD
+	}),
+	sisyfos_source_live_speak: literal<MappingSisyfos & BlueprintMapping>({
+		device: PlayoutDeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 3,
+		lookahead: LookaheadMode.PRELOAD
 	})
 })
 

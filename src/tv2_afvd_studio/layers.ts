@@ -53,7 +53,8 @@ export enum CasparLLayer {
 export enum SisyfosLLAyer {
 	SisyfosSourceClipPending = 'sisyfos_source_clip_pending',
 	SisyfosSourceJingle = 'sisyfos_source_jingle',
-	SisyfosSourceAudio = 'sisyfos_source_audio'
+	SisyfosSourceAudio = 'sisyfos_source_audio',
+	SisyfosSourceLiveSpeak = 'sisyfos_source_live_speak'
 }
 
 export function CasparPlayerClip(i: number) {

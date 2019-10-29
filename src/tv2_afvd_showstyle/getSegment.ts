@@ -79,14 +79,10 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 				context.warning(`GRAFIK Part, not implemented yet`)
 				break
 			case PartType.VO:
-				// TODO: This part
-				blueprintParts.push(CreatePartVO(part))
-				context.warning(`VO Part, not implemented yet`)
+				blueprintParts.push(CreatePartVO(partContext, config, part, totalWords))
 				break
 			case PartType.Unknown:
-				// context.warning(`Unknown part type for part ${part.rawType} with id ${part.externalId}`)
 				blueprintParts.push(CreatePartUnknown(partContext, config, part))
-				context.warning('Unknown part type')
 				break
 			case PartType.Slutord:
 				blueprintParts.push(CreatePartInvalid(part))
