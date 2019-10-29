@@ -39,6 +39,7 @@ export interface PartDefinitionBase {
 	type: PartType
 	rawType: string
 	variant: {}
+	effekt?: number
 	cues: CueDefinition[]
 	script: string
 	fields: { [key: string]: string }
@@ -105,15 +106,15 @@ export type PartDefinition =
 	| PartDefinitionIntro
 	| PartDefinitionSlutord
 export type PartdefinitionTypes =
-	| Pick<PartDefinitionUnknown, 'type' | 'variant'>
-	| Pick<PartDefinitionKam, 'type' | 'variant'>
-	| Pick<PartDefinitionServer, 'type' | 'variant'>
-	| Pick<PartDefinitionTeknik, 'type' | 'variant'>
-	| Pick<PartDefinitionLive, 'type' | 'variant'>
-	| Pick<PartDefinitionGrafik, 'type' | 'variant'>
-	| Pick<PartDefinitionVO, 'type' | 'variant'>
-	| Pick<PartDefinitionIntro, 'type' | 'variant'>
-	| Pick<PartDefinitionSlutord, 'type' | 'variant'>
+	| Pick<PartDefinitionUnknown, 'type' | 'variant' | 'effekt'>
+	| Pick<PartDefinitionKam, 'type' | 'variant' | 'effekt'>
+	| Pick<PartDefinitionServer, 'type' | 'variant' | 'effekt'>
+	| Pick<PartDefinitionTeknik, 'type' | 'variant' | 'effekt'>
+	| Pick<PartDefinitionLive, 'type' | 'variant' | 'effekt'>
+	| Pick<PartDefinitionGrafik, 'type' | 'variant' | 'effekt'>
+	| Pick<PartDefinitionVO, 'type' | 'variant' | 'effekt'>
+	| Pick<PartDefinitionIntro, 'type' | 'variant' | 'effekt'>
+	| Pick<PartDefinitionSlutord, 'type' | 'variant' | 'effekt'>
 
 export function ParseBody(
 	segmentId: string,
@@ -241,7 +242,10 @@ function makeDefinition(segmentId: string, i: number, typeStr: string, fields: a
 	const part: PartDefinition = {
 		externalId: `${segmentId}-${i}`, // TODO - this should be something that sticks when inserting a part before the current part
 		...extractTypeProperties(typeStr),
-		rawType: typeStr,
+		rawType: typeStr
+			.replace(/effekt \d+/gi, '')
+			.replace(/ /g, ' ')
+			.trim(),
 		cues: [],
 		script: '',
 		fields,
@@ -252,7 +256,16 @@ function makeDefinition(segmentId: string, i: number, typeStr: string, fields: a
 }
 
 function extractTypeProperties(typeStr: string): PartdefinitionTypes {
-	const tokens = typeStr.split(' ')
+	const effektMatch = typeStr.match(/effekt (\d+)/i)
+	const definition: Pick<PartdefinitionTypes, 'effekt'> = {}
+	if (effektMatch) {
+		definition.effekt = Number(effektMatch[1])
+	}
+	const tokens = typeStr
+		.replace(/effekt (\d+)/gi, '')
+		.replace(/ /g, ' ')
+		.trim()
+		.split(' ')
 	const firstToken = tokens[0]
 
 	if (firstToken.match(/KAM|CAM/)) {
@@ -260,44 +273,52 @@ function extractTypeProperties(typeStr: string): PartdefinitionTypes {
 			type: PartType.Kam,
 			variant: {
 				name: tokens[1]
-			}
+			},
+			...definition
 		}
 	} else if (firstToken.match(/SERVER/)) {
 		return {
 			type: PartType.Server,
-			variant: {}
+			variant: {},
+			...definition
 		}
 	} else if (firstToken.match(/TEKNIK/)) {
 		return {
 			type: PartType.Teknik,
-			variant: {}
+			variant: {},
+			...definition
 		}
 	} else if (firstToken.match(/LIVE/)) {
 		return {
 			type: PartType.Live,
-			variant: {}
+			variant: {},
+			...definition
 		}
 	} else if (firstToken.match(/GRAFIK/)) {
 		return {
 			type: PartType.Grafik,
-			variant: {}
+			variant: {},
+			...definition
 		}
 	} else if (firstToken.match(/VO/)) {
 		return {
 			type: PartType.VO,
-			variant: {}
+			variant: {},
+			...definition
 		}
 	} else if (firstToken.match(/SLUTORD/i)) {
 		return {
 			type: PartType.Slutord,
 			variant: {
 				endWords: tokens.slice(1, tokens.length).join(' ')
-			}
+			},
+			...definition
 		}
 	} else {
 		return {
 			type: PartType.Unknown,
-			variant: {}
+			variant: {},
+			...definition
 		}
 	}
 }
