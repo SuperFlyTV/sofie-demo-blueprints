@@ -111,7 +111,7 @@ function getGlobalAdLibPieces(_context: NotesContext, config: BlueprintConfig): 
 				timelineObjects: _.compact<TSRTimelineObj>([
 					literal<TimelineObjAtemME>({
 						id: '',
-						enable: { while: 0 },
+						enable: { while: '1' },
 						priority: 1,
 						layer: AtemLLayer.AtemMEProgram,
 						content: {
@@ -121,6 +121,17 @@ function getGlobalAdLibPieces(_context: NotesContext, config: BlueprintConfig): 
 								input: info.port,
 								transition: AtemTransitionStyle.CUT
 							}
+						}
+					}),
+					literal<TimelineObjSisyfosMessage>({
+						id: '',
+						enable: { while: '1' },
+						priority: 1,
+						layer: SisyfosSourceCamera(info.id),
+						content: {
+							deviceType: DeviceType.SISYFOS,
+							type: TimelineContentTypeSisyfos.SISYFOS,
+							isPgm: 1
 						}
 					})
 				])
@@ -137,7 +148,7 @@ function getGlobalAdLibPieces(_context: NotesContext, config: BlueprintConfig): 
 		}
 	})
 	adlibItems.push({
-		externalId: 'cam',
+		externalId: 'delayed',
 		name: `Delayed Playback`,
 		_rank: 200,
 		sourceLayerId: SourceLayer.PgmCam,
@@ -148,7 +159,7 @@ function getGlobalAdLibPieces(_context: NotesContext, config: BlueprintConfig): 
 			timelineObjects: _.compact<TSRTimelineObj>([
 				literal<TimelineObjAtemME>({
 					id: '',
-					enable: { while: 0 },
+					enable: { while: '1' },
 					priority: 1,
 					layer: AtemLLayer.AtemMEProgram,
 					content: {
@@ -164,7 +175,7 @@ function getGlobalAdLibPieces(_context: NotesContext, config: BlueprintConfig): 
 		}
 	})
 	adlibItems.push({
-		externalId: 'cam',
+		externalId: 'delayedplus',
 		name: `Delayed Playback +`,
 		_rank: 300,
 		sourceLayerId: SourceLayer.PgmCam,
@@ -175,7 +186,7 @@ function getGlobalAdLibPieces(_context: NotesContext, config: BlueprintConfig): 
 			timelineObjects: _.compact<TSRTimelineObj>([
 				literal<TimelineObjAtemME>({
 					id: '',
-					enable: { while: 0 },
+					enable: { while: '1' },
 					priority: 1,
 					layer: AtemLLayer.AtemMEProgram,
 					content: {
@@ -198,7 +209,7 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 		// Default timeline
 		literal<TimelineObjAtemME>({
 			id: '',
-			enable: { while: 1 },
+			enable: { while: '1' },
 			priority: 0,
 			layer: AtemLLayer.AtemMEProgram,
 			content: {
