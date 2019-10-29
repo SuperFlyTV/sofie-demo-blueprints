@@ -57,7 +57,7 @@ export function EvaluateCues(
 					break
 				default:
 					if (cue.type !== CueType.Unknown) {
-						context.warning(`Unknown cue type: ${CueType[cue.type]}`)
+						context.warning(`Unimplemented cue type: ${CueType[cue.type]}`)
 					}
 					break
 			}
