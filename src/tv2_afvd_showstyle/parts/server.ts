@@ -14,6 +14,7 @@ import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { AddScript } from '../helpers/pieces/script'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
+import { EffektTransitionPiece, GetEffektAutoNext } from './effekt'
 import { CreatePartInvalid } from './invalid'
 
 export function CreatePartServer(
@@ -32,7 +33,7 @@ export function CreatePartServer(
 	const file = partDefinition.fields.videoId
 	const duration = Number(partDefinition.fields.tapeTime) * 1000 || 0
 
-	const part = literal<IBlueprintPart>({
+	let part = literal<IBlueprintPart>({
 		externalId: partDefinition.externalId,
 		title: PartType[partDefinition.type] + ' - ' + partDefinition.rawType,
 		metaData: {},
@@ -42,7 +43,7 @@ export function CreatePartServer(
 	})
 
 	const adLibPieces: IBlueprintAdLibPiece[] = []
-	const pieces: IBlueprintPiece[] = []
+	let pieces: IBlueprintPiece[] = []
 
 	pieces.push(
 		literal<IBlueprintPiece>({
@@ -59,6 +60,9 @@ export function CreatePartServer(
 			content: MakeContentServer(file, duration, part.externalId)
 		})
 	)
+
+	part = { ...part, ...GetEffektAutoNext(context, config, partDefinition) }
+	pieces = [...pieces, ...EffektTransitionPiece(context, config, partDefinition)]
 
 	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
 	AddScript(partDefinition, pieces)

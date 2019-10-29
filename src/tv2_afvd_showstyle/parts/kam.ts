@@ -23,6 +23,7 @@ import { AddScript } from '../helpers/pieces/script'
 import { GetSisyfosTimelineObjForCamera } from '../helpers/sisyfos/sisyfos'
 import { PartDefinition } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
+import { EffektTransitionPiece, GetEffektAutoNext } from './effekt'
 import { CreatePartInvalid } from './invalid'
 import { PartTime } from './time/partTime'
 
@@ -34,7 +35,7 @@ export function CreatePartKam(
 ): BlueprintResultPart {
 	const partTime = PartTime(partDefinition, totalWords)
 
-	const part = literal<IBlueprintPart>({
+	let part = literal<IBlueprintPart>({
 		externalId: partDefinition.externalId,
 		title: partDefinition.rawType,
 		metaData: {},
@@ -44,7 +45,7 @@ export function CreatePartKam(
 	})
 
 	const adLibPieces: IBlueprintAdLibPiece[] = []
-	const pieces: IBlueprintPiece[] = []
+	let pieces: IBlueprintPiece[] = []
 	const sourceInfoCam = FindSourceInfoStrict(context, config.sources, SourceLayerType.CAMERA, partDefinition.rawType)
 	if (sourceInfoCam === undefined) {
 		return CreatePartInvalid(partDefinition)
@@ -86,6 +87,9 @@ export function CreatePartKam(
 			}
 		})
 	)
+
+	part = { ...part, ...GetEffektAutoNext(context, config, partDefinition) }
+	pieces = [...pieces, ...EffektTransitionPiece(context, config, partDefinition)]
 
 	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
 	AddScript(partDefinition, pieces)

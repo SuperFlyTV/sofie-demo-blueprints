@@ -11,6 +11,7 @@ import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { AddScript } from '../helpers/pieces/script'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { CueType } from '../inewsConversion/converters/ParseCue'
+import { EffektTransitionPiece, GetEffektAutoNext } from './effekt'
 import { CreatePartInvalid } from './invalid'
 import { PartTime } from './time/partTime'
 
@@ -21,7 +22,7 @@ export function CreatePartLive(
 	totalWords: number
 ): BlueprintResultPart {
 	const partTime = PartTime(partDefinition, totalWords)
-	const part = literal<IBlueprintPart>({
+	let part = literal<IBlueprintPart>({
 		externalId: partDefinition.externalId,
 		title: PartType[partDefinition.type] + ' - ' + partDefinition.rawType,
 		metaData: {},
@@ -30,7 +31,7 @@ export function CreatePartLive(
 	})
 
 	const adLibPieces: IBlueprintAdLibPiece[] = []
-	const pieces: IBlueprintPiece[] = []
+	let pieces: IBlueprintPiece[] = []
 
 	const liveCue = partDefinition.cues.find(cue => {
 		return cue.type === CueType.Ekstern
@@ -39,6 +40,9 @@ export function CreatePartLive(
 	if (liveCue) {
 		partDefinition.cues.splice(partDefinition.cues.indexOf(liveCue), 1)
 	} // TODO: Make AdLib live cue
+
+	part = { ...part, ...GetEffektAutoNext(context, config, partDefinition) }
+	pieces = [...pieces, ...EffektTransitionPiece(context, config, partDefinition)]
 
 	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
 	AddScript(partDefinition, pieces)

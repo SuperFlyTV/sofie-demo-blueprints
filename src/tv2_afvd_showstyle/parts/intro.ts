@@ -12,6 +12,7 @@ import { AddScript } from '../helpers/pieces/script'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { CueDefinitionJingle, CueType } from '../inewsConversion/converters/ParseCue'
 import { CreatePartInvalid } from './invalid'
+import { TimeFromFrames } from './time/frameTime'
 import { PartTime } from './time/partTime'
 
 export function CreatePartIntro(
@@ -58,7 +59,7 @@ export function CreatePartIntro(
 		expectedDuration: partTime,
 		displayDuration: partTime,
 		autoNext: true,
-		autoNextOverlap: (1000 / 25) * overlapFrames
+		autoNextOverlap: TimeFromFrames(overlapFrames)
 	})
 
 	const adLibPieces: IBlueprintAdLibPiece[] = []

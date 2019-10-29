@@ -34,11 +34,13 @@ export function EvaluateJingle(
 			externalId: part.externalId,
 			name: parsedCue.clip,
 			enable: {
-				start: 0
+				start: 0,
+				duration
 			},
 			infiniteMode: PieceLifespan.OutOnNextPart,
 			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmJingle,
+			isTransition: true,
 			content: literal<VTContent>({
 				studioLabel: '',
 				fileName: parsedCue.clip,
