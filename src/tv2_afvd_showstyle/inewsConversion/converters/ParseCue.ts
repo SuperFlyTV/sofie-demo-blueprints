@@ -409,7 +409,7 @@ function parseJingle(cue: string[]) {
 
 export function isTime(line: string) {
 	return !!line
-		.replace(/ /g, '')
+		.replace(/\s+/g, '')
 		.match(/^;\d{1,2}(?:(?:\.\d{1,2}){0,1}){0,2}(?:(?:-\d{1,2}(?:(?:\.\d{1,2}){0,1}){0,2}){0,1}|(?:-[BSO]))$/)
 }
 
@@ -421,7 +421,7 @@ export function parseTime(line: string) {
 	const startAndEnd = line.split('-')
 	startAndEnd[0] = startAndEnd[0].replace(';', '')
 	startAndEnd.forEach((time, i) => {
-		time = time.replace(/ /g, '')
+		time = time.replace(/\s+/g, '')
 		const field = i === 0 ? 'start' : 'end'
 		if (time.match(/^[BSO]$/) && i !== 0) {
 			retTime[field].infiniteMode = time

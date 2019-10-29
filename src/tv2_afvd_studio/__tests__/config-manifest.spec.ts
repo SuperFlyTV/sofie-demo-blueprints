@@ -19,6 +19,8 @@ const blankStudioConfig: StudioConfig = {
 		DSK2F: 0,
 		DSK2K: 0,
 		ServerC: 0,
+		JingleFill: 0,
+		JingleKey: 0,
 		SplitArtF: 0,
 		SplitArtK: 0,
 		Default: 0

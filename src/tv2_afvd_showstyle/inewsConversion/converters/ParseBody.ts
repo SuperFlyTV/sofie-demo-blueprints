@@ -244,7 +244,7 @@ function makeDefinition(segmentId: string, i: number, typeStr: string, fields: a
 		...extractTypeProperties(typeStr),
 		rawType: typeStr
 			.replace(/effekt \d+/gi, '')
-			.replace(/ /g, ' ')
+			.replace(/\s+/g, ' ')
 			.trim(),
 		cues: [],
 		script: '',
@@ -263,7 +263,7 @@ function extractTypeProperties(typeStr: string): PartdefinitionTypes {
 	}
 	const tokens = typeStr
 		.replace(/effekt (\d+)/gi, '')
-		.replace(/ /g, ' ')
+		.replace(/\s+/g, ' ')
 		.trim()
 		.split(' ')
 	const firstToken = tokens[0]
