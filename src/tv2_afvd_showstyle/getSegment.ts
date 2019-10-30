@@ -92,7 +92,10 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 				assertUnreachable(part)
 				break
 		}
-		if (SlutordLookahead(parsedParts, i, blueprintParts)) {
+		if (SlutordLookahead(parsedParts, i, 1, blueprintParts)) {
+			if (SlutordLookahead(parsedParts, i, 2, blueprintParts)) {
+				i++
+			}
 			i++
 		}
 	}
@@ -106,14 +109,18 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 function SlutordLookahead(
 	parsedParts: PartDefinition[],
 	currentIndex: number,
+	offset: number,
 	blueprintParts: BlueprintResultPart[]
 ): boolean {
 	// Check if next part is Slutord
-	if (currentIndex + 1 < parsedParts.length) {
-		if (parsedParts[currentIndex + 1].type === PartType.Slutord) {
-			const part = (parsedParts[currentIndex + 1] as unknown) as PartDefinitionSlutord
+	if (currentIndex + offset < parsedParts.length) {
+		if (parsedParts[currentIndex + offset].type === PartType.Slutord) {
+			const part = (parsedParts[currentIndex + offset] as unknown) as PartDefinitionSlutord
 			// If it's attached to a server and has some content
-			if (parsedParts[currentIndex].type === PartType.Server && part.variant.endWords) {
+			if (
+				(parsedParts[currentIndex].type === PartType.Server || parsedParts[currentIndex].type === PartType.Slutord) &&
+				part.variant.endWords
+			) {
 				blueprintParts[blueprintParts.length - 1].pieces.push(
 					literal<IBlueprintPiece>({
 						_id: '',
