@@ -57,5 +57,6 @@ export const defaultShowStyleConfig: ConfigMap = {
 		{ _id: '', EffektNumber: 1, ClipName: 'effekt_1', Duration: 100, StartAlpha: 25, EndAlpha: 25 },
 		{ _id: '', EffektNumber: 2, ClipName: 'effekt_1', Duration: 100, StartAlpha: 25, EndAlpha: 25 },
 		{ _id: '', EffektNumber: 3, ClipName: 'effekt_1', Duration: 100, StartAlpha: 25, EndAlpha: 25 }
-	]
+	],
+	BreakerConfig: []
 }

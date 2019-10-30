@@ -22,6 +22,7 @@ export interface ShowStyleConfig {
 	DVEStyles: TableConfigItemValue
 	GFXTemplates: TableConfigItemValue
 	WipesConfig: TableConfigItemValue
+	BreakerConfig: TableConfigItemValue
 	JingleTimings: string
 	DefaultTemplateDuration: number
 }

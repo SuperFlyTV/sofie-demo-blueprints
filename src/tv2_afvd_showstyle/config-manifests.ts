@@ -197,6 +197,72 @@ export const showStyleConfigManifest: ConfigManifestEntry[] = [
 		]
 	},
 	{
+		/*
+		Breaker Config
+		Effekt number
+		Clip name
+		Alpha at start
+		Alpha at end
+		*/
+		id: 'BreakerConfig',
+		name: 'Breaker Configuration',
+		description: 'Breaker configuration',
+		type: ConfigManifestEntryType.TABLE,
+		required: false,
+		defaultVal: [
+			{
+				_id: '',
+				BreakerName: '',
+				ClipName: '',
+				Duration: 0,
+				StartAlpha: 0,
+				EndAlpha: 0
+			}
+		],
+		columns: [
+			{
+				id: 'BreakerName',
+				name: 'Breaker name',
+				description: 'Breaker name as typed in iNews',
+				type: ConfigManifestEntryType.STRING,
+				required: true,
+				defaultVal: ''
+			},
+			{
+				id: 'ClipName',
+				name: 'Clip Name',
+				description: 'The name of the breaker clip to play',
+				type: ConfigManifestEntryType.STRING,
+				required: true,
+				defaultVal: ''
+			},
+			{
+				id: 'Duration',
+				name: 'Effekt Duration',
+				description: 'Duration of the effekt',
+				type: ConfigManifestEntryType.NUMBER,
+				required: true,
+				defaultVal: 0
+			},
+			{
+				id: 'StartAlpha',
+				name: 'Alpha at Start',
+				description: 'Number of frames of alpha at start',
+				type: ConfigManifestEntryType.NUMBER,
+				required: true,
+				defaultVal: 0
+			},
+			{
+				id: 'EndAlpha',
+				name: 'Alpha at End',
+				description: 'Number of frames of alpha at end',
+				type: ConfigManifestEntryType.NUMBER,
+				required: true,
+				defaultVal: 0
+			}
+		]
+	},
+	{
 		id: 'DefaultTemplateDuration',
 		name: 'Default Template Duration',
 		description: 'Default Template Duration',
