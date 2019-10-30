@@ -97,7 +97,7 @@ export default literal<ISourceLayer[]>([
 		_id: SourceLayer.PgmBreak,
 		_rank: 5000,
 		name: 'Break',
-		type: SourceLayerType.TRANSITION,
+		type: SourceLayerType.VT,
 		onPGMClean: true,
 		unlimited: false
 	},

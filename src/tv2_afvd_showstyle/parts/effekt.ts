@@ -13,7 +13,8 @@ import {
 	PartContext,
 	PieceLifespan,
 	TimelineObjectCoreExt,
-	TransitionContent
+	TransitionContent,
+	VTContent
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
 import { AtemLLayer, CasparLLayer, SisyfosLLAyer } from '../../tv2_afvd_studio/layers'
@@ -74,7 +75,12 @@ export function EffektTransitionPiece(
 				outputLayerId: 'pgm0',
 				sourceLayerId: SourceLayer.PgmBreak,
 				infiniteMode: PieceLifespan.Normal,
-				content: literal<TransitionContent>({
+				content: literal<TransitionContent & VTContent>({
+					fileName: effektConfig.ClipName.toString(),
+					path: effektConfig.ClipName.toString(),
+					firstWords: '',
+					lastWords: '',
+					sourceDuration: TimeFromFrames(Number(effektConfig.Duration)),
 					timelineObjects: literal<TimelineObjectCoreExt[]>([
 						literal<TimelineObjCCGMedia>({
 							id: '',
