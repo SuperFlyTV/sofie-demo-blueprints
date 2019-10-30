@@ -165,6 +165,8 @@ export function ParseBody(
 				.replace(/<\/[a-z]+>/g, '')
 				.replace(/[^\w\s]*\B[^\w\s]/g, '')
 				.replace(/[\s]+/, ' ')
+				.replace(/<tab>/, '')
+				.replace(/<\/tab>/, '')
 				.trim()
 
 			if (typeStr) {
@@ -179,8 +181,16 @@ export function ParseBody(
 							}
 						}
 					} else {
-						definition.externalId = `${segmentId}-${definitions.length}`
-						definitions.push(definition)
+						if (
+							definition.externalId !== '' ||
+							definition.rawType !== '' ||
+							JSON.stringify(definition.variant) !== JSON.stringify({}) ||
+							definition.cues.toString() !== [].toString() ||
+							definition.script !== ''
+						) {
+							definition.externalId = `${segmentId}-${definitions.length}`
+							definitions.push(definition)
+						}
 
 						definition = makeDefinition(segmentId, definitions.length, typeStr, fields, modified)
 					}
