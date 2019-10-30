@@ -114,8 +114,9 @@ export default literal<ISourceLayer[]>([
 		_rank: 3000,
 		name: 'VIZ',
 		type: SourceLayerType.GRAPHICS,
-		onPGMClean: true,
-		unlimited: false
+		onPGMClean: false,
+		unlimited: false,
+		isHidden: true
 	},
 	{
 		_id: SourceLayer.PgmAudioBed,
