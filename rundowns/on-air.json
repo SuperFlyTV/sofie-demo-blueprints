@@ -150,6 +150,7 @@
                         "runsTime": "0",
                         "onair": "ON-AIR",
                         "typecode": "nyx",
+                        "videoId": "1222606A",
                         "programtitle": ".",
                         "noarchive": "."
                     },
@@ -168,7 +169,7 @@
                         ]
                     ],
                     "id": "221dd486:011bd649:5daed309",
-                    "body": "\r\n<p></p>\r\n<p><pi>KAM 1</pi></p>\r\n<p>Dette er takst</p>\r\n<p></p>\r\n<p><pi>SERVER</pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"1\"></a></p>\r\n<p>STORT BILLEDE AF STUDIE</p>\r\n<p></p>\r\n"
+                    "body": "\r\n<p></p>\r\n<p><pi>KAM 1 EFFEKT 1</pi></p>\r\n<p>Dette er takst</p>\r\n<p></p>\r\n<p><pi>SERVER</pi></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p><a idref=\"0\"></a></p>\r\n<p>STORT BILLEDE AF STUDIE</p>\r\n<p></p>\r\n"
                 },
                 "modified": "2019-10-23T11:17:00.000Z",
                 "externalId": "221dd486:011bd649:5daed309",

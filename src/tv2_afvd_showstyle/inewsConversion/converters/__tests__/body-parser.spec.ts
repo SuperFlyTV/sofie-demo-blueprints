@@ -877,4 +877,38 @@ describe('Body parser', () => {
 			])
 		)
 	})
+
+	test('test19', () => {
+		const body19 =
+			'\r\n<p></p>\r\n<p><pi>KAM 1 EFFEKT 1</pi></p>\r\n<p>Dette er takst</p>\r\n<p></p>\r\n<p><pi>SERVER</pi></p>\r\n<p><a idref="0"></a></p>\r\n<p><a idref="1"></a></p>\r\n<p>STORT BILLEDE AF STUDIE</p>\r\n<p></p>\r\n'
+		const cues19 = [unparsedGrafik1, unparsedGrafik2]
+		const result = ParseBody('00000000001', '', body19, cues19, fields, 0)
+		expect(result).toEqual(
+			literal<PartDefinition[]>([
+				literal<PartDefinitionKam>({
+					externalId: '00000000001-0',
+					type: PartType.Kam,
+					variant: {
+						name: '1'
+					},
+					effekt: 1,
+					rawType: 'KAM 1',
+					cues: [],
+					script: 'Dette er takst\n',
+					fields,
+					modified: 0
+				}),
+				literal<PartDefinitionServer>({
+					externalId: '00000000001-1',
+					type: PartType.Server,
+					variant: {},
+					rawType: 'SERVER',
+					cues: [cueGrafik1, cueGrafik2],
+					script: 'STORT BILLEDE AF STUDIE\n',
+					fields,
+					modified: 0
+				})
+			])
+		)
+	})
 })
