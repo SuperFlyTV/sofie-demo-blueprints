@@ -76,7 +76,7 @@ export function CreatePartKam(
 							deviceType: DeviceType.ATEM,
 							type: TimelineContentTypeAtem.ME,
 							me: {
-								input: atemInput,
+								input: Number(atemInput),
 								transition: AtemTransitionStyle.CUT
 							}
 						}
@@ -92,7 +92,7 @@ export function CreatePartKam(
 	pieces = [...pieces, ...EffektTransitionPiece(context, config, partDefinition)]
 
 	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
-	AddScript(partDefinition, pieces)
+	AddScript(partDefinition, pieces, partTime)
 
 	if (pieces.length === 0) {
 		return CreatePartInvalid(partDefinition)

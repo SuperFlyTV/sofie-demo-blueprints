@@ -45,7 +45,7 @@ export function CreatePartLive(
 	pieces = [...pieces, ...EffektTransitionPiece(context, config, partDefinition)]
 
 	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
-	AddScript(partDefinition, pieces)
+	AddScript(partDefinition, pieces, partTime)
 
 	if (pieces.length === 0) {
 		return CreatePartInvalid(partDefinition)

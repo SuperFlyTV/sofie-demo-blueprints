@@ -50,7 +50,9 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 		ingestSegment.payload.iNewsStory.fields,
 		ingestSegment.payload.iNewsStory.fields.modifyDate
 	)
-	const totalWords = ingestSegment.payload.iNewsStory.meta.words || 0
+	const totalWords = parsedParts.reduce((prev, cur) => {
+		return prev + cur.script.length
+	}, 0)
 	for (let i = 0; i < parsedParts.length; i++) {
 		const part = parsedParts[i]
 		if (i === 0 && DEBUG_LAYERS) {

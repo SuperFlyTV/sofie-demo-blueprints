@@ -191,7 +191,7 @@ function parsekg(cue: string[]): CueDefinitionGrafik {
 	let textFields = cue.length - 1
 	if (isTime(cue[cue.length - 1])) {
 		kgCue = { ...kgCue, ...parseTime(cue[cue.length - 1]) }
-	} else {
+	} else if (!cue[cue.length - 1].match(/;x.xx/)) {
 		textFields += 1
 	}
 

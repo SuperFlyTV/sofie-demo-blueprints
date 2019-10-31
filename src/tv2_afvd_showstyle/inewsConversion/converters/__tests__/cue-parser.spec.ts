@@ -96,6 +96,18 @@ describe('Cue parser', () => {
 		)
 	})
 
+	test('Grafik (kg) - Inline first text field, blank time', () => {
+		const cueGrafik = ['kg bund HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk', ';x.xx']
+		const result = ParseCue(cueGrafik)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.Grafik,
+				template: 'bund',
+				textFields: ['HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk']
+			})
+		)
+	})
+
 	test('Grafik (kg) - Multiline text fields', () => {
 		const cueGrafik = ['kg bund', 'HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk', ';0.02']
 		const result = ParseCue(cueGrafik)

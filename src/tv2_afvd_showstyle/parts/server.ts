@@ -12,7 +12,7 @@ import { BlueprintConfig } from '../helpers/config'
 import { MakeContentServer } from '../helpers/content/server'
 import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { AddScript } from '../helpers/pieces/script'
-import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
+import { PartDefinition } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
 import { EffektTransitionPiece, GetEffektAutoNext } from './effekt'
 import { CreatePartInvalid } from './invalid'
@@ -35,7 +35,7 @@ export function CreatePartServer(
 
 	let part = literal<IBlueprintPart>({
 		externalId: partDefinition.externalId,
-		title: PartType[partDefinition.type] + ' - ' + partDefinition.rawType,
+		title: partDefinition.rawType,
 		metaData: {},
 		typeVariant: '',
 		expectedDuration: duration,
@@ -65,7 +65,7 @@ export function CreatePartServer(
 	pieces = [...pieces, ...EffektTransitionPiece(context, config, partDefinition)]
 
 	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
-	AddScript(partDefinition, pieces)
+	AddScript(partDefinition, pieces, duration)
 
 	if (pieces.length === 0) {
 		return CreatePartInvalid(partDefinition)

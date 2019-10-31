@@ -16,7 +16,8 @@ import {
 	CueDefinitionTelefon,
 	CueDefinitionUnknown,
 	CueType,
-	UnparsedCue
+	UnparsedCue,
+	CueDefinition
 } from '../ParseCue'
 
 const fields = {}
@@ -925,6 +926,117 @@ describe('Body parser', () => {
 					variant: {},
 					rawType: 'K2 NBA18_LEAD_OUT',
 					cues: [cueJingle1],
+					script: '',
+					fields,
+					modified: 0
+				})
+			])
+		)
+	})
+
+	test('test21', () => {
+		const body21 =
+			'\r\n<p><a idref="0"><pi>KAM 2</pi></a></p>\r\n<p><cc>Husk at lave en DIGI=trompet</cc></p>\r\n<p><cc>OBS: Udfyld kun linje </cc></p>\r\n<p></p>\r\n<p></p>\r\n<p>Hallo, I wnat to tell you......</p>\r\n<p>HEREEEELLLLOOOK</p>\r\n<p>YES</p>\r\n<p><a idref="1"></a></p>\r\n<p><pi>***SERVER*** </pi></p>\r\n<p></p>\r\n<p><a idref="2"><a idref="3"><a idref="4"><a idref="5"></a></a></a></a></p>\r\n<p><cc>---SS3 19 NYH LOOP--></cc><a idref="6"><cc><----</cc></a></p>\r\n<p></p>\r\n<p></p>\r\n<p><cc>---<b>BUNDTER HERUNDER</b> ---></cc></p>\r\n<p><pi>KAM 1</pi></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>KAM 1</pi></p>\r\n<p></p>\r\n<p></p>\r\n<p><pi>SLUTORD:</pi></p>\r\n<p></p>\r\n<p><pi>KAM 1</pi></p>\r\n<p><cc>SLET KAMERA HVIS INGEN NEDLÆG</cc></p>\r\n<p></p>\r\n'
+		const cues21 = [
+			null,
+			null,
+			null,
+			['kg ident_blank', 'ODENSE', 'KLJ', ';x.xx'],
+			['kg bund ANETTE RYTTER', 'Inews', ';x.xx'],
+			['kg bund ANETTE RYTTER', 'anry@tv2.dk', ';x.xx'],
+			['SS=3-NYH-19-LOOP', ';0.01']
+		]
+		const result = ParseBody('00000000001', '', body21, cues21, fields, 0)
+		expect(result).toEqual(
+			literal<PartDefinition[]>([
+				literal<PartDefinitionKam>({
+					externalId: '00000000001-0',
+					type: PartType.Kam,
+					variant: {
+						name: '2'
+					},
+					rawType: 'KAM 2',
+					cues: [],
+					script: 'Hallo, I wnat to tell you......\nHEREEEELLLLOOOK\nYES\n',
+					fields,
+					modified: 0
+				}),
+				literal<PartDefinitionServer>({
+					externalId: '00000000001-1',
+					type: PartType.Server,
+					variant: {},
+					rawType: 'SERVER',
+					cues: literal<CueDefinition[]>([
+						literal<CueDefinitionGrafik>({
+							type: CueType.Grafik,
+							template: 'ident_blank',
+							textFields: ['ODENSE', 'KLJ']
+						}),
+						literal<CueDefinitionGrafik>({
+							type: CueType.Grafik,
+							template: 'bund',
+							textFields: ['ANETTE RYTTER', 'Inews']
+						}),
+						literal<CueDefinitionGrafik>({
+							type: CueType.Grafik,
+							template: 'bund',
+							textFields: ['ANETTE RYTTER', 'anry@tv2.dk']
+						}),
+						literal<CueDefinitionUnknown>({
+							type: CueType.Unknown,
+							start: {
+								seconds: 1
+							}
+						})
+					]),
+					script: '',
+					fields,
+					modified: 0
+				}),
+				literal<PartDefinitionKam>({
+					externalId: '00000000001-2',
+					type: PartType.Kam,
+					variant: {
+						name: '1'
+					},
+					rawType: 'KAM 1',
+					cues: [],
+					script: '',
+					fields,
+					modified: 0
+				}),
+				literal<PartDefinitionKam>({
+					externalId: '00000000001-3',
+					type: PartType.Kam,
+					variant: {
+						name: '1'
+					},
+					rawType: 'KAM 1',
+					cues: [],
+					script: '',
+					fields,
+					modified: 0
+				}),
+				literal<PartDefinitionSlutord>({
+					externalId: '00000000001-4',
+					type: PartType.Slutord,
+					variant: {
+						endWords: ''
+					},
+					rawType: 'SLUTORD:',
+					cues: [],
+					script: '',
+					fields,
+					modified: 0
+				}),
+				literal<PartDefinitionKam>({
+					externalId: '00000000001-5',
+					type: PartType.Kam,
+					variant: {
+						name: '1'
+					},
+					rawType: 'KAM 1',
+					cues: [],
 					script: '',
 					fields,
 					modified: 0

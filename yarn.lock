@@ -1267,11 +1267,6 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
   integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
 
-countable@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/countable/-/countable-3.0.1.tgz#1d0c1c426e8db08890534151ac7448c3642496ce"
-  integrity sha512-dz/sdi+RFpHJKMen5RAB9EKpCKd/q5WMfxG3SbdbQ3Pak4+SEPmDhVWZF0GTTHwjqjR+7DmiZHzZiFJ4qeAzmg==
-
 create-ecdh@^4.0.0:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/create-ecdh/-/create-ecdh-4.0.3.tgz#c9111b6f33045c4697f144787f9254cdc77c45ff"

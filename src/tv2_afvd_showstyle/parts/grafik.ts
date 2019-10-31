@@ -35,7 +35,7 @@ export function CreatePartGrafik(partDefinition: PartDefinition): BlueprintResul
 		})
 	)
 
-	AddScript(partDefinition, pieces)
+	AddScript(partDefinition, pieces, 0)
 
 	if (pieces.length === 0) {
 		return CreatePartInvalid(partDefinition)

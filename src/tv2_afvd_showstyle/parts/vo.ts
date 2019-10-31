@@ -74,7 +74,7 @@ export function CreatePartVO(
 	pieces = [...pieces, ...EffektTransitionPiece(context, config, partDefinition)]
 
 	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
-	AddScript(partDefinition, pieces)
+	AddScript(partDefinition, pieces, duration)
 
 	if (pieces.length === 0) {
 		return CreatePartInvalid(partDefinition)
