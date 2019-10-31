@@ -34,7 +34,7 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 	})
 	const config = parseConfig(context)
 
-	if (ingestSegment.payload.float === 'true') {
+	if (ingestSegment.payload.iNewsStory.meta.float === 'float') {
 		return {
 			segment,
 			parts: []
