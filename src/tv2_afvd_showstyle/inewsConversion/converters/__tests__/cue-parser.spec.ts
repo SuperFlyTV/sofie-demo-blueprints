@@ -250,7 +250,7 @@ describe('Cue parser', () => {
 	})
 
 	test('DVE', () => {
-		const cueDVE = ['DVE=sommerfugl', 'INP1=KAM 1', 'INP2=LIVE 1', 'BYNAVN=Odense/København']
+		const cueDVE = ['DVE=sommerfugl', 'INP1=KAM 1', 'INP2=LIVE 1', 'BYNAVN=Odense\\København']
 		const result = ParseCue(cueDVE)
 		expect(result).toEqual(
 			literal<CueDefinition>({
