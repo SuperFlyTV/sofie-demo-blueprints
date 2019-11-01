@@ -11,7 +11,7 @@ import { CueDefinitionTelefon } from '../../../tv2_afvd_showstyle/inewsConversio
 import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
 import { BlueprintConfig } from '../../../tv2_afvd_studio/helpers/config'
 import { SisyfosSourceTelefon } from '../../../tv2_afvd_studio/layers'
-import { CreateTiming } from './evaluateCues'
+import { CreateTimingEnable } from './evaluateCues'
 import { EvaluateGrafik } from './grafik'
 
 export function EvaluateTelefon(
@@ -28,7 +28,7 @@ export function EvaluateTelefon(
 			_id: '',
 			externalId: partId,
 			name: parsedCue.source,
-			...CreateTiming(parsedCue),
+			...CreateTimingEnable(parsedCue),
 			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmTelephone,
 			content: literal<BaseContent>({

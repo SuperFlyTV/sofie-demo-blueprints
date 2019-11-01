@@ -18,7 +18,7 @@ import { AtemLLayer } from '../../../tv2_afvd_studio/layers'
 import { CueDefinitionEkstern } from '../../inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../layers'
 import { GetSisyfosTimelineObjForEkstern } from '../sisyfos/sisyfos'
-import { CreateTiming } from './evaluateCues'
+import { CreateTimingEnable } from './evaluateCues'
 
 export function EvaluateEkstern(
 	context: PartContext,
@@ -51,7 +51,7 @@ export function EvaluateEkstern(
 			_id: '',
 			externalId: partId,
 			name: eksternProps[0],
-			...CreateTiming(parsedCue),
+			...CreateTimingEnable(parsedCue),
 			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmLive,
 			content: literal<RemoteContent>({

@@ -11,7 +11,7 @@ import { PartDefinition } from '../../../tv2_afvd_showstyle/inewsConversion/conv
 import { CueDefinitionLYD } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
 import { CasparLLayer, SisyfosLLAyer } from '../../../tv2_afvd_studio/layers'
-import { CalculateTime, CreateTiming } from './evaluateCues'
+import { CalculateTime, CreateTimingEnable } from './evaluateCues'
 
 export function EvaluateLYD(pieces: IBlueprintPiece[], parsedCue: CueDefinitionLYD, part: PartDefinition) {
 	pieces.push(
@@ -19,7 +19,7 @@ export function EvaluateLYD(pieces: IBlueprintPiece[], parsedCue: CueDefinitionL
 			_id: '',
 			externalId: part.externalId,
 			name: parsedCue.variant,
-			...CreateTiming(parsedCue),
+			...CreateTimingEnable(parsedCue),
 			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmAudioBed,
 			content: literal<BaseContent>({

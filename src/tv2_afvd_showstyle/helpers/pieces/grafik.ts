@@ -14,7 +14,7 @@ import { literal } from '../../../common/util'
 import { CueDefinitionGrafik } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
 import { VizLLayer } from '../../../tv2_afvd_studio/layers'
-import { CalculateTime, CreateTiming } from './evaluateCues'
+import { CalculateTime, CreateTimingAdLib, CreateTimingEnable } from './evaluateCues'
 
 /**
  * @returns {true} If a cue is a grafik
@@ -37,7 +37,7 @@ export function EvaluateGrafik(
 				_rank: rank || 0,
 				externalId: partId,
 				name: grafikName(parsedCue),
-				...CreateTiming(parsedCue),
+				...CreateTimingAdLib(parsedCue),
 				sourceLayerId: SourceLayer.PgmGraphics,
 				outputLayerId: 'pgm0',
 				expectedDuration: 0,
@@ -71,7 +71,7 @@ export function EvaluateGrafik(
 				_id: '',
 				externalId: partId,
 				name: grafikName(parsedCue),
-				...CreateTiming(parsedCue),
+				...CreateTimingEnable(parsedCue),
 				outputLayerId: 'pgm0',
 				sourceLayerId: SourceLayer.PgmGraphics,
 				content: literal<GraphicsContent>({
