@@ -28,11 +28,14 @@ export function EvaluateCues(
 ) {
 	let adLibRank = 0
 	const filteredCues = cues.filter(cue => cue.type !== CueType.Grafik)
-	const grafikCues = cues.filter(cue => cue.type === CueType.Grafik)
-	const isDVE = containsDVE(cues)
+	// const grafikCues = cues.filter(cue => cue.type === CueType.Grafik)
+	// const isDVE = containsDVE(cues)
 	filteredCues.forEach(cue => {
 		if (cue) {
 			switch (cue.type) {
+				case CueType.Grafik:
+					EvaluateGrafik(pieces, adLibPieces, part.externalId, cue, cue.adlib)
+					break
 				case CueType.Ekstern:
 					EvaluateEkstern(context, config, pieces, part.externalId, cue)
 					break
@@ -64,54 +67,77 @@ export function EvaluateCues(
 		}
 	})
 
-	if (isDVE) {
+	/*if (isDVE) {
 		// All cues are AdLibs
 		grafikCues.forEach((cue, i) => {
-			EvaluateGrafik(context, config, pieces, adLibPieces, part.externalId, cue as any, true, i)
+			EvaluateGrafik(pieces, adLibPieces, part.externalId, cue as any, true, i)
 		})
 	} else {
 		// First cue is not AdLib, but also an AdLib
 		grafikCues.forEach((cue, i) => {
 			if (i === 0) {
-				EvaluateGrafik(context, config, pieces, adLibPieces, part.externalId, cue as any)
+				EvaluateGrafik(pieces, adLibPieces, part.externalId, cue as any)
 			}
-			EvaluateGrafik(context, config, pieces, adLibPieces, part.externalId, cue as any, true)
+			EvaluateGrafik(pieces, adLibPieces, part.externalId, cue as any, true)
 		})
+	}*/
+}
+
+export function CreateTiming(
+	cue: CueDefinitionBase
+): Pick<IBlueprintPiece, 'enable' | 'infiniteMode'> | Pick<IBlueprintAdLibPiece, 'infiniteMode' | 'expectedDuration'> {
+	if (cue.adlib) {
+		const result: Pick<IBlueprintAdLibPiece, 'infiniteMode' | 'expectedDuration'> = {
+			infiniteMode: PieceLifespan.OutOnNextPart,
+			expectedDuration: 0
+		}
+
+		if (cue.end) {
+			if (cue.end.infiniteMode) {
+				result.infiniteMode = infiniteMode(cue.end.infiniteMode, PieceLifespan.OutOnNextPart)
+			} else {
+				result.expectedDuration = CalculateTime(cue.end)
+			}
+		}
+
+		return result
+	} else {
+		const result: Pick<IBlueprintPiece, 'enable' | 'infiniteMode'> = {
+			enable: {},
+			infiniteMode: PieceLifespan.Normal
+		}
+
+		if (cue.start) {
+			;(result.enable as any).start = CalculateTime(cue.start)
+		} else {
+			;(result.enable as any).start = 0
+		}
+
+		if (cue.end) {
+			if (cue.end.infiniteMode) {
+				result.infiniteMode = infiniteMode(cue.end.infiniteMode, PieceLifespan.Normal)
+			} else {
+				;(result.enable as any).end = CalculateTime(cue.end)
+			}
+		} else {
+			result.infiniteMode = PieceLifespan.Normal
+		}
+
+		return result
 	}
 }
 
-export function CreateTiming(cue: CueDefinitionBase): Pick<IBlueprintPiece, 'enable' | 'infiniteMode'> {
-	const result: Pick<IBlueprintPiece, 'enable' | 'infiniteMode'> = {
-		enable: {},
-		infiniteMode: PieceLifespan.Normal
-	}
-	if (cue.start) {
-		;(result.enable as any).start = CalculateTime(cue.start)
-	} else {
-		;(result.enable as any).start = 0
-	}
-
-	if (cue.end) {
-		if (cue.end.infiniteMode) {
-			switch (cue.end.infiniteMode) {
-				case 'B':
-					result.infiniteMode = PieceLifespan.OutOnNextPart
-					break
-				case 'S':
-					result.infiniteMode = PieceLifespan.OutOnNextSegment
-					break
-				case 'O':
-					result.infiniteMode = PieceLifespan.Infinite
-					break
-			}
-		} else {
-			;(result.enable as any).end = CalculateTime(cue.end)
-		}
-	} else {
-		result.infiniteMode = PieceLifespan.Normal
+function infiniteMode(mode: 'B' | 'S' | 'O', defaultLifespan: PieceLifespan): PieceLifespan {
+	switch (mode) {
+		case 'B':
+			return PieceLifespan.OutOnNextPart
+		case 'S':
+			return PieceLifespan.OutOnNextSegment
+		case 'O':
+			return PieceLifespan.Infinite
 	}
 
-	return result
+	return defaultLifespan
 }
 
 export function CalculateTime(time: CueTime) {
@@ -127,6 +153,6 @@ export function CalculateTime(time: CueTime) {
 	return result
 }
 
-function containsDVE(cues: CueDefinition[]) {
+/*function containsDVE(cues: CueDefinition[]) {
 	return !!cues.filter(cue => cue.type === CueType.DVE).length
-}
+}*/
