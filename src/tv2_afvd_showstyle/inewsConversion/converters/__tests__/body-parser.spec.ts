@@ -10,14 +10,14 @@ import {
 	PartType
 } from '../ParseBody'
 import {
+	CueDefinition,
 	CueDefinitionEkstern,
 	CueDefinitionGrafik,
 	CueDefinitionJingle,
 	CueDefinitionTelefon,
 	CueDefinitionUnknown,
 	CueType,
-	UnparsedCue,
-	CueDefinition
+	UnparsedCue
 } from '../ParseCue'
 
 const fields = {}
