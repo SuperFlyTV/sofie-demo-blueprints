@@ -16,7 +16,7 @@ const manifest: StudioBlueprintManifest = {
 	integrationVersion: VERSION_INTEGRATION,
 	TSRVersion: VERSION_TSR,
 
-	minimumCoreVersion: '1.1.0',
+	minimumCoreVersion: '1.2.0',
 
 	studioConfigManifest,
 	studioMigrations, // TODO - device migrations should be moved to be done here
