@@ -36,6 +36,9 @@ export function EvaluateCues(
 				case CueType.Grafik:
 					EvaluateGrafik(pieces, adLibPieces, part.externalId, cue, cue.adlib)
 					break
+				case CueType.MOS:
+					// EvaluateMos(pieces, adLibPieces, part.externalId, cue, cue.adlib)
+					break
 				case CueType.Ekstern:
 					EvaluateEkstern(context, config, pieces, part.externalId, cue)
 					break
@@ -47,7 +50,7 @@ export function EvaluateCues(
 					adLibRank++
 					break
 				case CueType.Telefon:
-					EvaluateTelefon(context, config, pieces, adLibPieces, part.externalId, cue)
+					EvaluateTelefon(pieces, adLibPieces, part.externalId, cue)
 					break
 				case CueType.VIZ:
 					EvaluateVIZ(context, config, pieces, adLibPieces, part.externalId, cue)
@@ -112,7 +115,7 @@ export function CreateTimingEnable(cue: CueDefinition) {
 			;(result.enable as any).end = CalculateTime(cue.end)
 		}
 	} else {
-		result.infiniteMode = PieceLifespan.Normal
+		result.infiniteMode = PieceLifespan.OutOnNextPart
 	}
 
 	return result

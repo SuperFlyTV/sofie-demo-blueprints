@@ -3,20 +3,16 @@ import {
 	BaseContent,
 	IBlueprintAdLibPiece,
 	IBlueprintPiece,
-	PartContext,
 	TimelineObjectCoreExt
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../../common/util'
 import { CueDefinitionTelefon } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
-import { BlueprintConfig } from '../../../tv2_afvd_studio/helpers/config'
 import { SisyfosSourceTelefon } from '../../../tv2_afvd_studio/layers'
 import { CreateTimingEnable } from './evaluateCues'
 import { EvaluateGrafik } from './grafik'
 
 export function EvaluateTelefon(
-	_context: PartContext,
-	_config: BlueprintConfig,
 	pieces: IBlueprintPiece[],
 	adlibPieces: IBlueprintAdLibPiece[],
 	partId: string,
