@@ -9,6 +9,7 @@ export function RealLLayers() {
 			// @ts-ignore
 			.concat(_.values(CasparLLayer))
 			.concat(_.values(SisyfosLLAyer))
+			.concat(_.values(VizLLayer))
 	)
 }
 export function VirtualLLayers() {
@@ -55,6 +56,10 @@ export enum SisyfosLLAyer {
 	SisyfosSourceJingle = 'sisyfos_source_jingle',
 	SisyfosSourceAudio = 'sisyfos_source_audio',
 	SisyfosSourceLiveSpeak = 'sisyfos_source_live_speak'
+}
+
+export enum VizLLayer {
+	VizLLayerOverlay = 'viz_layer_overlay'
 }
 
 export function CasparPlayerClip(i: number) {

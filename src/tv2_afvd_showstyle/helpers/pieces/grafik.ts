@@ -1,4 +1,11 @@
 import {
+	DeviceType,
+	TimelineContentTypeVizMSE,
+	TimelineObjVIZMSEAny,
+	TimelineObjVIZMSEElementInternal
+} from 'timeline-state-resolver-types'
+import {
+	GraphicsContent,
 	IBlueprintAdLibPiece,
 	IBlueprintPiece,
 	PartContext,
@@ -8,7 +15,8 @@ import { literal } from '../../../common/util'
 import { CueDefinitionGrafik } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
 import { BlueprintConfig } from '../../../tv2_afvd_studio/helpers/config'
-import { CreateTiming } from './evaluateCues'
+import { VizLLayer } from '../../../tv2_afvd_studio/layers'
+import { CalculateTime, CreateTiming } from './evaluateCues'
 
 /**
  * @returns {true} If a cue is a grafik
@@ -47,9 +55,30 @@ export function EvaluateGrafik(
 				name: grafikName(parsedCue),
 				...CreateTiming(parsedCue),
 				outputLayerId: 'pgm0',
-				sourceLayerId: SourceLayer.PgmGraphics
+				sourceLayerId: SourceLayer.PgmGraphics,
+				content: literal<GraphicsContent>({
+					fileName: parsedCue.template,
+					path: parsedCue.template,
+					timelineObjects: literal<TimelineObjVIZMSEAny[]>([
+						literal<TimelineObjVIZMSEElementInternal>({
+							id: '',
+							enable: {
+								start: parsedCue.start ? CalculateTime(parsedCue.start) : 0,
+								...(parsedCue.end ? { end: CalculateTime(parsedCue.end) } : {})
+							},
+							priority: 1,
+							layer: VizLLayer.VizLLayerOverlay,
+							content: {
+								deviceType: DeviceType.VIZMSE,
+								type: TimelineContentTypeVizMSE.ELEMENT_INTERNAL,
+								templateName: parsedCue.template,
+								templateData: parsedCue.textFields
+							}
+						})
+					])
+				})
 			})
-		) // TODO: Timeline objects
+		)
 	}
 }
 

@@ -6,7 +6,8 @@ import {
 	MappingCasparCG,
 	MappingHyperdeck,
 	MappingHyperdeckType,
-	MappingSisyfos
+	MappingSisyfos,
+	MappingVizMSE
 } from 'timeline-state-resolver-types'
 import { BlueprintMapping, BlueprintMappings, LookaheadMode } from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
@@ -203,6 +204,11 @@ export default literal<BlueprintMappings>({
 		deviceId: 'sisyfos0',
 		channel: 3,
 		lookahead: LookaheadMode.PRELOAD
+	}),
+	viz_layer_overlay: literal<MappingVizMSE & BlueprintMapping>({
+		device: PlayoutDeviceType.VIZMSE,
+		deviceId: 'viz0',
+		lookahead: LookaheadMode.NONE
 	})
 })
 
