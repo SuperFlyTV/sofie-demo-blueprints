@@ -12,7 +12,8 @@ export enum CueType {
 	Mic,
 	AdLib,
 	LYD,
-	Jingle
+	Jingle,
+	Design
 }
 
 export interface CueTime {
@@ -100,6 +101,11 @@ export interface CueDefinitionJingle extends CueDefinitionBase {
 	clip: string
 }
 
+export interface CueDefinitionDesign extends CueDefinitionBase {
+	type: CueType.Design
+	design: string
+}
+
 export type CueDefinition =
 	| CueDefinitionUnknown
 	| CueDefinitionIgnoredMOS
@@ -113,6 +119,7 @@ export type CueDefinition =
 	| CueDefinitionAdLib
 	| CueDefinitionLYD
 	| CueDefinitionJingle
+	| CueDefinitionDesign
 
 export function ParseCue(cue: UnparsedCue): CueDefinition {
 	if (!cue || cue.length === 0) {
@@ -127,9 +134,11 @@ export function ParseCue(cue: UnparsedCue): CueDefinition {
 			type: CueType.Ignored_MOS,
 			command: cue
 		}
-	} else if (cue[0].match(/(?:^kg)|(?:^digi)/i)) {
+	} else if (cue[0].match(/(?:^kg )|(?:^digi)/i)) {
 		// kg (Grafik)
 		return parsekg(cue as string[])
+	} else if (cue[0].match(/^KG=/)) {
+		return parseDesign(cue)
 	} else if (cue[0].match(/ss=/i)) {
 		return parseSS(cue)
 	} else if (cue[0].match(/^]] [a-z]\d\.\d [a-z] \d \[\[$/i)) {
@@ -200,6 +209,26 @@ function parsekg(cue: string[]): CueDefinitionGrafik {
 	}
 
 	return kgCue
+}
+
+function parseDesign(cue: string[]): CueDefinitionDesign {
+	let designCue: CueDefinitionDesign = {
+		type: CueType.Design,
+		design: ''
+	}
+
+	cue.forEach(line => {
+		if (isTime(line)) {
+			designCue = { ...designCue, ...parseTime(line) }
+		} else {
+			const design = line.match(/^KG=(.*)$/)
+			if (design) {
+				designCue.design = design[1]
+			}
+		}
+	})
+
+	return designCue
 }
 
 function parseSS(cue: string[]): CueDefinitionUnknown {

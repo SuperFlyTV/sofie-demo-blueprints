@@ -184,13 +184,12 @@ describe('Cue parser', () => {
 		const result = ParseCue(cueGrafik)
 		expect(result).toEqual(
 			literal<CueDefinition>({
-				type: CueType.Grafik,
+				type: CueType.Design,
 				start: {
 					frames: 1,
 					seconds: 0
 				},
-				template: 'DESIGN_FODBOLD',
-				textFields: []
+				design: 'DESIGN_FODBOLD'
 			})
 		)
 		expect(result).toBeTruthy()
