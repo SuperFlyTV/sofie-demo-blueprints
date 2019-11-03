@@ -2,7 +2,7 @@ import {
 	DeviceType,
 	TimelineContentTypeVizMSE,
 	TimelineObjVIZMSEAny,
-	TimelineObjVIZMSEElementInternal
+	TimelineObjVIZMSEElementPilot
 } from 'timeline-state-resolver-types'
 import {
 	GraphicsContent,
@@ -11,27 +11,17 @@ import {
 	PieceLifespan
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../../common/util'
-import {
-	CueDefinitionGrafik,
-	CueDefinitionMOS,
-	CueType
-} from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseCue'
+import { CueDefinitionMOS } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
 import { VizLLayer } from '../../../tv2_afvd_studio/layers'
 import { CalculateTime, CreateTimingAdLib, CreateTimingEnable } from './evaluateCues'
+import { grafikName } from './grafik'
 
-/**
- * @returns {true} If a cue is a grafik
- */
-export function IsGrafik(rawString: string): boolean {
-	return !!rawString.match(/^(?:kg |DIGI=)/)
-}
-
-export function EvaluateGrafik(
+export function EvaluateMOS(
 	pieces: IBlueprintPiece[],
 	adlibPieces: IBlueprintAdLibPiece[],
 	partId: string,
-	parsedCue: CueDefinitionGrafik,
+	parsedCue: CueDefinitionMOS,
 	adlib?: boolean,
 	rank?: number
 ) {
@@ -47,10 +37,10 @@ export function EvaluateGrafik(
 				expectedDuration: 0,
 				infiniteMode: PieceLifespan.OutOnNextPart,
 				content: literal<GraphicsContent>({
-					fileName: parsedCue.template,
-					path: parsedCue.template,
+					fileName: parsedCue.name,
+					path: parsedCue.vcpid.toString(),
 					timelineObjects: literal<TimelineObjVIZMSEAny[]>([
-						literal<TimelineObjVIZMSEElementInternal>({
+						literal<TimelineObjVIZMSEElementPilot>({
 							id: '',
 							enable: {
 								start: parsedCue.start ? CalculateTime(parsedCue.start) : 0,
@@ -60,9 +50,9 @@ export function EvaluateGrafik(
 							layer: VizLLayer.VizLLayerOverlay,
 							content: {
 								deviceType: DeviceType.VIZMSE,
-								type: TimelineContentTypeVizMSE.ELEMENT_INTERNAL,
-								templateName: parsedCue.template,
-								templateData: parsedCue.textFields
+								type: TimelineContentTypeVizMSE.ELEMENT_PILOT,
+								templateVcpId: parsedCue.vcpid,
+								continueStep: parsedCue.continueCount
 							}
 						})
 					])
@@ -79,10 +69,10 @@ export function EvaluateGrafik(
 				outputLayerId: 'pgm0',
 				sourceLayerId: SourceLayer.PgmGraphics,
 				content: literal<GraphicsContent>({
-					fileName: parsedCue.template,
-					path: parsedCue.template,
+					fileName: parsedCue.name,
+					path: parsedCue.vcpid.toString(),
 					timelineObjects: literal<TimelineObjVIZMSEAny[]>([
-						literal<TimelineObjVIZMSEElementInternal>({
+						literal<TimelineObjVIZMSEElementPilot>({
 							id: '',
 							enable: {
 								start: parsedCue.start ? CalculateTime(parsedCue.start) : 0,
@@ -92,24 +82,14 @@ export function EvaluateGrafik(
 							layer: VizLLayer.VizLLayerOverlay,
 							content: {
 								deviceType: DeviceType.VIZMSE,
-								type: TimelineContentTypeVizMSE.ELEMENT_INTERNAL,
-								templateName: parsedCue.template,
-								templateData: parsedCue.textFields
+								type: TimelineContentTypeVizMSE.ELEMENT_PILOT,
+								templateVcpId: parsedCue.vcpid,
+								continueStep: parsedCue.continueCount
 							}
 						})
 					])
 				})
 			})
 		)
-	}
-}
-
-export function grafikName(parsedCue: CueDefinitionGrafik | CueDefinitionMOS): string {
-	if (parsedCue.type === CueType.Grafik) {
-		return `${parsedCue.template ? `${parsedCue.template}` : ''}${parsedCue.textFields
-			.filter(txt => !txt.match(/^;.\.../))
-			.map(txt => ` - ${txt}`)}`.replace(/,/g, '')
-	} else {
-		return `${parsedCue.name ? parsedCue.name : ''}${parsedCue.vcpid ? parsedCue.vcpid : parsedCue.vcpid}`
 	}
 }

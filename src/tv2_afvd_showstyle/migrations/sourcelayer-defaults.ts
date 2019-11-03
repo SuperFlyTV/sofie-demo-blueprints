@@ -49,6 +49,17 @@ export default literal<ISourceLayer[]>([
 		unlimited: false
 	},
 	{
+		_id: SourceLayer.PgmPilot,
+		_rank: 9500,
+		name: 'Graphics',
+		type: SourceLayerType.GRAPHICS,
+		onPGMClean: false,
+		activateKeyboardHotkeys: 'q,w,e,r,t,y',
+		clearKeyboardHotkey: 'u,alt+j,alt+u',
+		allowDisable: true,
+		unlimited: false
+	},
+	{
 		_id: SourceLayer.PgmJingle,
 		_rank: 9000,
 		name: 'Jingle',

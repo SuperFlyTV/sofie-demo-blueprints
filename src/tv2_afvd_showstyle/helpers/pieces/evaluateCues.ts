@@ -13,6 +13,7 @@ import { EvaluateEkstern } from './ekstern'
 import { EvaluateGrafik } from './grafik'
 import { EvaluateJingle } from './jingle'
 import { EvaluateLYD } from './lyd'
+import { EvaluateMOS } from './mos'
 import { EvaluateTelefon } from './telefon'
 import { EvaluateVIZ } from './viz'
 
@@ -37,7 +38,7 @@ export function EvaluateCues(
 					EvaluateGrafik(pieces, adLibPieces, part.externalId, cue, cue.adlib)
 					break
 				case CueType.MOS:
-					// EvaluateMos(pieces, adLibPieces, part.externalId, cue, cue.adlib)
+					EvaluateMOS(pieces, adLibPieces, part.externalId, cue, cue.adlib)
 					break
 				case CueType.Ekstern:
 					EvaluateEkstern(context, config, pieces, part.externalId, cue)
