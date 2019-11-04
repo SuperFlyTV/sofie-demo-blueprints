@@ -46,7 +46,7 @@ export function EvaluateGrafik(
 				name: grafikName(parsedCue),
 				sourceLayerId: SourceLayer.PgmGraphics,
 				outputLayerId: 'pgm0',
-				expectedDuration: getGrafikDuration(config, parsedCue),
+				expectedDuration: GetGrafikDuration(config, parsedCue),
 				infiniteMode:
 					parsedCue.end && parsedCue.end.infiniteMode
 						? InfiniteMode(parsedCue.end.infiniteMode, PieceLifespan.Normal)
@@ -65,7 +65,7 @@ export function EvaluateGrafik(
 							content: {
 								deviceType: DeviceType.VIZMSE,
 								type: TimelineContentTypeVizMSE.ELEMENT_INTERNAL,
-								templateName: getTemplateName(config, parsedCue),
+								templateName: GetTemplateName(config, parsedCue),
 								templateData: parsedCue.textFields
 							}
 						})
@@ -80,7 +80,7 @@ export function EvaluateGrafik(
 				externalId: partId,
 				name: grafikName(parsedCue),
 				enable: {
-					...createTimingGrafik(config, parsedCue)
+					...CreateTimingGrafik(config, parsedCue)
 				},
 				outputLayerId: 'pgm0',
 				sourceLayerId: SourceLayer.PgmGraphics,
@@ -102,7 +102,7 @@ export function EvaluateGrafik(
 							content: {
 								deviceType: DeviceType.VIZMSE,
 								type: TimelineContentTypeVizMSE.ELEMENT_INTERNAL,
-								templateName: getTemplateName(config, parsedCue),
+								templateName: GetTemplateName(config, parsedCue),
 								templateData: parsedCue.textFields
 							}
 						})
@@ -123,20 +123,32 @@ export function grafikName(parsedCue: CueDefinitionGrafik | CueDefinitionMOS): s
 	}
 }
 
-function createTimingGrafik(config: BlueprintConfig, cue: CueDefinitionGrafik): { start: number; end: number } {
+export function CreateTimingGrafik(
+	config: BlueprintConfig,
+	cue: CueDefinitionGrafik | CueDefinitionMOS
+): { start: number; end: number } {
 	const ret: { start: number; end: number } = { start: 0, end: 0 }
 	cue.start ? (ret.start = CalculateTime(cue.start)) : (ret.start = 0)
 
-	cue.end ? (ret.end = CalculateTime(cue.end)) : (ret.end = getGrafikDuration(config, cue))
+	cue.end ? (ret.end = CalculateTime(cue.end)) : (ret.end = GetGrafikDuration(config, cue))
 
 	return ret
 }
 
-function getGrafikDuration(config: BlueprintConfig, cue: CueDefinitionGrafik): number {
-	const template = config.showStyle.GFXTemplates.find(templ => templ.iNewsName === cue.template)
-	if (template) {
-		if (template.OutType && !template.OutType.toString().match(/default/i)) {
-			return 0
+export function GetGrafikDuration(config: BlueprintConfig, cue: CueDefinitionGrafik | CueDefinitionMOS): number {
+	if (cue.type === CueType.Grafik) {
+		const template = config.showStyle.GFXTemplates.find(templ => templ.iNewsName === cue.template)
+		if (template) {
+			if (template.OutType && !template.OutType.toString().match(/default/i)) {
+				return 0
+			}
+		}
+	} else {
+		const template = config.showStyle.GFXTemplates.find(templ => templ.iNewsName === cue.vcpid)
+		if (template) {
+			if (template.OutType && !template.OutType.toString().match(/default/i)) {
+				return 0
+			}
 		}
 	}
 
@@ -145,7 +157,7 @@ function getGrafikDuration(config: BlueprintConfig, cue: CueDefinitionGrafik): n
 		: 4000
 }
 
-function getTemplateName(config: BlueprintConfig, cue: CueDefinitionGrafik): string {
+export function GetTemplateName(config: BlueprintConfig, cue: CueDefinitionGrafik): string {
 	const template = config.showStyle.GFXTemplates.find(templ => templ.iNewsName === cue.template)
 	if (template) {
 		return template.VizTemplate.toString()

@@ -14,10 +14,12 @@ import { literal } from '../../../common/util'
 import { CueDefinitionMOS } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
 import { VizLLayer } from '../../../tv2_afvd_studio/layers'
-import { CalculateTime, CreateTimingAdLib, CreateTimingEnable } from './evaluateCues'
-import { grafikName } from './grafik'
+import { BlueprintConfig } from '../config'
+import { InfiniteMode } from './evaluateCues'
+import { CreateTimingGrafik, GetGrafikDuration, grafikName } from './grafik'
 
 export function EvaluateMOS(
+	config: BlueprintConfig,
 	pieces: IBlueprintPiece[],
 	adlibPieces: IBlueprintAdLibPiece[],
 	partId: string,
@@ -31,11 +33,13 @@ export function EvaluateMOS(
 				_rank: rank || 0,
 				externalId: partId,
 				name: grafikName(parsedCue),
-				...CreateTimingAdLib(parsedCue),
-				sourceLayerId: SourceLayer.PgmGraphics,
+				expectedDuration: GetGrafikDuration(config, parsedCue),
+				infiniteMode:
+					parsedCue.end && parsedCue.end.infiniteMode
+						? InfiniteMode(parsedCue.end.infiniteMode, PieceLifespan.Normal)
+						: PieceLifespan.Normal,
+				sourceLayerId: SourceLayer.PgmPilot,
 				outputLayerId: 'pgm0',
-				expectedDuration: 0,
-				infiniteMode: PieceLifespan.OutOnNextPart,
 				content: literal<GraphicsContent>({
 					fileName: parsedCue.name,
 					path: parsedCue.vcpid.toString(),
@@ -43,8 +47,7 @@ export function EvaluateMOS(
 						literal<TimelineObjVIZMSEElementPilot>({
 							id: '',
 							enable: {
-								start: parsedCue.start ? CalculateTime(parsedCue.start) : 0,
-								...(parsedCue.end ? { end: CalculateTime(parsedCue.end) } : {})
+								start: 0
 							},
 							priority: 1,
 							layer: VizLLayer.VizLLayerOverlay,
@@ -65,9 +68,15 @@ export function EvaluateMOS(
 				_id: '',
 				externalId: partId,
 				name: grafikName(parsedCue),
-				...CreateTimingEnable(parsedCue),
+				enable: {
+					...CreateTimingGrafik(config, parsedCue)
+				},
 				outputLayerId: 'pgm0',
 				sourceLayerId: SourceLayer.PgmGraphics,
+				infiniteMode:
+					parsedCue.end && parsedCue.end.infiniteMode
+						? InfiniteMode(parsedCue.end.infiniteMode, PieceLifespan.Normal)
+						: PieceLifespan.Normal,
 				content: literal<GraphicsContent>({
 					fileName: parsedCue.name,
 					path: parsedCue.vcpid.toString(),
@@ -75,8 +84,7 @@ export function EvaluateMOS(
 						literal<TimelineObjVIZMSEElementPilot>({
 							id: '',
 							enable: {
-								start: parsedCue.start ? CalculateTime(parsedCue.start) : 0,
-								...(parsedCue.end ? { end: CalculateTime(parsedCue.end) } : {})
+								start: 0
 							},
 							priority: 1,
 							layer: VizLLayer.VizLLayerOverlay,
