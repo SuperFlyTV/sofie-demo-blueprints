@@ -58,8 +58,7 @@ export function EvaluateGrafik(
 						literal<TimelineObjVIZMSEElementInternal>({
 							id: '',
 							enable: {
-								start: parsedCue.start ? CalculateTime(parsedCue.start) : 0,
-								...(parsedCue.end ? { end: CalculateTime(parsedCue.end) } : {})
+								start: 0
 							},
 							priority: 1,
 							layer: VizLLayer.VizLLayerOverlay,
@@ -81,7 +80,7 @@ export function EvaluateGrafik(
 				externalId: partId,
 				name: grafikName(parsedCue),
 				enable: {
-					...createTimingGrafik(config, parsedCue)
+					start: 0
 				},
 				outputLayerId: 'pgm0',
 				sourceLayerId: SourceLayer.PgmGraphics,
@@ -96,8 +95,7 @@ export function EvaluateGrafik(
 						literal<TimelineObjVIZMSEElementInternal>({
 							id: '',
 							enable: {
-								start: parsedCue.start ? CalculateTime(parsedCue.start) : 0,
-								...(parsedCue.end ? { end: CalculateTime(parsedCue.end) } : {})
+								start: parsedCue.start ? CalculateTime(parsedCue.start) : 0
 							},
 							priority: 1,
 							layer: VizLLayer.VizLLayerOverlay,
