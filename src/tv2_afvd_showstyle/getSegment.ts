@@ -13,7 +13,9 @@ import * as _ from 'underscore'
 import { assertUnreachable, literal } from '../common/util'
 import { parseConfig } from './helpers/config'
 import { ParseBody, PartDefinition, PartDefinitionSlutord, PartType } from './inewsConversion/converters/ParseBody'
+import { CueType } from './inewsConversion/converters/ParseCue'
 import { SourceLayer } from './layers'
+import { CreatePartCueOnly } from './parts/cueonly'
 import { CreatePartFake } from './parts/fake'
 import { CreatePartGrafik } from './parts/grafik'
 import { CreatePartIntro } from './parts/intro'
@@ -59,6 +61,24 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 			blueprintParts.push(CreatePartFake(part))
 		}
 		const partContext = new PartContext2(context, part.externalId)
+		const livecue = part.cues.filter(cue => cue.type === CueType.Ekstern)
+		const extraParts: BlueprintResultPart[] = []
+		if (livecue && part.type !== PartType.Live && part.type !== PartType.Unknown) {
+			livecue.forEach((cue, j) => {
+				extraParts.push(
+					CreatePartCueOnly(
+						partContext,
+						config,
+						part,
+						`${part.externalId}-${1}`,
+						`${part.rawType ? `${part.rawType}-` : ''}EKSTERN-${j}`,
+						cue,
+						totalWords
+					)
+				)
+				part.cues.splice(part.cues.findIndex(c => _.isEqual(c, cue)), 1)
+			})
+		}
 		switch (part.type) {
 			case PartType.INTRO:
 				blueprintParts.push(CreatePartIntro(partContext, config, part, totalWords))
@@ -84,7 +104,7 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 				blueprintParts.push(CreatePartVO(partContext, config, part, totalWords))
 				break
 			case PartType.Unknown:
-				blueprintParts.push(CreatePartUnknown(partContext, config, part))
+				blueprintParts.push(CreatePartUnknown(partContext, config, part, totalWords))
 				break
 			case PartType.Slutord:
 				blueprintParts.push(CreatePartInvalid(part))
@@ -100,6 +120,9 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 			}
 			i++
 		}
+		extraParts.forEach(extraPart => {
+			blueprintParts.push(extraPart)
+		})
 	}
 
 	return {
