@@ -18,7 +18,8 @@ import {
 } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
 import { VizLLayer } from '../../../tv2_afvd_studio/layers'
-import { CalculateTime, CreateTimingAdLib, CreateTimingEnable } from './evaluateCues'
+import { BlueprintConfig } from '../config'
+import { CalculateTime, InfiniteMode } from './evaluateCues'
 
 /**
  * @returns {true} If a cue is a grafik
@@ -28,6 +29,7 @@ export function IsGrafik(rawString: string): boolean {
 }
 
 export function EvaluateGrafik(
+	config: BlueprintConfig,
 	pieces: IBlueprintPiece[],
 	adlibPieces: IBlueprintAdLibPiece[],
 	partId: string,
@@ -35,17 +37,20 @@ export function EvaluateGrafik(
 	adlib?: boolean,
 	rank?: number
 ) {
+	console.log(`GRAFIK: ${JSON.stringify(parsedCue)}`)
 	if (adlib) {
 		adlibPieces.push(
 			literal<IBlueprintAdLibPiece>({
 				_rank: rank || 0,
 				externalId: partId,
 				name: grafikName(parsedCue),
-				...CreateTimingAdLib(parsedCue),
 				sourceLayerId: SourceLayer.PgmGraphics,
 				outputLayerId: 'pgm0',
-				expectedDuration: 0,
-				infiniteMode: PieceLifespan.OutOnNextPart,
+				expectedDuration: getGrafikDuration(config, parsedCue),
+				infiniteMode:
+					parsedCue.end && parsedCue.end.infiniteMode
+						? InfiniteMode(parsedCue.end.infiniteMode, PieceLifespan.Normal)
+						: PieceLifespan.Normal,
 				content: literal<GraphicsContent>({
 					fileName: parsedCue.template,
 					path: parsedCue.template,
@@ -61,7 +66,7 @@ export function EvaluateGrafik(
 							content: {
 								deviceType: DeviceType.VIZMSE,
 								type: TimelineContentTypeVizMSE.ELEMENT_INTERNAL,
-								templateName: parsedCue.template,
+								templateName: getTemplateName(config, parsedCue),
 								templateData: parsedCue.textFields
 							}
 						})
@@ -75,9 +80,15 @@ export function EvaluateGrafik(
 				_id: '',
 				externalId: partId,
 				name: grafikName(parsedCue),
-				...CreateTimingEnable(parsedCue),
+				enable: {
+					...createTimingGrafik(config, parsedCue)
+				},
 				outputLayerId: 'pgm0',
 				sourceLayerId: SourceLayer.PgmGraphics,
+				infiniteMode:
+					parsedCue.end && parsedCue.end.infiniteMode
+						? InfiniteMode(parsedCue.end.infiniteMode, PieceLifespan.Normal)
+						: PieceLifespan.Normal,
 				content: literal<GraphicsContent>({
 					fileName: parsedCue.template,
 					path: parsedCue.template,
@@ -93,7 +104,7 @@ export function EvaluateGrafik(
 							content: {
 								deviceType: DeviceType.VIZMSE,
 								type: TimelineContentTypeVizMSE.ELEMENT_INTERNAL,
-								templateName: parsedCue.template,
+								templateName: getTemplateName(config, parsedCue),
 								templateData: parsedCue.textFields
 							}
 						})
@@ -112,4 +123,36 @@ export function grafikName(parsedCue: CueDefinitionGrafik | CueDefinitionMOS): s
 	} else {
 		return `${parsedCue.name ? parsedCue.name : ''}${parsedCue.vcpid ? parsedCue.vcpid : parsedCue.vcpid}`
 	}
+}
+
+function createTimingGrafik(config: BlueprintConfig, cue: CueDefinitionGrafik): { start: number; end: number } {
+	const ret: { start: number; end: number } = { start: 0, end: 0 }
+	cue.start ? (ret.start = CalculateTime(cue.start)) : (ret.start = 0)
+
+	cue.end ? (ret.end = CalculateTime(cue.end)) : (ret.end = getGrafikDuration(config, cue))
+
+	return ret
+}
+
+function getGrafikDuration(config: BlueprintConfig, cue: CueDefinitionGrafik): number {
+	const template = config.showStyle.GFXTemplates.find(templ => templ.iNewsName === cue.template)
+	if (template) {
+		if (template.OutType && !template.OutType.toString().match(/default/i)) {
+			return 0
+		}
+	}
+
+	return config.showStyle.DefaultTemplateDuration !== undefined
+		? Number(config.showStyle.DefaultTemplateDuration) * 1000
+		: 4000
+}
+
+function getTemplateName(config: BlueprintConfig, cue: CueDefinitionGrafik): string {
+	const template = config.showStyle.GFXTemplates.find(templ => templ.iNewsName === cue.template)
+	if (template) {
+		return template.VizTemplate.toString()
+	}
+
+	// This means unconfigured templates will still be supported, with default out.
+	return cue.template
 }

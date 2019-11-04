@@ -15,13 +15,16 @@ import {
 	TimelineObjectCoreExt
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../../../common/util'
+import { defaultShowStyleConfig, defaultStudioConfig } from '../../../../tv2_afvd_showstyle/__tests__/configs'
 import {
 	CueDefinitionGrafik,
 	CueDefinitionTelefon,
 	CueType
 } from '../../../../tv2_afvd_showstyle/inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../../../tv2_afvd_showstyle/layers'
+import { StudioConfig } from '../../../../tv2_afvd_studio/helpers/config'
 import { VizLLayer } from '../../../../tv2_afvd_studio/layers'
+import { ShowStyleConfig } from '../../config'
 import { EvaluateTelefon } from '../telefon'
 
 describe('telefon', () => {
@@ -41,7 +44,18 @@ describe('telefon', () => {
 		const pieces: IBlueprintPiece[] = []
 		const adLibPieces: IBlueprintAdLibPiece[] = []
 		const partId = '0000000001'
-		EvaluateTelefon(pieces, adLibPieces, partId, cue)
+		EvaluateTelefon(
+			{
+				showStyle: (defaultShowStyleConfig as unknown) as ShowStyleConfig,
+				studio: (defaultStudioConfig as unknown) as StudioConfig,
+				sources: [],
+				mediaPlayers: []
+			},
+			pieces,
+			adLibPieces,
+			partId,
+			cue
+		)
 		expect(pieces).toEqual([
 			literal<IBlueprintPiece>({
 				_id: '',

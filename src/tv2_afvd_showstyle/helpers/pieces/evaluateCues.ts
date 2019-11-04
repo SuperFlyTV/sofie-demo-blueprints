@@ -28,14 +28,14 @@ export function EvaluateCues(
 	part: PartDefinition
 ) {
 	let adLibRank = 0
-	const filteredCues = cues.filter(cue => cue.type !== CueType.Grafik)
+	// const filteredCues = cues.filter(cue => cue.type !== CueType.Grafik)
 	// const grafikCues = cues.filter(cue => cue.type === CueType.Grafik)
 	// const isDVE = containsDVE(cues)
-	filteredCues.forEach(cue => {
+	cues.forEach(cue => {
 		if (cue) {
 			switch (cue.type) {
 				case CueType.Grafik:
-					EvaluateGrafik(pieces, adLibPieces, part.externalId, cue, cue.adlib)
+					EvaluateGrafik(config, pieces, adLibPieces, part.externalId, cue, cue.adlib)
 					break
 				case CueType.MOS:
 					EvaluateMOS(pieces, adLibPieces, part.externalId, cue, cue.adlib)
@@ -51,7 +51,7 @@ export function EvaluateCues(
 					adLibRank++
 					break
 				case CueType.Telefon:
-					EvaluateTelefon(pieces, adLibPieces, part.externalId, cue)
+					EvaluateTelefon(config, pieces, adLibPieces, part.externalId, cue)
 					break
 				case CueType.VIZ:
 					EvaluateVIZ(context, config, pieces, adLibPieces, part.externalId, cue)
@@ -111,7 +111,7 @@ export function CreateTimingEnable(cue: CueDefinition) {
 
 	if (cue.end) {
 		if (cue.end.infiniteMode) {
-			result.infiniteMode = infiniteMode(cue.end.infiniteMode, PieceLifespan.Normal)
+			result.infiniteMode = InfiniteMode(cue.end.infiniteMode, PieceLifespan.Normal)
 		} else {
 			;(result.enable as any).end = CalculateTime(cue.end)
 		}
@@ -132,7 +132,7 @@ export function CreateTimingAdLib(
 
 	if (cue.end) {
 		if (cue.end.infiniteMode) {
-			result.infiniteMode = infiniteMode(cue.end.infiniteMode, PieceLifespan.OutOnNextPart)
+			result.infiniteMode = InfiniteMode(cue.end.infiniteMode, PieceLifespan.OutOnNextPart)
 		} else {
 			result.expectedDuration = CalculateTime(cue.end)
 		}
@@ -141,7 +141,7 @@ export function CreateTimingAdLib(
 	return result
 }
 
-function infiniteMode(mode: 'B' | 'S' | 'O', defaultLifespan: PieceLifespan): PieceLifespan {
+export function InfiniteMode(mode: 'B' | 'S' | 'O', defaultLifespan: PieceLifespan): PieceLifespan {
 	switch (mode) {
 		case 'B':
 			return PieceLifespan.OutOnNextPart

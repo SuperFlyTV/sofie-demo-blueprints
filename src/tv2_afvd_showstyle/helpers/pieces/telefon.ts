@@ -9,10 +9,12 @@ import { literal } from '../../../common/util'
 import { CueDefinitionTelefon } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
 import { SisyfosSourceTelefon } from '../../../tv2_afvd_studio/layers'
+import { BlueprintConfig } from '../config'
 import { CreateTimingEnable } from './evaluateCues'
 import { EvaluateGrafik } from './grafik'
 
 export function EvaluateTelefon(
+	config: BlueprintConfig,
 	pieces: IBlueprintPiece[],
 	adlibPieces: IBlueprintAdLibPiece[],
 	partId: string,
@@ -49,6 +51,6 @@ export function EvaluateTelefon(
 	)
 
 	if (parsedCue.vizObj) {
-		EvaluateGrafik(pieces, adlibPieces, partId, parsedCue.vizObj)
+		EvaluateGrafik(config, pieces, adlibPieces, partId, parsedCue.vizObj)
 	}
 }
