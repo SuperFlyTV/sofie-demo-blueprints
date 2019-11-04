@@ -80,7 +80,7 @@ export function EvaluateGrafik(
 				externalId: partId,
 				name: grafikName(parsedCue),
 				enable: {
-					start: 0
+					...createTimingGrafik(config, parsedCue)
 				},
 				outputLayerId: 'pgm0',
 				sourceLayerId: SourceLayer.PgmGraphics,
@@ -95,7 +95,7 @@ export function EvaluateGrafik(
 						literal<TimelineObjVIZMSEElementInternal>({
 							id: '',
 							enable: {
-								start: parsedCue.start ? CalculateTime(parsedCue.start) : 0
+								start: 0
 							},
 							priority: 1,
 							layer: VizLLayer.VizLLayerOverlay,
