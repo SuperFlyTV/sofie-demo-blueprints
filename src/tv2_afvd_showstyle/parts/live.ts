@@ -10,7 +10,6 @@ import { BlueprintConfig } from '../../tv2_afvd_showstyle/helpers/config'
 import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { AddScript } from '../helpers/pieces/script'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
-import { CueType } from '../inewsConversion/converters/ParseCue'
 import { EffektTransitionPiece, GetEffektAutoNext } from './effekt'
 import { CreatePartInvalid } from './invalid'
 import { PartTime } from './time/partTime'
@@ -32,14 +31,6 @@ export function CreatePartLive(
 
 	const adLibPieces: IBlueprintAdLibPiece[] = []
 	let pieces: IBlueprintPiece[] = []
-
-	const liveCue = partDefinition.cues.find(cue => {
-		return cue.type === CueType.Ekstern
-	})
-
-	if (liveCue) {
-		partDefinition.cues.splice(partDefinition.cues.indexOf(liveCue), 1)
-	} // TODO: Make AdLib live cue
 
 	part = { ...part, ...GetEffektAutoNext(context, config, partDefinition) }
 	pieces = [...pieces, ...EffektTransitionPiece(context, config, partDefinition)]
