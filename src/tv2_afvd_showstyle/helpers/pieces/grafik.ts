@@ -34,10 +34,9 @@ export function EvaluateGrafik(
 	adlibPieces: IBlueprintAdLibPiece[],
 	partId: string,
 	parsedCue: CueDefinitionGrafik,
-	adlib?: boolean,
+	adlib: boolean,
 	rank?: number
 ) {
-	console.log(`GRAFIK: ${JSON.stringify(parsedCue)}`)
 	if (adlib) {
 		adlibPieces.push(
 			literal<IBlueprintAdLibPiece>({
@@ -136,18 +135,20 @@ export function CreateTimingGrafik(
 }
 
 export function GetGrafikDuration(config: BlueprintConfig, cue: CueDefinitionGrafik | CueDefinitionMOS): number {
-	if (cue.type === CueType.Grafik) {
-		const template = config.showStyle.GFXTemplates.find(templ => templ.iNewsName === cue.template)
-		if (template) {
-			if (template.OutType && !template.OutType.toString().match(/default/i)) {
-				return 0
+	if (config.showStyle.GFXTemplates) {
+		if (cue.type === CueType.Grafik) {
+			const template = config.showStyle.GFXTemplates.find(templ => templ.iNewsName === cue.template)
+			if (template) {
+				if (template.OutType && !template.OutType.toString().match(/default/i)) {
+					return 0
+				}
 			}
-		}
-	} else {
-		const template = config.showStyle.GFXTemplates.find(templ => templ.iNewsName === cue.vcpid)
-		if (template) {
-			if (template.OutType && !template.OutType.toString().match(/default/i)) {
-				return 0
+		} else {
+			const template = config.showStyle.GFXTemplates.find(templ => templ.iNewsName === cue.vcpid)
+			if (template) {
+				if (template.OutType && !template.OutType.toString().match(/default/i)) {
+					return 0
+				}
 			}
 		}
 	}
@@ -158,9 +159,11 @@ export function GetGrafikDuration(config: BlueprintConfig, cue: CueDefinitionGra
 }
 
 export function GetTemplateName(config: BlueprintConfig, cue: CueDefinitionGrafik): string {
-	const template = config.showStyle.GFXTemplates.find(templ => templ.iNewsName === cue.template)
-	if (template) {
-		return template.VizTemplate.toString()
+	if (config.showStyle.GFXTemplates) {
+		const template = config.showStyle.GFXTemplates.find(templ => templ.iNewsName === cue.template)
+		if (template) {
+			return template.VizTemplate.toString()
+		}
 	}
 
 	// This means unconfigured templates will still be supported, with default out.

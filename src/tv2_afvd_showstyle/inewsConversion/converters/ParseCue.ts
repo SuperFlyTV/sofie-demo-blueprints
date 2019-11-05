@@ -202,10 +202,16 @@ function parsekg(cue: string[]): CueDefinitionGrafik {
 		kgCue = { ...kgCue, ...parseTime(cue[cue.length - 1]) }
 	} else if (!cue[cue.length - 1].match(/;x.xx/)) {
 		textFields += 1
+	} else {
+		kgCue.adlib = true
 	}
 
 	for (let i = 1; i < textFields; i++) {
 		kgCue.textFields.push(cue[i])
+	}
+
+	if (!kgCue.start) {
+		kgCue.adlib = true
 	}
 
 	return kgCue

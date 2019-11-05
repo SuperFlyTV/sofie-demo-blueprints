@@ -31,7 +31,8 @@ const unparsedUnknown: UnparsedCue = ['Some invalid cue']
 const cueGrafik1: CueDefinitionGrafik = {
 	type: CueType.Grafik,
 	template: 'bund',
-	textFields: ['1']
+	textFields: ['1'],
+	adlib: true
 }
 
 const unparsedGrafik1 = ['kg bund 1']
@@ -39,7 +40,8 @@ const unparsedGrafik1 = ['kg bund 1']
 const cueGrafik2: CueDefinitionGrafik = {
 	type: CueType.Grafik,
 	template: 'bund',
-	textFields: ['2']
+	textFields: ['2'],
+	adlib: true
 }
 
 const unparsedGrafik2 = ['kg bund 2']
@@ -47,7 +49,8 @@ const unparsedGrafik2 = ['kg bund 2']
 const cueGrafik3: CueDefinitionGrafik = {
 	type: CueType.Grafik,
 	template: 'bund',
-	textFields: ['3']
+	textFields: ['3'],
+	adlib: true
 }
 
 const unparsedGrafik3 = ['kg bund 3']
@@ -970,17 +973,20 @@ describe('Body parser', () => {
 						literal<CueDefinitionGrafik>({
 							type: CueType.Grafik,
 							template: 'ident_blank',
-							textFields: ['ODENSE', 'KLJ']
+							textFields: ['ODENSE', 'KLJ'],
+							adlib: true
 						}),
 						literal<CueDefinitionGrafik>({
 							type: CueType.Grafik,
 							template: 'bund',
-							textFields: ['ANETTE RYTTER', 'Inews']
+							textFields: ['ANETTE RYTTER', 'Inews'],
+							adlib: true
 						}),
 						literal<CueDefinitionGrafik>({
 							type: CueType.Grafik,
 							template: 'bund',
-							textFields: ['ANETTE RYTTER', 'anry@tv2.dk']
+							textFields: ['ANETTE RYTTER', 'anry@tv2.dk'],
+							adlib: true
 						}),
 						literal<CueDefinitionUnknown>({
 							type: CueType.Unknown,

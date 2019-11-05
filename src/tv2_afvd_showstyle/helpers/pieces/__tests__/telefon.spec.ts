@@ -91,11 +91,12 @@ describe('telefon', () => {
 				externalId: partId,
 				name: 'bund - Odense - Copenhagen',
 				enable: {
-					start: 0
+					start: 0,
+					end: 4000
 				},
 				outputLayerId: 'pgm0',
 				sourceLayerId: SourceLayer.PgmGraphics,
-				infiniteMode: PieceLifespan.OutOnNextPart,
+				infiniteMode: PieceLifespan.Normal,
 				content: literal<GraphicsContent>({
 					fileName: 'bund',
 					path: 'bund',

@@ -96,6 +96,19 @@ describe('Cue parser', () => {
 		)
 	})
 
+	test('Grafik (kg) - AdLib ;x.xx', () => {
+		const cueGrafik = ['kg bund HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk', ';x.xx']
+		const result = ParseCue(cueGrafik)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.Grafik,
+				template: 'bund',
+				textFields: ['HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk'],
+				adlib: true
+			})
+		)
+	})
+
 	test('Grafik (kg) - Inline first text field, blank time', () => {
 		const cueGrafik = ['kg bund HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk', ';x.xx']
 		const result = ParseCue(cueGrafik)
@@ -103,7 +116,8 @@ describe('Cue parser', () => {
 			literal<CueDefinition>({
 				type: CueType.Grafik,
 				template: 'bund',
-				textFields: ['HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk']
+				textFields: ['HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk'],
+				adlib: true
 			})
 		)
 	})
@@ -130,7 +144,21 @@ describe('Cue parser', () => {
 			literal<CueDefinition>({
 				type: CueType.Grafik,
 				template: 'bund',
-				textFields: ['HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk']
+				textFields: ['HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk'],
+				adlib: true
+			})
+		)
+	})
+
+	test('Grafik (kg) - Single line', () => {
+		const cueGrafik = ['kg bund 2']
+		const result = ParseCue(cueGrafik)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.Grafik,
+				template: 'bund',
+				textFields: ['2'],
+				adlib: true
 			})
 		)
 	})

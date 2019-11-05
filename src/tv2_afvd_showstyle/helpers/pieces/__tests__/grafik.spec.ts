@@ -11,9 +11,12 @@ import {
 	PieceLifespan
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../../../common/util'
+import { defaultShowStyleConfig, defaultStudioConfig } from '../../../../tv2_afvd_showstyle/__tests__/configs'
 import { CueDefinitionGrafik, CueType } from '../../../../tv2_afvd_showstyle/inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../../../tv2_afvd_showstyle/layers'
+import { StudioConfig } from '../../../../tv2_afvd_studio/helpers/config'
 import { VizLLayer } from '../../../../tv2_afvd_studio/layers'
+import { ShowStyleConfig } from '../../config'
 import { EvaluateGrafik } from '../grafik'
 
 describe('grafik piece', () => {
@@ -29,16 +32,29 @@ describe('grafik piece', () => {
 		const pieces: IBlueprintPiece[] = []
 		const adLibPieces: IBlueprintAdLibPiece[] = []
 		const partId = '0000000001'
-		EvaluateGrafik(pieces, adLibPieces, partId, cue)
+		EvaluateGrafik(
+			{
+				showStyle: (defaultShowStyleConfig as unknown) as ShowStyleConfig,
+				studio: (defaultStudioConfig as unknown) as StudioConfig,
+				sources: [],
+				mediaPlayers: []
+			},
+			pieces,
+			adLibPieces,
+			partId,
+			cue,
+			cue.adlib ? cue.adlib : false
+		)
 		expect(pieces).toEqual([
 			literal<IBlueprintPiece>({
 				_id: '',
 				externalId: partId,
 				name: 'bund - Odense - Copenhagen',
 				enable: {
-					start: 0
+					start: 0,
+					end: 4000
 				},
-				infiniteMode: PieceLifespan.OutOnNextPart,
+				infiniteMode: PieceLifespan.Normal,
 				outputLayerId: 'pgm0',
 				sourceLayerId: SourceLayer.PgmGraphics,
 				content: literal<GraphicsContent>({
@@ -75,16 +91,28 @@ describe('grafik piece', () => {
 		const pieces: IBlueprintPiece[] = []
 		const adLibPieces: IBlueprintAdLibPiece[] = []
 		const partId = '0000000001'
-		EvaluateGrafik(pieces, adLibPieces, partId, cue, cue.adlib)
+		EvaluateGrafik(
+			{
+				showStyle: (defaultShowStyleConfig as unknown) as ShowStyleConfig,
+				studio: (defaultStudioConfig as unknown) as StudioConfig,
+				sources: [],
+				mediaPlayers: []
+			},
+			pieces,
+			adLibPieces,
+			partId,
+			cue,
+			cue.adlib ? cue.adlib : false
+		)
 		expect(adLibPieces).toEqual([
 			literal<IBlueprintAdLibPiece>({
 				_rank: 0,
 				externalId: partId,
 				name: 'bund - Odense - Copenhagen',
-				infiniteMode: PieceLifespan.OutOnNextPart,
+				infiniteMode: PieceLifespan.Normal,
 				outputLayerId: 'pgm0',
 				sourceLayerId: SourceLayer.PgmGraphics,
-				expectedDuration: 0,
+				expectedDuration: 4000,
 				content: literal<GraphicsContent>({
 					fileName: 'bund',
 					path: 'bund',
