@@ -128,6 +128,8 @@ export function ParseCue(cue: UnparsedCue): CueDefinition {
 		}
 	}
 
+	cue = cue.filter(c => c !== '')
+
 	if (cue[0].match(/^kg ovl-all-out$/)) {
 		// All out
 		return {

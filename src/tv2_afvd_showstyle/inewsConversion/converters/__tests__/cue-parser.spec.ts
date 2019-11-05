@@ -150,6 +150,19 @@ describe('Cue parser', () => {
 		)
 	})
 
+	test('Grafik (kg) - Blank Lines', () => {
+		const cueGrafik = ['', 'kg bund', '', 'HELENE RØNBJERG KRISTENSEN', '', 'herk@tv2.dk', '']
+		const result = ParseCue(cueGrafik)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.Grafik,
+				template: 'bund',
+				textFields: ['HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk'],
+				adlib: true
+			})
+		)
+	})
+
 	test('Grafik (kg) - Single line', () => {
 		const cueGrafik = ['kg bund 2']
 		const result = ParseCue(cueGrafik)
