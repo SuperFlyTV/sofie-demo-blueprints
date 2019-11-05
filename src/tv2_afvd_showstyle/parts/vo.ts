@@ -14,7 +14,7 @@ import { BlueprintConfig } from '../helpers/config'
 import { MakeContentServer } from '../helpers/content/server'
 import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { AddScript } from '../helpers/pieces/script'
-import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
+import { PartDefinition } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
 import { EffektTransitionPiece, GetEffektAutoNext } from './effekt'
 import { CreatePartInvalid } from './invalid'
@@ -26,6 +26,16 @@ export function CreatePartVO(
 	partDefinition: PartDefinition,
 	totalWords: number
 ): BlueprintResultPart {
+	if (partDefinition.fields === undefined) {
+		context.warning('Video ID not set!')
+		return CreatePartInvalid(partDefinition)
+	}
+
+	if (!partDefinition.fields.videoId) {
+		context.warning('Video ID not set!')
+		return CreatePartInvalid(partDefinition)
+	}
+
 	const partTime = PartTime(partDefinition, totalWords)
 	let part = literal<IBlueprintPart>({
 		externalId: partDefinition.externalId,

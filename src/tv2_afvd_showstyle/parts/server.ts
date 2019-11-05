@@ -23,10 +23,12 @@ export function CreatePartServer(
 	partDefinition: PartDefinition
 ): BlueprintResultPart {
 	if (partDefinition.fields === undefined) {
+		context.warning('Video ID not set!')
 		return CreatePartInvalid(partDefinition)
 	}
 
 	if (!partDefinition.fields.videoId) {
+		context.warning('Video ID not set!')
 		return CreatePartInvalid(partDefinition)
 	}
 
