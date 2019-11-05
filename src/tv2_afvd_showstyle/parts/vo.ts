@@ -5,7 +5,8 @@ import {
 	IBlueprintPart,
 	IBlueprintPiece,
 	PartContext,
-	PieceLifespan
+	PieceLifespan,
+	PieceMetaData
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
 import { SisyfosLLAyer } from '../../tv2_afvd_studio/layers'
@@ -28,7 +29,7 @@ export function CreatePartVO(
 	const partTime = PartTime(partDefinition, totalWords)
 	let part = literal<IBlueprintPart>({
 		externalId: partDefinition.externalId,
-		title: PartType[partDefinition.type] + ' - ' + partDefinition.rawType,
+		title: `${partDefinition.rawType} - ${partDefinition.fields.videoId}`,
 		metaData: {},
 		typeVariant: '',
 		expectedDuration: partTime
@@ -40,8 +41,8 @@ export function CreatePartVO(
 	const adLibPieces: IBlueprintAdLibPiece[] = []
 	let pieces: IBlueprintPiece[] = []
 
-	const content = MakeContentServer(file, duration, partDefinition.externalId)
-	content.timelineObjects.push(
+	const serverContent = MakeContentServer(file, duration, partDefinition.externalId)
+	serverContent.timelineObjects.push(
 		literal<TimelineObjSisyfosMessage>({
 			id: '',
 			enable: {
@@ -66,7 +67,10 @@ export function CreatePartVO(
 			outputLayerId: 'pgm0',
 			sourceLayerId: SourceLayer.PgmVoiceOver,
 			infiniteMode: PieceLifespan.OutOnNextPart,
-			content
+			metaData: literal<PieceMetaData>({
+				mediaPlayerSessions: [part.externalId]
+			}),
+			content: serverContent
 		})
 	)
 
