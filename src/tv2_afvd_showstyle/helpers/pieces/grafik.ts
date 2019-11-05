@@ -129,7 +129,7 @@ export function CreateTimingGrafik(
 	const ret: { start: number; end: number } = { start: 0, end: 0 }
 	cue.start ? (ret.start = CalculateTime(cue.start)) : (ret.start = 0)
 
-	cue.end ? (ret.end = CalculateTime(cue.end)) : (ret.end = GetGrafikDuration(config, cue))
+	cue.end ? (ret.end = ret.start + CalculateTime(cue.end)) : (ret.end = ret.start + GetGrafikDuration(config, cue))
 
 	return ret
 }
@@ -153,9 +153,7 @@ export function GetGrafikDuration(config: BlueprintConfig, cue: CueDefinitionGra
 		}
 	}
 
-	return config.showStyle.DefaultTemplateDuration !== undefined
-		? Number(config.showStyle.DefaultTemplateDuration) * 1000
-		: 4000
+	return GetDefaultOut(config)
 }
 
 export function GetTemplateName(config: BlueprintConfig, cue: CueDefinitionGrafik): string {
@@ -168,4 +166,12 @@ export function GetTemplateName(config: BlueprintConfig, cue: CueDefinitionGrafi
 
 	// This means unconfigured templates will still be supported, with default out.
 	return cue.template
+}
+
+export function GetDefaultOut(config: BlueprintConfig): number {
+	if (config.showStyle.DefaultTemplateDuration! === undefined) {
+		return Number(config.showStyle.DefaultTemplateDuration) * 1000
+	}
+
+	return 4 * 1000
 }

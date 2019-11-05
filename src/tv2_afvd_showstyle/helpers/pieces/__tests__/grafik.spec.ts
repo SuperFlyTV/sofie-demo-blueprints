@@ -136,4 +136,65 @@ describe('grafik piece', () => {
 			})
 		])
 	})
+
+	test('kg bund length', () => {
+		const cue: CueDefinitionGrafik = {
+			type: CueType.Grafik,
+			template: 'bund',
+			textFields: ['Odense', 'Copenhagen'],
+			start: {
+				seconds: 10
+			}
+		}
+		const pieces: IBlueprintPiece[] = []
+		const adLibPieces: IBlueprintAdLibPiece[] = []
+		const partId = '0000000001'
+		EvaluateGrafik(
+			{
+				showStyle: (defaultShowStyleConfig as unknown) as ShowStyleConfig,
+				studio: (defaultStudioConfig as unknown) as StudioConfig,
+				sources: [],
+				mediaPlayers: []
+			},
+			pieces,
+			adLibPieces,
+			partId,
+			cue,
+			cue.adlib ? cue.adlib : false
+		)
+		expect(pieces).toEqual([
+			literal<IBlueprintPiece>({
+				_id: '',
+				externalId: partId,
+				name: 'bund - Odense - Copenhagen',
+				enable: {
+					start: 10000,
+					end: 14000
+				},
+				infiniteMode: PieceLifespan.Normal,
+				outputLayerId: 'pgm0',
+				sourceLayerId: SourceLayer.PgmGraphics,
+				content: literal<GraphicsContent>({
+					fileName: 'bund',
+					path: 'bund',
+					timelineObjects: literal<TimelineObjVIZMSEAny[]>([
+						literal<TimelineObjVIZMSEElementInternal>({
+							id: '',
+							enable: {
+								start: 0
+							},
+							priority: 1,
+							layer: VizLLayer.VizLLayerOverlay,
+							content: {
+								deviceType: DeviceType.VIZMSE,
+								type: TimelineContentTypeVizMSE.ELEMENT_INTERNAL,
+								templateName: 'bund',
+								templateData: ['Odense', 'Copenhagen']
+							}
+						})
+					])
+				})
+			})
+		])
+	})
 })
