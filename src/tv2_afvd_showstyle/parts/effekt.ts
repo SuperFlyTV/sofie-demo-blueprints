@@ -136,15 +136,15 @@ export function EffektTransitionPiece(
 								start: 0
 							},
 							priority: 1,
-							layer: AtemLLayer.AtemMEProgram,
+							layer: AtemLLayer.AtemDSKEffect,
 							content: {
 								deviceType: DeviceType.ATEM,
 								type: TimelineContentTypeAtem.DSK,
 								dsk: {
 									onAir: true,
 									sources: {
-										fillSource: config.studio.AtemSource.JingleFill,
-										cutSource: config.studio.AtemSource.JingleKey
+										fillSource: Number(config.studio.AtemSource.JingleFill),
+										cutSource: Number(config.studio.AtemSource.JingleKey)
 									}
 								}
 							}

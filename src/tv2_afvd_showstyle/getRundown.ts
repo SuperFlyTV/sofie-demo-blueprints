@@ -295,8 +295,8 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 				dsk: {
 					onAir: true,
 					sources: {
-						fillSource: config.studio.AtemSource.DSK2F,
-						cutSource: config.studio.AtemSource.DSK2K
+						fillSource: config.studio.AtemSource.JingleFill,
+						cutSource: config.studio.AtemSource.JingleKey
 					},
 					properties: {
 						tie: false,
