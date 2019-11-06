@@ -97,6 +97,17 @@ export default literal<ISourceLayer[]>([
 		exclusiveGroup: 'fullscreen_pgm'
 	},
 	{
+		_id: SourceLayer.PgmDVEBackground,
+		_rank: 7500,
+		name: 'DVE Background',
+		type: SourceLayerType.GRAPHICS,
+		onPGMClean: false,
+		activateKeyboardHotkeys: '',
+		clearKeyboardHotkey: '',
+		allowDisable: true,
+		unlimited: false
+	},
+	{
 		_id: SourceLayer.PgmTelephone,
 		_rank: 6000,
 		name: 'Telephone',

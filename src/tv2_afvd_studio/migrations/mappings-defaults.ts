@@ -87,16 +87,16 @@ export default literal<BlueprintMappings>({
 	}),
 	casparcg_dve_loop: literal<MappingCasparCG & BlueprintMapping>({
 		device: PlayoutDeviceType.CASPARCG,
-		deviceId: 'caspar01',
+		deviceId: 'caspar02',
 		lookahead: LookaheadMode.NONE,
-		channel: 5,
+		channel: 2,
 		layer: 110
 	}),
 	casparcg_cg_dve_template: literal<MappingCasparCG & BlueprintMapping>({
 		device: PlayoutDeviceType.CASPARCG,
-		deviceId: 'caspar01',
+		deviceId: 'caspar02',
 		lookahead: LookaheadMode.NONE,
-		channel: 5,
+		channel: 2,
 		layer: 120
 	}),
 	casparcg_dve_key: literal<MappingCasparCG & BlueprintMapping>({

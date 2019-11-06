@@ -5,6 +5,7 @@ import {
 	TimelineContentTypeCasparCg,
 	TimelineObjAtemME,
 	TimelineObjAtemSsrc,
+	TimelineObjAtemSsrcProps,
 	TimelineObjCCGMedia,
 	TimelineObjCCGTemplate,
 	TSRTimelineObj
@@ -129,7 +130,7 @@ export function MakeContentDVE(
 	const frameFile = dveConfig.DVEGraphicsFrame ? dveConfig.DVEGraphicsFrame.toString() : ''
 
 	parsedCue.labels.forEach((label, i) => {
-		graphicsTemplateContent[`locator${i}1`] = label
+		graphicsTemplateContent[`locator${i + 1}`] = label
 	})
 
 	return {
@@ -150,10 +151,26 @@ export function MakeContentDVE(
 						ssrc: { boxes }
 					}
 				}),
+				literal<TimelineObjAtemSsrcProps>({
+					id: `${partId}_DVE_ATEMSSRC_ART`,
+					enable: { start: 10 },
+					priority: 1,
+					layer: AtemLLayer.AtemSSrcArt,
+					content: {
+						deviceType: DeviceType.ATEM,
+						type: TimelineContentTypeAtem.SSRCPROPS,
+						ssrcProps: {
+							artFillSource: config.studio.AtemSource.SplitArtF,
+							artCutSource: config.studio.AtemSource.SplitArtK,
+							artOption: 1,
+							artPreMultiplied: true
+						}
+					}
+				}),
 
 				literal<TimelineObjAtemME>({
 					id: '',
-					enable: { start: `#${partId}_DVE_ATEMSSRC.start + 80` }, // give the ssrc 2 frames to get configured
+					enable: { start: 80 }, // give the ssrc 2 frames to get configured
 					priority: 1,
 					layer: AtemLLayer.AtemMEProgram,
 					content: {

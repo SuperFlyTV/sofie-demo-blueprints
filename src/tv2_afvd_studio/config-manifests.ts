@@ -128,7 +128,7 @@ export const studioConfigManifest: ConfigManifestEntry[] = [
 		description: 'ATEM vision mixer input for Split Screen Art Fill',
 		type: ConfigManifestEntryType.NUMBER,
 		required: false,
-		defaultVal: 3010
+		defaultVal: 30
 	},
 	{
 		id: 'AtemSource.SplitArtK',
@@ -136,7 +136,7 @@ export const studioConfigManifest: ConfigManifestEntry[] = [
 		description: 'ATEM vision mixer input for Split Screen Art Key',
 		type: ConfigManifestEntryType.NUMBER,
 		required: false,
-		defaultVal: 3011
+		defaultVal: 32
 	},
 	{
 		id: 'AtemSource.Default',
