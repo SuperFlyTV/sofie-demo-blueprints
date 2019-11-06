@@ -29,6 +29,14 @@ export default literal<ISourceLayer[]>([
 		exclusiveGroup: 'fullscreen_pgm'
 	},
 	{
+		_id: SourceLayer.PgmSlutord,
+		_rank: 11900,
+		name: 'Slutord',
+		type: SourceLayerType.SCRIPT,
+		onPGMClean: true,
+		unlimited: false
+	},
+	{
 		_id: SourceLayer.PgmVoiceOver,
 		_rank: 11000,
 		name: 'Voice Over',

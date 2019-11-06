@@ -11,7 +11,6 @@ import { PieceMetaData } from '../../tv2_afvd_studio/onTimelineGenerate'
 import { BlueprintConfig } from '../helpers/config'
 import { MakeContentServer } from '../helpers/content/server'
 import { EvaluateCues } from '../helpers/pieces/evaluateCues'
-import { AddScript } from '../helpers/pieces/script'
 import { PartDefinition } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
 import { EffektTransitionPiece, GetEffektAutoNext } from './effekt'
@@ -67,7 +66,6 @@ export function CreatePartServer(
 	pieces = [...pieces, ...EffektTransitionPiece(context, config, partDefinition)]
 
 	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
-	AddScript(partDefinition, pieces, duration)
 
 	if (pieces.length === 0) {
 		return CreatePartInvalid(partDefinition)

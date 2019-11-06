@@ -34,7 +34,7 @@ export function CreatePartUnknown(
 	const pieces: IBlueprintPiece[] = []
 
 	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
-	AddScript(partDefinition, pieces, partTime)
+	AddScript(partDefinition, pieces, partTime, false)
 	part = { ...part, ...GetBreakerAutoNext(context, config, partDefinition) }
 
 	if (pieces.length === 0) {

@@ -20,7 +20,7 @@ describe('addScript', () => {
 			modified: 0
 		})
 		const result: IBlueprintPiece[] = []
-		AddScript(part, result, 1000)
+		AddScript(part, result, 1000, false)
 		expect(result).toEqual([
 			literal<IBlueprintPiece>({
 				_id: '',
