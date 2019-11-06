@@ -148,7 +148,7 @@ export function InfiniteMode(mode: 'B' | 'S' | 'O', defaultLifespan: PieceLifesp
 		case 'S':
 			return PieceLifespan.OutOnNextSegment
 		case 'O':
-			return PieceLifespan.Infinite
+			return PieceLifespan.OutOnNextSegment
 	}
 
 	return defaultLifespan

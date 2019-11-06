@@ -166,7 +166,7 @@ describe('CreateTiming', () => {
 				enable: {
 					start: 0
 				},
-				infiniteMode: PieceLifespan.Infinite
+				infiniteMode: PieceLifespan.OutOnNextSegment
 			})
 		)
 	})
