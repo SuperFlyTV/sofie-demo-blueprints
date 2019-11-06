@@ -117,7 +117,8 @@ export function MakeContentDVE(
 			valid: false,
 			content: {
 				boxSourceConfiguration: [],
-				timelineObjects: []
+				timelineObjects: [],
+				dveConfiguration: []
 			}
 		}
 	}
