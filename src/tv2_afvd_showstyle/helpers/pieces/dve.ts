@@ -73,9 +73,6 @@ export function EvaluateDVE(
 		context.warning(`Could not find template ${parsedCue.template}`)
 		return
 	}
-	// @todo: To be pulled from a story cue
-	// const background: string = rawTemplate.BackgroundLoop as string
-	const background = 'amb' // @todo: hardcode!
 
 	if (!TemplateIsValid(JSON.parse(rawTemplate.DVEJSON as string))) {
 		context.warning(`Invalid DVE template ${parsedCue.template}`)
@@ -85,7 +82,7 @@ export function EvaluateDVE(
 	// const template: DVEConfig = JSON.parse(rawTemplate.DVEJSON as string) as DVEConfig
 	const template: DVEConfig = JSON.parse(rawTemplate.DVEJSON as string) as DVEConfig
 
-	const content = MakeContentDVE(context, config, partId, parsedCue, template, background)
+	const content = MakeContentDVE(context, config, partId, parsedCue, template)
 
 	if (content.valid) {
 		pieces.push(

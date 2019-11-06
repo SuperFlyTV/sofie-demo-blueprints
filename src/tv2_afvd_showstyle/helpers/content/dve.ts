@@ -5,8 +5,6 @@ import {
 	TimelineContentTypeCasparCg,
 	TimelineObjAtemME,
 	TimelineObjAtemSsrc,
-	TimelineObjAtemSsrcProps,
-	TimelineObjCCGMedia,
 	TimelineObjCCGTemplate,
 	TSRTimelineObj
 } from 'timeline-state-resolver-types'
@@ -35,28 +33,7 @@ export function MakeContentDVE(
 	config: BlueprintConfig,
 	partId: string,
 	parsedCue: CueDefinitionDVE,
-	template: DVEConfig,
-	background: string,
-	graphicsTemplateName: string = 'dve/locators', // @todo: hardcoded
-	graphicsTemplateSetup: object = {
-		// @todo: hardcoded
-		display: {
-			isPreview: false,
-			displayState: 'locators'
-		},
-		locators: {
-			style: {}
-		}
-	},
-	// @todo: hardcoded
-	graphicsTemplateContent: obejct = {
-		locator1: {
-			by: 'Odense'
-		},
-		locator2: {
-			by: 'København'
-		}
-	}
+	template: DVEConfig
 ): { content: SplitsContent; valid: boolean } {
 	const boxes: DVEConfigBox[] = []
 	let audioTimeline: TSRTimelineObj[] = []
@@ -131,6 +108,27 @@ export function MakeContentDVE(
 			valid = false
 		}
 	})
+
+	const dveConfig = config.showStyle.DVEStyles.find(style => style.DVEName === parsedCue.template)
+	if (!dveConfig) {
+		return {
+			valid: false,
+			content: {
+				boxSourceConfiguration: [],
+				timelineObjects: []
+			}
+		}
+	}
+	const graphicsTemplateName = dveConfig.DVEGraphicsTemplate ? dveConfig.DVEGraphicsTemplate.toString() : ''
+	const graphicsTemplateStyle = dveConfig.DVEGraphicsTemplateJSON
+		? JSON.parse(dveConfig.DVEGraphicsTemplateJSON.toString())
+		: ''
+	const graphicsTemplateContent: { [key: string]: string } = {}
+
+	parsedCue.labels.forEach((label, i) => {
+		graphicsTemplateContent[`locator${i}1`] = label
+	})
+
 	return {
 		valid,
 		content: literal<SplitsContent>({
@@ -164,55 +162,27 @@ export function MakeContentDVE(
 						}
 					}
 				}),
-
-				...(background
-					? [
-							literal<TimelineObjCCGMedia>({
-								id: '',
-								enable: { start: 0 },
-								priority: 1,
-								layer: CasparLLayer.CasparCGDVELoop,
-								content: {
-									deviceType: DeviceType.CASPARCG,
-									type: TimelineContentTypeCasparCg.MEDIA,
-									file: background,
-									loop: true
-								}
-							}),
-							literal<TimelineObjAtemSsrcProps>({
-								id: '',
-								enable: { start: 0 },
-								priority: 1,
-								layer: AtemLLayer.AtemSSrcArt,
-								content: {
-									deviceType: DeviceType.ATEM,
-									type: TimelineContentTypeAtem.SSRCPROPS,
-									ssrcProps: {
-										artFillSource: config.studio.AtemSource.SplitArtF,
-										artCutSource: config.studio.AtemSource.SplitArtK,
-										artOption: 0, // Background
-										artPreMultiplied: false
-									}
-								}
-							})
-					  ]
-					: []),
-
 				...(graphicsTemplateName
 					? [
 							literal<TimelineObjCCGTemplate>({
 								id: '',
 								enable: { start: 0 },
 								priority: 1,
-								layer: CasparLLayer.CasparCGDVECG,
+								layer: CasparLLayer.CasparCGDVETemplate,
 								content: {
 									deviceType: DeviceType.CASPARCG,
 									type: TimelineContentTypeCasparCg.TEMPLATE,
 									templateType: 'html',
 									name: graphicsTemplateName,
 									data: {
-										...(graphicsTemplateSetup ? graphicsTemplateSetup : {}),
-										...(graphicsTemplateContent ? graphicsTemplateContent : {})
+										display: {
+											isPreview: false,
+											displayState: 'locators'
+										},
+										locators: {
+											style: graphicsTemplateStyle ? graphicsTemplateStyle : {},
+											content: graphicsTemplateContent
+										}
 									},
 									useStopCommand: false
 								}
