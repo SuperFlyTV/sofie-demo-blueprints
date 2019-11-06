@@ -50,7 +50,6 @@ export function EvaluateAdLib(
 			context.warning(`Could not find template ${parsedCue.variant}`)
 			return
 		}
-		const background: string = rawTemplate.BackgroundLoop as string
 
 		if (!TemplateIsValid(JSON.parse(rawTemplate.DVEJSON as string))) {
 			context.warning(`Invalid DVE template ${parsedCue.variant}`)
@@ -67,7 +66,7 @@ export function EvaluateAdLib(
 		// const template: DVEConfig = JSON.parse(rawTemplate.DVEJSON as string) as DVEConfig
 		const template: DVEConfig = JSON.parse(rawTemplate.DVEJSON as string) as DVEConfig
 
-		const content = MakeContentDVE(context, config, partId, cueDVE, template, background)
+		const content = MakeContentDVE(context, config, partId, cueDVE, template)
 
 		adLibPieces.push(
 			literal<IBlueprintAdLibPiece>({

@@ -42,13 +42,14 @@ export enum CasparLLayer {
 	CasparPlayerSoundEffect = 'casparcg_player_soundeffect',
 	CasparPlayerClipPending = 'casparcg_player_clip_pending',
 	CasparPlayerJingle = 'casparcg_player_jingle',
-
 	CasparCGGraphics = 'casparcg_cg_graphics',
 	CasparCGEffects = 'casparcg_cg_effects',
 	CasparCGDVELoop = 'casparcg_dve_loop',
 	CasparCGLYD = 'casparcg_audio_lyd',
-
-	CasparCountdown = 'casparcg_cg_countdown'
+	CasparCountdown = 'casparcg_cg_countdown',
+	CasparCGDVETemplate = 'casparcg_cg_dve_template',
+	CasparCGDVEKey = 'casparcg_dve_key',
+	CasparCGDVEFrame = 'casparcg_dve_frame'
 }
 
 export enum SisyfosLLAyer {

@@ -7,6 +7,7 @@ import {
 	TimelineObjAtemSsrc,
 	TimelineObjAtemSsrcProps,
 	TimelineObjCCGMedia,
+	TimelineObjCCGTemplate,
 	TSRTimelineObj
 } from 'timeline-state-resolver-types'
 import {
@@ -34,8 +35,7 @@ export function MakeContentDVE(
 	config: BlueprintConfig,
 	partId: string,
 	parsedCue: CueDefinitionDVE,
-	template: DVEConfig,
-	background: string
+	template: DVEConfig
 ): { content: SplitsContent; valid: boolean } {
 	const boxes: DVEConfigBox[] = []
 	let audioTimeline: TSRTimelineObj[] = []
@@ -110,6 +110,30 @@ export function MakeContentDVE(
 			valid = false
 		}
 	})
+
+	const dveConfig = config.showStyle.DVEStyles.find(style => style.DVEName === parsedCue.template)
+	if (!dveConfig) {
+		return {
+			valid: false,
+			content: {
+				boxSourceConfiguration: [],
+				timelineObjects: [],
+				dveConfiguration: []
+			}
+		}
+	}
+	const graphicsTemplateName = dveConfig.DVEGraphicsTemplate ? dveConfig.DVEGraphicsTemplate.toString() : ''
+	const graphicsTemplateStyle = dveConfig.DVEGraphicsTemplateJSON
+		? JSON.parse(dveConfig.DVEGraphicsTemplateJSON.toString())
+		: ''
+	const graphicsTemplateContent: { [key: string]: string } = {}
+	const keyFile = dveConfig.DVEGraphicsKey ? dveConfig.DVEGraphicsKey.toString() : ''
+	const frameFile = dveConfig.DVEGraphicsFrame ? dveConfig.DVEGraphicsFrame.toString() : ''
+
+	parsedCue.labels.forEach((label, i) => {
+		graphicsTemplateContent[`locator${i + 1}`] = label
+	})
+
 	return {
 		valid,
 		content: literal<SplitsContent>({
@@ -128,10 +152,26 @@ export function MakeContentDVE(
 						ssrc: { boxes }
 					}
 				}),
+				literal<TimelineObjAtemSsrcProps>({
+					id: `${partId}_DVE_ATEMSSRC_ART`,
+					enable: { start: 10 },
+					priority: 1,
+					layer: AtemLLayer.AtemSSrcArt,
+					content: {
+						deviceType: DeviceType.ATEM,
+						type: TimelineContentTypeAtem.SSRCPROPS,
+						ssrcProps: {
+							artFillSource: config.studio.AtemSource.SplitArtF,
+							artCutSource: config.studio.AtemSource.SplitArtK,
+							artOption: 1,
+							artPreMultiplied: true
+						}
+					}
+				}),
 
 				literal<TimelineObjAtemME>({
 					id: '',
-					enable: { start: `#${partId}_DVE_ATEMSSRC.start + 80` }, // give the ssrc 2 frames to get configured
+					enable: { start: 80 }, // give the ssrc 2 frames to get configured
 					priority: 1,
 					layer: AtemLLayer.AtemMEProgram,
 					content: {
@@ -143,41 +183,68 @@ export function MakeContentDVE(
 						}
 					}
 				}),
-
-				...(background
+				...(graphicsTemplateName
+					? [
+							literal<TimelineObjCCGTemplate>({
+								id: '',
+								enable: { start: 0 },
+								priority: 1,
+								layer: CasparLLayer.CasparCGDVETemplate,
+								content: {
+									deviceType: DeviceType.CASPARCG,
+									type: TimelineContentTypeCasparCg.TEMPLATE,
+									templateType: 'html',
+									name: graphicsTemplateName,
+									data: {
+										display: {
+											isPreview: false,
+											displayState: 'locators'
+										},
+										locators: {
+											style: graphicsTemplateStyle ? graphicsTemplateStyle : {},
+											content: graphicsTemplateContent
+										}
+									},
+									useStopCommand: false
+								}
+							})
+					  ]
+					: []),
+				...(keyFile
 					? [
 							literal<TimelineObjCCGMedia>({
 								id: '',
 								enable: { start: 0 },
 								priority: 1,
-								layer: CasparLLayer.CasparCGDVELoop,
+								layer: CasparLLayer.CasparCGDVEKey,
 								content: {
 									deviceType: DeviceType.CASPARCG,
 									type: TimelineContentTypeCasparCg.MEDIA,
-									file: background,
+									file: keyFile,
+									mixer: {
+										keyer: true
+									},
 									loop: true
-								}
-							}),
-							literal<TimelineObjAtemSsrcProps>({
-								id: '',
-								enable: { start: 0 },
-								priority: 1,
-								layer: AtemLLayer.AtemSSrcArt,
-								content: {
-									deviceType: DeviceType.ATEM,
-									type: TimelineContentTypeAtem.SSRCPROPS,
-									ssrcProps: {
-										artFillSource: config.studio.AtemSource.SplitArtF,
-										artCutSource: config.studio.AtemSource.SplitArtK,
-										artOption: 0, // Background
-										artPreMultiplied: false
-									}
 								}
 							})
 					  ]
 					: []),
-
-				// TODO: Graphic overlay
+				...(frameFile
+					? [
+							literal<TimelineObjCCGMedia>({
+								id: '',
+								enable: { start: 0 },
+								priority: 1,
+								layer: CasparLLayer.CasparCGDVEFrame,
+								content: {
+									deviceType: DeviceType.CASPARCG,
+									type: TimelineContentTypeCasparCg.MEDIA,
+									file: frameFile,
+									loop: true
+								}
+							})
+					  ]
+					: []),
 
 				...audioTimeline,
 

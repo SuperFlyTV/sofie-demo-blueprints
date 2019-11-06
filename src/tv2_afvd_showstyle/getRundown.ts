@@ -374,7 +374,87 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			content: {
 				deviceType: DeviceType.CASPARCG,
 				type: TimelineContentTypeCasparCg.MEDIA,
-				file: 'EMPTY',
+				file: 'CG1080I50',
+				mixer: {
+					opacity: 0
+				},
+				transitions: {
+					inTransition: {
+						type: Transition.CUT,
+						duration: CONSTANTS.DefaultClipFadeOut
+					}
+				}
+			}
+		}),
+		literal<TimelineObjCCGMedia>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: CasparLLayer.CasparCGDVEFrame,
+			content: {
+				deviceType: DeviceType.CASPARCG,
+				type: TimelineContentTypeCasparCg.MEDIA,
+				file: 'CG1080I50',
+				mixer: {
+					opacity: 0
+				},
+				transitions: {
+					inTransition: {
+						type: Transition.CUT,
+						duration: CONSTANTS.DefaultClipFadeOut
+					}
+				}
+			}
+		}),
+		literal<TimelineObjCCGMedia>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: CasparLLayer.CasparCGDVEKey,
+			content: {
+				deviceType: DeviceType.CASPARCG,
+				type: TimelineContentTypeCasparCg.MEDIA,
+				file: 'CG1080I50',
+				mixer: {
+					opacity: 0
+				},
+				transitions: {
+					inTransition: {
+						type: Transition.CUT,
+						duration: CONSTANTS.DefaultClipFadeOut
+					}
+				}
+			}
+		}),
+		literal<TimelineObjCCGMedia>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: CasparLLayer.CasparCGDVETemplate,
+			content: {
+				deviceType: DeviceType.CASPARCG,
+				type: TimelineContentTypeCasparCg.MEDIA,
+				file: 'CG1080I50',
+				mixer: {
+					opacity: 0
+				},
+				transitions: {
+					inTransition: {
+						type: Transition.CUT,
+						duration: CONSTANTS.DefaultClipFadeOut
+					}
+				}
+			}
+		}),
+		literal<TimelineObjCCGMedia>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: CasparLLayer.CasparCGDVELoop,
+			content: {
+				deviceType: DeviceType.CASPARCG,
+				type: TimelineContentTypeCasparCg.MEDIA,
+				file: 'CG1080I50',
 				mixer: {
 					opacity: 0
 				},

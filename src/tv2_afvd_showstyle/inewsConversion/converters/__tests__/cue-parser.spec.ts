@@ -339,8 +339,66 @@ describe('Cue parser', () => {
 			literal<CueDefinition>({
 				type: CueType.VIZ,
 				rawType: 'VIZ=grafik-design',
+				design: 'grafik-design',
 				content: {
 					triopage: 'DESIGN_SC'
+				},
+				start: {
+					frames: 4,
+					seconds: 0
+				}
+			})
+		)
+	})
+
+	test('VIZ Cue', () => {
+		const cueViz = ['VIZ=full-triopage', 'triopage=DESIGN_SC', ';0.00.04']
+		const result = ParseCue(cueViz)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.VIZ,
+				rawType: 'VIZ=full-triopage',
+				design: 'full-triopage',
+				content: {
+					triopage: 'DESIGN_SC'
+				},
+				start: {
+					frames: 4,
+					seconds: 0
+				}
+			})
+		)
+	})
+
+	test('VIZ Cue', () => {
+		const cueViz = ['VIZ=dve-triopage', 'triopage=DESIGN_SC', ';0.00.04']
+		const result = ParseCue(cueViz)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.VIZ,
+				rawType: 'VIZ=dve-triopage',
+				design: 'dve-triopage',
+				content: {
+					triopage: 'DESIGN_SC'
+				},
+				start: {
+					frames: 4,
+					seconds: 0
+				}
+			})
+		)
+	})
+
+	test('VIZ Cue', () => {
+		const cueViz = ['VIZ=dve-triopage', 'GRAFIK=DESIGN_SC', ';0.00.04']
+		const result = ParseCue(cueViz)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.VIZ,
+				rawType: 'VIZ=dve-triopage',
+				design: 'dve-triopage',
+				content: {
+					GRAFIK: 'DESIGN_SC'
 				},
 				start: {
 					frames: 4,
@@ -408,6 +466,7 @@ describe('Cue parser', () => {
 	})
 
 	test('Kommando', () => {
+		// TODO make this it's own type
 		const cueKommando = ['KOMMANDO=GRAPHICSPROFILE', 'TV2 SPORT 2016', ';0.00']
 		const result = ParseCue(cueKommando)
 		expect(result).toEqual(
@@ -417,12 +476,14 @@ describe('Cue parser', () => {
 				start: {
 					seconds: 0
 				},
-				content: { GRAPHICSPROFILE: 'TV2 SPORT 2016' }
+				content: { GRAPHICSPROFILE: 'TV2 SPORT 2016' },
+				design: 'GRAPHICSPROFILE'
 			})
 		)
 	})
 
 	test('SS=', () => {
+		// TODO: Screen type
 		const cueSS = ['SS=3-SPORTSDIGI', 'INP1=EVS 1', ';0.00.01']
 		const result = ParseCue(cueSS)
 		expect(result).toEqual(

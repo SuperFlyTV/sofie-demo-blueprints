@@ -75,6 +75,7 @@ export interface CueDefinitionVIZ extends CueDefinitionBase {
 	content: {
 		[key: string]: string
 	}
+	design: string
 }
 
 export interface CueDefinitionMic extends CueDefinitionBase {
@@ -342,7 +343,13 @@ function parseVIZCues(cue: string[]): CueDefinitionVIZ {
 	let vizCues: CueDefinitionVIZ = {
 		type: CueType.VIZ,
 		rawType: cue[0],
-		content: {}
+		content: {},
+		design: ''
+	}
+
+	const design = cue[0].match(/^VIZ=(.*)$/)
+	if (design) {
+		vizCues.design = design[1]
 	}
 
 	for (let i = 1; i < cue.length; i++) {
@@ -414,12 +421,14 @@ function parseKommando(cue: string[]) {
 	let kommandoCue: CueDefinitionVIZ = {
 		type: CueType.VIZ,
 		rawType: cue[0],
-		content: {}
+		content: {},
+		design: ''
 	}
 
 	const command = cue[0].match(/^KOMMANDO=(.*)$/)
 	if (command) {
 		kommandoCue.content[command[1].toString()] = cue[1]
+		kommandoCue.design = command[1]
 	}
 
 	if (cue[2] && isTime(cue[2])) {

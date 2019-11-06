@@ -87,17 +87,38 @@ export default literal<BlueprintMappings>({
 	}),
 	casparcg_dve_loop: literal<MappingCasparCG & BlueprintMapping>({
 		device: PlayoutDeviceType.CASPARCG,
-		deviceId: 'caspar01',
+		deviceId: 'caspar02',
 		lookahead: LookaheadMode.NONE,
-		channel: 5,
-		layer: 100
+		channel: 2,
+		layer: 110
+	}),
+	casparcg_cg_dve_template: literal<MappingCasparCG & BlueprintMapping>({
+		device: PlayoutDeviceType.CASPARCG,
+		deviceId: 'caspar02',
+		lookahead: LookaheadMode.NONE,
+		channel: 2,
+		layer: 120
+	}),
+	casparcg_dve_key: literal<MappingCasparCG & BlueprintMapping>({
+		device: PlayoutDeviceType.CASPARCG,
+		deviceId: 'caspar02',
+		lookahead: LookaheadMode.PRELOAD,
+		channel: 2,
+		layer: 109
+	}),
+	casparcg_dve_frame: literal<MappingCasparCG & BlueprintMapping>({
+		device: PlayoutDeviceType.CASPARCG,
+		deviceId: 'caspar02',
+		lookahead: LookaheadMode.PRELOAD,
+		channel: 2,
+		layer: 111
 	}),
 	casparcg_player_jingle: literal<MappingCasparCG & BlueprintMapping>({
 		device: PlayoutDeviceType.CASPARCG,
 		deviceId: 'caspar02',
 		lookahead: LookaheadMode.PRELOAD,
 		channel: 1,
-		layer: 100
+		layer: 120
 	}),
 	casparcg_audio_lyd: literal<MappingCasparCG & BlueprintMapping>({
 		device: PlayoutDeviceType.CASPARCG,
@@ -374,7 +395,7 @@ export function getMediaPlayerMappings(mode: MediaPlayerType, mediaPlayers: Blue
 					deviceId: 'caspar01',
 					lookahead: LookaheadMode.NONE,
 					channel: 0, // TODO?
-					layer: 100
+					layer: 110
 				})
 				res[`sisyfos_player_clip_${mp.id}`] = literal<MappingSisyfos & BlueprintMapping>({
 					device: PlayoutDeviceType.SISYFOS,
