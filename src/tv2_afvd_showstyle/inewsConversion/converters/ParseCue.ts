@@ -312,7 +312,7 @@ function parseDVE(cue: string[]): CueDefinitionDVE {
 		} else if (c.match(/^BYNAVN=/)) {
 			const labels = c.match(/^BYNAVN=(.+)$/)
 			if (labels) {
-				dvecue.labels = labels[1].split('\\')
+				dvecue.labels = labels[1].split(/\/|\\/)
 			}
 		} else if (isTime(c)) {
 			dvecue = { ...dvecue, ...parseTime(c) }

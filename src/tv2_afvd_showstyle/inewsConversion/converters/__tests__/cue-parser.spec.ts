@@ -302,6 +302,19 @@ describe('Cue parser', () => {
 		)
 	})
 
+	test('DVE', () => {
+		const cueDVE = ['DVE=sommerfugl', 'INP1=KAM 1', 'INP2=LIVE 1', 'BYNAVN=Odense/København']
+		const result = ParseCue(cueDVE)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.DVE,
+				template: 'sommerfugl',
+				sources: ['KAM 1', 'LIVE 1'],
+				labels: ['Odense', 'København']
+			})
+		)
+	})
+
 	test('TELEFON with Grafik', () => {
 		const cueTelefon = ['TELEFON=TLF 2', 'kg bund', 'HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk', ';0.02']
 		const result = ParseCue(cueTelefon)
