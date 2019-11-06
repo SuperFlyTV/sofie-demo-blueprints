@@ -73,7 +73,9 @@ export function EvaluateDVE(
 		context.warning(`Could not find template ${parsedCue.template}`)
 		return
 	}
-	const background: string = rawTemplate.BackgroundLoop as string
+	// @todo: To be pulled from a story cue
+	// const background: string = rawTemplate.BackgroundLoop as string
+	const background = 'amb' // @todo: hardcode!
 
 	if (!TemplateIsValid(JSON.parse(rawTemplate.DVEJSON as string))) {
 		context.warning(`Invalid DVE template ${parsedCue.template}`)
@@ -167,15 +169,17 @@ export function TemplateIsValid(template: any): boolean {
 	return false
 }
 
-export function GetDVETemplate(
-	config: TableConfigItemValue,
-	templateName: string
-):
-	| {
-			_id: string
-			[key: string]: BasicConfigItemValue
-	  }
-	| undefined {
+export interface DVEConfigInput {
+	_id: string
+	DVEName: string
+	DVEJSON: string
+	DVEGraphicsTemplate: string
+	DVEGraphicsTemplateJSON: string
+	DVEInputs: string
+	[key: string]: BasicConfigItemValue
+}
+
+export function GetDVETemplate(config: TableConfigItemValue, templateName: string): DVEConfigInput | undefined {
 	const conf = config.find(c => c.DVEName === templateName)
-	return conf
+	return conf as DVEConfigInput
 }

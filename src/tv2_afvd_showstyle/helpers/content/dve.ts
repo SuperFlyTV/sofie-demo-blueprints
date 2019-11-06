@@ -7,6 +7,7 @@ import {
 	TimelineObjAtemSsrc,
 	TimelineObjAtemSsrcProps,
 	TimelineObjCCGMedia,
+	TimelineObjCCGTemplate,
 	TSRTimelineObj
 } from 'timeline-state-resolver-types'
 import {
@@ -35,7 +36,27 @@ export function MakeContentDVE(
 	partId: string,
 	parsedCue: CueDefinitionDVE,
 	template: DVEConfig,
-	background: string
+	background: string,
+	graphicsTemplateName: string = 'dve/locators', // @todo: hardcoded
+	graphicsTemplateSetup: object = {
+		// @todo: hardcoded
+		display: {
+			isPreview: false,
+			displayState: 'locators'
+		},
+		locators: {
+			style: {}
+		}
+	},
+	// @todo: hardcoded
+	graphicsTemplateContent: obejct = {
+		locator1: {
+			by: 'Odense'
+		},
+		locator2: {
+			by: 'København'
+		}
+	}
 ): { content: SplitsContent; valid: boolean } {
 	const boxes: DVEConfigBox[] = []
 	let audioTimeline: TSRTimelineObj[] = []
@@ -177,7 +198,27 @@ export function MakeContentDVE(
 					  ]
 					: []),
 
-				// TODO: Graphic overlay
+				...(graphicsTemplateName
+					? [
+							literal<TimelineObjCCGTemplate>({
+								id: '',
+								enable: { start: 0 },
+								priority: 1,
+								layer: CasparLLayer.CasparCGDVECG,
+								content: {
+									deviceType: DeviceType.CASPARCG,
+									type: TimelineContentTypeCasparCg.TEMPLATE,
+									templateType: 'html',
+									name: graphicsTemplateName,
+									data: {
+										...(graphicsTemplateSetup ? graphicsTemplateSetup : {}),
+										...(graphicsTemplateContent ? graphicsTemplateContent : {})
+									},
+									useStopCommand: false
+								}
+							})
+					  ]
+					: []),
 
 				...audioTimeline,
 

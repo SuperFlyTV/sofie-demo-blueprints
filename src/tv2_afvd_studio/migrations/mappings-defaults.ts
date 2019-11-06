@@ -90,14 +90,21 @@ export default literal<BlueprintMappings>({
 		deviceId: 'caspar01',
 		lookahead: LookaheadMode.NONE,
 		channel: 5,
-		layer: 100
+		layer: 110
+	}),
+	casparcg_dve_cg: literal<MappingCasparCG & BlueprintMapping>({
+		device: PlayoutDeviceType.CASPARCG,
+		deviceId: 'caspar01',
+		lookahead: LookaheadMode.NONE,
+		channel: 5,
+		layer: 120
 	}),
 	casparcg_player_jingle: literal<MappingCasparCG & BlueprintMapping>({
 		device: PlayoutDeviceType.CASPARCG,
 		deviceId: 'caspar02',
 		lookahead: LookaheadMode.PRELOAD,
 		channel: 1,
-		layer: 100
+		layer: 120
 	}),
 	casparcg_audio_lyd: literal<MappingCasparCG & BlueprintMapping>({
 		device: PlayoutDeviceType.CASPARCG,
@@ -374,7 +381,7 @@ export function getMediaPlayerMappings(mode: MediaPlayerType, mediaPlayers: Blue
 					deviceId: 'caspar01',
 					lookahead: LookaheadMode.NONE,
 					channel: 0, // TODO?
-					layer: 100
+					layer: 110
 				})
 				res[`sisyfos_player_clip_${mp.id}`] = literal<MappingSisyfos & BlueprintMapping>({
 					device: PlayoutDeviceType.SISYFOS,

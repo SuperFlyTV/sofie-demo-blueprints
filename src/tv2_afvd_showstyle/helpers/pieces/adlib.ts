@@ -50,7 +50,9 @@ export function EvaluateAdLib(
 			context.warning(`Could not find template ${parsedCue.variant}`)
 			return
 		}
-		const background: string = rawTemplate.BackgroundLoop as string
+		// @todo: To be pulled from a story cue
+		// const background: string = rawTemplate.BackgroundLoop as string
+		const background = 'amb' // @todo: hardcode!
 
 		if (!TemplateIsValid(JSON.parse(rawTemplate.DVEJSON as string))) {
 			context.warning(`Invalid DVE template ${parsedCue.variant}`)

@@ -3,11 +3,13 @@ import { ConfigManifestEntry, ConfigManifestEntryType } from 'tv-automation-sofi
 export const showStyleConfigManifest: ConfigManifestEntry[] = [
 	{
 		id: 'DVEStyles',
-		name: 'DVE Styles',
+		name: 'DVE Layouts',
 		description: '',
 		type: ConfigManifestEntryType.TABLE,
 		required: false,
-		defaultVal: [{ _id: '', DVEName: '', BackgroundLoop: '', DVEJSON: '' }],
+		defaultVal: [
+			{ _id: '', DVEName: '', DVEInputs: '', DVEJSON: '{}', DVEGraphicsTemplate: '', DVEGraphicsTemplateJSON: '{}' }
+		],
 		columns: [
 			{
 				id: 'DVEName',
@@ -18,17 +20,33 @@ export const showStyleConfigManifest: ConfigManifestEntry[] = [
 				defaultVal: ''
 			},
 			{
-				id: 'BackgroundLoop',
-				name: 'Background Loop',
-				description: 'Background loop file name',
+				id: 'DVEInputs',
+				name: 'Box inputs',
+				description: 'I.e.: 1:INP1;2:INP3; as an example to chose which ATEM boxes to assign iNews inputs to',
 				type: ConfigManifestEntryType.STRING,
 				required: true,
-				defaultVal: ''
+				defaultVal: '1:INP1;2:INP2;3:INP3;4:INP4'
 			},
 			{
 				id: 'DVEJSON',
 				name: 'DVE config',
 				description: 'DVE config pulled from ATEM',
+				type: ConfigManifestEntryType.STRING,
+				required: true,
+				defaultVal: ''
+			},
+			{
+				id: 'DVEGraphicsTemplate',
+				name: 'CasparCG template',
+				description: 'File name (path) for CasparCG overlay template (locators)',
+				type: ConfigManifestEntryType.STRING,
+				required: true,
+				defaultVal: 'dve/locators.html'
+			},
+			{
+				id: 'DVEGraphicsTemplateJSON',
+				name: 'CasparCG template config',
+				description: 'Position (and style) data for the boxes in the CasparCG template',
 				type: ConfigManifestEntryType.STRING,
 				required: true,
 				defaultVal: ''
