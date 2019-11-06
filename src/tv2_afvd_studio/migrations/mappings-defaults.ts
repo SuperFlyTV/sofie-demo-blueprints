@@ -99,6 +99,20 @@ export default literal<BlueprintMappings>({
 		channel: 5,
 		layer: 120
 	}),
+	casparcg_dve_key: literal<MappingCasparCG & BlueprintMapping>({
+		device: PlayoutDeviceType.CASPARCG,
+		deviceId: 'caspar02',
+		lookahead: LookaheadMode.PRELOAD,
+		channel: 2,
+		layer: 109
+	}),
+	casparcg_dve_frame: literal<MappingCasparCG & BlueprintMapping>({
+		device: PlayoutDeviceType.CASPARCG,
+		deviceId: 'caspar02',
+		lookahead: LookaheadMode.PRELOAD,
+		channel: 2,
+		layer: 111
+	}),
 	casparcg_player_jingle: literal<MappingCasparCG & BlueprintMapping>({
 		device: PlayoutDeviceType.CASPARCG,
 		deviceId: 'caspar02',

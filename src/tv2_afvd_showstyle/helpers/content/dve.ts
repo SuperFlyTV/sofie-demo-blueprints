@@ -5,6 +5,7 @@ import {
 	TimelineContentTypeCasparCg,
 	TimelineObjAtemME,
 	TimelineObjAtemSsrc,
+	TimelineObjCCGMedia,
 	TimelineObjCCGTemplate,
 	TSRTimelineObj
 } from 'timeline-state-resolver-types'
@@ -124,6 +125,8 @@ export function MakeContentDVE(
 		? JSON.parse(dveConfig.DVEGraphicsTemplateJSON.toString())
 		: ''
 	const graphicsTemplateContent: { [key: string]: string } = {}
+	const keyFile = dveConfig.DVEGraphicsKey ? dveConfig.DVEGraphicsKey.toString() : ''
+	const frameFile = dveConfig.DVEGraphicsFrame ? dveConfig.DVEGraphicsFrame.toString() : ''
 
 	parsedCue.labels.forEach((label, i) => {
 		graphicsTemplateContent[`locator${i}1`] = label
@@ -185,6 +188,41 @@ export function MakeContentDVE(
 										}
 									},
 									useStopCommand: false
+								}
+							})
+					  ]
+					: []),
+				...(keyFile
+					? [
+							literal<TimelineObjCCGMedia>({
+								id: '',
+								enable: { start: 0 },
+								priority: 1,
+								layer: CasparLLayer.CasparCGDVEKey,
+								content: {
+									deviceType: DeviceType.CASPARCG,
+									type: TimelineContentTypeCasparCg.MEDIA,
+									file: keyFile,
+									mixer: {
+										keyer: true
+									},
+									loop: true
+								}
+							})
+					  ]
+					: []),
+				...(frameFile
+					? [
+							literal<TimelineObjCCGMedia>({
+								id: '',
+								enable: { start: 0 },
+								priority: 1,
+								layer: CasparLLayer.CasparCGDVEFrame,
+								content: {
+									deviceType: DeviceType.CASPARCG,
+									type: TimelineContentTypeCasparCg.MEDIA,
+									file: frameFile,
+									loop: true
 								}
 							})
 					  ]
