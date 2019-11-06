@@ -8,7 +8,16 @@ export const showStyleConfigManifest: ConfigManifestEntry[] = [
 		type: ConfigManifestEntryType.TABLE,
 		required: false,
 		defaultVal: [
-			{ _id: '', DVEName: '', DVEInputs: '', DVEJSON: '{}', DVEGraphicsTemplate: '', DVEGraphicsTemplateJSON: '{}' }
+			{
+				_id: '',
+				DVEName: '',
+				DVEInputs: '',
+				DVEJSON: '{}',
+				DVEGraphicsTemplate: '',
+				DVEGraphicsTemplateJSON: '{}',
+				DVEGraphicsKey: '',
+				DVEGraphicsFrame: ''
+			}
 		],
 		columns: [
 			{
@@ -47,6 +56,22 @@ export const showStyleConfigManifest: ConfigManifestEntry[] = [
 				id: 'DVEGraphicsTemplateJSON',
 				name: 'CasparCG template config',
 				description: 'Position (and style) data for the boxes in the CasparCG template',
+				type: ConfigManifestEntryType.STRING,
+				required: true,
+				defaultVal: ''
+			},
+			{
+				id: 'DVEGraphicsKey',
+				name: 'CasparCG key file',
+				description: 'Key file for DVE',
+				type: ConfigManifestEntryType.STRING,
+				required: true,
+				defaultVal: ''
+			},
+			{
+				id: 'DVEGraphicsFrame',
+				name: 'CasparCG frame file',
+				description: 'Frames file for caspar',
 				type: ConfigManifestEntryType.STRING,
 				required: true,
 				defaultVal: ''
