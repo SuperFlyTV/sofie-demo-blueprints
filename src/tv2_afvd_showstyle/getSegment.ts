@@ -31,8 +31,8 @@ const DEBUG_LAYERS = false // TODO: Remove for production, used show all source 
 
 export function getSegment(context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
 	const segment = literal<IBlueprintSegment>({
-		name: ingestSegment.payload.iNewsStory.pageNumber
-			? `${ingestSegment.payload.iNewsStory.pageNumber} ${ingestSegment.name}`
+		name: ingestSegment.payload.iNewsStory.fields.pageNumber
+			? `${ingestSegment.payload.iNewsStory.fields.pageNumber} ${ingestSegment.name}`
 			: ingestSegment.name,
 		metaData: {}
 	})
