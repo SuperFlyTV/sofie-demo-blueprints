@@ -230,6 +230,16 @@ export default literal<BlueprintMappings>({
 		device: PlayoutDeviceType.VIZMSE,
 		deviceId: 'viz0',
 		lookahead: LookaheadMode.NONE
+	}),
+	viz_layer_design: literal<MappingVizMSE & BlueprintMapping>({
+		device: PlayoutDeviceType.VIZMSE,
+		deviceId: 'viz0',
+		lookahead: LookaheadMode.NONE
+	}),
+	viz_layer_dve_background: literal<MappingVizMSE & BlueprintMapping>({
+		device: PlayoutDeviceType.VIZMSE,
+		deviceId: 'viz0',
+		lookahead: LookaheadMode.NONE
 	})
 })
 

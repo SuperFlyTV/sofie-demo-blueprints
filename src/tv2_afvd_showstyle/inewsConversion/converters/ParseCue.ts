@@ -420,17 +420,13 @@ function parseAdLib(cue: string[]) {
 }
 
 function parseKommando(cue: string[]) {
-	let kommandoCue: CueDefinitionVIZ = {
-		type: CueType.VIZ,
-		rawType: cue[0],
-		content: {},
+	let kommandoCue: CueDefinitionDesign = {
+		type: CueType.Design,
 		design: ''
 	}
 
-	const command = cue[0].match(/^KOMMANDO=(.*)$/)
-	if (command) {
-		kommandoCue.content[command[1].toString()] = cue[1]
-		kommandoCue.design = command[1]
+	if (cue[1]) {
+		kommandoCue.design = cue[1]
 	}
 
 	if (cue[2] && isTime(cue[2])) {

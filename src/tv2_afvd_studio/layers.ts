@@ -60,7 +60,9 @@ export enum SisyfosLLAyer {
 }
 
 export enum VizLLayer {
-	VizLLayerOverlay = 'viz_layer_overlay'
+	VizLLayerOverlay = 'viz_layer_overlay',
+	VizLLayerDesign = 'viz_layer_design',
+	VizLLayerDVEBackground = 'viz_layer_dve_background'
 }
 
 export function CasparPlayerClip(i: number) {

@@ -7,6 +7,7 @@ export enum SourceLayer {
 	PgmPilot = 'studio0_pilot0',
 	PgmVIZ = 'studio0_viz0',
 	PgmDVEBackground = 'studio0_dve_back0',
+	PgmDesign = 'studio0_design',
 	PgmJingle = 'studio0_jingle0',
 	PgmLive = 'studio0_live0',
 	PgmDVE = 'studio0_dev0',

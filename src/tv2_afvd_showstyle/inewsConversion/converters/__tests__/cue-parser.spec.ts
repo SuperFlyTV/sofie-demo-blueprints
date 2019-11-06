@@ -479,18 +479,15 @@ describe('Cue parser', () => {
 	})
 
 	test('Kommando', () => {
-		// TODO make this it's own type
 		const cueKommando = ['KOMMANDO=GRAPHICSPROFILE', 'TV2 SPORT 2016', ';0.00']
 		const result = ParseCue(cueKommando)
 		expect(result).toEqual(
 			literal<CueDefinition>({
-				type: CueType.VIZ,
-				rawType: 'KOMMANDO=GRAPHICSPROFILE',
+				type: CueType.Design,
 				start: {
 					seconds: 0
 				},
-				content: { GRAPHICSPROFILE: 'TV2 SPORT 2016' },
-				design: 'GRAPHICSPROFILE'
+				design: 'TV2 SPORT 2016'
 			})
 		)
 	})

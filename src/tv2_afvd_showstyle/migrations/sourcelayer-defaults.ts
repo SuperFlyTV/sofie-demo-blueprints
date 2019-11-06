@@ -116,6 +116,17 @@ export default literal<ISourceLayer[]>([
 		unlimited: false
 	},
 	{
+		_id: SourceLayer.PgmDesign,
+		_rank: 7500,
+		name: 'VIZ Design',
+		type: SourceLayerType.GRAPHICS,
+		onPGMClean: false,
+		activateKeyboardHotkeys: '',
+		clearKeyboardHotkey: '',
+		allowDisable: true,
+		unlimited: false
+	},
+	{
 		_id: SourceLayer.PgmTelephone,
 		_rank: 6000,
 		name: 'Telephone',

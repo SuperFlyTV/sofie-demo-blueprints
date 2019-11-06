@@ -8,6 +8,7 @@ import { BlueprintConfig } from '../../../tv2_afvd_showstyle/helpers/config'
 import { PartDefinition } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseBody'
 import { CueDefinition, CueDefinitionBase, CueTime, CueType } from '../../inewsConversion/converters/ParseCue'
 import { EvaluateAdLib } from './adlib'
+import { EvaluateDesign } from './design'
 import { EvaluateDVE } from './dve'
 import { EvaluateEkstern } from './ekstern'
 import { EvaluateGrafik } from './grafik'
@@ -61,6 +62,9 @@ export function EvaluateCues(
 					break
 				case CueType.LYD:
 					EvaluateLYD(pieces, cue, part)
+					break
+				case CueType.Design:
+					EvaluateDesign(context, config, pieces, adLibPieces, part.externalId, cue)
 					break
 				default:
 					if (cue.type !== CueType.Unknown) {
