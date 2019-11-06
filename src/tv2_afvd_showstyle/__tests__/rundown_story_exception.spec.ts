@@ -56,7 +56,6 @@ describe('Rundown exceptions', () => {
 				mockContext.showStyleConfig = roSpec.showStyleConfig
 
 				const res = Blueprints.getSegment(mockContext, segment)
-				expect(res.segment.name).toEqual(segment.name)
 
 				const allPieces: IBlueprintPieceGeneric[] = []
 				_.each(res.parts, part => {
