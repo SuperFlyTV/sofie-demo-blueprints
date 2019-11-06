@@ -25,7 +25,7 @@ export enum AtemLLayer {
 	AtemDSKGraphics = 'atem_dsk_graphics',
 	AtemDSKEffect = 'atem_dsk_effect',
 	AtemAuxLookahead = 'atem_aux_lookahead',
-	AtemAuxSSrc = 'atem_aux_ssrc',
+	// AtemAuxSSrc = 'atem_aux_ssrc',
 	AtemAuxClean = 'atem_aux_clean',
 	AtemAuxScreen = 'atem_aux_screen',
 	AtemSSrcArt = 'atem_supersource_art',
@@ -46,7 +46,7 @@ export enum CasparLLayer {
 	CasparCGEffects = 'casparcg_cg_effects',
 	CasparCGDVELoop = 'casparcg_dve_loop',
 	CasparCGLYD = 'casparcg_audio_lyd',
-	CasparCountdown = 'casparcg_cg_countdown',
+	// CasparCountdown = 'casparcg_cg_countdown',	// @todo: to be rendered outside of casparcg for now
 	CasparCGDVETemplate = 'casparcg_cg_dve_template',
 	CasparCGDVEKey = 'casparcg_dve_key',
 	CasparCGDVEFrame = 'casparcg_dve_frame'

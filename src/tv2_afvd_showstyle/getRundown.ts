@@ -318,19 +318,19 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 				}
 			}
 		}),
-		literal<TimelineObjAtemAUX>({
-			id: '',
-			enable: { while: '1' },
-			priority: 0,
-			layer: AtemLLayer.AtemAuxSSrc,
-			content: {
-				deviceType: DeviceType.ATEM,
-				type: TimelineContentTypeAtem.AUX,
-				aux: {
-					input: AtemSourceIndex.SSrc
-				}
-			}
-		}),
+		// literal<TimelineObjAtemAUX>({ // @todo: to be decided by TV 2
+		// 	id: '',
+		// 	enable: { while: '1' },
+		// 	priority: 0,
+		// 	layer: AtemLLayer.AtemAuxSSrc,
+		// 	content: {
+		// 		deviceType: DeviceType.ATEM,
+		// 		type: TimelineContentTypeAtem.AUX,
+		// 		aux: {
+		// 			input: AtemSourceIndex.SSrc
+		// 		}
+		// 	}
+		// }),
 		literal<TimelineObjAtemAUX>({
 			id: '',
 			enable: { while: '1' },
@@ -575,17 +575,17 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			}
 		}),
 
-		literal<TimelineObjCCGHTMLPage>({
-			id: '',
-			enable: { while: '1' },
-			priority: 0,
-			layer: CasparLLayer.CasparCountdown,
-			content: {
-				deviceType: DeviceType.CASPARCG,
-				type: TimelineContentTypeCasparCg.HTMLPAGE,
-				url: config.studio.SofieHostURL + '/countdowns/studio0/presenter'
-			}
-		}),
+		// literal<TimelineObjCCGHTMLPage>({	// @todo: to be rendered outside of casparcg for now
+		// 	id: '',
+		// 	enable: { while: '1' },
+		// 	priority: 0,
+		// 	layer: CasparLLayer.CasparCountdown,
+		// 	content: {
+		// 		deviceType: DeviceType.CASPARCG,
+		// 		type: TimelineContentTypeCasparCg.HTMLPAGE,
+		// 		url: config.studio.SofieHostURL + '/countdowns/studio0/presenter'
+		// 	}
+		// }),
 
 		..._.range(config.studio.HyperdeckCount).map(i =>
 			literal<TimelineObjHyperdeckTransport>({
