@@ -56,6 +56,11 @@ describe('Rundown exceptions', () => {
 				mockContext.showStyleConfig = roSpec.showStyleConfig
 
 				const res = Blueprints.getSegment(mockContext, segment)
+				if (segment.payload.iNewsStory.fields.pageNumber && segment.payload.iNewsStory.fields.pageNumber.trim()) {
+					expect(res.segment.name).toEqual(segment.payload.iNewsStory.fields.pageNumber.trim() + ' ' + segment.name)
+				} else {
+					expect(res.segment.name).toEqual(segment.name)
+				}
 
 				const allPieces: IBlueprintPieceGeneric[] = []
 				_.each(res.parts, part => {
