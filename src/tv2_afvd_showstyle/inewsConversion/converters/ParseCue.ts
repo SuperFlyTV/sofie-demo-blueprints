@@ -133,6 +133,7 @@ export function ParseCue(cue: UnparsedCue): CueDefinition {
 
 	if (cue[0].match(/^kg ovl-all-out$/)) {
 		// All out
+		// TODO: STOP IGNORING MAYBE!
 		return {
 			type: CueType.Ignored_MOS,
 			command: cue
@@ -241,6 +242,7 @@ function parseDesign(cue: string[]): CueDefinitionDesign {
 }
 
 function parseSS(cue: string[]): CueDefinitionUnknown {
+	// TODO: Studio screen
 	let ssCue: CueDefinitionUnknown = {
 		type: CueType.Unknown
 	}
