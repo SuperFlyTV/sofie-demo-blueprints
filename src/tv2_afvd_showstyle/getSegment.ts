@@ -174,7 +174,7 @@ function SlutordLookahead(
 	return false
 }
 
-class PartContext2 implements PartContext {
+export class PartContext2 implements PartContext {
 	public readonly rundownId: string
 	public readonly rundown: IBlueprintRundownDB
 	private baseContext: SegmentContext

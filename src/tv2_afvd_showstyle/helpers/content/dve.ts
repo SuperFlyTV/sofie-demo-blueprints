@@ -26,7 +26,7 @@ import { atemNextObject } from '../../../tv2_afvd_studio/helpers/objects'
 import { FindSourceInfoStrict, SourceInfo } from '../../../tv2_afvd_studio/helpers/sources'
 import { AtemLLayer, CasparLLayer } from '../../../tv2_afvd_studio/layers'
 import { AtemSourceIndex } from '../../../types/atem'
-import { CueDefinitionDVE } from '../../inewsConversion/converters/ParseCue'
+import { CueDefinitionDVE, DVESources } from '../../inewsConversion/converters/ParseCue'
 import { DVEConfig, DVEConfigBox } from '../pieces/dve'
 import { GetSisyfosTimelineObjForCamera, GetSisyfosTimelineObjForEkstern } from '../sisyfos/sisyfos'
 
@@ -61,58 +61,12 @@ export function MakeContentDVE(
 
 	let valid = true
 
-	parsedCue.sources.forEach((source, index) => {
-		const props = source.split(' ')
-		const sourceType = props[0]
-		const sourceInput = props[1]
-		if (!sourceType || !sourceInput) {
-			context.warning(`Invalid DVE source: ${source}`)
-			return
-		}
-		if (sourceType.match(/KAM/i)) {
-			const sourceInfoCam = FindSourceInfoStrict(context, config.sources, SourceLayerType.CAMERA, source)
-			if (sourceInfoCam === undefined) {
-				context.warning(`Invalid source: ${source}`)
-				valid = false
-				return
-			}
-			boxSources.push({
-				...boxSource(sourceInfoCam, source),
-				...literal<CameraContent>({
-					studioLabel: '',
-					switcherInput: sourceInfoCam.port,
-					timelineObjects: []
-				})
-			})
-			boxes.push({ ...template.boxes[index], ...{ source: sourceInfoCam.port } })
+	const dveConfig = config.showStyle.DVEStyles
+		? config.showStyle.DVEStyles.find(conf => conf.DVEName === parsedCue.template)
+		: undefined
 
-			audioTimeline = [...audioTimeline, ...GetSisyfosTimelineObjForCamera(source, false)]
-		} else if (sourceType.match(/LIVE/i) || sourceType.match(/SKYPE/i)) {
-			const sourceInfoLive = FindSourceInfoStrict(context, config.sources, SourceLayerType.REMOTE, source)
-			if (sourceInfoLive === undefined) {
-				context.warning(`Invalid source: ${source}`)
-				valid = false
-				return
-			}
-			boxSources.push({
-				...boxSource(sourceInfoLive, source),
-				...literal<RemoteContent>({
-					studioLabel: '',
-					switcherInput: sourceInfoLive.port,
-					timelineObjects: []
-				})
-			})
-			boxes.push({ ...template.boxes[index], ...{ source: sourceInfoLive.port } })
-
-			audioTimeline = [...audioTimeline, ...GetSisyfosTimelineObjForEkstern(source, false)]
-		} else {
-			context.warning(`Unknown source type for DVE: ${source}`)
-			valid = false
-		}
-	})
-
-	const dveConfig = config.showStyle.DVEStyles.find(style => style.DVEName === parsedCue.template)
 	if (!dveConfig) {
+		context.warning(`DVE ${parsedCue.template} is not configured`)
 		return {
 			valid: false,
 			content: {
@@ -122,6 +76,95 @@ export function MakeContentDVE(
 			}
 		}
 	}
+
+	const inputs = dveConfig.DVEInputs
+		? dveConfig.DVEInputs.toString().split(';')
+		: '1:INP1;2:INP2;3:INP3;4:INP4'.split(';')
+	const boxMap: [string, string, string, string] = ['', '', '', '']
+
+	inputs.forEach(source => {
+		const sourceProps = source.split(':')
+		const mappingFrom = sourceProps[1]
+		const mappingTo = Number(sourceProps[0])
+		if (!mappingFrom || !mappingTo || isNaN(mappingTo)) {
+			context.warning(`Invalid DVE mapping: ${sourceProps}`)
+			return
+		}
+
+		const prop = parsedCue.sources[mappingFrom as keyof DVESources]
+		if (!prop) {
+			context.warning(`Missing mapping for ${mappingTo}`)
+			return
+		}
+		boxMap[mappingTo - 1] = prop
+	})
+
+	boxMap.forEach((mappingFrom, num) => {
+		if (mappingFrom === undefined || mappingFrom === '') {
+			boxSources.push({
+				...{
+					studioLabel: '',
+					switcherInput: 0,
+					type: SourceLayerType.CAMERA
+				},
+				...literal<CameraContent>({
+					studioLabel: '',
+					switcherInput: 0,
+					timelineObjects: []
+				})
+			})
+			boxes.push({ ...template.boxes[num], ...{ source: 0, enabled: false } })
+		} else {
+			const props = mappingFrom.split(' ')
+			const sourceType = props[0]
+			const sourceInput = props[1]
+			if (!sourceType || !sourceInput) {
+				context.warning(`Invalid DVE source: ${mappingFrom}`)
+				return
+			}
+			if (sourceType.match(/KAM/i)) {
+				const sourceInfoCam = FindSourceInfoStrict(context, config.sources, SourceLayerType.CAMERA, mappingFrom)
+				if (sourceInfoCam === undefined) {
+					context.warning(`Invalid source: ${mappingFrom}`)
+					valid = false
+					return
+				}
+				boxSources.push({
+					...boxSource(sourceInfoCam, mappingFrom),
+					...literal<CameraContent>({
+						studioLabel: '',
+						switcherInput: Number(sourceInfoCam.port),
+						timelineObjects: []
+					})
+				})
+				boxes.push({ ...template.boxes[num], ...{ source: Number(sourceInfoCam.port), enabled: true } })
+
+				audioTimeline = [...audioTimeline, ...GetSisyfosTimelineObjForCamera(mappingFrom, false)]
+			} else if (sourceType.match(/LIVE/i) || sourceType.match(/SKYPE/i)) {
+				const sourceInfoLive = FindSourceInfoStrict(context, config.sources, SourceLayerType.REMOTE, mappingFrom)
+				if (sourceInfoLive === undefined) {
+					context.warning(`Invalid source: ${mappingFrom}`)
+					valid = false
+					return
+				}
+				boxSources.push({
+					...boxSource(sourceInfoLive, mappingFrom),
+					...literal<RemoteContent>({
+						studioLabel: '',
+						switcherInput: Number(sourceInfoLive.port),
+						timelineObjects: []
+					})
+				})
+				boxes.push({ ...template.boxes[num], ...{ source: Number(sourceInfoLive.port), enabled: true } })
+
+				audioTimeline = [...audioTimeline, ...GetSisyfosTimelineObjForEkstern(mappingFrom, false)]
+			} else {
+				context.warning(`Unknown source type for DVE: ${mappingFrom}`)
+				valid = false
+			}
+		}
+	})
+
 	const graphicsTemplateName = dveConfig.DVEGraphicsTemplate ? dveConfig.DVEGraphicsTemplate.toString() : ''
 	const graphicsTemplateStyle = dveConfig.DVEGraphicsTemplateJSON
 		? JSON.parse(dveConfig.DVEGraphicsTemplateJSON.toString())

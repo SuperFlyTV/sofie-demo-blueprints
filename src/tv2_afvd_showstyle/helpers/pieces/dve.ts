@@ -19,7 +19,7 @@ export interface DVEConfigBox {
 	x: number
 	y: number
 	size: number
-	cropped: false
+	cropped: boolean
 	cropTop: number
 	cropBottom: number
 	cropLeft: number

@@ -1,0 +1,85 @@
+[
+    {
+        "part": {
+            "externalId": "0a1ff9b6:00db05ba:5d722ae3-0",
+            "title": "Unknown",
+            "metaData": {},
+            "typeVariant": "",
+            "invalid": true,
+            "autoNext": true
+        },
+        "adLibPieces": [],
+        "pieces": []
+    },
+    {
+        "part": {
+            "externalId": "0a1ff9b6: 00db05ba: 5d722ae3-0-1",
+            "title": "EKSTERN-0",
+            "metaData": {},
+            "typeVariant": "",
+            "expectedDuration": 3000,
+            "displayDuration": 3000
+        },
+        "adLibPieces": [],
+        "pieces": [
+            {
+                "_id": "",
+                "externalId": "0a1ff9b6: 00db05ba: 5d722ae3-0-1",
+                "name": "LIVE 1",
+                "enable": {
+                    "start": 0
+                },
+                "infiniteMode": 1,
+                "outputLayerId": "pgm0",
+                "sourceLayerId": "studio0_live0",
+                "content": {
+                    "studioLabel": "",
+                    "switcherInput": "1",
+                    "timelineObjects": [
+                        {
+                            "id": "",
+                            "enable": {
+                                "start": 0
+                            },
+                            "priority": 1,
+                            "layer": "atem_me_program",
+                            "content": {
+                                "deviceType": 2,
+                                "type": "me",
+                                "me": {
+                                    "input": "1",
+                                    "transition": 5
+                                }
+                            }
+                        },
+                        {
+                            "id": "",
+                            "enable": {
+                                "start": 0
+                            },
+                            "priority": 1,
+                            "layer": "sisyfos_remote_source_1",
+                            "content": {
+                                "deviceType": 11,
+                                "type": "sisyfos",
+                                "isPgm": 1
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "part": {
+            "externalId": "0a1ff9b6: 00db05ba: 5d722ae3-1",
+            "title": "LIVE",
+            "metaData": {},
+            "typeVariant": "",
+            "invalid": true,
+            "autoNext": true
+        },
+        "adLibPieces": [],
+        "pieces": []
+    }
+]

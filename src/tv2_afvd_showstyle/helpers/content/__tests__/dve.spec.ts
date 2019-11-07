@@ -131,13 +131,13 @@ describe('DVE Content', () => {
 					boxSourceConfiguration: [
 						{
 							studioLabel: '',
-							switcherInput: 1,
+							switcherInput: 0,
 							timelineObjects: [],
 							type: SourceLayerType.CAMERA
 						},
 						{
 							studioLabel: '',
-							switcherInput: 1,
+							switcherInput: 0,
 							timelineObjects: [],
 							type: SourceLayerType.CAMERA
 						},
@@ -169,7 +169,7 @@ describe('DVE Content', () => {
 									boxes: [
 										{
 											enabled: false,
-											source: 2,
+											source: 0,
 											x: -800,
 											y: 25,
 											size: 550,
@@ -181,7 +181,7 @@ describe('DVE Content', () => {
 										},
 										{
 											enabled: false,
-											source: 1,
+											source: 0,
 											x: 800,
 											y: 25,
 											size: 550,

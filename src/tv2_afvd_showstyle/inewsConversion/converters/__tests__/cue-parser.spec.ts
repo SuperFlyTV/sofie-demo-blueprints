@@ -296,7 +296,7 @@ describe('Cue parser', () => {
 			literal<CueDefinition>({
 				type: CueType.DVE,
 				template: 'sommerfugl',
-				sources: ['KAM 1', 'LIVE 1'],
+				sources: { INP1: 'KAM 1', INP2: 'LIVE 1' },
 				labels: ['Odense', 'København']
 			})
 		)
@@ -309,7 +309,7 @@ describe('Cue parser', () => {
 			literal<CueDefinition>({
 				type: CueType.DVE,
 				template: 'sommerfugl',
-				sources: ['KAM 1', 'LIVE 1'],
+				sources: { INP1: 'KAM 1', INP2: 'LIVE 1' },
 				labels: ['Odense', 'København']
 			})
 		)

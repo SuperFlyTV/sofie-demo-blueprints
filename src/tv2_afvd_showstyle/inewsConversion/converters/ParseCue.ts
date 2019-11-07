@@ -56,10 +56,17 @@ export interface CueDefinitionEkstern extends CueDefinitionBase {
 	source: string
 }
 
+export interface DVESources {
+	INP1?: string
+	INP2?: string
+	INP3?: string
+	INP4?: string
+}
+
 export interface CueDefinitionDVE extends CueDefinitionBase {
 	type: CueType.DVE
 	template: string
-	sources: string[]
+	sources: DVESources
 	labels: string[]
 }
 
@@ -296,7 +303,7 @@ function parseDVE(cue: string[]): CueDefinitionDVE {
 	let dvecue: CueDefinitionDVE = {
 		type: CueType.DVE,
 		template: '',
-		sources: [],
+		sources: {},
 		labels: []
 	}
 
@@ -307,9 +314,9 @@ function parseDVE(cue: string[]): CueDefinitionDVE {
 				dvecue.template = template[1]
 			}
 		} else if (c.match(/^INP\d+=/)) {
-			const input = c.match(/^INP\d+=(.+)$/)
-			if (input) {
-				dvecue.sources.push(input[1])
+			const input = c.match(/^(INP\d)+=(.+)$/)
+			if (input && input[1] && input[2]) {
+				dvecue.sources[input[1] as keyof DVESources] = input[2]
 			}
 		} else if (c.match(/^BYNAVN=/)) {
 			const labels = c.match(/^BYNAVN=(.+)$/)

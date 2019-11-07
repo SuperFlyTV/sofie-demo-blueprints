@@ -28,11 +28,12 @@ export const defaultShowStyleConfig: ConfigMap = {
 			_id: '',
 			DVEName: 'morbarn',
 			BackgroundLoop: 'loopy',
-			DVEInputs: '3:INP1;4:INP2;2:INP3;1:INP4',
+			DVEInputs: '3:INP1;4:INP2',
 			DVEJSON:
 				'{"boxes":{"0":{"enabled":true,"source":0,"x":0,"y":450,"size":500,"cropped":false,"cropTop":0,"cropBottom":0,"cropLeft":0,"cropRight":0},"1":{"enabled":true,"source":0,"x":50,"y":580,"size":256,"cropped":false,"cropTop":0,"cropBottom":0,"cropLeft":0,"cropRight":0},"2":{"enabled":true,"source":0,"x":-800,"y":-450,"size":500,"cropped":false,"cropTop":0,"cropBottom":0,"cropLeft":0,"cropRight":0},"3":{"enabled":true,"source":0,"x":800,"y":-450,"size":500,"cropped":false,"cropTop":0,"cropBottom":0,"cropLeft":0,"cropRight":0}},"index":0,"properties":{"artFillSource":3010,"artCutSource":3011,"artOption":0,"artPreMultiplied":false,"artClip":500,"artGain":700,"artInvertKey":false},"border":{"borderEnabled":false,"borderBevel":1,"borderOuterWidth":50,"borderInnerWidth":50,"borderOuterSoftness":0,"borderInnerSoftness":0,"borderBevelSoftness":0,"borderBevelPosition":50,"borderHue":0,"borderSaturation":0,"borderLuma":1000,"borderLightSourceDirection":360,"borderLightSourceAltitude":25}}',
 			DVEGraphicsTemplate: 'dve/locators',
-			DVEGraphicsTemplateJSON: '',
+			DVEGraphicsTemplateJSON:
+				'{"locator1": {"heigt": 30, "widht": 300, "x":100,"y":100},"locator2": {"heigt": 30, "widht": 300, "x":500,"y":100}}',
 			DVEGraphicsKey: 'loopy_key',
 			DVEGraphicsFrame: 'loopy_frame'
 		},
