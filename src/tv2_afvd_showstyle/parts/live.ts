@@ -38,7 +38,7 @@ export function CreatePartLive(
 	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
 	AddScript(partDefinition, pieces, partTime, false)
 
-	if (pieces.length === 0) {
+	if (pieces.length === 0 && adLibPieces.length === 0) {
 		return CreatePartInvalid(partDefinition)
 	}
 

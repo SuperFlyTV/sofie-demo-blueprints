@@ -90,7 +90,7 @@ export function CreatePartVO(
 	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
 	AddScript(partDefinition, pieces, duration, true)
 
-	if (pieces.length === 0) {
+	if (pieces.length === 0 && adLibPieces.length === 0) {
 		return CreatePartInvalid(partDefinition)
 	}
 
