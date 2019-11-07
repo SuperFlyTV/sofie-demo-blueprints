@@ -80,7 +80,7 @@ export function MakeContentDVE(
 	const inputs = dveConfig.DVEInputs
 		? dveConfig.DVEInputs.toString().split(';')
 		: '1:INP1;2:INP2;3:INP3;4:INP4'.split(';')
-	const boxMap: [string, string, string, string] = ['', '', '', '']
+	let boxMap: string[] = []
 
 	inputs.forEach(source => {
 		const sourceProps = source.split(':')
@@ -98,6 +98,8 @@ export function MakeContentDVE(
 		}
 		boxMap[mappingTo - 1] = prop
 	})
+
+	boxMap = boxMap.filter(map => map !== '')
 
 	boxMap.forEach((mappingFrom, num) => {
 		if (mappingFrom === undefined || mappingFrom === '') {
