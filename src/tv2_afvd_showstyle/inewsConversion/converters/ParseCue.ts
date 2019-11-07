@@ -95,7 +95,7 @@ export interface CueDefinitionMic extends CueDefinitionBase {
 export interface CueDefinitionAdLib extends CueDefinitionBase {
 	type: CueType.AdLib
 	variant: string
-	inputs?: string[]
+	inputs: DVESources
 	bynavn?: string
 }
 
@@ -397,7 +397,8 @@ function parseMic(cue: string[]): CueDefinitionMic {
 function parseAdLib(cue: string[]) {
 	const adlib: CueDefinitionAdLib = {
 		type: CueType.AdLib,
-		variant: ''
+		variant: '',
+		inputs: {}
 	}
 
 	const variant = cue[0].match(/^ADLIBPIX=(.+)$/)
@@ -406,13 +407,9 @@ function parseAdLib(cue: string[]) {
 	}
 
 	if (cue[1]) {
-		const input = cue[1].match(/^INP\d+=(.+)$/)
-		if (input) {
-			if (adlib.inputs) {
-				adlib.inputs.push(input[1])
-			} else {
-				adlib.inputs = [input[1]]
-			}
+		const input = cue[1].match(/^(INP\d)+=(.+)$/)
+		if (input && input[1] && input[2] && adlib.inputs !== undefined) {
+			adlib.inputs[input[1] as keyof DVESources] = input[2]
 		}
 	}
 

@@ -59,7 +59,7 @@ export function EvaluateAdLib(
 		const cueDVE: CueDefinitionDVE = {
 			type: CueType.DVE,
 			template: parsedCue.variant,
-			sources: parsedCue.inputs ? parsedCue.inputs : [],
+			sources: parsedCue.inputs ? parsedCue.inputs : {},
 			labels: parsedCue.bynavn ? [parsedCue.bynavn] : []
 		}
 

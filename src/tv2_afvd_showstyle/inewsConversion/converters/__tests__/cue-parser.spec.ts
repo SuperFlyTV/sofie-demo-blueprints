@@ -462,7 +462,7 @@ describe('Cue parser', () => {
 			literal<CueDefinition>({
 				type: CueType.AdLib,
 				variant: 'MORBARN',
-				inputs: ['LIVE 1']
+				inputs: { INP1: 'LIVE 1' }
 			})
 		)
 	})
@@ -473,7 +473,8 @@ describe('Cue parser', () => {
 		expect(result).toEqual(
 			literal<CueDefinition>({
 				type: CueType.AdLib,
-				variant: 'server'
+				variant: 'server',
+				inputs: {}
 			})
 		)
 	})
