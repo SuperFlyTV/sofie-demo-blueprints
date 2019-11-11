@@ -96,7 +96,7 @@ describe('telefon', () => {
 					end: 4000
 				},
 				outputLayerId: 'pgm0',
-				sourceLayerId: SourceLayer.PgmGraphics,
+				sourceLayerId: SourceLayer.PgmGraphicsTLF,
 				infiniteMode: PieceLifespan.Normal,
 				content: literal<GraphicsContent>({
 					fileName: 'bund',
