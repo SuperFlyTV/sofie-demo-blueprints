@@ -113,13 +113,6 @@ export function EvaluateCues(
 		}
 	})
 
-	pieces.forEach(piece => {
-		if (piece.expectedPlayoutItems) {
-			console.log(JSON.stringify(piece.expectedPlayoutItems))
-			console.log(piece.externalId)
-		}
-	})
-
 	/*if (isDVE) {
 		// All cues are AdLibs
 		grafikCues.forEach((cue, i) => {
