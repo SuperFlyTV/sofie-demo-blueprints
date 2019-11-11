@@ -8,7 +8,7 @@ const blankShowStyleConfig: ShowStyleConfig = {
 	WipesConfig: [],
 	BreakerConfig: [],
 	DefaultTemplateDuration: 4,
-	JingleTimings: ''
+	JingleTimings: []
 }
 
 describe('Config Manifest', () => {

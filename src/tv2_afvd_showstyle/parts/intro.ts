@@ -35,18 +35,20 @@ export function CreatePartIntro(
 
 	const parsedJingle = jingleCue as CueDefinitionJingle
 
-	const timings = config.showStyle.JingleTimings.split(',')
-	let overlapFrames = -1
-	timings.forEach(timing => {
-		const props = timing.split(':')
-		if (props[0] && props[1]) {
-			if (props[0] === parsedJingle.clip) {
-				overlapFrames = Number(props[1])
-			}
-		}
-	})
+	if (!config.showStyle.JingleTimings) {
+		context.warning(`Jingles have not been configured`)
+		return CreatePartInvalid(partDefinition)
+	}
 
-	if (overlapFrames === -1) {
+	const jingle = config.showStyle.JingleTimings.find(jngl => jngl.JingleName === parsedJingle.clip)
+	if (!jingle) {
+		context.warning(`Jingle ${parsedJingle.clip} is not configured`)
+		return CreatePartInvalid(partDefinition)
+	}
+
+	const overlapFrames = jingle.FramesOfAlpha
+
+	if (overlapFrames === undefined) {
 		context.warning(`Jingle ${parsedJingle.clip} does not have an out-duration set.`)
 		return CreatePartInvalid(partDefinition)
 	}
@@ -59,7 +61,7 @@ export function CreatePartIntro(
 		expectedDuration: partTime,
 		displayDuration: partTime,
 		autoNext: true,
-		autoNextOverlap: TimeFromFrames(overlapFrames)
+		autoNextOverlap: TimeFromFrames(Number(overlapFrames))
 	})
 
 	const adLibPieces: IBlueprintAdLibPiece[] = []

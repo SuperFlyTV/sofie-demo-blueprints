@@ -9,6 +9,7 @@ import {
 } from 'timeline-state-resolver-types'
 import {
 	IBlueprintPiece,
+	PartContext,
 	PieceLifespan,
 	TimelineObjectCoreExt,
 	VTContent
@@ -22,12 +23,24 @@ import { TimelineBlueprintExt } from '../../../tv2_afvd_studio/onTimelineGenerat
 import { BlueprintConfig } from '../config'
 
 export function EvaluateJingle(
+	context: PartContext,
 	config: BlueprintConfig,
 	pieces: IBlueprintPiece[],
 	parsedCue: CueDefinitionJingle,
 	part: PartDefinition
 ) {
 	const duration = Number(part.fields.tapeTime) * 1000 || 0
+
+	if (!config.showStyle.JingleTimings) {
+		context.warning(`Jingles have not been configured`)
+		return
+	}
+
+	const jingle = config.showStyle.JingleTimings.find(jngl => jngl.JingleName === parsedCue.clip)
+	if (!jingle) {
+		context.warning(`Jingle ${parsedCue.clip} is not configured`)
+		return
+	}
 	pieces.push(
 		literal<IBlueprintPiece>({
 			_id: '',
@@ -43,8 +56,8 @@ export function EvaluateJingle(
 			isTransition: true,
 			content: literal<VTContent>({
 				studioLabel: '',
-				fileName: parsedCue.clip,
-				path: parsedCue.clip,
+				fileName: jingle.FileName.toString(),
+				path: jingle.FileName.toString(),
 				firstWords: '',
 				lastWords: '',
 				sourceDuration: duration,
@@ -59,7 +72,7 @@ export function EvaluateJingle(
 						content: {
 							deviceType: DeviceType.CASPARCG,
 							type: TimelineContentTypeCasparCg.MEDIA,
-							file: parsedCue.clip,
+							file: jingle.FileName.toString(),
 							length: duration
 						}
 					}),

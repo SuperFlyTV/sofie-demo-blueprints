@@ -23,7 +23,7 @@ export interface ShowStyleConfig {
 	GFXTemplates: TableConfigItemValue
 	WipesConfig: TableConfigItemValue
 	BreakerConfig: TableConfigItemValue
-	JingleTimings: string
+	JingleTimings: TableConfigItemValue
 	DefaultTemplateDuration: number
 }
 
