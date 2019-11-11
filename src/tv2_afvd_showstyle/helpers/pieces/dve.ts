@@ -177,6 +177,6 @@ export interface DVEConfigInput {
 }
 
 export function GetDVETemplate(config: TableConfigItemValue, templateName: string): DVEConfigInput | undefined {
-	const conf = config.find(c => c.DVEName === templateName)
+	const conf = config.find(c => c.DVEName.toString().toUpperCase() === templateName.toUpperCase())
 	return conf as DVEConfigInput
 }
