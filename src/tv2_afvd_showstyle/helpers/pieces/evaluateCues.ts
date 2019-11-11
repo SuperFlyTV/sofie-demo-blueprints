@@ -1,4 +1,11 @@
 import {
+	DeviceType,
+	TimelineContentTypeVizMSE,
+	TimelineObjVIZMSEElementInternal,
+	TimelineObjVIZMSEElementPilot,
+	TSRTimelineObj
+} from 'timeline-state-resolver-types'
+import {
 	IBlueprintAdLibPiece,
 	IBlueprintPiece,
 	PartContext,
@@ -11,6 +18,7 @@ import { EvaluateAdLib } from './adlib'
 import { EvaluateDesign } from './design'
 import { EvaluateDVE } from './dve'
 import { EvaluateEkstern } from './ekstern'
+import { IBlueprintAdLibPieceEPI, IBlueprintPieceEPI } from './expectedPlayoutItems'
 import { EvaluateGrafik } from './grafik'
 import { EvaluateJingle } from './jingle'
 import { EvaluateLYD } from './lyd'
@@ -23,8 +31,8 @@ const FRAME_TIME = 1000 / 25 // TODO: This should be pulled from config.
 export function EvaluateCues(
 	context: PartContext,
 	config: BlueprintConfig,
-	pieces: IBlueprintPiece[],
-	adLibPieces: IBlueprintAdLibPiece[],
+	pieces: IBlueprintPieceEPI[],
+	adLibPieces: IBlueprintAdLibPieceEPI[],
 	cues: CueDefinition[],
 	part: PartDefinition
 ) {
@@ -72,6 +80,43 @@ export function EvaluateCues(
 					}
 					break
 			}
+		}
+	})
+
+	pieces.forEach(piece => {
+		if (piece.content) {
+			piece.content.timelineObjects.forEach((obj: TSRTimelineObj) => {
+				if (obj.content.deviceType === DeviceType.VIZMSE) {
+					if (!piece.expectedPlayoutItems) {
+						piece.expectedPlayoutItems = []
+					}
+
+					if (obj.content.type === TimelineContentTypeVizMSE.ELEMENT_INTERNAL) {
+						piece.expectedPlayoutItems.push({
+							deviceSubType: DeviceType.VIZMSE,
+							content: {
+								templateName: (obj as TimelineObjVIZMSEElementInternal).content.templateName,
+								templateData: (obj as TimelineObjVIZMSEElementInternal).content.templateData,
+								channelName: undefined // Currently not used
+							}
+						})
+					} else if (obj.content.type === TimelineContentTypeVizMSE.ELEMENT_PILOT) {
+						piece.expectedPlayoutItems.push({
+							deviceSubType: DeviceType.VIZMSE,
+							content: {
+								templateName: (obj as TimelineObjVIZMSEElementPilot).content.templateVcpId
+							}
+						})
+					}
+				}
+			})
+		}
+	})
+
+	pieces.forEach(piece => {
+		if (piece.expectedPlayoutItems) {
+			console.log(JSON.stringify(piece.expectedPlayoutItems))
+			console.log(piece.externalId)
 		}
 	})
 
