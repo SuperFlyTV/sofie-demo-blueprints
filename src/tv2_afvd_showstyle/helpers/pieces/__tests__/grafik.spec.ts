@@ -44,7 +44,8 @@ describe('grafik piece', () => {
 			adLibPieces,
 			partId,
 			cue,
-			cue.adlib ? cue.adlib : false
+			cue.adlib ? cue.adlib : false,
+			false
 		)
 		expect(pieces).toEqual([
 			literal<IBlueprintPiece>({
@@ -104,7 +105,8 @@ describe('grafik piece', () => {
 			adLibPieces,
 			partId,
 			cue,
-			cue.adlib ? cue.adlib : false
+			cue.adlib ? cue.adlib : false,
+			false
 		)
 		expect(adLibPieces).toEqual([
 			literal<IBlueprintAdLibPiece>({
@@ -163,7 +165,8 @@ describe('grafik piece', () => {
 			adLibPieces,
 			partId,
 			cue,
-			cue.adlib ? cue.adlib : false
+			cue.adlib ? cue.adlib : false,
+			false
 		)
 		expect(pieces).toEqual([
 			literal<IBlueprintPiece>({

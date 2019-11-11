@@ -51,6 +51,14 @@ export function EvaluateTelefon(
 	)
 
 	if (parsedCue.vizObj) {
-		EvaluateGrafik(config, pieces, adlibPieces, partId, parsedCue.vizObj, parsedCue.adlib ? parsedCue.adlib : false)
+		EvaluateGrafik(
+			config,
+			pieces,
+			adlibPieces,
+			partId,
+			parsedCue.vizObj,
+			parsedCue.adlib ? parsedCue.adlib : false,
+			true
+		)
 	}
 }

@@ -44,7 +44,7 @@ export function EvaluateCues(
 		if (cue) {
 			switch (cue.type) {
 				case CueType.Grafik:
-					EvaluateGrafik(config, pieces, adLibPieces, part.externalId, cue, cue.adlib ? cue.adlib : false)
+					EvaluateGrafik(config, pieces, adLibPieces, part.externalId, cue, cue.adlib ? cue.adlib : false, false)
 					break
 				case CueType.MOS:
 					EvaluateMOS(config, pieces, adLibPieces, part.externalId, cue, cue.adlib)

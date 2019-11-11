@@ -37,6 +37,7 @@ export function EvaluateGrafik(
 	partId: string,
 	parsedCue: CueDefinitionGrafik,
 	adlib: boolean,
+	isTlf?: boolean,
 	rank?: number
 ) {
 	if (config.showStyle.GFXTemplates) {
@@ -66,7 +67,7 @@ export function EvaluateGrafik(
 				_rank: rank || 0,
 				externalId: partId,
 				name: grafikName(parsedCue),
-				sourceLayerId: SourceLayer.PgmGraphics,
+				sourceLayerId: isTlf ? SourceLayer.PgmGraphicsTLF : SourceLayer.PgmGraphics,
 				outputLayerId: 'pgm0',
 				expectedDuration: GetGrafikDuration(config, parsedCue),
 				infiniteMode:
@@ -105,7 +106,7 @@ export function EvaluateGrafik(
 					...CreateTimingGrafik(config, parsedCue)
 				},
 				outputLayerId: 'pgm0',
-				sourceLayerId: SourceLayer.PgmGraphics,
+				sourceLayerId: isTlf ? SourceLayer.PgmGraphicsTLF : SourceLayer.PgmGraphics,
 				infiniteMode:
 					parsedCue.end && parsedCue.end.infiniteMode
 						? InfiniteMode(parsedCue.end.infiniteMode, PieceLifespan.Normal)

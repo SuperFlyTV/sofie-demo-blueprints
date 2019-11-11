@@ -57,6 +57,18 @@ export default literal<ISourceLayer[]>([
 		unlimited: false
 	},
 	{
+		_id: SourceLayer.PgmGraphicsTLF,
+		_rank: 9900,
+		name: 'Graphics',
+		type: SourceLayerType.GRAPHICS,
+		onPGMClean: true,
+		activateKeyboardHotkeys: '',
+		clearKeyboardHotkey: '',
+		allowDisable: true,
+		unlimited: false,
+		exclusiveGroup: 'fullscreen_pgm'
+	},
+	{
 		_id: SourceLayer.PgmPilot,
 		_rank: 9500,
 		name: 'Graphics',
