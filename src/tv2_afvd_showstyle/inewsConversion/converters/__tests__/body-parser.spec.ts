@@ -31,6 +31,7 @@ const unparsedUnknown: UnparsedCue = ['Some invalid cue']
 const cueGrafik1: CueDefinitionGrafik = {
 	type: CueType.Grafik,
 	template: 'bund',
+	cue: 'kg',
 	textFields: ['1'],
 	adlib: true
 }
@@ -40,6 +41,7 @@ const unparsedGrafik1 = ['kg bund 1']
 const cueGrafik2: CueDefinitionGrafik = {
 	type: CueType.Grafik,
 	template: 'bund',
+	cue: 'kg',
 	textFields: ['2'],
 	adlib: true
 }
@@ -49,6 +51,7 @@ const unparsedGrafik2 = ['kg bund 2']
 const cueGrafik3: CueDefinitionGrafik = {
 	type: CueType.Grafik,
 	template: 'bund',
+	cue: 'kg',
 	textFields: ['3'],
 	adlib: true
 }
@@ -973,18 +976,21 @@ describe('Body parser', () => {
 						literal<CueDefinitionGrafik>({
 							type: CueType.Grafik,
 							template: 'ident_blank',
+							cue: 'kg',
 							textFields: ['ODENSE', 'KLJ'],
 							adlib: true
 						}),
 						literal<CueDefinitionGrafik>({
 							type: CueType.Grafik,
 							template: 'bund',
+							cue: 'kg',
 							textFields: ['ANETTE RYTTER', 'Inews'],
 							adlib: true
 						}),
 						literal<CueDefinitionGrafik>({
 							type: CueType.Grafik,
 							template: 'bund',
+							cue: 'kg',
 							textFields: ['ANETTE RYTTER', 'anry@tv2.dk'],
 							adlib: true
 						}),

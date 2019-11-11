@@ -64,7 +64,7 @@ export function EvaluateCues(
 					EvaluateLYD(pieces, cue, part)
 					break
 				case CueType.Design:
-					EvaluateDesign(context, config, pieces, adLibPieces, part.externalId, cue)
+					EvaluateDesign(config, pieces, adLibPieces, part.externalId, cue)
 					break
 				default:
 					if (cue.type !== CueType.Unknown) {

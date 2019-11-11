@@ -88,6 +88,7 @@ describe('Cue parser', () => {
 			literal<CueDefinition>({
 				type: CueType.Grafik,
 				template: 'bund',
+				cue: 'kg',
 				textFields: ['HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk'],
 				start: {
 					seconds: 2
@@ -103,6 +104,7 @@ describe('Cue parser', () => {
 			literal<CueDefinition>({
 				type: CueType.Grafik,
 				template: 'bund',
+				cue: 'kg',
 				textFields: ['HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk'],
 				adlib: true
 			})
@@ -116,6 +118,7 @@ describe('Cue parser', () => {
 			literal<CueDefinition>({
 				type: CueType.Grafik,
 				template: 'bund',
+				cue: 'kg',
 				textFields: ['HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk'],
 				adlib: true
 			})
@@ -129,6 +132,7 @@ describe('Cue parser', () => {
 			literal<CueDefinition>({
 				type: CueType.Grafik,
 				template: 'bund',
+				cue: 'kg',
 				textFields: ['HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk'],
 				start: {
 					seconds: 2
@@ -144,6 +148,7 @@ describe('Cue parser', () => {
 			literal<CueDefinition>({
 				type: CueType.Grafik,
 				template: 'bund',
+				cue: 'kg',
 				textFields: ['HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk'],
 				adlib: true
 			})
@@ -157,6 +162,7 @@ describe('Cue parser', () => {
 			literal<CueDefinition>({
 				type: CueType.Grafik,
 				template: 'bund',
+				cue: 'kg',
 				textFields: ['HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk'],
 				adlib: true
 			})
@@ -170,6 +176,7 @@ describe('Cue parser', () => {
 			literal<CueDefinition>({
 				type: CueType.Grafik,
 				template: 'bund',
+				cue: 'kg',
 				textFields: ['2'],
 				adlib: true
 			})
@@ -200,6 +207,7 @@ describe('Cue parser', () => {
 					seconds: 31
 				},
 				template: 'bund',
+				cue: 'kg',
 				textFields: ['STIG NIKOLAJ BLOMBERG', 'Forsker, Akutberedskabet, Region Hovedstaden']
 			})
 		)
@@ -215,6 +223,7 @@ describe('Cue parser', () => {
 					seconds: 0
 				},
 				template: 'VO',
+				cue: 'DIGI',
 				textFields: ['Dette er en VO tekst', 'Dette er linje 2']
 			})
 		)
@@ -225,12 +234,14 @@ describe('Cue parser', () => {
 		const result = ParseCue(cueGrafik)
 		expect(result).toEqual(
 			literal<CueDefinition>({
-				type: CueType.Design,
+				type: CueType.Grafik,
 				start: {
 					frames: 1,
 					seconds: 0
 				},
-				design: 'DESIGN_FODBOLD'
+				template: 'DESIGN_FODBOLD',
+				cue: 'KG',
+				textFields: []
 			})
 		)
 		expect(result).toBeTruthy()
@@ -328,6 +339,7 @@ describe('Cue parser', () => {
 						seconds: 2
 					},
 					template: 'bund',
+					cue: 'kg',
 					textFields: ['HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk']
 				}
 			})
@@ -484,11 +496,11 @@ describe('Cue parser', () => {
 		const result = ParseCue(cueKommando)
 		expect(result).toEqual(
 			literal<CueDefinition>({
-				type: CueType.Design,
+				type: CueType.Profile,
 				start: {
 					seconds: 0
 				},
-				design: 'TV2 SPORT 2016'
+				profile: 'TV2 SPORT 2016'
 			})
 		)
 	})

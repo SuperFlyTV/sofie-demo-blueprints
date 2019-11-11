@@ -12,6 +12,7 @@ import {
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../../common/util'
 import {
+	CueDefinitionDesign,
 	CueDefinitionGrafik,
 	CueDefinitionMOS,
 	CueType
@@ -19,6 +20,7 @@ import {
 import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
 import { VizLLayer } from '../../../tv2_afvd_studio/layers'
 import { BlueprintConfig } from '../config'
+import { EvaluateDesign } from './design'
 import { CalculateTime, InfiniteMode } from './evaluateCues'
 
 /**
@@ -37,6 +39,27 @@ export function EvaluateGrafik(
 	adlib: boolean,
 	rank?: number
 ) {
+	if (config.showStyle.GFXTemplates) {
+		const template = config.showStyle.GFXTemplates.find(
+			templ => templ.iNewsName === parsedCue.template && templ.INewsCode.toString().replace(/=/g, '') === parsedCue.cue
+		)
+		if (template) {
+			if (template.IsDesign) {
+				const designCue: CueDefinitionDesign = {
+					type: CueType.Design,
+					design: parsedCue.template,
+					start: {
+						...parsedCue.start
+					},
+					end: {
+						...parsedCue.end
+					}
+				}
+				EvaluateDesign(config, pieces, adlibPieces, partId, designCue)
+				return
+			}
+		}
+	}
 	if (adlib) {
 		adlibPieces.push(
 			literal<IBlueprintAdLibPiece>({

@@ -8,7 +8,6 @@ import {
 	GraphicsContent,
 	IBlueprintAdLibPiece,
 	IBlueprintPiece,
-	PartContext,
 	PieceLifespan
 } from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
@@ -20,7 +19,6 @@ import { VizLLayer } from '../../../tv2_afvd_studio/layers'
 import { CalculateTime } from './evaluateCues'
 
 export function EvaluateDesign(
-	_context: PartContext,
 	_config: BlueprintConfig,
 	pieces: IBlueprintPiece[],
 	_adlibPieces: IBlueprintAdLibPiece[],

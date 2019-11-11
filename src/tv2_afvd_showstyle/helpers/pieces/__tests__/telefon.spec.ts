@@ -35,6 +35,7 @@ describe('telefon', () => {
 			vizObj: literal<CueDefinitionGrafik>({
 				type: CueType.Grafik,
 				template: 'bund',
+				cue: 'kg',
 				textFields: ['Odense', 'Copenhagen']
 			}),
 			start: {

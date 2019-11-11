@@ -24,6 +24,7 @@ describe('grafik piece', () => {
 		const cue: CueDefinitionGrafik = {
 			type: CueType.Grafik,
 			template: 'bund',
+			cue: 'kg',
 			textFields: ['Odense', 'Copenhagen'],
 			start: {
 				seconds: 0
@@ -85,6 +86,7 @@ describe('grafik piece', () => {
 		const cue: CueDefinitionGrafik = {
 			type: CueType.Grafik,
 			template: 'bund',
+			cue: 'kg',
 			textFields: ['Odense', 'Copenhagen'],
 			adlib: true
 		}
@@ -141,6 +143,7 @@ describe('grafik piece', () => {
 		const cue: CueDefinitionGrafik = {
 			type: CueType.Grafik,
 			template: 'bund',
+			cue: 'kg',
 			textFields: ['Odense', 'Copenhagen'],
 			start: {
 				seconds: 10

@@ -103,7 +103,8 @@ export const showStyleConfigManifest: ConfigManifestEntry[] = [
 				VizDestination: '',
 				OutType: '', // (default(''), S, B, O)
 				Argument1: '',
-				Argument2: ''
+				Argument2: '',
+				IsDesign: false
 			}
 		],
 		columns: [
@@ -162,6 +163,14 @@ export const showStyleConfigManifest: ConfigManifestEntry[] = [
 				type: ConfigManifestEntryType.STRING,
 				required: true,
 				defaultVal: ''
+			},
+			{
+				id: 'IsDesign',
+				name: 'Changes Design',
+				description: 'Whether this cue changes the design',
+				type: ConfigManifestEntryType.BOOLEAN,
+				required: false,
+				defaultVal: false
 			}
 		]
 	},
