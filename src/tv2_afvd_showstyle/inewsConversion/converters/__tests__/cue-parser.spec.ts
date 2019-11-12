@@ -183,6 +183,34 @@ describe('Cue parser', () => {
 		)
 	})
 
+	test('Grafik (kg) - star', () => {
+		const cueGrafik = ['*kg bund 2']
+		const result = ParseCue(cueGrafik)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.Grafik,
+				template: 'bund',
+				cue: 'kg',
+				textFields: ['2'],
+				adlib: true
+			})
+		)
+	})
+
+	test('Grafik (kg) - Hash', () => {
+		const cueGrafik = ['#kg bund 2']
+		const result = ParseCue(cueGrafik)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.Grafik,
+				template: 'bund',
+				cue: 'kg',
+				textFields: ['2'],
+				adlib: true
+			})
+		)
+	})
+
 	test('Grafik (kg) - All out', () => {
 		const cueGrafik = ['kg ovl-all-out', 'CLEAR OVERLAY', ';0.00']
 		const result = ParseCue(cueGrafik)
@@ -341,6 +369,35 @@ describe('Cue parser', () => {
 					template: 'bund',
 					cue: 'kg',
 					textFields: ['HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk']
+				}
+			})
+		)
+	})
+
+	test('TELEFON with pilot', () => {
+		const cueTelefon = [
+			'TELEFON=TLF 2',
+			']] S3.0 M 0 [[',
+			'cg4 ]] 1 YNYAB 0 [[ pilotdata',
+			'LgfxWeb/-ETKAEM_07-05-2019_17:55:42/Mosart=L|M|O',
+			'VCPID=2520177',
+			'ContinueCount=-1',
+			'LgfxWeb/-ETKAEM_07-05-2019_17:55:42/Mosart=L|M|O'
+		]
+		const result = ParseCue(cueTelefon)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.Telefon,
+				source: 'TLF 2',
+				vizObj: {
+					type: CueType.MOS,
+					name: 'LgfxWeb/-ETKAEM_07-05-2019_17:55:42/Mosart=L|M|O',
+					vcpid: 2520177,
+					continueCount: -1,
+					adlib: true,
+					end: {
+						infiniteMode: 'O'
+					}
 				}
 			})
 		)

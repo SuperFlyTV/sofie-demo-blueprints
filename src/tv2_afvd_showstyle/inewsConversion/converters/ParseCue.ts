@@ -75,7 +75,7 @@ export interface CueDefinitionDVE extends CueDefinitionBase {
 export interface CueDefinitionTelefon extends CueDefinitionBase {
 	type: CueType.Telefon
 	source: string
-	vizObj?: CueDefinitionGrafik
+	vizObj?: CueDefinitionGrafik | CueDefinitionMOS
 }
 
 export interface CueDefinitionVIZ extends CueDefinitionBase {
@@ -153,9 +153,9 @@ export function ParseCue(cue: UnparsedCue): CueDefinition {
 			type: CueType.Ignored_MOS,
 			command: cue
 		}
-	} else if (cue[0].match(/(?:^kg[ |=])|(?:^digi)/i)) {
+	} else if (cue[0].match(/(?:^[*|#]?kg[ |=])|(?:^digi)/i)) {
 		// kg (Grafik)
-		return parsekg(cue as string[])
+		return parsekg(cue)
 	} else if (cue[0].match(/ss=/i)) {
 		return parseSS(cue)
 	} else if (cue[0].match(/^]] [a-z]\d\.\d [a-z] \d \[\[$/i)) {
@@ -202,7 +202,7 @@ function parsekg(cue: string[]): CueDefinitionGrafik {
 		textFields: []
 	}
 
-	const firstLineValues = cue[0].match(/^kg[ |=]([\w|\d]+)( (.+))*$/i)
+	const firstLineValues = cue[0].match(/^[*|#]?kg[ |=]([\w|\d]+)( (.+))*$/i)
 	if (firstLineValues) {
 		kgCue.cue = cue[0].match(/kg/) ? 'kg' : 'KG'
 		kgCue.template = firstLineValues[1]
@@ -331,7 +331,12 @@ function parseTelefon(cue: string[]): CueDefinitionTelefon {
 	}
 
 	if (cue.length > 1) {
-		telefonCue.vizObj = parsekg(cue.slice(1, cue.length))
+		// tslint:disable-next-line:prefer-conditional-expression
+		if (cue[1].match(/(?:^[*|#]?kg[ |=])|(?:^digi)/i)) {
+			telefonCue.vizObj = parsekg(cue.slice(1, cue.length))
+		} else {
+			telefonCue.vizObj = parseMOS(cue.slice(1, cue.length))
+		}
 	}
 
 	return telefonCue
