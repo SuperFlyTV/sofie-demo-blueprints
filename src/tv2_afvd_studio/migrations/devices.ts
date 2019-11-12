@@ -1,4 +1,4 @@
-import { DeviceOptions as PlayoutDeviceOptions, DeviceType as PlayoutDeviceType } from 'timeline-state-resolver-types'
+import { DeviceOptionsAny, DeviceType as PlayoutDeviceType } from 'timeline-state-resolver-types'
 import {
 	MigrationContextStudio,
 	MigrationStepInput,
@@ -17,9 +17,9 @@ interface DeviceEntry {
 	defaultValue: (
 		input: MigrationStepInputFilteredResult,
 		context: MigrationContextStudio
-	) => PlayoutDeviceOptions | undefined
+	) => DeviceOptionsAny | undefined
 	input?: MigrationStepInput[]
-	validate?: (device: PlayoutDeviceOptions) => string | boolean
+	validate?: (device: DeviceOptionsAny) => string | boolean
 	createDependsOn?: string
 	createCondition?: (context: MigrationContextStudio) => boolean
 }
@@ -109,7 +109,7 @@ const devices: DeviceEntry[] = [
 				host: input.host,
 				port: 5250,
 				launcherHost: input.host,
-				launcherPort: 8005
+				launcherPort: '8005'
 			}
 		}),
 		input: [

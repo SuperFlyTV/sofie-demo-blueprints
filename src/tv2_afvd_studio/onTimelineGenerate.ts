@@ -1,6 +1,6 @@
 import {
 	DeviceType,
-	TimelineContentTypeHttp,
+	TimelineContentTypeHTTP,
 	TimelineContentTypeLawo,
 	TimelineObjHTTPRequest,
 	TimelineObjLawoSource,
@@ -151,7 +151,7 @@ export function validateNoraPreload(timelineObjs: OnGenerateTimelineObj[]) {
 			obj.isLookahead &&
 			obj.content &&
 			obj.content.deviceType === DeviceType.HTTPSEND &&
-			obj.content.type === TimelineContentTypeHttp.POST,
+			obj.content.type === TimelineContentTypeHTTP.POST,
 		httpObj => {
 			// ignore normal objects
 			if (
