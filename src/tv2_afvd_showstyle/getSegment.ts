@@ -80,7 +80,8 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 						`${part.externalId}-${1}`,
 						`${part.rawType ? `${part.rawType}-` : ''}EKSTERN-${j}`,
 						cue,
-						totalWords
+						totalWords,
+						true
 					)
 				)
 				part.cues.splice(part.cues.findIndex(c => _.isEqual(c, cue)), 1)

@@ -5,6 +5,7 @@ import {
 	TimelineObjAtemME
 } from 'timeline-state-resolver-types'
 import {
+	IBlueprintAdLibPiece,
 	IBlueprintPiece,
 	PartContext,
 	RemoteContent,
@@ -24,8 +25,11 @@ export function EvaluateEkstern(
 	context: PartContext,
 	config: BlueprintConfig,
 	pieces: IBlueprintPiece[],
+	adlibPieces: IBlueprintAdLibPiece[],
 	partId: string,
-	parsedCue: CueDefinitionEkstern
+	parsedCue: CueDefinitionEkstern,
+	adlib?: boolean,
+	rank?: number
 ) {
 	const eksternProps = parsedCue.source
 		.replace(/\s+/, ' ')
@@ -46,38 +50,75 @@ export function EvaluateEkstern(
 		return
 	}
 	const atemInput = sourceInfoCam.port
-	pieces.push(
-		literal<IBlueprintPiece>({
-			_id: '',
-			externalId: partId,
-			name: eksternProps[0],
-			...CreateTimingEnable(parsedCue),
-			outputLayerId: 'pgm0',
-			sourceLayerId: SourceLayer.PgmLive,
-			content: literal<RemoteContent>({
-				studioLabel: '',
-				switcherInput: atemInput,
-				timelineObjects: literal<TimelineObjectCoreExt[]>([
-					literal<TimelineObjAtemME>({
-						id: '',
-						enable: {
-							start: 0
-						},
-						priority: 1,
-						layer: AtemLLayer.AtemMEProgram,
-						content: {
-							deviceType: DeviceType.ATEM,
-							type: TimelineContentTypeAtem.ME,
-							me: {
-								input: atemInput,
-								transition: AtemTransitionStyle.CUT // TODO: This may change
-							}
-						}
-					}),
 
-					...GetSisyfosTimelineObjForEkstern(parsedCue.source, false)
-				])
+	if (adlib) {
+		adlibPieces.push(
+			literal<IBlueprintAdLibPiece>({
+				_rank: rank || 0,
+				externalId: partId,
+				name: eksternProps[0],
+				outputLayerId: 'pgm0',
+				sourceLayerId: SourceLayer.PgmLive,
+				content: literal<RemoteContent>({
+					studioLabel: '',
+					switcherInput: atemInput,
+					timelineObjects: literal<TimelineObjectCoreExt[]>([
+						literal<TimelineObjAtemME>({
+							id: '',
+							enable: {
+								start: 0
+							},
+							priority: 1,
+							layer: AtemLLayer.AtemMEProgram,
+							content: {
+								deviceType: DeviceType.ATEM,
+								type: TimelineContentTypeAtem.ME,
+								me: {
+									input: atemInput,
+									transition: AtemTransitionStyle.CUT // TODO: This may change
+								}
+							}
+						}),
+
+						...GetSisyfosTimelineObjForEkstern(parsedCue.source, false)
+					])
+				})
 			})
-		})
-	)
+		)
+	} else {
+		pieces.push(
+			literal<IBlueprintPiece>({
+				_id: '',
+				externalId: partId,
+				name: eksternProps[0],
+				...CreateTimingEnable(parsedCue),
+				outputLayerId: 'pgm0',
+				sourceLayerId: SourceLayer.PgmLive,
+				content: literal<RemoteContent>({
+					studioLabel: '',
+					switcherInput: atemInput,
+					timelineObjects: literal<TimelineObjectCoreExt[]>([
+						literal<TimelineObjAtemME>({
+							id: '',
+							enable: {
+								start: 0
+							},
+							priority: 1,
+							layer: AtemLLayer.AtemMEProgram,
+							content: {
+								deviceType: DeviceType.ATEM,
+								type: TimelineContentTypeAtem.ME,
+								me: {
+									input: atemInput,
+									transition: AtemTransitionStyle.CUT // TODO: This may change
+								}
+							}
+						}),
+
+						...GetSisyfosTimelineObjForEkstern(parsedCue.source, false)
+					])
+				})
+			})
+		)
+	}
 }

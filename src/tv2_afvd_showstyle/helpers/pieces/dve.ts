@@ -3,7 +3,8 @@ import {
 	IBlueprintPiece,
 	PartContext,
 	PieceLifespan,
-	TableConfigItemValue
+	TableConfigItemValue,
+	IBlueprintAdLibPiece
 } from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
 import { literal } from '../../../common/util'
@@ -61,8 +62,11 @@ export function EvaluateDVE(
 	context: PartContext,
 	config: BlueprintConfig,
 	pieces: IBlueprintPiece[],
+	adlibPieces: IBlueprintAdLibPiece[],
 	partId: string,
-	parsedCue: CueDefinitionDVE
+	parsedCue: CueDefinitionDVE,
+	adlib?: boolean,
+	rank?: number
 ) {
 	if (!parsedCue.template) {
 		return
@@ -85,21 +89,35 @@ export function EvaluateDVE(
 	const content = MakeContentDVE(context, config, partId, parsedCue, template)
 
 	if (content.valid) {
-		pieces.push(
-			literal<IBlueprintPiece>({
-				_id: '',
-				externalId: partId,
-				name: `DVE: ${parsedCue.template}`,
-				enable: {
-					start: parsedCue.start ? CalculateTime(parsedCue.start) : 0,
-					...(parsedCue.end ? { end: CalculateTime(parsedCue.end) } : {})
-				},
-				outputLayerId: 'pgm0',
-				sourceLayerId: SourceLayer.PgmDVE,
-				infiniteMode: PieceLifespan.OutOnNextPart,
-				content: content.content
-			})
-		)
+		if (adlib) {
+			adlibPieces.push(
+				literal<IBlueprintAdLibPiece>({
+					_rank: rank || 0,
+					externalId: partId,
+					name: `DVE: ${parsedCue.template}`,
+					outputLayerId: 'pgm0',
+					sourceLayerId: SourceLayer.PgmDVE,
+					infiniteMode: PieceLifespan.OutOnNextPart,
+					content: content.content
+				})
+			)
+		} else {
+			pieces.push(
+				literal<IBlueprintPiece>({
+					_id: '',
+					externalId: partId,
+					name: `DVE: ${parsedCue.template}`,
+					enable: {
+						start: parsedCue.start ? CalculateTime(parsedCue.start) : 0,
+						...(parsedCue.end ? { end: CalculateTime(parsedCue.end) } : {})
+					},
+					outputLayerId: 'pgm0',
+					sourceLayerId: SourceLayer.PgmDVE,
+					infiniteMode: PieceLifespan.OutOnNextPart,
+					content: content.content
+				})
+			)
+		}
 	}
 }
 

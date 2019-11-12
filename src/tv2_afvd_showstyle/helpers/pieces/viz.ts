@@ -25,77 +25,141 @@ export function EvaluateVIZ(
 	context: PartContext,
 	_config: BlueprintConfig,
 	pieces: IBlueprintPiece[],
-	_adlibPieces: IBlueprintAdLibPiece[],
+	adlibPieces: IBlueprintAdLibPiece[],
 	partId: string,
-	parsedCue: CueDefinitionVIZ
+	parsedCue: CueDefinitionVIZ,
+	adlib?: boolean,
+	rank?: number
 ) {
 	if (parsedCue.design.match(/^dve-triopage$/)) {
 		const path = parsedCue.content.triopage ? parsedCue.content.triopage : parsedCue.content.GRAFIK
-		pieces.push(
-			literal<IBlueprintPiece>({
-				_id: '',
-				externalId: partId,
-				name: path,
-				enable: {
-					start: parsedCue.start ? CalculateTime(parsedCue.start) : 0
-				},
-				outputLayerId: 'pgm0',
-				sourceLayerId: SourceLayer.PgmDVEBackground,
-				infiniteMode: PieceLifespan.Infinite,
-				content: literal<GraphicsContent>({
-					fileName: path,
-					path,
-					timelineObjects: _.compact<TSRTimelineObj>([
-						literal<TimelineObjCCGMedia>({
-							id: '',
-							enable: { start: 0 },
-							priority: 100,
-							layer: CasparLLayer.CasparCGDVELoop,
-							content: {
-								deviceType: DeviceType.CASPARCG,
-								type: TimelineContentTypeCasparCg.MEDIA,
-								file: path,
-								loop: true
-							}
-						})
-					])
+		if (adlib) {
+			adlibPieces.push(
+				literal<IBlueprintAdLibPiece>({
+					_rank: rank || 0,
+					externalId: partId,
+					name: path,
+					outputLayerId: 'pgm0',
+					sourceLayerId: SourceLayer.PgmDVEBackground,
+					infiniteMode: PieceLifespan.Infinite,
+					content: literal<GraphicsContent>({
+						fileName: path,
+						path,
+						timelineObjects: _.compact<TSRTimelineObj>([
+							literal<TimelineObjCCGMedia>({
+								id: '',
+								enable: { start: 0 },
+								priority: 100,
+								layer: CasparLLayer.CasparCGDVELoop,
+								content: {
+									deviceType: DeviceType.CASPARCG,
+									type: TimelineContentTypeCasparCg.MEDIA,
+									file: path,
+									loop: true
+								}
+							})
+						])
+					})
 				})
-			})
-		)
+			)
+		} else {
+			pieces.push(
+				literal<IBlueprintPiece>({
+					_id: '',
+					externalId: partId,
+					name: path,
+					enable: {
+						start: parsedCue.start ? CalculateTime(parsedCue.start) : 0
+					},
+					outputLayerId: 'pgm0',
+					sourceLayerId: SourceLayer.PgmDVEBackground,
+					infiniteMode: PieceLifespan.Infinite,
+					content: literal<GraphicsContent>({
+						fileName: path,
+						path,
+						timelineObjects: _.compact<TSRTimelineObj>([
+							literal<TimelineObjCCGMedia>({
+								id: '',
+								enable: { start: 0 },
+								priority: 100,
+								layer: CasparLLayer.CasparCGDVELoop,
+								content: {
+									deviceType: DeviceType.CASPARCG,
+									type: TimelineContentTypeCasparCg.MEDIA,
+									file: path,
+									loop: true
+								}
+							})
+						])
+					})
+				})
+			)
+		}
 	} else if (parsedCue.rawType.match(/^VIZ=grafik-design$/)) {
 		context.warning('VIZ=grafik-design is not supported for this showstyle')
 	} else {
 		const path = parsedCue.content.triopage ? parsedCue.content.triopage : parsedCue.content.GRAFIK
-		pieces.push(
-			literal<IBlueprintPiece>({
-				_id: '',
-				externalId: partId,
-				name: path,
-				enable: {
-					start: parsedCue.start ? CalculateTime(parsedCue.start) : 0
-				},
-				outputLayerId: 'pgm0',
-				sourceLayerId: SourceLayer.PgmDesign,
-				infiniteMode: PieceLifespan.Infinite,
-				content: literal<GraphicsContent>({
-					fileName: path,
-					path,
-					timelineObjects: _.compact<TSRTimelineObj>([
-						literal<TimelineObjVIZMSEElementInternal>({
-							id: '',
-							enable: { start: 0 },
-							priority: 100,
-							layer: VizLLayer.VizLLayerDesign,
-							content: {
-								deviceType: DeviceType.VIZMSE,
-								type: TimelineContentTypeVizMSE.ELEMENT_INTERNAL,
-								templateName: path,
-								templateData: []
-							}
-						})
-					])
+		if (adlib) {
+			adlibPieces.push(
+				literal<IBlueprintAdLibPiece>({
+					_rank: rank || 0,
+					externalId: partId,
+					name: path,
+					outputLayerId: 'pgm0',
+					sourceLayerId: SourceLayer.PgmDesign,
+					infiniteMode: PieceLifespan.Infinite,
+					content: literal<GraphicsContent>({
+						fileName: path,
+						path,
+						timelineObjects: _.compact<TSRTimelineObj>([
+							literal<TimelineObjVIZMSEElementInternal>({
+								id: '',
+								enable: { start: 0 },
+								priority: 100,
+								layer: VizLLayer.VizLLayerDesign,
+								content: {
+									deviceType: DeviceType.VIZMSE,
+									type: TimelineContentTypeVizMSE.ELEMENT_INTERNAL,
+									templateName: path,
+									templateData: []
+								}
+							})
+						])
+					})
 				})
-			})
-		)
+			)
+		} else {
+			pieces.push(
+				literal<IBlueprintPiece>({
+					_id: '',
+					externalId: partId,
+					name: path,
+					enable: {
+						start: parsedCue.start ? CalculateTime(parsedCue.start) : 0
+					},
+					outputLayerId: 'pgm0',
+					sourceLayerId: SourceLayer.PgmDesign,
+					infiniteMode: PieceLifespan.Infinite,
+					content: literal<GraphicsContent>({
+						fileName: path,
+						path,
+						timelineObjects: _.compact<TSRTimelineObj>([
+							literal<TimelineObjVIZMSEElementInternal>({
+								id: '',
+								enable: { start: 0 },
+								priority: 100,
+								layer: VizLLayer.VizLLayerDesign,
+								content: {
+									deviceType: DeviceType.VIZMSE,
+									type: TimelineContentTypeVizMSE.ELEMENT_INTERNAL,
+									templateName: path,
+									templateData: []
+								}
+							})
+						])
+					})
+				})
+			)
+		}
 	}
 }

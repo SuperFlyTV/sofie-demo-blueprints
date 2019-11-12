@@ -21,39 +21,72 @@ import { CalculateTime } from './evaluateCues'
 export function EvaluateDesign(
 	_config: BlueprintConfig,
 	pieces: IBlueprintPiece[],
-	_adlibPieces: IBlueprintAdLibPiece[],
+	adlibPieces: IBlueprintAdLibPiece[],
 	partId: string,
-	parsedCue: CueDefinitionDesign
+	parsedCue: CueDefinitionDesign,
+	adlib?: boolean,
+	rank?: number
 ) {
-	pieces.push(
-		literal<IBlueprintPiece>({
-			_id: '',
-			externalId: partId,
-			name: parsedCue.design,
-			enable: {
-				start: parsedCue.start ? CalculateTime(parsedCue.start) : 0
-			},
-			outputLayerId: 'pgm0',
-			sourceLayerId: SourceLayer.PgmDesign,
-			infiniteMode: PieceLifespan.Infinite,
-			content: literal<GraphicsContent>({
-				fileName: parsedCue.design,
-				path: parsedCue.design,
-				timelineObjects: _.compact<TSRTimelineObj>([
-					literal<TimelineObjVIZMSEElementInternal>({
-						id: '',
-						enable: { start: 0 },
-						priority: 100,
-						layer: VizLLayer.VizLLayerDesign,
-						content: {
-							deviceType: DeviceType.VIZMSE,
-							type: TimelineContentTypeVizMSE.ELEMENT_INTERNAL,
-							templateName: parsedCue.design,
-							templateData: []
-						}
-					})
-				])
+	if (adlib) {
+		adlibPieces.push(
+			literal<IBlueprintAdLibPiece>({
+				_rank: rank || 0,
+				externalId: partId,
+				name: parsedCue.design,
+				outputLayerId: 'pgm0',
+				sourceLayerId: SourceLayer.PgmDesign,
+				infiniteMode: PieceLifespan.Infinite,
+				content: literal<GraphicsContent>({
+					fileName: parsedCue.design,
+					path: parsedCue.design,
+					timelineObjects: _.compact<TSRTimelineObj>([
+						literal<TimelineObjVIZMSEElementInternal>({
+							id: '',
+							enable: { start: 0 },
+							priority: 100,
+							layer: VizLLayer.VizLLayerDesign,
+							content: {
+								deviceType: DeviceType.VIZMSE,
+								type: TimelineContentTypeVizMSE.ELEMENT_INTERNAL,
+								templateName: parsedCue.design,
+								templateData: []
+							}
+						})
+					])
+				})
 			})
-		})
-	)
+		)
+	} else {
+		pieces.push(
+			literal<IBlueprintPiece>({
+				_id: '',
+				externalId: partId,
+				name: parsedCue.design,
+				enable: {
+					start: parsedCue.start ? CalculateTime(parsedCue.start) : 0
+				},
+				outputLayerId: 'pgm0',
+				sourceLayerId: SourceLayer.PgmDesign,
+				infiniteMode: PieceLifespan.Infinite,
+				content: literal<GraphicsContent>({
+					fileName: parsedCue.design,
+					path: parsedCue.design,
+					timelineObjects: _.compact<TSRTimelineObj>([
+						literal<TimelineObjVIZMSEElementInternal>({
+							id: '',
+							enable: { start: 0 },
+							priority: 100,
+							layer: VizLLayer.VizLLayerDesign,
+							content: {
+								deviceType: DeviceType.VIZMSE,
+								type: TimelineContentTypeVizMSE.ELEMENT_INTERNAL,
+								templateName: parsedCue.design,
+								templateData: []
+							}
+						})
+					])
+				})
+			})
+		)
+	}
 }

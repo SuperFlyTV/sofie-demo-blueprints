@@ -21,7 +21,8 @@ export function CreatePartCueOnly(
 	id: string,
 	title: string,
 	cue: CueDefinition,
-	totalWords: number
+	totalWords: number,
+	makeAdlibs?: boolean
 ) {
 	const partDefinitionWithID = { ...partDefinition, ...{ externalId: id } }
 	const partTime = PartTime(partDefinitionWithID, totalWords)
@@ -41,6 +42,10 @@ export function CreatePartCueOnly(
 	EvaluateCues(context, config, pieces, adLibPieces, [cue], partDefinitionWithID)
 	AddScript(partDefinitionWithID, pieces, partTime, false)
 	part = { ...part, ...GetBreakerAutoNext(context, config, partDefinitionWithID) }
+
+	if (makeAdlibs) {
+		EvaluateCues(context, config, pieces, adLibPieces, [cue], partDefinitionWithID, true)
+	}
 
 	if (pieces.length === 0) {
 		return CreatePartInvalid(partDefinitionWithID)

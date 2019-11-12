@@ -18,37 +18,68 @@ export function EvaluateTelefon(
 	pieces: IBlueprintPiece[],
 	adlibPieces: IBlueprintAdLibPiece[],
 	partId: string,
-	parsedCue: CueDefinitionTelefon
+	parsedCue: CueDefinitionTelefon,
+	adlib?: boolean,
+	rank?: number
 ) {
-	// TODO: Grafik
-	pieces.push(
-		literal<IBlueprintPiece>({
-			_id: '',
-			externalId: partId,
-			name: parsedCue.source,
-			...CreateTimingEnable(parsedCue),
-			outputLayerId: 'pgm0',
-			sourceLayerId: SourceLayer.PgmTelephone,
-			content: literal<BaseContent>({
-				timelineObjects: literal<TimelineObjectCoreExt[]>([
-					literal<TimelineObjSisyfosMessage>({
-						id: '',
-						enable: {
-							start: 0
-						},
-						priority: 1,
-						layer: SisyfosSourceTelefon(parsedCue.source),
-						content: {
-							deviceType: DeviceType.SISYFOS,
-							type: TimelineContentTypeSisyfos.SISYFOS,
-							isPgm: 1,
-							faderLevel: 0.75
-						}
-					})
-				])
+	if (adlib) {
+		adlibPieces.push(
+			literal<IBlueprintAdLibPiece>({
+				_rank: rank || 0,
+				externalId: partId,
+				name: parsedCue.source,
+				outputLayerId: 'pgm0',
+				sourceLayerId: SourceLayer.PgmTelephone,
+				content: literal<BaseContent>({
+					timelineObjects: literal<TimelineObjectCoreExt[]>([
+						literal<TimelineObjSisyfosMessage>({
+							id: '',
+							enable: {
+								start: 0
+							},
+							priority: 1,
+							layer: SisyfosSourceTelefon(parsedCue.source),
+							content: {
+								deviceType: DeviceType.SISYFOS,
+								type: TimelineContentTypeSisyfos.SISYFOS,
+								isPgm: 1,
+								faderLevel: 0.75
+							}
+						})
+					])
+				})
 			})
-		})
-	)
+		)
+	} else {
+		pieces.push(
+			literal<IBlueprintPiece>({
+				_id: '',
+				externalId: partId,
+				name: parsedCue.source,
+				...CreateTimingEnable(parsedCue),
+				outputLayerId: 'pgm0',
+				sourceLayerId: SourceLayer.PgmTelephone,
+				content: literal<BaseContent>({
+					timelineObjects: literal<TimelineObjectCoreExt[]>([
+						literal<TimelineObjSisyfosMessage>({
+							id: '',
+							enable: {
+								start: 0
+							},
+							priority: 1,
+							layer: SisyfosSourceTelefon(parsedCue.source),
+							content: {
+								deviceType: DeviceType.SISYFOS,
+								type: TimelineContentTypeSisyfos.SISYFOS,
+								isPgm: 1,
+								faderLevel: 0.75
+							}
+						})
+					])
+				})
+			})
+		)
+	}
 
 	if (parsedCue.vizObj) {
 		EvaluateGrafik(
@@ -57,7 +88,7 @@ export function EvaluateTelefon(
 			adlibPieces,
 			partId,
 			parsedCue.vizObj,
-			parsedCue.adlib ? parsedCue.adlib : false,
+			adlib ? adlib : parsedCue.adlib ? parsedCue.adlib : false,
 			true
 		)
 	}

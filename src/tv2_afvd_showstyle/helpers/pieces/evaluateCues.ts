@@ -34,7 +34,8 @@ export function EvaluateCues(
 	pieces: IBlueprintPieceEPI[],
 	adLibPieces: IBlueprintAdLibPieceEPI[],
 	cues: CueDefinition[],
-	part: PartDefinition
+	part: PartDefinition,
+	adlib?: boolean
 ) {
 	let adLibRank = 0
 	// const filteredCues = cues.filter(cue => cue.type !== CueType.Grafik)
@@ -42,43 +43,50 @@ export function EvaluateCues(
 	// const isDVE = containsDVE(cues)
 	cues.forEach(cue => {
 		if (cue) {
+			const shouldAdlib = adlib ? adlib : cue.adlib ? cue.adlib : false
 			switch (cue.type) {
 				case CueType.Grafik:
-					EvaluateGrafik(config, pieces, adLibPieces, part.externalId, cue, cue.adlib ? cue.adlib : false, false)
+					EvaluateGrafik(config, pieces, adLibPieces, part.externalId, cue, shouldAdlib, false, adLibRank)
 					break
 				case CueType.MOS:
-					EvaluateMOS(config, pieces, adLibPieces, part.externalId, cue, cue.adlib)
+					EvaluateMOS(config, pieces, adLibPieces, part.externalId, cue, shouldAdlib, adLibRank)
 					break
 				case CueType.Ekstern:
-					EvaluateEkstern(context, config, pieces, part.externalId, cue)
+					EvaluateEkstern(context, config, pieces, adLibPieces, part.externalId, cue, shouldAdlib, adLibRank)
 					break
 				case CueType.DVE:
-					EvaluateDVE(context, config, pieces, part.externalId, cue)
+					EvaluateDVE(context, config, pieces, adLibPieces, part.externalId, cue, shouldAdlib, adLibRank)
+					// Always make an adlib for DVEs
+					if (!shouldAdlib) {
+						EvaluateDVE(context, config, pieces, adLibPieces, part.externalId, cue, true, adLibRank)
+					}
 					break
 				case CueType.AdLib:
 					EvaluateAdLib(context, config, adLibPieces, part.externalId, cue, part, adLibRank)
-					adLibRank++
 					break
 				case CueType.Telefon:
-					EvaluateTelefon(config, pieces, adLibPieces, part.externalId, cue)
+					EvaluateTelefon(config, pieces, adLibPieces, part.externalId, cue, shouldAdlib, adLibRank)
 					break
 				case CueType.VIZ:
-					EvaluateVIZ(context, config, pieces, adLibPieces, part.externalId, cue)
+					EvaluateVIZ(context, config, pieces, adLibPieces, part.externalId, cue, shouldAdlib, adLibRank)
 					break
 				case CueType.Jingle:
-					EvaluateJingle(context, config, pieces, cue, part)
+					EvaluateJingle(context, config, pieces, adLibPieces, cue, part, shouldAdlib, adLibRank)
 					break
 				case CueType.LYD:
-					EvaluateLYD(pieces, cue, part)
+					EvaluateLYD(pieces, adLibPieces, cue, part, shouldAdlib, adLibRank)
 					break
 				case CueType.Design:
-					EvaluateDesign(config, pieces, adLibPieces, part.externalId, cue)
+					EvaluateDesign(config, pieces, adLibPieces, part.externalId, cue, shouldAdlib, adLibRank)
 					break
 				default:
 					if (cue.type !== CueType.Unknown) {
 						context.warning(`Unimplemented cue type: ${CueType[cue.type]}`)
 					}
 					break
+			}
+			if (shouldAdlib || cue.type === CueType.AdLib || cue.type === CueType.DVE) {
+				adLibRank++
 			}
 		}
 	})
