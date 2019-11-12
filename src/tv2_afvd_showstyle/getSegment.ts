@@ -67,7 +67,10 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 		const livecue = part.cues.filter(cue => cue.type === CueType.Ekstern)
 		const dveCue = part.cues.filter(cue => cue.type === CueType.DVE)
 		const extraParts: BlueprintResultPart[] = []
-		if (livecue.length && dveCue.length) {
+		if (
+			livecue.length &&
+			(dveCue.length || part.type === PartType.Kam || part.type === PartType.Server || part.type === PartType.VO)
+		) {
 			livecue.forEach((cue, j) => {
 				extraParts.push(
 					CreatePartCueOnly(
