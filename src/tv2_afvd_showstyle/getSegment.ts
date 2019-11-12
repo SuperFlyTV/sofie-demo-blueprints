@@ -16,7 +16,6 @@ import { ParseBody, PartDefinition, PartDefinitionSlutord, PartType } from './in
 import { CueType } from './inewsConversion/converters/ParseCue'
 import { SourceLayer } from './layers'
 import { CreatePartCueOnly } from './parts/cueonly'
-import { CreatePartFake } from './parts/fake'
 import { CreatePartGrafik } from './parts/grafik'
 import { CreatePartIntro } from './parts/intro'
 import { CreatePartInvalid } from './parts/invalid'
@@ -26,8 +25,6 @@ import { CreatePartServer } from './parts/server'
 import { CreatePartTeknik } from './parts/teknik'
 import { CreatePartUnknown } from './parts/unknown'
 import { CreatePartVO } from './parts/vo'
-
-const DEBUG_LAYERS = false // TODO: Remove for production, used show all source layers even without parts.
 
 export function getSegment(context: SegmentContext, ingestSegment: IngestSegment): BlueprintResultSegment {
 	const segment = literal<IBlueprintSegment>({
@@ -61,9 +58,6 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 	}, 0)
 	for (let i = 0; i < parsedParts.length; i++) {
 		const part = parsedParts[i]
-		if (i === 0 && DEBUG_LAYERS) {
-			blueprintParts.push(CreatePartFake(part))
-		}
 		const partContext = new PartContext2(context, part.externalId)
 		const livecue = part.cues.filter(cue => cue.type === CueType.Ekstern)
 		const dveCue = part.cues.filter(cue => cue.type === CueType.DVE)
