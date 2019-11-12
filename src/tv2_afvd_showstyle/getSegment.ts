@@ -140,6 +140,13 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 			}
 			i++
 		}
+		if (blueprintParts[blueprintParts.length - 1].pieces.length === 1) {
+			const p = blueprintParts[blueprintParts.length - 1].pieces[0]
+			if (p.sourceLayerId === SourceLayer.PgmScript) {
+				blueprintParts[blueprintParts.length - 1].part.autoNext = true
+				blueprintParts[blueprintParts.length - 1].part.displayDuration = 1000
+			}
+		}
 		extraParts.forEach(extraPart => {
 			blueprintParts.push(extraPart)
 		})

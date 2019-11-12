@@ -6,12 +6,13 @@ import {
 	TimelineObjectCoreExt
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../../common/util'
-import { CueDefinitionTelefon } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseCue'
+import { CueDefinitionTelefon, CueType } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
 import { SisyfosSourceTelefon } from '../../../tv2_afvd_studio/layers'
 import { BlueprintConfig } from '../config'
 import { CreateTimingEnable } from './evaluateCues'
 import { EvaluateGrafik } from './grafik'
+import { EvaluateMOS } from './mos'
 
 export function EvaluateTelefon(
 	config: BlueprintConfig,
@@ -82,14 +83,25 @@ export function EvaluateTelefon(
 	}
 
 	if (parsedCue.vizObj) {
-		EvaluateGrafik(
-			config,
-			pieces,
-			adlibPieces,
-			partId,
-			parsedCue.vizObj,
-			adlib ? adlib : parsedCue.adlib ? parsedCue.adlib : false,
-			true
-		)
+		if (parsedCue.vizObj.type === CueType.Grafik) {
+			EvaluateGrafik(
+				config,
+				pieces,
+				adlibPieces,
+				partId,
+				parsedCue.vizObj,
+				adlib ? adlib : parsedCue.adlib ? parsedCue.adlib : false,
+				true
+			)
+		} else {
+			EvaluateMOS(
+				config,
+				pieces,
+				adlibPieces,
+				partId,
+				parsedCue.vizObj,
+				adlib ? adlib : parsedCue.adlib ? parsedCue.adlib : false
+			)
+		}
 	}
 }
