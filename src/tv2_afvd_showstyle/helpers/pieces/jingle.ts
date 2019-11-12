@@ -40,10 +40,21 @@ export function EvaluateJingle(
 		return
 	}
 
-	const jingle = config.showStyle.JingleTimings.find(jngl => jngl.JingleName === parsedCue.clip)
+	let breaker = false
+	let file = ''
+
+	let jingle = config.showStyle.JingleTimings.find(jngl => jngl.JingleName === parsedCue.clip)
 	if (!jingle) {
-		context.warning(`Jingle ${parsedCue.clip} is not configured`)
-		return
+		jingle = config.showStyle.BreakerConfig.find(brkr => brkr.BreakerName === parsedCue.clip)
+		breaker = true
+		if (!jingle) {
+			context.warning(`Jingle ${parsedCue.clip} is not configured`)
+			return
+		} else {
+			file = jingle.ClipName.toString()
+		}
+	} else {
+		file = jingle.FileName.toString()
 	}
 
 	if (adlib) {
@@ -60,12 +71,12 @@ export function EvaluateJingle(
 				},
 				infiniteMode: PieceLifespan.OutOnNextPart,
 				outputLayerId: 'pgm0',
-				sourceLayerId: SourceLayer.PgmJingle,
+				sourceLayerId: breaker ? SourceLayer.PgmBreak : SourceLayer.PgmJingle,
 				isTransition: true,
 				content: literal<VTContent>({
 					studioLabel: '',
-					fileName: jingle.FileName.toString(),
-					path: jingle.FileName.toString(),
+					fileName: file,
+					path: file,
 					firstWords: '',
 					lastWords: '',
 					sourceDuration: duration,
@@ -80,7 +91,7 @@ export function EvaluateJingle(
 							content: {
 								deviceType: DeviceType.CASPARCG,
 								type: TimelineContentTypeCasparCg.MEDIA,
-								file: jingle.FileName.toString(),
+								file,
 								length: duration
 							}
 						}),

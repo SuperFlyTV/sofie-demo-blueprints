@@ -76,6 +76,14 @@ export function GetBreakerAutoNext(
 					autoNextOverlap: TimeFromFrames(Number(realBreaker.EndAlpha)),
 					expectedDuration: TimeFromFrames(Number(realBreaker.Duration))
 				}
+			} else {
+				const realJingle = config.showStyle.JingleTimings.find(conf => conf.JingleName === cue.clip)
+				if (realJingle) {
+					return {
+						autoNext: true,
+						autoNextOverlap: TimeFromFrames(Number(realJingle.FramesOfAlpha))
+					}
+				}
 			}
 		}
 	}
