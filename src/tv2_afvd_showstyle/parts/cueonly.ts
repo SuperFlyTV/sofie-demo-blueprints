@@ -11,7 +11,6 @@ import { AddScript } from '../helpers/pieces/script'
 import { PartDefinition } from '../inewsConversion/converters/ParseBody'
 import { CueDefinition } from '../inewsConversion/converters/ParseCue'
 import { GetBreakerAutoNext } from './effekt'
-import { CreatePartInvalid } from './invalid'
 import { PartTime } from './time/partTime'
 
 export function CreatePartCueOnly(
@@ -47,8 +46,8 @@ export function CreatePartCueOnly(
 		EvaluateCues(context, config, pieces, adLibPieces, [cue], partDefinitionWithID, true)
 	}
 
-	if (pieces.length === 0) {
-		return CreatePartInvalid(partDefinitionWithID)
+	if (pieces.length === 0 && adLibPieces.length === 0) {
+		part.invalid = true
 	}
 
 	return {

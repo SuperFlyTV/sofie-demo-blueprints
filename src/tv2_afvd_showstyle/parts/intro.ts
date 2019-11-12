@@ -71,7 +71,7 @@ export function CreatePartIntro(
 	AddScript(partDefinition, pieces, partTime, false)
 
 	if (pieces.length === 0 && adLibPieces.length === 0) {
-		return CreatePartInvalid(partDefinition)
+		part.invalid = true
 	}
 
 	return {

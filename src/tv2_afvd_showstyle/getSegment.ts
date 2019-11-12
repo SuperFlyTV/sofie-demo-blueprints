@@ -40,6 +40,7 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 	const config = parseConfig(context)
 
 	if (ingestSegment.payload.iNewsStory.meta.float === 'float') {
+		segment.isHidden = true
 		return {
 			segment,
 			parts: []
@@ -82,6 +83,23 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 						cue,
 						totalWords,
 						true
+					)
+				)
+				part.cues.splice(part.cues.findIndex(c => _.isEqual(c, cue)), 1)
+			})
+		}
+		const tlfCue = part.cues.filter(cue => cue.type === CueType.Telefon)
+		if (tlfCue.length) {
+			tlfCue.forEach((cue, j) => {
+				extraParts.push(
+					CreatePartCueOnly(
+						partContext,
+						config,
+						part,
+						`${part.externalId}-${1}`,
+						`${part.rawType ? `${part.rawType}-` : ''}EKSTERN-${j}`,
+						cue,
+						totalWords
 					)
 				)
 				part.cues.splice(part.cues.findIndex(c => _.isEqual(c, cue)), 1)
@@ -131,6 +149,10 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 		extraParts.forEach(extraPart => {
 			blueprintParts.push(extraPart)
 		})
+	}
+
+	if (blueprintParts.filter(part => part.pieces.length === 0 && part.adLibPieces.length).length) {
+		segment.isHidden = true
 	}
 
 	return {

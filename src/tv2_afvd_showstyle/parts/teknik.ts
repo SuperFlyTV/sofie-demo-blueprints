@@ -11,7 +11,6 @@ import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { AddScript } from '../helpers/pieces/script'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { EffektTransitionPiece, GetEffektAutoNext } from './effekt'
-import { CreatePartInvalid } from './invalid'
 import { PartTime } from './time/partTime'
 
 export function CreatePartTeknik(
@@ -39,7 +38,7 @@ export function CreatePartTeknik(
 	AddScript(partDefinition, pieces, partTime, false)
 
 	if (pieces.length === 0 && adLibPieces.length === 0) {
-		return CreatePartInvalid(partDefinition)
+		part.invalid = true
 	}
 
 	return {

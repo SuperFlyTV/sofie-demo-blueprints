@@ -1,5 +1,5 @@
 import {
-	DeviceType as PlayoutDeviceType,
+	DeviceType,
 	MappingAbstract,
 	MappingAtem,
 	MappingAtemType,
@@ -18,131 +18,131 @@ import { HyperdeckLLayer } from '../layers'
 
 export default literal<BlueprintMappings>({
 	core_abstract: literal<MappingAbstract & BlueprintMapping>({
-		device: PlayoutDeviceType.ABSTRACT,
+		device: DeviceType.ABSTRACT,
 		deviceId: 'abstract0',
 		lookahead: LookaheadMode.NONE
 	}),
 	casparcg_player_wipe: literal<MappingCasparCG & BlueprintMapping>({
-		device: PlayoutDeviceType.CASPARCG,
+		device: DeviceType.CASPARCG,
 		deviceId: 'caspar01',
 		lookahead: LookaheadMode.NONE,
 		channel: 3,
 		layer: 199
 	}),
 	casparcg_player_soundeffect: literal<MappingCasparCG & BlueprintMapping>({
-		device: PlayoutDeviceType.CASPARCG,
+		device: DeviceType.CASPARCG,
 		deviceId: 'caspar01',
 		lookahead: LookaheadMode.NONE,
 		channel: 3,
 		layer: 130
 	}),
 	casparcg_player_clip_next_warning: literal<MappingCasparCG & BlueprintMapping>({
-		device: PlayoutDeviceType.CASPARCG,
+		device: DeviceType.CASPARCG,
 		deviceId: 'caspar01',
 		lookahead: LookaheadMode.NONE,
 		channel: 4,
 		layer: 99
 	}),
 	casparcg_player_clip: literal<MappingCasparCG & BlueprintMapping>({
-		device: PlayoutDeviceType.CASPARCG,
+		device: DeviceType.CASPARCG,
 		deviceId: 'caspar01',
 		lookahead: LookaheadMode.PRELOAD,
 		channel: 1,
 		layer: 111
 	}),
 	casparcg_player_clip_next: literal<MappingCasparCG & BlueprintMapping>({
-		device: PlayoutDeviceType.CASPARCG,
+		device: DeviceType.CASPARCG,
 		deviceId: 'caspar01',
 		lookahead: LookaheadMode.NONE,
 		channel: 4,
 		layer: 101
 	}),
 	casparcg_player_clip_next_custom: literal<MappingCasparCG & BlueprintMapping>({
-		device: PlayoutDeviceType.CASPARCG,
+		device: DeviceType.CASPARCG,
 		deviceId: 'caspar01',
 		lookahead: LookaheadMode.NONE,
 		channel: 4,
 		layer: 110
 	}),
 	casparcg_cg_graphics: literal<MappingCasparCG & BlueprintMapping>({
-		device: PlayoutDeviceType.CASPARCG,
+		device: DeviceType.CASPARCG,
 		deviceId: 'caspar02',
 		lookahead: LookaheadMode.NONE,
 		channel: 2,
 		layer: 120
 	}),
 	casparcg_cg_countdown: literal<MappingCasparCG & BlueprintMapping>({
-		device: PlayoutDeviceType.CASPARCG,
+		device: DeviceType.CASPARCG,
 		deviceId: 'caspar02',
 		lookahead: LookaheadMode.NONE,
 		channel: 1,
 		layer: 120
 	}),
 	casparcg_cg_effects: literal<MappingCasparCG & BlueprintMapping>({
-		device: PlayoutDeviceType.CASPARCG,
+		device: DeviceType.CASPARCG,
 		deviceId: 'caspar01',
 		lookahead: LookaheadMode.NONE,
 		channel: 3,
 		layer: 120
 	}),
 	casparcg_dve_loop: literal<MappingCasparCG & BlueprintMapping>({
-		device: PlayoutDeviceType.CASPARCG,
+		device: DeviceType.CASPARCG,
 		deviceId: 'caspar02',
 		lookahead: LookaheadMode.NONE,
 		channel: 2,
 		layer: 110
 	}),
 	casparcg_cg_dve_template: literal<MappingCasparCG & BlueprintMapping>({
-		device: PlayoutDeviceType.CASPARCG,
+		device: DeviceType.CASPARCG,
 		deviceId: 'caspar02',
 		lookahead: LookaheadMode.NONE,
 		channel: 2,
 		layer: 120
 	}),
 	casparcg_dve_key: literal<MappingCasparCG & BlueprintMapping>({
-		device: PlayoutDeviceType.CASPARCG,
+		device: DeviceType.CASPARCG,
 		deviceId: 'caspar02',
 		lookahead: LookaheadMode.PRELOAD,
 		channel: 2,
 		layer: 109
 	}),
 	casparcg_dve_frame: literal<MappingCasparCG & BlueprintMapping>({
-		device: PlayoutDeviceType.CASPARCG,
+		device: DeviceType.CASPARCG,
 		deviceId: 'caspar02',
 		lookahead: LookaheadMode.PRELOAD,
 		channel: 2,
 		layer: 111
 	}),
 	casparcg_player_jingle: literal<MappingCasparCG & BlueprintMapping>({
-		device: PlayoutDeviceType.CASPARCG,
+		device: DeviceType.CASPARCG,
 		deviceId: 'caspar02',
 		lookahead: LookaheadMode.PRELOAD,
 		channel: 1,
 		layer: 120
 	}),
 	casparcg_audio_lyd: literal<MappingCasparCG & BlueprintMapping>({
-		device: PlayoutDeviceType.CASPARCG,
+		device: DeviceType.CASPARCG,
 		deviceId: 'caspar02',
 		lookahead: LookaheadMode.PRELOAD,
 		channel: 1,
 		layer: 101
 	}),
 	atem_me_program: literal<MappingAtem & BlueprintMapping>({
-		device: PlayoutDeviceType.ATEM,
+		device: DeviceType.ATEM,
 		deviceId: 'atem0',
 		lookahead: LookaheadMode.NONE,
 		mappingType: MappingAtemType.MixEffect,
 		index: 0 // 0 = ME1
 	}),
 	atem_aux_lookahead: literal<MappingAtem & BlueprintMapping>({
-		device: PlayoutDeviceType.ATEM,
+		device: DeviceType.ATEM,
 		deviceId: 'atem0',
 		lookahead: LookaheadMode.WHEN_CLEAR,
 		mappingType: MappingAtemType.Auxilliary,
 		index: 1
 	}),
 	atem_aux_ssrc: literal<MappingAtem & BlueprintMapping>({
-		device: PlayoutDeviceType.ATEM,
+		device: DeviceType.ATEM,
 		deviceId: 'atem0',
 		lookahead: LookaheadMode.NONE,
 		mappingType: MappingAtemType.Auxilliary,
@@ -150,94 +150,94 @@ export default literal<BlueprintMappings>({
 	}),
 	atem_aux_clean: literal<MappingAtem & BlueprintMapping>({
 		// to be removed
-		device: PlayoutDeviceType.ATEM,
+		device: DeviceType.ATEM,
 		deviceId: 'atem0',
 		lookahead: LookaheadMode.NONE,
 		mappingType: MappingAtemType.Auxilliary,
 		index: 5
 	}),
 	atem_aux_screen: literal<MappingAtem & BlueprintMapping>({
-		device: PlayoutDeviceType.ATEM,
+		device: DeviceType.ATEM,
 		deviceId: 'atem0',
 		lookahead: LookaheadMode.NONE,
 		mappingType: MappingAtemType.Auxilliary,
 		index: 3
 	}),
 	atem_dsk_graphics: literal<MappingAtem & BlueprintMapping>({
-		device: PlayoutDeviceType.ATEM,
+		device: DeviceType.ATEM,
 		deviceId: 'atem0',
 		lookahead: LookaheadMode.NONE,
 		mappingType: MappingAtemType.DownStreamKeyer,
 		index: 0 // 0 = DSK1
 	}),
 	atem_dsk_effect: literal<MappingAtem & BlueprintMapping>({
-		device: PlayoutDeviceType.ATEM,
+		device: DeviceType.ATEM,
 		deviceId: 'atem0',
 		lookahead: LookaheadMode.NONE,
 		mappingType: MappingAtemType.DownStreamKeyer,
 		index: 1 // 1 = DSK2
 	}),
 	atem_supersource_art: literal<MappingAtem & BlueprintMapping>({
-		device: PlayoutDeviceType.ATEM,
+		device: DeviceType.ATEM,
 		deviceId: 'atem0',
 		lookahead: LookaheadMode.NONE,
 		mappingType: MappingAtemType.SuperSourceProperties,
 		index: 0 // 0 = SS
 	}),
 	atem_supersource_default: literal<MappingAtem & BlueprintMapping>({
-		device: PlayoutDeviceType.ATEM,
+		device: DeviceType.ATEM,
 		deviceId: 'atem0',
 		lookahead: LookaheadMode.NONE,
 		mappingType: MappingAtemType.SuperSourceBox,
 		index: 0 // 0 = SS
 	}),
 	atem_supersource_override: literal<MappingAtem & BlueprintMapping>({
-		device: PlayoutDeviceType.ATEM,
+		device: DeviceType.ATEM,
 		deviceId: 'atem0',
 		lookahead: LookaheadMode.RETAIN,
 		mappingType: MappingAtemType.SuperSourceBox,
 		index: 0 // 0 = SS
 	}),
 	casparcg_player_clip_pending: literal<MappingAbstract & BlueprintMapping>({
-		device: PlayoutDeviceType.ABSTRACT,
+		device: DeviceType.ABSTRACT,
 		deviceId: 'abstract0',
 		lookahead: LookaheadMode.PRELOAD
 	}),
 	sisyfos_source_clip_pending: literal<MappingAbstract & BlueprintMapping>({
-		device: PlayoutDeviceType.ABSTRACT,
+		device: DeviceType.ABSTRACT,
 		deviceId: 'abstract0',
 		lookahead: LookaheadMode.NONE
 	}),
 	sisyfos_source_jingle: literal<MappingSisyfos & BlueprintMapping>({
-		device: PlayoutDeviceType.SISYFOS,
+		device: DeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
 		channel: 1,
 		lookahead: LookaheadMode.PRELOAD
 	}),
 	sisyfos_source_audio: literal<MappingSisyfos & BlueprintMapping>({
-		device: PlayoutDeviceType.SISYFOS,
+		device: DeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
 		channel: 2,
 		lookahead: LookaheadMode.PRELOAD
 	}),
 	sisyfos_source_live_speak: literal<MappingSisyfos & BlueprintMapping>({
-		device: PlayoutDeviceType.SISYFOS,
+		device: DeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
 		channel: 3,
 		lookahead: LookaheadMode.PRELOAD
 	}),
 	viz_layer_overlay: literal<MappingVizMSE & BlueprintMapping>({
-		device: PlayoutDeviceType.VIZMSE,
+		device: DeviceType.VIZMSE,
 		deviceId: 'viz0',
 		lookahead: LookaheadMode.NONE
 	}),
 	viz_layer_design: literal<MappingVizMSE & BlueprintMapping>({
-		device: PlayoutDeviceType.VIZMSE,
+		device: DeviceType.VIZMSE,
 		deviceId: 'viz0',
 		lookahead: LookaheadMode.NONE
 	}),
 	viz_layer_dve_background: literal<MappingVizMSE & BlueprintMapping>({
-		device: PlayoutDeviceType.VIZMSE,
+		device: DeviceType.VIZMSE,
 		deviceId: 'viz0',
 		lookahead: LookaheadMode.NONE
 	})
@@ -249,7 +249,7 @@ export function getHyperdeckMappings(count: number) {
 	for (let i = 0; i < count; i++) {
 		const id = HyperdeckLLayer(i)
 		res[id] = literal<MappingHyperdeck & BlueprintMapping>({
-			device: PlayoutDeviceType.HYPERDECK,
+			device: DeviceType.HYPERDECK,
 			deviceId: id,
 			mappingType: MappingHyperdeckType.TRANSPORT,
 			lookahead: LookaheadMode.NONE
@@ -266,7 +266,7 @@ export function getCameraSisyfosMappings(cameras: StudioConfig['SourcesCam']) {
 		const props = cam.split(':')
 		if (props[0] && props[1]) {
 			res[`sisyfos_camera_active_${props[0].replace(' ', '_').trim()}`] = literal<MappingSisyfos & BlueprintMapping>({
-				device: PlayoutDeviceType.SISYFOS,
+				device: DeviceType.SISYFOS,
 				deviceId: 'sisyfos0',
 				lookahead: LookaheadMode.NONE,
 				channel: Number(props[1]) || 0
@@ -284,21 +284,21 @@ export function getRemoteSisyfosMappings(remotes: StudioConfig['SourcesRM']) {
 		const props = rmt.split(':')
 		if (props[0] && props[1]) {
 			res[`sisyfos_remote_source_${props[0]}`] = literal<MappingSisyfos & BlueprintMapping>({
-				device: PlayoutDeviceType.SISYFOS,
+				device: DeviceType.SISYFOS,
 				deviceId: 'sisyfos0',
 				lookahead: LookaheadMode.NONE,
 				channel: Number(props[1]) || 0
 			})
 
 			res[`sisyfos_remote_source_${props[0]}_spor_2`] = literal<MappingSisyfos & BlueprintMapping>({
-				device: PlayoutDeviceType.SISYFOS,
+				device: DeviceType.SISYFOS,
 				deviceId: 'sisyfos0',
 				lookahead: LookaheadMode.NONE,
 				channel: Number(props[1]) || 0
 			})
 
 			res[`sisyfos_remote_source_${props[0]}_stereo`] = literal<MappingSisyfos & BlueprintMapping>({
-				device: PlayoutDeviceType.SISYFOS,
+				device: DeviceType.SISYFOS,
 				deviceId: 'sisyfos0',
 				lookahead: LookaheadMode.NONE,
 				channel: Number(props[1]) || 0
@@ -316,21 +316,21 @@ export function getSkypeSisyfosMappings(remotes: StudioConfig['SourcesSkype']) {
 		const props = rmt.split(':')
 		if (props[0] && props[1]) {
 			res[`sisyfos_remote_source_skype_${props[0]}`] = literal<MappingSisyfos & BlueprintMapping>({
-				device: PlayoutDeviceType.SISYFOS,
+				device: DeviceType.SISYFOS,
 				deviceId: 'sisyfos0',
 				lookahead: LookaheadMode.NONE,
 				channel: Number(props[1]) || 0
 			})
 
 			res[`sisyfos_remote_source_skype_${props[0]}_spor_2`] = literal<MappingSisyfos & BlueprintMapping>({
-				device: PlayoutDeviceType.SISYFOS,
+				device: DeviceType.SISYFOS,
 				deviceId: 'sisyfos0',
 				lookahead: LookaheadMode.NONE,
 				channel: Number(props[1]) || 0
 			})
 
 			res[`sisyfos_remote_source_skype_${props[0]}_stereo`] = literal<MappingSisyfos & BlueprintMapping>({
-				device: PlayoutDeviceType.SISYFOS,
+				device: DeviceType.SISYFOS,
 				deviceId: 'sisyfos0',
 				lookahead: LookaheadMode.NONE,
 				channel: Number(props[1]) || 0
@@ -348,7 +348,7 @@ export function getTelefonSisyfosMappings(mappings: string) {
 		const props = tlf.split(':')
 		if (props[0] && props[1]) {
 			res[`sisyfos_telefon_source_${props[0].replace(' ', '_').trim()}`] = literal<MappingSisyfos & BlueprintMapping>({
-				device: PlayoutDeviceType.SISYFOS,
+				device: DeviceType.SISYFOS,
 				deviceId: 'sisyfos0',
 				lookahead: LookaheadMode.NONE,
 				channel: Number(props[1]) || 0
@@ -364,21 +364,21 @@ export function getMediaPlayerMappings(mode: MediaPlayerType, mediaPlayers: Blue
 		case MediaPlayerType.CasparWithNext:
 			return {
 				casparcg_player_clip_next_warning: literal<MappingCasparCG & BlueprintMapping>({
-					device: PlayoutDeviceType.CASPARCG,
+					device: DeviceType.CASPARCG,
 					deviceId: 'caspar01',
 					lookahead: LookaheadMode.NONE,
 					channel: 4,
 					layer: 99
 				}),
 				casparcg_player_clip_next_custom: literal<MappingCasparCG & BlueprintMapping>({
-					device: PlayoutDeviceType.CASPARCG,
+					device: DeviceType.CASPARCG,
 					deviceId: 'caspar01',
 					lookahead: LookaheadMode.NONE,
 					channel: 4,
 					layer: 110
 				}),
 				sisyfos_source_clip_pending: literal<MappingSisyfos & BlueprintMapping>({
-					device: PlayoutDeviceType.SISYFOS,
+					device: DeviceType.SISYFOS,
 					deviceId: 'sisyfos0',
 					lookahead: LookaheadMode.NONE,
 					channel: 1
@@ -387,13 +387,13 @@ export function getMediaPlayerMappings(mode: MediaPlayerType, mediaPlayers: Blue
 		case MediaPlayerType.CasparAB: {
 			const res: BlueprintMappings = {
 				casparcg_player_clip_pending: literal<MappingAbstract & BlueprintMapping>({
-					device: PlayoutDeviceType.ABSTRACT,
+					device: DeviceType.ABSTRACT,
 					deviceId: 'abstract0',
 					lookahead: LookaheadMode.PRELOAD,
 					lookaheadDepth: mediaPlayers.length // Number of players
 				}),
 				sisyfos_source_clip_pending: literal<MappingAbstract & BlueprintMapping>({
-					device: PlayoutDeviceType.ABSTRACT,
+					device: DeviceType.ABSTRACT,
 					deviceId: 'abstract0',
 					lookahead: LookaheadMode.NONE
 				})
@@ -401,14 +401,14 @@ export function getMediaPlayerMappings(mode: MediaPlayerType, mediaPlayers: Blue
 
 			for (const mp of mediaPlayers) {
 				res[`casparcg_player_clip_${mp.id}`] = literal<MappingCasparCG & BlueprintMapping>({
-					device: PlayoutDeviceType.CASPARCG,
+					device: DeviceType.CASPARCG,
 					deviceId: 'caspar01',
 					lookahead: LookaheadMode.NONE,
 					channel: 0, // TODO?
 					layer: 110
 				})
 				res[`sisyfos_player_clip_${mp.id}`] = literal<MappingSisyfos & BlueprintMapping>({
-					device: PlayoutDeviceType.SISYFOS,
+					device: DeviceType.SISYFOS,
 					deviceId: 'sisyfos0',
 					lookahead: LookaheadMode.NONE,
 					channel: Number(mp.id) || 0

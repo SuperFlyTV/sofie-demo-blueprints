@@ -92,7 +92,7 @@ export function EvaluateCues(
 	})
 
 	pieces.forEach(piece => {
-		if (piece.content) {
+		if (piece.content && piece.content.timelineObjects) {
 			piece.content.timelineObjects.forEach((obj: TSRTimelineObj) => {
 				if (obj.content.deviceType === DeviceType.VIZMSE) {
 					if (!piece.expectedPlayoutItems) {

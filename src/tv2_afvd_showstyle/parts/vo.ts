@@ -91,7 +91,7 @@ export function CreatePartVO(
 	AddScript(partDefinition, pieces, duration, false)
 
 	if (pieces.length === 0 && adLibPieces.length === 0) {
-		return CreatePartInvalid(partDefinition)
+		part.invalid = true
 	}
 
 	return {

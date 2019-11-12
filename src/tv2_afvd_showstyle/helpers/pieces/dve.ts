@@ -1,10 +1,10 @@
 import {
 	BasicConfigItemValue,
+	IBlueprintAdLibPiece,
 	IBlueprintPiece,
 	PartContext,
 	PieceLifespan,
-	TableConfigItemValue,
-	IBlueprintAdLibPiece
+	TableConfigItemValue
 } from 'tv-automation-sofie-blueprints-integration'
 import * as _ from 'underscore'
 import { literal } from '../../../common/util'

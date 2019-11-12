@@ -9,7 +9,6 @@ import { literal } from '../../common/util'
 import { AddScript } from '../helpers/pieces/script'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
-import { CreatePartInvalid } from './invalid'
 
 export function CreatePartGrafik(partDefinition: PartDefinition): BlueprintResultPart {
 	const part = literal<IBlueprintPart>({
@@ -38,7 +37,7 @@ export function CreatePartGrafik(partDefinition: PartDefinition): BlueprintResul
 	AddScript(partDefinition, pieces, 0, false)
 
 	if (pieces.length === 0 && adLibPieces.length === 0) {
-		return CreatePartInvalid(partDefinition)
+		part.invalid = true
 	}
 
 	return {
