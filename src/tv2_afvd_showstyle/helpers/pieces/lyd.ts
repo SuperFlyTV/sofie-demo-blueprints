@@ -9,7 +9,8 @@ import {
 	BaseContent,
 	IBlueprintAdLibPiece,
 	IBlueprintPiece,
-	TimelineObjectCoreExt
+	TimelineObjectCoreExt,
+	PartContext
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../../common/util'
 import { PartDefinition } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseBody'
@@ -17,8 +18,11 @@ import { CueDefinitionLYD } from '../../../tv2_afvd_showstyle/inewsConversion/co
 import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
 import { CasparLLayer, SisyfosLLAyer } from '../../../tv2_afvd_studio/layers'
 import { CalculateTime, CreateTimingEnable } from './evaluateCues'
+import { BlueprintConfig } from '../config'
 
 export function EvaluateLYD(
+	context: PartContext,
+	config: BlueprintConfig,
 	pieces: IBlueprintPiece[],
 	adlibPieces: IBlueprintAdLibPiece[],
 	parsedCue: CueDefinitionLYD,
@@ -26,6 +30,14 @@ export function EvaluateLYD(
 	adlib?: boolean,
 	rank?: number
 ) {
+	const conf = config.showStyle.LYDConfig.find(lyd => lyd.iNewsName === parsedCue.variant)
+
+	if (!conf) {
+		context.warning(`LYD ${parsedCue.variant} not configured, using iNews name as file name`)
+	}
+
+	const file = conf ? conf.FileName.toString() : parsedCue.variant
+
 	if (adlib) {
 		adlibPieces.push(
 			literal<IBlueprintAdLibPiece>({
@@ -47,7 +59,7 @@ export function EvaluateLYD(
 							content: {
 								deviceType: DeviceType.CASPARCG,
 								type: TimelineContentTypeCasparCg.MEDIA,
-								file: parsedCue.variant
+								file
 							}
 						}),
 						literal<TimelineObjSisyfosMessage>({
@@ -90,7 +102,7 @@ export function EvaluateLYD(
 							content: {
 								deviceType: DeviceType.CASPARCG,
 								type: TimelineContentTypeCasparCg.MEDIA,
-								file: parsedCue.variant
+								file
 							}
 						}),
 						literal<TimelineObjSisyfosMessage>({

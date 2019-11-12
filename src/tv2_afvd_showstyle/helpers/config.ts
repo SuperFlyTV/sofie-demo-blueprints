@@ -25,6 +25,7 @@ export interface ShowStyleConfig {
 	BreakerConfig: TableConfigItemValue
 	JingleTimings: TableConfigItemValue
 	DefaultTemplateDuration: number
+	LYDConfig: TableConfigItemValue
 }
 
 function extendWithShowStyleConfig(

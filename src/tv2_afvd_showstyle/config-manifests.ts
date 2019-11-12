@@ -360,5 +360,42 @@ export const showStyleConfigManifest: ConfigManifestEntry[] = [
 		type: ConfigManifestEntryType.NUMBER,
 		required: true,
 		defaultVal: 4
+	},
+	{
+		/*
+		LYD Mappings
+		iNews Name
+		File Name
+		*/
+		id: 'LYDConfig',
+		name: 'LYD Config',
+		description: 'Map LYD iNews names to file names',
+		type: ConfigManifestEntryType.TABLE,
+		required: false,
+		defaultVal: [
+			{
+				_id: '',
+				iNewsName: '',
+				FileName: ''
+			}
+		],
+		columns: [
+			{
+				id: 'iNewsName',
+				name: 'iNews Name',
+				description: 'Name of LYD as in iNews',
+				type: ConfigManifestEntryType.STRING,
+				required: true,
+				defaultVal: ''
+			},
+			{
+				id: 'FileName',
+				name: 'File Name',
+				description: 'The name of the LYD file',
+				type: ConfigManifestEntryType.STRING,
+				required: true,
+				defaultVal: ''
+			}
+		]
 	}
 ]

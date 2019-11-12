@@ -74,7 +74,7 @@ export function EvaluateCues(
 					EvaluateJingle(context, config, pieces, adLibPieces, cue, part, shouldAdlib, adLibRank)
 					break
 				case CueType.LYD:
-					EvaluateLYD(pieces, adLibPieces, cue, part, shouldAdlib, adLibRank)
+					EvaluateLYD(context, config, pieces, adLibPieces, cue, part, shouldAdlib, adLibRank)
 					break
 				case CueType.Design:
 					EvaluateDesign(config, pieces, adLibPieces, part.externalId, cue, shouldAdlib, adLibRank)
