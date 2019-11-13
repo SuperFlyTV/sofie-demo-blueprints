@@ -74,7 +74,7 @@ export function EvaluateMOS(
 					...CreateTimingGrafik(config, parsedCue)
 				},
 				outputLayerId: 'pgm0',
-				sourceLayerId: SourceLayer.PgmGraphics,
+				sourceLayerId: SourceLayer.PgmPilot,
 				infiniteMode:
 					parsedCue.end && parsedCue.end.infiniteMode
 						? InfiniteMode(parsedCue.end.infiniteMode, PieceLifespan.Normal)

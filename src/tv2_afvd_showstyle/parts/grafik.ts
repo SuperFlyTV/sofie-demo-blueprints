@@ -3,15 +3,24 @@ import {
 	IBlueprintAdLibPiece,
 	IBlueprintPart,
 	IBlueprintPiece,
-	PieceLifespan
+	PartContext
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../common/util'
+import { BlueprintConfig } from '../helpers/config'
+import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { AddScript } from '../helpers/pieces/script'
 import { PartDefinition, PartType } from '../inewsConversion/converters/ParseBody'
-import { SourceLayer } from '../layers'
+import { EffektTransitionPiece, GetEffektAutoNext } from './effekt'
+import { PartTime } from './time/partTime'
 
-export function CreatePartGrafik(partDefinition: PartDefinition): BlueprintResultPart {
-	const part = literal<IBlueprintPart>({
+export function CreatePartGrafik(
+	context: PartContext,
+	config: BlueprintConfig,
+	partDefinition: PartDefinition,
+	totalWords: number
+): BlueprintResultPart {
+	const partTime = PartTime(partDefinition, totalWords)
+	let part = literal<IBlueprintPart>({
 		externalId: partDefinition.externalId,
 		title: PartType[partDefinition.type] + ' - ' + partDefinition.rawType,
 		metaData: {},
@@ -19,21 +28,13 @@ export function CreatePartGrafik(partDefinition: PartDefinition): BlueprintResul
 	})
 
 	const adLibPieces: IBlueprintAdLibPiece[] = []
-	const pieces: IBlueprintPiece[] = []
+	let pieces: IBlueprintPiece[] = []
 
-	pieces.push(
-		literal<IBlueprintPiece>({
-			_id: '',
-			externalId: partDefinition.externalId,
-			name: part.title,
-			enable: { start: 0 },
-			outputLayerId: 'pgm0',
-			sourceLayerId: SourceLayer.PgmGraphics,
-			infiniteMode: PieceLifespan.OutOnNextPart
-		})
-	)
+	part = { ...part, ...GetEffektAutoNext(context, config, partDefinition) }
+	pieces = [...pieces, ...EffektTransitionPiece(context, config, partDefinition)]
 
-	AddScript(partDefinition, pieces, 0, false)
+	EvaluateCues(context, config, pieces, adLibPieces, partDefinition.cues, partDefinition)
+	AddScript(partDefinition, pieces, partTime, false)
 
 	if (pieces.length === 0 && adLibPieces.length === 0) {
 		part.invalid = true

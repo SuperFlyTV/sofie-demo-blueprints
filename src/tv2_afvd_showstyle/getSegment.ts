@@ -117,9 +117,7 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 				blueprintParts.push(CreatePartTeknik(partContext, config, part, totalWords))
 				break
 			case PartType.Grafik:
-				// TODO: This part
-				blueprintParts.push(CreatePartGrafik(part))
-				context.warning(`GRAFIK Part, not implemented yet`)
+				blueprintParts.push(CreatePartGrafik(partContext, config, part, totalWords))
 				break
 			case PartType.VO:
 				blueprintParts.push(CreatePartVO(partContext, config, part, totalWords))
