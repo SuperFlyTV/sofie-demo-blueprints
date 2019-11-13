@@ -89,7 +89,8 @@ export function EvaluateGrafik(
 								deviceType: DeviceType.VIZMSE,
 								type: TimelineContentTypeVizMSE.ELEMENT_INTERNAL,
 								templateName: GetTemplateName(config, parsedCue),
-								templateData: parsedCue.textFields
+								templateData: parsedCue.textFields,
+								channelName: 'FULL1'
 							}
 						})
 					])
@@ -126,7 +127,8 @@ export function EvaluateGrafik(
 								deviceType: DeviceType.VIZMSE,
 								type: TimelineContentTypeVizMSE.ELEMENT_INTERNAL,
 								templateName: GetTemplateName(config, parsedCue),
-								templateData: parsedCue.textFields
+								templateData: parsedCue.textFields,
+								channelName: 'FULL1'
 							}
 						})
 					])
