@@ -39,9 +39,7 @@ export function CreatePartKam(
 		externalId: partDefinition.externalId,
 		title: partDefinition.rawType,
 		metaData: {},
-		typeVariant: '',
-		expectedDuration: partTime,
-		displayDuration: partTime
+		typeVariant: ''
 	})
 
 	const adLibPieces: IBlueprintAdLibPiece[] = []

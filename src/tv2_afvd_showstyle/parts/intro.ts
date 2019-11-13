@@ -58,8 +58,6 @@ export function CreatePartIntro(
 		title: PartType[partDefinition.type] + ' - ' + partDefinition.rawType,
 		metaData: {},
 		typeVariant: '',
-		expectedDuration: partTime,
-		displayDuration: partTime,
 		autoNext: true,
 		autoNextOverlap: TimeFromFrames(Number(overlapFrames))
 	})

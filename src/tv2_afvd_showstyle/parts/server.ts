@@ -39,8 +39,8 @@ export function CreatePartServer(
 		title: partDefinition.rawType,
 		metaData: {},
 		typeVariant: '',
-		expectedDuration: duration,
-		displayDuration: duration
+		displayDuration: duration || 1000,
+		expectedDuration: duration || 1000
 	})
 
 	const adLibPieces: IBlueprintAdLibPiece[] = []

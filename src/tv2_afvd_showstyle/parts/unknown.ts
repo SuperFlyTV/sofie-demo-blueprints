@@ -25,8 +25,6 @@ export function CreatePartUnknown(
 		title: PartType[partDefinition.type] + ' - ' + partDefinition.rawType,
 		metaData: {},
 		typeVariant: '',
-		expectedDuration: partTime,
-		displayDuration: partTime,
 		autoNext: false
 	})
 

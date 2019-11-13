@@ -30,9 +30,7 @@ export function CreatePartCueOnly(
 		externalId: id,
 		title,
 		metaData: {},
-		typeVariant: '',
-		expectedDuration: partTime,
-		displayDuration: partTime
+		typeVariant: ''
 	})
 
 	const adLibPieces: IBlueprintAdLibPiece[] = []

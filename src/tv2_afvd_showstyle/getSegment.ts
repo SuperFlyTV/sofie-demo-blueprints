@@ -56,6 +56,7 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 	const totalWords = parsedParts.reduce((prev, cur) => {
 		return prev + cur.script.length
 	}, 0)
+	let nonServerParts = 0
 	for (let i = 0; i < parsedParts.length; i++) {
 		const part = parsedParts[i]
 		const partContext = new PartContext2(context, part.externalId)
@@ -144,13 +145,25 @@ export function getSegment(context: SegmentContext, ingestSegment: IngestSegment
 			const p = blueprintParts[blueprintParts.length - 1].pieces[0]
 			if (p.sourceLayerId === SourceLayer.PgmScript) {
 				blueprintParts[blueprintParts.length - 1].part.autoNext = true
-				blueprintParts[blueprintParts.length - 1].part.displayDuration = 1000
+				blueprintParts[blueprintParts.length - 1].part.expectedDuration = 1000
 			}
 		}
 		extraParts.forEach(extraPart => {
 			blueprintParts.push(extraPart)
 		})
+
+		if (part.type !== PartType.Server) {
+			nonServerParts++
+		}
 	}
+
+	blueprintParts.forEach(part => {
+		part.part.displayDurationGroup = ingestSegment.externalId
+		if (!part.part.expectedDuration) {
+			part.part.expectedDuration =
+				(Number(ingestSegment.payload.iNewsStory.fields.audioTime) * 1000 || 0) / nonServerParts
+		}
+	})
 
 	if (blueprintParts.filter(part => part.pieces.length === 0 && part.adLibPieces.length).length) {
 		segment.isHidden = true

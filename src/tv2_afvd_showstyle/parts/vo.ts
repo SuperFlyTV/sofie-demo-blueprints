@@ -18,13 +18,13 @@ import { PartDefinition } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
 import { EffektTransitionPiece, GetEffektAutoNext } from './effekt'
 import { CreatePartInvalid } from './invalid'
-import { PartTime } from './time/partTime'
+// import { PartTime } from './time/partTime'
 
 export function CreatePartVO(
 	context: PartContext,
 	config: BlueprintConfig,
 	partDefinition: PartDefinition,
-	totalWords: number
+	_totalWords: number
 ): BlueprintResultPart {
 	if (partDefinition.fields === undefined) {
 		context.warning('Video ID not set!')
@@ -36,13 +36,13 @@ export function CreatePartVO(
 		return CreatePartInvalid(partDefinition)
 	}
 
-	const partTime = PartTime(partDefinition, totalWords)
+	// const partTime = PartTime(partDefinition, totalWords)
 	let part = literal<IBlueprintPart>({
 		externalId: partDefinition.externalId,
 		title: `${partDefinition.rawType} - ${partDefinition.fields.videoId}`,
 		metaData: {},
-		typeVariant: '',
-		expectedDuration: partTime
+		typeVariant: ''
+		// expectedDuration: partTime
 	})
 
 	const file = partDefinition.fields.videoId

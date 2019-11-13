@@ -15,8 +15,7 @@ export function CreatePartGrafik(partDefinition: PartDefinition): BlueprintResul
 		externalId: partDefinition.externalId,
 		title: PartType[partDefinition.type] + ' - ' + partDefinition.rawType,
 		metaData: {},
-		typeVariant: '',
-		expectedDuration: 0
+		typeVariant: ''
 	})
 
 	const adLibPieces: IBlueprintAdLibPiece[] = []
