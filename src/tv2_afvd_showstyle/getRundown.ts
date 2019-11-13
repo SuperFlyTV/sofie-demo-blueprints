@@ -131,7 +131,48 @@ function getGlobalAdLibPieces(_context: NotesContext, config: BlueprintConfig): 
 						content: {
 							deviceType: DeviceType.SISYFOS,
 							type: TimelineContentTypeSisyfos.SISYFOS,
-							isPgm: 1
+							isPgm: 2
+						}
+					})
+				])
+			}
+		}
+	}
+
+	function makeRemoteAdLib(info: SourceInfo, rank: number): IBlueprintAdLibPiece {
+		return {
+			externalId: 'cam',
+			name: info.id + '',
+			_rank: rank || 0,
+			sourceLayerId: SourceLayer.PgmLive,
+			outputLayerId: 'pgm0',
+			expectedDuration: 0,
+			infiniteMode: PieceLifespan.OutOnNextPart,
+			content: {
+				timelineObjects: _.compact<TSRTimelineObj>([
+					literal<TimelineObjAtemME>({
+						id: '',
+						enable: { while: '1' },
+						priority: 1,
+						layer: AtemLLayer.AtemMEProgram,
+						content: {
+							deviceType: DeviceType.ATEM,
+							type: TimelineContentTypeAtem.ME,
+							me: {
+								input: info.port,
+								transition: AtemTransitionStyle.CUT
+							}
+						}
+					}),
+					literal<TimelineObjSisyfosMessage>({
+						id: '',
+						enable: { while: '1' },
+						priority: 1,
+						layer: SisyfosSourceRemote(info.id),
+						content: {
+							deviceType: DeviceType.SISYFOS,
+							type: TimelineContentTypeSisyfos.SISYFOS,
+							isPgm: 2
 						}
 					})
 				])
@@ -145,6 +186,13 @@ function getGlobalAdLibPieces(_context: NotesContext, config: BlueprintConfig): 
 		if (v.type === SourceLayerType.CAMERA) {
 			adlibItems.push(makeCameraAdLib(v, 100 + cameras))
 			cameras++
+		}
+	})
+	let remotes = cameras
+	_.each(config.sources, v => {
+		if (v.type === SourceLayerType.REMOTE) {
+			adlibItems.push(makeRemoteAdLib(v, 100 + remotes))
+			remotes++
 		}
 	})
 	adlibItems.push({
