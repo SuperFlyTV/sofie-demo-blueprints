@@ -9,16 +9,16 @@ import {
 	BaseContent,
 	IBlueprintAdLibPiece,
 	IBlueprintPiece,
-	TimelineObjectCoreExt,
-	PartContext
+	PartContext,
+	TimelineObjectCoreExt
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../../common/util'
 import { PartDefinition } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseBody'
 import { CueDefinitionLYD } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../../tv2_afvd_showstyle/layers'
 import { CasparLLayer, SisyfosLLAyer } from '../../../tv2_afvd_studio/layers'
-import { CalculateTime, CreateTimingEnable } from './evaluateCues'
 import { BlueprintConfig } from '../config'
+import { CalculateTime, CreateTimingEnable } from './evaluateCues'
 
 export function EvaluateLYD(
 	context: PartContext,
