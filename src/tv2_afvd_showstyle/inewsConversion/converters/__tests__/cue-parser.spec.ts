@@ -290,12 +290,15 @@ describe('Cue parser', () => {
 				type: CueType.MOS,
 				name: 'TELEFON/KORT//LIVE_KABUL',
 				vcpid: 2552305,
-				continueCount: 3
+				continueCount: 3,
+				start: {
+					seconds: 0
+				}
 			})
 		)
 	})
 
-	test('MOS object with timing', () => {
+	test('MOS object with timing - adlib + O', () => {
 		const cueMOS = [
 			']] S3.0 M 0 [[',
 			'cg4 ]] 1 YNYAB 0 [[ pilotdata',
@@ -313,6 +316,30 @@ describe('Cue parser', () => {
 			adlib: true,
 			end: {
 				infiniteMode: 'O'
+			}
+		})
+	})
+
+	test('MOS object with timing - start time + end time', () => {
+		const cueMOS = [
+			']] S3.0 M 0 [[',
+			'cg4 ]] 1 YNYAB 0 [[ pilotdata',
+			'LgfxWeb/-ETKAEM_07-05-2019_17:55:42/Mosart=L|00:00|00:10',
+			'VCPID=2520177',
+			'ContinueCount=-1',
+			'LgfxWeb/-ETKAEM_07-05-2019_17:55:42/Mosart=L|00:00|00:1O'
+		]
+		const result = ParseCue(cueMOS)
+		expect(result).toEqual({
+			type: CueType.MOS,
+			name: 'LgfxWeb/-ETKAEM_07-05-2019_17:55:42/Mosart=L|00:00|00:10',
+			vcpid: 2520177,
+			continueCount: -1,
+			start: {
+				seconds: 0
+			},
+			end: {
+				seconds: 0
 			}
 		})
 	})

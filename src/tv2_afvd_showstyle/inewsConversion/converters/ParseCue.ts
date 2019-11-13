@@ -260,7 +260,7 @@ function parseMOS(cue: string[]): CueDefinitionMOS {
 	if (cue.length === 6) {
 		const vcpid = cue[3].match(/^VCPID=(\d+)$/i)
 		const continueCount = cue[4].match(/^ContinueCount=(-?\d+)$/i)
-		const timing = cue[2].match(/L\|(M|;\d{1,2}(?:\.\d{1,2}){0,2})\|([SBO])$/)
+		const timing = cue[2].match(/L\|(M|\d{1,2}(?:\:\d{1,2}){0,2})\|([SBO]|\d{1,2}(?:\:\d{1,2}){0,2})$/)
 
 		if (vcpid && continueCount) {
 			mosCue = {
@@ -271,17 +271,21 @@ function parseMOS(cue: string[]): CueDefinitionMOS {
 			}
 
 			if (timing) {
-				if (isTime(timing[1])) {
-					mosCue.start = parseTime(timing[1]).start
-				} else if (timing[1] === 'M') {
+				if (timing[1] === 'M') {
 					mosCue.adlib = true
+				} else if (isMosTime(timing[1])) {
+					mosCue.start = parseTime(timing[1]).start
 				}
 
 				if (timing[2].match(/[SBO]/)) {
 					mosCue.end = {
 						infiniteMode: timing[2] as keyof { B: any; S: any; O: any }
 					}
+				} else if (isMosTime(timing[2])) {
+					mosCue.end = parseTime(timing[2]).start
 				}
+			} else {
+				mosCue.start = { seconds: 0 }
 			}
 		}
 	}
@@ -469,6 +473,10 @@ export function isTime(line: string) {
 	return !!line
 		.replace(/\s+/g, '')
 		.match(/^;\d{1,2}(?:(?:\.\d{1,2}){0,1}){0,2}(?:(?:-\d{1,2}(?:(?:\.\d{1,2}){0,1}){0,2}){0,1}|(?:-[BSO]))$/)
+}
+
+export function isMosTime(line: string) {
+	return !!line.replace(/\s+/g, '').match(/\d{1,2}(?:\:\d{1,2}){1,2}/)
 }
 
 export function parseTime(line: string): Pick<CueDefinitionBase, 'start' | 'end'> {
