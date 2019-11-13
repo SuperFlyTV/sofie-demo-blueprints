@@ -55,7 +55,8 @@ export function EvaluateMOS(
 								deviceType: DeviceType.VIZMSE,
 								type: TimelineContentTypeVizMSE.ELEMENT_PILOT,
 								templateVcpId: parsedCue.vcpid,
-								continueStep: parsedCue.continueCount
+								continueStep: parsedCue.continueCount,
+								noAutoPreloading: true
 							}
 						})
 					])
@@ -92,7 +93,8 @@ export function EvaluateMOS(
 								deviceType: DeviceType.VIZMSE,
 								type: TimelineContentTypeVizMSE.ELEMENT_PILOT,
 								templateVcpId: parsedCue.vcpid,
-								continueStep: parsedCue.continueCount
+								continueStep: parsedCue.continueCount,
+								noAutoPreloading: true
 							}
 						})
 					])
