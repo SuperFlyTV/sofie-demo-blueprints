@@ -49,7 +49,7 @@ export function EvaluateCues(
 					EvaluateGrafik(config, pieces, adLibPieces, part.externalId, cue, shouldAdlib, false, adLibRank)
 					break
 				case CueType.MOS:
-					EvaluateMOS(config, pieces, adLibPieces, part.externalId, cue, shouldAdlib, adLibRank)
+					EvaluateMOS(config, pieces, adLibPieces, part.externalId, cue, shouldAdlib, false, adLibRank)
 					break
 				case CueType.Ekstern:
 					EvaluateEkstern(context, config, pieces, adLibPieces, part.externalId, cue, shouldAdlib, adLibRank)

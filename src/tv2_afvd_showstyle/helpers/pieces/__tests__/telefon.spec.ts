@@ -3,16 +3,13 @@ import {
 	TimelineContentTypeSisyfos,
 	TimelineContentTypeVizMSE,
 	TimelineObjSisyfosMessage,
-	TimelineObjVIZMSEAny,
 	TimelineObjVIZMSEElementInternal
 } from 'timeline-state-resolver-types'
 import {
-	BaseContent,
 	GraphicsContent,
 	IBlueprintAdLibPiece,
 	IBlueprintPiece,
-	PieceLifespan,
-	TimelineObjectCoreExt
+	PieceLifespan
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../../../common/util'
 import { defaultShowStyleConfig, defaultStudioConfig } from '../../../../tv2_afvd_showstyle/__tests__/configs'
@@ -63,35 +60,6 @@ describe('telefon', () => {
 				externalId: partId,
 				name: 'TLF 1',
 				enable: {
-					start: 0
-				},
-				outputLayerId: 'pgm0',
-				sourceLayerId: SourceLayer.PgmTelephone,
-				infiniteMode: PieceLifespan.OutOnNextPart,
-				content: literal<BaseContent>({
-					timelineObjects: literal<TimelineObjectCoreExt[]>([
-						literal<TimelineObjSisyfosMessage>({
-							id: '',
-							enable: {
-								start: 0
-							},
-							priority: 1,
-							layer: 'sisyfos_telefon_source_TLF_1',
-							content: {
-								deviceType: DeviceType.SISYFOS,
-								type: TimelineContentTypeSisyfos.SISYFOS,
-								isPgm: 1,
-								faderLevel: 0.75
-							}
-						})
-					])
-				})
-			}),
-			literal<IBlueprintPiece>({
-				_id: '',
-				externalId: partId,
-				name: 'bund - Odense - Copenhagen',
-				enable: {
 					start: 0,
 					end: 4000
 				},
@@ -101,7 +69,7 @@ describe('telefon', () => {
 				content: literal<GraphicsContent>({
 					fileName: 'bund',
 					path: 'bund',
-					timelineObjects: literal<TimelineObjVIZMSEAny[]>([
+					timelineObjects: [
 						literal<TimelineObjVIZMSEElementInternal>({
 							id: '',
 							enable: {
@@ -116,8 +84,22 @@ describe('telefon', () => {
 								templateData: ['Odense', 'Copenhagen'],
 								channelName: 'FULL1'
 							}
+						}),
+						literal<TimelineObjSisyfosMessage>({
+							id: '',
+							enable: {
+								start: 0
+							},
+							priority: 1,
+							layer: 'sisyfos_telefon_source_TLF_1',
+							content: {
+								deviceType: DeviceType.SISYFOS,
+								type: TimelineContentTypeSisyfos.SISYFOS,
+								isPgm: 1,
+								faderLevel: 0.75
+							}
 						})
-					])
+					]
 				})
 			})
 		])

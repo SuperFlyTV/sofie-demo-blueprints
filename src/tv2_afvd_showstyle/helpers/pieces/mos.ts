@@ -25,6 +25,7 @@ export function EvaluateMOS(
 	partId: string,
 	parsedCue: CueDefinitionMOS,
 	adlib?: boolean,
+	isTlf?: boolean,
 	rank?: number
 ) {
 	if (adlib) {
@@ -38,7 +39,7 @@ export function EvaluateMOS(
 					parsedCue.end && parsedCue.end.infiniteMode
 						? InfiniteMode(parsedCue.end.infiniteMode, PieceLifespan.Normal)
 						: PieceLifespan.Normal,
-				sourceLayerId: SourceLayer.PgmPilot,
+				sourceLayerId: isTlf ? SourceLayer.PgmGraphicsTLF : SourceLayer.PgmPilot,
 				outputLayerId: 'pgm0',
 				content: literal<GraphicsContent>({
 					fileName: parsedCue.name,
@@ -74,7 +75,7 @@ export function EvaluateMOS(
 					...CreateTimingGrafik(config, parsedCue)
 				},
 				outputLayerId: 'pgm0',
-				sourceLayerId: SourceLayer.PgmPilot,
+				sourceLayerId: isTlf ? SourceLayer.PgmGraphicsTLF : SourceLayer.PgmPilot,
 				infiniteMode:
 					parsedCue.end && parsedCue.end.infiniteMode
 						? InfiniteMode(parsedCue.end.infiniteMode, PieceLifespan.Normal)

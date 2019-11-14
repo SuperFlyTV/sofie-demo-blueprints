@@ -59,13 +59,14 @@ export default literal<ISourceLayer[]>([
 	{
 		_id: SourceLayer.PgmGraphicsTLF,
 		_rank: 9900,
-		name: 'Graphics',
+		name: 'TLF',
 		type: SourceLayerType.GRAPHICS,
 		onPGMClean: true,
 		activateKeyboardHotkeys: '',
 		clearKeyboardHotkey: '',
 		allowDisable: true,
 		unlimited: false,
+		isSticky: true,
 		exclusiveGroup: 'fullscreen_pgm'
 	},
 	{
@@ -136,14 +137,6 @@ export default literal<ISourceLayer[]>([
 		activateKeyboardHotkeys: '',
 		clearKeyboardHotkey: '',
 		allowDisable: true,
-		unlimited: false
-	},
-	{
-		_id: SourceLayer.PgmTelephone,
-		_rank: 6000,
-		name: 'Telephone',
-		type: SourceLayerType.AUDIO,
-		onPGMClean: true,
 		unlimited: false
 	},
 	{

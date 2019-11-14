@@ -12,7 +12,6 @@ export enum SourceLayer {
 	PgmJingle = 'studio0_jingle0',
 	PgmLive = 'studio0_live0',
 	PgmDVE = 'studio0_dev0',
-	PgmTelephone = 'studio0_telephone0',
 	PgmBreak = 'studio0_break0',
 	PgmScript = 'studio0_script',
 	PgmSlutord = 'studio0_slutord',
