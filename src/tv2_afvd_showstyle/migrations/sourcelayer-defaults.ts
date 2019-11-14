@@ -89,8 +89,7 @@ export default literal<ISourceLayer[]>([
 		activateKeyboardHotkeys: '',
 		clearKeyboardHotkey: '',
 		allowDisable: true,
-		unlimited: false,
-		isHidden: true
+		unlimited: false
 	},
 	{
 		_id: SourceLayer.PgmJingle,
