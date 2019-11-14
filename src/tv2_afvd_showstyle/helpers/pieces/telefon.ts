@@ -44,7 +44,6 @@ export function EvaluateTelefon(
 		if ((!adlib && pieces.length) || (adlib && adlibPieces.length)) {
 			if (adlib) {
 				const index = adlibPieces.length - 1
-				console.log(index)
 				const adlibPiece = adlibPieces[index]
 				if (adlibPiece.content && adlibPiece.content.timelineObjects) {
 					adlibPiece.content.timelineObjects.push(
@@ -68,7 +67,6 @@ export function EvaluateTelefon(
 				}
 			} else {
 				const index = pieces.length - 1
-				console.log(index)
 				const piece = pieces[index]
 				if (piece.content && piece.content.timelineObjects) {
 					piece.content.timelineObjects.push(
