@@ -7,6 +7,7 @@ import {
 	TimelineContentTypeCasparCg,
 	TimelineContentTypeHyperdeck,
 	TimelineContentTypeSisyfos,
+	TimelineContentTypeVizMSE,
 	TimelineObjAtemAUX,
 	TimelineObjAtemDSK,
 	TimelineObjAtemME,
@@ -17,6 +18,7 @@ import {
 	TimelineObjCCGRoute,
 	TimelineObjHyperdeckTransport,
 	TimelineObjSisyfosMessage,
+	TimelineObjVIZMSEElementContinue,
 	Transition,
 	TransportStatus,
 	TSRTimelineObj,
@@ -44,7 +46,8 @@ import {
 	SisyfosLLAyer,
 	SisyfosSourceCamera,
 	SisyfosSourceClip,
-	SisyfosSourceRemote
+	SisyfosSourceRemote,
+	VizLLayer
 } from '../tv2_afvd_studio/layers'
 import { AtemSourceIndex } from '../types/atem'
 import { CONSTANTS } from '../types/constants'
@@ -244,6 +247,60 @@ function getGlobalAdLibPieces(_context: NotesContext, config: BlueprintConfig): 
 							input: 35,
 							transition: AtemTransitionStyle.CUT
 						}
+					}
+				})
+			])
+		}
+	})
+	adlibItems.push({
+		externalId: 'continueForward',
+		name: 'GFX Continue',
+		_rank: 400,
+		sourceLayerId: SourceLayer.PgmContinue,
+		outputLayerId: 'pgm0',
+		expectedDuration: 0,
+		infiniteMode: PieceLifespan.Normal,
+		content: {
+			timelineObjects: _.compact<TSRTimelineObj>([
+				literal<TimelineObjVIZMSEElementContinue>({
+					id: '',
+					enable: {
+						start: 0,
+						duration: 1000
+					},
+					layer: VizLLayer.VizLLayerContinue,
+					content: {
+						deviceType: DeviceType.VIZMSE,
+						type: TimelineContentTypeVizMSE.CONTINUE,
+						direction: 1,
+						reference: VizLLayer.VizLLayerPilot
+					}
+				})
+			])
+		}
+	})
+	adlibItems.push({
+		externalId: 'continueReverse',
+		name: 'GFX Reverse',
+		_rank: 400,
+		sourceLayerId: SourceLayer.PgmContinue,
+		outputLayerId: 'pgm0',
+		expectedDuration: 0,
+		infiniteMode: PieceLifespan.Normal,
+		content: {
+			timelineObjects: _.compact<TSRTimelineObj>([
+				literal<TimelineObjVIZMSEElementContinue>({
+					id: '',
+					enable: {
+						start: 0,
+						duration: 1000
+					},
+					layer: VizLLayer.VizLLayerContinue,
+					content: {
+						deviceType: DeviceType.VIZMSE,
+						type: TimelineContentTypeVizMSE.CONTINUE,
+						direction: -1,
+						reference: VizLLayer.VizLLayerPilot
 					}
 				})
 			])

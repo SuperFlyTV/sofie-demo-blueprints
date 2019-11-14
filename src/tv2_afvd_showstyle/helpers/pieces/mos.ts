@@ -51,7 +51,7 @@ export function EvaluateMOS(
 								start: 0
 							},
 							priority: 1,
-							layer: VizLLayer.VizLLayerOverlay,
+							layer: VizLLayer.VizLLayerPilot,
 							content: {
 								deviceType: DeviceType.VIZMSE,
 								type: TimelineContentTypeVizMSE.ELEMENT_PILOT,
@@ -90,7 +90,7 @@ export function EvaluateMOS(
 								start: 0
 							},
 							priority: 1,
-							layer: VizLLayer.VizLLayerOverlay,
+							layer: VizLLayer.VizLLayerPilot,
 							content: {
 								deviceType: DeviceType.VIZMSE,
 								type: TimelineContentTypeVizMSE.ELEMENT_PILOT,
