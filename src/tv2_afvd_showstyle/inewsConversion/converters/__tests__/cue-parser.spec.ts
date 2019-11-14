@@ -344,7 +344,7 @@ describe('Cue parser', () => {
 		})
 	})
 
-	test('#cg4 pilotdata with timing', () => {
+	test('#cg4 pilotdata', () => {
 		const cueMOS = [
 			'#cg4 pilotdata',
 			'TELEFON/KORT//LIVE_KABUL',
@@ -361,14 +361,15 @@ describe('Cue parser', () => {
 				continueCount: 3,
 				start: {
 					seconds: 0
-				}
+				},
+				engine: '4'
 			})
 		)
 	})
 
-	test('#cg4 pilotdata mix', () => {
+	test('cg12 pilotdata', () => {
 		const cueMOS = [
-			'#cg4 pilotdata MIX 200',
+			'cg12 pilotdata',
 			'TELEFON/KORT//LIVE_KABUL',
 			'VCPID=2552305',
 			'ContinueCount=3',
@@ -383,7 +384,31 @@ describe('Cue parser', () => {
 				continueCount: 3,
 				start: {
 					seconds: 0
-				}
+				},
+				engine: '12'
+			})
+		)
+	})
+
+	test('#cg4 pilotdata with timing', () => {
+		const cueMOS = [
+			'*cg4 pilotdata',
+			'TELEFON/KORT//LIVE_KABUL',
+			'VCPID=2552305',
+			'ContinueCount=3',
+			'TELEFON/KORT//LIVE_KABUL'
+		]
+		const result = ParseCue(cueMOS)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.MOS,
+				name: 'TELEFON/KORT//LIVE_KABUL',
+				vcpid: 2552305,
+				continueCount: 3,
+				start: {
+					seconds: 0
+				},
+				engine: '4'
 			})
 		)
 	})

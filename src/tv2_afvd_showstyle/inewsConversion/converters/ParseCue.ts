@@ -51,6 +51,7 @@ export interface CueDefinitionMOS extends CueDefinitionBase {
 	name: string
 	vcpid: number
 	continueCount: number
+	engine?: string
 }
 
 export interface CueDefinitionEkstern extends CueDefinitionBase {
@@ -161,6 +162,8 @@ export function ParseCue(cue: UnparsedCue): CueDefinition {
 	} else if (cue[0].match(/^]] [a-z]\d\.\d [a-z] \d \[\[$/i)) {
 		// MOS
 		return parseMOS(cue)
+	} else if (cue[0].match(/[#|*]?cg\d+ pilotdata/i)) {
+		return parseMOS(cue)
 	} else if (cue[0].match(/^EKSTERN=/)) {
 		// EKSTERN
 		const eksternSource = cue[0].match(/^EKSTERN=(.+)$/)
@@ -251,24 +254,36 @@ function parseSS(cue: string[]): CueDefinitionUnknown {
 }
 
 function parseMOS(cue: string[]): CueDefinitionMOS {
-	let mosCue: CueDefinitionMOS = {
+	const mosCue: CueDefinitionMOS = {
 		type: CueType.MOS,
 		name: '',
 		vcpid: -1,
 		continueCount: -1
 	}
-	if (cue.length === 6) {
-		const vcpid = cue[3].match(/^VCPID=(\d+)$/i)
-		const continueCount = cue[4].match(/^ContinueCount=(-?\d+)$/i)
-		const timing = cue[2].match(/L\|(M|\d{1,2}(?:\:\d{1,2}){0,2})\|([SBO]|\d{1,2}(?:\:\d{1,2}){0,2})$/)
+	const realCue: string[] = []
+	cue.forEach(line => {
+		if (
+			!line.match(/[#|*]?cg\d+ pilotdata/i) &&
+			!line.match(/^]] [a-z]\d\.\d [a-z] \d \[\[$/i) &&
+			!line.match(/cg\d+ \]\] .+? \[\[ pilotdata/i)
+		) {
+			realCue.push(line)
+		} else if (!!line.match(/[#|*]?cg\d+ pilotdata/i)) {
+			const engine = line.match(/[#|*]?cg(\d+) pilotdata/i)
+			if (engine && engine[1]) {
+				mosCue.engine = engine[1]
+			}
+		}
+	})
+	if (realCue.length === 4) {
+		const vcpid = realCue[1].match(/^VCPID=(\d+)$/i)
+		const continueCount = realCue[2].match(/^ContinueCount=(-?\d+)$/i)
+		const timing = realCue[0].match(/L\|(M|\d{1,2}(?:\:\d{1,2}){0,2})\|([SBO]|\d{1,2}(?:\:\d{1,2}){0,2})$/)
 
 		if (vcpid && continueCount) {
-			mosCue = {
-				type: CueType.MOS,
-				name: cue[2],
-				vcpid: Number(vcpid[1]),
-				continueCount: Number(continueCount[1])
-			}
+			mosCue.name = realCue[0]
+			mosCue.vcpid = Number(vcpid[1])
+			mosCue.continueCount = Number(continueCount[1])
 
 			if (timing) {
 				if (timing[1] === 'M') {
