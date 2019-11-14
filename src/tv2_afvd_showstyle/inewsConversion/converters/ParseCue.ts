@@ -492,18 +492,37 @@ export function parseTime(line: string): Pick<CueDefinitionBase, 'start' | 'end'
 		if (time.match(/^[BSO]$/) && i !== 0) {
 			retTime[field].infiniteMode = time
 		} else {
-			const timeSegments = time.split('.')
+			if (!!time.match(/\./)) {
+				const timeSegments = time.split('.')
 
-			if (timeSegments[0]) {
-				retTime[field].seconds = (Number(timeSegments[0]) || 0) * 60
-			}
+				if (timeSegments[0]) {
+					retTime[field].seconds = (Number(timeSegments[0]) || 0) * 60
+				}
 
-			if (timeSegments[1]) {
-				retTime[field].seconds += Number(timeSegments[1].replace('.', '')) || 0
-			}
+				if (timeSegments[1]) {
+					if (retTime[field].seconds) {
+						retTime[field].seconds += Number(timeSegments[1].replace('.', '')) || 0
+					} else {
+						retTime[field].seconds = Number(timeSegments[1].replace('.', '')) || 0
+					}
+				}
 
-			if (timeSegments[2]) {
-				retTime[field].frames = Number(timeSegments[2].replace('.', '')) || 0
+				if (timeSegments[2]) {
+					retTime[field].frames = Number(timeSegments[2].replace('.', '')) || 0
+				}
+			} else {
+				const timeSegments = time.split(':')
+				if (timeSegments[0]) {
+					retTime[field].seconds = (Number(timeSegments[0]) || 0) * 60
+				}
+
+				if (timeSegments[1]) {
+					if (retTime[field].seconds) {
+						retTime[field].seconds += Number(timeSegments[1]) || 0
+					} else {
+						retTime[field].seconds = Number(timeSegments[1]) || 0
+					}
+				}
 			}
 		}
 	})

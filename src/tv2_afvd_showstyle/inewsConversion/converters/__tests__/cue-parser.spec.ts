@@ -320,6 +320,74 @@ describe('Cue parser', () => {
 		})
 	})
 
+	test('MOS object with timing - time + O', () => {
+		const cueMOS = [
+			']] S3.0 M 0 [[',
+			'cg4 ]] 1 YNYAB 0 [[ pilotdata',
+			'LgfxWeb/-ETKAEM_07-05-2019_17:55:42/Mosart=L|00:02|O',
+			'VCPID=2520177',
+			'ContinueCount=-1',
+			'LgfxWeb/-ETKAEM_07-05-2019_17:55:42/Mosart=L|00:02|O'
+		]
+		const result = ParseCue(cueMOS)
+		expect(result).toEqual({
+			type: CueType.MOS,
+			name: 'LgfxWeb/-ETKAEM_07-05-2019_17:55:42/Mosart=L|00:02|O',
+			vcpid: 2520177,
+			continueCount: -1,
+			start: {
+				seconds: 2
+			},
+			end: {
+				infiniteMode: 'O'
+			}
+		})
+	})
+
+	test('#cg4 pilotdata with timing', () => {
+		const cueMOS = [
+			'#cg4 pilotdata',
+			'TELEFON/KORT//LIVE_KABUL',
+			'VCPID=2552305',
+			'ContinueCount=3',
+			'TELEFON/KORT//LIVE_KABUL'
+		]
+		const result = ParseCue(cueMOS)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.MOS,
+				name: 'TELEFON/KORT//LIVE_KABUL',
+				vcpid: 2552305,
+				continueCount: 3,
+				start: {
+					seconds: 0
+				}
+			})
+		)
+	})
+
+	test('#cg4 pilotdata mix', () => {
+		const cueMOS = [
+			'#cg4 pilotdata MIX 200',
+			'TELEFON/KORT//LIVE_KABUL',
+			'VCPID=2552305',
+			'ContinueCount=3',
+			'TELEFON/KORT//LIVE_KABUL'
+		]
+		const result = ParseCue(cueMOS)
+		expect(result).toEqual(
+			literal<CueDefinition>({
+				type: CueType.MOS,
+				name: 'TELEFON/KORT//LIVE_KABUL',
+				vcpid: 2552305,
+				continueCount: 3,
+				start: {
+					seconds: 0
+				}
+			})
+		)
+	})
+
 	test('MOS object with timing - start time + end time', () => {
 		const cueMOS = [
 			']] S3.0 M 0 [[',
@@ -339,7 +407,7 @@ describe('Cue parser', () => {
 				seconds: 0
 			},
 			end: {
-				seconds: 0
+				seconds: 10
 			}
 		})
 	})
