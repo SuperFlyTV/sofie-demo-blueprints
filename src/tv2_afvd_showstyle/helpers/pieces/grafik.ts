@@ -144,7 +144,7 @@ export function grafikName(parsedCue: CueDefinitionGrafik | CueDefinitionMOS): s
 			.filter(txt => !txt.match(/^;.\.../))
 			.map(txt => ` - ${txt}`)}`.replace(/,/g, '')
 	} else {
-		return `${parsedCue.name ? parsedCue.name : ''}${parsedCue.vcpid ? parsedCue.vcpid : parsedCue.vcpid}`
+		return `${parsedCue.name ? parsedCue.name : ''}`
 	}
 }
 
