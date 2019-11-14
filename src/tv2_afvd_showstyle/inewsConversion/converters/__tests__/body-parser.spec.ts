@@ -1133,4 +1133,88 @@ describe('Body parser', () => {
 			])
 		)
 	})
+
+	test('test-23', () => {
+		const body22 =
+			'\r\n<p><cc>Tlf nummer på gæst:</cc></p>\r\n<p><cc>By/land:</cc></p>\r\n<p></p>\r\n<p><pi>KAM 1 MIX 200</pi></p>\r\n<p></p>\r\n<p>Skriv spib her</p>\r\n<p></p>\r\n<p></p>\r\n<p><cc>-----></cc><a idref="0"><cc><-----Skriv navnet på Viz-scenen ind på anden linje i TELEFON=TLF </cc></a></p>\r\n<p><a idref="1"></a></p>\r\n<p></p>\r\n<p><pi>***LIVE*** DIP 300</pi></p>\r\n<p></p>\r\n<p><cc>-----></cc><a idref="2"><cc><----- Skriv </cc></a></p>\r\n<p></p>\r\n<p></p>\r\n<p></p>\r\n<p><cc>Vejledning til grafik:</cc></p>\r\n<p><cc>(Grafik laves i VCP, vælg baggrund AVID. Tid i direkte skal være ;0.00-S</cc></p>\r\n<p><cc>Så bliver tlfdirekte og tlftoplive på indtil der klippes til næste punkt.)</cc></p>\r\n<p></p>\r\n'
+		const cues22 = [
+			['TELEFON=TLF 2', 'kg bund', 'HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk', ';0.02'],
+			['kg tlfdirekte Odense', ';0.00-S'],
+			['kg tlftoptlive', 'Navn Navnesen', 'Numerolog', ';0.00-S']
+		]
+		const result = ParseBody('00000000001', '', body22, cues22, fields, 0)
+		expect(result).toEqual(
+			literal<PartDefinition[]>([
+				literal<PartDefinitionKam>({
+					externalId: '00000000001-0',
+					type: PartType.Kam,
+					variant: {
+						name: '1'
+					},
+					transition: {
+						style: 'MIX',
+						duration: 200
+					},
+					rawType: 'KAM 1',
+					cues: [
+						literal<CueDefinitionTelefon>({
+							type: CueType.Telefon,
+							source: 'TLF 2',
+							vizObj: literal<CueDefinitionGrafik>({
+								type: CueType.Grafik,
+								template: 'bund',
+								cue: 'kg',
+								textFields: ['HELENE RØNBJERG KRISTENSEN', 'herk@tv2.dk'],
+								start: {
+									seconds: 2
+								}
+							})
+						}),
+						literal<CueDefinitionGrafik>({
+							type: CueType.Grafik,
+							template: 'tlfdirekte',
+							cue: 'kg',
+							textFields: ['Odense'],
+							start: {
+								seconds: 0
+							},
+							end: {
+								infiniteMode: 'S'
+							}
+						})
+					],
+					script: 'Skriv spib her\n',
+					fields,
+					modified: 0
+				}),
+				literal<PartDefinitionLive>({
+					externalId: '00000000001-1',
+					type: PartType.Live,
+					variant: {},
+					rawType: 'LIVE',
+					transition: {
+						style: 'DIP',
+						duration: 300
+					},
+					cues: [
+						literal<CueDefinitionGrafik>({
+							type: CueType.Grafik,
+							template: 'tlftoptlive',
+							cue: 'kg',
+							textFields: ['Navn Navnesen', 'Numerolog'],
+							start: {
+								seconds: 0
+							},
+							end: {
+								infiniteMode: 'S'
+							}
+						})
+					],
+					script: '',
+					fields,
+					modified: 0
+				})
+			])
+		)
+	})
 })

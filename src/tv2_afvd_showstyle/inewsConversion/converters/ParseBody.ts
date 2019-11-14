@@ -1,4 +1,3 @@
-import { IngestSegment } from 'tv-automation-sofie-blueprints-integration'
 import { CueDefinition, ParseCue, UnparsedCue } from './ParseCue'
 
 export enum PartType {
@@ -21,17 +20,9 @@ export interface INewsStory {
 	body: string
 }
 
-export interface INewsIngestSegment extends IngestSegment {
-	payload: {
-		rundownId: string
-		iNewsStory: INewsStory
-		float: boolean
-
-		// TODO - remove the below
-		externalId: string
-		rank: number
-		name: string
-	}
+export interface PartTransition {
+	style: string
+	duration?: number
 }
 
 export interface PartDefinitionBase {
@@ -44,6 +35,7 @@ export interface PartDefinitionBase {
 	script: string
 	fields: { [key: string]: string }
 	modified: number
+	transition?: PartTransition
 }
 
 export interface PartDefinitionUnknown extends PartDefinitionBase {
@@ -106,15 +98,15 @@ export type PartDefinition =
 	| PartDefinitionIntro
 	| PartDefinitionSlutord
 export type PartdefinitionTypes =
-	| Pick<PartDefinitionUnknown, 'type' | 'variant' | 'effekt'>
-	| Pick<PartDefinitionKam, 'type' | 'variant' | 'effekt'>
-	| Pick<PartDefinitionServer, 'type' | 'variant' | 'effekt'>
-	| Pick<PartDefinitionTeknik, 'type' | 'variant' | 'effekt'>
-	| Pick<PartDefinitionLive, 'type' | 'variant' | 'effekt'>
-	| Pick<PartDefinitionGrafik, 'type' | 'variant' | 'effekt'>
-	| Pick<PartDefinitionVO, 'type' | 'variant' | 'effekt'>
-	| Pick<PartDefinitionIntro, 'type' | 'variant' | 'effekt'>
-	| Pick<PartDefinitionSlutord, 'type' | 'variant' | 'effekt'>
+	| Pick<PartDefinitionUnknown, 'type' | 'variant' | 'effekt' | 'transition'>
+	| Pick<PartDefinitionKam, 'type' | 'variant' | 'effekt' | 'transition'>
+	| Pick<PartDefinitionServer, 'type' | 'variant' | 'effekt' | 'transition'>
+	| Pick<PartDefinitionTeknik, 'type' | 'variant' | 'effekt' | 'transition'>
+	| Pick<PartDefinitionLive, 'type' | 'variant' | 'effekt' | 'transition'>
+	| Pick<PartDefinitionGrafik, 'type' | 'variant' | 'effekt' | 'transition'>
+	| Pick<PartDefinitionVO, 'type' | 'variant' | 'effekt' | 'transition'>
+	| Pick<PartDefinitionIntro, 'type' | 'variant' | 'effekt' | 'transition'>
+	| Pick<PartDefinitionSlutord, 'type' | 'variant' | 'effekt' | 'transition'>
 
 export function ParseBody(
 	segmentId: string,
@@ -254,6 +246,7 @@ function makeDefinition(segmentId: string, i: number, typeStr: string, fields: a
 		...extractTypeProperties(typeStr),
 		rawType: typeStr
 			.replace(/effekt \d+/gi, '')
+			.replace(/(MIX|DIP|WIPE|STING)( \d+)?(?:$| |\n)/gi, '')
 			.replace(/\s+/g, ' ')
 			.trim(),
 		cues: [],
@@ -267,12 +260,20 @@ function makeDefinition(segmentId: string, i: number, typeStr: string, fields: a
 
 function extractTypeProperties(typeStr: string): PartdefinitionTypes {
 	const effektMatch = typeStr.match(/effekt (\d+)/i)
-	const definition: Pick<PartdefinitionTypes, 'effekt'> = {}
+	const transitionMatch = typeStr.match(/(MIX|DIP|WIPE|STING)( \d+)?(?:$| |\n)/i)
+	const definition: Pick<PartdefinitionTypes, 'effekt' | 'transition'> = {}
 	if (effektMatch) {
 		definition.effekt = Number(effektMatch[1])
 	}
+	if (transitionMatch) {
+		definition.transition = {
+			style: transitionMatch[1],
+			duration: transitionMatch[2] ? Number(transitionMatch[2]) : undefined
+		}
+	}
 	const tokens = typeStr
 		.replace(/effekt (\d+)/gi, '')
+		.replace(/(MIX|DIP|WIPE|STING)( \d+)?(?:$| |\n)/gi, '')
 		.replace(/\s+/g, ' ')
 		.trim()
 		.split(' ')
