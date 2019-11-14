@@ -58,7 +58,7 @@ export function CreatePartServer(
 			metaData: literal<PieceMetaData>({
 				mediaPlayerSessions: [part.externalId]
 			}),
-			content: MakeContentServer(file, duration, part.externalId)
+			content: MakeContentServer(file, duration, part.externalId, partDefinition)
 		})
 	)
 

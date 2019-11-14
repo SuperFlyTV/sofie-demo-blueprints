@@ -13,12 +13,15 @@ import {
 	TimelineObjectCoreExt
 } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../../common/util'
+import { PartDefinition } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseBody'
 import { BlueprintConfig } from '../../../tv2_afvd_studio/helpers/config'
 import { FindSourceInfoStrict } from '../../../tv2_afvd_studio/helpers/sources'
 import { AtemLLayer } from '../../../tv2_afvd_studio/layers'
 import { CueDefinitionEkstern } from '../../inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../layers'
 import { GetSisyfosTimelineObjForEkstern } from '../sisyfos/sisyfos'
+import { TransitionFromString } from '../transitionFromString'
+import { TransitionSettings } from '../transitionSettings'
 import { CreateTimingEnable } from './evaluateCues'
 
 export function EvaluateEkstern(
@@ -28,6 +31,7 @@ export function EvaluateEkstern(
 	adlibPieces: IBlueprintAdLibPiece[],
 	partId: string,
 	parsedCue: CueDefinitionEkstern,
+	partDefinition: PartDefinition,
 	adlib?: boolean,
 	rank?: number
 ) {
@@ -75,7 +79,10 @@ export function EvaluateEkstern(
 								type: TimelineContentTypeAtem.ME,
 								me: {
 									input: atemInput,
-									transition: AtemTransitionStyle.CUT // TODO: This may change
+									transition: partDefinition.transition
+										? TransitionFromString(partDefinition.transition.style)
+										: AtemTransitionStyle.CUT,
+									transitionSettings: TransitionSettings(partDefinition)
 								}
 							}
 						}),

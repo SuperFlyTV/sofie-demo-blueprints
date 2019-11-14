@@ -51,7 +51,7 @@ export function CreatePartVO(
 	const adLibPieces: IBlueprintAdLibPiece[] = []
 	let pieces: IBlueprintPiece[] = []
 
-	const serverContent = MakeContentServer(file, duration, partDefinition.externalId)
+	const serverContent = MakeContentServer(file, duration, partDefinition.externalId, partDefinition)
 	serverContent.timelineObjects.push(
 		literal<TimelineObjSisyfosMessage>({
 			id: '',

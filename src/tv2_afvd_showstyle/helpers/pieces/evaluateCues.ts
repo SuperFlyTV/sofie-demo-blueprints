@@ -34,7 +34,7 @@ export function EvaluateCues(
 	pieces: IBlueprintPieceEPI[],
 	adLibPieces: IBlueprintAdLibPieceEPI[],
 	cues: CueDefinition[],
-	part: PartDefinition,
+	partDefinition: PartDefinition,
 	adlib?: boolean
 ) {
 	let adLibRank = 0
@@ -46,38 +46,48 @@ export function EvaluateCues(
 			const shouldAdlib = adlib ? adlib : cue.adlib ? cue.adlib : false
 			switch (cue.type) {
 				case CueType.Grafik:
-					EvaluateGrafik(config, pieces, adLibPieces, part.externalId, cue, shouldAdlib, false, adLibRank)
+					EvaluateGrafik(config, pieces, adLibPieces, partDefinition.externalId, cue, shouldAdlib, false, adLibRank)
 					break
 				case CueType.MOS:
-					EvaluateMOS(config, pieces, adLibPieces, part.externalId, cue, shouldAdlib, false, adLibRank)
+					EvaluateMOS(config, pieces, adLibPieces, partDefinition.externalId, cue, shouldAdlib, false, adLibRank)
 					break
 				case CueType.Ekstern:
-					EvaluateEkstern(context, config, pieces, adLibPieces, part.externalId, cue, shouldAdlib, adLibRank)
+					EvaluateEkstern(
+						context,
+						config,
+						pieces,
+						adLibPieces,
+						partDefinition.externalId,
+						cue,
+						partDefinition,
+						shouldAdlib,
+						adLibRank
+					)
 					break
 				case CueType.DVE:
-					EvaluateDVE(context, config, pieces, adLibPieces, part.externalId, cue, shouldAdlib, adLibRank)
+					EvaluateDVE(context, config, pieces, adLibPieces, partDefinition.externalId, cue, shouldAdlib, adLibRank)
 					// Always make an adlib for DVEs
 					if (!shouldAdlib) {
-						EvaluateDVE(context, config, pieces, adLibPieces, part.externalId, cue, true, adLibRank)
+						EvaluateDVE(context, config, pieces, adLibPieces, partDefinition.externalId, cue, true, adLibRank)
 					}
 					break
 				case CueType.AdLib:
-					EvaluateAdLib(context, config, adLibPieces, part.externalId, cue, part, adLibRank)
+					EvaluateAdLib(context, config, adLibPieces, partDefinition.externalId, cue, partDefinition, adLibRank)
 					break
 				case CueType.Telefon:
-					EvaluateTelefon(config, pieces, adLibPieces, part.externalId, cue, shouldAdlib, adLibRank)
+					EvaluateTelefon(config, pieces, adLibPieces, partDefinition.externalId, cue, shouldAdlib, adLibRank)
 					break
 				case CueType.VIZ:
-					EvaluateVIZ(context, config, pieces, adLibPieces, part.externalId, cue, shouldAdlib, adLibRank)
+					EvaluateVIZ(context, config, pieces, adLibPieces, partDefinition.externalId, cue, shouldAdlib, adLibRank)
 					break
 				case CueType.Jingle:
-					EvaluateJingle(context, config, pieces, adLibPieces, cue, part, shouldAdlib, adLibRank)
+					EvaluateJingle(context, config, pieces, adLibPieces, cue, partDefinition, shouldAdlib, adLibRank)
 					break
 				case CueType.LYD:
-					EvaluateLYD(context, config, pieces, adLibPieces, cue, part, shouldAdlib, adLibRank)
+					EvaluateLYD(context, config, pieces, adLibPieces, cue, partDefinition, shouldAdlib, adLibRank)
 					break
 				case CueType.Design:
-					EvaluateDesign(config, pieces, adLibPieces, part.externalId, cue, shouldAdlib, adLibRank)
+					EvaluateDesign(config, pieces, adLibPieces, partDefinition.externalId, cue, shouldAdlib, adLibRank)
 					break
 				default:
 					if (cue.type !== CueType.Unknown) {

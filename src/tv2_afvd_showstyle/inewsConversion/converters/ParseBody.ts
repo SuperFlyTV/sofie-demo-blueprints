@@ -267,7 +267,7 @@ function extractTypeProperties(typeStr: string): PartdefinitionTypes {
 	}
 	if (transitionMatch) {
 		definition.transition = {
-			style: transitionMatch[1],
+			style: transitionMatch[1].toUpperCase(),
 			duration: transitionMatch[2] ? Number(transitionMatch[2]) : undefined
 		}
 	}

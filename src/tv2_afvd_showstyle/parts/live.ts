@@ -25,7 +25,6 @@ export function CreatePartLive(
 		title: PartType[partDefinition.type] + ' - ' + partDefinition.rawType,
 		metaData: {},
 		typeVariant: ''
-		// expectedDuration: partTime
 	})
 
 	const adLibPieces: IBlueprintAdLibPiece[] = []

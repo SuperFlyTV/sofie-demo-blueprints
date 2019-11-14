@@ -21,6 +21,8 @@ import { BlueprintConfig } from '../helpers/config'
 import { EvaluateCues } from '../helpers/pieces/evaluateCues'
 import { AddScript } from '../helpers/pieces/script'
 import { GetSisyfosTimelineObjForCamera } from '../helpers/sisyfos/sisyfos'
+import { TransitionFromString } from '../helpers/transitionFromString'
+import { TransitionSettings } from '../helpers/transitionSettings'
 import { PartDefinition } from '../inewsConversion/converters/ParseBody'
 import { SourceLayer } from '../layers'
 import { EffektTransitionPiece, GetEffektAutoNext } from './effekt'
@@ -75,7 +77,10 @@ export function CreatePartKam(
 							type: TimelineContentTypeAtem.ME,
 							me: {
 								input: Number(atemInput),
-								transition: AtemTransitionStyle.CUT
+								transition: partDefinition.transition
+									? TransitionFromString(partDefinition.transition.style)
+									: AtemTransitionStyle.CUT,
+								transitionSettings: TransitionSettings(partDefinition)
 							}
 						}
 					}),

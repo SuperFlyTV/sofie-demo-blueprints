@@ -10,14 +10,18 @@ import {
 } from 'timeline-state-resolver-types'
 import { TimelineObjectCoreExt, VTContent } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../../common/util'
+import { PartDefinition } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseBody'
 import { AtemLLayer, CasparLLayer, SisyfosLLAyer } from '../../../tv2_afvd_studio/layers'
 import { TimelineBlueprintExt } from '../../../tv2_afvd_studio/onTimelineGenerate'
 import { MEDIA_PLAYER_AUTO } from '../../../types/constants'
+import { TransitionFromString } from '../transitionFromString'
+import { TransitionSettings } from '../transitionSettings'
 
 export function MakeContentServer(
 	file: string,
 	duration: number,
 	mediaPlayerSessionId: string,
+	partDefinition: PartDefinition,
 	adLib?: boolean
 ): VTContent {
 	return literal<VTContent>({
@@ -58,7 +62,10 @@ export function MakeContentServer(
 					type: TimelineContentTypeAtem.ME,
 					me: {
 						input: undefined,
-						transition: AtemTransitionStyle.CUT
+						transition: partDefinition.transition
+							? TransitionFromString(partDefinition.transition.style)
+							: AtemTransitionStyle.CUT,
+						transitionSettings: TransitionSettings(partDefinition)
 					}
 				},
 				metaData: {
