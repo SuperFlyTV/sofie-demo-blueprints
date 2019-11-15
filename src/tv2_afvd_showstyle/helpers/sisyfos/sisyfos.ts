@@ -234,23 +234,3 @@ export function GetSisyfosTimelineObjForEkstern(sourceType: string, voiceOverLev
 	}
 	return audioTimeline
 }
-
-export function GetSisyfosTimelineObjFadeToBlack(): TSRTimelineObj[] {
-	const audioTimeline: TSRTimelineObj[] = [
-		literal<TimelineObjSisyfosMessage>({
-			id: '',
-			enable: {
-				start: 0
-			},
-			priority: 1,
-			// TODO: Add to correct layer, an overall for all channels
-			layer: '',
-			content: {
-				deviceType: DeviceType.SISYFOS,
-				type: TimelineContentTypeSisyfos.SISYFOS,
-				fadeToBlack: true
-			}
-		})
-	]
-	return audioTimeline
-}

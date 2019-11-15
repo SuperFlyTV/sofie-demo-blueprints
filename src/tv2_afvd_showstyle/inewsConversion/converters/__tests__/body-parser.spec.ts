@@ -283,7 +283,7 @@ describe('Body parser', () => {
 				{
 					type: PartType.Kam,
 					rawType: 'KAM 1',
-					cues: [cueUnknown], // TODO: There should be another cue
+					cues: [cueUnknown],
 					script: '',
 					variant: {
 						name: '1'

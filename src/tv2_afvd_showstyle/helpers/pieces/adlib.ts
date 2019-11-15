@@ -45,7 +45,7 @@ export function EvaluateAdLib(
 			return
 		}
 
-		const rawTemplate = GetDVETemplate(config.showStyle.DVEStyles, parsedCue.variant) // TODO: pull from config
+		const rawTemplate = GetDVETemplate(config.showStyle.DVEStyles, parsedCue.variant)
 		if (!rawTemplate) {
 			context.warning(`Could not find template ${parsedCue.variant}`)
 			return
@@ -63,7 +63,6 @@ export function EvaluateAdLib(
 			labels: parsedCue.bynavn ? [parsedCue.bynavn] : []
 		}
 
-		// const template: DVEConfig = JSON.parse(rawTemplate.DVEJSON as string) as DVEConfig
 		const template: DVEConfig = JSON.parse(rawTemplate.DVEJSON as string) as DVEConfig
 
 		const content = MakeContentDVE(context, config, partId, cueDVE, template)
