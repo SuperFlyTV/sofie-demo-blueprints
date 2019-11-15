@@ -208,12 +208,6 @@ export default literal<BlueprintMappings>({
 		deviceId: 'abstract0',
 		lookahead: LookaheadMode.NONE
 	}),
-	sisyfos_source_jingle: literal<MappingSisyfos & BlueprintMapping>({
-		device: DeviceType.SISYFOS,
-		deviceId: 'sisyfos0',
-		channel: 1,
-		lookahead: LookaheadMode.PRELOAD
-	}),
 	sisyfos_source_audio: literal<MappingSisyfos & BlueprintMapping>({
 		device: DeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
@@ -224,6 +218,174 @@ export default literal<BlueprintMappings>({
 		device: DeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
 		channel: 3,
+		lookahead: LookaheadMode.PRELOAD
+	}),
+	sisyfos_source_vært_1_st_a: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 0,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_vært_2_st_a: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 1,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_gæst_1_st_a: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 2,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_gæst_2_st_a: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 3,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_gæst_3_st_a: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 4,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_gæst_4_st_a: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 5,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_vært_1_st_b: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 6,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_vært_2_st_b: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 7,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_gæst_1_st_b: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 8,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_gæst_2_st_b: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 9,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_gæst_3_st_b: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 10,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_gæst_4_st_b: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 11,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_live_1: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 12,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_live_2: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 13,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_live_3: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 14,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_live_4: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 15,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_live_5: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 16,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_live_6: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 17,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_live_7: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 18,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_live_8: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 19,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_live_9: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 20,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_live_10: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 21,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_player_clip_1: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 22,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_player_clip_2: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 23,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_evs_1: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 25,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_evs_2: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 26,
+		lookahead: LookaheadMode.NONE
+	}),
+	sisyfos_source_jingle: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 27,
+		lookahead: LookaheadMode.PRELOAD
+	}),
+	sisyfos_source_tlf_hybrid: literal<MappingSisyfos & BlueprintMapping>({
+		device: DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		channel: 28,
 		lookahead: LookaheadMode.PRELOAD
 	}),
 	viz_layer_overlay: literal<MappingVizMSE & BlueprintMapping>({

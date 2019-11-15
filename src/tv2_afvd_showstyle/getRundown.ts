@@ -44,14 +44,13 @@ import {
 	CasparLLayer,
 	HyperdeckLLayer,
 	SisyfosLLAyer,
-	SisyfosSourceCamera,
 	SisyfosSourceClip,
-	SisyfosSourceRemote,
 	VizLLayer
 } from '../tv2_afvd_studio/layers'
 import { AtemSourceIndex } from '../types/atem'
 import { CONSTANTS } from '../types/constants'
 import { BlueprintConfig, parseConfig } from './helpers/config'
+import { GetSisyfosTimelineObjForCamera, GetSisyfosTimelineObjForEkstern } from './helpers/sisyfos/sisyfos'
 import { SourceLayer } from './layers'
 
 export function getShowStyleVariantId(
@@ -126,17 +125,7 @@ function getGlobalAdLibPieces(_context: NotesContext, config: BlueprintConfig): 
 							}
 						}
 					}),
-					literal<TimelineObjSisyfosMessage>({
-						id: '',
-						enable: { while: '1' },
-						priority: 1,
-						layer: SisyfosSourceCamera(info.id),
-						content: {
-							deviceType: DeviceType.SISYFOS,
-							type: TimelineContentTypeSisyfos.SISYFOS,
-							isPgm: 2
-						}
-					})
+					...GetSisyfosTimelineObjForCamera(`Kamera ${info.id}`, false)
 				])
 			}
 		}
@@ -167,17 +156,7 @@ function getGlobalAdLibPieces(_context: NotesContext, config: BlueprintConfig): 
 							}
 						}
 					}),
-					literal<TimelineObjSisyfosMessage>({
-						id: '',
-						enable: { while: '1' },
-						priority: 1,
-						layer: SisyfosSourceRemote(info.id),
-						content: {
-							deviceType: DeviceType.SISYFOS,
-							type: TimelineContentTypeSisyfos.SISYFOS,
-							isPgm: 2
-						}
-					})
+					...GetSisyfosTimelineObjForEkstern(`Live ${info.id}`, false)
 				])
 			}
 		}
@@ -622,47 +601,269 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			})
 		),
 
-		...config.studio.SourcesCam.split(',').map(props =>
-			literal<TimelineObjSisyfosMessage>({
-				id: '',
-				enable: { while: '1' },
-				priority: 0,
-				layer: SisyfosSourceCamera(props.split(':')[0]),
-				content: {
-					deviceType: DeviceType.SISYFOS,
-					type: TimelineContentTypeSisyfos.SISYFOS,
-					isPgm: 0
-				}
-			})
-		),
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceVært_1_ST_A,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
 
-		...config.studio.SourcesRM.split(',').map(props =>
-			literal<TimelineObjSisyfosMessage>({
-				id: '',
-				enable: { while: '1' },
-				priority: 0,
-				layer: SisyfosSourceRemote(props.split(':')[0]),
-				content: {
-					deviceType: DeviceType.SISYFOS,
-					type: TimelineContentTypeSisyfos.SISYFOS,
-					isPgm: 0
-				}
-			})
-		),
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceVært_1_ST_B,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
 
-		...config.studio.SourcesSkype.split(',').map(props =>
-			literal<TimelineObjSisyfosMessage>({
-				id: '',
-				enable: { while: '1' },
-				priority: 0,
-				layer: SisyfosSourceRemote(`skype_${props.split(':')[0]}`),
-				content: {
-					deviceType: DeviceType.SISYFOS,
-					type: TimelineContentTypeSisyfos.SISYFOS,
-					isPgm: 0
-				}
-			})
-		),
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceVært_2_ST_A,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceVært_2_ST_B,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceGæst_1_ST_A,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceGæst_1_ST_B,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceGæst_2_ST_A,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceGæst_2_ST_B,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceGæst_3_ST_A,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceGæst_3_ST_B,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceGæst_4_ST_A,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceGæst_4_ST_B,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceLive_1,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceLive_2,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceLive_3,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceLive_4,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceLive_5,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceLive_6,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceLive_7,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceLive_8,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceLive_9,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceLive_10,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0
+			}
+		}),
 
 		...(config.studio.MediaPlayerType === MediaPlayerType.CasparAB
 			? config.studio.ABMediaPlayers.split(',').map(props =>

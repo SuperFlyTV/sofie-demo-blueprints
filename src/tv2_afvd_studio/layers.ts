@@ -56,7 +56,34 @@ export enum SisyfosLLAyer {
 	SisyfosSourceClipPending = 'sisyfos_source_clip_pending',
 	SisyfosSourceJingle = 'sisyfos_source_jingle',
 	SisyfosSourceAudio = 'sisyfos_source_audio',
-	SisyfosSourceLiveSpeak = 'sisyfos_source_live_speak'
+	SisyfosSourceLiveSpeak = 'sisyfos_source_live_speak',
+	SisyfosSourceTLF = 'sisyfos_source_tlf_hybrid',
+	SisyfosSourceVært_1_ST_A = 'sisyfos_source_vært_1_st_a',
+	SisyfosSourceVært_2_ST_A = 'sisyfos_source_vært_2_st_a',
+	SisyfosSourceGæst_1_ST_A = 'sisyfos_source_gæst_1_st_a',
+	SisyfosSourceGæst_2_ST_A = 'sisyfos_source_gæst_2_st_a',
+	SisyfosSourceGæst_3_ST_A = 'sisyfos_source_gæst_3_st_a',
+	SisyfosSourceGæst_4_ST_A = 'sisyfos_source_gæst_4_st_a',
+	SisyfosSourceVært_1_ST_B = 'sisyfos_source_vært_1_st_b',
+	SisyfosSourceVært_2_ST_B = 'sisyfos_source_vært_2_st_b',
+	SisyfosSourceGæst_1_ST_B = 'sisyfos_source_gæst_1_st_b',
+	SisyfosSourceGæst_2_ST_B = 'sisyfos_source_gæst_2_st_b',
+	SisyfosSourceGæst_3_ST_B = 'sisyfos_source_gæst_3_st_b',
+	SisyfosSourceGæst_4_ST_B = 'sisyfos_source_gæst_4_st_b',
+	SisyfosSourceLive_1 = 'sisyfos_source_live_1',
+	SisyfosSourceLive_2 = 'sisyfos_source_live_2',
+	SisyfosSourceLive_3 = 'sisyfos_source_live_3',
+	SisyfosSourceLive_4 = 'sisyfos_source_live_4',
+	SisyfosSourceLive_5 = 'sisyfos_source_live_5',
+	SisyfosSourceLive_6 = 'sisyfos_source_live_6',
+	SisyfosSourceLive_7 = 'sisyfos_source_live_7',
+	SisyfosSourceLive_8 = 'sisyfos_source_live_8',
+	SisyfosSourceLive_9 = 'sisyfos_source_live_9',
+	SisyfosSourceLive_10 = 'sisyfos_source_live_10',
+	SisyfosSourceEVS_1 = 'sisyfos_source_evs_1',
+	SisyfosSourceEVS_2 = 'sisyfos_source_evs_2',
+	SisyfosSourceClip_1 = 'sisyfos_player_clip_1',
+	SisyfosSourceClip_2 = 'sisyfos_player_clip_2'
 }
 
 export enum VizLLayer {
@@ -73,22 +100,6 @@ export function CasparPlayerClip(i: number) {
 
 export function SisyfosSourceClip(i: number | string) {
 	return `sisyfos_player_clip_${i}`
-}
-
-export function SisyfosSourceCamera(name: string) {
-	return `sisyfos_camera_active_${name.replace(' ', '_').trim()}`
-}
-
-export function SisyfosSourceRemote(name: string, variant?: string) {
-	let source = `sisyfos_remote_source_${name}`
-	if (variant) {
-		source = `${source}_${variant.replace(' ', '_')}`
-	}
-	return source
-}
-
-export function SisyfosSourceTelefon(i: string) {
-	return `sisyfos_telefon_source_${i.replace(' ', '_').trim()}`
 }
 
 export function HyperdeckLLayer(index: number) {

@@ -20,7 +20,7 @@ import {
 } from '../../../../tv2_afvd_showstyle/inewsConversion/converters/ParseCue'
 import { SourceLayer } from '../../../../tv2_afvd_showstyle/layers'
 import { StudioConfig } from '../../../../tv2_afvd_studio/helpers/config'
-import { VizLLayer } from '../../../../tv2_afvd_studio/layers'
+import { SisyfosLLAyer, VizLLayer } from '../../../../tv2_afvd_studio/layers'
 import { ShowStyleConfig } from '../../config'
 import { EvaluateTelefon } from '../telefon'
 
@@ -91,7 +91,7 @@ describe('telefon', () => {
 								start: 0
 							},
 							priority: 1,
-							layer: 'sisyfos_telefon_source_TLF_1',
+							layer: SisyfosLLAyer.SisyfosSourceTLF,
 							content: {
 								deviceType: DeviceType.SISYFOS,
 								type: TimelineContentTypeSisyfos.SISYFOS,

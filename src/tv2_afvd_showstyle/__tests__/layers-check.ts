@@ -10,12 +10,8 @@ import {
 
 import { literal } from '../../common/util'
 import mappingsDefaults, {
-	getCameraSisyfosMappings,
 	getHyperdeckMappings,
-	getMediaPlayerMappings,
-	getRemoteSisyfosMappings,
-	getSkypeSisyfosMappings,
-	getTelefonSisyfosMappings
+	getMediaPlayerMappings
 } from '../../tv2_afvd_studio/migrations/mappings-defaults'
 import { parseConfig } from '../helpers/config'
 import { SourceLayer } from '../layers'
@@ -39,13 +35,7 @@ export function checkAllLayers(
 	const allMappings = literal<BlueprintMappings>({
 		...mappingsDefaults,
 		...getHyperdeckMappings(config.studio.HyperdeckCount),
-		...getMediaPlayerMappings(config.studio.MediaPlayerType, config.mediaPlayers),
-		...getCameraSisyfosMappings(
-			'1:1,2:2,3:3,4:4,5:5,1S:1,2S:1,3S:3,4S:4,5S:5,CS 1:1,CS 2:2,CS 3:3,CS 4:4,CS 5:5,CS 6:6,AR:7,HVID:8,1S:1,3S:3,X8:8,11:11,12:12,13:13,14:14,15:15,SORT:1,CS1:1,CS2:2,CS3:3,CS4:4,CS5:5'
-		),
-		...getRemoteSisyfosMappings('1:1,2:2,3:3,4:4,5:5,6:6,7:7,8:8,9:9,10:10,S1:1,S2:2,S3:3,S4:4,S5:5,S6:6,S7:7'),
-		...getSkypeSisyfosMappings('1:1,2:2,3:3,4:4,5:5,6:6,7:7,8:8'),
-		...getTelefonSisyfosMappings('TLF 2:1')
+		...getMediaPlayerMappings(config.studio.MediaPlayerType, config.mediaPlayers)
 	})
 
 	const validateObject = (obj: TimelineObjectCoreExt) => {

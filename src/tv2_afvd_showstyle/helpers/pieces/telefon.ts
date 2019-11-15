@@ -2,7 +2,7 @@ import { DeviceType, TimelineContentTypeSisyfos, TimelineObjSisyfosMessage } fro
 import { IBlueprintAdLibPiece, IBlueprintPiece } from 'tv-automation-sofie-blueprints-integration'
 import { literal } from '../../../common/util'
 import { CueDefinitionTelefon, CueType } from '../../../tv2_afvd_showstyle/inewsConversion/converters/ParseCue'
-import { SisyfosSourceTelefon } from '../../../tv2_afvd_studio/layers'
+import { SisyfosLLAyer } from '../../../tv2_afvd_studio/layers'
 import { BlueprintConfig } from '../config'
 import { EvaluateGrafik } from './grafik'
 import { EvaluateMOS } from './mos'
@@ -53,7 +53,7 @@ export function EvaluateTelefon(
 								start: 0
 							},
 							priority: 1,
-							layer: SisyfosSourceTelefon(parsedCue.source),
+							layer: SisyfosLLAyer.SisyfosSourceTLF,
 							content: {
 								deviceType: DeviceType.SISYFOS,
 								type: TimelineContentTypeSisyfos.SISYFOS,
@@ -76,7 +76,7 @@ export function EvaluateTelefon(
 								start: 0
 							},
 							priority: 1,
-							layer: SisyfosSourceTelefon(parsedCue.source),
+							layer: SisyfosLLAyer.SisyfosSourceTLF,
 							content: {
 								deviceType: DeviceType.SISYFOS,
 								type: TimelineContentTypeSisyfos.SISYFOS,
