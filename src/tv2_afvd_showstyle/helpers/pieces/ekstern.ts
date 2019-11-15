@@ -117,7 +117,10 @@ export function EvaluateEkstern(
 								type: TimelineContentTypeAtem.ME,
 								me: {
 									input: atemInput,
-									transition: AtemTransitionStyle.CUT // TODO: This may change
+									transition: partDefinition.transition
+										? TransitionFromString(partDefinition.transition.style)
+										: AtemTransitionStyle.CUT,
+									transitionSettings: TransitionSettings(partDefinition)
 								}
 							}
 						}),
