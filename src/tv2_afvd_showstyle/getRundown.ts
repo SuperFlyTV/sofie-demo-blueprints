@@ -478,7 +478,7 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			content: {
 				deviceType: DeviceType.CASPARCG,
 				type: TimelineContentTypeCasparCg.MEDIA,
-				file: 'CG1080I50',
+				file: 'CG1080I50',	// @todo: should this be 'empty'??
 				mixer: {
 					opacity: 0
 				},
@@ -498,7 +498,7 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			content: {
 				deviceType: DeviceType.CASPARCG,
 				type: TimelineContentTypeCasparCg.MEDIA,
-				file: 'CG1080I50',
+				file: 'CG1080I50',	// @todo: should this be 'empty'??
 				mixer: {
 					opacity: 0
 				},
@@ -518,7 +518,7 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			content: {
 				deviceType: DeviceType.CASPARCG,
 				type: TimelineContentTypeCasparCg.MEDIA,
-				file: 'CG1080I50',
+				file: 'CG1080I50',	// @todo: should this be 'empty'??
 				mixer: {
 					opacity: 0
 				},
@@ -538,7 +538,7 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			content: {
 				deviceType: DeviceType.CASPARCG,
 				type: TimelineContentTypeCasparCg.MEDIA,
-				file: 'CG1080I50',
+				file: 'CG1080I50',	// @todo: should this be 'empty'??
 				mixer: {
 					opacity: 0
 				},
