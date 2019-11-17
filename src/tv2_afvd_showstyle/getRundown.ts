@@ -450,26 +450,26 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			}
 		}),
 
-		literal<TimelineObjCCGMedia>({
-			id: '',
-			enable: { while: '1' },
-			priority: 0,
-			layer: CasparLLayer.CasparPlayerClip,
-			content: {
-				deviceType: DeviceType.CASPARCG,
-				type: TimelineContentTypeCasparCg.MEDIA,
-				file: 'CG1080I50',
-				mixer: {
-					opacity: 0
-				},
-				transitions: {
-					inTransition: {
-						type: Transition.CUT,
-						duration: CONSTANTS.DefaultClipFadeOut
-					}
-				}
-			}
-		}),
+		// literal<TimelineObjCCGMedia>({	// @todo: should the be removed for a/b setup?
+		// 	id: '',
+		// 	enable: { while: '1' },
+		// 	priority: 0,
+		// 	layer: CasparLLayer.CasparPlayerClip,
+		// 	content: {
+		// 		deviceType: DeviceType.CASPARCG,
+		// 		type: TimelineContentTypeCasparCg.MEDIA,
+		// 		file: 'CG1080I50',
+		// 		mixer: {
+		// 			opacity: 0
+		// 		},
+		// 		transitions: {
+		// 			inTransition: {
+		// 				type: Transition.CUT,
+		// 				duration: CONSTANTS.DefaultClipFadeOut
+		// 			}
+		// 		}
+		// 	}
+		// }),
 		literal<TimelineObjCCGMedia>({
 			id: '',
 			enable: { while: '1' },
@@ -550,30 +550,30 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 				}
 			}
 		}),
-		literal<TimelineObjCCGRoute>({
-			id: '',
-			enable: { while: '1' },
-			priority: 0,
-			layer: CasparLLayer.CasparPlayerClipNext,
-			content: {
-				deviceType: DeviceType.CASPARCG,
-				type: TimelineContentTypeCasparCg.ROUTE,
-				mappedLayer: CasparLLayer.CasparPlayerClip,
-				mode: 'BACKGROUND'
-			}
-		}),
-		literal<TimelineObjCCGMedia>({
-			id: '',
-			enable: { while: '1' },
-			priority: 0,
-			layer: CasparLLayer.CasparPlayerClipNextWarning,
-			content: {
-				deviceType: DeviceType.CASPARCG,
-				type: TimelineContentTypeCasparCg.MEDIA,
-				file: 'assets/no_clip_spinner_loop',
-				loop: true
-			}
-		}),
+		// literal<TimelineObjCCGRoute>({ // @todo: should the be removed for a/b setup?
+		// 	id: '',
+		// 	enable: { while: '1' },
+		// 	priority: 0,
+		// 	layer: CasparLLayer.CasparPlayerClipNext,
+		// 	content: {
+		// 		deviceType: DeviceType.CASPARCG,
+		// 		type: TimelineContentTypeCasparCg.ROUTE,
+		// 		mappedLayer: CasparLLayer.CasparPlayerClip,
+		// 		mode: 'BACKGROUND'
+		// 	}
+		// }),
+		// literal<TimelineObjCCGMedia>({	// @todo: how is this implemented for a/b??
+		// 	id: '',
+		// 	enable: { while: '1' },
+		// 	priority: 0,
+		// 	layer: CasparLLayer.CasparPlayerClipNextWarning,
+		// 	content: {
+		// 		deviceType: DeviceType.CASPARCG,
+		// 		type: TimelineContentTypeCasparCg.MEDIA,
+		// 		file: 'assets/no_clip_spinner_loop',
+		// 		loop: true
+		// 	}
+		// }),
 
 		// literal<TimelineObjCCGHTMLPage>({	// @todo: to be rendered outside of casparcg for now
 		// 	id: '',

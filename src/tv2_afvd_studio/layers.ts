@@ -34,12 +34,12 @@ export enum AtemLLayer {
 }
 
 export enum CasparLLayer {
-	CasparPlayerClip = 'casparcg_player_clip',
-	CasparPlayerClipNext = 'casparcg_player_clip_next',
-	CasparPlayerClipNextWarning = 'casparcg_player_clip_next_warning',
-	CasparPlayerClipNextCustom = 'casparcg_player_clip_next_custom',
 	CasparPlayerWipe = 'casparcg_player_wipe',
 	CasparPlayerSoundEffect = 'casparcg_player_soundeffect',
+	// CasparPlayerClip = 'casparcg_player_clip',
+	// CasparPlayerClipNext = 'casparcg_player_clip_next',
+	// CasparPlayerClipNextWarning = 'casparcg_player_clip_next_warning', // @todo: how is this implemented for a/b??
+	// CasparPlayerClipNextCustom = 'casparcg_player_clip_next_custom',
 	CasparPlayerClipPending = 'casparcg_player_clip_pending',
 	CasparPlayerJingle = 'casparcg_player_jingle',
 	CasparCGGraphics = 'casparcg_cg_graphics',
