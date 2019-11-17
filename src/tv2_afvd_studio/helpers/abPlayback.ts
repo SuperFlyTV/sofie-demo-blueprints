@@ -410,7 +410,10 @@ export function applyMediaPlayersAssignments(
 	let mediaPlayerUsageEnd: MediaPlayerUsageEnd[] = []
 	for (const mp of config.mediaPlayers) {
 		// Block players with an 'infinite' clip from being used for lookahead
-		const endTimes = _.map(_.filter(activeRequests, s => s.player === mp.id), s => s.end)
+		const endTimes = _.map(
+			_.filter(activeRequests, s => s.player === mp.id),
+			s => s.end
+		)
 		const realEndTimes = _.filter(endTimes, e => e !== undefined) as number[]
 		if (endTimes.length === realEndTimes.length) {
 			// No infinite(undefined) ones, so find the highest end
