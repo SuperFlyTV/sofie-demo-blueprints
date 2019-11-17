@@ -609,19 +609,9 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			content: {
 				deviceType: DeviceType.SISYFOS,
 				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
-			}
-		}),
-
-		literal<TimelineObjSisyfosMessage>({
-			id: '',
-			enable: { while: '1' },
-			priority: 0,
-			layer: SisyfosLLAyer.SisyfosSourceVært_1_ST_B,
-			content: {
-				deviceType: DeviceType.SISYFOS,
-				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
+				isPgm: 0,
+				visible: true,
+				label: 'VÆRT 1'
 			}
 		}),
 
@@ -633,7 +623,79 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			content: {
 				deviceType: DeviceType.SISYFOS,
 				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
+				isPgm: 0,
+				visible: true,
+				label: 'VÆRT 2'
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceGst_1_ST_A,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0,
+				visible: true,
+				label: 'GÆST 1'
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceGst_2_ST_A,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0,
+				visible: true,
+				label: 'GÆST 2'
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceGst_3_ST_A,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0,
+				visible: true,
+				label: 'GÆST 3'
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceGst_4_ST_A,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0,
+				visible: true,
+				label: 'GÆST 4'
+			}
+		}),
+
+		literal<TimelineObjSisyfosMessage>({
+			id: '',
+			enable: { while: '1' },
+			priority: 0,
+			layer: SisyfosLLAyer.SisyfosSourceVært_1_ST_B,
+			content: {
+				deviceType: DeviceType.SISYFOS,
+				type: TimelineContentTypeSisyfos.SISYFOS,
+				isPgm: 0,
+				visible: false,
+				label: 'VÆRT 1'
 			}
 		}),
 
@@ -645,7 +707,9 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			content: {
 				deviceType: DeviceType.SISYFOS,
 				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
+				isPgm: 0,
+				visible: false,
+				label: 'VÆRT 2'
 			}
 		}),
 
@@ -653,11 +717,13 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			id: '',
 			enable: { while: '1' },
 			priority: 0,
-			layer: SisyfosLLAyer.SisyfosSourceGæst_1_ST_A,
+			layer: SisyfosLLAyer.SisyfosSourceGst_1_ST_B,
 			content: {
 				deviceType: DeviceType.SISYFOS,
 				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
+				isPgm: 0,
+				visible: false,
+				label: 'GÆST 1'
 			}
 		}),
 
@@ -665,11 +731,13 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			id: '',
 			enable: { while: '1' },
 			priority: 0,
-			layer: SisyfosLLAyer.SisyfosSourceGæst_1_ST_B,
+			layer: SisyfosLLAyer.SisyfosSourceGst_2_ST_B,
 			content: {
 				deviceType: DeviceType.SISYFOS,
 				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
+				isPgm: 0,
+				visible: false,
+				label: 'GÆST 2'
 			}
 		}),
 
@@ -677,11 +745,13 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			id: '',
 			enable: { while: '1' },
 			priority: 0,
-			layer: SisyfosLLAyer.SisyfosSourceGæst_2_ST_A,
+			layer: SisyfosLLAyer.SisyfosSourceGst_3_ST_B,
 			content: {
 				deviceType: DeviceType.SISYFOS,
 				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
+				isPgm: 0,
+				visible: false,
+				label: 'GÆST 3'
 			}
 		}),
 
@@ -689,59 +759,13 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			id: '',
 			enable: { while: '1' },
 			priority: 0,
-			layer: SisyfosLLAyer.SisyfosSourceGæst_2_ST_B,
+			layer: SisyfosLLAyer.SisyfosSourceGst_4_ST_B,
 			content: {
 				deviceType: DeviceType.SISYFOS,
 				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
-			}
-		}),
-
-		literal<TimelineObjSisyfosMessage>({
-			id: '',
-			enable: { while: '1' },
-			priority: 0,
-			layer: SisyfosLLAyer.SisyfosSourceGæst_3_ST_A,
-			content: {
-				deviceType: DeviceType.SISYFOS,
-				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
-			}
-		}),
-
-		literal<TimelineObjSisyfosMessage>({
-			id: '',
-			enable: { while: '1' },
-			priority: 0,
-			layer: SisyfosLLAyer.SisyfosSourceGæst_3_ST_B,
-			content: {
-				deviceType: DeviceType.SISYFOS,
-				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
-			}
-		}),
-
-		literal<TimelineObjSisyfosMessage>({
-			id: '',
-			enable: { while: '1' },
-			priority: 0,
-			layer: SisyfosLLAyer.SisyfosSourceGæst_4_ST_A,
-			content: {
-				deviceType: DeviceType.SISYFOS,
-				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
-			}
-		}),
-
-		literal<TimelineObjSisyfosMessage>({
-			id: '',
-			enable: { while: '1' },
-			priority: 0,
-			layer: SisyfosLLAyer.SisyfosSourceGæst_4_ST_B,
-			content: {
-				deviceType: DeviceType.SISYFOS,
-				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
+				isPgm: 0,
+				visible: false,
+				label: 'GÆST 4'
 			}
 		}),
 
@@ -753,7 +777,9 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			content: {
 				deviceType: DeviceType.SISYFOS,
 				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
+				isPgm: 0,
+				visible: true,
+				label: 'LIVE 1'
 			}
 		}),
 
@@ -765,7 +791,9 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			content: {
 				deviceType: DeviceType.SISYFOS,
 				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
+				isPgm: 0,
+				visible: true,
+				label: 'LIVE 2'
 			}
 		}),
 
@@ -777,7 +805,9 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			content: {
 				deviceType: DeviceType.SISYFOS,
 				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
+				isPgm: 0,
+				visible: true,
+				label: 'LIVE 3'
 			}
 		}),
 
@@ -789,7 +819,9 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			content: {
 				deviceType: DeviceType.SISYFOS,
 				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
+				isPgm: 0,
+				visible: true,
+				label: 'LIVE 4'
 			}
 		}),
 
@@ -801,7 +833,9 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			content: {
 				deviceType: DeviceType.SISYFOS,
 				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
+				isPgm: 0,
+				visible: true,
+				label: 'LIVE 5'
 			}
 		}),
 
@@ -813,7 +847,9 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			content: {
 				deviceType: DeviceType.SISYFOS,
 				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
+				isPgm: 0,
+				visible: true,
+				label: 'LIVE 6'
 			}
 		}),
 
@@ -825,7 +861,9 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			content: {
 				deviceType: DeviceType.SISYFOS,
 				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
+				isPgm: 0,
+				visible: true,
+				label: 'LIVE 7'
 			}
 		}),
 
@@ -837,7 +875,9 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			content: {
 				deviceType: DeviceType.SISYFOS,
 				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
+				isPgm: 0,
+				visible: true,
+				label: 'LIVE 8'
 			}
 		}),
 
@@ -849,7 +889,9 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			content: {
 				deviceType: DeviceType.SISYFOS,
 				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
+				isPgm: 0,
+				visible: true,
+				label: 'LIVE 9'
 			}
 		}),
 
@@ -861,7 +903,9 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 			content: {
 				deviceType: DeviceType.SISYFOS,
 				type: TimelineContentTypeSisyfos.SISYFOS,
-				isPgm: 0
+				isPgm: 0,
+				visible: true,
+				label: 'LIVE 10'
 			}
 		}),
 
@@ -875,7 +919,9 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 						content: {
 							deviceType: DeviceType.SISYFOS,
 							type: TimelineContentTypeSisyfos.SISYFOS,
-							isPgm: 0
+							isPgm: 0,
+							visible: true,
+							label: 'SERV'
 						}
 					})
 			  )
@@ -888,7 +934,9 @@ function getBaseline(config: BlueprintConfig): TSRTimelineObjBase[] {
 						content: {
 							deviceType: DeviceType.SISYFOS,
 							type: TimelineContentTypeSisyfos.SISYFOS,
-							isPgm: 0
+							isPgm: 0,
+							visible: true,
+							label: 'SERV'
 						}
 					})
 			  ])

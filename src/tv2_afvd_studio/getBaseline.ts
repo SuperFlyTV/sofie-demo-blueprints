@@ -69,7 +69,8 @@ export function getBaseline(context: IStudioContext): TSRTimelineObjBase[] {
 					deviceType: DeviceType.SISYFOS,
 					type: TimelineContentTypeSisyfos.SISYFOS,
 					isPgm: 0,
-					faderLevel: -1
+					visible: true,
+					label: ''
 				}
 			})
 		)
