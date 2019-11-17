@@ -17,7 +17,6 @@ export function VirtualLLayers() {
 }
 
 export enum VirtualAbstractLLayer {
-	RecordControl = 'record_control'
 }
 
 export enum AtemLLayer {
@@ -34,16 +33,16 @@ export enum AtemLLayer {
 }
 
 export enum CasparLLayer {
-	CasparPlayerWipe = 'casparcg_player_wipe',
-	CasparPlayerSoundEffect = 'casparcg_player_soundeffect',
 	// CasparPlayerClip = 'casparcg_player_clip',
 	// CasparPlayerClipNext = 'casparcg_player_clip_next',
 	// CasparPlayerClipNextWarning = 'casparcg_player_clip_next_warning', // @todo: how is this implemented for a/b??
 	// CasparPlayerClipNextCustom = 'casparcg_player_clip_next_custom',
+	// CasparPlayerWipe = 'casparcg_player_wipe',
+	// CasparPlayerSoundEffect = 'casparcg_player_soundeffect',
 	CasparPlayerClipPending = 'casparcg_player_clip_pending',
 	CasparPlayerJingle = 'casparcg_player_jingle',
-	CasparCGGraphics = 'casparcg_cg_graphics',
-	CasparCGEffects = 'casparcg_cg_effects',
+	// CasparCGGraphics = 'casparcg_cg_graphics',
+	// CasparCGEffects = 'casparcg_cg_effects',
 	CasparCGDVELoop = 'casparcg_dve_loop',
 	CasparCGLYD = 'casparcg_audio_lyd',
 	// CasparCountdown = 'casparcg_cg_countdown',	// @todo: to be rendered outside of casparcg for now
@@ -90,7 +89,7 @@ export enum VizLLayer {
 	VizLLayerOverlay = 'viz_layer_overlay',
 	VizLLayerPilot = 'viz_layer_pilot',
 	VizLLayerDesign = 'viz_layer_design',
-	VizLLayerDVEBackground = 'viz_layer_dve_background',
+	// VizLLayerDVEBackground = 'viz_layer_dve_background',
 	VizLLayerContinue = 'viz_layer_continue'
 }
 
