@@ -232,25 +232,25 @@ export default literal<BlueprintMappings>({
 		channel: 1,
 		lookahead: LookaheadMode.NONE
 	}),
-	sisyfos_source_gæst_1_st_a: literal<MappingSisyfos & BlueprintMapping>({
+	sisyfos_source_gst__1_st_a: literal<MappingSisyfos & BlueprintMapping>({
 		device: DeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
 		channel: 2,
 		lookahead: LookaheadMode.NONE
 	}),
-	sisyfos_source_gæst_2_st_a: literal<MappingSisyfos & BlueprintMapping>({
+	sisyfos_source_gst__2_st_a: literal<MappingSisyfos & BlueprintMapping>({
 		device: DeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
 		channel: 3,
 		lookahead: LookaheadMode.NONE
 	}),
-	sisyfos_source_gæst_3_st_a: literal<MappingSisyfos & BlueprintMapping>({
+	sisyfos_source_gst__3_st_a: literal<MappingSisyfos & BlueprintMapping>({
 		device: DeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
 		channel: 4,
 		lookahead: LookaheadMode.NONE
 	}),
-	sisyfos_source_gæst_4_st_a: literal<MappingSisyfos & BlueprintMapping>({
+	sisyfos_source_gst__4_st_a: literal<MappingSisyfos & BlueprintMapping>({
 		device: DeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
 		channel: 5,
@@ -268,25 +268,25 @@ export default literal<BlueprintMappings>({
 		channel: 7,
 		lookahead: LookaheadMode.NONE
 	}),
-	sisyfos_source_gæst_1_st_b: literal<MappingSisyfos & BlueprintMapping>({
+	sisyfos_source_gst__1_st_b: literal<MappingSisyfos & BlueprintMapping>({
 		device: DeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
 		channel: 8,
 		lookahead: LookaheadMode.NONE
 	}),
-	sisyfos_source_gæst_2_st_b: literal<MappingSisyfos & BlueprintMapping>({
+	sisyfos_source_gst__2_st_b: literal<MappingSisyfos & BlueprintMapping>({
 		device: DeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
 		channel: 9,
 		lookahead: LookaheadMode.NONE
 	}),
-	sisyfos_source_gæst_3_st_b: literal<MappingSisyfos & BlueprintMapping>({
+	sisyfos_source_gst__3_st_b: literal<MappingSisyfos & BlueprintMapping>({
 		device: DeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
 		channel: 10,
 		lookahead: LookaheadMode.NONE
 	}),
-	sisyfos_source_gæst_4_st_b: literal<MappingSisyfos & BlueprintMapping>({
+	sisyfos_source_gst__4_st_b: literal<MappingSisyfos & BlueprintMapping>({
 		device: DeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
 		channel: 11,

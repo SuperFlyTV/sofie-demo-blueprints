@@ -71,7 +71,7 @@ export function GetSisyfosTimelineObjForCamera(sourceType: string, voiceOverLeve
 					start: 0
 				},
 				priority: 1,
-				layer: SisyfosLLAyer.SisyfosSourceGæst_1_ST_A,
+				layer: SisyfosLLAyer.SisyfosSourceGst__1_ST_A,
 				content: {
 					deviceType: DeviceType.SISYFOS,
 					type: TimelineContentTypeSisyfos.SISYFOS,
@@ -84,7 +84,7 @@ export function GetSisyfosTimelineObjForCamera(sourceType: string, voiceOverLeve
 					start: 0
 				},
 				priority: 1,
-				layer: SisyfosLLAyer.SisyfosSourceGæst_1_ST_B,
+				layer: SisyfosLLAyer.SisyfosSourceGst__1_ST_B,
 				content: {
 					deviceType: DeviceType.SISYFOS,
 					type: TimelineContentTypeSisyfos.SISYFOS,
@@ -97,7 +97,7 @@ export function GetSisyfosTimelineObjForCamera(sourceType: string, voiceOverLeve
 					start: 0
 				},
 				priority: 1,
-				layer: SisyfosLLAyer.SisyfosSourceGæst_2_ST_A,
+				layer: SisyfosLLAyer.SisyfosSourceGst__2_ST_A,
 				content: {
 					deviceType: DeviceType.SISYFOS,
 					type: TimelineContentTypeSisyfos.SISYFOS,
@@ -110,7 +110,7 @@ export function GetSisyfosTimelineObjForCamera(sourceType: string, voiceOverLeve
 					start: 0
 				},
 				priority: 1,
-				layer: SisyfosLLAyer.SisyfosSourceGæst_2_ST_B,
+				layer: SisyfosLLAyer.SisyfosSourceGst__2_ST_B,
 				content: {
 					deviceType: DeviceType.SISYFOS,
 					type: TimelineContentTypeSisyfos.SISYFOS,
@@ -123,7 +123,7 @@ export function GetSisyfosTimelineObjForCamera(sourceType: string, voiceOverLeve
 					start: 0
 				},
 				priority: 1,
-				layer: SisyfosLLAyer.SisyfosSourceGæst_3_ST_A,
+				layer: SisyfosLLAyer.SisyfosSourceGst__3_ST_A,
 				content: {
 					deviceType: DeviceType.SISYFOS,
 					type: TimelineContentTypeSisyfos.SISYFOS,
@@ -136,7 +136,7 @@ export function GetSisyfosTimelineObjForCamera(sourceType: string, voiceOverLeve
 					start: 0
 				},
 				priority: 1,
-				layer: SisyfosLLAyer.SisyfosSourceGæst_3_ST_B,
+				layer: SisyfosLLAyer.SisyfosSourceGst__3_ST_B,
 				content: {
 					deviceType: DeviceType.SISYFOS,
 					type: TimelineContentTypeSisyfos.SISYFOS,
@@ -149,7 +149,7 @@ export function GetSisyfosTimelineObjForCamera(sourceType: string, voiceOverLeve
 					start: 0
 				},
 				priority: 1,
-				layer: SisyfosLLAyer.SisyfosSourceGæst_4_ST_A,
+				layer: SisyfosLLAyer.SisyfosSourceGst__4_ST_A,
 				content: {
 					deviceType: DeviceType.SISYFOS,
 					type: TimelineContentTypeSisyfos.SISYFOS,
@@ -162,7 +162,7 @@ export function GetSisyfosTimelineObjForCamera(sourceType: string, voiceOverLeve
 					start: 0
 				},
 				priority: 1,
-				layer: SisyfosLLAyer.SisyfosSourceGæst_4_ST_B,
+				layer: SisyfosLLAyer.SisyfosSourceGst__4_ST_B,
 				content: {
 					deviceType: DeviceType.SISYFOS,
 					type: TimelineContentTypeSisyfos.SISYFOS,
