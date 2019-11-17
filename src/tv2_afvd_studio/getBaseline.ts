@@ -68,8 +68,7 @@ export function getBaseline(context: IStudioContext): TSRTimelineObjBase[] {
 				content: {
 					deviceType: DeviceType.SISYFOS,
 					type: TimelineContentTypeSisyfos.SISYFOS,
-					isPgm: 0,
-					faderLevel: -1
+					isPgm: 0
 				}
 			})
 		)
