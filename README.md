@@ -4,7 +4,7 @@ This is a reference blueprints package for the [Sofie News Studio Automation Sys
 
 ## Features
 
-These blueprints is intended to be used with Spreadsheets based on the template [TODO: LINK](http://spreadsheetsonGoogleDrive)
+These blueprints is intended to be used with Spreadsheets based on [this template](https://docs.google.com/spreadsheets/d/1iyegRv5MxYYtlVu8uEEMkBYXsLL-71PAMrNW0ZfWRUw/edit#gid=0)
 
 * 
 
