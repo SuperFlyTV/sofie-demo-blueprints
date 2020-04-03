@@ -38,8 +38,9 @@ export function CreatePieceGenericAdLib (piece: Piece): IBlueprintAdLibPiece {
  * @param {Piece} piece Piece properties.
  */
 export function CreatePieceGenericEnable (piece: Piece): IBlueprintPiece {
-	let enable: PieceEnable = {}
-	enable.start = piece.objectTime || 0
+	let enable: PieceEnable = {
+		start: piece.objectTime || 0
+	}
 
 	let p = literal<IBlueprintPiece>({
 		_id: '',

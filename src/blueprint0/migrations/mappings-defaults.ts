@@ -148,7 +148,7 @@ export default literal<BlueprintMappings>({
 	'atem_supersource_override': literal<MappingAtem & BlueprintMapping>({
 		device: PlayoutDeviceType.ATEM,
 		deviceId: 'atem0',
-		lookahead: LookaheadMode.RETAIN,
+		lookahead: LookaheadMode.WHEN_CLEAR,
 		mappingType: MappingAtemType.SuperSourceBox,
 		index: 0 // 0 = SS
 	}),
