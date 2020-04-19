@@ -3,7 +3,7 @@ import {
 	MigrationContextStudio, MigrationStepInputFilteredResult, MigrationStepStudio, MigrationStepInput
 } from 'tv-automation-sofie-blueprints-integration'
 import {
-	DeviceType as PlayoutDeviceType
+	DeviceType as PlayoutDeviceType, CasparCGOptions
 	// DeviceOptions as PlayoutDeviceOptions
 } from 'timeline-state-resolver-types'
 import { literal } from '../../common/util'
@@ -129,7 +129,7 @@ const devices: DeviceEntry[] = [
 		defaultValue: (_input: MigrationStepInputFilteredResult, context: MigrationContextStudio) => {
 			const mainDev = context.getDevice('caspar01')
 			if (mainDev && mainDev.options) {
-				const mainOpts = mainDev.options as any
+				const mainOpts = mainDev.options as CasparCGOptions
 				if (mainOpts.launcherHost) {
 					return {
 						type: PlayoutDeviceType.HTTPWATCHER,
@@ -164,7 +164,7 @@ const devices: DeviceEntry[] = [
 		defaultValue: (_input: MigrationStepInputFilteredResult, context: MigrationContextStudio) => {
 			const mainDev = context.getDevice('caspar01')
 			if (mainDev && mainDev.options) {
-				const mainOpts = mainDev.options as any
+				const mainOpts = mainDev.options as CasparCGOptions
 				if (mainOpts.launcherHost) {
 					return {
 						type: PlayoutDeviceType.HTTPWATCHER,
