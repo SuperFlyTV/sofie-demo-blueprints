@@ -1,6 +1,6 @@
 import { ShowStyleBlueprintManifest, BlueprintManifestType } from 'tv-automation-sofie-blueprints-integration'
-import { StudioConfigManifest, ShowStyleConfigManifest } from './config-manifests'
-import { studioMigrations, showStyleMigrations } from './migrations'
+import { ShowStyleConfigManifest } from './config-manifests'
+import { showStyleMigrations } from './migrations'
 
 import { getRundown, getShowStyleVariantId } from './getRundown'
 import { getSegment } from './getSegment'
@@ -17,7 +17,7 @@ const manifest: ShowStyleBlueprintManifest = {
 	integrationVersion: VERSION_INTEGRATION,
 	TSRVersion: VERSION_TSR,
 
-	minimumCoreVersion: '1.0.0',
+	minimumCoreVersion: '^1.0.0',
 
 	getShowStyleVariantId: getShowStyleVariantId,
 	getRundown: getRundown,
@@ -25,9 +25,7 @@ const manifest: ShowStyleBlueprintManifest = {
 
 	onAsRunEvent: onAsRunEvent,
 
-	studioConfigManifest: StudioConfigManifest,
 	showStyleConfigManifest: ShowStyleConfigManifest,
-	studioMigrations: studioMigrations,
 	showStyleMigrations: showStyleMigrations
 }
 

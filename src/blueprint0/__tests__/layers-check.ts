@@ -32,7 +32,7 @@ export function checkAllLayers (context: ShowStyleContext, pieces: IBlueprintPie
 
 	const config = parseConfig(context)
 
-	const allSourceLayers = _.values(SourceLayer)
+	const allSourceLayers = _.values(SourceLayer) as string[]
 	const allOutputLayers = _.map(OutputlayerDefaults, m => m._id)
 
 	const allMappings = {

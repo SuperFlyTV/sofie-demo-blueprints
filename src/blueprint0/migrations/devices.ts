@@ -3,13 +3,19 @@ import {
 	MigrationContextStudio, MigrationStepInputFilteredResult, MigrationStepStudio, MigrationStepInput
 } from 'tv-automation-sofie-blueprints-integration'
 import {
-	DeviceType as PlayoutDeviceType,
-	DeviceOptions as PlayoutDeviceOptions
+	DeviceType as PlayoutDeviceType, CasparCGOptions
+	// DeviceOptions as PlayoutDeviceOptions
 } from 'timeline-state-resolver-types'
 import { literal } from '../../common/util'
 
 declare const VERSION: string // Injected by webpack
 
+interface PlayoutDeviceOptions {
+	type: number
+	options: {
+		[index: string]: any
+	}
+}
 interface DeviceEntry {
 	id: string
 	firstVersion: string
@@ -27,12 +33,13 @@ function validateDevice (spec: DeviceEntry): MigrationStepStudio {
 		version: VERSION,
 		canBeRunAutomatically: false,
 		validate: (context: MigrationContextStudio) => {
-			const dev = context.getDevice(spec.id)
+			const dev = context.getDevice(spec.id) // Device Default Value ( PlayoutDeviceOptions ) is a device's context
 			if (!dev) return false
 			if (dev.type !== spec.type) return `Type is not "${PlayoutDeviceType[spec.type]}"`
 
 			if (spec.validate) {
-				return spec.validate(dev)
+				return spec.validate(dev) // We check our Device from Context.
+				// Confirms properties needed to connect to device
 			}
 
 			return false
@@ -122,7 +129,7 @@ const devices: DeviceEntry[] = [
 		defaultValue: (_input: MigrationStepInputFilteredResult, context: MigrationContextStudio) => {
 			const mainDev = context.getDevice('caspar01')
 			if (mainDev && mainDev.options) {
-				const mainOpts = mainDev.options as any
+				const mainOpts = mainDev.options as CasparCGOptions
 				if (mainOpts.launcherHost) {
 					return {
 						type: PlayoutDeviceType.HTTPWATCHER,
@@ -157,7 +164,7 @@ const devices: DeviceEntry[] = [
 		defaultValue: (_input: MigrationStepInputFilteredResult, context: MigrationContextStudio) => {
 			const mainDev = context.getDevice('caspar01')
 			if (mainDev && mainDev.options) {
-				const mainOpts = mainDev.options as any
+				const mainOpts = mainDev.options as CasparCGOptions
 				if (mainOpts.launcherHost) {
 					return {
 						type: PlayoutDeviceType.HTTPWATCHER,

@@ -3,6 +3,7 @@ import * as _ from 'underscore'
 import MappingsDefaults from '../migrations/mappings-defaults'
 import { RealLLayers, SourceLayer } from '../../types/layers'
 import SourcelayerDefaults from '../migrations/sourcelayer-defaults'
+import { ISourceLayer } from 'tv-automation-sofie-blueprints-integration'
 
 describe('Migration Defaults', () => {
 	test('MappingsDefaults', () => {
@@ -18,7 +19,7 @@ describe('Migration Defaults', () => {
 	})
 
 	test('SourcelayerDefaults', () => {
-		const defaultsIds = _.map(SourcelayerDefaults, (v) => v._id).sort()
+		const defaultsIds = _.map(SourcelayerDefaults, (v: ISourceLayer) => v._id).sort()
 		const layerIds = _.values(SourceLayer).sort()
 
 		expect(defaultsIds).toEqual(layerIds)

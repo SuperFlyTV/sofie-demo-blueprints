@@ -2,6 +2,8 @@ import { StudioBlueprintManifest, BlueprintManifestType } from 'tv-automation-so
 import * as _ from 'underscore'
 import { getBaseline } from './getBaseline'
 import { getShowStyleId } from './getShowStyleId'
+import { StudioConfigManifest } from '../blueprint0/config-manifests'
+import { studioMigrations } from '../blueprint0/migrations'
 
 declare const VERSION: string // Injected by webpack
 declare const VERSION_TSR: string // Injected by webpack
@@ -14,13 +16,13 @@ const manifest: StudioBlueprintManifest = {
 	integrationVersion: VERSION_INTEGRATION,
 	TSRVersion: VERSION_TSR,
 
-	minimumCoreVersion: '1.0.0',
-
-	studioConfigManifest: [], // TODO - some config should be moved here
-	studioMigrations: [], // TODO - device migrations should be moved to be done here
+	minimumCoreVersion: '^1.0.0',
 
 	getBaseline: getBaseline,
-	getShowStyleId: getShowStyleId
+	getShowStyleId: getShowStyleId,
+
+	studioConfigManifest: StudioConfigManifest,
+	studioMigrations: studioMigrations
 }
 
 export default manifest

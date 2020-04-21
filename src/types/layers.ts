@@ -19,7 +19,7 @@ export type LLayer = VirtualAbstractLLayer | AtemLLayer | CasparLLayer
 
 /** Get all the Real LLayers (map to devices). Note: Does not include some which are dynamically generated */
 export function RealLLayers () {
-	return _.values(AtemLLayer)
+	return _.values<string>(AtemLLayer)
 		.concat(_.values(CasparLLayer))
 		.concat(_.values(LawoLLayer))
 }
