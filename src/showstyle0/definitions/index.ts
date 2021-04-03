@@ -1,8 +1,8 @@
-import { ITranslatableMessage } from '@sofie-automation/blueprints-integration';
-import { SomeObject } from '../../common/definitions/objects';
-import { ClipProps } from '../helpers/clips';
-import { DVELayouts } from '../helpers/dve';
-import { RawSourceInfo } from '../helpers/sources';
+import { ITranslatableMessage } from '@sofie-automation/blueprints-integration'
+import { SomeObject } from '../../common/definitions/objects'
+import { ClipProps } from '../helpers/clips'
+import { DVELayouts } from '../helpers/dve'
+import { RawSourceInfo } from '../helpers/sources'
 import { IntermediatePart, IntermediateSegment } from './intermediate'
 
 export enum SegmentType {
@@ -18,7 +18,7 @@ export enum PartType {
 	VT = 'vt',
 	VO = 'vo',
 	Titles = 'titles',
-	DVE = 'dve'
+	DVE = 'dve',
 }
 
 export enum PartInfo {
