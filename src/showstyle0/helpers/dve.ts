@@ -1,49 +1,55 @@
-import { SourceLayerType, SplitsContent, SplitsContentBoxContent, SplitsContentBoxProperties, TSR } from "@sofie-automation/blueprints-integration"
-import { AtemSourceType, StudioConfig } from "../../studio0/helpers/config"
-import { literal } from "../../common/util"
-import { DVEProps } from "../definitions"
-import { getClipPlayerInput } from "./clips"
-import { getSourceInfoFromRaw } from "./sources"
+import {
+	SourceLayerType,
+	SplitsContent,
+	SplitsContentBoxContent,
+	SplitsContentBoxProperties,
+	TSR,
+} from '@sofie-automation/blueprints-integration'
+import { literal } from '../../common/util'
+import { AtemSourceType, StudioConfig } from '../../studio0/helpers/config'
+import { DVEProps } from '../definitions'
+import { getClipPlayerInput } from './clips'
+import { getSourceInfoFromRaw } from './sources'
 
 export type DVELayout = TSR.SuperSourceBox[]
 
 export enum DVELayouts {
-    TwoBox
+	TwoBox,
 }
 
 export const DVEDesigns: Record<DVELayouts, DVELayout> = {
-    [DVELayouts.TwoBox]: [ 
-        {
-            enabled: true,
-            source: 0,
-            size: 580,
-            x: -800,
-            y: 50,
-            cropped: true,
-            cropLeft: 0,
-            cropTop: 0,
-            cropRight: 2000,
-            cropBottom: 0,
-        },
-        {
-            enabled: true,
-            source: 0,
-            size: 580,
-            x: 800,
-            y: 50,
-            // note: this sits behind box1, so don't crop it to ensure there is no gap between
-        },
-        {
-            enabled: false,
-        },
-        {
-            enabled: false,
-        },
-    ]
+	[DVELayouts.TwoBox]: [
+		{
+			enabled: true,
+			source: 0,
+			size: 580,
+			x: -800,
+			y: 50,
+			cropped: true,
+			cropLeft: 0,
+			cropTop: 0,
+			cropRight: 2000,
+			cropBottom: 0,
+		},
+		{
+			enabled: true,
+			source: 0,
+			size: 580,
+			x: 800,
+			y: 50,
+			// note: this sits behind box1, so don't crop it to ensure there is no gap between
+		},
+		{
+			enabled: false,
+		},
+		{
+			enabled: false,
+		},
+	],
 }
 
 export function dveLayoutToContent(
-    config: StudioConfig,
+	config: StudioConfig,
 	ssrcLayout: TSR.TimelineObjAtemSsrc['content']['ssrc'],
 	allBoxes: DVEProps['inputs']
 ): Pick<SplitsContent, 'boxSourceConfiguration'> {
@@ -69,8 +75,14 @@ export function dveLayoutToContent(
 
 		return literal<SplitsContentBoxContent & SplitsContentBoxProperties>({
 			studioLabel: 'fileName' in info ? info.fileName : `${info.type} ${info.id + 1}`,
-			switcherInput: 'fileName' in info ? getClipPlayerInput(config)?.input || 0 : getSourceInfoFromRaw(config, info).input,
-			type: 'fileName' in info ? SourceLayerType.VT : info.type === AtemSourceType.Remote ? SourceLayerType.REMOTE : SourceLayerType.CAMERA,
+			switcherInput:
+				'fileName' in info ? getClipPlayerInput(config)?.input || 0 : getSourceInfoFromRaw(config, info).input,
+			type:
+				'fileName' in info
+					? SourceLayerType.VT
+					: info.type === AtemSourceType.Remote
+					? SourceLayerType.REMOTE
+					: SourceLayerType.CAMERA,
 			geometry,
 		})
 	}

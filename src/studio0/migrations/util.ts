@@ -50,12 +50,14 @@ export function getMappingsDefaultsMigrationSteps(versionStr: string): Migration
 		})
 	)
 
-
 	const getAuxMappings = (context: MigrationContextStudio): BlueprintMappings => {
 		const auxes = getConfigOrDefault(context, 'atemOutputs')
 
 		if (auxes) {
-			const auxNumber = (auxes as unknown as StudioConfig['atemOutputs']).map(aux => aux.output).sort().reverse()[0]
+			const auxNumber = ((auxes as unknown) as StudioConfig['atemOutputs'])
+				.map((aux) => aux.output)
+				.sort()
+				.reverse()[0]
 			return getAllAuxMappings(auxNumber || 0)
 		}
 

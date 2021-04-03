@@ -1,6 +1,6 @@
-import { IBlueprintPiece, PieceLifespan, ScriptContent, WithTimeline } from "@sofie-automation/blueprints-integration";
-import { literal } from "../../common/util";
-import { getOutputLayerForSourceLayer, SourceLayer } from "../layers";
+import { IBlueprintPiece, PieceLifespan, ScriptContent, WithTimeline } from '@sofie-automation/blueprints-integration'
+import { literal } from '../../common/util'
+import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
 
 function getFirstWords(input: string): string {
 	const firstWordsMatch = (input + '').match(/^([\S]*[^\n]){1,3}/)
@@ -20,16 +20,15 @@ function getLastWords(input: string): string {
 	}
 }
 
-export function createScriptPiece (script: string, extId: string): IBlueprintPiece | undefined {
+export function createScriptPiece(script: string, extId: string): IBlueprintPiece | undefined {
 	if (script.trim() === '') return undefined
 
-    const firstWords = getFirstWords(script)
-    const lastWords = getLastWords(script)
+	const firstWords = getFirstWords(script)
+	const lastWords = getLastWords(script)
 
-    return {
+	return {
 		externalId: extId,
-		name:
-			(firstWords ? firstWords + '\u2026' : '') + '||' + (lastWords ? '\u2026' + lastWords : ''),
+		name: (firstWords ? firstWords + '\u2026' : '') + '||' + (lastWords ? '\u2026' + lastWords : ''),
 		enable: { start: 0 },
 		sourceLayerId: SourceLayer.Script,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Script),

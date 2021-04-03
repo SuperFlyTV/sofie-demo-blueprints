@@ -99,7 +99,7 @@ const devices: DeviceEntry[] = [
 
 			return false
 		},
-	}
+	},
 ]
 
 export const deviceMigrations = literal<MigrationStepStudio[]>([

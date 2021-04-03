@@ -29,7 +29,8 @@ export function getRundown(
 		baseline: [],
 	}
 
-	if (ingestRundown.payload) { // TODO - maybe guard against unknown types of rundowns?
+	if (ingestRundown.payload) {
+		// TODO - maybe guard against unknown types of rundowns?
 		const payload: SpreadsheetIngestRundown = ingestRundown.payload
 
 		res.rundown.expectedStart = payload.expectedStart

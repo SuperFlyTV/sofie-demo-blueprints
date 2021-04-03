@@ -3,16 +3,16 @@ import { t } from '../../common/util'
 import { SpreadsheetIngestPart, SpreadsheetIngestSegment } from '../../copy/spreadsheet-gateway'
 import { AllProps, PartProps, SegmentProps, SegmentType } from '../definitions'
 import { parseCamera } from './camera'
+import { parseDVE } from './dve'
 import { createInvalidProps } from './invalid'
-import { parseOpener } from './titles'
 import { parseRemote } from './remote'
+import { parseOpener } from './titles'
 import { parseVO } from './vo'
 import { parseVT } from './vt'
-import { parseDVE } from './dve'
 
 /**
  * This function converts from raw ingest segments to parsed segments
- * @param context 
+ * @param context
  * @param ingestSegment The segment from the spreadsheet-gateway
  * @returns Intermediate data type used to generate parts
  */
@@ -25,7 +25,7 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: I
 
 		if (payload.name.match(/intro/i)) type = SegmentType.OPENING
 
-		ingestSegment.parts.forEach(part => {
+		ingestSegment.parts.forEach((part) => {
 			const partPayload: SpreadsheetIngestPart = part.payload
 
 			if (partPayload.type.match(/cam/i)) {
@@ -43,15 +43,14 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: I
 			} else {
 				parts.push(createInvalidProps(t('Unknown part type'), partPayload))
 			}
-
 		})
 	} else {
 		context.logError('Missing segment payload')
 	}
 
 	// parse the objects
-	parts.forEach(p => {
-		p.objects.forEach(obj => {
+	parts.forEach((p) => {
+		p.objects.forEach((obj) => {
 			obj.isAdlib = (obj.attributes as any).adlib === 'true'
 		})
 	})
@@ -60,7 +59,7 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: I
 		type,
 		parts,
 		payload: {
-			name: ingestSegment.name
+			name: ingestSegment.name,
 		},
 	}
 }
