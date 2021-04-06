@@ -6,6 +6,8 @@ export enum SourceLayer {
 	VO = 'vo',
 	DVE = 'dve',
 
+	AudioBed = 'audioBed',
+
 	LowerThird = 'lower_third',
 	Strap = 'strap',
 	Ticker = 'ticker',
@@ -16,6 +18,7 @@ export enum SourceLayer {
 export enum OutputLayer {
 	Gfx = 'gfx',
 	Pgm = 'pgm',
+	Aux = 'aux',
 	Script = 'script',
 }
 
@@ -27,6 +30,8 @@ export function getOutputLayerForSourceLayer(layer: SourceLayer): OutputLayer {
 		case SourceLayer.Strap:
 		case SourceLayer.Ticker:
 			return OutputLayer.Gfx
+		case SourceLayer.AudioBed:
+			return OutputLayer.Aux
 		default:
 			return OutputLayer.Pgm
 	}

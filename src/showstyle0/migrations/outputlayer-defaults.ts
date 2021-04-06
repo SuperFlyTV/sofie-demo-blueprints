@@ -18,6 +18,14 @@ export default literal<IOutputLayer[]>([
 		isFlattened: true,
 	},
 	{
+		_id: OutputLayer.Aux,
+		name: 'Aux',
+		_rank: 150,
+		isPGM: false,
+		isFlattened: false,
+		isDefaultCollapsed: true,
+	},
+	{
 		_id: OutputLayer.Script,
 		name: 'Script',
 		_rank: 200,

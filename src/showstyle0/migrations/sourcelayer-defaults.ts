@@ -85,6 +85,15 @@ export default literal<ISourceLayer[]>([
 	},
 
 	{
+		_id: SourceLayer.AudioBed,
+		type: SourceLayerType.AUDIO,
+		_rank: 203,
+		name: 'Audio Bed',
+		abbreviation: 'Bed',
+		isHidden: true,
+	},
+
+	{
 		_id: SourceLayer.Script,
 		type: SourceLayerType.SCRIPT,
 		_rank: 50,

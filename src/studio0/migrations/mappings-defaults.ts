@@ -91,6 +91,14 @@ export default literal<BlueprintMappings>({
 		channel: 2,
 		layer: 112,
 	}),
+	[CasparCGLayers.CasparCGAudioBed]: literal<TSR.MappingCasparCG & BlueprintMapping>({
+		device: TSR.DeviceType.CASPARCG,
+		deviceId: 'casparcg0',
+		lookahead: LookaheadMode.NONE,
+
+		channel: 2,
+		layer: 80,
+	}),
 })
 
 export function getAllAuxMappings(total: number): BlueprintMappings {

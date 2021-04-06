@@ -24,7 +24,7 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Titles),
 
 		content: {
-			fileName: 'std/titles',
+			fileName: 'assets/Sofie News Opener',
 
 			timelineObjects: [
 				...createAtemInputTimelineObjects(atemInput?.input || 0),
@@ -45,7 +45,46 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 		},
 	}
 
-	const pieces = [cameraPiece]
+	const audioBedPiece = literal<IBlueprintPiece>({
+		enable: {
+			start: 0,
+		},
+		externalId: part.payload.externalId,
+		name: `Audiobed`,
+		lifespan: PieceLifespan.OutOnSegmentEnd,
+		sourceLayerId: SourceLayer.AudioBed,
+		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.AudioBed),
+
+		content: {
+			fileName: 'assets/Sofie News Opener Audio Bed',
+
+			timelineObjects: [
+				...createAtemInputTimelineObjects(atemInput?.input || 0),
+
+				// clip
+				literal<TSR.TimelineObjCCGMedia>({
+					id: '',
+					enable: { start: 0 },
+					layer: CasparCGLayers.CasparCGAudioBed,
+					content: {
+						deviceType: TSR.DeviceType.CASPARCG,
+						type: TSR.TimelineContentTypeCasparCg.MEDIA,
+
+						file: 'assets/Sofie News Opener Audio Bed',
+
+						transitions: {
+							outTransition: {
+								type: TSR.Transition.MIX,
+								duration: 750
+							}
+						}
+					},
+				}),
+			],
+		},
+	})
+
+	const pieces = [cameraPiece, audioBedPiece]
 	const scriptPiece = createScriptPiece(part.payload.script, part.payload.externalId)
 	if (scriptPiece) pieces.push(scriptPiece)
 
