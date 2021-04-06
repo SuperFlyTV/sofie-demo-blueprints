@@ -6,6 +6,7 @@ import {
 } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../common/util'
 import { SpreadsheetIngestRundown } from '../../copy/spreadsheet-gateway'
+import { getBaseline } from './baseline'
 import { getGlobalAdlibs } from './globalAdlibs'
 
 export function getRundown(
@@ -26,7 +27,7 @@ export function getRundown(
 		rundown,
 		globalAdLibPieces: getGlobalAdlibs(context),
 		globalActions: [],
-		baseline: [],
+		baseline: getBaseline(context),
 	}
 
 	if (ingestRundown.payload) {
