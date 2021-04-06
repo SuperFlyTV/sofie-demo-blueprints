@@ -1,11 +1,12 @@
 import { IShowStyleUserContext, TSR } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../common/util'
-import { StudioConfig } from '../../studio0/helpers/config'
+import { AtemSourceType, StudioConfig } from '../../studio0/helpers/config'
 import { AtemLayers } from '../../studio0/layers'
 import { DVEDesigns, DVELayouts } from '../helpers/dve'
 
 export function getBaseline(context: IShowStyleUserContext): TSR.TSRTimelineObj[] {
-	const config = context.getShowStyleConfig() as StudioConfig
+	const config = context.getStudioConfig() as StudioConfig
+	const dskInput = config.atemSources.find(source => source.type === AtemSourceType.Graphics)
 
 	return [
 		literal<TSR.TimelineObjAtemSsrcProps>({
@@ -38,6 +39,28 @@ export function getBaseline(context: IShowStyleUserContext): TSR.TSRTimelineObj[
 				ssrc: {
 					boxes: [...DVEDesigns[DVELayouts.TwoBox]],
 				},
+			},
+		}),
+
+		literal<TSR.TimelineObjAtemDSK>({
+			id: '',
+			enable: { while: 1 },
+			priority: 0,
+			layer: AtemLayers.AtemDskGraphics,
+			content: {
+				deviceType: TSR.DeviceType.ATEM,
+				type: TSR.TimelineContentTypeAtem.DSK,
+
+				dsk: {
+					onAir: true,
+					sources: {
+						fillSource: dskInput?.input || 0,
+						cutSource: dskInput ? dskInput.input + 1 : 0,
+					},
+					properties: {
+						preMultiply: true
+					}
+				}
 			},
 		}),
 
