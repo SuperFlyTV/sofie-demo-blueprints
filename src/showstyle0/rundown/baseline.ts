@@ -1,7 +1,7 @@
 import { IShowStyleUserContext, TSR } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../common/util'
 import { AtemSourceType, StudioConfig } from '../../studio0/helpers/config'
-import { AtemLayers } from '../../studio0/layers'
+import { AtemLayers, CasparCGLayers } from '../../studio0/layers'
 import { DVEDesigns, DVELayouts } from '../helpers/dve'
 
 export function getBaseline(context: IShowStyleUserContext): TSR.TSRTimelineObj[] {
@@ -80,5 +80,19 @@ export function getBaseline(context: IShowStyleUserContext): TSR.TSRTimelineObj[
 				},
 			})
 		),
+
+		literal<TSR.TimelineObjCCGRoute>({
+			id: '',
+			enable: { while: 1 },
+			priority: 0,
+			layer: CasparCGLayers.CasparCGClipPlayerPreview,
+			content: {
+				deviceType: TSR.DeviceType.CASPARCG,
+				type: TSR.TimelineContentTypeCasparCg.ROUTE,
+
+				mappedLayer: CasparCGLayers.CasparCGClipPlayer,
+				mode: 'BACKGROUND'
+			},
+		}),
 	]
 }

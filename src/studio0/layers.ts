@@ -8,6 +8,7 @@ export enum AtemLayers {
 
 export enum CasparCGLayers {
 	CasparCGClipPlayer = 'casparcg_clip_player',
+	CasparCGClipPlayerPreview = 'casparcg_clip_player_preview',
 	CasparCGEffectsPlayer = 'casparcg_effects_player',
 
 	CasparCGGraphicsLowerThird = 'casparcg_graphics_l3d',

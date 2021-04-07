@@ -58,6 +58,14 @@ export default literal<BlueprintMappings>({
 		channel: 1,
 		layer: 110,
 	}),
+	[CasparCGLayers.CasparCGClipPlayerPreview]: literal<TSR.MappingCasparCG & BlueprintMapping>({
+		device: TSR.DeviceType.CASPARCG,
+		deviceId: 'casparcg0',
+		lookahead: LookaheadMode.NONE,
+
+		channel: 1,
+		layer: 100,
+	}),
 
 	[CasparCGLayers.CasparCGEffectsPlayer]: literal<TSR.MappingCasparCG & BlueprintMapping>({
 		device: TSR.DeviceType.CASPARCG,
