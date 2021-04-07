@@ -60,6 +60,15 @@ export default literal<ISourceLayer[]>([
 		exclusiveGroup: 'pgm',
 		onPresenterScreen: true,
 	},
+	{
+		_id: SourceLayer.GFX,
+		type: SourceLayerType.GRAPHICS,
+		_rank: 100,
+		name: 'GFX',
+		abbreviation: 'GFX',
+		exclusiveGroup: 'pgm',
+		onPresenterScreen: true,
+	},
 
 	{
 		_id: SourceLayer.LowerThird,

@@ -3,6 +3,7 @@ import { GraphicObject, ObjectType, SomeObject } from '../../common/definitions/
 import { literal } from '../../common/util'
 import { CasparCGLayers } from '../../studio0/layers'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
+import { createAtemInputTimelineObjects } from './atem'
 
 export interface GraphicsResult {
 	pieces: IBlueprintPiece[]
@@ -14,6 +15,8 @@ function getGraphicSourceLayer(object: GraphicObject): SourceLayer {
 		return SourceLayer.Ticker
 	} else if (object.clipName.match(/strap/i)) {
 		return SourceLayer.Strap
+	} else if (object.clipName.match(/fullscreen/i)) {
+		return SourceLayer.GFX
 	} else {
 		return SourceLayer.LowerThird
 	}
@@ -23,12 +26,14 @@ function getGraphicTlLayer(object: GraphicObject): CasparCGLayers {
 		return CasparCGLayers.CasparCGGraphicsTicker
 	} else if (object.clipName.match(/strap/i)) {
 		return CasparCGLayers.CasparCGGraphicsStrap
+	} else if (object.clipName.match(/fullscreen/i)) {
+		return CasparCGLayers.CasparCGClipPlayer
 	} else {
 		return CasparCGLayers.CasparCGGraphicsLowerThird
 	}
 }
 
-function getGraphicTlObject(object: GraphicObject): TSR.TSRTimelineObj[] {
+function getGraphicTlObject(object: GraphicObject, fullscreenAtemInput?: number): TSR.TSRTimelineObj[] {
 	return [
 		literal<TSR.TimelineObjCCGTemplate>({
 			id: '',
@@ -48,9 +53,10 @@ function getGraphicTlObject(object: GraphicObject): TSR.TSRTimelineObj[] {
 				useStopCommand: true,
 			},
 		}),
+		...(object.clipName.match(/fullscreen/i) ? createAtemInputTimelineObjects(fullscreenAtemInput || 0) : []),
 	]
 }
-function parseGraphic(object: GraphicObject): IBlueprintPiece {
+function parseGraphic(object: GraphicObject, fullscreenAtemInput?: number): IBlueprintPiece {
 	const sourceLayer = getGraphicSourceLayer(object)
 
 	return {
@@ -60,7 +66,7 @@ function parseGraphic(object: GraphicObject): IBlueprintPiece {
 		sourceLayerId: sourceLayer,
 		outputLayerId: getOutputLayerForSourceLayer(sourceLayer),
 		content: {
-			timelineObjects: getGraphicTlObject(object),
+			timelineObjects: getGraphicTlObject(object, fullscreenAtemInput),
 		},
 		enable: {
 			start: object.objectTime,
@@ -68,7 +74,7 @@ function parseGraphic(object: GraphicObject): IBlueprintPiece {
 		},
 	}
 }
-function parseAdlibGraphic(object: GraphicObject, index: number): IBlueprintAdLibPiece {
+function parseAdlibGraphic(object: GraphicObject, index: number, fullscreenAtemInput?: number): IBlueprintAdLibPiece {
 	return {
 		externalId: object.id,
 		name: `${object.clipName} | ${object.attributes.name}`, // todo - add info
@@ -76,18 +82,18 @@ function parseAdlibGraphic(object: GraphicObject, index: number): IBlueprintAdLi
 		sourceLayerId: SourceLayer.LowerThird,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.LowerThird),
 		content: {
-			timelineObjects: getGraphicTlObject(object),
+			timelineObjects: getGraphicTlObject(object, fullscreenAtemInput),
 		},
 		_rank: index, // todo - probably some offset for ordering
 		expectedDuration: object.duration,
 	}
 }
 
-export function parseGraphicsFromObjects(objects: SomeObject[]): GraphicsResult {
+export function parseGraphicsFromObjects(objects: SomeObject[], fullscreenAtemInput?: number): GraphicsResult {
 	const graphicsObjects = objects.filter((o): o is GraphicObject => o.objectType === ObjectType.Graphic)
 
 	return {
-		pieces: graphicsObjects.filter((o) => !o.isAdlib).map((o) => parseGraphic(o)),
-		adLibPieces: graphicsObjects.filter((o) => !!o.isAdlib).map((o, i) => parseAdlibGraphic(o, i)),
+		pieces: graphicsObjects.filter((o) => !o.isAdlib).map((o) => parseGraphic(o, fullscreenAtemInput)),
+		adLibPieces: graphicsObjects.filter((o) => !!o.isAdlib).map((o, i) => parseAdlibGraphic(o, i, fullscreenAtemInput)),
 	}
 }

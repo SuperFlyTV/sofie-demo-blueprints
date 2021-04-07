@@ -5,6 +5,7 @@ export enum SourceLayer {
 	VT = 'vt',
 	VO = 'vo',
 	DVE = 'dve',
+	GFX = 'gfx',
 
 	AudioBed = 'audioBed',
 

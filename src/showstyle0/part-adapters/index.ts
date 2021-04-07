@@ -8,6 +8,7 @@ import { t } from '../../common/util'
 import {
 	CameraProps,
 	DVEProps,
+	GfxProps,
 	InvalidProps,
 	PartProps,
 	PartType,
@@ -18,6 +19,7 @@ import {
 } from '../definitions'
 import { generateCameraPart } from './camera'
 import { generateDVEPart } from './dve'
+import { generateGfxPart } from './gfx'
 import { generateRemotePart } from './remote'
 import { generateOpenerPart as generateTitlesPart } from './titles'
 import { generateVOPart } from './vo'
@@ -41,6 +43,8 @@ export function generateParts(context: IRundownUserContext, intermediateSegment:
 					return generateTitlesPart(partContext, (rawPart as unknown) as PartProps<TitlesProps>)
 				case PartType.DVE:
 					return generateDVEPart(partContext, (rawPart as unknown) as PartProps<DVEProps>)
+				case PartType.GFX:
+					return generateGfxPart(partContext, (rawPart as unknown) as PartProps<GfxProps>)
 				case PartType.Invalid:
 					return {
 						part: {

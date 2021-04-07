@@ -19,7 +19,7 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 			start: 0,
 		},
 		externalId: part.payload.externalId,
-		name: `${part.payload.clipProps.fileName || 'Missing file name'}`,
+		name: `${part.payload.clipProps?.fileName || 'Missing file name'}`,
 		lifespan: PieceLifespan.WithinPart,
 		sourceLayerId: SourceLayer.VT,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.VT),
