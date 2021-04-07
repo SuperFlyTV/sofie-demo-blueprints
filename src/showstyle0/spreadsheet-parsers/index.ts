@@ -4,6 +4,7 @@ import { SpreadsheetIngestPart, SpreadsheetIngestSegment } from '../../copy/spre
 import { AllProps, PartProps, SegmentProps, SegmentType } from '../definitions'
 import { parseCamera } from './camera'
 import { parseDVE } from './dve'
+import { parseGfx } from './gfx'
 import { createInvalidProps } from './invalid'
 import { parseRemote } from './remote'
 import { parseOpener } from './titles'
@@ -40,6 +41,8 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: I
 				parts.push(parseOpener(partPayload))
 			} else if (partPayload.type.match(/dve/i)) {
 				parts.push(parseDVE(partPayload))
+			} else if (partPayload.type.match(/gfx/i)) {
+				parts.push(parseGfx(partPayload))
 			} else {
 				parts.push(createInvalidProps(t('Unknown part type'), partPayload))
 			}

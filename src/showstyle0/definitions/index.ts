@@ -1,5 +1,5 @@
 import { ITranslatableMessage } from '@sofie-automation/blueprints-integration'
-import { SomeObject } from '../../common/definitions/objects'
+import { GraphicObject, SomeObject } from '../../common/definitions/objects'
 import { ClipProps } from '../helpers/clips'
 import { DVELayouts } from '../helpers/dve'
 import { RawSourceInfo } from '../helpers/sources'
@@ -19,13 +19,14 @@ export enum PartType {
 	VO = 'vo',
 	Titles = 'titles',
 	DVE = 'dve',
+	GFX = 'gfx',
 }
 
 export enum PartInfo {
 	NORMAL = 0,
 }
 
-export type AllProps = CameraProps | RemoteProps | VTProps | VOProps | TitlesProps | DVEProps | InvalidProps
+export type AllProps = CameraProps | RemoteProps | VTProps | VOProps | TitlesProps | DVEProps | GfxProps | InvalidProps
 
 export interface PartProps<T extends AllProps> extends IntermediatePart {
 	type: PartType | null
@@ -74,6 +75,10 @@ export interface VOProps extends PartBaseProps {
 export interface DVEProps extends PartBaseProps {
 	layout: DVELayouts
 	inputs: Array<RawSourceInfo | ClipProps>
+}
+
+export interface GfxProps extends PartBaseProps {
+	graphic: GraphicObject
 }
 
 export interface InvalidProps extends PartBaseProps {
