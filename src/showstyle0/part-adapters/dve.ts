@@ -12,6 +12,8 @@ import { createScriptPiece } from '../helpers/script'
 import { getSourceInfoFromRaw } from '../helpers/sources'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
 
+const SUPER_SOURCE_LATENCY = 80
+
 export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>): BlueprintResultPart {
 	const config = context.getStudioConfig() as StudioConfig
 	// const sourceInfo = getSourceInfoFromRaw(config, part.payload.input1)
@@ -43,7 +45,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 			...dveLayoutToContent(config, { boxes }, part.payload.inputs),
 
 			timelineObjects: [
-				...createAtemInputTimelineObjects(6000),
+				...createAtemInputTimelineObjects(6000, SUPER_SOURCE_LATENCY),
 
 				literal<TSR.TimelineObjAtemSsrcProps>({
 					id: '',
