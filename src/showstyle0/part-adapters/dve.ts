@@ -56,7 +56,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 						ssrcProps: {
 							artFillSource: 3010, // atem mediaplayer1
 							artCutSource: 3011,
-							artOption: 1,
+							artOption: 0, // bg
 							artPreMultiplied: true,
 							borderEnabled: false,
 						},
@@ -85,7 +85,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 	const scriptPiece = createScriptPiece(part.payload.script, part.payload.externalId)
 	if (scriptPiece) pieces.push(scriptPiece)
 
-	const graphics = parseGraphicsFromObjects(part.objects)
+	const graphics = parseGraphicsFromObjects(config, part.objects)
 	if (graphics.pieces) pieces.push(...graphics.pieces)
 
 	return {

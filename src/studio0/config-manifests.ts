@@ -59,4 +59,12 @@ export const studioConfigManifest: ConfigManifestEntry[] = [
 			},
 		],
 	},
+	{
+		id: 'previewRenderer',
+		name: 'Preview Renderer',
+		description: 'Graphics preview renderer URL',
+		type: ConfigManifestEntryType.STRING,
+		required: false,
+		defaultVal: ''
+	}
 ]

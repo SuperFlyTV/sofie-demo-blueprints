@@ -2,15 +2,13 @@ import { BlueprintResultPart } from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../common/context'
 import { StudioConfig } from '../../studio0/helpers/config'
 import { GfxProps, PartProps } from '../definitions'
-import { getClipPlayerInput } from '../helpers/clips'
 import { parseGraphicsFromObjects } from '../helpers/graphics'
 import { createScriptPiece } from '../helpers/script'
 
 export function generateGfxPart(context: PartContext, part: PartProps<GfxProps>): BlueprintResultPart {
 	const config = context.getStudioConfig() as StudioConfig
-	const atemInput = getClipPlayerInput(config)
 
-	const graphic = parseGraphicsFromObjects([part.payload.graphic], atemInput?.input)
+	const graphic = parseGraphicsFromObjects(config, [part.payload.graphic])
 	if (!graphic.pieces[0]) context.notifyUserError('Missing fullscreen graphic')
 
 	const fullscreenPiece = graphic.pieces[0]
@@ -19,7 +17,7 @@ export function generateGfxPart(context: PartContext, part: PartProps<GfxProps>)
 	const scriptPiece = createScriptPiece(part.payload.script, part.payload.externalId)
 	if (scriptPiece) pieces.push(scriptPiece)
 
-	const graphics = parseGraphicsFromObjects(part.objects)
+	const graphics = parseGraphicsFromObjects(config, part.objects)
 	if (graphics.pieces) pieces.push(...graphics.pieces)
 
 	return {

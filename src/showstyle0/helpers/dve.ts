@@ -21,7 +21,7 @@ export const DVEDesigns: Record<DVELayouts, DVELayout> = {
 	[DVELayouts.TwoBox]: [
 		{
 			enabled: true,
-			source: 0,
+			source: 1000, // bars
 			size: 580,
 			x: -800,
 			y: 50,
@@ -33,7 +33,7 @@ export const DVEDesigns: Record<DVELayouts, DVELayout> = {
 		},
 		{
 			enabled: true,
-			source: 0,
+			source: 1000,
 			size: 580,
 			x: 800,
 			y: 50,
