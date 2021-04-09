@@ -14,4 +14,5 @@ export interface StudioConfig {
 		output: number // aux number, needs a mapping
 		source: number
 	}[]
+	previewRenderer?: string
 }

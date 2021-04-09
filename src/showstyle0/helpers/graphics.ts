@@ -1,9 +1,11 @@
 import { IBlueprintAdLibPiece, IBlueprintPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
+import { StudioConfig } from '../../studio0/helpers/config'
 import { GraphicObject, ObjectType, SomeObject } from '../../common/definitions/objects'
 import { literal } from '../../common/util'
 import { CasparCGLayers } from '../../studio0/layers'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
 import { createAtemInputTimelineObjects } from './atem'
+import { getClipPlayerInput } from './clips'
 
 export interface GraphicsResult {
 	pieces: IBlueprintPiece[]
@@ -33,7 +35,9 @@ function getGraphicTlLayer(object: GraphicObject): CasparCGLayers {
 	}
 }
 
-function getGraphicTlObject(object: GraphicObject, fullscreenAtemInput?: number): TSR.TSRTimelineObj[] {
+function getGraphicTlObject(config: StudioConfig, object: GraphicObject): TSR.TSRTimelineObj[] {
+	const fullscreenAtemInput = getClipPlayerInput(config)
+
 	return [
 		literal<TSR.TimelineObjCCGTemplate>({
 			id: '',
@@ -53,20 +57,34 @@ function getGraphicTlObject(object: GraphicObject, fullscreenAtemInput?: number)
 				useStopCommand: true,
 			},
 		}),
-		...(object.clipName.match(/fullscreen/i) ? createAtemInputTimelineObjects(fullscreenAtemInput || 0) : []),
+		...(object.clipName.match(/fullscreen/i) ? createAtemInputTimelineObjects(fullscreenAtemInput?.input || 0) : []),
 	]
 }
-function parseGraphic(object: GraphicObject, fullscreenAtemInput?: number): IBlueprintPiece {
+function parseGraphic(config: StudioConfig, object: GraphicObject): IBlueprintPiece {
 	const sourceLayer = getGraphicSourceLayer(object)
 
 	return {
 		externalId: object.id,
-		name: `${object.clipName} | ${object.attributes.name}`, // todo - add info
+		name: `${object.clipName} | ${Object.values(object.attributes).filter(v => (v !== 'true' && v !== 'false')).join(', ')}`, // todo - add info
 		lifespan: sourceLayer === SourceLayer.Ticker ? PieceLifespan.OutOnRundownEnd : PieceLifespan.WithinPart, // todo - infinite modes
 		sourceLayerId: sourceLayer,
 		outputLayerId: getOutputLayerForSourceLayer(sourceLayer),
 		content: {
-			timelineObjects: getGraphicTlObject(object, fullscreenAtemInput),
+			timelineObjects: getGraphicTlObject(config, object),
+
+			payload: {
+				content: {
+					...object.attributes,
+					adlib: undefined,
+				},
+				manifest: '',
+				template: {
+					event: '',
+					layer: '',
+					name: object.clipName,
+				}
+			},
+			previewRenderer: config.previewRenderer
 		},
 		enable: {
 			start: object.objectTime,
@@ -74,26 +92,39 @@ function parseGraphic(object: GraphicObject, fullscreenAtemInput?: number): IBlu
 		},
 	}
 }
-function parseAdlibGraphic(object: GraphicObject, index: number, fullscreenAtemInput?: number): IBlueprintAdLibPiece {
+function parseAdlibGraphic(config: StudioConfig, object: GraphicObject, index: number): IBlueprintAdLibPiece {
 	return {
 		externalId: object.id,
-		name: `${object.clipName} | ${object.attributes.name}`, // todo - add info
+		name: `${object.clipName} | ${Object.values(object.attributes).filter(v => (v !== 'true' && v !== 'false')).join(', ')}`, // todo - add info
 		lifespan: PieceLifespan.WithinPart, // todo - infinite modes
 		sourceLayerId: SourceLayer.LowerThird,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.LowerThird),
 		content: {
-			timelineObjects: getGraphicTlObject(object, fullscreenAtemInput),
+			timelineObjects: getGraphicTlObject(config, object),
+
+			payload: {
+				content: {
+					...object.attributes,
+					adlib: undefined,
+				},
+				manifest: '',
+				template: {
+					event: '',
+					layer: '',
+					name: object.clipName,
+				}
+			}
 		},
 		_rank: index, // todo - probably some offset for ordering
 		expectedDuration: object.duration,
 	}
 }
 
-export function parseGraphicsFromObjects(objects: SomeObject[], fullscreenAtemInput?: number): GraphicsResult {
+export function parseGraphicsFromObjects(config: StudioConfig, objects: SomeObject[]): GraphicsResult {
 	const graphicsObjects = objects.filter((o): o is GraphicObject => o.objectType === ObjectType.Graphic)
 
 	return {
-		pieces: graphicsObjects.filter((o) => !o.isAdlib).map((o) => parseGraphic(o, fullscreenAtemInput)),
-		adLibPieces: graphicsObjects.filter((o) => !!o.isAdlib).map((o, i) => parseAdlibGraphic(o, i, fullscreenAtemInput)),
+		pieces: graphicsObjects.filter((o) => !o.isAdlib).map((o) => parseGraphic(config, o)),
+		adLibPieces: graphicsObjects.filter((o) => !!o.isAdlib).map((o, i) => parseAdlibGraphic(config, o, i)),
 	}
 }

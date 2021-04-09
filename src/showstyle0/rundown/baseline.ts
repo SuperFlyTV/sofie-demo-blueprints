@@ -20,7 +20,7 @@ export function getBaseline(context: IShowStyleUserContext): TSR.TSRTimelineObj[
 				ssrcProps: {
 					artFillSource: 3010, // atem mediaplayer1
 					artCutSource: 3011,
-					artOption: 1,
+					artOption: 0, // bg art
 					artPreMultiplied: true,
 					borderEnabled: false,
 				},
@@ -59,7 +59,7 @@ export function getBaseline(context: IShowStyleUserContext): TSR.TSRTimelineObj[
 					},
 					properties: {
 						preMultiply: true
-					}
+					},
 				}
 			},
 		}),
