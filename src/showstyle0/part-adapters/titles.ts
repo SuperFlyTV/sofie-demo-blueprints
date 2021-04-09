@@ -72,10 +72,12 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 
 						file: 'assets/Sofie News Opener Audio Bed',
 
+						noStarttime: true,
+
 						transitions: {
 							outTransition: {
 								type: TSR.Transition.MIX,
-								duration: 750
+								duration: 1500
 							}
 						}
 					},
