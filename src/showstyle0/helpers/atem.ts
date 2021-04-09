@@ -2,11 +2,11 @@ import { TSR } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../common/util'
 import { AtemLayers } from '../../studio0/layers'
 
-export function createAtemInputTimelineObjects(input: number): TSR.TimelineObjAtemME[] {
+export function createAtemInputTimelineObjects(input: number, start = 0): TSR.TimelineObjAtemME[] {
 	return [
 		literal<TSR.TimelineObjAtemME>({
 			id: '',
-			enable: { start: 0 },
+			enable: { start: start },
 			layer: AtemLayers.AtemMeProgram,
 			content: {
 				deviceType: TSR.DeviceType.ATEM,
@@ -36,7 +36,7 @@ export function createAtemInputTimelineObjects(input: number): TSR.TimelineObjAt
 		// Add object for preview
 		literal<TSR.TimelineObjAtemME>({
 			id: '',
-			enable: { start: 0 },
+			enable: { start: start },
 			layer: AtemLayers.AtemMePreview,
 			content: {
 				deviceType: TSR.DeviceType.ATEM,

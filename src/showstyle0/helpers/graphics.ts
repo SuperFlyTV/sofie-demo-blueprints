@@ -57,7 +57,7 @@ function getGraphicTlObject(config: StudioConfig, object: GraphicObject): TSR.TS
 				useStopCommand: true,
 			},
 		}),
-		...(object.clipName.match(/fullscreen/i) ? createAtemInputTimelineObjects(fullscreenAtemInput?.input || 0) : []),
+		...(object.clipName.match(/fullscreen/i) ? createAtemInputTimelineObjects(fullscreenAtemInput?.input || 0, config.casparcgLatency) : []),
 	]
 }
 function parseGraphic(config: StudioConfig, object: GraphicObject): IBlueprintPiece {

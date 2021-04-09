@@ -66,5 +66,13 @@ export const studioConfigManifest: ConfigManifestEntry[] = [
 		type: ConfigManifestEntryType.STRING,
 		required: false,
 		defaultVal: ''
-	}
+	},
+	{
+		id: 'casparcgLatency',
+		name: 'CasparCG Latency',
+		description: 'Delay in ms before SDI signal hits the mixer',
+		type: ConfigManifestEntryType.NUMBER,
+		required: false,
+		defaultVal: 160
+	},
 ]

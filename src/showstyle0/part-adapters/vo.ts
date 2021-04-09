@@ -28,7 +28,7 @@ export function generateVOPart(context: PartContext, part: PartProps<VOProps>): 
 			fileName: part.payload.clipProps.fileName,
 
 			timelineObjects: [
-				...createAtemInputTimelineObjects(atemInput?.input || 0),
+				...createAtemInputTimelineObjects(atemInput?.input || 0, config.casparcgLatency),
 
 				literal<TSR.TimelineObjCCGMedia>({
 					id: '',

@@ -15,4 +15,5 @@ export interface StudioConfig {
 		source: number
 	}[]
 	previewRenderer?: string
+	casparcgLatency: number
 }
