@@ -8,21 +8,33 @@ const pWebpackConfig = require('../webpack.config.js') // eslint-disable-line @t
 const readFile = util.promisify(fs.readFile)
 const writeFile = util.promisify(fs.writeFile)
 
-async function writeBundle(name: string, blueprints: BlueprintManifestSet) {
+async function writeBundle(name: string, blueprints: BlueprintManifestSet): Promise<void> {
 	const manifestStr = JSON.stringify(blueprints, undefined, 4)
 	await writeFile(`dist/bundle${name ? '-' + name : ''}.json`, manifestStr)
 }
 
-;(async () => {
-	const blueprints: BlueprintManifestSet = {}
+void (async () => {
+	const blueprints: BlueprintManifestSet = {
+		blueprints: {},
+		assets: {},
+	}
 	const webpackConfig = await pWebpackConfig()
 	for (const s of Object.keys(webpackConfig.entry)) {
-		blueprints[s] = (await readFile(`dist/${s}-bundle.js`)).toString()
+		blueprints.blueprints[s] = (await readFile(`dist/${s}-bundle.js`)).toString()
 	}
 
-	writeBundle('', blueprints)
-
-	for (const id of Object.keys(BlueprintBundles)) {
-		writeBundle(id, _.pick(blueprints, ...BlueprintBundles[id]) as BlueprintManifestSet)
+	try {
+		const assets = (await readFile('dist/assets-bundle.json')).toString()
+		blueprints.assets = JSON.parse(assets) as { [index: string]: string }
+	} catch (e) {
+		console.log('Failed to bundle assets', e)
 	}
+
+	await writeBundle('', blueprints)
+
+	await Promise.all(
+		Object.keys(BlueprintBundles).map((id) =>
+			writeBundle(id, _.pick(blueprints, ...BlueprintBundles[id]) as BlueprintManifestSet)
+		)
+	)
 })()
