@@ -20,7 +20,7 @@ export function parseGfx(ingestPart: SpreadsheetIngestPart): PartProps<GfxProps 
 		payload: {
 			...parseBaseProps(ingestPart),
 
-			graphic: gfxObject
+			graphic: gfxObject,
 		},
 	}
 }

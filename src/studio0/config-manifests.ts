@@ -65,7 +65,7 @@ export const studioConfigManifest: ConfigManifestEntry[] = [
 		description: 'Graphics preview renderer URL',
 		type: ConfigManifestEntryType.STRING,
 		required: false,
-		defaultVal: ''
+		defaultVal: '',
 	},
 	{
 		id: 'casparcgLatency',
@@ -73,6 +73,6 @@ export const studioConfigManifest: ConfigManifestEntry[] = [
 		description: 'Delay in ms before SDI signal hits the mixer',
 		type: ConfigManifestEntryType.NUMBER,
 		required: false,
-		defaultVal: 160
+		defaultVal: 160,
 	},
 ]
