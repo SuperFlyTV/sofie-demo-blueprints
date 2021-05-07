@@ -61,6 +61,18 @@ module.exports = async (env) => {
 					],
 					exclude: /node_modules/,
 				},
+				{
+					test: /\.(svg|png)?$/,
+					use: [
+						{
+							loader: 'file-loader',
+							options: {
+								outputPath: 'assets',
+							},
+						},
+					],
+					exclude: /node_modules/,
+				},
 			],
 		},
 		resolve: {
