@@ -77,9 +77,9 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 						transitions: {
 							outTransition: {
 								type: TSR.Transition.MIX,
-								duration: 1500
-							}
-						}
+								duration: 1500,
+							},
+						},
 					},
 				}),
 			],

@@ -6,7 +6,7 @@ import { DVEDesigns, DVELayouts } from '../helpers/dve'
 
 export function getBaseline(context: IShowStyleUserContext): TSR.TSRTimelineObj[] {
 	const config = context.getStudioConfig() as StudioConfig
-	const dskInput = config.atemSources.find(source => source.type === AtemSourceType.Graphics)
+	const dskInput = config.atemSources.find((source) => source.type === AtemSourceType.Graphics)
 
 	return [
 		literal<TSR.TimelineObjAtemSsrcProps>({
@@ -58,9 +58,9 @@ export function getBaseline(context: IShowStyleUserContext): TSR.TSRTimelineObj[
 						cutSource: dskInput ? dskInput.input + 1 : 0,
 					},
 					properties: {
-						preMultiply: true
+						preMultiply: true,
 					},
-				}
+				},
 			},
 		}),
 
@@ -91,7 +91,7 @@ export function getBaseline(context: IShowStyleUserContext): TSR.TSRTimelineObj[
 				type: TSR.TimelineContentTypeCasparCg.ROUTE,
 
 				mappedLayer: CasparCGLayers.CasparCGClipPlayer,
-				mode: 'BACKGROUND'
+				mode: 'BACKGROUND',
 			},
 		}),
 	]

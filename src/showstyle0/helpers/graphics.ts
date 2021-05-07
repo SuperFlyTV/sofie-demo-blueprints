@@ -1,7 +1,7 @@
 import { IBlueprintAdLibPiece, IBlueprintPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
-import { StudioConfig } from '../../studio0/helpers/config'
 import { GraphicObject, ObjectType, SomeObject } from '../../common/definitions/objects'
 import { literal } from '../../common/util'
+import { StudioConfig } from '../../studio0/helpers/config'
 import { CasparCGLayers } from '../../studio0/layers'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
 import { createAtemInputTimelineObjects } from './atem'
@@ -57,7 +57,9 @@ function getGraphicTlObject(config: StudioConfig, object: GraphicObject): TSR.TS
 				useStopCommand: true,
 			},
 		}),
-		...(object.clipName.match(/fullscreen/i) ? createAtemInputTimelineObjects(fullscreenAtemInput?.input || 0, config.casparcgLatency) : []),
+		...(object.clipName.match(/fullscreen/i)
+			? createAtemInputTimelineObjects(fullscreenAtemInput?.input || 0, config.casparcgLatency)
+			: []),
 	]
 }
 function parseGraphic(config: StudioConfig, object: GraphicObject): IBlueprintPiece {
@@ -65,7 +67,9 @@ function parseGraphic(config: StudioConfig, object: GraphicObject): IBlueprintPi
 
 	return {
 		externalId: object.id,
-		name: `${object.clipName} | ${Object.values(object.attributes).filter(v => (v !== 'true' && v !== 'false')).join(', ')}`, // todo - add info
+		name: `${object.clipName} | ${Object.values(object.attributes)
+			.filter((v) => v !== 'true' && v !== 'false')
+			.join(', ')}`, // todo - add info
 		lifespan: sourceLayer === SourceLayer.Ticker ? PieceLifespan.OutOnRundownEnd : PieceLifespan.WithinPart, // todo - infinite modes
 		sourceLayerId: sourceLayer,
 		outputLayerId: getOutputLayerForSourceLayer(sourceLayer),
@@ -82,9 +86,9 @@ function parseGraphic(config: StudioConfig, object: GraphicObject): IBlueprintPi
 					event: '',
 					layer: '',
 					name: object.clipName,
-				}
+				},
 			},
-			previewRenderer: config.previewRenderer
+			previewRenderer: config.previewRenderer,
 		},
 		enable: {
 			start: object.objectTime,
@@ -95,7 +99,9 @@ function parseGraphic(config: StudioConfig, object: GraphicObject): IBlueprintPi
 function parseAdlibGraphic(config: StudioConfig, object: GraphicObject, index: number): IBlueprintAdLibPiece {
 	return {
 		externalId: object.id,
-		name: `${object.clipName} | ${Object.values(object.attributes).filter(v => (v !== 'true' && v !== 'false')).join(', ')}`, // todo - add info
+		name: `${object.clipName} | ${Object.values(object.attributes)
+			.filter((v) => v !== 'true' && v !== 'false')
+			.join(', ')}`, // todo - add info
 		lifespan: PieceLifespan.WithinPart, // todo - infinite modes
 		sourceLayerId: SourceLayer.LowerThird,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.LowerThird),
@@ -112,8 +118,8 @@ function parseAdlibGraphic(config: StudioConfig, object: GraphicObject, index: n
 					event: '',
 					layer: '',
 					name: object.clipName,
-				}
-			}
+				},
+			},
 		},
 		_rank: index, // todo - probably some offset for ordering
 		expectedDuration: object.duration,
