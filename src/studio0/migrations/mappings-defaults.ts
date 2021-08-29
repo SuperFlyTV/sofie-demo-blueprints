@@ -44,7 +44,8 @@ export default literal<BlueprintMappings>({
 	[AtemLayers.AtemSuperSourceBoxes]: literal<TSR.MappingAtem & BlueprintMapping>({
 		device: TSR.DeviceType.ATEM,
 		deviceId: 'atem0',
-		lookahead: LookaheadMode.NONE,
+		lookahead: LookaheadMode.WHEN_CLEAR,
+		lookaheadMaxSearchDistance: 1,
 
 		mappingType: TSR.MappingAtemType.SuperSourceBox,
 		index: 0,
