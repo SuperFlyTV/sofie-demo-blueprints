@@ -105,8 +105,62 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 			],
 		},
 	}
+	/**
+	 * this piece contains just the ssrc layouts and will
+	 * stay on when you adlib a different primary to retain
+	 * the layout
+	 */
+	const retainPiece: IBlueprintPiece = {
+		enable: {
+			start: 0,
+		},
+		externalId: part.payload.externalId,
+		name: `DVE Retain`,
+		lifespan: PieceLifespan.OutOnSegmentEnd,
+		sourceLayerId: SourceLayer.DVE_RETAIN,
+		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.DVE),
+		adlibPreroll: SUPER_SOURCE_LATENCY,
+		content: {
+			...dveLayoutToContent(config, { boxes }, part.payload.inputs),
 
-	const pieces = [dvePiece]
+			timelineObjects: [
+				literal<TSR.TimelineObjAtemSsrcProps>({
+					id: '',
+					enable: { while: 1 },
+					priority: 0.5,
+					layer: AtemLayers.AtemSuperSourceProps,
+					content: {
+						deviceType: TSR.DeviceType.ATEM,
+						type: TSR.TimelineContentTypeAtem.SSRCPROPS,
+						ssrcProps: {
+							artFillSource: 3010, // atem mediaplayer1
+							artCutSource: 3011,
+							artOption: 0, // bg
+							artPreMultiplied: true,
+							borderEnabled: false,
+						},
+					},
+				}),
+
+				literal<TSR.TimelineObjAtemSsrc>({
+					id: '',
+					enable: { start: 0 },
+					priority: 1,
+					layer: AtemLayers.AtemSuperSourceBoxes,
+					content: {
+						deviceType: TSR.DeviceType.ATEM,
+						type: TSR.TimelineContentTypeAtem.SSRC,
+
+						ssrc: {
+							boxes,
+						},
+					},
+				}),
+			],
+		},
+	}
+
+	const pieces = [dvePiece, retainPiece]
 	const scriptPiece = createScriptPiece(part.payload.script, part.payload.externalId)
 	if (scriptPiece) pieces.push(scriptPiece)
 

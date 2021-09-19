@@ -5,6 +5,7 @@ export enum SourceLayer {
 	VT = 'vt',
 	VO = 'vo',
 	DVE = 'dve',
+	DVE_RETAIN = 'dveRetain',
 	GFX = 'gfx',
 
 	AudioBed = 'audioBed',
@@ -38,6 +39,7 @@ export function getOutputLayerForSourceLayer(layer: SourceLayer): OutputLayer {
 		case SourceLayer.StudioGuests:
 		case SourceLayer.HostOverride:
 		case SourceLayer.AudioBed:
+		case SourceLayer.DVE_RETAIN:
 			return OutputLayer.Aux
 		default:
 			return OutputLayer.Pgm

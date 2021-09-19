@@ -130,6 +130,15 @@ export default literal<ISourceLayer[]>([
 		activateKeyboardHotkeys: 'v,shift+v',
 		assignHotkeysToGlobalAdlibs: true,
 	},
+	{
+		_id: SourceLayer.DVE_RETAIN,
+		type: SourceLayerType.UNKNOWN,
+		_rank: 206,
+		name: 'DVE Retain',
+		abbreviation: 'DVE',
+		exclusiveGroup: 'pgm',
+		isHidden: true,
+	},
 
 	{
 		_id: SourceLayer.Script,
