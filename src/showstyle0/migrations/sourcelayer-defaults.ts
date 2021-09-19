@@ -18,8 +18,6 @@ export default literal<ISourceLayer[]>([
 		name: 'Camera',
 		abbreviation: 'Cam',
 		exclusiveGroup: 'pgm',
-		activateKeyboardHotkeys: 'f1,f2,f3,f4,f5',
-		assignHotkeysToGlobalAdlibs: true,
 		onPresenterScreen: true,
 	},
 	{
@@ -29,8 +27,6 @@ export default literal<ISourceLayer[]>([
 		name: 'Remote',
 		abbreviation: 'Rem',
 		exclusiveGroup: 'pgm',
-		activateKeyboardHotkeys: 'f7,1,2,3,4,5',
-		assignHotkeysToGlobalAdlibs: true,
 		onPresenterScreen: true,
 		isRemoteInput: true,
 	},
@@ -60,8 +56,6 @@ export default literal<ISourceLayer[]>([
 		abbreviation: 'DVE',
 		exclusiveGroup: 'pgm',
 		onPresenterScreen: true,
-		activateKeyboardHotkeys: 'f8',
-		assignHotkeysToGlobalAdlibs: true,
 	},
 	{
 		_id: SourceLayer.GFX,
@@ -79,7 +73,6 @@ export default literal<ISourceLayer[]>([
 		_rank: 200,
 		name: 'Lower Third',
 		abbreviation: 'L3d',
-		activateKeyboardHotkeys: 'q,w,e,r,t',
 	},
 	{
 		_id: SourceLayer.Strap,
@@ -127,8 +120,6 @@ export default literal<ISourceLayer[]>([
 		name: 'Host Mic override',
 		abbreviation: 'HostMic',
 		isHidden: true,
-		activateKeyboardHotkeys: 'v,shift+v',
-		assignHotkeysToGlobalAdlibs: true,
 	},
 	{
 		_id: SourceLayer.DVE_RETAIN,

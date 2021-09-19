@@ -1,11 +1,19 @@
 import {
+	IAdLibFilterLink,
+	IBlueprintTriggeredActions,
+	IGUIContextFilterLink,
 	IOutputLayer,
+	IRundownPlaylistFilterLink,
 	ISourceLayer,
+	ITranslatableMessage,
 	MigrationContextShowStyle,
 	MigrationStepShowStyle,
+	PlayoutActions,
+	TriggerType,
 } from '@sofie-automation/blueprints-integration'
 import * as _ from 'underscore'
 import { literal } from '../../common/util'
+import { SourceLayer } from '../layers'
 
 export function getSourceLayerDefaultsMigrationSteps(
 	versionStr: string,
@@ -59,72 +67,30 @@ export function getOutputLayerDefaultsMigrationSteps(
 	)
 }
 
-export function updateSourceLayerHotkeys(
+export function getTriggeredActionsMigrationSteps(
 	versionStr: string,
-	sourceLayerDefaults: ISourceLayer[],
-	layer: string
-): MigrationStepShowStyle | undefined {
-	const filledOptionals: Pick<
-		Required<ISourceLayer>,
-		| 'activateKeyboardHotkeys'
-		| 'clearKeyboardHotkey'
-		| 'assignHotkeysToGlobalAdlibs'
-		| 'isSticky'
-		| 'activateStickyKeyboardHotkey'
-		| 'isQueueable'
-	> = {
-		activateKeyboardHotkeys: '',
-		clearKeyboardHotkey: '',
-		assignHotkeysToGlobalAdlibs: false,
-		isSticky: false,
-		activateStickyKeyboardHotkey: '',
-		isQueueable: false,
-	}
-	const fields = Object.keys(filledOptionals) as Array<keyof ISourceLayer>
-
-	const newDefaults = _.find(sourceLayerDefaults, (s) => s._id === layer)
-
-	if (newDefaults) {
-		const nonOptionalDefaults = {
-			...filledOptionals,
-			...newDefaults,
-		}
-		return literal<MigrationStepShowStyle>({
-			id: `sourcelayer.hotkeys.${layer}`,
-			version: versionStr,
-			canBeRunAutomatically: true,
-			validate: (context: MigrationContextShowStyle) => {
-				const existing = context.getSourceLayer(layer)
-				if (!existing) {
-					return false
-				} // Nothing to update
-
-				const filledExisting = {
-					...filledOptionals,
-					...existing,
-				}
-				const result: string[] = []
-				_.each(fields, (f) => {
-					if (filledExisting[f] !== nonOptionalDefaults[f]) {
-						result.push(f)
+	triggeredActionsDefaults: IBlueprintTriggeredActions[]
+): MigrationStepShowStyle[] {
+	return _.compact(
+		_.map(triggeredActionsDefaults, (defaultVal: IBlueprintTriggeredActions): MigrationStepShowStyle | null => {
+			return literal<MigrationStepShowStyle>({
+				id: `triggeredActions.defaults.${defaultVal._id}`,
+				version: versionStr,
+				canBeRunAutomatically: true,
+				validate: (context: MigrationContextShowStyle) => {
+					if (!context.getTriggeredAction(defaultVal._id)) {
+						return `Action Trigger "${defaultVal._id}" doesn't exist on ShowStyleBase`
 					}
-				})
-
-				if (result.length > 0) {
-					return `SourceLayer needs "${layer}": ${result.join(',')} to be updated`
-				}
-
-				return false
-			},
-			migrate: (context: MigrationContextShowStyle) => {
-				if (context.getSourceLayer(layer)) {
-					context.updateSourceLayer(layer, _.pick(newDefaults, fields))
-				}
-			},
+					return false
+				},
+				migrate: (context: MigrationContextShowStyle) => {
+					if (!context.getTriggeredAction(defaultVal._id)) {
+						context.setTriggeredAction(defaultVal)
+					}
+				},
+			})
 		})
-	} else {
-		return undefined
-	}
+	)
 }
 
 export function removeSourceLayer(versionStr: string, layer: string): MigrationStepShowStyle | undefined {
@@ -144,4 +110,86 @@ export function removeSourceLayer(versionStr: string, layer: string): MigrationS
 			context.removeSourceLayer(layer)
 		},
 	})
+}
+
+const triggeredActionIdMap: Map<string, number> = new Map()
+
+/**
+ * These are supposed to be "locally" unique and the result will depend the order of it being called. That's on purpose
+ * so that it's easy to replace a given hotkey with a different one.
+ *
+ * @param {string} prefix
+ * @param {string} sourceLayerId
+ * @param {boolean} globalAdLib
+ * @param {number} pick
+ * @return {*}
+ */
+function makeActionTriggerId(prefix: string, sourceLayerId: string, globalAdLib: boolean, pick: number) {
+	const builtId = `${prefix}_${sourceLayerId}_` + (globalAdLib ? 'global_' : '') + `pick${pick}`
+	const idx = (triggeredActionIdMap.get(builtId) ?? -1) + 1
+	triggeredActionIdMap.set(builtId, idx)
+	return `${builtId}_${idx}`
+}
+
+let rankCounter = 0
+
+export function createAdLibHotkey(
+	keys: string,
+	sourceLayerIds: SourceLayer[],
+	globalAdLib: boolean,
+	pick: number,
+	tags: string[] | undefined,
+	label?: ITranslatableMessage
+): IBlueprintTriggeredActions {
+	return {
+		_id: makeActionTriggerId('adLib', sourceLayerIds.join('_'), !!globalAdLib, pick),
+		_rank: rankCounter++ * 1000,
+		actions: [
+			{
+				action: PlayoutActions.adlib,
+				filterChain: [
+					{
+						object: 'view',
+					},
+					{
+						object: 'adLib',
+						field: 'sourceLayerId',
+						value: sourceLayerIds,
+					},
+					{
+						object: 'adLib',
+						field: 'global',
+						value: globalAdLib,
+					},
+					!globalAdLib // if not a Global AdLib, trigger only if it's coming from the current segment
+						? {
+								object: 'adLib',
+								field: 'segment',
+								value: 'current',
+						  }
+						: undefined,
+					tags && tags.length > 0
+						? {
+								object: 'adLib',
+								field: 'tag',
+								value: tags,
+						  }
+						: undefined,
+					{
+						object: 'adLib',
+						field: 'pick',
+						value: pick,
+					},
+				].filter(Boolean) as (IRundownPlaylistFilterLink | IGUIContextFilterLink | IAdLibFilterLink)[],
+			},
+		],
+		triggers: [
+			{
+				type: TriggerType.hotkey,
+				keys: keys,
+				up: true,
+			},
+		],
+		name: label,
+	}
 }
