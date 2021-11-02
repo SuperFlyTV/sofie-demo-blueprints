@@ -49,6 +49,8 @@ export interface GraphicObject extends BaseObject {
 	attributes: {
 		name: string
 		description: string // TODO - need to allow undefined here..
+		location?: string
+		text?: string
 	}
 	adlibVariant?: string
 }

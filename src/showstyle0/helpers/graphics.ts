@@ -35,7 +35,7 @@ function getGraphicTlLayer(object: GraphicObject): CasparCGLayers {
 	}
 }
 
-function getGraphicTlObject(config: StudioConfig, object: GraphicObject): TSR.TSRTimelineObj[] {
+function getGraphicTlObject(config: StudioConfig, object: GraphicObject, isAdlib?: boolean): TSR.TSRTimelineObj[] {
 	const fullscreenAtemInput = getClipPlayerInput(config)
 
 	return [
@@ -45,6 +45,7 @@ function getGraphicTlObject(config: StudioConfig, object: GraphicObject): TSR.TS
 				start: 0, // TODO - this might not be quite right
 			},
 			layer: getGraphicTlLayer(object),
+			priority: 1 + (isAdlib ? 10 : 0),
 			content: {
 				deviceType: TSR.DeviceType.CASPARCG,
 				type: TSR.TimelineContentTypeCasparCg.TEMPLATE,
@@ -64,17 +65,18 @@ function getGraphicTlObject(config: StudioConfig, object: GraphicObject): TSR.TS
 }
 function parseGraphic(config: StudioConfig, object: GraphicObject): IBlueprintPiece {
 	const sourceLayer = getGraphicSourceLayer(object)
+	const lifespan = getGraphicLifespan(sourceLayer, object)
 
 	return {
 		externalId: object.id,
 		name: `${object.clipName} | ${Object.values(object.attributes)
 			.filter((v) => v !== 'true' && v !== 'false')
 			.join(', ')}`, // todo - add info
-		lifespan: sourceLayer === SourceLayer.Ticker ? PieceLifespan.OutOnRundownEnd : PieceLifespan.WithinPart, // todo - infinite modes
+		lifespan,
 		sourceLayerId: sourceLayer,
 		outputLayerId: getOutputLayerForSourceLayer(sourceLayer),
 		content: {
-			timelineObjects: getGraphicTlObject(config, object),
+			timelineObjects: getGraphicTlObject(config, object, false),
 
 			payload: {
 				content: {
@@ -96,17 +98,20 @@ function parseGraphic(config: StudioConfig, object: GraphicObject): IBlueprintPi
 		},
 	}
 }
-function parseAdlibGraphic(config: StudioConfig, object: GraphicObject, index: number): IBlueprintAdLibPiece {
+export function parseAdlibGraphic(config: StudioConfig, object: GraphicObject, index: number): IBlueprintAdLibPiece {
+	const sourceLayer = getGraphicSourceLayer(object)
+	const lifespan = getGraphicLifespan(sourceLayer, object)
+
 	return {
 		externalId: object.id,
 		name: `${object.clipName} | ${Object.values(object.attributes)
 			.filter((v) => v !== 'true' && v !== 'false')
 			.join(', ')}`, // todo - add info
-		lifespan: PieceLifespan.WithinPart, // todo - infinite modes
-		sourceLayerId: SourceLayer.LowerThird,
-		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.LowerThird),
+		lifespan,
+		sourceLayerId: sourceLayer,
+		outputLayerId: getOutputLayerForSourceLayer(sourceLayer),
 		content: {
-			timelineObjects: getGraphicTlObject(config, object),
+			timelineObjects: getGraphicTlObject(config, object, true),
 
 			payload: {
 				content: {
@@ -133,4 +138,19 @@ export function parseGraphicsFromObjects(config: StudioConfig, objects: SomeObje
 		pieces: graphicsObjects.filter((o) => !o.isAdlib).map((o) => parseGraphic(config, o)),
 		adLibPieces: graphicsObjects.filter((o) => !!o.isAdlib).map((o, i) => parseAdlibGraphic(config, o, i)),
 	}
+}
+function getGraphicLifespan(sourceLayer: SourceLayer, object: GraphicObject): PieceLifespan {
+	if (sourceLayer === SourceLayer.Ticker) {
+		return PieceLifespan.OutOnRundownEnd
+	}
+
+	if (sourceLayer === SourceLayer.Logo) {
+		return PieceLifespan.OutOnRundownEnd
+	}
+
+	if (sourceLayer === SourceLayer.Strap && (!object.attributes['text'] || object.attributes['text'].match(/live/i))) {
+		return PieceLifespan.OutOnSegmentEnd
+	}
+
+	return PieceLifespan.WithinPart
 }

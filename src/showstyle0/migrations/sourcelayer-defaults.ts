@@ -76,6 +76,7 @@ export default literal<ISourceLayer[]>([
 		_rank: 200,
 		name: 'Lower Third',
 		abbreviation: 'L3d',
+		activateKeyboardHotkeys: 'q,w,e,r,t'
 	},
 	{
 		_id: SourceLayer.Strap,
@@ -89,7 +90,13 @@ export default literal<ISourceLayer[]>([
 		type: SourceLayerType.GRAPHICS,
 		_rank: 202,
 		name: 'Ticker',
-		abbreviation: 'TKR',
+		isHidden: true,
+	},
+	{
+		_id: SourceLayer.Logo,
+		type: SourceLayerType.GRAPHICS,
+		_rank: 204,
+		name: 'Logo',
 		isHidden: true,
 	},
 

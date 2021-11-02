@@ -99,6 +99,14 @@ export default literal<BlueprintMappings>({
 		channel: 2,
 		layer: 112,
 	}),
+	[CasparCGLayers.CasparCGGraphicsLogo]: literal<TSR.MappingCasparCG & BlueprintMapping>({
+		device: TSR.DeviceType.CASPARCG,
+		deviceId: 'casparcg0',
+		lookahead: LookaheadMode.NONE,
+
+		channel: 2,
+		layer: 113,
+	}),
 	[CasparCGLayers.CasparCGAudioBed]: literal<TSR.MappingCasparCG & BlueprintMapping>({
 		device: TSR.DeviceType.CASPARCG,
 		deviceId: 'casparcg0',

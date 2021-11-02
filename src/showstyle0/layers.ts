@@ -12,6 +12,7 @@ export enum SourceLayer {
 	LowerThird = 'lower_third',
 	Strap = 'strap',
 	Ticker = 'ticker',
+	Logo = 'logo',
 
 	Script = 'script',
 }
@@ -30,6 +31,7 @@ export function getOutputLayerForSourceLayer(layer: SourceLayer): OutputLayer {
 		case SourceLayer.LowerThird:
 		case SourceLayer.Strap:
 		case SourceLayer.Ticker:
+		case SourceLayer.Logo:
 			return OutputLayer.Gfx
 		case SourceLayer.AudioBed:
 			return OutputLayer.Aux

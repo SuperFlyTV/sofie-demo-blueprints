@@ -14,6 +14,7 @@ export enum CasparCGLayers {
 	CasparCGGraphicsLowerThird = 'casparcg_graphics_l3d',
 	CasparCGGraphicsTicker = 'casparcg_graphics_ticker',
 	CasparCGGraphicsStrap = 'casparcg_graphics_strap',
+	CasparCGGraphicsLogo = 'casparcg_graphics_logo',
 	CasparCGAudioBed = 'casparcg_audio_bed',
 }
 
