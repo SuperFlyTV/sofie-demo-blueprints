@@ -33,7 +33,7 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: I
 				parts.push(parseCamera(partPayload))
 			} else if (partPayload.type.match(/remote/i)) {
 				parts.push(parseRemote(partPayload))
-			} else if (partPayload.type.match(/full/i)) {
+			} else if (partPayload.type.match(/full|vt|package/i)) {
 				parts.push(parseVT(partPayload))
 			} else if (partPayload.type.match(/vo/i)) {
 				parts.push(parseVO(partPayload))
