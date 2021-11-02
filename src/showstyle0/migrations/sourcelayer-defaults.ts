@@ -29,7 +29,7 @@ export default literal<ISourceLayer[]>([
 		name: 'Remote',
 		abbreviation: 'Rem',
 		exclusiveGroup: 'pgm',
-		activateKeyboardHotkeys: '1,2,3,4,5',
+		activateKeyboardHotkeys: 'f7,1,2,3,4,5',
 		assignHotkeysToGlobalAdlibs: true,
 		onPresenterScreen: true,
 	},
@@ -59,6 +59,8 @@ export default literal<ISourceLayer[]>([
 		abbreviation: 'DVE',
 		exclusiveGroup: 'pgm',
 		onPresenterScreen: true,
+		activateKeyboardHotkeys: 'f8',
+		assignHotkeysToGlobalAdlibs: true
 	},
 	{
 		_id: SourceLayer.GFX,

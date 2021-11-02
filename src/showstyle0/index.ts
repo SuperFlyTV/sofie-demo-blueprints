@@ -4,6 +4,7 @@ import { getSegment } from './getSegment'
 import { getShowStyleVariantId } from './getShowStyleVariantId'
 import { showStyleMigrations } from './migrations'
 import { getRundown } from './rundown'
+import { executeAction } from './executeActions'
 
 declare const VERSION: string // Injected by webpack
 declare const VERSION_TSR: string // Injected by webpack
@@ -21,6 +22,7 @@ const manifest: ShowStyleBlueprintManifest = {
 	getShowStyleVariantId,
 	getRundown,
 	getSegment,
+	executeAction,
 
 	showStyleConfigManifest,
 	showStyleMigrations,

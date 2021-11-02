@@ -13,7 +13,7 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 	const config = context.getStudioConfig() as StudioConfig
 
 	const makeCameraAdlib = (id: number, input: number): IBlueprintAdLibPiece => ({
-		_rank: id,
+		_rank: 100 + id,
 		externalId: 'cam' + id,
 		name: `Camera ${id + 1}`,
 		lifespan: PieceLifespan.WithinPart,
@@ -39,7 +39,7 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 		},
 	})
 	const makeRemoteAdlib = (id: number, input: number): IBlueprintAdLibPiece => ({
-		_rank: 100 + id,
+		_rank: 200 + id,
 		externalId: 'rem' + id,
 		name: `Remote ${id + 1}`,
 		lifespan: PieceLifespan.WithinPart,

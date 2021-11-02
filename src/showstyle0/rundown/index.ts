@@ -9,6 +9,7 @@ import {
 import { literal } from '../../common/util'
 import { SpreadsheetIngestRundown } from '../../copy/spreadsheet-gateway'
 import { getBaseline } from './baseline'
+import { getGlobalActions } from './globalActions'
 import { getGlobalAdlibs } from './globalAdlibs'
 
 export function getRundown(
@@ -32,7 +33,7 @@ export function getRundown(
 	const res: BlueprintResultRundown = {
 		rundown,
 		globalAdLibPieces: getGlobalAdlibs(context),
-		globalActions: [],
+		globalActions: getGlobalActions(context),
 		baseline: getBaseline(context),
 	}
 
