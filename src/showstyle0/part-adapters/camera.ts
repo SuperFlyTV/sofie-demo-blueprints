@@ -3,6 +3,7 @@ import { PartContext } from '../../common/context'
 import { StudioConfig } from '../../studio0/helpers/config'
 import { CameraProps, PartProps } from '../definitions'
 import { createAtemInputTimelineObjects } from '../helpers/atem'
+import { parseClipsFromObjects } from '../helpers/clips'
 import { parseGraphicsFromObjects } from '../helpers/graphics'
 import { createScriptPiece } from '../helpers/script'
 import { getSourceInfoFromRaw } from '../helpers/sources'
@@ -33,6 +34,8 @@ export function generateCameraPart(context: PartContext, part: PartProps<CameraP
 	const graphics = parseGraphicsFromObjects(config, part.objects)
 	if (graphics.pieces) pieces.push(...graphics.pieces)
 
+	const clips = parseClipsFromObjects(config, part.objects)
+
 	return {
 		part: {
 			externalId: part.payload.externalId,
@@ -41,6 +44,6 @@ export function generateCameraPart(context: PartContext, part: PartProps<CameraP
 			expectedDuration: part.payload.duration,
 		},
 		pieces,
-		adLibPieces: [...graphics.adLibPieces],
+		adLibPieces: [...graphics.adLibPieces, ...clips],
 	}
 }

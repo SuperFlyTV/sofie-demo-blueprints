@@ -2,6 +2,7 @@ import { BlueprintResultPart } from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../common/context'
 import { StudioConfig } from '../../studio0/helpers/config'
 import { GfxProps, PartProps } from '../definitions'
+import { parseClipsFromObjects } from '../helpers/clips'
 import { parseGraphicsFromObjects } from '../helpers/graphics'
 import { createScriptPiece } from '../helpers/script'
 
@@ -20,6 +21,8 @@ export function generateGfxPart(context: PartContext, part: PartProps<GfxProps>)
 	const graphics = parseGraphicsFromObjects(config, part.objects)
 	if (graphics.pieces) pieces.push(...graphics.pieces)
 
+	const clips = parseClipsFromObjects(config, part.objects)
+
 	return {
 		part: {
 			externalId: part.payload.externalId,
@@ -29,6 +32,6 @@ export function generateGfxPart(context: PartContext, part: PartProps<GfxProps>)
 			autoNext: true,
 		},
 		pieces,
-		adLibPieces: [...graphics.adLibPieces],
+		adLibPieces: [...graphics.adLibPieces, ...clips],
 	}
 }

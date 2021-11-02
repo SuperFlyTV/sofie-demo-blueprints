@@ -5,7 +5,7 @@ import { StudioConfig } from '../../studio0/helpers/config'
 import { AtemLayers } from '../../studio0/layers'
 import { DVEProps, PartProps } from '../definitions'
 import { createAtemInputTimelineObjects } from '../helpers/atem'
-import { getClipPlayerInput } from '../helpers/clips'
+import { getClipPlayerInput, parseClipsFromObjects } from '../helpers/clips'
 import { DVEDesigns, DVELayouts, dveLayoutToContent } from '../helpers/dve'
 import { parseGraphicsFromObjects } from '../helpers/graphics'
 import { createScriptPiece } from '../helpers/script'
@@ -32,7 +32,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 		}
 	})
 
-	const cameraPiece: IBlueprintPiece = {
+	const dvePiece: IBlueprintPiece = {
 		enable: {
 			start: 0,
 		},
@@ -83,12 +83,14 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 		},
 	}
 
-	const pieces = [cameraPiece]
+	const pieces = [dvePiece]
 	const scriptPiece = createScriptPiece(part.payload.script, part.payload.externalId)
 	if (scriptPiece) pieces.push(scriptPiece)
 
 	const graphics = parseGraphicsFromObjects(config, part.objects)
 	if (graphics.pieces) pieces.push(...graphics.pieces)
+
+	const clips = parseClipsFromObjects(config, part.objects)
 
 	return {
 		part: {
@@ -98,6 +100,6 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 			expectedDuration: part.payload.duration,
 		},
 		pieces,
-		adLibPieces: [...graphics.adLibPieces],
+		adLibPieces: [...graphics.adLibPieces, ...clips],
 	}
 }

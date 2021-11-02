@@ -14,7 +14,7 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 	const config = context.getStudioConfig() as StudioConfig
 	const atemInput = getClipPlayerInput(config)
 
-	const cameraPiece: IBlueprintPiece = {
+	const vtPiece: IBlueprintPiece = {
 		enable: {
 			start: 0,
 		},
@@ -44,7 +44,7 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 		},
 	}
 
-	const pieces = [cameraPiece]
+	const pieces = [vtPiece]
 	const scriptPiece = createScriptPiece(part.payload.script, part.payload.externalId)
 	if (scriptPiece) pieces.push(scriptPiece)
 
