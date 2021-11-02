@@ -5,6 +5,14 @@ export enum AtemSourceType {
 	Graphics = 'graphics',
 }
 
+export enum AudioSourceType {
+	Host = 'host',
+	Guest = 'guest',
+	Remote = 'remote',
+	Playback = 'playback'
+	// FX?
+}
+
 export interface StudioConfig {
 	atemSources: {
 		input: number
@@ -13,6 +21,10 @@ export interface StudioConfig {
 	atemOutputs: {
 		output: number // aux number, needs a mapping
 		source: number
+	}[]
+	sisyfosSources: {
+		source: number,
+		type: AudioSourceType
 	}[]
 	previewRenderer?: string
 	casparcgLatency: number

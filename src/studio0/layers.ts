@@ -21,3 +21,10 @@ export enum CasparCGLayers {
 export enum AsbtractLayers {
 	CoreAbstract = 'core_abstract',
 }
+
+export enum SisyfosLayers {
+	Baseline = 'sisyfos_baseline',
+	Primary = 'sisyfos_primary',
+	Guests = 'sisyfos_guests',
+	ForceMute = 'sisyfos_forceMute',
+}

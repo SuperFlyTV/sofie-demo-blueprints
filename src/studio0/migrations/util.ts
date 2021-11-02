@@ -12,7 +12,7 @@ import * as _ from 'underscore'
 import { literal } from '../../common/util'
 import { studioConfigManifest } from '../config-manifests'
 import { StudioConfig } from '../helpers/config'
-import MappingsDefaults, { getAllAuxMappings } from './mappings-defaults'
+import MappingsDefaults, { getAllAuxMappings, getDynamicSisyfosMappings } from './mappings-defaults'
 
 export function getConfigOrDefault(context: MigrationContextStudio, name: string): ConfigItemValue | undefined {
 	const val = context.getConfig(name)
@@ -84,6 +84,46 @@ export function getMappingsDefaultsMigrationSteps(versionStr: string): Migration
 			},
 			migrate: (context: MigrationContextStudio): void => {
 				const expected = getAuxMappings(context)
+
+				_.each(expected, (v, k): void => {
+					if (!context.getMapping(k)) {
+						context.insertMapping(k, v)
+					}
+				})
+			},
+		})
+	)
+	
+	const getSisyfosMappings = (context: MigrationContextStudio): BlueprintMappings => {
+		const sources = getConfigOrDefault(context, 'sisyfosSources') as any as StudioConfig['sisyfosSources']
+
+		if (sources) {
+			return getDynamicSisyfosMappings(sources)
+		}
+
+		return {}
+	}
+
+	res.push(
+		literal<MigrationStepStudio>({
+			id: `mappings.defaults._all_sisyfos_dynamic_`,
+			version: versionStr,
+			canBeRunAutomatically: true,
+			validate: (context: MigrationContextStudio): boolean | string => {
+				const expected = _.keys(getSisyfosMappings(context))
+
+				const badMappings: string[] = []
+				_.each(expected, (f) => {
+					const mapping = context.getMapping(f)
+					if (!mapping) {
+						badMappings.push(`${f} is missing`)
+					}
+				})
+
+				return badMappings.length > 0 ? badMappings.join(', ') : false
+			},
+			migrate: (context: MigrationContextStudio): void => {
+				const expected = getSisyfosMappings(context)
 
 				_.each(expected, (v, k): void => {
 					if (!context.getMapping(k)) {
