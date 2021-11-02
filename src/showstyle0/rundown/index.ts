@@ -3,6 +3,8 @@ import {
 	ExtendedIngestRundown,
 	IBlueprintRundown,
 	IShowStyleUserContext,
+	PlaylistTimingForwardTime,
+	PlaylistTimingType,
 } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../common/util'
 import { SpreadsheetIngestRundown } from '../../copy/spreadsheet-gateway'
@@ -15,12 +17,16 @@ export function getRundown(
 ): BlueprintResultRundown {
 	const rundownMetadata = {}
 
+	const timing: PlaylistTimingForwardTime = {
+		type: PlaylistTimingType.ForwardTime,
+		expectedStart: 0,
+		expectedDuration: 0,
+	}
 	const rundown = literal<IBlueprintRundown>({
 		externalId: ingestRundown.externalId,
 		name: ingestRundown.name,
-		expectedStart: 0,
-		expectedDuration: 0,
 		metaData: rundownMetadata,
+		timing
 	})
 
 	const res: BlueprintResultRundown = {
@@ -34,8 +40,8 @@ export function getRundown(
 		// TODO - maybe guard against unknown types of rundowns?
 		const payload: SpreadsheetIngestRundown = ingestRundown.payload
 
-		res.rundown.expectedStart = payload.expectedStart
-		res.rundown.expectedDuration = payload.expectedEnd - payload.expectedStart
+		timing.expectedStart = payload.expectedStart
+		timing.expectedDuration = payload.expectedEnd - payload.expectedStart
 	}
 
 	return res
