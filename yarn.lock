@@ -523,15 +523,15 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@sofie-automation/blueprints-integration@1.33.0-in-testing.1":
-  version "1.33.0-in-testing.1"
-  resolved "https://registry.yarnpkg.com/@sofie-automation/blueprints-integration/-/blueprints-integration-1.33.0-in-testing.1.tgz#56b0bf7ecb2e166cfe293be175c747546cf92f6f"
-  integrity sha512-3VTkh2Hqw6lTGY8wrpxcTmXm/Aw+JKjz2Zw85xCGKgHumzICIcwnaDQK1V/ulTSMe8eXt++xejPzJA6r8VfnQg==
+"@sofie-automation/blueprints-integration@1.35.0":
+  version "1.35.0"
+  resolved "https://registry.yarnpkg.com/@sofie-automation/blueprints-integration/-/blueprints-integration-1.35.0.tgz#37d3fc6c00c4e924218ee171240bc14ca50d8ccd"
+  integrity sha512-0sOTyQUaEk0GPC3SOR5KB+iWG76IRY5SG40NRbwtr1GR9cPLMLRhso/fJHL29tmB6hp+dEEo0t5X4XtIsc/3pg==
   dependencies:
     moment "2.29.1"
-    timeline-state-resolver-types "5.7.0-nightly-release33-20210421-102534-d3150d7e3.0"
+    timeline-state-resolver-types "^6.0.3"
     tslib "^2.1.0"
-    underscore "1.12.1"
+    underscore "1.13.1"
 
 "@sofie-automation/code-standard-preset@0.2.2":
   version "0.2.2"
@@ -6418,12 +6418,12 @@ through@^2.3.8:
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
 
-timeline-state-resolver-types@5.7.0-nightly-release33-20210421-102534-d3150d7e3.0:
-  version "5.7.0-nightly-release33-20210421-102534-d3150d7e3.0"
-  resolved "https://registry.yarnpkg.com/timeline-state-resolver-types/-/timeline-state-resolver-types-5.7.0-nightly-release33-20210421-102534-d3150d7e3.0.tgz#569d8436cb89996c32d354acf63ade5e91a6140c"
-  integrity sha512-0duh41MtYAnDaFoQ2JibTzGtmz+c/ydoAECmpdnpo0GVMb96viz7eLnTkMTWMMlwJBYJbuzPtvmkgh/ZWaZRvw==
+timeline-state-resolver-types@^6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/timeline-state-resolver-types/-/timeline-state-resolver-types-6.0.3.tgz#c153adb4344431d87d1ca301b9b5974c0d2a13d2"
+  integrity sha512-zzR9AFD3ftg3bGhmlag/JCuIubA0S5e6VbMRpXTjcMsmFYs5A/W2qVilperd6pQDhkuXqrLpXEnPW0Ctsmj/xw==
   dependencies:
-    tslib "^1.13.0"
+    tslib "^2.1.0"
 
 timers-browserify@^2.0.4:
   version "2.0.12"
@@ -6686,10 +6686,10 @@ underscore@1.12.0:
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.12.0.tgz#4814940551fc80587cef7840d1ebb0f16453be97"
   integrity sha512-21rQzss/XPMjolTiIezSu3JAjgagXKROtNrYFEOWK109qY1Uv2tVjPTZ1ci2HgvQDA16gHYSthQIJfB+XId/rQ==
 
-underscore@1.12.1:
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.12.1.tgz#7bb8cc9b3d397e201cf8553336d262544ead829e"
-  integrity sha512-hEQt0+ZLDVUMhebKxL4x1BTtDY7bavVofhZ9KZ4aI26X9SRaE+Y3m83XUL1UP2jn8ynjndwCCpEHdUG+9pP1Tw==
+underscore@1.13.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.1.tgz#0c1c6bd2df54b6b69f2314066d65b6cde6fcf9d1"
+  integrity sha512-hzSoAVtJF+3ZtiFX0VgfFPHEDRm7Y/QPjGyNo4TVdnDTdft3tr8hEkD25a1jC+TjTuE7tkHGKkhwCgs9dgBB2g==
 
 union-value@^1.0.0:
   version "1.0.1"
