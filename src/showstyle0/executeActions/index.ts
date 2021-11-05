@@ -24,7 +24,7 @@ function executeLastOnSourceLayer(context: IActionExecutionContext, sourceLayer:
 		const piece = {
 			...lastRemote.piece,
 			enable: {
-				start: 'now' as 'now', // scrap timing
+				start: 'now' as const, // scrap timing
 			},
 		}
 

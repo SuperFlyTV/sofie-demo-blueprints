@@ -9,7 +9,10 @@ export interface SourceInfo extends RawSourceInfo {
 	input: number
 }
 
-export function findSource(input: string | number | boolean, type: AtemSourceType): RawSourceInfo | undefined {
+export function findSource(
+	input: string | number | boolean | undefined,
+	type: AtemSourceType
+): RawSourceInfo | undefined {
 	const match = (input + '').match(/(.*?)(\d+)(.*)/) // find the first number
 	if (match) {
 		return {

@@ -75,19 +75,14 @@ export const studioConfigManifest: ConfigManifestEntry[] = [
 				required: true,
 				defaultVal: 0,
 				rank: 1,
-				zeroBased: true
+				zeroBased: true,
 			},
 			{
 				id: 'type',
 				name: 'Type',
 				description: 'Input type',
 				type: ConfigManifestEntryType.ENUM,
-				options: [
-					AudioSourceType.Host,
-					AudioSourceType.Guest,
-					AudioSourceType.Remote,
-					AudioSourceType.Playback,
-				],
+				options: [AudioSourceType.Host, AudioSourceType.Guest, AudioSourceType.Remote, AudioSourceType.Playback],
 				required: true,
 				defaultVal: 'host',
 				rank: 2,

@@ -1,10 +1,10 @@
 import { BlueprintManifestType, ShowStyleBlueprintManifest } from '@sofie-automation/blueprints-integration'
 import { showStyleConfigManifest } from './config-manifests'
+import { executeAction } from './executeActions'
 import { getSegment } from './getSegment'
 import { getShowStyleVariantId } from './getShowStyleVariantId'
 import { showStyleMigrations } from './migrations'
 import { getRundown } from './rundown'
-import { executeAction } from './executeActions'
 
 declare const VERSION: string // Injected by webpack
 declare const VERSION_TSR: string // Injected by webpack

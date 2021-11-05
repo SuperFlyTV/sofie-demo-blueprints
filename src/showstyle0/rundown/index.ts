@@ -27,7 +27,7 @@ export function getRundown(
 		externalId: ingestRundown.externalId,
 		name: ingestRundown.name,
 		metaData: rundownMetadata,
-		timing
+		timing,
 	})
 
 	const res: BlueprintResultRundown = {

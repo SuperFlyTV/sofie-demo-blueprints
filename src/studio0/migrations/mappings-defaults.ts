@@ -123,28 +123,28 @@ export default literal<BlueprintMappings>({
 		deviceId: 'sisyfos0',
 		lookahead: LookaheadMode.NONE,
 
-		mappingType: TSR.MappingSisyfosType.CHANNELS
+		mappingType: TSR.MappingSisyfosType.CHANNELS,
 	}),
 	[SisyfosLayers.Primary]: literal<TSR.MappingSisyfosChannels & BlueprintMapping>({
 		device: TSR.DeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
 		lookahead: LookaheadMode.NONE,
 
-		mappingType: TSR.MappingSisyfosType.CHANNELS
+		mappingType: TSR.MappingSisyfosType.CHANNELS,
 	}),
 	[SisyfosLayers.Guests]: literal<TSR.MappingSisyfosChannels & BlueprintMapping>({
 		device: TSR.DeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
 		lookahead: LookaheadMode.NONE,
 
-		mappingType: TSR.MappingSisyfosType.CHANNELS
+		mappingType: TSR.MappingSisyfosType.CHANNELS,
 	}),
 	[SisyfosLayers.ForceMute]: literal<TSR.MappingSisyfosChannels & BlueprintMapping>({
 		device: TSR.DeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
 		lookahead: LookaheadMode.NONE,
 
-		mappingType: TSR.MappingSisyfosType.CHANNELS
+		mappingType: TSR.MappingSisyfosType.CHANNELS,
 	}),
 })
 
@@ -168,16 +168,16 @@ export function getAllAuxMappings(total: number): BlueprintMappings {
 export function getDynamicSisyfosMappings(sisyfosSources: StudioConfig['sisyfosSources']): BlueprintMappings {
 	const mappings: BlueprintMappings = {}
 	const pushSisyfosMappings = (type: AudioSourceType) => {
-		const sources = sisyfosSources.filter(m => m.type === type)
+		const sources = sisyfosSources.filter((m) => m.type === type)
 		for (let i = 0; i < sources.length; i++) {
 			mappings[`sisyfos_source_${type}${i}`] = literal<TSR.MappingSisyfosChannel & BlueprintMapping>({
 				device: TSR.DeviceType.SISYFOS,
 				deviceId: 'sisyfos0',
 				lookahead: LookaheadMode.NONE,
-	
+
 				mappingType: TSR.MappingSisyfosType.CHANNEL,
 				channel: sources[i].source,
-				setLabelToLayerName: false // ??
+				setLabelToLayerName: false, // ??
 			})
 		}
 	}

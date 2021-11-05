@@ -41,7 +41,7 @@ export interface SpreadsheetIngestPiece {
 	duration: number
 	clipName: string
 	attributes: {
-		[key: string]: string | number | boolean
+		[key: string]: string | number | boolean | undefined
 	},
 	script?: string,
 	transition?: string

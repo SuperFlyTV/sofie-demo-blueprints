@@ -93,9 +93,9 @@ export function getMappingsDefaultsMigrationSteps(versionStr: string): Migration
 			},
 		})
 	)
-	
+
 	const getSisyfosMappings = (context: MigrationContextStudio): BlueprintMappings => {
-		const sources = getConfigOrDefault(context, 'sisyfosSources') as any as StudioConfig['sisyfosSources']
+		const sources = (getConfigOrDefault(context, 'sisyfosSources') as any) as StudioConfig['sisyfosSources']
 
 		if (sources) {
 			return getDynamicSisyfosMappings(sources)

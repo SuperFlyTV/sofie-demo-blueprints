@@ -28,7 +28,7 @@ export class PartContext implements ISegmentUserContext {
 		this.rundown = baseContext.rundown
 		this.studioId = baseContext.studioId
 	}
-	
+
 	public getPackageInfo(_packageId: string): PackageInfo.Any[] {
 		return []
 	}
