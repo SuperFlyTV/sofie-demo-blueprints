@@ -1,3 +1,5 @@
+import { IStudioContext, IStudioUserContext } from '@sofie-automation/blueprints-integration'
+
 export enum AtemSourceType {
 	Camera = 'camera',
 	Remote = 'remote',
@@ -9,8 +11,12 @@ export enum AudioSourceType {
 	Host = 'host',
 	Guest = 'guest',
 	Remote = 'remote',
-	Playback = 'playback'
+	Playback = 'playback',
 	// FX?
+}
+
+export interface BlueprintConfig {
+	studio: StudioConfig
 }
 
 export interface StudioConfig {
@@ -23,9 +29,13 @@ export interface StudioConfig {
 		source: number
 	}[]
 	sisyfosSources: {
-		source: number,
+		source: number
 		type: AudioSourceType
 	}[]
 	previewRenderer?: string
 	casparcgLatency: number
+}
+
+export function getStudioConfig(context: IStudioUserContext | IStudioContext) {
+	return context.getStudioConfig() as StudioConfig
 }

@@ -1,14 +1,14 @@
-import { ObjectType, SomeObject, VideoObject } from '../../common/definitions/objects'
+import { ObjectType, SomeObject, SplitObject, VideoObject } from '../../common/definitions/objects'
 import { SpreadsheetIngestPart } from '../../copy/spreadsheet-gateway'
 import { AtemSourceType } from '../../studio0/helpers/config'
 import { DVEProps, InvalidProps, PartInfo, PartProps, PartType } from '../definitions'
 import { parseClipProps } from '../helpers/clips'
-import { DVELayouts } from '../helpers/dve'
 import { findSource } from '../helpers/sources'
 import { parseBaseProps } from './base'
 
 export function parseDVE(ingestPart: SpreadsheetIngestPart): PartProps<DVEProps | InvalidProps> {
 	// TODO - parse layout property
+	const splitPiece = ingestPart.pieces.find((piece): piece is SplitObject => piece.objectType === 'split')
 	const splitInputs: DVEProps['inputs'] = []
 	let hasVideo = false // only 1 player means only 1 input can be video
 
@@ -35,7 +35,7 @@ export function parseDVE(ingestPart: SpreadsheetIngestPart): PartProps<DVEProps 
 		payload: {
 			...parseBaseProps(ingestPart),
 
-			layout: DVELayouts.TwoBox,
+			layout: splitPiece?.attributes.layout || '',
 			inputs: splitInputs.slice(0, 2), // TODO - three box?
 		},
 	}

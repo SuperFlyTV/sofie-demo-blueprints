@@ -1,7 +1,6 @@
 import { ITranslatableMessage } from '@sofie-automation/blueprints-integration'
 import { GraphicObject, SomeObject } from '../../common/definitions/objects'
 import { ClipProps } from '../helpers/clips'
-import { DVELayouts } from '../helpers/dve'
 import { RawSourceInfo } from '../helpers/sources'
 import { IntermediatePart, IntermediateSegment } from './intermediate'
 
@@ -73,7 +72,7 @@ export interface VOProps extends PartBaseProps {
 }
 
 export interface DVEProps extends PartBaseProps {
-	layout: DVELayouts
+	layout: string
 	inputs: Array<RawSourceInfo | ClipProps>
 }
 

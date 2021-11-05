@@ -7,7 +7,7 @@ import { DVEProps, PartProps } from '../definitions'
 import { createAtemInputTimelineObjects } from '../helpers/atem'
 import { getAudioPrimaryObject } from '../helpers/audio'
 import { getClipPlayerInput, parseClipsFromObjects } from '../helpers/clips'
-import { DVEDesigns, DVELayouts, dveLayoutToContent } from '../helpers/dve'
+import { dveLayoutToContent, parseSuperSourceLayout, parseSuperSourceProps } from '../helpers/dve'
 import { parseGraphicsFromObjects } from '../helpers/graphics'
 import { createScriptPiece } from '../helpers/script'
 import { getSourceInfoFromRaw } from '../helpers/sources'
@@ -19,7 +19,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 	const config = context.getStudioConfig() as StudioConfig
 	// const sourceInfo = getSourceInfoFromRaw(config, part.payload.input1)
 
-	const layout = DVEDesigns[DVELayouts.TwoBox]
+	const layout = parseSuperSourceLayout(context, part.payload)
 	const boxes: TSR.SuperSourceBox[] = part.payload.inputs.map((input, i) => {
 		let source = undefined
 		if ('fileName' in input) {
@@ -82,13 +82,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 					content: {
 						deviceType: TSR.DeviceType.ATEM,
 						type: TSR.TimelineContentTypeAtem.SSRCPROPS,
-						ssrcProps: {
-							artFillSource: 3010, // atem mediaplayer1
-							artCutSource: 3011,
-							artOption: 0, // bg
-							artPreMultiplied: true,
-							borderEnabled: false,
-						},
+						ssrcProps: parseSuperSourceProps(context, part.payload),
 					},
 				}),
 
