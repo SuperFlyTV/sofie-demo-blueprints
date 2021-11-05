@@ -37,6 +37,7 @@ function getGraphicTlLayer(object: GraphicObject): CasparCGLayers {
 
 function getGraphicTlObject(config: StudioConfig, object: GraphicObject, isAdlib?: boolean): TSR.TSRTimelineObj[] {
 	const fullscreenAtemInput = getClipPlayerInput(config)
+	const isFullscreen = object.clipName.match(/fullscreen/i)
 
 	return [
 		literal<TSR.TimelineObjCCGTemplate>({
@@ -55,12 +56,10 @@ function getGraphicTlObject(config: StudioConfig, object: GraphicObject, isAdlib
 				data: {
 					...object.attributes,
 				},
-				useStopCommand: true,
+				useStopCommand: isFullscreen ? false : true,
 			},
 		}),
-		...(object.clipName.match(/fullscreen/i)
-			? createAtemInputTimelineObjects(fullscreenAtemInput?.input || 0, config.casparcgLatency)
-			: []),
+		...(isFullscreen ? createAtemInputTimelineObjects(fullscreenAtemInput?.input || 0, config.casparcgLatency) : []),
 	]
 }
 function parseGraphic(config: StudioConfig, object: GraphicObject): IBlueprintPiece {
@@ -101,6 +100,7 @@ function parseGraphic(config: StudioConfig, object: GraphicObject): IBlueprintPi
 export function parseAdlibGraphic(config: StudioConfig, object: GraphicObject, index: number): IBlueprintAdLibPiece {
 	const sourceLayer = getGraphicSourceLayer(object)
 	const lifespan = getGraphicLifespan(sourceLayer, object)
+	const isFullscreen = object.clipName.match(/fullscreen/i)
 
 	return {
 		externalId: object.id,
@@ -110,6 +110,7 @@ export function parseAdlibGraphic(config: StudioConfig, object: GraphicObject, i
 		lifespan,
 		sourceLayerId: sourceLayer,
 		outputLayerId: getOutputLayerForSourceLayer(sourceLayer),
+		adlibPreroll: isFullscreen ? config.casparcgLatency : 0,
 		content: {
 			timelineObjects: getGraphicTlObject(config, object, true),
 
