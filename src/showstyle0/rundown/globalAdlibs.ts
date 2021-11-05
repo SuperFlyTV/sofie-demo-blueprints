@@ -1,12 +1,8 @@
-import {
-	IBlueprintAdLibPiece,
-	IShowStyleUserContext,
-	PieceLifespan,
-	TSR,
-} from '@sofie-automation/blueprints-integration'
+import { IBlueprintAdLibPiece, IShowStyleUserContext, PieceLifespan } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../common/util'
 import { AtemSourceType, AudioSourceType, StudioConfig } from '../../studio0/helpers/config'
-import { AtemLayers, SisyfosLayers } from '../../studio0/layers'
+import { SisyfosLayers } from '../../studio0/layers'
+import { createAtemInputTimelineObjects } from '../helpers/atem'
 import { getAudioObjectOnLayer, getAudioPrimaryObject } from '../helpers/audio'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
 
@@ -22,20 +18,7 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Camera),
 		content: {
 			timelineObjects: [
-				literal<TSR.TimelineObjAtemME>({
-					id: '',
-					enable: { start: 0 },
-					layer: AtemLayers.AtemMeProgram,
-					content: {
-						deviceType: TSR.DeviceType.ATEM,
-						type: TSR.TimelineContentTypeAtem.ME,
-
-						me: {
-							input: input,
-							transition: TSR.AtemTransitionStyle.CUT,
-						},
-					},
-				}),
+				...createAtemInputTimelineObjects(input, 0),
 				getAudioPrimaryObject(config, [{ type: AudioSourceType.Host, index: 0 }]),
 			],
 		},
@@ -49,20 +32,7 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Camera),
 		content: {
 			timelineObjects: [
-				literal<TSR.TimelineObjAtemME>({
-					id: '',
-					enable: { start: 0 },
-					layer: AtemLayers.AtemMeProgram,
-					content: {
-						deviceType: TSR.DeviceType.ATEM,
-						type: TSR.TimelineContentTypeAtem.ME,
-
-						me: {
-							input: input,
-							transition: TSR.AtemTransitionStyle.CUT,
-						},
-					},
-				}),
+				...createAtemInputTimelineObjects(input, 0),
 				getAudioPrimaryObject(config, [{ type: AudioSourceType.Remote, index: id }]),
 			],
 		},
