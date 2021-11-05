@@ -523,14 +523,14 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@sofie-automation/blueprints-integration@1.37.0-nightly-release37-20210817-094912-40717fd.0":
-  version "1.37.0-nightly-release37-20210817-094912-40717fd.0"
-  resolved "https://registry.yarnpkg.com/@sofie-automation/blueprints-integration/-/blueprints-integration-1.37.0-nightly-release37-20210817-094912-40717fd.0.tgz#5e7ba275e5e47c0a9388c258bded6da45c8faf23"
-  integrity sha512-+XXY6zEW2QXI1TnZpcwI8wzcftV1tfMqMsXBXe/dDzpr+dtA7OU9ze4SMVGchTXXtzgLMp+FAG3DVBRUrVytwg==
+"@sofie-automation/blueprints-integration@1.37.0-in-testing.13":
+  version "1.37.0-in-testing.13"
+  resolved "https://registry.yarnpkg.com/@sofie-automation/blueprints-integration/-/blueprints-integration-1.37.0-in-testing.13.tgz#506c1fdd8633bb9287bb0c758df3242c7927e37a"
+  integrity sha512-SR7a0VGe6KREdapFVtNNqTSiRw4zdf2V4KjbuefKulVEeh0glsZBfxk/0qysj92CON8bgaocwEStLz+UYqcziA==
   dependencies:
     moment "2.29.1"
-    timeline-state-resolver-types "^6.0.3"
-    tslib "^2.1.0"
+    timeline-state-resolver-types "6.2.0-release37.4"
+    tslib "^2.3.1"
     underscore "1.13.1"
 
 "@sofie-automation/code-standard-preset@0.2.2":
@@ -6418,12 +6418,12 @@ through@^2.3.8:
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
 
-timeline-state-resolver-types@^6.0.3:
-  version "6.0.3"
-  resolved "https://registry.yarnpkg.com/timeline-state-resolver-types/-/timeline-state-resolver-types-6.0.3.tgz#c153adb4344431d87d1ca301b9b5974c0d2a13d2"
-  integrity sha512-zzR9AFD3ftg3bGhmlag/JCuIubA0S5e6VbMRpXTjcMsmFYs5A/W2qVilperd6pQDhkuXqrLpXEnPW0Ctsmj/xw==
+timeline-state-resolver-types@6.2.0-release37.4:
+  version "6.2.0-release37.4"
+  resolved "https://registry.yarnpkg.com/timeline-state-resolver-types/-/timeline-state-resolver-types-6.2.0-release37.4.tgz#593f59d4b44c5fb4032207c09c4f411cb3488b50"
+  integrity sha512-jv1i0HOvl0ZeiAmgpC8GmB89XMbJ+kroYxEqLILqEsDtHd1LzaYOHZdgM8j3KkvgcHq8rP0XQL8yMWu0p5WcAg==
   dependencies:
-    tslib "^2.1.0"
+    tslib "^2.3.1"
 
 timers-browserify@^2.0.4:
   version "2.0.12"
@@ -6573,10 +6573,10 @@ tslib@^1.13.0, tslib@^1.8.1, tslib@^1.9.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.1.0.tgz#da60860f1c2ecaa5703ab7d39bc05b6bf988b97a"
-  integrity sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==
+tslib@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
+  integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
 
 tsutils@^3.17.1:
   version "3.20.0"
