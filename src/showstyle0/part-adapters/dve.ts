@@ -1,10 +1,11 @@
 import { BlueprintResultPart, IBlueprintPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../common/context'
 import { literal } from '../../common/util'
-import { StudioConfig } from '../../studio0/helpers/config'
+import { AtemSourceType, AudioSourceType, StudioConfig } from '../../studio0/helpers/config'
 import { AtemLayers } from '../../studio0/layers'
 import { DVEProps, PartProps } from '../definitions'
 import { createAtemInputTimelineObjects } from '../helpers/atem'
+import { getAudioPrimaryObject } from '../helpers/audio'
 import { getClipPlayerInput, parseClipsFromObjects } from '../helpers/clips'
 import { DVEDesigns, DVELayouts, dveLayoutToContent } from '../helpers/dve'
 import { parseGraphicsFromObjects } from '../helpers/graphics'
@@ -31,6 +32,31 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 			source: source?.input || 0,
 		}
 	})
+
+	const audioTlObj = getAudioPrimaryObject(
+		config,
+		part.payload.inputs
+			.map((input) => {
+				if ('fileName' in input) {
+					return {
+						type: AudioSourceType.Playback,
+						index: 0, // whihc player?
+					}
+				} else if (input.type === AtemSourceType.Camera) {
+					return {
+						type: AudioSourceType.Host, // all hosts?
+						index: 0,
+					}
+				} else if (input.type === AtemSourceType.Remote) {
+					return {
+						type: AudioSourceType.Remote,
+						index: input.id - 1,
+					}
+				}
+				return undefined
+			})
+			.filter<any>((p): p is any => p !== undefined)
+	)
 
 	const dvePiece: IBlueprintPiece = {
 		enable: {
@@ -79,6 +105,8 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 						},
 					},
 				}),
+
+				audioTlObj,
 			],
 		},
 	}

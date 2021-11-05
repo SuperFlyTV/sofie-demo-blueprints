@@ -32,6 +32,7 @@ export default literal<ISourceLayer[]>([
 		activateKeyboardHotkeys: 'f7,1,2,3,4,5',
 		assignHotkeysToGlobalAdlibs: true,
 		onPresenterScreen: true,
+		isRemoteInput: true,
 	},
 	{
 		_id: SourceLayer.VO,
@@ -60,7 +61,7 @@ export default literal<ISourceLayer[]>([
 		exclusiveGroup: 'pgm',
 		onPresenterScreen: true,
 		activateKeyboardHotkeys: 'f8',
-		assignHotkeysToGlobalAdlibs: true
+		assignHotkeysToGlobalAdlibs: true,
 	},
 	{
 		_id: SourceLayer.GFX,
@@ -78,7 +79,7 @@ export default literal<ISourceLayer[]>([
 		_rank: 200,
 		name: 'Lower Third',
 		abbreviation: 'L3d',
-		activateKeyboardHotkeys: 'q,w,e,r,t'
+		activateKeyboardHotkeys: 'q,w,e,r,t',
 	},
 	{
 		_id: SourceLayer.Strap,
@@ -109,6 +110,25 @@ export default literal<ISourceLayer[]>([
 		name: 'Audio Bed',
 		abbreviation: 'Bed',
 		isHidden: true,
+	},
+	{
+		_id: SourceLayer.StudioGuests,
+		type: SourceLayerType.UNKNOWN,
+		_rank: 204,
+		name: 'Studio Guest',
+		abbreviation: 'Guest',
+		isHidden: true,
+		isGuestInput: true,
+	},
+	{
+		_id: SourceLayer.HostOverride,
+		type: SourceLayerType.AUDIO,
+		_rank: 205,
+		name: 'Host Mic override',
+		abbreviation: 'HostMic',
+		isHidden: true,
+		activateKeyboardHotkeys: 'v,shift+v',
+		assignHotkeysToGlobalAdlibs: true,
 	},
 
 	{

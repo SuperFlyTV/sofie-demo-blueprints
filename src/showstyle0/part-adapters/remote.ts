@@ -1,8 +1,9 @@
 import { BlueprintResultPart, IBlueprintPiece, PieceLifespan } from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../common/context'
-import { StudioConfig } from '../../studio0/helpers/config'
+import { AudioSourceType, StudioConfig } from '../../studio0/helpers/config'
 import { PartProps, RemoteProps } from '../definitions'
 import { createAtemInputTimelineObjects } from '../helpers/atem'
+import { getAudioPrimaryObject } from '../helpers/audio'
 import { parseClipsFromObjects } from '../helpers/clips'
 import { parseGraphicsFromObjects } from '../helpers/graphics'
 import { createScriptPiece } from '../helpers/script'
@@ -12,6 +13,8 @@ import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
 export function generateRemotePart(context: PartContext, part: PartProps<RemoteProps>): BlueprintResultPart {
 	const config = context.getStudioConfig() as StudioConfig
 	const sourceInfo = getSourceInfoFromRaw(config, part.payload.input)
+
+	const audioTlObj = getAudioPrimaryObject(config, [{ type: AudioSourceType.Remote, index: part.payload.input.id - 1 }]) // todo: all hosts?
 
 	const cameraPiece: IBlueprintPiece = {
 		enable: {
@@ -23,7 +26,7 @@ export function generateRemotePart(context: PartContext, part: PartProps<RemoteP
 		sourceLayerId: SourceLayer.Remote,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Remote),
 		content: {
-			timelineObjects: [...createAtemInputTimelineObjects(sourceInfo.input)],
+			timelineObjects: [...createAtemInputTimelineObjects(sourceInfo.input), audioTlObj],
 		},
 	}
 

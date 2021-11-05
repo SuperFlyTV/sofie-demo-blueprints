@@ -1,9 +1,9 @@
 import { IBlueprintAdLibPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
-import { literal } from '../../common/util'
-import { CasparCGLayers } from '../../studio0/layers'
 import { ObjectType, SomeObject, VideoObject } from '../../common/definitions/objects'
+import { literal } from '../../common/util'
 import { AtemSourceType, StudioConfig } from '../../studio0/helpers/config'
-import { SourceLayer, getOutputLayerForSourceLayer } from '../layers'
+import { CasparCGLayers } from '../../studio0/layers'
+import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
 import { createAtemInputTimelineObjects } from './atem'
 
 export interface ClipProps {
@@ -24,7 +24,7 @@ export function getClipPlayerInput(config: StudioConfig): StudioConfig['atemSour
 	return mediaplayerInput
 }
 
-export function clipToAdlib (config: StudioConfig, clipObject: VideoObject): IBlueprintAdLibPiece {
+export function clipToAdlib(config: StudioConfig, clipObject: VideoObject): IBlueprintAdLibPiece {
 	const props = parseClipProps(clipObject)
 	const atemInput = getClipPlayerInput(config)
 
@@ -58,7 +58,7 @@ export function clipToAdlib (config: StudioConfig, clipObject: VideoObject): IBl
 }
 
 export function parseClipsFromObjects(config: StudioConfig, objects: SomeObject[]) {
-	const clips = objects.filter((o): o is VideoObject => o.objectType === ObjectType.Video) 
+	const clips = objects.filter((o): o is VideoObject => o.objectType === ObjectType.Video)
 
-	return clips.map(o => clipToAdlib(config, o))
+	return clips.map((o) => clipToAdlib(config, o))
 }

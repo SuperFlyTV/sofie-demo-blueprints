@@ -8,6 +8,8 @@ export enum SourceLayer {
 	GFX = 'gfx',
 
 	AudioBed = 'audioBed',
+	StudioGuests = 'guest',
+	HostOverride = 'hostOverride',
 
 	LowerThird = 'lower_third',
 	Strap = 'strap',
@@ -33,6 +35,8 @@ export function getOutputLayerForSourceLayer(layer: SourceLayer): OutputLayer {
 		case SourceLayer.Ticker:
 		case SourceLayer.Logo:
 			return OutputLayer.Gfx
+		case SourceLayer.StudioGuests:
+		case SourceLayer.HostOverride:
 		case SourceLayer.AudioBed:
 			return OutputLayer.Aux
 		default:

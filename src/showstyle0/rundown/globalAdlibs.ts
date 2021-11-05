@@ -5,8 +5,9 @@ import {
 	TSR,
 } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../common/util'
-import { AtemSourceType, StudioConfig } from '../../studio0/helpers/config'
-import { AtemLayers } from '../../studio0/layers'
+import { AtemSourceType, AudioSourceType, StudioConfig } from '../../studio0/helpers/config'
+import { AtemLayers, SisyfosLayers } from '../../studio0/layers'
+import { getAudioObjectOnLayer, getAudioPrimaryObject } from '../helpers/audio'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
 
 export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLibPiece[] {
@@ -35,6 +36,7 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 						},
 					},
 				}),
+				getAudioPrimaryObject(config, [{ type: AudioSourceType.Host, index: 0 }]),
 			],
 		},
 	})
@@ -61,9 +63,41 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 						},
 					},
 				}),
+				getAudioPrimaryObject(config, [{ type: AudioSourceType.Remote, index: id }]),
 			],
 		},
 	})
+
+	const hostMicOverrides = [
+		literal<IBlueprintAdLibPiece>({
+			_rank: 301,
+			externalId: 'Host Mics Up',
+			name: `Host Mics Up`,
+			lifespan: PieceLifespan.WithinPart,
+			sourceLayerId: SourceLayer.HostOverride,
+			outputLayerId: getOutputLayerForSourceLayer(SourceLayer.HostOverride),
+			content: {
+				timelineObjects: [
+					getAudioObjectOnLayer(config, SisyfosLayers.HostOverride, [{ type: AudioSourceType.Host, index: 0 }]),
+				],
+			},
+		}),
+		literal<IBlueprintAdLibPiece>({
+			_rank: 301,
+			externalId: 'Host Mics Down',
+			name: `Host Mics Down`,
+			lifespan: PieceLifespan.WithinPart,
+			sourceLayerId: SourceLayer.HostOverride,
+			outputLayerId: getOutputLayerForSourceLayer(SourceLayer.HostOverride),
+			content: {
+				timelineObjects: [
+					getAudioObjectOnLayer(config, SisyfosLayers.HostOverride, [
+						{ type: AudioSourceType.Host, index: 0, isOn: false },
+					]),
+				],
+			},
+		}),
+	]
 
 	return [
 		...config.atemSources
@@ -72,5 +106,6 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 		...config.atemSources
 			.filter((source) => source.type === AtemSourceType.Remote)
 			.map((source, i) => makeRemoteAdlib(i, source.input)),
+		...hostMicOverrides,
 	]
 }

@@ -26,5 +26,6 @@ export enum SisyfosLayers {
 	Baseline = 'sisyfos_baseline',
 	Primary = 'sisyfos_primary',
 	Guests = 'sisyfos_guests',
+	HostOverride = 'sisyfos_host_override',
 	ForceMute = 'sisyfos_forceMute',
 }

@@ -12,6 +12,7 @@ export type SomeObject =
 	| PipObject
 	| VoiceoverObject
 	| ScriptObject
+	| StudioGuestObject
 
 export type SomeAdlibPiece = VideoObject | GraphicObject
 
@@ -27,6 +28,7 @@ export enum ObjectType {
 	Pip = 'pip',
 	Voiceover = 'voiceover',
 	Script = 'script',
+	StudioGuest = 'guest',
 }
 
 export interface BaseObject extends SpreadsheetIngestPiece {
@@ -88,4 +90,11 @@ export interface VoiceoverObject extends BaseObject {
 }
 export interface ScriptObject extends BaseObject {
 	objectType: ObjectType.Script
+}
+
+export interface StudioGuestObject extends BaseObject {
+	objectType: ObjectType.StudioGuest
+	attributes: {
+		count: number
+	}
 }

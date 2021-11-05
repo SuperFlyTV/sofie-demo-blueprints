@@ -100,6 +100,39 @@ const devices: DeviceEntry[] = [
 			return false
 		},
 	},
+	{
+		id: 'sisyfos0',
+		firstVersion: '0.1.0',
+		type: TSR.DeviceType.SISYFOS,
+		defaultValue: (input): TSR.DeviceOptionsSisyfos => ({
+			type: TSR.DeviceType.SISYFOS,
+			options: literal<TSR.SisyfosOptions>({
+				host: input.host,
+				port: 5255,
+			}),
+		}),
+		input: [
+			{
+				label: 'Device config sisyfos0: Host',
+				description: 'Enter the Host parameter, example: "127.0.0.1"',
+				inputType: 'text',
+				attribute: 'host',
+				defaultValue: undefined,
+			},
+		],
+		validate: (device): string | boolean => {
+			if (!device.options) {
+				return 'Missing options'
+			}
+
+			const opts = device.options as TSR.SisyfosOptions
+			if (!opts.host) {
+				return 'Host is not set'
+			}
+
+			return false
+		},
+	},
 ]
 
 export const deviceMigrations = literal<MigrationStepStudio[]>([
