@@ -7,6 +7,8 @@ declare const VERSION_INTEGRATION: string // Injected by webpack
 const manifest: SystemBlueprintManifest = {
 	blueprintType: BlueprintManifestType.SYSTEM,
 
+	coreMigrations: [],
+
 	blueprintId: 'sofie-system',
 	blueprintVersion: VERSION,
 	integrationVersion: VERSION_INTEGRATION,
