@@ -18,6 +18,13 @@ export function parseClipProps(object: VideoObject): ClipProps {
 	}
 }
 
+export function parseClipEditorProps(object: VideoObject): ClipProps {
+	return {
+		fileName: object.attributes.fileName as string,
+		duration: object.duration * 1000,
+	}
+}
+
 export function getClipPlayerInput(config: StudioConfig): StudioConfig['atemSources'][any] | undefined {
 	const mediaplayerInput = config.atemSources.find((s) => s.type === AtemSourceType.MediaPlayer)
 

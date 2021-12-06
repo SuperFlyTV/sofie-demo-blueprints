@@ -8,6 +8,7 @@ import {
 } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../common/util'
 import { SpreadsheetIngestRundown } from '../../copy/spreadsheet-gateway'
+import { RundownMetadata } from '../helpers/metadata'
 import { getBaseline } from './baseline'
 import { getGlobalActions } from './globalActions'
 import { getGlobalAdlibs } from './globalAdlibs'
@@ -16,7 +17,9 @@ export function getRundown(
 	context: IShowStyleUserContext,
 	ingestRundown: ExtendedIngestRundown
 ): BlueprintResultRundown {
-	const rundownMetadata = {}
+	const rundownMetadata: RundownMetadata = {
+		ingestType: ingestRundown.type,
+	}
 
 	const timing: PlaylistTimingForwardTime = {
 		type: PlaylistTimingType.ForwardTime,
