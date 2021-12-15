@@ -56,12 +56,29 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: I
 	parts.forEach((part) => {
 		part.objects.forEach((piece) => {
 			if (piece.objectType === ObjectType.Graphic) {
-				piece.clipName = (piece.attributes as any).template
+				piece.clipName = (piece.attributes as any).template || ''
+
+				if (piece.clipName === 'gfx/strap') {
+					piece.attributes.location = (piece.attributes as any).field0
+					piece.attributes.text = (piece.attributes as any).field1
+				} else if (piece.clipName === 'gfx/head') {
+					piece.attributes.text = (piece.attributes as any).field0
+				} else if (piece.clipName === 'gfx/l3d') {
+					piece.attributes.name = (piece.attributes as any).field0
+					piece.attributes.description = (piece.attributes as any).field1
+				} else if (piece.clipName === 'gfx/fullscreen') {
+					;(piece.attributes as any).url = (piece.attributes as any).field0
+				}
 			} else if (piece.objectType === ObjectType.Video) {
 				piece.clipName = piece.attributes.fileName as string
 			}
+
 			piece.duration = piece.duration * 1000
 			piece.objectTime = piece.objectTime * 1000
+
+			if (!piece.objectTime && piece.objectTime !== 0) {
+				piece.isAdlib = true
+			}
 		})
 	})
 
