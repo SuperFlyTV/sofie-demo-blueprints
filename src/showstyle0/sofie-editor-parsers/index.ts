@@ -22,6 +22,8 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: I
 	const parts: PartProps<AllProps>[] = []
 	let type = SegmentType.NORMAL
 
+	throw new Error('Breaky')
+
 	if (ingestSegment.payload) {
 		const payload: EditorIngestSegment = ingestSegment.payload
 
