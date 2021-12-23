@@ -13,7 +13,9 @@ import { parseVO } from './vo'
 import { parseVT } from './vt'
 
 /**
- * This function converts from raw ingest segments to parsed segments
+ * This function converts from raw ingest segments to parsed segments, we
+ * make sure to parse to the data structure originally used by the
+ * spreadsheets.
  * @param context
  * @param ingestSegment The segment from the spreadsheet-gateway
  * @returns Intermediate data type used to generate parts
@@ -53,6 +55,8 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: I
 	}
 
 	// process the pieces
+	const graphicTypes = ['strap', 'head', 'l3d', 'fullscreen']
+
 	parts.forEach((part) => {
 		part.objects.forEach((piece) => {
 			if (piece.objectType === ObjectType.Graphic) {
@@ -75,6 +79,11 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: I
 
 			piece.duration = piece.duration * 1000
 			piece.objectTime = piece.objectTime * 1000
+
+			if (graphicTypes.includes(piece.objectType)) {
+				piece.objectType = ObjectType.Graphic
+				piece.clipName = 'gfx/' + piece.objectType
+			}
 
 			if (!piece.objectTime && piece.objectTime !== 0) {
 				piece.isAdlib = true
