@@ -67,6 +67,6 @@
         "moment": "2.29.1",
         "object-path": "^0.11.5",
         "type-fest": "^0.20.2",
-        "underscore": "1.12.0"
+        "underscore": "1.12.1"
     }
 }
