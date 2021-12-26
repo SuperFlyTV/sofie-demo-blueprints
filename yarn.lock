@@ -523,13 +523,13 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@sofie-automation/blueprints-integration@1.37.0-in-testing.13":
-  version "1.37.0-in-testing.13"
-  resolved "https://registry.yarnpkg.com/@sofie-automation/blueprints-integration/-/blueprints-integration-1.37.0-in-testing.13.tgz#506c1fdd8633bb9287bb0c758df3242c7927e37a"
-  integrity sha512-SR7a0VGe6KREdapFVtNNqTSiRw4zdf2V4KjbuefKulVEeh0glsZBfxk/0qysj92CON8bgaocwEStLz+UYqcziA==
+"@sofie-automation/blueprints-integration@1.37.0":
+  version "1.37.0"
+  resolved "https://registry.yarnpkg.com/@sofie-automation/blueprints-integration/-/blueprints-integration-1.37.0.tgz#95d2341ab637455868294db28eb339816eb6a40f"
+  integrity sha512-2PbCiB3ll5eDLWtqhJNWPPcV5NS+OnSh3BdoCwpbrnK9gbBaZHhaDbnG47vslz63T+vOzXD8yVaACZ39VTJJCg==
   dependencies:
     moment "2.29.1"
-    timeline-state-resolver-types "6.2.0-release37.4"
+    timeline-state-resolver-types "6.2.0"
     tslib "^2.3.1"
     underscore "1.13.1"
 
@@ -6418,10 +6418,10 @@ through@^2.3.8:
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
 
-timeline-state-resolver-types@6.2.0-release37.4:
-  version "6.2.0-release37.4"
-  resolved "https://registry.yarnpkg.com/timeline-state-resolver-types/-/timeline-state-resolver-types-6.2.0-release37.4.tgz#593f59d4b44c5fb4032207c09c4f411cb3488b50"
-  integrity sha512-jv1i0HOvl0ZeiAmgpC8GmB89XMbJ+kroYxEqLILqEsDtHd1LzaYOHZdgM8j3KkvgcHq8rP0XQL8yMWu0p5WcAg==
+timeline-state-resolver-types@6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/timeline-state-resolver-types/-/timeline-state-resolver-types-6.2.0.tgz#bbc46e82680f7d4938dac8c84080a5fce52f9a1a"
+  integrity sha512-4R55l8KvB1Xk11kAN60KLQoMd/rkysrTNlvB9eOLkoJ5PKmWSqtHV4VNHU8aXUSYfgdTZD9mwq69AbMuuvbiFw==
   dependencies:
     tslib "^2.3.1"
 
