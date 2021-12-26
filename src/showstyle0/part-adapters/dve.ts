@@ -19,6 +19,8 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 	const config = context.getStudioConfig() as StudioConfig
 	// const sourceInfo = getSourceInfoFromRaw(config, part.payload.input1)
 
+	context.logDebug(JSON.stringify(part, null, 2))
+
 	const layout = parseSuperSourceLayout(context, part.payload)
 	const boxes: TSR.SuperSourceBox[] = part.payload.inputs.map((input, i) => {
 		let source = undefined
@@ -118,7 +120,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 		name: `DVE Retain`,
 		lifespan: PieceLifespan.OutOnSegmentEnd,
 		sourceLayerId: SourceLayer.DVE_RETAIN,
-		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.DVE),
+		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.DVE_RETAIN),
 		adlibPreroll: SUPER_SOURCE_LATENCY,
 		content: {
 			...dveLayoutToContent(config, { boxes }, part.payload.inputs),

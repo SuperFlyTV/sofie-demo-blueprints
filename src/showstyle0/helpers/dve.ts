@@ -81,7 +81,7 @@ export function parseSuperSourceProps(
 export function parseSuperSourceLayout(context: IShowStyleContext, partProps: DVEProps): TSR.SuperSourceBox[] {
 	const config = parseConfig(context)
 	const layoutName = partProps.layout || config.dvePresets[0].name
-	const layout = config.dvePresets.find((p) => p.name === layoutName)
+	const layout = config.dvePresets.find((p) => p.name === layoutName) || config.dvePresets[0]
 
 	return (
 		layout?.preset.boxes

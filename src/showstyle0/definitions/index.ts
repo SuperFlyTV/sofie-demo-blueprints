@@ -48,7 +48,7 @@ export interface PartBaseProps {
 	externalId: string
 	duration: number
 	name: string
-	script: string
+	script?: string
 }
 
 export interface CameraProps extends PartBaseProps {
