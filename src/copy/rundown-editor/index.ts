@@ -1,16 +1,16 @@
 import { IngestPart, IngestSegment } from "@sofie-automation/blueprints-integration"
 
-export interface SpreadsheetIngestRundown {
+export interface EditorIngestRundown {
 	externalId: string
 	name: string // namnet på sheeten
 	expectedStart: number // unix time
 	expectedEnd: number // unix time
 }
 
-export interface DecoratedSpreadsheetIngestSegment extends IngestSegment {
-	payload?: SpreadsheetIngestSegment
+export interface DecoratedEditorIngestSegment extends IngestSegment {
+	payload?: EditorIngestSegment
 }
-export interface SpreadsheetIngestSegment {
+export interface EditorIngestSegment {
 	rundownId: string
 	externalId: string // unique within the parent runningOrder
 	rank: number
@@ -18,23 +18,24 @@ export interface SpreadsheetIngestSegment {
 	float: boolean
 }
 
-export interface DecoratedSpreadsheetIngestPart extends IngestPart {
-	payload?: SpreadsheetIngestPart
+export interface DecoratedEditorIngestPart extends IngestPart {
+	payload?: EditorIngestPart
 }
-export interface SpreadsheetIngestPart {
+export interface EditorIngestPart {
 	segmentId: string
 	externalId: string // unique within the parent section
 	rank: number
 	name: string
 	type: string //  Assume we want this
+    duration?: number
 	// type: string
 	float: boolean
 	script: string
 
-	pieces: SpreadsheetIngestPiece[]
+	pieces: EditorIngestPiece[]
 }
 
-export interface SpreadsheetIngestPiece {
+export interface EditorIngestPiece {
 	id: string
 	objectType: string
 	objectTime: number

@@ -1,7 +1,7 @@
 import {
 	BlueprintResultPart,
 	BlueprintResultSegment,
-	IRundownUserContext,
+	ISegmentUserContext,
 } from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../common/context'
 import { t } from '../../common/util'
@@ -25,7 +25,7 @@ import { generateOpenerPart as generateTitlesPart } from './titles'
 import { generateVOPart } from './vo'
 import { generateVTPart } from './vt'
 
-export function generateParts(context: IRundownUserContext, intermediateSegment: SegmentProps): BlueprintResultSegment {
+export function generateParts(context: ISegmentUserContext, intermediateSegment: SegmentProps): BlueprintResultSegment {
 	const parts = intermediateSegment.parts.map(
 		(rawPart): BlueprintResultPart => {
 			const partContext = new PartContext(context, rawPart.payload.externalId)

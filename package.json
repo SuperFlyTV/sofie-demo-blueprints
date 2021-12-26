@@ -1,6 +1,6 @@
 {
     "name": "sofie-blueprints-spreadsheet",
-    "version": "0.2.0-release33-in-testing.0",
+    "version": "0.3.0-release37-in-testing.0",
     "repository": "https://github.com/superflytv/sofie-blueprints-spreadsheet/",
     "license": "MIT",
     "files": [],
@@ -63,7 +63,7 @@
         "webpack-cli": "^3.3.12"
     },
     "dependencies": {
-        "@sofie-automation/blueprints-integration": "1.35.0",
+        "@sofie-automation/blueprints-integration": "1.37.0",
         "moment": "2.29.1",
         "object-path": "^0.11.5",
         "type-fest": "^0.20.2",

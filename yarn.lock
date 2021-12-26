@@ -523,14 +523,14 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@sofie-automation/blueprints-integration@1.35.0":
-  version "1.35.0"
-  resolved "https://registry.yarnpkg.com/@sofie-automation/blueprints-integration/-/blueprints-integration-1.35.0.tgz#37d3fc6c00c4e924218ee171240bc14ca50d8ccd"
-  integrity sha512-0sOTyQUaEk0GPC3SOR5KB+iWG76IRY5SG40NRbwtr1GR9cPLMLRhso/fJHL29tmB6hp+dEEo0t5X4XtIsc/3pg==
+"@sofie-automation/blueprints-integration@1.37.0":
+  version "1.37.0"
+  resolved "https://registry.yarnpkg.com/@sofie-automation/blueprints-integration/-/blueprints-integration-1.37.0.tgz#95d2341ab637455868294db28eb339816eb6a40f"
+  integrity sha512-2PbCiB3ll5eDLWtqhJNWPPcV5NS+OnSh3BdoCwpbrnK9gbBaZHhaDbnG47vslz63T+vOzXD8yVaACZ39VTJJCg==
   dependencies:
     moment "2.29.1"
-    timeline-state-resolver-types "^6.0.3"
-    tslib "^2.1.0"
+    timeline-state-resolver-types "6.2.0"
+    tslib "^2.3.1"
     underscore "1.13.1"
 
 "@sofie-automation/code-standard-preset@0.2.2":
@@ -6418,12 +6418,12 @@ through@^2.3.8:
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
 
-timeline-state-resolver-types@^6.0.3:
-  version "6.0.3"
-  resolved "https://registry.yarnpkg.com/timeline-state-resolver-types/-/timeline-state-resolver-types-6.0.3.tgz#c153adb4344431d87d1ca301b9b5974c0d2a13d2"
-  integrity sha512-zzR9AFD3ftg3bGhmlag/JCuIubA0S5e6VbMRpXTjcMsmFYs5A/W2qVilperd6pQDhkuXqrLpXEnPW0Ctsmj/xw==
+timeline-state-resolver-types@6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/timeline-state-resolver-types/-/timeline-state-resolver-types-6.2.0.tgz#bbc46e82680f7d4938dac8c84080a5fce52f9a1a"
+  integrity sha512-4R55l8KvB1Xk11kAN60KLQoMd/rkysrTNlvB9eOLkoJ5PKmWSqtHV4VNHU8aXUSYfgdTZD9mwq69AbMuuvbiFw==
   dependencies:
-    tslib "^2.1.0"
+    tslib "^2.3.1"
 
 timers-browserify@^2.0.4:
   version "2.0.12"
@@ -6573,10 +6573,10 @@ tslib@^1.13.0, tslib@^1.8.1, tslib@^1.9.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.1.0.tgz#da60860f1c2ecaa5703ab7d39bc05b6bf988b97a"
-  integrity sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==
+tslib@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
+  integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
 
 tsutils@^3.17.1:
   version "3.20.0"

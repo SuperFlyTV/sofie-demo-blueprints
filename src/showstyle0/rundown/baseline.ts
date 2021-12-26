@@ -1,7 +1,8 @@
 import { BlueprintResultBaseline, IShowStyleUserContext, TSR } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../common/util'
 import { AtemSourceType, StudioConfig } from '../../studio0/helpers/config'
-import { AtemLayers, CasparCGLayers } from '../../studio0/layers'
+import { AtemLayers, CasparCGLayers, SisyfosLayers } from '../../studio0/layers'
+import { getSisyfosBaseline } from '../helpers/audio'
 import { DVEDesigns, DVELayouts } from '../helpers/dve'
 
 export function getBaseline(context: IShowStyleUserContext): BlueprintResultBaseline {
@@ -95,6 +96,21 @@ export function getBaseline(context: IShowStyleUserContext): BlueprintResultBase
 					mode: 'BACKGROUND',
 				},
 			}),
-		]
+
+			literal<TSR.TimelineObjSisyfosChannels>({
+				id: '',
+				enable: {
+					while: 1,
+				},
+				layer: SisyfosLayers.Baseline,
+				content: {
+					deviceType: TSR.DeviceType.SISYFOS,
+					type: TSR.TimelineContentTypeSisyfos.CHANNELS,
+					overridePriority: -10,
+
+					channels: getSisyfosBaseline(config),
+				},
+			}),
+		],
 	}
 }

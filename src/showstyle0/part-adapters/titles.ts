@@ -97,6 +97,7 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 
 			expectedDuration: part.payload.duration,
 			autoNext: true,
+			prerollDuration: config.casparcgLatency,
 		},
 		pieces,
 		adLibPieces: [],

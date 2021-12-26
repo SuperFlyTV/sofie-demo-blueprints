@@ -1,5 +1,6 @@
 import { BlueprintManifestType, ShowStyleBlueprintManifest } from '@sofie-automation/blueprints-integration'
 import { showStyleConfigManifest } from './config-manifests'
+import { executeAction } from './executeActions'
 import { getSegment } from './getSegment'
 import { getShowStyleVariantId } from './getShowStyleVariantId'
 import { showStyleMigrations } from './migrations'
@@ -21,6 +22,7 @@ const manifest: ShowStyleBlueprintManifest = {
 	getShowStyleVariantId,
 	getRundown,
 	getSegment,
+	executeAction,
 
 	showStyleConfigManifest,
 	showStyleMigrations,

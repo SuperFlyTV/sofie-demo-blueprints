@@ -1,5 +1,5 @@
 import { ConfigManifestEntry, ConfigManifestEntryType } from '@sofie-automation/blueprints-integration'
-import { AtemSourceType } from './helpers/config'
+import { AtemSourceType, AudioSourceType } from './helpers/config'
 
 export const studioConfigManifest: ConfigManifestEntry[] = [
 	{
@@ -55,6 +55,36 @@ export const studioConfigManifest: ConfigManifestEntry[] = [
 				type: ConfigManifestEntryType.NUMBER,
 				required: true,
 				defaultVal: 1,
+				rank: 2,
+			},
+		],
+	},
+	{
+		id: 'sisyfosSources',
+		name: 'Sisyfos Sources',
+		description: 'Description of Sisyfos channels',
+		type: ConfigManifestEntryType.TABLE,
+		required: true,
+		defaultVal: [],
+		columns: [
+			{
+				id: 'source',
+				name: 'Source',
+				description: 'Channel number of the sisyfos channel',
+				type: ConfigManifestEntryType.INT,
+				required: true,
+				defaultVal: 0,
+				rank: 1,
+				zeroBased: true,
+			},
+			{
+				id: 'type',
+				name: 'Type',
+				description: 'Input type',
+				type: ConfigManifestEntryType.ENUM,
+				options: [AudioSourceType.Host, AudioSourceType.Guest, AudioSourceType.Remote, AudioSourceType.Playback],
+				required: true,
+				defaultVal: 'host',
 				rank: 2,
 			},
 		],

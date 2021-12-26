@@ -1,4 +1,5 @@
 import {
+	IShowStyleContext,
 	SourceLayerType,
 	SplitsContent,
 	SplitsContentBoxContent,
@@ -9,6 +10,7 @@ import { literal } from '../../common/util'
 import { AtemSourceType, StudioConfig } from '../../studio0/helpers/config'
 import { DVEProps } from '../definitions'
 import { getClipPlayerInput } from './clips'
+import { parseConfig } from './config'
 import { getSourceInfoFromRaw } from './sources'
 
 export type DVELayout = TSR.SuperSourceBox[]
@@ -46,6 +48,46 @@ export const DVEDesigns: Record<DVELayouts, DVELayout> = {
 			enabled: false,
 		},
 	],
+}
+
+export function parseSuperSourceProps(
+	context: IShowStyleContext,
+	partProps: DVEProps
+): TSR.TimelineObjAtemSsrcProps['content']['ssrcProps'] {
+	const config = parseConfig(context)
+	const layoutName = partProps.layout || config.dvePresets[0].name
+	const layout = config.dvePresets.find((p) => p.name === layoutName)
+
+	return literal<TSR.TimelineObjAtemSsrcProps['content']['ssrcProps']>({
+		artFillSource: layout?.preset.properties?.artFillSource || 0,
+		artCutSource: layout?.preset.properties?.artCutSource || 0,
+		artOption: layout?.preset.properties?.artOption || 0,
+		...(layout?.preset.properties?.artPreMultiplied === false
+			? {
+					artPreMultiplied: false,
+					artInvertKey: layout?.preset.properties.artInvertKey,
+					artClip: layout?.preset.properties.artClip * 10,
+					artGain: layout?.preset.properties.artGain * 10,
+			  }
+			: { artPreMultiplied: true }),
+		...(layout?.preset.border?.borderEnabled
+			? {
+					...layout?.preset.border,
+			  }
+			: { borderEnabled: false }),
+	})
+}
+
+export function parseSuperSourceLayout(context: IShowStyleContext, partProps: DVEProps): TSR.SuperSourceBox[] {
+	const config = parseConfig(context)
+	const layoutName = partProps.layout || config.dvePresets[0].name
+	const layout = config.dvePresets.find((p) => p.name === layoutName) || config.dvePresets[0]
+
+	return (
+		layout?.preset.boxes
+			.map((b) => literal<TSR.SuperSourceBox>({ ...b, source: 0 }))
+			.slice(0, layout.boxes) || []
+	)
 }
 
 export function dveLayoutToContent(

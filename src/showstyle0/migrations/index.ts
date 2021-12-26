@@ -3,7 +3,12 @@ import * as _ from 'underscore'
 import { literal } from '../../common/util'
 import OutputLayerDefaults from './outputlayer-defaults'
 import SourceLayerDefaults from './sourcelayer-defaults'
-import { getOutputLayerDefaultsMigrationSteps, getSourceLayerDefaultsMigrationSteps } from './util'
+import { TriggeredActionsDefaults } from './triggered-actions-defaults'
+import {
+	getOutputLayerDefaultsMigrationSteps,
+	getSourceLayerDefaultsMigrationSteps,
+	getTriggeredActionsMigrationSteps,
+} from './util'
 import { variants } from './variants-defaults'
 
 declare const VERSION: string // Injected by webpack
@@ -44,5 +49,6 @@ export const showStyleMigrations: MigrationStepShowStyle[] = literal<MigrationSt
 		...getCreateVariantMigrationSteps(),
 		...getSourceLayerDefaultsMigrationSteps(VERSION, SourceLayerDefaults),
 		...getOutputLayerDefaultsMigrationSteps(VERSION, OutputLayerDefaults),
+		...getTriggeredActionsMigrationSteps(VERSION, TriggeredActionsDefaults),
 	])
 )

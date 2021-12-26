@@ -1,10 +1,11 @@
 import { BlueprintResultPart, IBlueprintPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../common/context'
 import { literal } from '../../common/util'
-import { StudioConfig } from '../../studio0/helpers/config'
+import { AudioSourceType, StudioConfig } from '../../studio0/helpers/config'
 import { CasparCGLayers } from '../../studio0/layers'
 import { PartProps, VTProps } from '../definitions'
 import { createAtemInputTimelineObjects } from '../helpers/atem'
+import { getAudioPrimaryObject } from '../helpers/audio'
 import { getClipPlayerInput } from '../helpers/clips'
 import { parseGraphicsFromObjects } from '../helpers/graphics'
 import { createScriptPiece } from '../helpers/script'
@@ -14,7 +15,9 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 	const config = context.getStudioConfig() as StudioConfig
 	const atemInput = getClipPlayerInput(config)
 
-	const cameraPiece: IBlueprintPiece = {
+	const audioTlObj = getAudioPrimaryObject(config, [{ type: AudioSourceType.Playback, index: 0 }]) // todo: which playback?
+
+	const vtPiece: IBlueprintPiece = {
 		enable: {
 			start: 0,
 		},
@@ -40,11 +43,13 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 						file: part.payload.clipProps.fileName,
 					},
 				}),
+
+				audioTlObj,
 			],
 		},
 	}
 
-	const pieces = [cameraPiece]
+	const pieces = [vtPiece]
 	const scriptPiece = createScriptPiece(part.payload.script, part.payload.externalId)
 	if (scriptPiece) pieces.push(scriptPiece)
 
