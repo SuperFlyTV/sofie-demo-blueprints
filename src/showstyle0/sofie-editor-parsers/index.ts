@@ -81,8 +81,8 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: I
 			piece.objectTime = piece.objectTime * 1000
 
 			if (graphicTypes.includes(piece.objectType)) {
-				piece.objectType = ObjectType.Graphic
 				piece.clipName = 'gfx/' + piece.objectType
+				piece.objectType = ObjectType.Graphic
 			}
 
 			if (!piece.objectTime && piece.objectTime !== 0) {
