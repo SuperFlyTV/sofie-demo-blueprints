@@ -4,10 +4,10 @@ import { literal } from '../../common/util'
 import { StudioConfig } from '../../studio0/helpers/config'
 import { CasparCGLayers } from '../../studio0/layers'
 import { PartProps, VOProps } from '../definitions'
-import { createAtemInputTimelineObjects } from '../helpers/atem'
 import { getClipPlayerInput } from '../helpers/clips'
 import { parseGraphicsFromObjects } from '../helpers/graphics'
 import { createScriptPiece } from '../helpers/script'
+import { createVisionMixerObjects } from '../helpers/visionMixer'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
 
 export function generateVOPart(context: PartContext, part: PartProps<VOProps>): BlueprintResultPart {
@@ -28,7 +28,7 @@ export function generateVOPart(context: PartContext, part: PartProps<VOProps>): 
 			fileName: part.payload.clipProps.fileName,
 
 			timelineObjects: [
-				...createAtemInputTimelineObjects(atemInput?.input || 0, config.casparcgLatency),
+				...createVisionMixerObjects(config, atemInput?.input || 0, config.casparcgLatency),
 
 				literal<TSR.TimelineObjCCGMedia>({
 					id: '',

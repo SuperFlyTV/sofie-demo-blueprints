@@ -1,16 +1,16 @@
 import { BlueprintResultPart, IBlueprintPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../common/context'
 import { literal } from '../../common/util'
-import { AtemSourceType, AudioSourceType, StudioConfig } from '../../studio0/helpers/config'
+import { AudioSourceType, SourceType, StudioConfig } from '../../studio0/helpers/config'
 import { AtemLayers } from '../../studio0/layers'
 import { DVEProps, PartProps } from '../definitions'
-import { createAtemInputTimelineObjects } from '../helpers/atem'
 import { getAudioPrimaryObject } from '../helpers/audio'
 import { getClipPlayerInput, parseClipsFromObjects } from '../helpers/clips'
 import { dveLayoutToContent, parseSuperSourceLayout, parseSuperSourceProps } from '../helpers/dve'
 import { parseGraphicsFromObjects } from '../helpers/graphics'
 import { createScriptPiece } from '../helpers/script'
 import { getSourceInfoFromRaw } from '../helpers/sources'
+import { createVisionMixerObjects } from '../helpers/visionMixer'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
 
 const SUPER_SOURCE_LATENCY = 80
@@ -44,12 +44,12 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 						type: AudioSourceType.Playback,
 						index: 0, // whihc player?
 					}
-				} else if (input.type === AtemSourceType.Camera) {
+				} else if (input.type === SourceType.Camera) {
 					return {
 						type: AudioSourceType.Host, // all hosts?
 						index: 0,
 					}
-				} else if (input.type === AtemSourceType.Remote) {
+				} else if (input.type === SourceType.Remote) {
 					return {
 						type: AudioSourceType.Remote,
 						index: input.id - 1,
@@ -74,7 +74,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 			...dveLayoutToContent(config, { boxes }, part.payload.inputs),
 
 			timelineObjects: [
-				...createAtemInputTimelineObjects(6000, SUPER_SOURCE_LATENCY),
+				...createVisionMixerObjects(config, 6000, SUPER_SOURCE_LATENCY), // TODO - use config for vmix
 
 				literal<TSR.TimelineObjAtemSsrcProps>({
 					id: '',

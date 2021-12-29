@@ -1,7 +1,16 @@
 import { ConfigManifestEntry, ConfigManifestEntryType } from '@sofie-automation/blueprints-integration'
-import { AtemSourceType, AudioSourceType } from './helpers/config'
+import { AudioSourceType, SourceType, VisionMixerType } from './helpers/config'
 
 export const studioConfigManifest: ConfigManifestEntry[] = [
+	{
+		id: 'visionMixerType',
+		name: 'Vision mixer type',
+		description: 'Atem or VMix',
+		type: ConfigManifestEntryType.ENUM,
+		required: true,
+		defaultVal: VisionMixerType.Atem,
+		options: [VisionMixerType.Atem, VisionMixerType.VMix],
+	},
 	{
 		id: 'atemSources',
 		name: 'Atem Sources',
@@ -24,7 +33,7 @@ export const studioConfigManifest: ConfigManifestEntry[] = [
 				name: 'Type',
 				description: 'Input type',
 				type: ConfigManifestEntryType.ENUM,
-				options: [AtemSourceType.Camera, AtemSourceType.Remote, AtemSourceType.MediaPlayer, AtemSourceType.Graphics],
+				options: [SourceType.Camera, SourceType.Remote, SourceType.MediaPlayer, SourceType.Graphics],
 				required: true,
 				defaultVal: 'camera',
 				rank: 2,
@@ -55,6 +64,35 @@ export const studioConfigManifest: ConfigManifestEntry[] = [
 				type: ConfigManifestEntryType.NUMBER,
 				required: true,
 				defaultVal: 1,
+				rank: 2,
+			},
+		],
+	},
+	{
+		id: 'vmixSources',
+		name: 'VMix Sources',
+		description: 'Description of vmix inputs i.e. cameras, remotes etc.',
+		type: ConfigManifestEntryType.TABLE,
+		required: true,
+		defaultVal: [],
+		columns: [
+			{
+				id: 'input',
+				name: 'Input',
+				description: 'Input number for the vmix source',
+				type: ConfigManifestEntryType.NUMBER,
+				required: true,
+				defaultVal: 0,
+				rank: 1,
+			},
+			{
+				id: 'type',
+				name: 'Type',
+				description: 'Input type',
+				type: ConfigManifestEntryType.ENUM,
+				options: [SourceType.Camera, SourceType.Remote, SourceType.MediaPlayer, SourceType.Graphics],
+				required: true,
+				defaultVal: 'camera',
 				rank: 2,
 			},
 		],

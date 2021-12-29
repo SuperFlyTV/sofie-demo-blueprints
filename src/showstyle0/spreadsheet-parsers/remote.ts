@@ -1,7 +1,7 @@
 import { ObjectType, RemoteObject, SomeObject } from '../../common/definitions/objects'
 import { t } from '../../common/util'
 import { SpreadsheetIngestPart } from '../../copy/spreadsheet-gateway'
-import { AtemSourceType } from '../../studio0/helpers/config'
+import { SourceType } from '../../studio0/helpers/config'
 import { InvalidProps, PartInfo, PartProps, PartType, RemoteProps } from '../definitions'
 import { findSource } from '../helpers/sources'
 import { parseBaseProps } from './base'
@@ -13,7 +13,7 @@ export function parseRemote(ingestPart: SpreadsheetIngestPart): PartProps<Remote
 		return createInvalidProps(t('No remote input object'), ingestPart)
 	}
 
-	const input = findSource(remotePiece.attributes.source, AtemSourceType.Remote)
+	const input = findSource(remotePiece.attributes.source, SourceType.Remote)
 	if (!input) {
 		return createInvalidProps(t(`Could not find remote source for input ${remotePiece.attributes.source}`), ingestPart)
 	}

@@ -1,6 +1,6 @@
 import { ObjectType, SomeObject, SplitObject, VideoObject } from '../../common/definitions/objects'
 import { SpreadsheetIngestPart } from '../../copy/spreadsheet-gateway'
-import { AtemSourceType } from '../../studio0/helpers/config'
+import { SourceType } from '../../studio0/helpers/config'
 import { DVEProps, InvalidProps, PartInfo, PartProps, PartType } from '../definitions'
 import { parseClipProps } from '../helpers/clips'
 import { findSource } from '../helpers/sources'
@@ -14,10 +14,10 @@ export function parseDVE(ingestPart: SpreadsheetIngestPart): PartProps<DVEProps 
 
 	ingestPart.pieces.forEach((p) => {
 		if (p.objectType === ObjectType.Camera) {
-			const source = findSource(p.attributes.name, AtemSourceType.Camera)
+			const source = findSource(p.attributes.name, SourceType.Camera)
 			if (source) splitInputs.push(source)
 		} else if (p.objectType === ObjectType.Remote) {
-			const source = findSource(p.attributes.source, AtemSourceType.Remote)
+			const source = findSource(p.attributes.source, SourceType.Remote)
 			if (source) splitInputs.push(source)
 		} else if (p.objectType === ObjectType.Video && !hasVideo) {
 			hasVideo = true

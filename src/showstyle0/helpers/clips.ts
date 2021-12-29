@@ -1,10 +1,10 @@
 import { IBlueprintAdLibPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
 import { ObjectType, SomeObject, VideoObject } from '../../common/definitions/objects'
-import { literal } from '../../common/util'
-import { AtemSourceType, StudioConfig } from '../../studio0/helpers/config'
+import { assertUnreachable, literal } from '../../common/util'
+import { SourceType, StudioConfig, VisionMixerType } from '../../studio0/helpers/config'
 import { CasparCGLayers } from '../../studio0/layers'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
-import { createAtemInputTimelineObjects } from './atem'
+import { createVisionMixerObjects } from './visionMixer'
 
 export interface ClipProps {
 	fileName: string
@@ -26,14 +26,22 @@ export function parseClipEditorProps(object: VideoObject): ClipProps {
 }
 
 export function getClipPlayerInput(config: StudioConfig): StudioConfig['atemSources'][any] | undefined {
-	const mediaplayerInput = config.atemSources.find((s) => s.type === AtemSourceType.MediaPlayer)
+	if (config.visionMixerType === VisionMixerType.Atem) {
+		const mediaplayerInput = config.atemSources.find((s) => s.type === SourceType.MediaPlayer)
 
-	return mediaplayerInput
+		return mediaplayerInput
+	} else if (config.visionMixerType === VisionMixerType.VMix) {
+		const mediaplayerInput = config.vmixSources.find((s) => s.type === SourceType.MediaPlayer)
+
+		return mediaplayerInput
+	} else {
+		assertUnreachable(config.visionMixerType)
+	}
 }
 
 export function clipToAdlib(config: StudioConfig, clipObject: VideoObject): IBlueprintAdLibPiece {
 	const props = parseClipProps(clipObject)
-	const atemInput = getClipPlayerInput(config)
+	const visionMixerInput = getClipPlayerInput(config)
 
 	return literal<IBlueprintAdLibPiece>({
 		_rank: 0,
@@ -46,7 +54,7 @@ export function clipToAdlib(config: StudioConfig, clipObject: VideoObject): IBlu
 			fileName: props.fileName,
 
 			timelineObjects: [
-				...createAtemInputTimelineObjects(atemInput?.input || 0, config.casparcgLatency),
+				...createVisionMixerObjects(config, visionMixerInput?.input || 0, config.casparcgLatency),
 
 				literal<TSR.TimelineObjCCGMedia>({
 					id: '',

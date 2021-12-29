@@ -4,16 +4,16 @@ import { literal } from '../../common/util'
 import { AudioSourceType, StudioConfig } from '../../studio0/helpers/config'
 import { CasparCGLayers } from '../../studio0/layers'
 import { PartProps, VTProps } from '../definitions'
-import { createAtemInputTimelineObjects } from '../helpers/atem'
 import { getAudioPrimaryObject } from '../helpers/audio'
 import { getClipPlayerInput } from '../helpers/clips'
 import { parseGraphicsFromObjects } from '../helpers/graphics'
 import { createScriptPiece } from '../helpers/script'
+import { createVisionMixerObjects } from '../helpers/visionMixer'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
 
 export function generateVTPart(context: PartContext, part: PartProps<VTProps>): BlueprintResultPart {
 	const config = context.getStudioConfig() as StudioConfig
-	const atemInput = getClipPlayerInput(config)
+	const visionMixerInput = getClipPlayerInput(config)
 
 	const audioTlObj = getAudioPrimaryObject(config, [{ type: AudioSourceType.Playback, index: 0 }]) // todo: which playback?
 
@@ -30,7 +30,7 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 			fileName: part.payload.clipProps.fileName,
 
 			timelineObjects: [
-				...createAtemInputTimelineObjects(atemInput?.input || 0, config.casparcgLatency),
+				...createVisionMixerObjects(config, visionMixerInput?.input || 0, config.casparcgLatency),
 
 				literal<TSR.TimelineObjCCGMedia>({
 					id: '',

@@ -1,6 +1,11 @@
 import { IStudioContext, IStudioUserContext } from '@sofie-automation/blueprints-integration'
 
-export enum AtemSourceType {
+export enum VisionMixerType {
+	Atem = 'atem',
+	VMix = 'vmix',
+}
+
+export enum SourceType {
 	Camera = 'camera',
 	Remote = 'remote',
 	MediaPlayer = 'mediaplayer',
@@ -20,18 +25,27 @@ export interface BlueprintConfig {
 }
 
 export interface StudioConfig {
+	visionMixerType: VisionMixerType
+
 	atemSources: {
 		input: number
-		type: AtemSourceType
+		type: SourceType
 	}[]
 	atemOutputs: {
 		output: number // aux number, needs a mapping
 		source: number
 	}[]
+
+	vmixSources: {
+		input: number
+		type: SourceType
+	}[]
+
 	sisyfosSources: {
 		source: number
 		type: AudioSourceType
 	}[]
+
 	previewRenderer?: string
 	casparcgLatency: number
 }
