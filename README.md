@@ -1,6 +1,8 @@
 # Sofie: The Modern TV News Studio Automation System
 
-This is **not** the NRK specific blueprints for the [Sofie News Studio Automation System](https://github.com/nrkno/Sofie-TV-automation/).
+This is **not** the NRK-specific blueprints for the [Sofie News Studio Automation System](https://github.com/nrkno/Sofie-TV-automation/).
+
+These blueprints work with the [Spreadsheet Gateway](https://github.com/SuperFlyTV/spreadsheet-gateway) or the [Rundown Editor](https://github.com/SuperFlyTV/sofie-automation-rundown-editor).
 
 ## Installation
 

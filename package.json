@@ -1,7 +1,7 @@
 {
-    "name": "sofie-blueprints-spreadsheet",
+    "name": "sofie-demo-blueprints",
     "version": "0.3.0",
-    "repository": "https://github.com/superflytv/sofie-blueprints-spreadsheet/",
+    "repository": "https://github.com/superflytv/sofie-demo-blueprints/",
     "license": "MIT",
     "files": [],
     "scripts": {
