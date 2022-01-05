@@ -32,6 +32,36 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: I
 		ingestSegment.parts.forEach((part) => {
 			const partPayload: EditorIngestPart = part.payload
 
+			// process the pieces
+			const graphicTypes = ['strap', 'head', 'l3d', 'fullscreen']
+			partPayload.pieces.forEach((piece) => {
+				if (piece.objectType === ObjectType.Graphic) {
+					piece.clipName = (piece.attributes as any).template || ''
+
+					if (piece.clipName === 'gfx/strap') {
+						piece.attributes.location = (piece.attributes as any).field0
+						piece.attributes.text = (piece.attributes as any).field1
+					} else if (piece.clipName === 'gfx/head') {
+						piece.attributes.text = (piece.attributes as any).field0
+					} else if (piece.clipName === 'gfx/l3d') {
+						piece.attributes.name = (piece.attributes as any).field0
+						piece.attributes.description = (piece.attributes as any).field1
+					} else if (piece.clipName === 'gfx/fullscreen') {
+						;(piece.attributes as any).url = (piece.attributes as any).field0
+					}
+				} else if (piece.objectType === ObjectType.Video) {
+					piece.clipName = piece.attributes.fileName as string
+				}
+
+				piece.duration = piece.duration * 1000
+				piece.objectTime = piece.objectTime * 1000
+
+				if (graphicTypes.includes(piece.objectType)) {
+					piece.clipName = 'gfx/' + piece.objectType
+					piece.objectType = ObjectType.Graphic
+				}
+			})
+
 			if (partPayload.type?.match(/cam/i)) {
 				parts.push(parseCamera(partPayload))
 			} else if (partPayload.type?.match(/dve/i)) {
@@ -55,36 +85,8 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: I
 	}
 
 	// process the pieces
-	const graphicTypes = ['strap', 'head', 'l3d', 'fullscreen']
-
 	parts.forEach((part) => {
 		part.objects.forEach((piece) => {
-			if (piece.objectType === ObjectType.Graphic) {
-				piece.clipName = (piece.attributes as any).template || ''
-
-				if (piece.clipName === 'gfx/strap') {
-					piece.attributes.location = (piece.attributes as any).field0
-					piece.attributes.text = (piece.attributes as any).field1
-				} else if (piece.clipName === 'gfx/head') {
-					piece.attributes.text = (piece.attributes as any).field0
-				} else if (piece.clipName === 'gfx/l3d') {
-					piece.attributes.name = (piece.attributes as any).field0
-					piece.attributes.description = (piece.attributes as any).field1
-				} else if (piece.clipName === 'gfx/fullscreen') {
-					;(piece.attributes as any).url = (piece.attributes as any).field0
-				}
-			} else if (piece.objectType === ObjectType.Video) {
-				piece.clipName = piece.attributes.fileName as string
-			}
-
-			piece.duration = piece.duration * 1000
-			piece.objectTime = piece.objectTime * 1000
-
-			if (graphicTypes.includes(piece.objectType)) {
-				piece.clipName = 'gfx/' + piece.objectType
-				piece.objectType = ObjectType.Graphic
-			}
-
 			if (!piece.objectTime && piece.objectTime !== 0) {
 				piece.isAdlib = true
 			}
