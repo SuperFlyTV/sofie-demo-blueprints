@@ -75,6 +75,7 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
 1. Restart the Playout Gateway.
 1. Use the [Rundown Editor](https://github.com/SuperFlyTV/sofie-automation-rundown-editor) or the [Spreadsheet Gateway](https://github.com/SuperFlyTV/spreadsheet-gateway) to add a demo rundown to Sofie.
 1. Go to the Rundowns page (http://localhost:3000/rundowns) and click on the rundown you added in the previous step.
+   - > 💡 Certain changes to your Sofie configuration may require that the rundown be re-ingested for those changes to take effect. If using the Rundown Editor, this can be achieved by selecting the rundown in question, unchecking the "Sync to Sofie" box, hitting save, rechecking that box, then hitting save again.
 1. (Optional) If you wish to have accurate media/VT statuses in the Rundown view, set up [tv-automation-package-manager](https://github.com/nrkno/tv-automation-package-manager).
 1. Right-click the blue header bar and click Activate (Rehearsal).
 1. Hit F12 to Take.
