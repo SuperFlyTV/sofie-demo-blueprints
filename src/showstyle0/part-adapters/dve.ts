@@ -2,7 +2,7 @@ import { BlueprintResultPart, IBlueprintPiece, PieceLifespan, TSR } from '@sofie
 import { PartContext } from '../../common/context'
 import { literal } from '../../common/util'
 import { AudioSourceType, SourceType, StudioConfig } from '../../studio0/helpers/config'
-import { AtemLayers } from '../../studio0/layers'
+import { AtemLayers, VMixLayers } from '../../studio0/layers'
 import { DVEProps, PartProps } from '../definitions'
 import { getAudioPrimaryObject } from '../helpers/audio'
 import { getClipPlayerInput, parseClipsFromObjects } from '../helpers/clips'
@@ -99,6 +99,21 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 
 						ssrc: {
 							boxes,
+						},
+					},
+				}),
+
+				literal<TSR.TimelineObjVMixInput>({
+					id: '',
+					enable: { start: 0 },
+					priority: 1,
+					layer: VMixLayers.VMixDVEMultiview,
+					content: {
+						deviceType: TSR.DeviceType.VMIX,
+						type: TSR.TimelineContentTypeVMix.INPUT,
+						overlays: {
+							1: boxes[0].source ?? -1,
+							2: boxes[1].source ?? -1,
 						},
 					},
 				}),

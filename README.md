@@ -72,6 +72,11 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
      - For vMix, the port can be obtained from "Settings > Web Contoller". It defaults to `8088`.
 1. Go back to the Studio settings (http://localhost:3000/settings/studio/studio0) and scroll down to the Blueprint Configuration section.
    - Create and fill out the configuration for the devices you have.
+1. If using vMix, scroll down to the Layer Mappings section and find the `vmix_dve_multiview` layer.
+   - Click the edit button (pencil icon) to the right of this layer.
+   - Set the Index to the number of the vMix input you'd like to use for DVE splits.
+   - In vMix, open the settings for that input and select "Layers / Multi View" in the left pane.
+   - In the top right, select the DVE layout you'd like to use. We recommend the third option in the top row, but you can use whatever you like.
 1. Restart the Playout Gateway.
 1. Use the [Rundown Editor](https://github.com/SuperFlyTV/sofie-automation-rundown-editor) or the [Spreadsheet Gateway](https://github.com/SuperFlyTV/spreadsheet-gateway) to add a demo rundown to Sofie.
 1. Go to the Rundowns page (http://localhost:3000/rundowns) and click on the rundown you added in the previous step.

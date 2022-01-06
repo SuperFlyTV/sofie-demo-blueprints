@@ -178,6 +178,21 @@ export const VMixMappings = literal<BlueprintMappings>({
 		mappingType: TSR.MappingVMixType.Overlay,
 		index: 1,
 	}),
+
+	/**
+	 * Note that the word "Multiview" here does not refer to a traditional multiviewer used to monitor inputs and outputs in a studio.
+	 * Instead, vMix uses this word to describe an input which has other inputs overlaid on top of it like a DVE.
+	 * This is vMix's version of an ATEM SuperSource.
+	 */
+	[VMixLayers.VMixDVEMultiview]: literal<TSR.MappingVMixInput & BlueprintMapping>({
+		device: TSR.DeviceType.VMIX,
+		deviceId: 'vmix0',
+		lookahead: LookaheadMode.WHEN_CLEAR,
+		lookaheadMaxSearchDistance: 1,
+
+		mappingType: TSR.MappingVMixType.Input,
+		index: 6,
+	}),
 })
 
 export function getAllAuxMappings(total: number): BlueprintMappings {
