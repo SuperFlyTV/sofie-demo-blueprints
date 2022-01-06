@@ -68,6 +68,8 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
    - If using an ATEM, give it a Device ID of `atem0`. If using vMix, give it a Device ID of `vmix0`.
    - Select the appropriate Device Type from the dropdown.
    - Fill out the Host and Port fields.
+     - For an ATEM, the port will be `9910`.
+     - For vMix, the port can be obtained from "Settings > Web Contoller". It defaults to `8088`.
 1. Go back to the Studio settings (http://localhost:3000/settings/studio/studio0) and scroll down to the Blueprint Configuration section.
    - Create and fill out the configuration for the devices you have.
 1. Restart the Playout Gateway.
