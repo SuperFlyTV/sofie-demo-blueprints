@@ -32,6 +32,13 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 		content: {
 			fileName: 'assets/Sofie News Opener',
 
+			/**
+			 * The opener video file does not have an audio track,
+			 * so we set this to true to suppress the "missing audio" warning
+			 * in the Rundown view.
+			 */
+			ignoreAudioFormat: true,
+
 			timelineObjects: [
 				...createAtemInputTimelineObjects(atemInput?.input || 0),
 
