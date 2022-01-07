@@ -1,6 +1,12 @@
-import { BlueprintResultPart, IBlueprintPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
+import {
+	BlueprintResultPart,
+	ExpectedPackage,
+	IBlueprintPiece,
+	PieceLifespan,
+	TSR,
+} from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../common/context'
-import { literal } from '../../common/util'
+import { changeExtension, literal, stripExtension } from '../../common/util'
 import { AudioSourceType, StudioConfig } from '../../studio0/helpers/config'
 import { CasparCGLayers } from '../../studio0/layers'
 import { PartProps, VTProps } from '../definitions'
@@ -40,13 +46,35 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 						deviceType: TSR.DeviceType.CASPARCG,
 						type: TSR.TimelineContentTypeCasparCg.MEDIA,
 
-						file: part.payload.clipProps.fileName,
+						file: stripExtension(part.payload.clipProps.fileName),
 					},
 				}),
 
 				audioTlObj,
 			],
 		},
+		expectedPackages: [
+			literal<ExpectedPackage.ExpectedPackageMediaFile>({
+				_id: context.getHashId(part.payload.clipProps.fileName, true),
+				layers: [CasparCGLayers.CasparCGClipPlayer],
+				type: ExpectedPackage.PackageType.MEDIA_FILE,
+				content: {
+					filePath: part.payload.clipProps.fileName,
+				},
+				version: {},
+				contentVersionHash: '',
+				sources: [],
+				sideEffect: {
+					previewPackageSettings: {
+						path: `previews/${changeExtension(part.payload.clipProps.fileName, 'webm')}`,
+					},
+					thumbnailPackageSettings: {
+						path: `thumbnails/${changeExtension(part.payload.clipProps.fileName, 'jpg')}`,
+						seekTime: 0,
+					},
+				},
+			}),
+		],
 	}
 
 	const pieces = [vtPiece]
