@@ -116,8 +116,8 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 					deviceType: TSR.DeviceType.VMIX,
 					type: TSR.TimelineContentTypeVMix.INPUT,
 					overlays: {
-						1: boxes[0].source ?? -1,
-						2: boxes[1].source ?? -1,
+						1: boxes[0]?.source ?? -1,
+						2: boxes[1]?.source ?? -1,
 					},
 				},
 			})
@@ -191,8 +191,8 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 					deviceType: TSR.DeviceType.VMIX,
 					type: TSR.TimelineContentTypeVMix.INPUT,
 					overlays: {
-						1: boxes[0].source ?? -1,
-						2: boxes[1].source ?? -1,
+						1: boxes[0]?.source ?? -1,
+						2: boxes[1]?.source ?? -1,
 					},
 				},
 			})
