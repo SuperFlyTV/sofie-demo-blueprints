@@ -125,3 +125,16 @@ export function unwrapStart(value: number | 'now'): number {
 	if (typeof value === 'number') return value
 	throw new Error("Cannot unwrap start that is set to 'now'")
 }
+
+export function changeExtension(fileName: string, newExt: string): string {
+	const pos = fileName.includes('.') ? fileName.lastIndexOf('.') : fileName.length
+	const fileRoot = fileName.substring(0, pos)
+	const output = `${fileRoot}.${newExt}`
+	return output
+}
+
+export function stripExtension(fileName: string): string {
+	const pos = fileName.includes('.') ? fileName.lastIndexOf('.') : fileName.length
+	const fileRoot = fileName.substring(0, pos)
+	return fileRoot
+}

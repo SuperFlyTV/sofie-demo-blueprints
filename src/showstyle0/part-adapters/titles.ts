@@ -1,4 +1,10 @@
-import { BlueprintResultPart, IBlueprintPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
+import {
+	BlueprintResultPart,
+	ExpectedPackage,
+	IBlueprintPiece,
+	PieceLifespan,
+	TSR,
+} from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../common/context'
 import { literal } from '../../common/util'
 import { StudioConfig } from '../../studio0/helpers/config'
@@ -43,6 +49,29 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 				}),
 			],
 		},
+
+		expectedPackages: [
+			literal<ExpectedPackage.ExpectedPackageMediaFile>({
+				_id: context.getHashId('assets/Sofie News Opener.mp4', true),
+				layers: [CasparCGLayers.CasparCGClipPlayer],
+				type: ExpectedPackage.PackageType.MEDIA_FILE,
+				content: {
+					filePath: 'assets/Sofie News Opener.mp4',
+				},
+				version: {},
+				contentVersionHash: '',
+				sources: [],
+				sideEffect: {
+					previewPackageSettings: {
+						path: 'previews/assets/Sofie News Opener.webm',
+					},
+					thumbnailPackageSettings: {
+						path: 'thumbnails/assets/Sofie News Opener.jpg',
+						seekTime: 1500,
+					},
+				},
+			}),
+		],
 	}
 
 	const audioBedPiece = literal<IBlueprintPiece>({
@@ -84,6 +113,27 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 				}),
 			],
 		},
+
+		expectedPackages: [
+			literal<ExpectedPackage.ExpectedPackageMediaFile>({
+				_id: context.getHashId('assets/Sofie News Opener Audio Bed.wav', true),
+				layers: [CasparCGLayers.CasparCGClipPlayer],
+				type: ExpectedPackage.PackageType.MEDIA_FILE,
+				content: {
+					filePath: 'assets/Sofie News Opener Audio Bed.wav',
+				},
+				version: {},
+				contentVersionHash: '',
+				sources: [],
+				sideEffect: {
+					// HACK: Disable preview and thumbnail generation.
+					// Once release39 is out, we can remove the "as any" from these values, and it will no longer be a hack.
+					// https://github.com/nrkno/tv-automation-server-core/commit/5e0a9c36c628be92370c035f78c8a8f278debbfa
+					previewContainerId: null as any,
+					thumbnailContainerId: null as any,
+				},
+			}),
+		],
 	})
 
 	const pieces = [cameraPiece, audioBedPiece]
