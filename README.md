@@ -72,7 +72,9 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
      - For vMix, the port can be obtained from "Settings > Web Contoller". It defaults to `8088`.
 1. Go back to the Studio settings (http://localhost:3000/settings/studio/studio0) and scroll down to the Blueprint Configuration section.
    - Create and fill out the configuration for the devices you have.
-   - After filling out this configuration, you may need to run migrations again. It may be necessary to hit "Reset All Versions".
+     - If using vMix, ensure that you have a `multiview` input configured. This input will be used for DVEs.
+   - After filling out this configuration, you may need to run migrations again. On the "[Upgrade Database](http://localhost:3000/settings/tools/migration)" page, click "Reset All Versions" then click "Run automatic migration procedure".
+   - Click "Reload Baseline" (just above the "Attached Devices" section in the Studio settings).
 1. Restart the Playout Gateway.
 1. Use the [Rundown Editor](https://github.com/SuperFlyTV/sofie-automation-rundown-editor) or the [Spreadsheet Gateway](https://github.com/SuperFlyTV/spreadsheet-gateway) to add a demo rundown to Sofie.
 1. Go to the Rundowns page (http://localhost:3000/rundowns) and click on the rundown you added in the previous step.
