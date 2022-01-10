@@ -38,7 +38,7 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
    - If you don't wish to demo the Slack integration, enter `http://localhost:3000` for the Slack webhook URL.
    - For this demo, we'll be using a media format of `1280x720p5000`.
 1. Ensure that [`playout-gateway`](https://github.com/nrkno/tv-automation-server-core/tree/master/packages/playout-gateway) is running and attached to the studio.
-   - Under the Studios heading, select Default Studio.
+   - Under the Studios heading, select your studio.
    - Scroll down to the Attached Devices section.
    - Click the plus icon (`+`) and attach the Playout gateway.
    - You'll be coming back to this section later to attach your vision mixer, CasparCG, and Sisyfos devices.
@@ -53,9 +53,9 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
    - Repeat for `showstyle0-bundle.js`, naming it `showstyle0`.
 1. Assign the blueprints:
    - Select the `system` blueprint and click the "Assign" button.
-   - Under the Studios heading, select Default Studio.
+   - Under the Studios heading, select your studio.
    - In the Blueprint dropdown, select `studio0`.
-   - Under the Show Styles heading, select Default Showstyle.
+   - Under the Show Styles heading, select your showstyle.
    - In the Blueprint dropdown, select `showstyle0`.
 1. Run the blueprint migrations
    - Under the Tools heading, click "Upgrade Database".
