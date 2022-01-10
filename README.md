@@ -37,7 +37,7 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
    - Fill out all the fields and then click "Run automatic migration procedure".
    - If you don't wish to demo the Slack integration, enter `http://localhost:3000` for the Slack webhook URL.
    - For this demo, we'll be using a media format of `1280x720p5000`.
-1. Ensure that `playout-gateway` is running and attached to the studio.
+1. Ensure that [`playout-gateway`](https://github.com/nrkno/tv-automation-server-core/tree/master/packages/playout-gateway) is running and attached to the studio.
    - Under the Studios heading, select Default Studio.
    - Scroll down to the Attached Devices section.
    - Click the plus icon (`+`) and attach the Playout gateway.
