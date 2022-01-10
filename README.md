@@ -72,7 +72,8 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
      - For vMix, the port can be obtained from "Settings > Web Contoller". It defaults to `8088`.
 1. Go back to the Studio settings (http://localhost:3000/settings/studio/studio0) and scroll down to the Blueprint Configuration section.
    - Create and fill out the configuration for the devices you have.
-     - If using vMix, ensure that you have a `multiview` input configured. This input will be used for DVEs.
+     - If using an ATEM for your vision mixer, ensure that you have the following inputs configured: 2 `camera`, 1 `remote`, 1 `mediaplayer`, and 1 `graphics`.
+     - If using vMix, ensure that you have all of the above and 1 `multiview` input configured. This input will be used for DVEs.
    - After filling out this configuration, you may need to run migrations again. On the "[Upgrade Database](http://localhost:3000/settings/tools/migration)" page, click "Reset All Versions" then click "Run automatic migration procedure".
    - Click "Reload Baseline" (just above the "Attached Devices" section in the Studio settings).
 1. Restart the Playout Gateway.
