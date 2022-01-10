@@ -9,7 +9,7 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
 - One of the following supported vision mixers:
   - [Blackmagic ATEM](https://www.blackmagicdesign.com/products/atem)
   - [vMix](https://www.vmix.com/)
-- [A CasparCG setup](https://nrkno.github.io/tv-automation-server-core/docs/getting-started/installation/installing-connections-and-additional-hardware/casparcg-server-installation) with the [Sofie Demo Assets](#TODO) installed.
+- [A CasparCG setup](https://nrkno.github.io/tv-automation-server-core/docs/getting-started/installation/installing-connections-and-additional-hardware/casparcg-server-installation) with the [Sofie Demo Assets](https://superfly.tv/sofie/demo/assets/sofie-demo-assets_v1.0.1.zip) installed.
 
   - This demo expects two channels to be configured in CasparCG: the first is used for media/VT playout and the second is used for graphics playout. Open `casparcg.config` in your text editor of choice and scroll down for more information on how to configure CasparCG. Your `<paths>` section should look like this:
 
