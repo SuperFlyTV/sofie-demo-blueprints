@@ -83,7 +83,6 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
 1. (Optional) If you wish to have accurate media/VT statuses in the Rundown view, set up [tv-automation-package-manager](https://github.com/nrkno/tv-automation-package-manager).
 1. Right-click the blue header bar and click Activate (Rehearsal).
 1. Hit F12 to Take.
-   - > ❗ If using Windows, please note that running Sofie in Docker or on a virtual machine may result in poor performance and lengthy takes. This is not indicitative of how Sofie performs in a production environment.
 
 ## Installation (for developers)
 
