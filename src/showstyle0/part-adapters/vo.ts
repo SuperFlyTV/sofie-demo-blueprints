@@ -48,6 +48,8 @@ export function generateVOPart(context: PartContext, part: PartProps<VOProps>): 
 					},
 				}),
 			],
+
+			sourceDuration: part.payload.clipProps.sourceDuration,
 		},
 
 		expectedPackages: [

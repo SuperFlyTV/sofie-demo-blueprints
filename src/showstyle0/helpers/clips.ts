@@ -9,6 +9,7 @@ import { createAtemInputTimelineObjects } from './atem'
 export interface ClipProps {
 	fileName: string
 	duration?: number
+	sourceDuration?: number
 }
 
 export function parseClipProps(object: VideoObject): ClipProps {
@@ -22,6 +23,7 @@ export function parseClipEditorProps(object: VideoObject): ClipProps {
 	return {
 		fileName: object.attributes.fileName as string,
 		duration: object.duration * 1000,
+		sourceDuration: object.attributes.sourceDuration as number,
 	}
 }
 

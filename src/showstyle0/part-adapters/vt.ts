@@ -52,6 +52,8 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 
 				audioTlObj,
 			],
+
+			sourceDuration: part.payload.clipProps.sourceDuration,
 		},
 		expectedPackages: [
 			literal<ExpectedPackage.ExpectedPackageMediaFile>({
