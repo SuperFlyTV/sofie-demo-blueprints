@@ -126,8 +126,6 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 		assertUnreachable(config.visionMixerType)
 	}
 
-	context.logDebug('timeline objects: ' + JSON.stringify(dvePieceTimelineObjects, undefined, 2))
-
 	const dvePiece: IBlueprintPiece = {
 		enable: {
 			start: 0,
