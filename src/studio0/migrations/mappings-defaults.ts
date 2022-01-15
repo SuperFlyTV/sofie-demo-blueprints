@@ -150,7 +150,7 @@ export const AtemMappings = literal<BlueprintMappings>({
 	}),
 })
 
-export function getDyanmicVMixMappings(vmixSources: StudioConfig['vmixSources']): BlueprintMappings {
+export function getDynamicVMixMappings(vmixSources: StudioConfig['vmixSources']): BlueprintMappings {
 	const mappings: BlueprintMappings = {
 		[VMixLayers.VMixMeProgram]: literal<TSR.MappingVMixAny & BlueprintMapping>({
 			device: TSR.DeviceType.VMIX,

@@ -15,8 +15,8 @@ import { StudioConfig, VisionMixerType } from '../helpers/config'
 import MappingsDefaults, {
 	AtemMappings,
 	getAllAuxMappings,
-	getDyanmicVMixMappings,
 	getDynamicSisyfosMappings,
+	getDynamicVMixMappings,
 } from './mappings-defaults'
 
 export function getConfigOrDefault(context: MigrationContextStudio, name: string): ConfigItemValue | undefined {
@@ -69,7 +69,7 @@ export function getMappingsDefaultsMigrationSteps(versionStr: string): Migration
 
 	const getVMixMappings = (context: MigrationContextStudio): BlueprintMappings => {
 		const sources = (getConfigOrDefault(context, 'vmixSources') as any) as StudioConfig['vmixSources']
-		return getDyanmicVMixMappings(sources)
+		return getDynamicVMixMappings(sources)
 	}
 
 	res.push(
