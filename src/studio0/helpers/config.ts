@@ -10,6 +10,7 @@ export enum SourceType {
 	Remote = 'remote',
 	MediaPlayer = 'mediaplayer',
 	Graphics = 'graphics',
+	MultiView = 'multiview',
 }
 
 export enum AudioSourceType {

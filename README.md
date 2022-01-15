@@ -9,7 +9,7 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
 - One of the following supported vision mixers:
   - [Blackmagic ATEM](https://www.blackmagicdesign.com/products/atem)
   - [vMix](https://www.vmix.com/)
-- [A CasparCG setup](https://nrkno.github.io/tv-automation-server-core/docs/getting-started/installation/installing-connections-and-additional-hardware/casparcg-server-installation) with the [Sofie Demo Assets](#TODO) installed.
+- [A CasparCG setup](https://nrkno.github.io/tv-automation-server-core/docs/getting-started/installation/installing-connections-and-additional-hardware/casparcg-server-installation) with the [Sofie Demo Assets](https://superfly.tv/sofie/demo/assets/sofie-demo-assets_v1.0.1.zip) installed.
 
   - This demo expects two channels to be configured in CasparCG: the first is used for media/VT playout and the second is used for graphics playout. Open `casparcg.config` in your text editor of choice and scroll down for more information on how to configure CasparCG. Your `<paths>` section should look like this:
 
@@ -37,8 +37,8 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
    - Fill out all the fields and then click "Run automatic migration procedure".
    - If you don't wish to demo the Slack integration, enter `http://localhost:3000` for the Slack webhook URL.
    - For this demo, we'll be using a media format of `1280x720p5000`.
-1. Ensure that `playout-gateway` is running and attached to the studio.
-   - Under the Studios heading, select Default Studio.
+1. Ensure that [`playout-gateway`](https://github.com/nrkno/tv-automation-server-core/tree/master/packages/playout-gateway) is running and attached to the studio.
+   - Under the Studios heading, select your studio.
    - Scroll down to the Attached Devices section.
    - Click the plus icon (`+`) and attach the Playout gateway.
    - You'll be coming back to this section later to attach your vision mixer, CasparCG, and Sisyfos devices.
@@ -53,9 +53,9 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
    - Repeat for `showstyle0-bundle.js`, naming it `showstyle0`.
 1. Assign the blueprints:
    - Select the `system` blueprint and click the "Assign" button.
-   - Under the Studios heading, select Default Studio.
+   - Under the Studios heading, select your studio.
    - In the Blueprint dropdown, select `studio0`.
-   - Under the Show Styles heading, select Default Showstyle.
+   - Under the Show Styles heading, select your showstyle.
    - In the Blueprint dropdown, select `showstyle0`.
 1. Run the blueprint migrations
    - Under the Tools heading, click "Upgrade Database".
@@ -72,14 +72,17 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
      - For vMix, the port can be obtained from "Settings > Web Contoller". It defaults to `8088`.
 1. Go back to the Studio settings (http://localhost:3000/settings/studio/studio0) and scroll down to the Blueprint Configuration section.
    - Create and fill out the configuration for the devices you have.
+     - If using an ATEM for your vision mixer, ensure that you have the following inputs configured: 2 `camera`, 1 `remote`, 1 `mediaplayer`, and 1 `graphics`.
+     - If using vMix, ensure that you have all of the above and 1 `multiview` input configured. This input will be used for DVEs.
+   - After filling out this configuration, you may need to run migrations again. On the "[Upgrade Database](http://localhost:3000/settings/tools/migration)" page, click "Reset All Versions" then click "Run automatic migration procedure".
+   - Click "Reload Baseline" (just above the "Attached Devices" section in the Studio settings).
 1. Restart the Playout Gateway.
 1. Use the [Rundown Editor](https://github.com/SuperFlyTV/sofie-automation-rundown-editor) or the [Spreadsheet Gateway](https://github.com/SuperFlyTV/spreadsheet-gateway) to add a demo rundown to Sofie.
 1. Go to the Rundowns page (http://localhost:3000/rundowns) and click on the rundown you added in the previous step.
    - > 💡 Certain changes to your Sofie configuration may require that the rundown be re-ingested for those changes to take effect. If using the Rundown Editor, this can be achieved by selecting the rundown in question, unchecking the "Sync to Sofie" box, hitting save, rechecking that box, then hitting save again.
-1. (Optional) If you wish to have accurate media/VT statuses in the Rundown view, set up [tv-automation-package-manager](https://github.com/nrkno/tv-automation-package-manager).
+1. (Optional) If you wish to have accurate media/VT statuses in the Rundown view, as well as hoverscrub media previews, set up [Package Manager](https://nrkno.github.io/tv-automation-server-core/docs/getting-started/installation/installing-package-manager).
 1. Right-click the blue header bar and click Activate (Rehearsal).
 1. Hit F12 to Take.
-   - > ❗ If using Windows, please note that running Sofie in Docker or on a virtual machine may result in poor performance and lengthy takes. This is not indicitative of how Sofie performs in a production environment.
 
 ## Installation (for developers)
 

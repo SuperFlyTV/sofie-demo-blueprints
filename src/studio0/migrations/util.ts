@@ -16,7 +16,7 @@ import MappingsDefaults, {
 	AtemMappings,
 	getAllAuxMappings,
 	getDynamicSisyfosMappings,
-	VMixMappings,
+	getDynamicVMixMappings,
 } from './mappings-defaults'
 
 export function getConfigOrDefault(context: MigrationContextStudio, name: string): ConfigItemValue | undefined {
@@ -65,11 +65,42 @@ export function getMappingsDefaultsMigrationSteps(versionStr: string): Migration
 			AtemMappings,
 			createMapping('visionMixerType', (config) => config === VisionMixerType.Atem)
 		),
-		..._.map(
-			VMixMappings,
-			createMapping('visionMixerType', (config) => config === VisionMixerType.VMix)
-		),
 	])
+
+	const getVMixMappings = (context: MigrationContextStudio): BlueprintMappings => {
+		const sources = (getConfigOrDefault(context, 'vmixSources') as any) as StudioConfig['vmixSources']
+		return getDynamicVMixMappings(sources)
+	}
+
+	res.push(
+		literal<MigrationStepStudio>({
+			id: `mappings.defaults._all_vmix_dynamic_`,
+			version: versionStr,
+			canBeRunAutomatically: true,
+			validate: (context: MigrationContextStudio): boolean | string => {
+				const expected = _.keys(getVMixMappings(context))
+
+				const badMappings: string[] = []
+				_.each(expected, (f) => {
+					const mapping = context.getMapping(f)
+					if (!mapping) {
+						badMappings.push(`${f} is missing`)
+					}
+				})
+
+				return badMappings.length > 0 ? badMappings.join(', ') : false
+			},
+			migrate: (context: MigrationContextStudio): void => {
+				const expected = getVMixMappings(context)
+
+				_.each(expected, (v, k): void => {
+					if (!context.getMapping(k)) {
+						context.insertMapping(k, v)
+					}
+				})
+			},
+		})
+	)
 
 	const getAuxMappings = (context: MigrationContextStudio): BlueprintMappings => {
 		const auxes = getConfigOrDefault(context, 'atemOutputs')
