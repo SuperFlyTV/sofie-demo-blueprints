@@ -153,13 +153,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 				content: {
 					deviceType: TSR.DeviceType.ATEM,
 					type: TSR.TimelineContentTypeAtem.SSRCPROPS,
-					ssrcProps: {
-						artFillSource: 3010, // atem mediaplayer1
-						artCutSource: 3011,
-						artOption: 0, // bg
-						artPreMultiplied: true,
-						borderEnabled: false,
-					},
+					ssrcProps: parseSuperSourceProps(context, part.payload),
 				},
 			}),
 
