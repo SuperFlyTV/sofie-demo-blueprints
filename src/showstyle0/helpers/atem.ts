@@ -13,6 +13,7 @@ export function createAtemInputTimelineObjects(
 			id: '',
 			enable: { start: start },
 			layer: AtemLayers.AtemMeProgram,
+			priority: 10,
 			content: {
 				deviceType: TSR.DeviceType.ATEM,
 				type: TSR.TimelineContentTypeAtem.ME,
@@ -43,6 +44,7 @@ export function createAtemInputTimelineObjects(
 			id: '',
 			enable: { start: start },
 			layer: AtemLayers.AtemMePreview,
+			priority: 10,
 			content: {
 				deviceType: TSR.DeviceType.ATEM,
 				type: TSR.TimelineContentTypeAtem.ME,

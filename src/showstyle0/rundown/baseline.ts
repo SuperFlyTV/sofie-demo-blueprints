@@ -111,6 +111,34 @@ export function getBaseline(context: IShowStyleUserContext): BlueprintResultBase
 					channels: getSisyfosBaseline(config),
 				},
 			}),
+
+			literal<TSR.TimelineObjAtemME>({
+				id: '',
+				enable: { while: 1 },
+				priority: 0,
+				layer: AtemLayers.AtemMeProgram,
+				content: {
+					deviceType: TSR.DeviceType.ATEM,
+					type: TSR.TimelineContentTypeAtem.ME,
+					me: {
+						programInput: 0,
+					},
+				},
+			}),
+
+			literal<TSR.TimelineObjAtemME>({
+				id: '',
+				enable: { while: 1 },
+				priority: 0,
+				layer: AtemLayers.AtemMePreview,
+				content: {
+					deviceType: TSR.DeviceType.ATEM,
+					type: TSR.TimelineContentTypeAtem.ME,
+					me: {
+						previewInput: 0,
+					},
+				},
+			}),
 		],
 	}
 }
