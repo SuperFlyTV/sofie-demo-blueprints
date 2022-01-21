@@ -1,5 +1,6 @@
 import { TimelineObjectCoreExt, TSR } from '@sofie-automation/blueprints-integration'
 import { assertUnreachable, literal } from '../../common/util'
+import { TimelineBlueprintExt } from '../../studio0/customTypes'
 import { StudioConfig, VisionMixerType } from '../../studio0/helpers/config'
 import { AtemLayers, VMixLayers } from '../../studio0/layers'
 
@@ -40,7 +41,7 @@ export function createAtemInputTimelineObjects(
 			],
 		}),
 		// Add object for preview
-		literal<TSR.TimelineObjAtemME>({
+		literal<TSR.TimelineObjAtemME & TimelineBlueprintExt>({
 			id: '',
 			enable: { start: start },
 			layer: AtemLayers.AtemMePreview,
@@ -64,7 +65,7 @@ export function createAtemInputTimelineObjects(
 						},
 					},
 					preserveForLookahead: true,
-				} as any, // todo
+				},
 			],
 		}),
 	]
@@ -91,7 +92,7 @@ export function createVMixTimelineObjects(
 		}),
 
 		// Add object for preview
-		literal<TSR.TimelineObjVMixPreview>({
+		literal<TSR.TimelineObjVMixPreview & TimelineBlueprintExt>({
 			id: '',
 			enable: { start: start },
 			layer: VMixLayers.VMixMePreview,
@@ -111,7 +112,7 @@ export function createVMixTimelineObjects(
 						input,
 					},
 					preserveForLookahead: true,
-				} as any, // todo
+				},
 			],
 		}),
 	]
