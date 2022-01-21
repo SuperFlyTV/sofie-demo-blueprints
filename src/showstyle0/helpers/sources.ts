@@ -1,7 +1,7 @@
-import { AtemSourceType, StudioConfig } from '../../studio0/helpers/config'
+import { SourceType, StudioConfig, VisionMixerType } from '../../studio0/helpers/config'
 
 export interface RawSourceInfo {
-	type: AtemSourceType
+	type: SourceType
 	id: number
 }
 
@@ -9,10 +9,7 @@ export interface SourceInfo extends RawSourceInfo {
 	input: number
 }
 
-export function findSource(
-	input: string | number | boolean | undefined,
-	type: AtemSourceType
-): RawSourceInfo | undefined {
+export function findSource(input: string | number | boolean | undefined, type: SourceType): RawSourceInfo | undefined {
 	const match = (input + '').match(/(.*?)(\d+)(.*)/) // find the first number
 	if (match) {
 		return {
@@ -25,7 +22,12 @@ export function findSource(
 }
 
 export function getSourceInfoFromRaw(config: StudioConfig, rawInfo: RawSourceInfo): SourceInfo {
-	const sourcesOfType = config.atemSources.filter((s) => s.type === rawInfo.type)
+	let sourcesOfType = config.atemSources.filter((s) => s.type === rawInfo.type)
+
+	if (config.visionMixerType === VisionMixerType.VMix) {
+		sourcesOfType = config.vmixSources.filter((s) => s.type === rawInfo.type)
+	}
+
 	const input = sourcesOfType[rawInfo.id - 1]
 
 	return {

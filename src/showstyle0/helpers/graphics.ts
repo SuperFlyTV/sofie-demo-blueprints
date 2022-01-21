@@ -4,8 +4,8 @@ import { literal } from '../../common/util'
 import { StudioConfig } from '../../studio0/helpers/config'
 import { CasparCGLayers } from '../../studio0/layers'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
-import { createAtemInputTimelineObjects } from './atem'
 import { getClipPlayerInput } from './clips'
+import { createVisionMixerObjects } from './visionMixer'
 
 export interface GraphicsResult {
 	pieces: IBlueprintPiece[]
@@ -59,7 +59,7 @@ function getGraphicTlObject(config: StudioConfig, object: GraphicObject, isAdlib
 				useStopCommand: isFullscreen ? false : true,
 			},
 		}),
-		...(isFullscreen ? createAtemInputTimelineObjects(fullscreenAtemInput?.input || 0, config.casparcgLatency) : []),
+		...(isFullscreen ? createVisionMixerObjects(config, fullscreenAtemInput?.input || 0, config.casparcgLatency) : []),
 	]
 }
 function parseGraphic(config: StudioConfig, object: GraphicObject): IBlueprintPiece {

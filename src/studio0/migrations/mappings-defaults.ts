@@ -1,7 +1,7 @@
 import { BlueprintMapping, BlueprintMappings, LookaheadMode, TSR } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../common/util'
-import { AudioSourceType, StudioConfig } from '../helpers/config'
-import { AsbtractLayers, AtemLayers, CasparCGLayers, SisyfosLayers } from '../layers'
+import { AudioSourceType, SourceType, StudioConfig } from '../helpers/config'
+import { AsbtractLayers, AtemLayers, CasparCGLayers, SisyfosLayers, VMixLayers } from '../layers'
 
 export default literal<BlueprintMappings>({
 	[AsbtractLayers.CoreAbstract]: {
@@ -9,48 +9,6 @@ export default literal<BlueprintMappings>({
 		deviceId: 'abstract0',
 		lookahead: LookaheadMode.NONE,
 	},
-
-	[AtemLayers.AtemMeProgram]: literal<TSR.MappingAtem & BlueprintMapping>({
-		device: TSR.DeviceType.ATEM,
-		deviceId: 'atem0',
-		lookahead: LookaheadMode.NONE,
-
-		mappingType: TSR.MappingAtemType.MixEffect,
-		index: 0,
-	}),
-	[AtemLayers.AtemMePreview]: literal<TSR.MappingAtem & BlueprintMapping>({
-		device: TSR.DeviceType.ATEM,
-		deviceId: 'atem0',
-		lookahead: LookaheadMode.PRELOAD,
-
-		mappingType: TSR.MappingAtemType.MixEffect,
-		index: 0,
-	}),
-	[AtemLayers.AtemDskGraphics]: literal<TSR.MappingAtem & BlueprintMapping>({
-		device: TSR.DeviceType.ATEM,
-		deviceId: 'atem0',
-		lookahead: LookaheadMode.NONE,
-
-		mappingType: TSR.MappingAtemType.DownStreamKeyer,
-		index: 0,
-	}),
-	[AtemLayers.AtemSuperSourceProps]: literal<TSR.MappingAtem & BlueprintMapping>({
-		device: TSR.DeviceType.ATEM,
-		deviceId: 'atem0',
-		lookahead: LookaheadMode.NONE,
-
-		mappingType: TSR.MappingAtemType.SuperSourceProperties,
-		index: 0,
-	}),
-	[AtemLayers.AtemSuperSourceBoxes]: literal<TSR.MappingAtem & BlueprintMapping>({
-		device: TSR.DeviceType.ATEM,
-		deviceId: 'atem0',
-		lookahead: LookaheadMode.WHEN_CLEAR,
-		lookaheadMaxSearchDistance: 1,
-
-		mappingType: TSR.MappingAtemType.SuperSourceBox,
-		index: 0,
-	}),
 
 	[CasparCGLayers.CasparCGClipPlayer]: literal<TSR.MappingCasparCG & BlueprintMapping>({
 		device: TSR.DeviceType.CASPARCG,
@@ -147,6 +105,102 @@ export default literal<BlueprintMappings>({
 		mappingType: TSR.MappingSisyfosType.CHANNELS,
 	}),
 })
+
+export const AtemMappings = literal<BlueprintMappings>({
+	[AtemLayers.AtemMeProgram]: literal<TSR.MappingAtem & BlueprintMapping>({
+		device: TSR.DeviceType.ATEM,
+		deviceId: 'atem0',
+		lookahead: LookaheadMode.NONE,
+
+		mappingType: TSR.MappingAtemType.MixEffect,
+		index: 0,
+	}),
+	[AtemLayers.AtemMePreview]: literal<TSR.MappingAtem & BlueprintMapping>({
+		device: TSR.DeviceType.ATEM,
+		deviceId: 'atem0',
+		lookahead: LookaheadMode.PRELOAD,
+
+		mappingType: TSR.MappingAtemType.MixEffect,
+		index: 0,
+	}),
+	[AtemLayers.AtemDskGraphics]: literal<TSR.MappingAtem & BlueprintMapping>({
+		device: TSR.DeviceType.ATEM,
+		deviceId: 'atem0',
+		lookahead: LookaheadMode.NONE,
+
+		mappingType: TSR.MappingAtemType.DownStreamKeyer,
+		index: 0,
+	}),
+	[AtemLayers.AtemSuperSourceProps]: literal<TSR.MappingAtem & BlueprintMapping>({
+		device: TSR.DeviceType.ATEM,
+		deviceId: 'atem0',
+		lookahead: LookaheadMode.NONE,
+
+		mappingType: TSR.MappingAtemType.SuperSourceProperties,
+		index: 0,
+	}),
+	[AtemLayers.AtemSuperSourceBoxes]: literal<TSR.MappingAtem & BlueprintMapping>({
+		device: TSR.DeviceType.ATEM,
+		deviceId: 'atem0',
+		lookahead: LookaheadMode.WHEN_CLEAR,
+		lookaheadMaxSearchDistance: 1,
+
+		mappingType: TSR.MappingAtemType.SuperSourceBox,
+		index: 0,
+	}),
+})
+
+export function getDynamicVMixMappings(vmixSources: StudioConfig['vmixSources']): BlueprintMappings {
+	const mappings: BlueprintMappings = {
+		[VMixLayers.VMixMeProgram]: literal<TSR.MappingVMixAny & BlueprintMapping>({
+			device: TSR.DeviceType.VMIX,
+			deviceId: 'vmix0',
+			lookahead: LookaheadMode.NONE,
+
+			mappingType: TSR.MappingVMixType.Program,
+			index: 1,
+		}),
+		[VMixLayers.VMixMePreview]: literal<TSR.MappingVMixAny & BlueprintMapping>({
+			device: TSR.DeviceType.VMIX,
+			deviceId: 'vmix0',
+
+			lookahead: LookaheadMode.WHEN_CLEAR,
+			lookaheadMaxSearchDistance: 1,
+			lookaheadDepth: 1,
+
+			mappingType: TSR.MappingVMixType.Preview,
+			index: 1,
+		}),
+		[VMixLayers.VMixOverlayGraphics]: literal<TSR.MappingVMixOverlay & BlueprintMapping>({
+			device: TSR.DeviceType.VMIX,
+			deviceId: 'vmix0',
+			lookahead: LookaheadMode.NONE,
+
+			mappingType: TSR.MappingVMixType.Overlay,
+			index: 1,
+		}),
+	}
+
+	const multiviewSource = vmixSources.find((source) => source.type === SourceType.MultiView)
+	if (multiviewSource) {
+		/**
+		 * Note that the word "MultiView" here does not refer to a traditional multiviewer used to monitor inputs and outputs in a studio.
+		 * Instead, vMix uses this word to describe an input which has other inputs overlaid on top of it like a DVE.
+		 * This is vMix's version of an ATEM SuperSource.
+		 */
+		mappings[VMixLayers.VMixDVEMultiView] = literal<TSR.MappingVMixInput & BlueprintMapping>({
+			device: TSR.DeviceType.VMIX,
+			deviceId: 'vmix0',
+			lookahead: LookaheadMode.WHEN_CLEAR,
+			lookaheadMaxSearchDistance: 1,
+
+			mappingType: TSR.MappingVMixType.Input,
+			index: multiviewSource.input,
+		})
+	}
+
+	return mappings
+}
 
 export function getAllAuxMappings(total: number): BlueprintMappings {
 	const mappings: BlueprintMappings = {}

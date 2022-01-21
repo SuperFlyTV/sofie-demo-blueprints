@@ -5,12 +5,12 @@ import { literal } from '../../common/util'
 import { AudioSourceType, StudioConfig } from '../../studio0/helpers/config'
 import { SisyfosLayers } from '../../studio0/layers'
 import { CameraProps, PartProps } from '../definitions'
-import { createAtemInputTimelineObjects } from '../helpers/atem'
 import { getAudioObjectOnLayer, getAudioPrimaryObject } from '../helpers/audio'
 import { parseClipsFromObjects } from '../helpers/clips'
 import { parseGraphicsFromObjects } from '../helpers/graphics'
 import { createScriptPiece } from '../helpers/script'
 import { getSourceInfoFromRaw } from '../helpers/sources'
+import { createVisionMixerObjects } from '../helpers/visionMixer'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
 
 export function generateCameraPart(context: PartContext, part: PartProps<CameraProps>): BlueprintResultPart {
@@ -29,7 +29,7 @@ export function generateCameraPart(context: PartContext, part: PartProps<CameraP
 		sourceLayerId: SourceLayer.Camera,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Camera),
 		content: {
-			timelineObjects: [...createAtemInputTimelineObjects(sourceInfo.input), audioTlObj],
+			timelineObjects: [...createVisionMixerObjects(config, sourceInfo.input), audioTlObj],
 		},
 	}
 

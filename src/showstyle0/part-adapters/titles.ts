@@ -10,14 +10,14 @@ import { literal } from '../../common/util'
 import { StudioConfig } from '../../studio0/helpers/config'
 import { CasparCGLayers } from '../../studio0/layers'
 import { PartProps, TitlesProps } from '../definitions'
-import { createAtemInputTimelineObjects } from '../helpers/atem'
 import { getClipPlayerInput } from '../helpers/clips'
 import { createScriptPiece } from '../helpers/script'
+import { createVisionMixerObjects } from '../helpers/visionMixer'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
 
 export function generateOpenerPart(context: PartContext, part: PartProps<TitlesProps>): BlueprintResultPart {
 	const config = context.getStudioConfig() as StudioConfig
-	const atemInput = getClipPlayerInput(config)
+	const visionMixerInput = getClipPlayerInput(config)
 
 	const cameraPiece: IBlueprintPiece = {
 		enable: {
@@ -40,7 +40,7 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 			ignoreAudioFormat: true,
 
 			timelineObjects: [
-				...createAtemInputTimelineObjects(atemInput?.input || 0),
+				...createVisionMixerObjects(config, visionMixerInput?.input || 0),
 
 				// clip
 				literal<TSR.TimelineObjCCGMedia>({
@@ -95,7 +95,7 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 			fileName: 'assets/Sofie News Opener Audio Bed',
 
 			timelineObjects: [
-				...createAtemInputTimelineObjects(atemInput?.input || 0),
+				...createVisionMixerObjects(config, visionMixerInput?.input || 0),
 
 				// clip
 				literal<TSR.TimelineObjCCGMedia>({

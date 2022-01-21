@@ -11,8 +11,13 @@ import {
 import * as _ from 'underscore'
 import { literal } from '../../common/util'
 import { studioConfigManifest } from '../config-manifests'
-import { StudioConfig } from '../helpers/config'
-import MappingsDefaults, { getAllAuxMappings, getDynamicSisyfosMappings } from './mappings-defaults'
+import { StudioConfig, VisionMixerType } from '../helpers/config'
+import MappingsDefaults, {
+	AtemMappings,
+	getAllAuxMappings,
+	getDynamicSisyfosMappings,
+	getDynamicVMixMappings,
+} from './mappings-defaults'
 
 export function getConfigOrDefault(context: MigrationContextStudio, name: string): ConfigItemValue | undefined {
 	const val = context.getConfig(name)
@@ -28,25 +33,72 @@ export function getConfigOrDefault(context: MigrationContextStudio, name: string
 	}
 }
 export function getMappingsDefaultsMigrationSteps(versionStr: string): MigrationStepStudio[] {
-	const res = _.compact(
-		_.map(MappingsDefaults, (defaultVal: BlueprintMapping, id: string): MigrationStepStudio | null => {
-			return literal<MigrationStepStudio>({
-				id: `mappings.defaults.${id}`,
-				version: versionStr,
-				canBeRunAutomatically: true,
-				validate: (context: MigrationContextStudio): boolean | string => {
-					if (!context.getMapping(id)) {
-						return `Mapping "${id}" doesn't exist on ShowBaseStyle`
+	const createMapping = (configId: string, condition: (configValue: ConfigItemValue | undefined) => boolean) => (
+		defaultVal: BlueprintMapping,
+		id: string
+	): MigrationStepStudio | null => {
+		return literal<MigrationStepStudio>({
+			id: `mappings.defaults.${id}`,
+			version: versionStr,
+			canBeRunAutomatically: true,
+			validate: (context: MigrationContextStudio): boolean | string => {
+				if (condition(context.getConfig(configId)) && !context.getMapping(id)) {
+					return `Mapping "${id}" doesn't exist on ShowBaseStyle`
+				}
+				return false
+			},
+			migrate: (context: MigrationContextStudio): void => {
+				if (!context.getMapping(id)) {
+					// defaultVal.deviceId = defaultVal.deviceId
+					context.insertMapping(id, defaultVal)
+				}
+			},
+		})
+	}
+
+	const res = _.compact([
+		..._.map(
+			MappingsDefaults,
+			createMapping('', () => true)
+		),
+		..._.map(
+			AtemMappings,
+			createMapping('visionMixerType', (config) => config === VisionMixerType.Atem)
+		),
+	])
+
+	const getVMixMappings = (context: MigrationContextStudio): BlueprintMappings => {
+		const sources = (getConfigOrDefault(context, 'vmixSources') as any) as StudioConfig['vmixSources']
+		return getDynamicVMixMappings(sources)
+	}
+
+	res.push(
+		literal<MigrationStepStudio>({
+			id: `mappings.defaults._all_vmix_dynamic_`,
+			version: versionStr,
+			canBeRunAutomatically: true,
+			validate: (context: MigrationContextStudio): boolean | string => {
+				const expected = _.keys(getVMixMappings(context))
+
+				const badMappings: string[] = []
+				_.each(expected, (f) => {
+					const mapping = context.getMapping(f)
+					if (!mapping) {
+						badMappings.push(`${f} is missing`)
 					}
-					return false
-				},
-				migrate: (context: MigrationContextStudio): void => {
-					if (!context.getMapping(id)) {
-						// defaultVal.deviceId = defaultVal.deviceId
-						context.insertMapping(id, defaultVal)
+				})
+
+				return badMappings.length > 0 ? badMappings.join(', ') : false
+			},
+			migrate: (context: MigrationContextStudio): void => {
+				const expected = getVMixMappings(context)
+
+				_.each(expected, (v, k): void => {
+					if (!context.getMapping(k)) {
+						context.insertMapping(k, v)
 					}
-				},
-			})
+				})
+			},
 		})
 	)
 
