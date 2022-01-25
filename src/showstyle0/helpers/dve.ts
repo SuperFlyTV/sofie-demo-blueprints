@@ -7,7 +7,7 @@ import {
 	TSR,
 } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../common/util'
-import { AtemSourceType, StudioConfig } from '../../studio0/helpers/config'
+import { SourceType, StudioConfig } from '../../studio0/helpers/config'
 import { DVEProps } from '../definitions'
 import { getClipPlayerInput } from './clips'
 import { parseConfig } from './config'
@@ -122,7 +122,7 @@ export function dveLayoutToContent(
 			type:
 				'fileName' in info
 					? SourceLayerType.VT
-					: info.type === AtemSourceType.Remote
+					: info.type === SourceType.Remote
 					? SourceLayerType.REMOTE
 					: SourceLayerType.CAMERA,
 			geometry,

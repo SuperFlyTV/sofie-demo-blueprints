@@ -2,12 +2,12 @@ import { BlueprintResultPart, IBlueprintPiece, PieceLifespan } from '@sofie-auto
 import { PartContext } from '../../common/context'
 import { AudioSourceType, StudioConfig } from '../../studio0/helpers/config'
 import { PartProps, RemoteProps } from '../definitions'
-import { createAtemInputTimelineObjects } from '../helpers/atem'
 import { getAudioPrimaryObject } from '../helpers/audio'
 import { parseClipsFromObjects } from '../helpers/clips'
 import { parseGraphicsFromObjects } from '../helpers/graphics'
 import { createScriptPiece } from '../helpers/script'
 import { getSourceInfoFromRaw } from '../helpers/sources'
+import { createVisionMixerObjects } from '../helpers/visionMixer'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
 
 export function generateRemotePart(context: PartContext, part: PartProps<RemoteProps>): BlueprintResultPart {
@@ -26,7 +26,7 @@ export function generateRemotePart(context: PartContext, part: PartProps<RemoteP
 		sourceLayerId: SourceLayer.Remote,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Remote),
 		content: {
-			timelineObjects: [...createAtemInputTimelineObjects(sourceInfo.input), audioTlObj],
+			timelineObjects: [...createVisionMixerObjects(config, sourceInfo.input), audioTlObj],
 		},
 	}
 

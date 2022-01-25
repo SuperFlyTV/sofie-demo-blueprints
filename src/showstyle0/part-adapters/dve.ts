@@ -1,19 +1,26 @@
-import { BlueprintResultPart, IBlueprintPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
+import {
+	BlueprintResultPart,
+	IBlueprintPiece,
+	PieceLifespan,
+	TimelineObjectCoreExt,
+	TSR,
+} from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../common/context'
-import { literal } from '../../common/util'
-import { AtemSourceType, AudioSourceType, StudioConfig } from '../../studio0/helpers/config'
-import { AtemLayers } from '../../studio0/layers'
+import { assertUnreachable, literal } from '../../common/util'
+import { AudioSourceType, SourceType, StudioConfig, VisionMixerType } from '../../studio0/helpers/config'
+import { AtemLayers, VMixLayers } from '../../studio0/layers'
 import { DVEProps, PartProps } from '../definitions'
-import { createAtemInputTimelineObjects } from '../helpers/atem'
 import { getAudioPrimaryObject } from '../helpers/audio'
 import { getClipPlayerInput, parseClipsFromObjects } from '../helpers/clips'
 import { dveLayoutToContent, parseSuperSourceLayout, parseSuperSourceProps } from '../helpers/dve'
 import { parseGraphicsFromObjects } from '../helpers/graphics'
 import { createScriptPiece } from '../helpers/script'
 import { getSourceInfoFromRaw } from '../helpers/sources'
+import { createVisionMixerObjects } from '../helpers/visionMixer'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
 
 const SUPER_SOURCE_LATENCY = 80
+const SUPER_SOURCE_INPUT = 6000
 
 export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>): BlueprintResultPart {
 	const config = context.getStudioConfig() as StudioConfig
@@ -44,12 +51,12 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 						type: AudioSourceType.Playback,
 						index: 0, // whihc player?
 					}
-				} else if (input.type === AtemSourceType.Camera) {
+				} else if (input.type === SourceType.Camera) {
 					return {
 						type: AudioSourceType.Host, // all hosts?
 						index: 0,
 					}
-				} else if (input.type === AtemSourceType.Remote) {
+				} else if (input.type === SourceType.Remote) {
 					return {
 						type: AudioSourceType.Remote,
 						index: input.id - 1,
@@ -59,6 +66,65 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 			})
 			.filter<any>((p): p is any => p !== undefined)
 	)
+
+	const vmixDVEInput = config.vmixSources.find((source) => source.type === SourceType.MultiView)?.input ?? -1
+	const dvePieceTimelineObjects: TimelineObjectCoreExt[] = [
+		...createVisionMixerObjects(
+			config,
+			config.visionMixerType === VisionMixerType.Atem ? SUPER_SOURCE_INPUT : vmixDVEInput,
+			SUPER_SOURCE_LATENCY
+		),
+		audioTlObj,
+	]
+	if (config.visionMixerType === VisionMixerType.Atem) {
+		dvePieceTimelineObjects.push(
+			literal<TSR.TimelineObjAtemSsrcProps>({
+				id: '',
+				enable: { while: 1 },
+				priority: 1,
+				layer: AtemLayers.AtemSuperSourceProps,
+				content: {
+					deviceType: TSR.DeviceType.ATEM,
+					type: TSR.TimelineContentTypeAtem.SSRCPROPS,
+					ssrcProps: parseSuperSourceProps(context, part.payload),
+				},
+			}),
+
+			literal<TSR.TimelineObjAtemSsrc>({
+				id: '',
+				enable: { start: 0 },
+				priority: 1,
+				layer: AtemLayers.AtemSuperSourceBoxes,
+				content: {
+					deviceType: TSR.DeviceType.ATEM,
+					type: TSR.TimelineContentTypeAtem.SSRC,
+
+					ssrc: {
+						boxes,
+					},
+				},
+			})
+		)
+	} else if (config.visionMixerType === VisionMixerType.VMix) {
+		dvePieceTimelineObjects.push(
+			literal<TSR.TimelineObjVMixInput>({
+				id: '',
+				enable: { start: 0 },
+				priority: 1,
+				layer: VMixLayers.VMixDVEMultiView,
+				content: {
+					deviceType: TSR.DeviceType.VMIX,
+					type: TSR.TimelineContentTypeVMix.INPUT,
+					overlays: {
+						1: boxes[0]?.source ?? -1,
+						2: boxes[1]?.source ?? -1,
+					},
+				},
+			})
+		)
+	} else {
+		assertUnreachable(config.visionMixerType)
+	}
 
 	const dvePiece: IBlueprintPiece = {
 		enable: {
@@ -72,43 +138,63 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 		adlibPreroll: SUPER_SOURCE_LATENCY,
 		content: {
 			...dveLayoutToContent(config, { boxes }, part.payload.inputs),
-
-			timelineObjects: [
-				...createAtemInputTimelineObjects(6000, SUPER_SOURCE_LATENCY),
-
-				literal<TSR.TimelineObjAtemSsrcProps>({
-					id: '',
-					enable: { while: 1 },
-					priority: 1,
-					layer: AtemLayers.AtemSuperSourceProps,
-					content: {
-						deviceType: TSR.DeviceType.ATEM,
-						type: TSR.TimelineContentTypeAtem.SSRCPROPS,
-						ssrcProps: parseSuperSourceProps(context, part.payload),
-					},
-				}),
-
-				literal<TSR.TimelineObjAtemSsrc>({
-					id: '',
-					enable: { start: 0 },
-					priority: 1,
-					layer: AtemLayers.AtemSuperSourceBoxes,
-					content: {
-						deviceType: TSR.DeviceType.ATEM,
-						type: TSR.TimelineContentTypeAtem.SSRC,
-
-						ssrc: {
-							boxes,
-						},
-					},
-				}),
-
-				audioTlObj,
-			],
+			timelineObjects: dvePieceTimelineObjects,
 		},
 	}
+
+	const retainPieceTimelineObjects: TimelineObjectCoreExt[] = []
+	if (config.visionMixerType === VisionMixerType.Atem) {
+		retainPieceTimelineObjects.push(
+			literal<TSR.TimelineObjAtemSsrcProps>({
+				id: '',
+				enable: { while: 1 },
+				priority: 0.5,
+				layer: AtemLayers.AtemSuperSourceProps,
+				content: {
+					deviceType: TSR.DeviceType.ATEM,
+					type: TSR.TimelineContentTypeAtem.SSRCPROPS,
+					ssrcProps: parseSuperSourceProps(context, part.payload),
+				},
+			}),
+
+			literal<TSR.TimelineObjAtemSsrc>({
+				id: '',
+				enable: { start: 0 },
+				priority: 1,
+				layer: AtemLayers.AtemSuperSourceBoxes,
+				content: {
+					deviceType: TSR.DeviceType.ATEM,
+					type: TSR.TimelineContentTypeAtem.SSRC,
+
+					ssrc: {
+						boxes,
+					},
+				},
+			})
+		)
+	} else if (config.visionMixerType === VisionMixerType.VMix) {
+		retainPieceTimelineObjects.push(
+			literal<TSR.TimelineObjVMixInput>({
+				id: '',
+				enable: { start: 0 },
+				priority: 1,
+				layer: VMixLayers.VMixDVEMultiView,
+				content: {
+					deviceType: TSR.DeviceType.VMIX,
+					type: TSR.TimelineContentTypeVMix.INPUT,
+					overlays: {
+						1: boxes[0]?.source ?? -1,
+						2: boxes[1]?.source ?? -1,
+					},
+				},
+			})
+		)
+	} else {
+		assertUnreachable(config.visionMixerType)
+	}
+
 	/**
-	 * this piece contains just the ssrc layouts and will
+	 * this piece contains just the ATEM SSrc or vMix Multiview layouts and will
 	 * stay on when you adlib a different primary to retain
 	 * the layout
 	 */
@@ -124,41 +210,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 		adlibPreroll: SUPER_SOURCE_LATENCY,
 		content: {
 			...dveLayoutToContent(config, { boxes }, part.payload.inputs),
-
-			timelineObjects: [
-				literal<TSR.TimelineObjAtemSsrcProps>({
-					id: '',
-					enable: { while: 1 },
-					priority: 0.5,
-					layer: AtemLayers.AtemSuperSourceProps,
-					content: {
-						deviceType: TSR.DeviceType.ATEM,
-						type: TSR.TimelineContentTypeAtem.SSRCPROPS,
-						ssrcProps: {
-							artFillSource: 3010, // atem mediaplayer1
-							artCutSource: 3011,
-							artOption: 0, // bg
-							artPreMultiplied: true,
-							borderEnabled: false,
-						},
-					},
-				}),
-
-				literal<TSR.TimelineObjAtemSsrc>({
-					id: '',
-					enable: { start: 0 },
-					priority: 1,
-					layer: AtemLayers.AtemSuperSourceBoxes,
-					content: {
-						deviceType: TSR.DeviceType.ATEM,
-						type: TSR.TimelineContentTypeAtem.SSRC,
-
-						ssrc: {
-							boxes,
-						},
-					},
-				}),
-			],
+			timelineObjects: retainPieceTimelineObjects,
 		},
 	}
 

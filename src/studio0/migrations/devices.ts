@@ -7,6 +7,7 @@ import {
 } from '@sofie-automation/blueprints-integration'
 import * as _ from 'underscore'
 import { literal } from '../../common/util'
+import { VisionMixerType } from '../helpers/config'
 
 declare const VERSION: string // Injected by webpack
 
@@ -48,7 +49,7 @@ const devices: DeviceEntry[] = [
 		input: [
 			{
 				label: 'Device config atem0: Host',
-				description: 'Enter the Host paramter, example: "127.0.0.1"',
+				description: 'Enter the Host parameter, example: "127.0.0.1"',
 				inputType: 'text',
 				attribute: 'host',
 				defaultValue: undefined,
@@ -66,6 +67,41 @@ const devices: DeviceEntry[] = [
 
 			return false
 		},
+		createCondition: (ctx) => ctx.getConfig('visionMixerType') === VisionMixerType.Atem,
+	},
+	{
+		id: 'vmix0',
+		firstVersion: '0.3.0',
+		type: TSR.DeviceType.VMIX,
+		defaultValue: (input): TSR.DeviceOptionsVMix => ({
+			type: TSR.DeviceType.VMIX,
+			options: literal<TSR.VMixOptions>({
+				host: input.host,
+				port: 8088,
+			}),
+		}),
+		input: [
+			{
+				label: 'Device config vmix0: Host',
+				description: 'Enter the Host parameter, example: "127.0.0.1"',
+				inputType: 'text',
+				attribute: 'host',
+				defaultValue: undefined,
+			},
+		],
+		validate: (device): string | boolean => {
+			if (!device.options) {
+				return 'Missing options'
+			}
+
+			const opts = device.options as TSR.VMixOptions
+			if (!opts.host) {
+				return 'Host is not set'
+			}
+
+			return false
+		},
+		createCondition: (ctx) => ctx.getConfig('visionMixerType') === VisionMixerType.VMix,
 	},
 	{
 		id: 'casparcg0',

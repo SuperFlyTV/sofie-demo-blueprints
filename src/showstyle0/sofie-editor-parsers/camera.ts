@@ -1,7 +1,7 @@
 import { ObjectType, SomeObject } from '../../common/definitions/objects'
 import { t } from '../../common/util'
 import { EditorIngestPart } from '../../copy/rundown-editor'
-import { AtemSourceType } from '../../studio0/helpers/config'
+import { SourceType } from '../../studio0/helpers/config'
 import { CameraProps, InvalidProps, PartInfo, PartProps, PartType } from '../definitions'
 import { findSource } from '../helpers/sources'
 import { parseBaseProps } from './base'
@@ -13,7 +13,7 @@ export function parseCamera(ingestPart: EditorIngestPart): PartProps<CameraProps
 		return createInvalidProps(t('No camera object'), ingestPart)
 	}
 
-	const input = findSource(cameraPiece.attributes.camNo, AtemSourceType.Camera)
+	const input = findSource(cameraPiece.attributes.camNo, SourceType.Camera)
 	if (!input) {
 		return createInvalidProps(t(`Could not find camera for input ${cameraPiece.attributes.camNo}`), ingestPart)
 	}

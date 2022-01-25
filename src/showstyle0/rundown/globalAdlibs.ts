@@ -1,9 +1,9 @@
 import { IBlueprintAdLibPiece, IShowStyleUserContext, PieceLifespan } from '@sofie-automation/blueprints-integration'
-import { literal } from '../../common/util'
-import { AtemSourceType, AudioSourceType, StudioConfig } from '../../studio0/helpers/config'
+import { assertUnreachable, literal } from '../../common/util'
+import { AudioSourceType, SourceType, StudioConfig, VisionMixerType } from '../../studio0/helpers/config'
 import { SisyfosLayers } from '../../studio0/layers'
-import { createAtemInputTimelineObjects } from '../helpers/atem'
 import { getAudioObjectOnLayer, getAudioPrimaryObject } from '../helpers/audio'
+import { createVisionMixerObjects } from '../helpers/visionMixer'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
 
 export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLibPiece[] {
@@ -18,7 +18,7 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Camera),
 		content: {
 			timelineObjects: [
-				...createAtemInputTimelineObjects(input, 0),
+				...createVisionMixerObjects(config, input, 0),
 				getAudioPrimaryObject(config, [{ type: AudioSourceType.Host, index: 0 }]),
 			],
 		},
@@ -32,7 +32,7 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Camera),
 		content: {
 			timelineObjects: [
-				...createAtemInputTimelineObjects(input, 0),
+				...createVisionMixerObjects(config, input, 0),
 				getAudioPrimaryObject(config, [{ type: AudioSourceType.Remote, index: id }]),
 			],
 		},
@@ -69,13 +69,27 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 		}),
 	]
 
-	return [
-		...config.atemSources
-			.filter((source) => source.type === AtemSourceType.Camera)
-			.map((source, i) => makeCameraAdlib(i, source.input)),
-		...config.atemSources
-			.filter((source) => source.type === AtemSourceType.Remote)
-			.map((source, i) => makeRemoteAdlib(i, source.input)),
-		...hostMicOverrides,
-	]
+	if (config.visionMixerType === VisionMixerType.Atem) {
+		return [
+			...config.atemSources
+				.filter((source) => source.type === SourceType.Camera)
+				.map((source, i) => makeCameraAdlib(i, source.input)),
+			...config.atemSources
+				.filter((source) => source.type === SourceType.Remote)
+				.map((source, i) => makeRemoteAdlib(i, source.input)),
+			...hostMicOverrides,
+		]
+	} else if (config.visionMixerType === VisionMixerType.VMix) {
+		return [
+			...config.vmixSources
+				.filter((source) => source.type === SourceType.Camera)
+				.map((source, i) => makeCameraAdlib(i, source.input)),
+			...config.vmixSources
+				.filter((source) => source.type === SourceType.Remote)
+				.map((source, i) => makeRemoteAdlib(i, source.input)),
+			...hostMicOverrides,
+		]
+	} else {
+		assertUnreachable(config.visionMixerType)
+	}
 }

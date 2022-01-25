@@ -6,6 +6,13 @@ export enum AtemLayers {
 	AtemSuperSourceBoxes = 'atem_supersource_boxes',
 }
 
+export enum VMixLayers {
+	VMixMeProgram = 'vmix_me_program',
+	VMixMePreview = 'vmix_me_preview',
+	VMixOverlayGraphics = 'vmix_overlay_graphics',
+	VMixDVEMultiView = 'vmix_dve_multiview',
+}
+
 export enum CasparCGLayers {
 	CasparCGClipPlayer = 'casparcg_clip_player',
 	CasparCGClipPlayerPreview = 'casparcg_clip_player_preview',

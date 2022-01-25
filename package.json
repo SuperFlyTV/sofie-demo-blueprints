@@ -1,6 +1,6 @@
 {
     "name": "sofie-demo-blueprints",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "repository": "https://github.com/superflytv/sofie-demo-blueprints/",
     "license": "MIT",
     "files": [],
@@ -63,7 +63,7 @@
         "webpack-cli": "^3.3.12"
     },
     "dependencies": {
-        "@sofie-automation/blueprints-integration": "1.37.0",
+        "@sofie-automation/blueprints-integration": "1.37.2",
         "moment": "2.29.1",
         "object-path": "^0.11.5",
         "type-fest": "^0.20.2",
