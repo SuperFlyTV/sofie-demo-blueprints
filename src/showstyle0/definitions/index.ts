@@ -1,8 +1,34 @@
 import { ITranslatableMessage } from '@sofie-automation/blueprints-integration'
 import { GraphicObject, SomeObject } from '../../common/definitions/objects'
 import { ClipProps } from '../helpers/clips'
+import { sanitizeName } from '../helpers/sanitize'
 import { RawSourceInfo } from '../helpers/sources'
 import { IntermediatePart, IntermediateSegment } from './intermediate'
+
+export enum AdLibTags {
+	Camera = 'camera',
+	Live = 'live',
+	Queue = 'queue',
+	DirectCut = 'direct_cut',
+}
+
+/**
+ * Creates an adLib tag for a particular camera, example:
+ * 	AdLibTagCamera('host') -> 'camera_host'
+ * @param camera Name of the camera to generate a tag for
+ */
+export function adLibTagCamera(camera: string) {
+	return `camera_${sanitizeName(camera)}`
+}
+
+/**
+ * Creates an adLib tag for a particular live, example:
+ * 	AdLibTagLive('westminster') -> 'live_westminster'
+ * @param live Name of the live to generate a tag for
+ */
+export function adLibTagLive(live: string) {
+	return `live_${sanitizeName(live)}`
+}
 
 export enum SegmentType {
 	NORMAL = 'normal',
