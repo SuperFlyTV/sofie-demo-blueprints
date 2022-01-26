@@ -1,14 +1,15 @@
 import { IBlueprintTriggeredActions } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../common/util'
+import { AdLibTags } from '../definitions'
 import { SourceLayer } from '../layers'
 import { createAdLibHotkey } from './util'
 
 export const TriggeredActionsDefaults = literal<IBlueprintTriggeredActions[]>([
 	...['F1', 'F2', 'F3', 'F4', 'F5', 'F6'].map((key, i) =>
-		createAdLibHotkey(key, [SourceLayer.Camera], true, i, undefined)
+		createAdLibHotkey(key, [SourceLayer.Camera], true, i, [AdLibTags.DirectCut])
 	),
 	...['F7', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5'].map((key, i) =>
-		createAdLibHotkey(key, [SourceLayer.Remote], true, i, undefined)
+		createAdLibHotkey(key, [SourceLayer.Remote], true, i, [AdLibTags.DirectCut])
 	),
 	...['F8'].map((key, i) => createAdLibHotkey(key, [SourceLayer.DVE], true, i, undefined)),
 	...['KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY'].map((key, i) =>

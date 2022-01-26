@@ -7,6 +7,8 @@ import {
 	ISourceLayer,
 	ITranslatableMessage,
 	MigrationContextShowStyle,
+	MigrationStepInput,
+	MigrationStepInputFilteredResult,
 	MigrationStepShowStyle,
 	PlayoutActions,
 	TriggerType,
@@ -76,15 +78,52 @@ export function getTriggeredActionsMigrationSteps(
 			return literal<MigrationStepShowStyle>({
 				id: `triggeredActions.defaults.${defaultVal._id}`,
 				version: versionStr,
-				canBeRunAutomatically: true,
-				validate: (context: MigrationContextShowStyle) => {
-					if (!context.getTriggeredAction(defaultVal._id)) {
+				canBeRunAutomatically: false,
+				input: [
+					literal<MigrationStepInput>({
+						label: `Replace AdLib Triggers with new defaults for ${defaultVal.name || defaultVal._id}?`,
+						inputType: 'checkbox',
+						attribute: 'forceToDefaults',
+						defaultValue: false,
+					}),
+				],
+				validate: (context: MigrationContextShowStyle, afterMigration: boolean) => {
+					const existingAction = context.getTriggeredAction(defaultVal._id)
+
+					if (!existingAction) {
 						return `Action Trigger "${defaultVal._id}" doesn't exist on ShowStyleBase`
 					}
+
+					const askForDefaults =
+						!afterMigration &&
+						existingAction.actions
+							.map((action) => action.filterChain.sort().join())
+							.sort()
+							.join() !==
+							defaultVal.actions
+								.map((action) => action.filterChain.sort().join())
+								.sort()
+								.join()
+					if (askForDefaults) {
+						return `Action Trigger "${defaultVal._id}" will be set to defaults`
+					}
+
 					return false
 				},
-				migrate: (context: MigrationContextShowStyle) => {
-					if (!context.getTriggeredAction(defaultVal._id)) {
+				migrate: (context: MigrationContextShowStyle, input: MigrationStepInputFilteredResult) => {
+					const existingAction = context.getTriggeredAction(defaultVal._id)
+
+					const setToDefault =
+						input['forceToDefaults'] &&
+						existingAction?.actions
+							.map((action) => action.filterChain.sort().join())
+							.sort()
+							.join() !==
+							defaultVal.actions
+								.map((action) => action.filterChain.sort().join())
+								.sort()
+								.join()
+					if (!existingAction || setToDefault) {
 						context.setTriggeredAction(defaultVal)
 					}
 				},
@@ -168,7 +207,7 @@ export function createAdLibHotkey(
 								value: 'current',
 						  }
 						: undefined,
-					tags && tags.length > 0
+					tags !== undefined && tags.length > 0
 						? {
 								object: 'adLib',
 								field: 'tag',
