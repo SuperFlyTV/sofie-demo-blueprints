@@ -64,7 +64,7 @@
     },
     "dependencies": {
         "@sofie-automation/blueprints-integration": "1.37.2",
-        "moment": "2.29.1",
+        "moment": "2.29.2",
         "object-path": "^0.11.5",
         "type-fest": "^0.20.2",
         "underscore": "1.12.0"
