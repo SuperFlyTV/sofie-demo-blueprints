@@ -7,6 +7,7 @@ const moment = require('moment')
 const pkg = require('./package.json')
 const { GetEntrypointsForBundle, BlueprintEntrypoints } = require('./scripts/blueprint-map')
 const pkgIntegration = require('@sofie-automation/blueprints-integration/package')
+const assetBundler = require('./scripts/bundle-assets')
 // eslint-disable-next-line node/no-extraneous-require
 const pkgTSR = require('timeline-state-resolver-types/package')
 
@@ -100,6 +101,13 @@ module.exports = async (env) => {
 			new webpack.DefinePlugin({
 				TRANSLATION_BUNDLES: JSON.stringify(translations),
 			}),
+			{
+				apply: (compiler) => {
+					compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
+						assetBundler(env, compilation)
+					})
+				},
+			},
 			{
 				apply: (compiler) => {
 					compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
