@@ -5,6 +5,7 @@
     "license": "MIT",
     "files": [],
     "scripts": {
+		"prepare": "husky install",
         "build": "yarn test && yarn build-now",
         "dist": "yarn build && yarn bundle",
         "bundle": "ts-node scripts/bundle.ts",
@@ -13,7 +14,8 @@
         "build-sync-local": "yarn run build --env.server=\"http://localhost:3000\"",
         "watch": "yarn run build-inner --watch",
         "watch-sync-local": "yarn run watch --env.server=\"http://localhost:3000\"",
-        "lint": "eslint . --ext .ts --ext .js --ignore-pattern dist",
+		"lint:raw": "eslint --ext .ts --ext .js --ext .tsx --ext .jsx --ignore-pattern dist",
+        "lint": "yarn lint:raw .",
         "unit": "jest",
         "test": "yarn lint && yarn unit",
         "validate:dependencies": "yarn audit && yarn license-validate",
@@ -25,17 +27,12 @@
     "engines": {
         "node": ">=12.16"
     },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
-    },
     "lint-staged": {
-        "*.{js,json,md}": [
+        "*.{css,json,md,scss}": [
             "prettier --write"
         ],
-        "*.{ts}": [
-            "yarn lint --fix"
+        "*.{ts,tsx,js,jsx}": [
+            "yarn lint:raw --fix"
         ]
     },
     "devDependencies": {
