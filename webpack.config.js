@@ -15,7 +15,7 @@ module.exports = async (env) => {
 
 	let versionStr
 	if (env.production) {
-		const GitRevisionPlugin = require('git-revision-webpack-plugin')
+		const { GitRevisionPlugin } = require('git-revision-webpack-plugin')
 		const gitRevisionPlugin = new GitRevisionPlugin({
 			lightweightTags: true,
 		})
