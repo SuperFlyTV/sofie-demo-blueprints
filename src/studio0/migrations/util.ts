@@ -253,7 +253,7 @@ export function updateStudioConfig(
 				if (configVal !== newConfigVal) {
 					return `${configName} is missing`
 				}
-			} catch (e) {
+			} catch (e: any) {
 				return e.toString()
 			}
 

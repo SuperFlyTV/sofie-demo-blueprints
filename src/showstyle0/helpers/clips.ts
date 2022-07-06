@@ -74,7 +74,7 @@ export function clipToAdlib(config: StudioConfig, clipObject: VideoObject): IBlu
 	})
 }
 
-export function parseClipsFromObjects(config: StudioConfig, objects: SomeObject[]) {
+export function parseClipsFromObjects(config: StudioConfig, objects: SomeObject[]): IBlueprintAdLibPiece[] {
 	const clips = objects.filter((o): o is VideoObject => o.objectType === ObjectType.Video)
 
 	return clips.map((o) => clipToAdlib(config, o))

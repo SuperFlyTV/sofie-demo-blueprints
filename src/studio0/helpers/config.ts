@@ -51,6 +51,6 @@ export interface StudioConfig {
 	casparcgLatency: number
 }
 
-export function getStudioConfig(context: IStudioUserContext | IStudioContext) {
+export function getStudioConfig(context: IStudioUserContext | IStudioContext): StudioConfig {
 	return context.getStudioConfig() as StudioConfig
 }
