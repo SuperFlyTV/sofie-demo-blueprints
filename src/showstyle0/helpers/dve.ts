@@ -83,11 +83,7 @@ export function parseSuperSourceLayout(context: IShowStyleContext, partProps: DV
 	const layoutName = partProps.layout || config.dvePresets[0].name
 	const layout = config.dvePresets.find((p) => p.name === layoutName) || config.dvePresets[0]
 
-	return (
-		layout?.preset.boxes
-			.map((b) => literal<TSR.SuperSourceBox>({ ...b, source: 0 }))
-			.slice(0, layout.boxes) || []
-	)
+	return layout?.preset.boxes.map((b) => literal<TSR.SuperSourceBox>({ ...b, source: 0 })).slice(0, layout.boxes) || []
 }
 
 export function dveLayoutToContent(

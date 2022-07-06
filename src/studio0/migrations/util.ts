@@ -33,28 +33,27 @@ export function getConfigOrDefault(context: MigrationContextStudio, name: string
 	}
 }
 export function getMappingsDefaultsMigrationSteps(versionStr: string): MigrationStepStudio[] {
-	const createMapping = (configId: string, condition: (configValue: ConfigItemValue | undefined) => boolean) => (
-		defaultVal: BlueprintMapping,
-		id: string
-	): MigrationStepStudio | null => {
-		return literal<MigrationStepStudio>({
-			id: `mappings.defaults.${id}`,
-			version: versionStr,
-			canBeRunAutomatically: true,
-			validate: (context: MigrationContextStudio): boolean | string => {
-				if (condition(context.getConfig(configId)) && !context.getMapping(id)) {
-					return `Mapping "${id}" doesn't exist on ShowBaseStyle`
-				}
-				return false
-			},
-			migrate: (context: MigrationContextStudio): void => {
-				if (!context.getMapping(id)) {
-					// defaultVal.deviceId = defaultVal.deviceId
-					context.insertMapping(id, defaultVal)
-				}
-			},
-		})
-	}
+	const createMapping =
+		(configId: string, condition: (configValue: ConfigItemValue | undefined) => boolean) =>
+		(defaultVal: BlueprintMapping, id: string): MigrationStepStudio | null => {
+			return literal<MigrationStepStudio>({
+				id: `mappings.defaults.${id}`,
+				version: versionStr,
+				canBeRunAutomatically: true,
+				validate: (context: MigrationContextStudio): boolean | string => {
+					if (condition(context.getConfig(configId)) && !context.getMapping(id)) {
+						return `Mapping "${id}" doesn't exist on ShowBaseStyle`
+					}
+					return false
+				},
+				migrate: (context: MigrationContextStudio): void => {
+					if (!context.getMapping(id)) {
+						// defaultVal.deviceId = defaultVal.deviceId
+						context.insertMapping(id, defaultVal)
+					}
+				},
+			})
+		}
 
 	const res = _.compact([
 		..._.map(
@@ -68,7 +67,7 @@ export function getMappingsDefaultsMigrationSteps(versionStr: string): Migration
 	])
 
 	const getVMixMappings = (context: MigrationContextStudio): BlueprintMappings => {
-		const sources = (getConfigOrDefault(context, 'vmixSources') as any) as StudioConfig['vmixSources']
+		const sources = getConfigOrDefault(context, 'vmixSources') as any as StudioConfig['vmixSources']
 		return getDynamicVMixMappings(sources)
 	}
 
@@ -106,7 +105,7 @@ export function getMappingsDefaultsMigrationSteps(versionStr: string): Migration
 		const auxes = getConfigOrDefault(context, 'atemOutputs')
 
 		if (auxes) {
-			const auxNumber = ((auxes as unknown) as StudioConfig['atemOutputs'])
+			const auxNumber = (auxes as unknown as StudioConfig['atemOutputs'])
 				.map((aux) => aux.output)
 				.sort()
 				.reverse()[0]
@@ -147,7 +146,7 @@ export function getMappingsDefaultsMigrationSteps(versionStr: string): Migration
 	)
 
 	const getSisyfosMappings = (context: MigrationContextStudio): BlueprintMappings => {
-		const sources = (getConfigOrDefault(context, 'sisyfosSources') as any) as StudioConfig['sisyfosSources']
+		const sources = getConfigOrDefault(context, 'sisyfosSources') as any as StudioConfig['sisyfosSources']
 
 		if (sources) {
 			return getDynamicSisyfosMappings(sources)

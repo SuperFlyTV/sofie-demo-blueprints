@@ -96,7 +96,7 @@ export function asRundownContext(context: IShowStyleContext): IRundownContext | 
 
 export function asRundownUserContext(context: IShowStyleUserContext): IRundownUserContext | undefined {
 	if (Object.prototype.hasOwnProperty.call(context, 'rundown')) {
-		return (context as unknown) as IRundownUserContext
+		return context as unknown as IRundownUserContext
 	} else {
 		return undefined
 	}
