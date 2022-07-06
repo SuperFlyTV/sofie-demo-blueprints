@@ -33,7 +33,7 @@ void (async () => {
 	await writeBundle('', blueprints)
 
 	await Promise.all(
-		Object.keys(BlueprintBundles).map((id) =>
+		Object.keys(BlueprintBundles).map(async (id) =>
 			writeBundle(id, _.pick(blueprints, ...BlueprintBundles[id]) as BlueprintManifestSet)
 		)
 	)
