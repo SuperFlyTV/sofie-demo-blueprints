@@ -19,7 +19,7 @@
         "unit": "jest",
         "test": "yarn lint && yarn unit",
         "validate:dependencies": "yarn audit && yarn license-validate",
-        "license-validate": "yarn sofie-licensecheck",
+        "license-validate": "yarn sofie-licensecheck --allowPackages \"caniuse-lite@1.0.30001363\"",
         "link-integration": "yarn link @sofie-automation/blueprints-integration",
         "translation:extract": "node scripts/translation/extract.js"
     },

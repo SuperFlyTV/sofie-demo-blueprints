@@ -80,7 +80,7 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
 1. Use the [Rundown Editor](https://github.com/SuperFlyTV/sofie-automation-rundown-editor) or the [Spreadsheet Gateway](https://github.com/SuperFlyTV/spreadsheet-gateway) to add a demo rundown to Sofie.
 1. Go to the Rundowns page (http://localhost:3000/rundowns) and click on the rundown you added in the previous step.
 1. (Optional) If you wish to have accurate media/VT statuses in the Rundown view, as well as hoverscrub media previews, set up [Package Manager](https://nrkno.github.io/sofie-core/docs/getting-started/installation/installing-package-manager/).
-    > ❗ This demo setup currently relies on Package Manager `release39`, which at the time of writing is compatible with Sofie Core `release37`. 
+   > ❗ This demo setup currently relies on Package Manager `release39`, which at the time of writing is compatible with Sofie Core `release37`.
 1. Right-click the blue header bar and click Activate (Rehearsal).
 1. Hit F12 to Take.
 
@@ -116,3 +116,9 @@ yarn test # watch for changes
 ```
 
 When adding code that uses new fields on the MosExternalMetadata, make sure to add a new rundown to the tests, to ensure that code is covered by the few tests that have been added.
+
+## Acknowledgements
+
+sofie-demo-blueprints uses many open source libraries, some of which include:
+
+- [`caniuse-lite`](https://github.com/browserslist/caniuse-lite) with data sourced from [caniuse.com](https://caniuse.com)
