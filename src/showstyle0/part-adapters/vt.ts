@@ -96,5 +96,6 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 		},
 		pieces,
 		adLibPieces: [...graphics.adLibPieces],
+		actions: [],
 	}
 }

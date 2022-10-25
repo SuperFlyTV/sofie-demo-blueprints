@@ -36,7 +36,7 @@ export function getRundown(
 	const res: BlueprintResultRundown = {
 		rundown,
 		globalAdLibPieces: getGlobalAdlibs(context),
-		globalActions: getGlobalActions(context),
+		globalActions: getGlobalActions(context, ingestRundown),
 		baseline: getBaseline(context),
 	}
 

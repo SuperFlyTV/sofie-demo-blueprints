@@ -200,14 +200,14 @@ export function ensureStudioConfig<TConfig>(
 	dependOnResultFrom?: string
 ): MigrationStepStudio {
 	return {
-		id: `studioConfig.${configName}`,
+		id: `studioConfig.${String(configName)}`,
 		dependOnResultFrom,
 		version,
 		canBeRunAutomatically: !_.isNull(value),
 		validate: (context: MigrationContextStudio): boolean | string => {
 			const configVal = context.getConfig(configName as string)
 			if (configVal === undefined) {
-				return `${configName} is missing`
+				return `${String(configName)} is missing`
 			}
 
 			return false

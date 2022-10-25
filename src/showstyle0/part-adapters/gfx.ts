@@ -30,10 +30,9 @@ export function generateGfxPart(context: PartContext, part: PartProps<GfxProps>)
 
 			expectedDuration: part.payload.duration,
 			autoNext: true,
-
-			prerollDuration: config.casparcgLatency,
 		},
 		pieces,
 		adLibPieces: [...graphics.adLibPieces, ...clips],
+		actions: [],
 	}
 }

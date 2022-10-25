@@ -92,5 +92,6 @@ export function generateVOPart(context: PartContext, part: PartProps<VOProps>): 
 		},
 		pieces,
 		adLibPieces: [...graphics.adLibPieces],
+		actions: [],
 	}
 }

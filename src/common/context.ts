@@ -1,6 +1,6 @@
 import {
 	BlueprintMappings,
-	IBlueprintRundownDB,
+	IBlueprintSegmentRundown,
 	ISegmentUserContext,
 	IShowStyleContext,
 	PackageInfo,
@@ -13,7 +13,7 @@ export function isPartContext(context: IShowStyleContext): context is PartContex
 export class PartContext implements ISegmentUserContext {
 	public readonly rundownId: string
 	public readonly studioId: string
-	public readonly rundown: IBlueprintRundownDB
+	public readonly rundown: IBlueprintSegmentRundown
 
 	private baseContext: ISegmentUserContext
 	private externalId: string
@@ -64,6 +64,9 @@ export class PartContext implements ISegmentUserContext {
 	}
 	public notifyUserWarning(message: string, params?: { [key: string]: any }): void {
 		return this.baseContext.notifyUserWarning(message, params, this.externalId)
+	}
+	public notifyUserInfo(message: string, params?: { [key: string]: any }): void {
+		return this.baseContext.notifyUserInfo(message, params, this.externalId)
 	}
 
 	/** ICommonContext */
