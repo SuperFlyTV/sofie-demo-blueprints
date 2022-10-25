@@ -102,10 +102,10 @@ This project builds with webpack and can auto upload on successful compilation
 
 ```sh
 yarn watch-sync-local # alias to upload to a local instance
-# yarn watch --env.server="http://localhost:3000" # can be used to connect to upload to a remote sofie instance
+# yarn watch --env server="http://localhost:3000" # can be used to connect to upload to a remote sofie instance
 ```
 
-The `--env.bundle=distriktsnyheter` can be used for watch or build to only build a specific bundle. Warning: using this parameter with the `yarn dist` will cause mismatched versions in the outputs.
+The `--env bundle=distriktsnyheter` can be used for watch or build to only build a specific bundle. Warning: using this parameter with the `yarn dist` will cause mismatched versions in the outputs.
 
 There are some unit tests for the project, currently just to validate that the blueprints do not crash while executing.
 These can be run with
