@@ -33,6 +33,10 @@ export class PartContext implements ISegmentUserContext {
 		return []
 	}
 
+	public async hackGetMediaObjectDuration(mediaId: string): Promise<number | undefined> {
+		return this.baseContext.hackGetMediaObjectDuration(mediaId)
+	}
+
 	public getRuntimeArguments(_externalId: string): undefined {
 		throw new Error('NOT SUPPORTED')
 	}
