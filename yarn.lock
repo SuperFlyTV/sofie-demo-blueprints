@@ -650,15 +650,15 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@sofie-automation/blueprints-integration@1.44.0":
-  version "1.44.0"
-  resolved "https://registry.yarnpkg.com/@sofie-automation/blueprints-integration/-/blueprints-integration-1.44.0.tgz#0cead6a8c07664400d50b2371aecfc26e9bea5ec"
-  integrity sha512-bpbPFtlijYOulOU585EVWTb0JqcypMN4hoI7lAFfR0NPxptwaVmmWwkdIgEopVpdomd8GGEJtaBT6zPdz85iBg==
+"@sofie-automation/blueprints-integration@1.46.0-in-testing.0":
+  version "1.46.0-in-testing.0"
+  resolved "https://registry.yarnpkg.com/@sofie-automation/blueprints-integration/-/blueprints-integration-1.46.0-in-testing.0.tgz#29f2b0f1ca8b7512be27099b21d335794f76af9d"
+  integrity sha512-RNbw3oPnaT1xZiBoh7LEBicXJestxvYZ3lvzHKlA5rbKOzOJaFsnqBxUU4gOvvWWbaAGMmsloCltAmaB3STRyA==
   dependencies:
-    "@sofie-automation/shared-lib" "1.44.0"
-    timeline-state-resolver-types "7.3.0"
+    "@sofie-automation/shared-lib" "1.46.0-in-testing.0"
+    timeline-state-resolver-types "7.4.0-release46.2"
     tslib "^2.4.0"
-    type-fest "^2.12.2"
+    type-fest "^2.19.0"
 
 "@sofie-automation/code-standard-preset@^2.1.0":
   version "2.1.0"
@@ -682,13 +682,13 @@
     semver "^7.3.8"
     shelljs "^0.8.5"
 
-"@sofie-automation/shared-lib@1.44.0":
-  version "1.44.0"
-  resolved "https://registry.yarnpkg.com/@sofie-automation/shared-lib/-/shared-lib-1.44.0.tgz#920ecc46afe185bb199d65ddb032da30b2a4564d"
-  integrity sha512-PXqDz8cqHKiKU/9PKP5ty63AiH4/VZe2lc3GuTfjQ4YV3wW0Aa1a6rw43gr9F+OE1ANpzzYjF0KYeuSQJt0lwA==
+"@sofie-automation/shared-lib@1.46.0-in-testing.0":
+  version "1.46.0-in-testing.0"
+  resolved "https://registry.yarnpkg.com/@sofie-automation/shared-lib/-/shared-lib-1.46.0-in-testing.0.tgz#97e279c14399f98df13408cec6e50d1ce2ee7d95"
+  integrity sha512-DrYvnDRzGDJeeRFpqq+3UyV/jmv+xp5DkIJ00Nd8VFUaAXGh8kNrdinYeDv0Xy9jaG34HUSYE6aQtZm5gDecAQ==
   dependencies:
     tslib "^2.4.0"
-    type-fest "^2.12.2"
+    type-fest "^2.19.0"
 
 "@tsconfig/node10@^1.0.7":
   version "1.0.9"
@@ -4907,10 +4907,10 @@ through@^2.3.8:
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==
 
-timeline-state-resolver-types@7.3.0:
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/timeline-state-resolver-types/-/timeline-state-resolver-types-7.3.0.tgz#72515377c89a2ac253158b577bba3d9ffbf8d7c2"
-  integrity sha512-Y4fmmP0aut9LjpnnDzu1BliUhAYgAe+ygQsAx3uxMkpYGBEs/A/1wROv4WGyKpsqtf3PjeyDch92s1Femq3TSA==
+timeline-state-resolver-types@7.4.0-release46.2:
+  version "7.4.0-release46.2"
+  resolved "https://registry.yarnpkg.com/timeline-state-resolver-types/-/timeline-state-resolver-types-7.4.0-release46.2.tgz#cb0fd08c7537504eca3531206bc20501612e33f0"
+  integrity sha512-1WYIyBiKS+JR1sBXB5gYGvcMB7JZhY4N++36i8YD44pP5B8a1j0g5LHcuv6Exo4DizlS6JuvvheSj218gKy6PQ==
   dependencies:
     tslib "^2.3.1"
 
@@ -5043,7 +5043,7 @@ type-fest@^2.0.0, type-fest@^2.16.0, type-fest@^2.5.0:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-2.16.0.tgz#1250fbd64dafaf4c8e405e393ef3fb16d9651db2"
   integrity sha512-qpaThT2HQkFb83gMOrdKVsfCN7LKxP26Yq+smPzY1FqoHRjqmjqHXA7n5Gkxi8efirtbeEUxzfEdePthQWCuHw==
 
-type-fest@^2.12.2, type-fest@^2.13.0:
+type-fest@^2.13.0, type-fest@^2.19.0:
   version "2.19.0"
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-2.19.0.tgz#88068015bb33036a598b952e55e9311a60fd3a9b"
   integrity sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==
