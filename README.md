@@ -25,7 +25,7 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
   ```
 
 - A [Sisyfos Audio Controller](https://github.com/tv2/sisyfos-audio-controller) setup
-- A [Sofie Core](https://github.com/nrkno/tv-automation-server-core) release 37 setup.
+- A [Sofie Core](https://github.com/nrkno/sofie-core) release 46 setup.
 
 > 💡 If you don't have a supported vision mixer, CasparCG setup, or Sisyfos setup, that's okay. You can still proceed with the demo setup and skip the steps for the pieces you don't have.
 
