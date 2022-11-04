@@ -81,6 +81,10 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
 1. Right-click the blue header bar and click Activate (Rehearsal).
 1. Hit F12 to Take.
 
+## Documentation
+
+In-depth documentation can be found here: https://superflytv.github.io/sofie-automation-rundown-editor/
+
 ## Installation (for developers)
 
 For developers, the installation steps are as follows:
