@@ -32,6 +32,7 @@ jobs:
           CI: true
       - name: Run typecheck and linter
         run: |
+          cd packages/blueprints
           yarn lint
           yarn build
         env:
