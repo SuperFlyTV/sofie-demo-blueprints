@@ -1,4 +1,10 @@
-import { IBlueprintPiece, PieceLifespan, ScriptContent, WithTimeline } from '@sofie-automation/blueprints-integration'
+import {
+	IBlueprintPiece,
+	IBlueprintPieceType,
+	PieceLifespan,
+	ScriptContent,
+	WithTimeline,
+} from '@sofie-automation/blueprints-integration'
 import { literal } from '../../common/util'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
 
@@ -32,7 +38,7 @@ export function createScriptPiece(script: string | undefined, extId: string): IB
 		enable: { start: 0 },
 		sourceLayerId: SourceLayer.Script,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Script),
-		isTransition: false,
+		pieceType: IBlueprintPieceType.InTransition,
 		lifespan: PieceLifespan.WithinPart,
 		metaData: {
 			source: 'script',

@@ -56,6 +56,7 @@ export function generateCameraPart(context: PartContext, part: PartProps<CameraP
 		},
 		pieces,
 		adLibPieces: [...graphics.adLibPieces, ...clips],
+		actions: [],
 	}
 }
 

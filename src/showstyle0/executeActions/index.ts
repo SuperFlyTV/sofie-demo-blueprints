@@ -2,23 +2,23 @@ import { ActionUserData, IActionExecutionContext } from '@sofie-automation/bluep
 import { ActionId } from '../actionDefinitions'
 import { SourceLayer } from '../layers'
 
-export function executeAction(
+export async function executeAction(
 	context: IActionExecutionContext,
 	actionId0: string,
 	_userData: ActionUserData,
 	_triggerMode?: string
-): void {
+): Promise<void> {
 	const actionId = actionId0 as ActionId
 
 	if (actionId === ActionId.LastRemote) {
-		executeLastOnSourceLayer(context, SourceLayer.Remote)
+		await executeLastOnSourceLayer(context, SourceLayer.Remote)
 	} else if (actionId === ActionId.LastDVE) {
-		executeLastOnSourceLayer(context, SourceLayer.DVE)
+		await executeLastOnSourceLayer(context, SourceLayer.DVE)
 	}
 }
 
-function executeLastOnSourceLayer(context: IActionExecutionContext, sourceLayer: SourceLayer) {
-	const lastRemote = context.findLastPieceOnLayer(sourceLayer)
+async function executeLastOnSourceLayer(context: IActionExecutionContext, sourceLayer: SourceLayer) {
+	const lastRemote = await context.findLastPieceOnLayer(sourceLayer)
 	if (lastRemote) {
 		// const partInstance = context.getPartInstance('current')
 		const piece = {
@@ -28,7 +28,7 @@ function executeLastOnSourceLayer(context: IActionExecutionContext, sourceLayer:
 			},
 		}
 
-		context.insertPiece('current', piece)
+		await context.insertPiece('current', piece)
 	} else {
 		context.notifyUserWarning('No piece was found to replay')
 		context.logWarning(`No last piece found on layer ${sourceLayer}`)

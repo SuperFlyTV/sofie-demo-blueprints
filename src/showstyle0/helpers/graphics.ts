@@ -95,6 +95,7 @@ function parseGraphic(config: StudioConfig, object: GraphicObject): IBlueprintPi
 			start: object.objectTime,
 			duration: object.duration > 0 ? object.duration : undefined,
 		},
+		prerollDuration: config.casparcgLatency,
 	}
 }
 export function parseAdlibGraphic(config: StudioConfig, object: GraphicObject, index: number): IBlueprintAdLibPiece {
@@ -110,7 +111,7 @@ export function parseAdlibGraphic(config: StudioConfig, object: GraphicObject, i
 		lifespan,
 		sourceLayerId: sourceLayer,
 		outputLayerId: getOutputLayerForSourceLayer(sourceLayer),
-		adlibPreroll: isFullscreen ? config.casparcgLatency : 0,
+		prerollDuration: isFullscreen ? config.casparcgLatency : 0,
 		content: {
 			timelineObjects: getGraphicTlObject(config, object, true),
 

@@ -57,5 +57,6 @@ export function generateRemotePart(context: PartContext, part: PartProps<RemoteP
 		},
 		pieces,
 		adLibPieces: [...graphics.adLibPieces, ...clips],
+		actions: [],
 	}
 }

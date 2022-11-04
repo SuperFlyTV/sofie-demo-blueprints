@@ -3,11 +3,12 @@ import {
 	IBlueprintShowStyleVariant,
 	IStudioUserContext,
 } from '@sofie-automation/blueprints-integration'
+import { ReadonlyObjectDeep } from 'type-fest/source/readonly-deep'
 // import _ = require('underscore')
 
 export function getShowStyleVariantId(
 	_context: IStudioUserContext,
-	showStyleVariants: IBlueprintShowStyleVariant[],
+	showStyleVariants: ReadonlyObjectDeep<IBlueprintShowStyleVariant[]>,
 	_ingestRundown: ExtendedIngestRundown
 ): string | null {
 	// Here you could parse bits of the rundown to decide which showstyle variant the rundown should have

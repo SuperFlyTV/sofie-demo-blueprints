@@ -56,6 +56,7 @@ export function generateParts(context: ISegmentUserContext, intermediateSegment:
 					},
 					pieces: [],
 					adLibPieces: [],
+					actions: [],
 				}
 			default:
 				return {
@@ -69,6 +70,7 @@ export function generateParts(context: ISegmentUserContext, intermediateSegment:
 					},
 					pieces: [],
 					adLibPieces: [],
+					actions: [],
 				}
 		}
 	})

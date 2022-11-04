@@ -12,8 +12,10 @@ module.exports = function (env, compilation) {
 		const filename = id + '-bundle.js'
 
 		const bundle = compilation.assets[filename]
-		if (bundle && bundle._cachedSource) {
-			console.log('Starting upload: ' + bundle._cachedSource.length + ' bytes to ' + id)
+		const data = bundle ? bundle.buffer() : null
+
+		if (bundle && data) {
+			console.log('Starting upload: ' + data.length + ' bytes to ' + id)
 
 			const instance = axios.create({
 				httpsAgent: new https.Agent({
@@ -22,7 +24,7 @@ module.exports = function (env, compilation) {
 			})
 
 			instance
-				.post(env.server + '/blueprints/restore/' + id, bundle._cachedSource, {
+				.post(env.server + '/blueprints/restore/' + id, data, {
 					headers: {
 						'Content-Type': 'text/javascript',
 					},

@@ -135,7 +135,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 		lifespan: PieceLifespan.WithinPart,
 		sourceLayerId: SourceLayer.DVE,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.DVE),
-		adlibPreroll: SUPER_SOURCE_LATENCY,
+		prerollDuration: SUPER_SOURCE_LATENCY,
 		content: {
 			...dveLayoutToContent(config, { boxes }, part.payload.inputs),
 			timelineObjects: dvePieceTimelineObjects,
@@ -207,7 +207,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 		lifespan: PieceLifespan.OutOnSegmentEnd,
 		sourceLayerId: SourceLayer.DVE_RETAIN,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.DVE_RETAIN),
-		adlibPreroll: SUPER_SOURCE_LATENCY,
+		prerollDuration: SUPER_SOURCE_LATENCY,
 		content: {
 			...dveLayoutToContent(config, { boxes }, part.payload.inputs),
 			timelineObjects: retainPieceTimelineObjects,
@@ -232,5 +232,6 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 		},
 		pieces,
 		adLibPieces: [...graphics.adLibPieces, ...clips],
+		actions: [],
 	}
 }
