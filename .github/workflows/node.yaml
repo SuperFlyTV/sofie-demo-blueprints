@@ -1,0 +1,68 @@
+name: Node CI
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - 'v**'
+  pull_request:
+
+jobs:
+  lint:
+    name: Typecheck and Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - name: restore node_modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+      - name: Prepare Environment
+        run: |
+          yarn
+        env:
+          CI: true
+      - name: Run typecheck and linter
+        run: |
+          yarn lint
+          yarn build
+        env:
+          CI: true
+
+  publish-docs:
+    name: Publish Docs
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - name: Prepare Environment
+        run: |
+          yarn
+        env:
+          CI: true
+      - name: Run docusaurus
+        run: |
+          cd packages/docs
+          yarn build
+        env:
+          CI: true
+      - name: Publish
+        if: github.ref == 'refs/heads/master' # always publish for just the master branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./packages/docs/build

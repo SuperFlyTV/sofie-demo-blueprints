@@ -15,6 +15,8 @@ const config = {
 	favicon: 'img/favicon.ico',
 	organizationName: 'superflytv', // Usually your GitHub org/user name.
 	projectName: 'sofie-demo-blueprints', // Usually your repo name.
+	deploymentBranch: 'gh-pages',
+	trailingSlash: false,
 	i18n: {
 		defaultLocale: 'en',
 		locales: ['en'],
