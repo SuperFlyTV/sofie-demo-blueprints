@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 /** @type {import('@docusaurus/types').Config} */
 const config = {
 	title: 'Sofie Demo Blueprints Documentation',
-	tagline: 'Documentation for the Sofie TV Automation demo blueprints.',
+	tagline: 'Learn how Sofie TV Automation Blueprints work.',
 	url: 'https://superflytv.github.io',
 	baseUrl: '/sofie-demo-blueprints/',
 	onBrokenLinks: 'throw',
