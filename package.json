@@ -10,7 +10,7 @@
         "license-validate": "yarn sofie-licensecheck --allowPackages \"caniuse-lite@1.0.30001363\"",
         "build:blueprints": "lerna run build-now --scope=blueprints",
         "watch:blueprints": "lerna run watch-sync-local --scope=blueprints",
-        "test:bluprints": "lerna run test --scope=blueprints",
+        "test:blueprints": "lerna run test --scope=blueprints",
         "build:docs": "lerna run build --scope=docs",
         "watch:docs": "lerna run start --scope=docs",
         "lint:raw": "eslint --ext .ts --ext .js --ext .tsx --ext .jsx --ignore-pattern dist"

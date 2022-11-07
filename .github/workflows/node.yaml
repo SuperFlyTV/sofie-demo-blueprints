@@ -38,6 +38,34 @@ jobs:
         env:
           CI: true
 
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - name: restore node_modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+      - name: Prepare Environment
+        run: |
+          yarn
+        env:
+          CI: true
+      - name: Run tests
+        run: |
+          cd packages/blueprints
+          yarn test
+        env:
+          CI: true
+
   publish-docs:
     name: Publish Docs
     runs-on: ubuntu-latest

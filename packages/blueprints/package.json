@@ -16,7 +16,7 @@
         "lint:raw": "eslint --ext .ts --ext .js --ext .tsx --ext .jsx --ignore-pattern dist",
         "lint": "yarn lint:raw .",
         "unit": "jest",
-        "test": "yarn lint && yarn unit",
+        "test": "yarn unit",
         "link-integration": "yarn link @sofie-automation/blueprints-integration",
         "translation:extract": "node scripts/translation/extract.js"
     },
