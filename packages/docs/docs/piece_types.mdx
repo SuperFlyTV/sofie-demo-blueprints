@@ -1,0 +1,75 @@
+---
+sidebar_position: 3
+---
+
+import l3d from '@site/static/vid/l3d.mp4'
+import ticker from '@site/static/vid/ticker.mp4'
+import head from '@site/static/vid/head.mp4'
+import strap from '@site/static/vid/strap.mp4'
+import l3dThumb from '@site/static/img/thumbs/l3d.jpg'
+import tickerThumb from '@site/static/img/thumbs/ticker.jpg'
+import headThumb from '@site/static/img/thumbs/head.jpg'
+import strapThumb from '@site/static/img/thumbs/strap.jpg'
+import fullscreen from '@site/static/img/fullscreen.jpg'
+
+# Piece Types
+
+Parts in the demo blueprints can be comprised of one of 10 Piece types.
+
+## Camera
+
+A Camera Piece shows the specified camera on-air.
+
+## Video
+
+A Video Piece shows the specified video clip (VT) on-air.
+
+## Remote
+
+A Remote Piece shows a remote video feed, such as a Skype interviewee or on-location reporter, on-air.
+
+## Lower Third
+
+A Lower Third Piece overlays a lower third graphic on top of the on-air content.
+
+<video controls loop width="500" poster={l3dThumb}>
+	<source src={l3d} />
+</video>
+
+## Split / DVE
+
+A Split Piece is used to set up a DVE to show more than one camera, remote, or VT at a time.
+
+## Ticker
+
+A Ticker Piece overlays a ticker graphic along the bottom of the on-air content.
+
+<video controls loop width="500" poster={tickerThumb}>
+	<source src={ticker} />
+</video>
+
+## Studio Guest
+
+A Studio Guest Piece is used to automatically unmute and re-mute a guest's microphone via [Sisyfos](https://github.com/tv2/sisyfos-audio-controller).
+
+## Head
+
+A Head Piece overlays a headline graphic on the bottom left of the on-air content.
+
+<video controls loop width="500" poster={headThumb}>
+	<source src={head} />
+</video>
+
+## Live Strap
+
+A Live Strap Piece overlays a two-line informational graphic in the top left, often used to show the current location as well as a "LIVE" indicator.
+
+<video controls loop width="500" poster={strapThumb}>
+	<source src={strap} />
+</video>
+
+## Fullscreen
+
+A Fullscreen Piece displays a fullscreen image.
+
+<img src={fullscreen} width="500" />

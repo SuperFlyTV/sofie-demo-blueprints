@@ -1,67 +1,172 @@
 [
 	{
-		"name": "Clip",
-		"shortName": "VT",
-		"payload": [{ "id": "fileName", "label": "File Name", "type": "string", "includeInName": true }],
-		"colour": "#0a20ed",
-		"id": "video"
-	},
-	{
 		"name": "Camera",
+		"shortName": "Cam",
+		"colour": "#18791C",
 		"includeTypeInName": true,
-		"payload": [{ "id": "camNo", "label": "Camera Num", "type": "number", "includeInName": true }],
-		"shortName": "C",
-		"colour": "#18791c",
+		"payload": [
+			{
+				"id": "camNo",
+				"label": "Camera number",
+				"type": "number",
+				"includeInName": true
+			}
+		],
 		"id": "camera"
 	},
 	{
-		"name": "Remote",
-		"shortName": "RM",
-		"colour": "#e80064",
-		"includeTypeInName": true,
-		"payload": [{ "id": "input", "label": "Input", "type": "number", "includeInName": true }],
-		"id": "remote"
+		"name": "Video",
+		"shortName": "VT",
+		"colour": "#0a20ed",
+		"payload": [
+			{
+				"id": "fileName",
+				"label": "File name",
+				"type": "string",
+				"includeInName": true
+			},
+			{
+				"id": "sourceDuration",
+				"label": "Source duration (in milliseconds)",
+				"type": "number",
+				"includeInName": false
+			}
+		],
+		"id": "video"
 	},
 	{
-		"name": "Graphics",
-		"shortName": "GFX",
+		"name": "Remote",
+		"colour": "#e80064",
+		"shortName": "REMI",
 		"payload": [
-			{ "id": "name", "label": "Name", "type": "string", "includeInName": true },
-			{ "id": "description", "label": "Description", "type": "string" },
-			{ "id": "location", "label": "Location", "type": "string" },
-			{ "id": "text", "label": "Text", "type": "string" }
+			{
+				"id": "input",
+				"label": "Input",
+				"type": "number",
+				"includeInName": true
+			}
 		],
-		"colour": "#dc5c00",
-		"id": "graphic"
+		"includeTypeInName": true,
+		"id": "remote"
 	},
 	{
 		"name": "Split",
 		"shortName": "DVE",
-		"colour": "#4b4b4b",
 		"payload": [
-			{ "id": "layout", "label": "Layout", "type": "string", "includeInName": true },
-			{ "id": "input1", "label": "Input 1", "type": "string", "includeInName": true },
-			{ "id": "input2", "label": "Input 2", "type": "string", "includeInName": true }
+			{
+				"id": "layout",
+				"label": "Layout",
+				"type": "string"
+			},
+			{
+				"id": "in1",
+				"label": "Input 1",
+				"type": "string",
+				"includeInName": true
+			},
+			{
+				"id": "in2",
+				"label": "Input 2",
+				"type": "string",
+				"includeInName": true
+			},
+			{
+				"id": "in3",
+				"label": "Input 3",
+				"type": "string",
+				"includeInName": true
+			}
 		],
-		"id": "Split"
+		"id": "split"
 	},
 	{
-		"name": "Transition",
-		"shortName": "T",
+		"name": "Lower third",
+		"shortName": "L3d",
+		"colour": "#ED7200",
 		"includeTypeInName": true,
-		"colour": "#4b4b4b",
-		"payload": [{ "id": "type", "label": "Type", "type": "string" }],
-		"id": "transition"
+		"payload": [
+			{
+				"id": "name",
+				"label": "Name",
+				"type": "string",
+				"includeInName": true
+			},
+			{
+				"id": "description",
+				"label": "Function",
+				"type": "string",
+				"includeInName": true
+			}
+		],
+		"id": "l3d"
 	},
-	{ "name": "Overlay", "includeTypeInName": false, "colour": "#ed7200", "id": "overlay" },
-	{ "name": "Lights", "shortName": "L", "colour": "#4b4b4b", "includeTypeInName": true, "id": "lights" },
-	{ "name": "PIP", "includeTypeInName": false, "colour": "#9a2bd8", "id": "pip" },
-	{ "name": "VoiceOver", "shortName": "VO", "colour": "#1e6820", "includeTypeInName": true, "id": "voiceover" },
-	{ "name": "Script", "colour": "#003600", "id": "script" },
 	{
-		"name": "Guest",
-		"colour": "#008a92",
-		"payload": [{ "id": "count", "label": "Count", "type": "number", "includeInName": true }],
+		"name": "Live strap",
+		"shortName": "Live",
+		"colour": "#ED7200",
+		"payload": [
+			{
+				"id": "location",
+				"label": "Text",
+				"type": "string",
+				"includeInName": true
+			},
+			{
+				"id": "text",
+				"label": "Label",
+				"type": "string"
+			}
+		],
+		"id": "strap"
+	},
+	{
+		"name": "Ticker",
+		"shortName": "Ticker",
+		"colour": "#ED7200",
+		"payload": [],
+		"id": "ticker"
+	},
+	{
+		"name": "Studio Guest",
+		"shortName": "Guest",
+		"includeTypeInName": true,
+		"payload": [
+			{
+				"id": "count",
+				"label": "Guest Count",
+				"type": "number",
+				"includeInName": true
+			}
+		],
 		"id": "guest"
+	},
+	{
+		"name": "Fullscreen",
+		"shortName": "GFX",
+		"colour": "#ED7200",
+		"includeTypeInName": true,
+		"payload": [
+			{
+				"id": "url",
+				"label": "URL",
+				"type": "string"
+			}
+		],
+		"id": "fullscreen"
+	},
+	{
+		"name": "Head",
+		"shortName": "head",
+		"colour": "#ED7200",
+		"includeTypeInName": false,
+		"payload": [
+			{
+				"id": "text",
+				"label": "Text",
+				"type": "string",
+				"includeInName": true
+			}
+		],
+		"id": "head"
 	}
 ]
