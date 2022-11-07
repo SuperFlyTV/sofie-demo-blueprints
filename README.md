@@ -83,7 +83,7 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
 
 ## Documentation
 
-In-depth documentation can be found here: https://superflytv.github.io/sofie-automation-rundown-editor/
+In-depth documentation can be found here: https://superflytv.github.io/sofie-demo-blueprints/
 
 ## Installation (for developers)
 
