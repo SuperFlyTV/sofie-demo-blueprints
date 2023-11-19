@@ -1,10 +1,17 @@
-import { BlueprintManifestType, ShowStyleBlueprintManifest } from '@sofie-automation/blueprints-integration'
-import { showStyleConfigManifest } from './config-manifests'
+import {
+	BlueprintManifestType,
+	JSONBlobStringify,
+	ShowStyleBlueprintManifest,
+} from '@sofie-automation/blueprints-integration'
 import { executeAction } from './executeActions'
 import { getSegment } from './getSegment'
 import { getShowStyleVariantId } from './getShowStyleVariantId'
-import { showStyleMigrations } from './migrations'
+// import { showStyleMigrations } from './migrations'
 import { getRundown } from './rundown'
+import OutputLayerDefaults from './migrations/outputlayer-defaults'
+import SourceLayerDefaults from './migrations/sourcelayer-defaults'
+import { TriggeredActionsDefaults } from './migrations/triggered-actions-defaults'
+import ConfigSchema = require('./config-schema.json')
 
 declare const VERSION: string // Injected by webpack
 declare const VERSION_TSR: string // Injected by webpack
@@ -24,8 +31,28 @@ const manifest: ShowStyleBlueprintManifest = {
 	getSegment,
 	executeAction,
 
-	showStyleConfigManifest,
-	showStyleMigrations,
+	showStyleConfigSchema: JSONBlobStringify(ConfigSchema),
+	configPresets: {
+		default: {
+			name: 'Default',
+			config: {
+				dvePresets: {},
+			},
+			variants: {
+				default: {
+					name: 'Default',
+					config: {},
+				},
+			},
+		},
+	},
+	showStyleMigrations: [],
+	validateConfig: () => [],
+	applyConfig: () => ({
+		sourceLayers: SourceLayerDefaults,
+		outputLayers: OutputLayerDefaults,
+		triggeredActions: TriggeredActionsDefaults,
+	}),
 
 	translations: TRANSLATION_BUNDLES,
 }

@@ -16,6 +16,7 @@ import { parseGraphicsFromObjects } from '../helpers/graphics'
 import { createScriptPiece } from '../helpers/script'
 import { createVisionMixerObjects } from '../helpers/visionMixer'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
+import { TimelineBlueprintExt } from '../../studio0/customTypes'
 
 export function generateVTPart(context: PartContext, part: PartProps<VTProps>): BlueprintResultPart {
 	const config = context.getStudioConfig() as StudioConfig
@@ -38,7 +39,7 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 			timelineObjects: [
 				...createVisionMixerObjects(config, visionMixerInput?.input || 0, config.casparcgLatency),
 
-				literal<TSR.TimelineObjCCGMedia>({
+				literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
 					id: '',
 					enable: { start: 0 },
 					layer: CasparCGLayers.CasparCGClipPlayer,
@@ -48,6 +49,7 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 
 						file: stripExtension(part.payload.clipProps.fileName),
 					},
+					priority: 1,
 				}),
 
 				audioTlObj,

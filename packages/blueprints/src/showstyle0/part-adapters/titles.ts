@@ -14,6 +14,7 @@ import { getClipPlayerInput } from '../helpers/clips'
 import { createScriptPiece } from '../helpers/script'
 import { createVisionMixerObjects } from '../helpers/visionMixer'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
+import { TimelineBlueprintExt } from '../../studio0/customTypes'
 
 export function generateOpenerPart(context: PartContext, part: PartProps<TitlesProps>): BlueprintResultPart {
 	const config = context.getStudioConfig() as StudioConfig
@@ -43,7 +44,7 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 				...createVisionMixerObjects(config, visionMixerInput?.input || 0),
 
 				// clip
-				literal<TSR.TimelineObjCCGMedia>({
+				literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
 					id: '',
 					enable: { start: 0 },
 					layer: CasparCGLayers.CasparCGEffectsPlayer,
@@ -53,6 +54,7 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 
 						file: 'assets/Sofie News Opener',
 					},
+					priority: 1,
 				}),
 			],
 		},
@@ -100,7 +102,7 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 				...createVisionMixerObjects(config, visionMixerInput?.input || 0),
 
 				// clip
-				literal<TSR.TimelineObjCCGMedia>({
+				literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
 					id: '',
 					enable: { start: 0 },
 					layer: CasparCGLayers.CasparCGAudioBed,
@@ -119,6 +121,7 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 							},
 						},
 					},
+					priority: 1,
 				}),
 			],
 		},

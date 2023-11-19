@@ -22,10 +22,10 @@ export function findSource(input: string | number | boolean | undefined, type: S
 }
 
 export function getSourceInfoFromRaw(config: StudioConfig, rawInfo: RawSourceInfo): SourceInfo {
-	let sourcesOfType = config.atemSources.filter((s) => s.type === rawInfo.type)
+	let sourcesOfType = Object.values(config.atemSources).filter((s) => s.type === rawInfo.type)
 
 	if (config.visionMixerType === VisionMixerType.VMix) {
-		sourcesOfType = config.vmixSources.filter((s) => s.type === rawInfo.type)
+		sourcesOfType = Object.values(config.vmixSources).filter((s) => s.type === rawInfo.type)
 	}
 
 	const input = sourcesOfType[rawInfo.id - 1]

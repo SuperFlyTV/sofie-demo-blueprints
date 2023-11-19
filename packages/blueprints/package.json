@@ -10,15 +10,16 @@
         "bundle": "ts-node scripts/bundle.ts",
         "build-now": "yarn run build-inner --env production",
         "build-inner": "webpack --config webpack.config.js",
-        "build-sync-local": "yarn run build --env server=\"http://localhost:3000\"",
+        "build-sync-local": "yarn run build --env server=\"http://127.0.0.1:3000\"",
         "watch": "yarn run build-inner --watch",
-        "watch-sync-local": "yarn run watch --env server=\"http://localhost:3000\"",
+        "watch-sync-local": "yarn run watch --env server=\"http://127.0.0.1:3000\"",
         "lint:raw": "eslint --ext .ts --ext .js --ext .tsx --ext .jsx --ignore-pattern dist",
         "lint": "yarn lint:raw .",
         "unit": "jest",
         "test": "yarn unit",
         "link-integration": "yarn link @sofie-automation/blueprints-integration",
-        "translation:extract": "node scripts/translation/extract.js"
+        "translation:extract": "node scripts/translation/extract.js",
+        "generate-schema-types": "node scripts/schema.mjs"
     },
     "devDependencies": {
         "@types/jest": "^28.1.4",
@@ -31,6 +32,7 @@
         "i18next-conv": "^10.2.0",
         "i18next-parser": "^3.11.0",
         "jest": "^28.1.2",
+        "json-schema-to-typescript": "^13.1.1",
         "moment": "^2.29.3",
         "ts-jest": "^28.0.5",
         "ts-loader": "^9.4.1",
@@ -41,7 +43,7 @@
         "webpack-cli": "^4.10.0"
     },
     "dependencies": {
-        "@sofie-automation/blueprints-integration": "1.46.0-in-testing.0",
+        "@sofie-automation/blueprints-integration": "1.50.0-in-testing.5",
         "object-path": "^0.11.8",
         "type-fest": "^2.16.0",
         "underscore": "^1.13.4"

@@ -6,6 +6,7 @@ import { CasparCGLayers } from '../../studio0/layers'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
 import { getClipPlayerInput } from './clips'
 import { createVisionMixerObjects } from './visionMixer'
+import { TimelineBlueprintExt } from '../../studio0/customTypes'
 
 export interface GraphicsResult {
 	pieces: IBlueprintPiece[]
@@ -35,12 +36,12 @@ function getGraphicTlLayer(object: GraphicObject): CasparCGLayers {
 	}
 }
 
-function getGraphicTlObject(config: StudioConfig, object: GraphicObject, isAdlib?: boolean): TSR.TSRTimelineObj[] {
+function getGraphicTlObject(config: StudioConfig, object: GraphicObject, isAdlib?: boolean): TimelineBlueprintExt[] {
 	const fullscreenAtemInput = getClipPlayerInput(config)
 	const isFullscreen = object.clipName.match(/fullscreen/i)
 
 	return [
-		literal<TSR.TimelineObjCCGTemplate>({
+		literal<TimelineBlueprintExt<TSR.TimelineContentCCGTemplate>>({
 			id: '',
 			enable: {
 				start: 0, // TODO - this might not be quite right

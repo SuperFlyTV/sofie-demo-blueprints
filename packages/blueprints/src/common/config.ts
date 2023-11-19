@@ -12,7 +12,7 @@ export function parseConfigManifest<T>(
 
 	for (const val of manifest) {
 		const overrideVal = overrides[val.id] as ConfigItemValue | undefined
-		const newVal = overrideVal !== undefined ? overrideVal : val.defaultVal
+		const newVal = overrideVal
 
 		objectPath.set(config, val.id, newVal)
 	}

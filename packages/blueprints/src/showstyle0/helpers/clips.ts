@@ -5,6 +5,7 @@ import { SourceType, StudioConfig, VisionMixerType } from '../../studio0/helpers
 import { CasparCGLayers } from '../../studio0/layers'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
 import { createVisionMixerObjects } from './visionMixer'
+import { TimelineBlueprintExt } from '../../studio0/customTypes'
 
 export interface ClipProps {
 	fileName: string
@@ -29,11 +30,11 @@ export function parseClipEditorProps(object: VideoObject): ClipProps {
 
 export function getClipPlayerInput(config: StudioConfig): StudioConfig['atemSources'][any] | undefined {
 	if (config.visionMixerType === VisionMixerType.Atem) {
-		const mediaplayerInput = config.atemSources.find((s) => s.type === SourceType.MediaPlayer)
+		const mediaplayerInput = Object.values(config.atemSources).find((s) => s.type === SourceType.MediaPlayer)
 
 		return mediaplayerInput
 	} else if (config.visionMixerType === VisionMixerType.VMix) {
-		const mediaplayerInput = config.vmixSources.find((s) => s.type === SourceType.MediaPlayer)
+		const mediaplayerInput = Object.values(config.vmixSources).find((s) => s.type === SourceType.MediaPlayer)
 
 		return mediaplayerInput
 	} else {
@@ -58,7 +59,7 @@ export function clipToAdlib(config: StudioConfig, clipObject: VideoObject): IBlu
 			timelineObjects: [
 				...createVisionMixerObjects(config, visionMixerInput?.input || 0, config.casparcgLatency),
 
-				literal<TSR.TimelineObjCCGMedia>({
+				literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
 					id: '',
 					enable: { start: 0 },
 					layer: CasparCGLayers.CasparCGClipPlayer,
@@ -68,6 +69,7 @@ export function clipToAdlib(config: StudioConfig, clipObject: VideoObject): IBlu
 
 						file: props.fileName,
 					},
+					priority: 1,
 				}),
 			],
 		},

@@ -8,6 +8,7 @@ import {
 	IBlueprintActionManifestDisplay,
 	IBlueprintActionManifestDisplayContent,
 	OnGenerateTimelineObj,
+	TSR,
 	TimelineObjectCoreExt,
 } from '@sofie-automation/blueprints-integration'
 import { SetRequired } from 'type-fest'
@@ -28,9 +29,13 @@ export interface TimelineObjectKeyframeMetaData {
 	_customTypes: void // just here to satisfy the linter
 }
 
-export type TimelineBlueprintExt = TimelineObjectCoreExt<TimelineObjectMetaData, TimelineObjectKeyframeMetaData>
+export type TimelineBlueprintExt<T extends TSR.TSRTimelineContent = TSR.TSRTimelineContent> = TimelineObjectCoreExt<
+	T,
+	TimelineObjectMetaData,
+	TimelineObjectKeyframeMetaData
+>
 export type OnTimelineGenerateBlueprintExt = TimelineBlueprintExt &
-	OnGenerateTimelineObj<TimelineObjectMetaData, TimelineObjectKeyframeMetaData>
+	OnGenerateTimelineObj<TSR.TSRTimelineContent, TimelineObjectMetaData, TimelineObjectKeyframeMetaData>
 
 export interface PieceMetaDataExt {
 	_customTypes: void // just here to satisfy the linter

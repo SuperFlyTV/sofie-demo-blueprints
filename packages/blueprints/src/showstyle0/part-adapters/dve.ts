@@ -1,10 +1,4 @@
-import {
-	BlueprintResultPart,
-	IBlueprintPiece,
-	PieceLifespan,
-	TimelineObjectCoreExt,
-	TSR,
-} from '@sofie-automation/blueprints-integration'
+import { BlueprintResultPart, IBlueprintPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../common/context'
 import { assertUnreachable, literal } from '../../common/util'
 import { AudioSourceType, SourceType, StudioConfig, VisionMixerType } from '../../studio0/helpers/config'
@@ -18,6 +12,7 @@ import { createScriptPiece } from '../helpers/script'
 import { getSourceInfoFromRaw } from '../helpers/sources'
 import { createVisionMixerObjects } from '../helpers/visionMixer'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
+import { TimelineBlueprintExt } from '../../studio0/customTypes'
 
 const SUPER_SOURCE_LATENCY = 80
 const SUPER_SOURCE_INPUT = 6000
@@ -67,8 +62,9 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 			.filter<any>((p): p is any => p !== undefined)
 	)
 
-	const vmixDVEInput = config.vmixSources.find((source) => source.type === SourceType.MultiView)?.input ?? -1
-	const dvePieceTimelineObjects: TimelineObjectCoreExt[] = [
+	const vmixDVEInput =
+		Object.values(config.vmixSources).find((source) => source.type === SourceType.MultiView)?.input ?? -1
+	const dvePieceTimelineObjects: TimelineBlueprintExt[] = [
 		...createVisionMixerObjects(
 			config,
 			config.visionMixerType === VisionMixerType.Atem ? SUPER_SOURCE_INPUT : vmixDVEInput,
@@ -78,7 +74,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 	]
 	if (config.visionMixerType === VisionMixerType.Atem) {
 		dvePieceTimelineObjects.push(
-			literal<TSR.TimelineObjAtemSsrcProps>({
+			literal<TimelineBlueprintExt<TSR.TimelineContentAtemSsrcProps>>({
 				id: '',
 				enable: { while: 1 },
 				priority: 1,
@@ -90,7 +86,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 				},
 			}),
 
-			literal<TSR.TimelineObjAtemSsrc>({
+			literal<TimelineBlueprintExt<TSR.TimelineContentAtemSsrc>>({
 				id: '',
 				enable: { start: 0 },
 				priority: 1,
@@ -107,7 +103,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 		)
 	} else if (config.visionMixerType === VisionMixerType.VMix) {
 		dvePieceTimelineObjects.push(
-			literal<TSR.TimelineObjVMixInput>({
+			literal<TimelineBlueprintExt<TSR.TimelineContentVMixInput>>({
 				id: '',
 				enable: { start: 0 },
 				priority: 1,
@@ -142,10 +138,10 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 		},
 	}
 
-	const retainPieceTimelineObjects: TimelineObjectCoreExt[] = []
+	const retainPieceTimelineObjects: TimelineBlueprintExt[] = []
 	if (config.visionMixerType === VisionMixerType.Atem) {
 		retainPieceTimelineObjects.push(
-			literal<TSR.TimelineObjAtemSsrcProps>({
+			literal<TimelineBlueprintExt<TSR.TimelineContentAtemSsrcProps>>({
 				id: '',
 				enable: { while: 1 },
 				priority: 0.5,
@@ -157,7 +153,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 				},
 			}),
 
-			literal<TSR.TimelineObjAtemSsrc>({
+			literal<TimelineBlueprintExt<TSR.TimelineContentAtemSsrc>>({
 				id: '',
 				enable: { start: 0 },
 				priority: 1,
@@ -174,7 +170,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 		)
 	} else if (config.visionMixerType === VisionMixerType.VMix) {
 		retainPieceTimelineObjects.push(
-			literal<TSR.TimelineObjVMixInput>({
+			literal<TimelineBlueprintExt<TSR.TimelineContentVMixInput>>({
 				id: '',
 				enable: { start: 0 },
 				priority: 1,

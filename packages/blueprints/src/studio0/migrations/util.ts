@@ -10,7 +10,6 @@ import {
 } from '@sofie-automation/blueprints-integration'
 import * as _ from 'underscore'
 import { literal } from '../../common/util'
-import { studioConfigManifest } from '../config-manifests'
 import { StudioConfig, VisionMixerType } from '../helpers/config'
 import MappingsDefaults, {
 	AtemMappings,
@@ -21,16 +20,7 @@ import MappingsDefaults, {
 
 export function getConfigOrDefault(context: MigrationContextStudio, name: string): ConfigItemValue | undefined {
 	const val = context.getConfig(name)
-	if (val !== undefined) {
-		return val
-	}
-
-	const def = _.find(studioConfigManifest, (c) => c.id === name)
-	if (def) {
-		return def.defaultVal
-	} else {
-		return undefined
-	}
+	return val
 }
 export function getMappingsDefaultsMigrationSteps(versionStr: string): MigrationStepStudio[] {
 	const createMapping =
@@ -105,7 +95,7 @@ export function getMappingsDefaultsMigrationSteps(versionStr: string): Migration
 		const auxes = getConfigOrDefault(context, 'atemOutputs')
 
 		if (auxes) {
-			const auxNumber = (auxes as unknown as StudioConfig['atemOutputs'])
+			const auxNumber = Object.values(auxes as unknown as StudioConfig['atemOutputs'])
 				.map((aux) => aux.output)
 				.sort()
 				.reverse()[0]
