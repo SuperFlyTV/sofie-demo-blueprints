@@ -37,15 +37,15 @@
         "ts-jest": "^28.0.5",
         "ts-loader": "^9.4.1",
         "ts-node": "^10.9.1",
-        "typescript": "~4.6.0",
+        "typescript": "~4.9.0",
         "vinyl-fs": "^3.0.3",
         "webpack": "^5.74.0",
         "webpack-cli": "^4.10.0"
     },
     "dependencies": {
-        "@sofie-automation/blueprints-integration": "1.50.0-in-testing.5",
+        "@sofie-automation/blueprints-integration": "1.51.0-nightly-release51-20240111-102412-af9f080.0",
         "object-path": "^0.11.8",
-        "type-fest": "^2.16.0",
+        "type-fest": "^4.9.0",
         "underscore": "^1.13.4"
     },
     "private": true,

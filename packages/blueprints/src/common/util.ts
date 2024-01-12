@@ -30,7 +30,7 @@ export function createVirtualPiece<TPieceMetadata>(
 	lifespan: PieceLifespan,
 	metadata: TPieceMetadata,
 	mainPiece?: IBlueprintPiece<TPieceMetadata>
-): SetRequired<IBlueprintPiece<TPieceMetadata>, 'metaData'> {
+): SetRequired<IBlueprintPiece<TPieceMetadata>, 'privateData'> {
 	return {
 		name: '',
 		externalId: mainPiece ? mainPiece.externalId : '-',
@@ -45,7 +45,7 @@ export function createVirtualPiece<TPieceMetadata>(
 		outputLayerId: outputLayer,
 		lifespan,
 		virtual: true,
-		metaData: metadata,
+		privateData: metadata,
 		content: {
 			timelineObjects: [],
 		},

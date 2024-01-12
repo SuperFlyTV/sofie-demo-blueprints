@@ -10,7 +10,7 @@ import { convertIngestData as convertEditorIngestData } from './sofie-editor-par
 import { convertIngestData as convertSpreadsheetIngestData } from './spreadsheet-parsers'
 
 export function getSegment(context: ISegmentUserContext, ingestSegment: IngestSegment): BlueprintResultSegment {
-	const rundownType = (context.rundown as Readonly<IBlueprintRundown<RundownMetadata>>).metaData?.ingestType
+	const rundownType = (context.rundown as Readonly<IBlueprintRundown<RundownMetadata>>).privateData?.ingestType
 
 	let intermediateSegment
 	switch (rundownType) {

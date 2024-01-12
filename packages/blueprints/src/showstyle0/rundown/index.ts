@@ -29,7 +29,7 @@ export function getRundown(
 	const rundown = literal<IBlueprintRundown>({
 		externalId: ingestRundown.externalId,
 		name: ingestRundown.name,
-		metaData: rundownMetadata,
+		privateData: rundownMetadata,
 		timing,
 	})
 
