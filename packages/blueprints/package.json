@@ -43,7 +43,7 @@
         "webpack-cli": "^4.10.0"
     },
     "dependencies": {
-        "@sofie-automation/blueprints-integration": "1.51.0-nightly-release51-20240111-102412-af9f080.0",
+        "@sofie-automation/blueprints-integration": "1.51.0-nightly-release51-20240524-100952-fa306dc.0",
         "object-path": "^0.11.8",
         "type-fest": "^4.9.0",
         "underscore": "^1.13.4"
