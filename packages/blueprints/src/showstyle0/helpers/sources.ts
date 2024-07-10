@@ -2,6 +2,7 @@ import { SourceType, StudioConfig, VisionMixerType } from '../../studio0/helpers
 
 export interface RawSourceInfo {
 	type: SourceType
+	/** 1-based number */
 	id: number
 }
 
