@@ -2,12 +2,13 @@ import { TSR } from '@sofie-automation/blueprints-integration'
 import { assertNever, literal } from '../../common/util'
 import { AudioSourceType, StudioConfig } from '../../studio0/helpers/config'
 import { SisyfosLayers } from '../../studio0/layers'
+import { TimelineBlueprintExt } from '../../studio0/customTypes'
 
 // note - studio baseline and showstyle baseline are the same for now
 export function getSisyfosBaseline(config: StudioConfig): (TSR.SisyfosChannelOptions & { mappedLayer: string })[] {
 	const channels: (TSR.SisyfosChannelOptions & { mappedLayer: string })[] = []
 	const addChannelsFromType = (type: AudioSourceType) =>
-		config.sisyfosSources
+		Object.values(config.sisyfosSources)
 			.filter((s) => s.type === type)
 			.forEach((s, i) => {
 				channels.push(
@@ -50,7 +51,7 @@ function getSisyfosPrimary(
 ): (TSR.SisyfosChannelOptions & { mappedLayer: string })[] {
 	return primaries
 		.map((primary) => {
-			const s = config.sisyfosSources.filter((s) => s.type === primary.type)[primary.index]
+			const s = Object.values(config.sisyfosSources).filter((s) => s.type === primary.type)[primary.index]
 			return (
 				s &&
 				literal<TSR.SisyfosChannelOptions & { mappedLayer: string }>({
@@ -66,8 +67,8 @@ export function getAudioObjectOnLayer(
 	config: StudioConfig,
 	layer: SisyfosLayers,
 	primaries: { type: AudioSourceType; index: number; isOn?: boolean }[]
-): TSR.TimelineObjSisyfosChannels {
-	return literal<TSR.TimelineObjSisyfosChannels>({
+): TimelineBlueprintExt<TSR.TimelineContentSisyfosChannels> {
+	return {
 		id: '',
 		enable: {
 			start: 0,
@@ -80,12 +81,13 @@ export function getAudioObjectOnLayer(
 
 			channels: getSisyfosPrimary(config, primaries),
 		},
-	})
+		priority: 1,
+	}
 }
 
 export function getAudioPrimaryObject(
 	config: StudioConfig,
 	primaries: { type: AudioSourceType; index: number; isOn?: boolean }[]
-): TSR.TimelineObjSisyfosChannels {
+): TimelineBlueprintExt<TSR.TimelineContentSisyfosChannels> {
 	return getAudioObjectOnLayer(config, SisyfosLayers.Primary, primaries)
 }

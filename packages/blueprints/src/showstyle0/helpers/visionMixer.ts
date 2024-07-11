@@ -1,4 +1,4 @@
-import { TimelineObjectCoreExt, TSR } from '@sofie-automation/blueprints-integration'
+import { TSR } from '@sofie-automation/blueprints-integration'
 import { assertUnreachable, literal } from '../../common/util'
 import { TimelineBlueprintExt } from '../../studio0/customTypes'
 import { StudioConfig, VisionMixerType } from '../../studio0/helpers/config'
@@ -8,10 +8,10 @@ export function createAtemInputTimelineObjects(
 	input: number,
 	start = 0,
 	transitionDuration = 40,
-	transitionProps?: Omit<TSR.TimelineObjAtemME['content']['me'], 'programInput' | 'previewInput'>
-): TSR.TimelineObjAtemME[] {
+	transitionProps?: Omit<TSR.TimelineContentAtemME['me'], 'programInput' | 'previewInput'>
+): TimelineBlueprintExt<TSR.TimelineContentAtemME>[] {
 	return [
-		literal<TimelineObjectCoreExt & TSR.TimelineObjAtemME>({
+		literal<TimelineBlueprintExt<TSR.TimelineContentAtemME>>({
 			id: '',
 			enable: { start: start },
 			layer: AtemLayers.AtemMeProgram,
@@ -31,17 +31,18 @@ export function createAtemInputTimelineObjects(
 						duration: transitionDuration, // only used to do the transition
 					},
 					content: {
-						me: literal<TSR.TimelineObjAtemME['content']['me']>({
+						me: {
 							input: input,
 							transition: TSR.AtemTransitionStyle.CUT,
 							...(transitionProps || {}),
-						}),
+						},
 					},
 				},
 			],
+			priority: 1,
 		}),
 		// Add object for preview
-		literal<TSR.TimelineObjAtemME & TimelineBlueprintExt>({
+		literal<TimelineBlueprintExt<TSR.TimelineContentAtemME>>({
 			id: '',
 			enable: { start: start },
 			layer: AtemLayers.AtemMePreview,
@@ -67,6 +68,7 @@ export function createAtemInputTimelineObjects(
 					preserveForLookahead: true,
 				},
 			],
+			priority: 1,
 		}),
 	]
 }
@@ -76,9 +78,9 @@ export function createVMixTimelineObjects(
 	start = 0,
 	transitionDuration = 40,
 	transitionProps?: TSR.VMixTransition
-): TSR.TimelineObjVMixAny[] {
+): TimelineBlueprintExt<TSR.TimelineContentVMixAny>[] {
 	return [
-		literal<TimelineObjectCoreExt & TSR.TimelineObjVMixProgram>({
+		literal<TimelineBlueprintExt<TSR.TimelineContentVMixProgram>>({
 			id: '',
 			enable: { start: start },
 			layer: VMixLayers.VMixMeProgram,
@@ -89,10 +91,11 @@ export function createVMixTimelineObjects(
 				input,
 				transition: transitionProps,
 			},
+			priority: 1,
 		}),
 
 		// Add object for preview
-		literal<TSR.TimelineObjVMixPreview & TimelineBlueprintExt>({
+		literal<TimelineBlueprintExt<TSR.TimelineContentVMixPreview>>({
 			id: '',
 			enable: { start: start },
 			layer: VMixLayers.VMixMePreview,
@@ -114,6 +117,7 @@ export function createVMixTimelineObjects(
 					preserveForLookahead: true,
 				},
 			],
+			priority: 1,
 		}),
 	]
 }
@@ -124,10 +128,10 @@ export function createVisionMixerObjects(
 	start = 0,
 	transitionDuration = 40,
 	transitionProps?: {
-		atemTransitionProps?: Omit<TSR.TimelineObjAtemME['content']['me'], 'programInput' | 'previewInput'>
+		atemTransitionProps?: Omit<TSR.TimelineContentAtemME['me'], 'programInput' | 'previewInput'>
 		vmixTransitionProps?: TSR.VMixTransition
 	}
-): (TSR.TimelineObjVMixAny | TSR.TimelineObjAtemAny)[] {
+): TimelineBlueprintExt<TSR.TimelineContentVMixAny | TSR.TimelineContentAtemAny>[] {
 	if (config.visionMixerType === VisionMixerType.Atem) {
 		return createAtemInputTimelineObjects(input, start, transitionDuration, transitionProps?.atemTransitionProps)
 	} else if (config.visionMixerType === VisionMixerType.VMix) {

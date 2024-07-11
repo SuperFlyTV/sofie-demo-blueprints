@@ -24,7 +24,7 @@ module.exports = function (env, compilation) {
 			})
 
 			instance
-				.post(env.server + '/blueprints/restore/' + id, data, {
+				.post(env.server + '/api/private/blueprints/restore/' + id, data, {
 					headers: {
 						'Content-Type': 'text/javascript',
 					},
@@ -48,7 +48,7 @@ module.exports = function (env, compilation) {
 			})
 
 			instance
-				.post(env.server + '/blueprints/assets', payload, {
+				.post(env.server + '/api/private/blueprints/assets', payload, {
 					headers: {
 						'Content-Type': 'application/json',
 					},

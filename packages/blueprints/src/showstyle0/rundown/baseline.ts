@@ -5,6 +5,7 @@ import { SourceType, StudioConfig, VisionMixerType } from '../../studio0/helpers
 import { AtemLayers, CasparCGLayers, SisyfosLayers, VMixLayers } from '../../studio0/layers'
 import { getSisyfosBaseline } from '../helpers/audio'
 import { DVEDesigns, DVELayouts } from '../helpers/dve'
+import { TimelineBlueprintExt } from '../../studio0/customTypes'
 
 export function getBaseline(context: IShowStyleUserContext): BlueprintResultBaseline {
 	const config = context.getStudioConfig() as StudioConfig
@@ -14,7 +15,7 @@ export function getBaseline(context: IShowStyleUserContext): BlueprintResultBase
 			...(config.visionMixerType === VisionMixerType.Atem ? getAtemBaseline(config) : []),
 			...(config.visionMixerType === VisionMixerType.VMix ? getVMixBaseline(config) : []),
 
-			literal<TSR.TimelineObjCCGRoute>({
+			literal<TimelineBlueprintExt<TSR.TimelineContentCCGRoute>>({
 				id: '',
 				enable: { while: 1 },
 				priority: 0,
@@ -28,7 +29,7 @@ export function getBaseline(context: IShowStyleUserContext): BlueprintResultBase
 				},
 			}),
 
-			literal<TSR.TimelineObjSisyfosChannels>({
+			literal<TimelineBlueprintExt<TSR.TimelineContentSisyfosChannels>>({
 				id: '',
 				enable: {
 					while: 1,
@@ -41,16 +42,17 @@ export function getBaseline(context: IShowStyleUserContext): BlueprintResultBase
 
 					channels: getSisyfosBaseline(config),
 				},
+				priority: 0,
 			}),
 		]),
 	}
 }
 
-function getAtemBaseline(config: StudioConfig): TSR.TSRTimelineObjBase[] {
-	const dskInput = config.atemSources.find((source) => source.type === SourceType.Graphics)
+function getAtemBaseline(config: StudioConfig): TimelineBlueprintExt[] {
+	const dskInput = Object.values(config.atemSources).find((source) => source.type === SourceType.Graphics)
 
 	return [
-		literal<TSR.TimelineObjAtemSsrcProps>({
+		literal<TimelineBlueprintExt<TSR.TimelineContentAtemSsrcProps>>({
 			id: '',
 			enable: { while: 1 },
 			priority: 0,
@@ -68,7 +70,7 @@ function getAtemBaseline(config: StudioConfig): TSR.TSRTimelineObjBase[] {
 			},
 		}),
 
-		literal<TSR.TimelineObjAtemSsrc>({
+		literal<TimelineBlueprintExt<TSR.TimelineContentAtemSsrc>>({
 			id: '',
 			enable: { while: 1 },
 			priority: 0,
@@ -83,7 +85,7 @@ function getAtemBaseline(config: StudioConfig): TSR.TSRTimelineObjBase[] {
 			},
 		}),
 
-		literal<TSR.TimelineObjAtemDSK>({
+		literal<TimelineBlueprintExt<TSR.TimelineContentAtemDSK>>({
 			id: '',
 			enable: { while: 1 },
 			priority: 0,
@@ -105,8 +107,8 @@ function getAtemBaseline(config: StudioConfig): TSR.TSRTimelineObjBase[] {
 			},
 		}),
 
-		...config.atemOutputs.map((output) =>
-			literal<TSR.TimelineObjAtemAUX>({
+		...Object.values(config.atemOutputs).map((output) =>
+			literal<TimelineBlueprintExt<TSR.TimelineContentAtemAUX>>({
 				id: '',
 				enable: { while: 1 },
 				priority: 0,
@@ -124,11 +126,11 @@ function getAtemBaseline(config: StudioConfig): TSR.TSRTimelineObjBase[] {
 	]
 }
 
-function getVMixBaseline(config: StudioConfig): TSR.TSRTimelineObjBase[] {
-	const dskInput = config.vmixSources.find((source) => source.type === SourceType.Graphics)
+function getVMixBaseline(config: StudioConfig): TimelineBlueprintExt[] {
+	const dskInput = Object.values(config.vmixSources).find((source) => source.type === SourceType.Graphics)
 
 	return [
-		literal<TSR.TimelineObjVMixOverlay>({
+		literal<TimelineBlueprintExt<TSR.TimelineContentVMixOverlay>>({
 			id: '',
 			enable: { while: 1 },
 			priority: 0,

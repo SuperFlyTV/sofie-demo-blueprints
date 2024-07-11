@@ -40,7 +40,7 @@ export function createScriptPiece(script: string | undefined, extId: string): IB
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Script),
 		pieceType: IBlueprintPieceType.InTransition,
 		lifespan: PieceLifespan.WithinPart,
-		metaData: {
+		privateData: {
 			source: 'script',
 		},
 		content: literal<WithTimeline<ScriptContent>>({

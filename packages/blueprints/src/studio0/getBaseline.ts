@@ -2,11 +2,12 @@ import { BlueprintResultStudioBaseline, IStudioContext, TSR } from '@sofie-autom
 import { literal } from '../common/util'
 import { AudioSourceType, StudioConfig } from './helpers/config'
 import { SisyfosLayers } from './layers'
+import { TimelineBlueprintExt } from './customTypes'
 
 function getSisyfosBaseline(config: StudioConfig): (TSR.SisyfosChannelOptions & { mappedLayer: string })[] {
 	const channels: (TSR.SisyfosChannelOptions & { mappedLayer: string })[] = []
 	const addChannelsFromType = (type: AudioSourceType) =>
-		config.sisyfosSources
+		Object.values(config.sisyfosSources)
 			.filter((s) => s.type === type)
 			.forEach((s, i) => {
 				channels.push(
@@ -30,7 +31,7 @@ export function getBaseline(context: IStudioContext): BlueprintResultStudioBasel
 
 	return {
 		timelineObjects: [
-			literal<TSR.TimelineObjSisyfosChannels>({
+			literal<TimelineBlueprintExt<TSR.TimelineContentSisyfosChannels>>({
 				id: '',
 				enable: {
 					while: 1,
@@ -42,9 +43,10 @@ export function getBaseline(context: IStudioContext): BlueprintResultStudioBasel
 
 					channels: getSisyfosBaseline(config),
 				},
+				priority: 1,
 			}),
-			...config.atemOutputs.map((output) =>
-				literal<TSR.TimelineObjAtemAUX>({
+			...Object.values(config.atemOutputs).map((output) =>
+				literal<TimelineBlueprintExt<TSR.TimelineContentAtemAUX>>({
 					id: '',
 					enable: { while: 1 },
 					priority: 0,

@@ -71,20 +71,20 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 
 	if (config.visionMixerType === VisionMixerType.Atem) {
 		return [
-			...config.atemSources
+			...Object.values(config.atemSources)
 				.filter((source) => source.type === SourceType.Camera)
 				.map((source, i) => makeCameraAdlib(i, source.input)),
-			...config.atemSources
+			...Object.values(config.atemSources)
 				.filter((source) => source.type === SourceType.Remote)
 				.map((source, i) => makeRemoteAdlib(i, source.input)),
 			...hostMicOverrides,
 		]
 	} else if (config.visionMixerType === VisionMixerType.VMix) {
 		return [
-			...config.vmixSources
+			...Object.values(config.vmixSources)
 				.filter((source) => source.type === SourceType.Camera)
 				.map((source, i) => makeCameraAdlib(i, source.input)),
-			...config.vmixSources
+			...Object.values(config.vmixSources)
 				.filter((source) => source.type === SourceType.Remote)
 				.map((source, i) => makeRemoteAdlib(i, source.input)),
 			...hostMicOverrides,

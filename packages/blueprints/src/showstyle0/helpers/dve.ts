@@ -53,12 +53,12 @@ export const DVEDesigns: Record<DVELayouts, DVELayout> = {
 export function parseSuperSourceProps(
 	context: IShowStyleContext,
 	partProps: DVEProps
-): TSR.TimelineObjAtemSsrcProps['content']['ssrcProps'] {
+): TSR.TimelineContentAtemSsrcProps['ssrcProps'] {
 	const config = parseConfig(context)
 	const layoutName = partProps.layout || config.dvePresets[0].name
 	const layout = config.dvePresets.find((p) => p.name === layoutName)
 
-	return literal<TSR.TimelineObjAtemSsrcProps['content']['ssrcProps']>({
+	return literal<TSR.TimelineContentAtemSsrcProps['ssrcProps']>({
 		artFillSource: layout?.preset.properties?.artFillSource || 0,
 		artCutSource: layout?.preset.properties?.artCutSource || 0,
 		artOption: layout?.preset.properties?.artOption || 0,
@@ -88,7 +88,7 @@ export function parseSuperSourceLayout(context: IShowStyleContext, partProps: DV
 
 export function dveLayoutToContent(
 	config: StudioConfig,
-	ssrcLayout: TSR.TimelineObjAtemSsrc['content']['ssrc'],
+	ssrcLayout: TSR.TimelineContentAtemSsrc['ssrc'],
 	allBoxes: DVEProps['inputs']
 ): Pick<SplitsContent, 'boxSourceConfiguration'> {
 	function boxSource(

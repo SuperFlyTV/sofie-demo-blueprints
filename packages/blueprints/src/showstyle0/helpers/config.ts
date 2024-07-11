@@ -1,15 +1,14 @@
 import { IShowStyleContext, IShowStyleUserContext } from '@sofie-automation/blueprints-integration'
 import { SuperSource } from '../../copy/atem-connection'
 import { BlueprintConfig as BlueprintConfigBase, getStudioConfig } from '../../studio0/helpers/config'
+import { ShowStyleConfig as ShowStyleConfig0 } from '../../generated/showStyle-config'
 
 export interface BlueprintConfig extends BlueprintConfigBase {
 	showStyle: Readonly<ShowStyleConfig>
 	dvePresets: { name: string; boxes: number; preset: SuperSource }[]
 }
 
-export interface ShowStyleConfig {
-	dvePresets: { name: string; boxes: number; preset: string }[]
-}
+export type ShowStyleConfig = ShowStyleConfig0
 
 export function parseConfig(context: IShowStyleContext | IShowStyleUserContext): BlueprintConfig {
 	const showStyle = context.getShowStyleConfig() as ShowStyleConfig
@@ -17,7 +16,7 @@ export function parseConfig(context: IShowStyleContext | IShowStyleUserContext):
 		studio: getStudioConfig(context),
 		showStyle,
 
-		dvePresets: showStyle.dvePresets
+		dvePresets: Object.values(showStyle.dvePresets)
 			.map((p) => {
 				try {
 					return {

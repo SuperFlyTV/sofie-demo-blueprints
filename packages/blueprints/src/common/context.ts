@@ -1,8 +1,10 @@
 import {
 	BlueprintMappings,
 	IBlueprintSegmentRundown,
+	IOutputLayer,
 	ISegmentUserContext,
 	IShowStyleContext,
+	ISourceLayer,
 	PackageInfo,
 } from '@sofie-automation/blueprints-integration'
 
@@ -14,6 +16,7 @@ export class PartContext implements ISegmentUserContext {
 	public readonly rundownId: string
 	public readonly studioId: string
 	public readonly rundown: IBlueprintSegmentRundown
+	public readonly playlistId: string
 
 	private baseContext: ISegmentUserContext
 	private externalId: string
@@ -27,6 +30,13 @@ export class PartContext implements ISegmentUserContext {
 		this.rundownId = baseContext.rundownId
 		this.rundown = baseContext.rundown
 		this.studioId = baseContext.studioId
+		this.playlistId = baseContext.playlistId
+	}
+	getShowStyleSourceLayers(): Record<string, ISourceLayer | undefined> {
+		return this.baseContext.getShowStyleSourceLayers()
+	}
+	getShowStyleOutputLayers(): Record<string, IOutputLayer | undefined> {
+		return this.baseContext.getShowStyleOutputLayers()
 	}
 
 	public getPackageInfo(_packageId: string): PackageInfo.Any[] {

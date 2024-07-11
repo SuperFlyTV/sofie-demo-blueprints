@@ -5,7 +5,6 @@ import {
 	MigrationStepStudio,
 	TSR,
 } from '@sofie-automation/blueprints-integration'
-import * as _ from 'underscore'
 import { literal } from '../../common/util'
 import { VisionMixerType } from '../helpers/config'
 
@@ -279,68 +278,5 @@ export function updateDeviceId(
 			}
 		},
 		dependOnResultFrom: 'studioConfig.DevicePrefix',
-	}
-}
-
-export function ensureMakeReadyIsUpToDate(
-	version: string,
-	deviceId: string,
-	cmdId: string,
-	getExpectedCommand: (context: MigrationContextStudio, deviceId: string, cmdId: string) => any
-): MigrationStepStudio {
-	return {
-		id: `Playout-gateway.${deviceId}.make-ready.${cmdId}`,
-		version: version, // Always run to ensure up-to-date
-		dependOnResultFrom: `Playout-gateway.${deviceId}.create`,
-		canBeRunAutomatically: true,
-		validate: (context: MigrationContextStudio): boolean | string => {
-			const expected = getExpectedCommand(context, deviceId, cmdId)
-			if (!expected) {
-				return false
-			}
-
-			const dev = context.getDevice(deviceId)
-			if (!dev) {
-				return `"${deviceId}" missing`
-			}
-
-			const opts = dev.options as Partial<TSR.DeviceOptionsHTTPSend['options']>
-			if (!opts || !opts.makeReadyCommands || opts.makeReadyCommands.length === 0) {
-				return `"${deviceId}" missing ${cmdId}`
-			}
-
-			const cmd = opts.makeReadyCommands.find((c: any) => c.id === cmdId)
-			if (!cmd) {
-				return `"${deviceId}" missing ${cmdId}`
-			}
-
-			if (!(_.isEqual(cmd, expected) || JSON.stringify(cmd) === JSON.stringify(expected))) {
-				return `"${deviceId}" ${cmdId}: current value (${JSON.stringify(
-					cmd
-				)}) does not match expected (${JSON.stringify(expected)})`
-			}
-
-			return false
-		},
-		migrate: (context: MigrationContextStudio): void => {
-			const dev = context.getDevice(deviceId)
-			const expected = getExpectedCommand(context, deviceId, cmdId)
-
-			if (dev && expected) {
-				const opts = (dev.options as Partial<TSR.DeviceOptionsHTTPSend['options']>) || {}
-				if (!opts.makeReadyCommands) {
-					opts.makeReadyCommands = []
-				}
-
-				const i = opts.makeReadyCommands.findIndex((c: any) => c.id === cmdId)
-				if (i === -1) {
-					opts.makeReadyCommands.push(expected)
-				} else {
-					opts.makeReadyCommands[i] = expected
-				}
-
-				context.updateDevice(deviceId, { options: opts })
-			}
-		},
 	}
 }

@@ -1,0 +1,45 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://example.com/product.schema.json",
+	"title": "ShowStyle Config",
+	"type": "object",
+	"properties": {
+		"dvePresets": {
+			"type": "object",
+			"ui:title": "DVE Presets",
+			"ui:category": "DVEs",
+			"patternProperties": {
+				"": {
+					"type": "object",
+					"title": "DVELayoutConfig",
+					"properties": {
+						"name": {
+							"type": "string",
+							"ui:title": "Preset name",
+							"ui:description": "Name to use in rundown editor",
+							"ui:summaryTitle": "Preset name",
+							"default": ""
+						},
+						"boxes": {
+							"type": "integer",
+							"ui:title": "Number of Boxes",
+							"ui:description": "The number of Boxes present in this DVE Layout",
+							"ui:summaryTitle": "Number of Boxes",
+							"min": 1,
+							"default": 2
+						},
+						"preset": {
+							"type": "string",
+							"ui:title": "JSON Preset",
+							"ui:description": "JSON configuration of the supersource",
+							"ui:summaryTitle": "JSON Preset",
+							"default": ""
+						}
+					},
+					"required": ["name", "boxes", "preset"]
+				}
+			}
+		}
+	},
+	"required": ["dvePresets"]
+}

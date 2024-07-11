@@ -144,8 +144,8 @@ export function createAdLibHotkey(
 	return {
 		_id: makeActionTriggerId('adLib', sourceLayerIds.join('_'), !!globalAdLib, pick),
 		_rank: rankCounter++ * 1000,
-		actions: [
-			{
+		actions: {
+			[PlayoutActions.adlib]: {
 				action: PlayoutActions.adlib,
 				filterChain: [
 					{
@@ -182,14 +182,14 @@ export function createAdLibHotkey(
 					},
 				].filter(Boolean) as (IRundownPlaylistFilterLink | IGUIContextFilterLink | IAdLibFilterLink)[],
 			},
-		],
-		triggers: [
-			{
+		},
+		triggers: {
+			[TriggerType.hotkey]: {
 				type: TriggerType.hotkey,
 				keys: keys,
 				up: true,
 			},
-		],
+		},
 		name: label,
 	}
 }

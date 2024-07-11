@@ -8,159 +8,172 @@ export default literal<BlueprintMappings>({
 		device: TSR.DeviceType.ABSTRACT,
 		deviceId: 'abstract0',
 		lookahead: LookaheadMode.NONE,
+		options: {},
 	},
 
-	[CasparCGLayers.CasparCGClipPlayer]: literal<TSR.MappingCasparCG & BlueprintMapping>({
+	[CasparCGLayers.CasparCGClipPlayer]: literal<BlueprintMapping<TSR.MappingCasparCGLayer>>({
 		device: TSR.DeviceType.CASPARCG,
 		deviceId: 'casparcg0',
 		lookahead: LookaheadMode.NONE,
 
-		channel: 1,
-		layer: 110,
+		options: {
+			mappingType: TSR.MappingCasparCGType.Layer,
+			channel: 1,
+			layer: 110,
+		},
 	}),
-	[CasparCGLayers.CasparCGClipPlayerPreview]: literal<TSR.MappingCasparCG & BlueprintMapping>({
+	[CasparCGLayers.CasparCGClipPlayerPreview]: literal<BlueprintMapping<TSR.MappingCasparCGLayer>>({
 		device: TSR.DeviceType.CASPARCG,
 		deviceId: 'casparcg0',
 		lookahead: LookaheadMode.NONE,
-
-		channel: 1,
-		layer: 100,
+		options: {
+			mappingType: TSR.MappingCasparCGType.Layer,
+			channel: 1,
+			layer: 100,
+		},
 	}),
 
-	[CasparCGLayers.CasparCGEffectsPlayer]: literal<TSR.MappingCasparCG & BlueprintMapping>({
+	[CasparCGLayers.CasparCGEffectsPlayer]: literal<BlueprintMapping<TSR.MappingCasparCGLayer>>({
 		device: TSR.DeviceType.CASPARCG,
 		deviceId: 'casparcg0',
 		lookahead: LookaheadMode.NONE,
-
-		channel: 2,
-		layer: 200,
+		options: {
+			mappingType: TSR.MappingCasparCGType.Layer,
+			channel: 2,
+			layer: 200,
+		},
 	}),
-	[CasparCGLayers.CasparCGGraphicsTicker]: literal<TSR.MappingCasparCG & BlueprintMapping>({
+	[CasparCGLayers.CasparCGGraphicsTicker]: literal<BlueprintMapping<TSR.MappingCasparCGLayer>>({
 		device: TSR.DeviceType.CASPARCG,
 		deviceId: 'casparcg0',
 		lookahead: LookaheadMode.NONE,
-
-		channel: 2,
-		layer: 110,
+		options: {
+			mappingType: TSR.MappingCasparCGType.Layer,
+			channel: 2,
+			layer: 110,
+		},
 	}),
-	[CasparCGLayers.CasparCGGraphicsLowerThird]: literal<TSR.MappingCasparCG & BlueprintMapping>({
+	[CasparCGLayers.CasparCGGraphicsLowerThird]: literal<BlueprintMapping<TSR.MappingCasparCGLayer>>({
 		device: TSR.DeviceType.CASPARCG,
 		deviceId: 'casparcg0',
 		lookahead: LookaheadMode.NONE,
-
-		channel: 2,
-		layer: 111,
+		options: {
+			mappingType: TSR.MappingCasparCGType.Layer,
+			channel: 2,
+			layer: 111,
+		},
 	}),
-	[CasparCGLayers.CasparCGGraphicsStrap]: literal<TSR.MappingCasparCG & BlueprintMapping>({
+	[CasparCGLayers.CasparCGGraphicsStrap]: literal<BlueprintMapping<TSR.MappingCasparCGLayer>>({
 		device: TSR.DeviceType.CASPARCG,
 		deviceId: 'casparcg0',
 		lookahead: LookaheadMode.NONE,
-
-		channel: 2,
-		layer: 112,
+		options: {
+			mappingType: TSR.MappingCasparCGType.Layer,
+			channel: 2,
+			layer: 112,
+		},
 	}),
-	[CasparCGLayers.CasparCGGraphicsLogo]: literal<TSR.MappingCasparCG & BlueprintMapping>({
+	[CasparCGLayers.CasparCGGraphicsLogo]: literal<BlueprintMapping<TSR.MappingCasparCGLayer>>({
 		device: TSR.DeviceType.CASPARCG,
 		deviceId: 'casparcg0',
 		lookahead: LookaheadMode.NONE,
-
-		channel: 2,
-		layer: 113,
+		options: {
+			mappingType: TSR.MappingCasparCGType.Layer,
+			channel: 2,
+			layer: 113,
+		},
 	}),
-	[CasparCGLayers.CasparCGAudioBed]: literal<TSR.MappingCasparCG & BlueprintMapping>({
+	[CasparCGLayers.CasparCGAudioBed]: literal<BlueprintMapping<TSR.MappingCasparCGLayer>>({
 		device: TSR.DeviceType.CASPARCG,
 		deviceId: 'casparcg0',
 		lookahead: LookaheadMode.NONE,
-
-		channel: 2,
-		layer: 80,
+		options: {
+			mappingType: TSR.MappingCasparCGType.Layer,
+			channel: 2,
+			layer: 80,
+		},
 	}),
 
-	[SisyfosLayers.Baseline]: literal<TSR.MappingSisyfosChannels & BlueprintMapping>({
+	[SisyfosLayers.Baseline]: literal<BlueprintMapping<TSR.MappingSisyfosChannels>>({
+		device: TSR.DeviceType.SISYFOS,
+		deviceId: 'sisyfos0',
+		lookahead: LookaheadMode.NONE,
+		options: {
+			mappingType: TSR.MappingSisyfosType.Channels,
+		},
+	}),
+	[SisyfosLayers.Primary]: literal<BlueprintMapping<TSR.MappingSisyfosChannels>>({
 		device: TSR.DeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
 		lookahead: LookaheadMode.NONE,
 
-		mappingType: TSR.MappingSisyfosType.CHANNELS,
+		options: { mappingType: TSR.MappingSisyfosType.Channels },
 	}),
-	[SisyfosLayers.Primary]: literal<TSR.MappingSisyfosChannels & BlueprintMapping>({
+	[SisyfosLayers.Guests]: literal<BlueprintMapping<TSR.MappingSisyfosChannels>>({
 		device: TSR.DeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
 		lookahead: LookaheadMode.NONE,
 
-		mappingType: TSR.MappingSisyfosType.CHANNELS,
+		options: { mappingType: TSR.MappingSisyfosType.Channels },
 	}),
-	[SisyfosLayers.Guests]: literal<TSR.MappingSisyfosChannels & BlueprintMapping>({
+	[SisyfosLayers.ForceMute]: literal<BlueprintMapping<TSR.MappingSisyfosChannels>>({
 		device: TSR.DeviceType.SISYFOS,
 		deviceId: 'sisyfos0',
 		lookahead: LookaheadMode.NONE,
 
-		mappingType: TSR.MappingSisyfosType.CHANNELS,
-	}),
-	[SisyfosLayers.ForceMute]: literal<TSR.MappingSisyfosChannels & BlueprintMapping>({
-		device: TSR.DeviceType.SISYFOS,
-		deviceId: 'sisyfos0',
-		lookahead: LookaheadMode.NONE,
-
-		mappingType: TSR.MappingSisyfosType.CHANNELS,
+		options: { mappingType: TSR.MappingSisyfosType.Channels },
 	}),
 })
 
 export const AtemMappings = literal<BlueprintMappings>({
-	[AtemLayers.AtemMeProgram]: literal<TSR.MappingAtem & BlueprintMapping>({
+	[AtemLayers.AtemMeProgram]: literal<BlueprintMapping<TSR.MappingAtemMixEffect>>({
 		device: TSR.DeviceType.ATEM,
 		deviceId: 'atem0',
 		lookahead: LookaheadMode.NONE,
 
-		mappingType: TSR.MappingAtemType.MixEffect,
-		index: 0,
+		options: { mappingType: TSR.MappingAtemType.MixEffect, index: 0 },
 	}),
-	[AtemLayers.AtemMePreview]: literal<TSR.MappingAtem & BlueprintMapping>({
+	[AtemLayers.AtemMePreview]: literal<BlueprintMapping<TSR.MappingAtemMixEffect>>({
 		device: TSR.DeviceType.ATEM,
 		deviceId: 'atem0',
 		lookahead: LookaheadMode.PRELOAD,
 
-		mappingType: TSR.MappingAtemType.MixEffect,
-		index: 0,
+		options: { mappingType: TSR.MappingAtemType.MixEffect, index: 0 },
 	}),
-	[AtemLayers.AtemDskGraphics]: literal<TSR.MappingAtem & BlueprintMapping>({
+	[AtemLayers.AtemDskGraphics]: literal<BlueprintMapping<TSR.MappingAtemDownStreamKeyer>>({
 		device: TSR.DeviceType.ATEM,
 		deviceId: 'atem0',
 		lookahead: LookaheadMode.NONE,
 
-		mappingType: TSR.MappingAtemType.DownStreamKeyer,
-		index: 0,
+		options: { mappingType: TSR.MappingAtemType.DownStreamKeyer, index: 0 },
 	}),
-	[AtemLayers.AtemSuperSourceProps]: literal<TSR.MappingAtem & BlueprintMapping>({
+	[AtemLayers.AtemSuperSourceProps]: literal<BlueprintMapping<TSR.MappingAtemSuperSourceProperties>>({
 		device: TSR.DeviceType.ATEM,
 		deviceId: 'atem0',
 		lookahead: LookaheadMode.NONE,
 
-		mappingType: TSR.MappingAtemType.SuperSourceProperties,
-		index: 0,
+		options: { mappingType: TSR.MappingAtemType.SuperSourceProperties, index: 0 },
 	}),
-	[AtemLayers.AtemSuperSourceBoxes]: literal<TSR.MappingAtem & BlueprintMapping>({
+	[AtemLayers.AtemSuperSourceBoxes]: literal<BlueprintMapping<TSR.MappingAtemSuperSourceBox>>({
 		device: TSR.DeviceType.ATEM,
 		deviceId: 'atem0',
 		lookahead: LookaheadMode.WHEN_CLEAR,
 		lookaheadMaxSearchDistance: 1,
 
-		mappingType: TSR.MappingAtemType.SuperSourceBox,
-		index: 0,
+		options: { mappingType: TSR.MappingAtemType.SuperSourceBox, index: 0 },
 	}),
 })
 
 export function getDynamicVMixMappings(vmixSources: StudioConfig['vmixSources']): BlueprintMappings {
 	const mappings: BlueprintMappings = {
-		[VMixLayers.VMixMeProgram]: literal<TSR.MappingVMixAny & BlueprintMapping>({
+		[VMixLayers.VMixMeProgram]: literal<BlueprintMapping<TSR.MappingVmixProgram>>({
 			device: TSR.DeviceType.VMIX,
 			deviceId: 'vmix0',
 			lookahead: LookaheadMode.NONE,
 
-			mappingType: TSR.MappingVMixType.Program,
-			index: 1,
+			options: { mappingType: TSR.MappingVmixType.Program, index: 1 },
 		}),
-		[VMixLayers.VMixMePreview]: literal<TSR.MappingVMixAny & BlueprintMapping>({
+		[VMixLayers.VMixMePreview]: literal<BlueprintMapping<TSR.MappingVmixPreview>>({
 			device: TSR.DeviceType.VMIX,
 			deviceId: 'vmix0',
 
@@ -168,34 +181,31 @@ export function getDynamicVMixMappings(vmixSources: StudioConfig['vmixSources'])
 			lookaheadMaxSearchDistance: 1,
 			lookaheadDepth: 1,
 
-			mappingType: TSR.MappingVMixType.Preview,
-			index: 1,
+			options: { mappingType: TSR.MappingVmixType.Preview, index: 1 },
 		}),
-		[VMixLayers.VMixOverlayGraphics]: literal<TSR.MappingVMixOverlay & BlueprintMapping>({
+		[VMixLayers.VMixOverlayGraphics]: literal<BlueprintMapping<TSR.MappingVmixOverlay>>({
 			device: TSR.DeviceType.VMIX,
 			deviceId: 'vmix0',
 			lookahead: LookaheadMode.NONE,
 
-			mappingType: TSR.MappingVMixType.Overlay,
-			index: 1,
+			options: { mappingType: TSR.MappingVmixType.Overlay, index: 1 },
 		}),
 	}
 
-	const multiviewSource = vmixSources.find((source) => source.type === SourceType.MultiView)
+	const multiviewSource = Object.values(vmixSources).find((source) => source.type === SourceType.MultiView)
 	if (multiviewSource) {
 		/**
 		 * Note that the word "MultiView" here does not refer to a traditional multiviewer used to monitor inputs and outputs in a studio.
 		 * Instead, vMix uses this word to describe an input which has other inputs overlaid on top of it like a DVE.
 		 * This is vMix's version of an ATEM SuperSource.
 		 */
-		mappings[VMixLayers.VMixDVEMultiView] = literal<TSR.MappingVMixInput & BlueprintMapping>({
+		mappings[VMixLayers.VMixDVEMultiView] = literal<BlueprintMapping<TSR.MappingVmixInput>>({
 			device: TSR.DeviceType.VMIX,
 			deviceId: 'vmix0',
 			lookahead: LookaheadMode.WHEN_CLEAR,
 			lookaheadMaxSearchDistance: 1,
 
-			mappingType: TSR.MappingVMixType.Input,
-			index: multiviewSource.input,
+			options: { mappingType: TSR.MappingVmixType.Input, index: '' + multiviewSource.input },
 		})
 	}
 
@@ -206,13 +216,14 @@ export function getAllAuxMappings(total: number): BlueprintMappings {
 	const mappings: BlueprintMappings = {}
 
 	for (let i = 0; i < total; i++) {
-		mappings[`atem_aux_${i}`] = literal<TSR.MappingAtem & BlueprintMapping>({
+		mappings[`atem_aux_${i}`] = literal<BlueprintMapping<TSR.MappingAtemAuxilliary>>({
 			device: TSR.DeviceType.ATEM,
 			deviceId: 'atem0',
 			lookahead: LookaheadMode.NONE,
-
-			mappingType: TSR.MappingAtemType.Auxilliary,
-			index: i,
+			options: {
+				mappingType: TSR.MappingAtemType.Auxilliary,
+				index: i,
+			},
 		})
 	}
 
@@ -222,16 +233,17 @@ export function getAllAuxMappings(total: number): BlueprintMappings {
 export function getDynamicSisyfosMappings(sisyfosSources: StudioConfig['sisyfosSources']): BlueprintMappings {
 	const mappings: BlueprintMappings = {}
 	const pushSisyfosMappings = (type: AudioSourceType) => {
-		const sources = sisyfosSources.filter((m) => m.type === type)
+		const sources = Object.values(sisyfosSources).filter((m) => m.type === type)
 		for (let i = 0; i < sources.length; i++) {
-			mappings[`sisyfos_source_${type}${i}`] = literal<TSR.MappingSisyfosChannel & BlueprintMapping>({
+			mappings[`sisyfos_source_${type}${i}`] = literal<BlueprintMapping<TSR.MappingSisyfosChannel>>({
 				device: TSR.DeviceType.SISYFOS,
 				deviceId: 'sisyfos0',
 				lookahead: LookaheadMode.NONE,
-
-				mappingType: TSR.MappingSisyfosType.CHANNEL,
-				channel: sources[i].source,
-				setLabelToLayerName: false, // ??
+				options: {
+					mappingType: TSR.MappingSisyfosType.Channel,
+					channel: sources[i].source,
+					setLabelToLayerName: false, // ??
+				},
 			})
 		}
 	}
