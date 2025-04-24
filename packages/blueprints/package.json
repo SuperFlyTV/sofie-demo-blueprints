@@ -43,13 +43,13 @@
         "webpack-cli": "^4.10.0"
     },
     "dependencies": {
-        "@sofie-automation/blueprints-integration": "1.51.0-nightly-release51-20240524-100952-fa306dc.0",
+        "@sofie-automation/blueprints-integration": "^1.52.0",
         "object-path": "^0.11.8",
         "type-fest": "^4.9.0",
         "underscore": "^1.13.4"
     },
     "private": true,
     "engines": {
-        "node": ">=16.14"
+        "node": ">=22.0.0"
     }
 }

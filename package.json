@@ -5,11 +5,13 @@
     "license": "MIT",
     "files": [],
     "scripts": {
-        "prepare": "husky install",
+        "prepare": "husky",
         "validate:dependencies": "yarn audit && yarn license-validate",
         "license-validate": "yarn sofie-licensecheck --allowPackages \"caniuse-lite@1.0.30001363\"",
         "build:blueprints": "lerna run build-now --scope=blueprints",
         "watch:blueprints": "lerna run watch-sync-local --scope=blueprints",
+        "build-sync-local": "lerna run build-sync-local --scope=blueprints",
+        "watch-sync-local": "lerna run watch-sync-local --scope=blueprints",
         "test:blueprints": "lerna run test --scope=blueprints",
         "build:docs": "lerna run build --scope=docs",
         "watch:docs": "lerna run start --scope=docs",
@@ -28,20 +30,22 @@
         ]
     },
     "devDependencies": {
-        "@babel/eslint-parser": "^7.19.1",
-        "@sofie-automation/code-standard-preset": "^2.1.0",
-        "eslint-import-resolver-typescript": "^3.5.2",
-        "eslint-plugin-import": "^2.26.0",
-        "eslint-plugin-react": "^7.31.10",
-        "eslint-plugin-react-hooks": "^4.6.0",
-        "lerna": "^6.0.1",
-        "lint-staged": "^15.2.5"
+        "@babel/eslint-parser": "^7.27.0",
+        "@sofie-automation/code-standard-preset": "2.5.2",
+        "eslint-import-resolver-typescript": "^4.3.4",
+        "eslint-plugin-import": "^2.31.0",
+        "eslint-plugin-react": "^7.37.5",
+        "eslint-plugin-react-hooks": "^5.2.0",
+        "husky": "^9.1.7",
+        "lerna": "^8.2.2",
+        "lint-staged": "^15.5.1"
     },
     "workspaces": [
         "packages/*"
     ],
     "private": true,
     "engines": {
-        "node": ">=18.12.0"
-    }
+        "node": ">=22.0.0"
+    },
+    "packageManager": "yarn@4.6.0"
 }
