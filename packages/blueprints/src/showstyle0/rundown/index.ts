@@ -41,11 +41,12 @@ export function getRundown(
 	}
 
 	if (ingestRundown.payload) {
-		// TODO - maybe guard against unknown types of rundowns?
-		const payload: SpreadsheetIngestRundown = ingestRundown.payload
-
-		timing.expectedStart = payload.expectedStart
-		timing.expectedDuration = payload.expectedEnd - payload.expectedStart
+		const payload = ingestRundown.payload as SpreadsheetIngestRundown
+		// Guard against missing or faulty payload:
+		if ((payload.externalId, payload.name, payload.expectedStart, payload.expectedEnd)) {
+			timing.expectedStart = payload.expectedStart
+			timing.expectedDuration = payload.expectedEnd - payload.expectedStart
+		}
 	}
 
 	return res

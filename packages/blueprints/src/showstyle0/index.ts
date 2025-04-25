@@ -46,7 +46,6 @@ const manifest: ShowStyleBlueprintManifest = {
 			},
 		},
 	},
-	showStyleMigrations: [],
 	validateConfig: () => [],
 	applyConfig: () => ({
 		sourceLayers: SourceLayerDefaults,

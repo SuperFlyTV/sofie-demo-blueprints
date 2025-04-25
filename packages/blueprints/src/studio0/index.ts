@@ -49,6 +49,7 @@ const manifest: StudioBlueprintManifest<StudioConfig> = {
 		},
 		playoutDevices: {},
 		routeSets: {},
+		parentDevices: {},
 	}),
 
 	getBaseline,

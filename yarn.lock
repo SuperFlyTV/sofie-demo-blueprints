@@ -3064,7 +3064,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mos-connection/model@npm:^4.1.0":
+"@mos-connection/model@npm:^4.2.2":
   version: 4.2.2
   resolution: "@mos-connection/model@npm:4.2.2"
   checksum: 10c0/3c6998417db60a59320a529f107c91b41e399f8ae6aa3107a1f0ae68370897baa3ef9580d33107cbf9c5924979e490a422b315e347392101f4c5fa03efe039fe
@@ -3736,14 +3736,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sofie-automation/blueprints-integration@npm:1.51.0-nightly-release51-20240524-100952-fa306dc.0":
-  version: 1.51.0-nightly-release51-20240524-100952-fa306dc.0
-  resolution: "@sofie-automation/blueprints-integration@npm:1.51.0-nightly-release51-20240524-100952-fa306dc.0"
+"@sofie-automation/blueprints-integration@npm:1.53.0-nightly-release53-20250423-081454-dc957dd.0":
+  version: 1.53.0-nightly-release53-20250423-081454-dc957dd.0
+  resolution: "@sofie-automation/blueprints-integration@npm:1.53.0-nightly-release53-20250423-081454-dc957dd.0"
   dependencies:
-    "@sofie-automation/shared-lib": "npm:1.51.0-nightly-release51-20240524-100952-fa306dc.0"
-    tslib: "npm:^2.6.2"
-    type-fest: "npm:^3.13.1"
-  checksum: 10c0/6bf40143e64a4b6d986c687903d51233201ab47aa5ec293b9bb6bc445adc2d45f3cf6e5154c3546f05756d0fc2600476abf8c8fb36af56499d08e4985ddc4588
+    "@sofie-automation/shared-lib": "npm:1.53.0-nightly-release53-20250423-081454-dc957dd.0"
+    tslib: "npm:^2.8.1"
+    type-fest: "npm:^4.33.0"
+  checksum: 10c0/4a1f3b214f2532a2fb155073d0d05e4b14f6bcd4ca1b1ad1524f3581174c56f3c750074002d872c6364c2d0decb854497b7f653577203cc31d1a1b0e4608f45c
   languageName: node
   linkType: hard
 
@@ -3787,15 +3787,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sofie-automation/shared-lib@npm:1.51.0-nightly-release51-20240524-100952-fa306dc.0":
-  version: 1.51.0-nightly-release51-20240524-100952-fa306dc.0
-  resolution: "@sofie-automation/shared-lib@npm:1.51.0-nightly-release51-20240524-100952-fa306dc.0"
+"@sofie-automation/shared-lib@npm:1.53.0-nightly-release53-20250423-081454-dc957dd.0":
+  version: 1.53.0-nightly-release53-20250423-081454-dc957dd.0
+  resolution: "@sofie-automation/shared-lib@npm:1.53.0-nightly-release53-20250423-081454-dc957dd.0"
   dependencies:
-    "@mos-connection/model": "npm:^4.1.0"
-    timeline-state-resolver-types: "npm:9.1.0-nightly-release51-20240228-132329-b7ceb6950.0"
-    tslib: "npm:^2.6.2"
-    type-fest: "npm:^3.13.1"
-  checksum: 10c0/fd0dbcf60a07261c91d810e62d7bb8201f7afe9b521ed743fcf947c1479f4fe47136f7d155df8244948ade83ff7043e6ad35c909e52aa3e1810d339bcaeafd97
+    "@mos-connection/model": "npm:^4.2.2"
+    timeline-state-resolver-types: "npm:9.3.0-release52.2"
+    tslib: "npm:^2.8.1"
+    type-fest: "npm:^4.33.0"
+  checksum: 10c0/4a3db962ef3e76f638b10facf39f2c8d9a3d5ebcfca879387fe31660e118256e4c436be50983fcac653187f4f2b54f9642f2577b6b8c3619b7bc7e42e2db59e9
   languageName: node
   linkType: hard
 
@@ -5987,7 +5987,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "blueprints@workspace:packages/blueprints"
   dependencies:
-    "@sofie-automation/blueprints-integration": "npm:1.51.0-nightly-release51-20240524-100952-fa306dc.0"
+    "@sofie-automation/blueprints-integration": "npm:1.53.0-nightly-release53-20250423-081454-dc957dd.0"
     "@types/jest": "npm:^28.1.4"
     "@types/node": "npm:^14.18.21"
     "@types/object-path": "npm:^0.11.1"
@@ -19354,12 +19354,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"timeline-state-resolver-types@npm:9.1.0-nightly-release51-20240228-132329-b7ceb6950.0":
-  version: 9.1.0-nightly-release51-20240228-132329-b7ceb6950.0
-  resolution: "timeline-state-resolver-types@npm:9.1.0-nightly-release51-20240228-132329-b7ceb6950.0"
+"timeline-state-resolver-types@npm:9.3.0-release52.2":
+  version: 9.3.0-release52.2
+  resolution: "timeline-state-resolver-types@npm:9.3.0-release52.2"
   dependencies:
-    tslib: "npm:^2.6.2"
-  checksum: 10c0/371fbca7599b9eee0c81342093f1b09c037281a6275466adcf133a238ab2a5f8f56a44bb4431547cde56f33f47da98a0b7448db7412c680dbb2c31366f130d2b
+    tslib: "npm:^2.6.3"
+  checksum: 10c0/c7f43960b0a98e6a1eb40b3ac6f42053f21528ae63f8151bebbd608056cb6fbc4687fa6141a627c7c14fd0581b49c0b6c10a4d19d1da346b6830093a6f5159b2
   languageName: node
   linkType: hard
 
@@ -19654,7 +19654,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.3, tslib@npm:^2.6.2":
+"tslib@npm:^2.0.3, tslib@npm:^2.6.3, tslib@npm:^2.8.1":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
@@ -19755,14 +19755,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:^3.1.0, type-fest@npm:^3.13.1":
+"type-fest@npm:^3.1.0":
   version: 3.13.1
   resolution: "type-fest@npm:3.13.1"
   checksum: 10c0/547d22186f73a8c04590b70dcf63baff390078c75ea8acd366bbd510fd0646e348bd1970e47ecf795b7cff0b41d26e9c475c1fedd6ef5c45c82075fbf916b629
   languageName: node
   linkType: hard
 
-"type-fest@npm:^4.9.0":
+"type-fest@npm:^4.33.0, type-fest@npm:^4.9.0":
   version: 4.40.0
   resolution: "type-fest@npm:4.40.0"
   checksum: 10c0/b39d4da6f9a154e3db7e714cd05ccf56b53f4f0bbf74dd294cb6be4921b16ecca5cb00cb81b53ab621a31c8e8509c74b5101895ada47af9de368a317d24538a3

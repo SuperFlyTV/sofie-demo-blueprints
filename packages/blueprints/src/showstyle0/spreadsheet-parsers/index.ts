@@ -22,12 +22,12 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: I
 	let type = SegmentType.NORMAL
 
 	if (ingestSegment.payload) {
-		const payload: SpreadsheetIngestSegment = ingestSegment.payload
+		const payload = ingestSegment.payload as SpreadsheetIngestSegment
 
 		if (payload.name.match(/intro/i)) type = SegmentType.OPENING
 
 		ingestSegment.parts.forEach((part) => {
-			const partPayload: SpreadsheetIngestPart = part.payload
+			const partPayload = part.payload as SpreadsheetIngestPart
 
 			if (partPayload.type.match(/cam/i)) {
 				parts.push(parseCamera(partPayload))

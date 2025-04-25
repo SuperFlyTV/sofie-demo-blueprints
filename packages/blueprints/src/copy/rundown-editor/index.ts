@@ -8,7 +8,7 @@ export interface EditorIngestRundown {
 }
 
 export interface DecoratedEditorIngestSegment extends IngestSegment {
-	payload?: EditorIngestSegment
+	payload: EditorIngestSegment
 }
 export interface EditorIngestSegment {
 	rundownId: string
@@ -19,7 +19,7 @@ export interface EditorIngestSegment {
 }
 
 export interface DecoratedEditorIngestPart extends IngestPart {
-	payload?: EditorIngestPart
+	payload: EditorIngestPart
 }
 export interface EditorIngestPart {
 	segmentId: string

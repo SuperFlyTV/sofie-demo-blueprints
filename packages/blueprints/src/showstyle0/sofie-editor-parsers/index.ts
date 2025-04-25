@@ -25,12 +25,12 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: I
 	let type = SegmentType.NORMAL
 
 	if (ingestSegment.payload) {
-		const payload: EditorIngestSegment = ingestSegment.payload
+		const payload = ingestSegment.payload as EditorIngestSegment
 
 		if (payload.name.match(/intro/i)) type = SegmentType.OPENING
 
 		ingestSegment.parts.forEach((part) => {
-			const partPayload: EditorIngestPart = part.payload
+			const partPayload = part.payload as EditorIngestPart
 
 			// process the pieces
 			const graphicTypes = ['strap', 'head', 'l3d', 'fullscreen']

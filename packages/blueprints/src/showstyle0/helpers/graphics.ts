@@ -78,18 +78,25 @@ function parseGraphic(config: StudioConfig, object: GraphicObject): IBlueprintPi
 		content: {
 			timelineObjects: getGraphicTlObject(config, object, false),
 
-			payload: {
-				content: {
-					...object.attributes,
-					adlib: undefined,
-				},
-				manifest: '',
-				template: {
-					event: '',
-					layer: '',
-					name: object.clipName,
-				},
+			templateData: {
+				name: object.attributes.name,
+				description: object.attributes.description,
+				location: object.attributes.location,
+				text: object.attributes.text,
 			},
+			// ToDo: This was the old way of doing it, but it doesn't work in R53:
+			// payload: {
+			// 	content: {
+			// 		...object.attributes,
+			// 		adlib: undefined,
+			// 	},
+			// 	manifest: '',
+			// 	template: {
+			// 		event: '',
+			// 		layer: '',
+			// 		name: object.clipName,
+			// 	},
+			// },
 			previewRenderer: config.previewRenderer,
 		},
 		enable: {
@@ -116,18 +123,24 @@ export function parseAdlibGraphic(config: StudioConfig, object: GraphicObject, i
 		content: {
 			timelineObjects: getGraphicTlObject(config, object, true),
 
-			payload: {
-				content: {
-					...object.attributes,
-					adlib: undefined,
-				},
-				manifest: '',
-				template: {
-					event: '',
-					layer: '',
-					name: object.clipName,
-				},
+			templateData: {
+				name: object.attributes.name,
+				description: object.attributes.description,
+				location: object.attributes.location,
+				text: object.attributes.text,
 			},
+			// payload: {
+			// 	content: {
+			// 		...object.attributes,
+			// 		adlib: undefined,
+			// 	},
+			// 	manifest: '',
+			// 	template: {
+			// 		event: '',
+			// 		layer: '',
+			// 		name: object.clipName,
+			// 	},
+			// },
 		},
 		_rank: index, // todo - probably some offset for ordering
 		expectedDuration: object.duration,

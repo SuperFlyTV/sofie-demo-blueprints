@@ -8,7 +8,7 @@ export interface SpreadsheetIngestRundown {
 }
 
 export interface DecoratedSpreadsheetIngestSegment extends IngestSegment {
-	payload?: SpreadsheetIngestSegment
+	payload: SpreadsheetIngestSegment
 }
 export interface SpreadsheetIngestSegment {
 	rundownId: string
@@ -19,7 +19,7 @@ export interface SpreadsheetIngestSegment {
 }
 
 export interface DecoratedSpreadsheetIngestPart extends IngestPart {
-	payload?: SpreadsheetIngestPart
+	payload: SpreadsheetIngestPart
 }
 export interface SpreadsheetIngestPart {
 	segmentId: string

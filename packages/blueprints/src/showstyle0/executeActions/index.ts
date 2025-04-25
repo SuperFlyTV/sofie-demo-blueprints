@@ -1,14 +1,33 @@
-import { ActionUserData, IActionExecutionContext } from '@sofie-automation/blueprints-integration'
+import {
+	ActionUserData,
+	BlueprintPlayoutPersistentStore,
+	IActionExecutionContext,
+} from '@sofie-automation/blueprints-integration'
 import { ActionId } from '../actionDefinitions'
 import { SourceLayer } from '../layers'
 
 export async function executeAction(
 	context: IActionExecutionContext,
+	playoutPersistentState: BlueprintPlayoutPersistentStore<unknown>,
 	actionId0: string,
-	_userData: ActionUserData,
-	_triggerMode?: string
+	userData: ActionUserData,
+	triggerMode?: string,
+	privateData?: unknown,
+	publicData?: unknown,
+	actionOptions?: { [key: string]: any }
 ): Promise<void> {
 	const actionId = actionId0 as ActionId
+
+	console.log(
+		'executeAction',
+		actionId,
+		userData,
+		triggerMode,
+		privateData,
+		publicData,
+		actionOptions,
+		playoutPersistentState
+	)
 
 	if (actionId === ActionId.LastRemote) {
 		await executeLastOnSourceLayer(context, SourceLayer.Remote)
