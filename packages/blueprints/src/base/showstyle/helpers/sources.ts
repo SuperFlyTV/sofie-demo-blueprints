@@ -1,4 +1,4 @@
-import { SourceType, StudioConfig, VisionMixerType } from '../../studio0/helpers/config'
+import { SourceType, StudioConfig, VisionMixerType } from '../../studio/helpers/config'
 
 export interface RawSourceInfo {
 	type: SourceType

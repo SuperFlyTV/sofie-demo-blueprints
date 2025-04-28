@@ -1,6 +1,6 @@
 import { BlueprintResultPart } from '@sofie-automation/blueprints-integration'
-import { PartContext } from '../../common/context'
-import { StudioConfig } from '../../studio0/helpers/config'
+import { PartContext } from '../../../common/context'
+import { StudioConfig } from '../../studio/helpers/config'
 import { GfxProps, PartProps } from '../definitions'
 import { parseClipsFromObjects } from '../helpers/clips'
 import { parseGraphicsFromObjects } from '../helpers/graphics'

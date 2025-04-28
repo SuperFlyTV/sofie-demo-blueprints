@@ -6,8 +6,8 @@ import {
 	SplitsContentBoxProperties,
 	TSR,
 } from '@sofie-automation/blueprints-integration'
-import { literal } from '../../common/util'
-import { SourceType, StudioConfig } from '../../studio0/helpers/config'
+import { literal } from '../../../common/util'
+import { SourceType, StudioConfig } from '../../studio/helpers/config'
 import { DVEProps } from '../definitions'
 import { getClipPlayerInput } from './clips'
 import { parseConfig } from './config'

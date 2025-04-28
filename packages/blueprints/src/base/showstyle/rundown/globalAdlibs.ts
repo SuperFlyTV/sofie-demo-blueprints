@@ -1,10 +1,10 @@
 import { IBlueprintAdLibPiece, IShowStyleUserContext, PieceLifespan } from '@sofie-automation/blueprints-integration'
-import { assertUnreachable, literal } from '../../common/util'
-import { AudioSourceType, SourceType, StudioConfig, VisionMixerType } from '../../studio0/helpers/config'
-import { SisyfosLayers } from '../../studio0/layers'
+import { assertUnreachable, literal } from '../../../common/util'
+import { AudioSourceType, SourceType, StudioConfig, VisionMixerType } from '../../studio/helpers/config'
+import { SisyfosLayers } from '../../studio/layers'
 import { getAudioObjectOnLayer, getAudioPrimaryObject } from '../helpers/audio'
 import { createVisionMixerObjects } from '../helpers/visionMixer'
-import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
+import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers'
 
 export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLibPiece[] {
 	const config = context.getStudioConfig() as StudioConfig

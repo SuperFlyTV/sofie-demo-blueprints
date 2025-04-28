@@ -1,5 +1,5 @@
 import { ITranslatableMessage } from '@sofie-automation/blueprints-integration'
-import { GraphicObject, SomeObject } from '../../common/definitions/objects'
+import { GraphicObject, SomeObject } from '../../../common/definitions/objects'
 import { ClipProps } from '../helpers/clips'
 import { RawSourceInfo } from '../helpers/sources'
 import { IntermediatePart, IntermediateSegment } from './intermediate'

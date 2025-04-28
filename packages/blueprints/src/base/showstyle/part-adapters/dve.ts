@@ -1,8 +1,8 @@
 import { BlueprintResultPart, IBlueprintPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
-import { PartContext } from '../../common/context'
-import { assertUnreachable, literal } from '../../common/util'
-import { AudioSourceType, SourceType, StudioConfig, VisionMixerType } from '../../studio0/helpers/config'
-import { AtemLayers, VMixLayers } from '../../studio0/layers'
+import { PartContext } from '../../../common/context'
+import { assertUnreachable, literal } from '../../../common/util'
+import { AudioSourceType, SourceType, StudioConfig, VisionMixerType } from '../../studio/helpers/config'
+import { AtemLayers, VMixLayers } from '../../studio/layers'
 import { DVEProps, PartProps } from '../definitions'
 import { getAudioPrimaryObject } from '../helpers/audio'
 import { getClipPlayerInput, parseClipsFromObjects } from '../helpers/clips'
@@ -11,8 +11,8 @@ import { parseGraphicsFromObjects } from '../helpers/graphics'
 import { createScriptPiece } from '../helpers/script'
 import { getSourceInfoFromRaw } from '../helpers/sources'
 import { createVisionMixerObjects } from '../helpers/visionMixer'
-import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
-import { TimelineBlueprintExt } from '../../studio0/customTypes'
+import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers'
+import { TimelineBlueprintExt } from '../../studio/customTypes'
 
 const SUPER_SOURCE_LATENCY = 80
 const SUPER_SOURCE_INPUT = 6000

@@ -1,8 +1,8 @@
 import { TSR } from '@sofie-automation/blueprints-integration'
-import { assertNever, literal } from '../../common/util'
-import { AudioSourceType, StudioConfig } from '../../studio0/helpers/config'
-import { SisyfosLayers } from '../../studio0/layers'
-import { TimelineBlueprintExt } from '../../studio0/customTypes'
+import { assertNever, literal } from '../../../common/util'
+import { AudioSourceType, StudioConfig } from '../../studio/helpers/config'
+import { SisyfosLayers } from '../../studio/layers'
+import { TimelineBlueprintExt } from '../../studio/customTypes'
 
 // note - studio baseline and showstyle baseline are the same for now
 export function getSisyfosBaseline(config: StudioConfig): (TSR.SisyfosChannelOptions & { mappedLayer: string })[] {

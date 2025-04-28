@@ -1,4 +1,4 @@
-import { EditorIngestPart } from '../../copy/rundown-editor'
+import { EditorIngestPart } from '../../../copy/rundown-editor'
 import { PartBaseProps } from '../definitions'
 
 export function parseBaseProps(part: EditorIngestPart): PartBaseProps {

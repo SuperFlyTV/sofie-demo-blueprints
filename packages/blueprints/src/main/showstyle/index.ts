@@ -7,7 +7,7 @@ import { getShowStyleConfigPreset } from './configPresets'
 const manifest: ShowStyleBlueprintManifest<ShowStyleConfig> = {
 	...baseManifest,
 
-	blueprintId: 'demo-studio',
+	blueprintId: 'demo-main-studio',
 
 	configPresets: getShowStyleConfigPreset(),
 }

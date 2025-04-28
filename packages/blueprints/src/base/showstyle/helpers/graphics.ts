@@ -1,12 +1,12 @@
 import { IBlueprintAdLibPiece, IBlueprintPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
-import { GraphicObject, ObjectType, SomeObject } from '../../common/definitions/objects'
-import { literal } from '../../common/util'
-import { StudioConfig } from '../../studio0/helpers/config'
-import { CasparCGLayers } from '../../studio0/layers'
-import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
+import { GraphicObject, ObjectType, SomeObject } from '../../../common/definitions/objects'
+import { literal } from '../../../common/util'
+import { StudioConfig } from '../../studio/helpers/config'
+import { CasparCGLayers } from '../../studio/layers'
+import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers'
 import { getClipPlayerInput } from './clips'
 import { createVisionMixerObjects } from './visionMixer'
-import { TimelineBlueprintExt } from '../../studio0/customTypes'
+import { TimelineBlueprintExt } from '../../studio/customTypes'
 
 export interface GraphicsResult {
 	pieces: IBlueprintPiece[]

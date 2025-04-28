@@ -1,11 +1,11 @@
 import { IBlueprintAdLibPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
-import { ObjectType, SomeObject, VideoObject } from '../../common/definitions/objects'
-import { assertUnreachable, literal } from '../../common/util'
-import { SourceType, StudioConfig, VisionMixerType } from '../../studio0/helpers/config'
-import { CasparCGLayers } from '../../studio0/layers'
-import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
+import { ObjectType, SomeObject, VideoObject } from '../../../common/definitions/objects'
+import { assertUnreachable, literal } from '../../../common/util'
+import { SourceType, StudioConfig, VisionMixerType } from '../../studio/helpers/config'
+import { CasparCGLayers } from '../../studio/layers'
+import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers'
 import { createVisionMixerObjects } from './visionMixer'
-import { TimelineBlueprintExt } from '../../studio0/customTypes'
+import { TimelineBlueprintExt } from '../../studio/customTypes'
 
 export interface ClipProps {
 	fileName: string

@@ -1,11 +1,11 @@
 import { BlueprintResultBaseline, IShowStyleUserContext, TSR } from '@sofie-automation/blueprints-integration'
 import * as _ from 'underscore'
-import { literal } from '../../common/util'
-import { SourceType, StudioConfig, VisionMixerType } from '../../studio0/helpers/config'
-import { AtemLayers, CasparCGLayers, SisyfosLayers, VMixLayers } from '../../studio0/layers'
+import { literal } from '../../../common/util'
+import { SourceType, StudioConfig, VisionMixerType } from '../../studio/helpers/config'
+import { AtemLayers, CasparCGLayers, SisyfosLayers, VMixLayers } from '../../studio/layers'
 import { getSisyfosBaseline } from '../helpers/audio'
 import { DVEDesigns, DVELayouts } from '../helpers/dve'
-import { TimelineBlueprintExt } from '../../studio0/customTypes'
+import { TimelineBlueprintExt } from '../../studio/customTypes'
 
 export function getBaseline(context: IShowStyleUserContext): BlueprintResultBaseline {
 	const config = context.getStudioConfig() as StudioConfig

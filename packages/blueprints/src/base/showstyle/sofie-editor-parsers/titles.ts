@@ -1,5 +1,5 @@
-import { SomeObject } from '../../common/definitions/objects'
-import { EditorIngestPart } from '../../copy/rundown-editor'
+import { SomeObject } from '../../../common/definitions/objects'
+import { EditorIngestPart } from '../../../copy/rundown-editor'
 import { InvalidProps, PartInfo, PartProps, PartType, TitlesProps } from '../definitions'
 import { parseBaseProps } from './base'
 

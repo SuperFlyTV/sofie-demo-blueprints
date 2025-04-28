@@ -10,7 +10,7 @@ import * as fs from 'fs/promises'
 
 	// convert showStyle-config options
 	try {
-		const schema = await compileFromFile('./src/showstyle0/config-schema.json', {
+		const schema = await compileFromFile('./src/showstyle/config-schema.json', {
 			additionalProperties: false,
 			style: PrettierConf,
 			bannerComment: '',

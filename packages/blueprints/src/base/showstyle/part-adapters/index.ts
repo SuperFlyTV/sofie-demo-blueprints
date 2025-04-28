@@ -3,8 +3,8 @@ import {
 	BlueprintResultSegment,
 	ISegmentUserContext,
 } from '@sofie-automation/blueprints-integration'
-import { PartContext } from '../../common/context'
-import { t } from '../../common/util'
+import { PartContext } from '../../../common/context'
+import { t } from '../../../common/util'
 import {
 	CameraProps,
 	DVEProps,

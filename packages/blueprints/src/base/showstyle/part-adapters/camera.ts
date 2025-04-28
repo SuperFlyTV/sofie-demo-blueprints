@@ -1,9 +1,9 @@
 import { BlueprintResultPart, IBlueprintPiece, PieceLifespan } from '@sofie-automation/blueprints-integration'
-import { PartContext } from '../../common/context'
-import { ObjectType, StudioGuestObject } from '../../common/definitions/objects'
-import { literal } from '../../common/util'
-import { AudioSourceType, StudioConfig } from '../../studio0/helpers/config'
-import { SisyfosLayers } from '../../studio0/layers'
+import { PartContext } from '../../../common/context'
+import { ObjectType, StudioGuestObject } from '../../../common/definitions/objects'
+import { literal } from '../../../common/util'
+import { AudioSourceType, StudioConfig } from '../../studio/helpers/config'
+import { SisyfosLayers } from '../../studio/layers'
 import { CameraProps, PartProps } from '../definitions'
 import { getAudioObjectOnLayer, getAudioPrimaryObject } from '../helpers/audio'
 import { parseClipsFromObjects } from '../helpers/clips'
@@ -11,7 +11,7 @@ import { parseGraphicsFromObjects } from '../helpers/graphics'
 import { createScriptPiece } from '../helpers/script'
 import { getSourceInfoFromRaw } from '../helpers/sources'
 import { createVisionMixerObjects } from '../helpers/visionMixer'
-import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
+import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers'
 
 export function generateCameraPart(context: PartContext, part: PartProps<CameraProps>): BlueprintResultPart {
 	const config = context.getStudioConfig() as StudioConfig

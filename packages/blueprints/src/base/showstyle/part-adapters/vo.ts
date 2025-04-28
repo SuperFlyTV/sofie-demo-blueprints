@@ -5,17 +5,17 @@ import {
 	PieceLifespan,
 	TSR,
 } from '@sofie-automation/blueprints-integration'
-import { PartContext } from '../../common/context'
-import { changeExtension, literal, stripExtension } from '../../common/util'
-import { StudioConfig } from '../../studio0/helpers/config'
-import { CasparCGLayers } from '../../studio0/layers'
+import { PartContext } from '../../../common/context'
+import { changeExtension, literal, stripExtension } from '../../../common/util'
+import { StudioConfig } from '../../studio/helpers/config'
+import { CasparCGLayers } from '../../studio/layers'
 import { PartProps, VOProps } from '../definitions'
 import { getClipPlayerInput } from '../helpers/clips'
 import { parseGraphicsFromObjects } from '../helpers/graphics'
 import { createScriptPiece } from '../helpers/script'
 import { createVisionMixerObjects } from '../helpers/visionMixer'
-import { getOutputLayerForSourceLayer, SourceLayer } from '../layers'
-import { TimelineBlueprintExt } from '../../studio0/customTypes'
+import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers'
+import { TimelineBlueprintExt } from '../../studio/customTypes'
 
 export function generateVOPart(context: PartContext, part: PartProps<VOProps>): BlueprintResultPart {
 	const config = context.getStudioConfig() as StudioConfig
