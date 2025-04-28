@@ -1,5 +1,5 @@
 import { IStudioContext, IStudioUserContext } from '@sofie-automation/blueprints-integration'
-import { StudioConfig as StudioConfig0 } from '../../../generated/studio-config'
+import { StudioConfig as StudioConfig0 } from '../../../$schemas/generated/main-studio-config'
 
 export enum VisionMixerType {
 	Atem = 'atem',

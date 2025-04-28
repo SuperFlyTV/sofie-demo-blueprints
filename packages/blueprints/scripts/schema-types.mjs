@@ -8,33 +8,35 @@ import * as fs from 'fs/promises'
 		await fs.readFile('../../node_modules/@sofie-automation/code-standard-preset/.prettierrc.json')
 	)
 
+	await fs.mkdir('src/$schemas/generated', { recursive: true })
+
 	// convert showStyle-config options
 	try {
-		const schema = await compileFromFile('./src/showstyle/config-schema.json', {
+		const schema = await compileFromFile('./src/$schemas/main-showstyle-config.json', {
 			additionalProperties: false,
 			style: PrettierConf,
 			bannerComment: '',
 			enableConstEnums: false,
 		})
 
-		await fs.writeFile('./src/generated/showStyle-config.ts', BANNER + '\n' + schema)
+		await fs.writeFile('./src/$schemas/generated/main-showstyle-config.ts', BANNER + '\n' + schema)
 	} catch (e) {
-		console.error('Error while generating showStyle-config.json, continuing...')
+		console.error('Error while generating main-showstyle-config.json, continuing...')
 		console.error(e)
 	}
 
 	// convert studio-config options
 	try {
-		const schema = await compileFromFile('./src/studio0/config-schema.json', {
+		const schema = await compileFromFile('./src/$schemas/main-studio-config.json', {
 			additionalProperties: false,
 			style: PrettierConf,
 			bannerComment: '',
 			enableConstEnums: false,
 		})
 
-		await fs.writeFile('./src/generated/studio-config.ts', BANNER + '\n' + schema)
+		await fs.writeFile('./src/$schemas/generated/main-studio-config.ts', BANNER + '\n' + schema)
 	} catch (e) {
-		console.error('Error while generating studio-config.json, continuing...')
+		console.error('Error while generating main-studio-config.json, continuing...')
 		console.error(e)
 	}
 })().catch(console.error)

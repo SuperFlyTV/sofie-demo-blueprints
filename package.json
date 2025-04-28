@@ -12,6 +12,7 @@
         "watch:blueprints": "lerna run watch-sync-local --scope=blueprints",
         "build-sync-local": "lerna run build-sync-local --scope=blueprints",
         "watch-sync-local": "lerna run watch-sync-local --scope=blueprints",
+        "generate-schema-types": "lerna run generate-schema-types --scope=blueprints",
         "test:blueprints": "lerna run test --scope=blueprints",
         "build:docs": "lerna run build --scope=docs",
         "watch:docs": "lerna run start --scope=docs",

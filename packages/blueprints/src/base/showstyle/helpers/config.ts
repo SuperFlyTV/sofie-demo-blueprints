@@ -1,7 +1,7 @@
 import { IShowStyleContext, IShowStyleUserContext } from '@sofie-automation/blueprints-integration'
 import { SuperSource } from '../../../code-copy/atem-connection'
 import { BlueprintConfig as BlueprintConfigBase, getStudioConfig } from '../../studio/helpers/config'
-import { ShowStyleConfig as ShowStyleConfig0 } from '../../../generated/showStyle-config'
+import { ShowStyleConfig as ShowStyleConfig0 } from '../../../$schemas/generated/main-showstyle-config'
 
 export interface BlueprintConfig extends BlueprintConfigBase {
 	showStyle: Readonly<ShowStyleConfig>

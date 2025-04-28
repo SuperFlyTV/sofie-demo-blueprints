@@ -19,7 +19,7 @@
         "test": "yarn unit",
         "link-integration": "yarn link @sofie-automation/blueprints-integration",
         "translation:extract": "node scripts/translation/extract.js",
-        "generate-schema-types": "node scripts/schema.mjs"
+        "generate-schema-types": "node scripts/schema-types.mjs"
     },
     "devDependencies": {
         "@types/jest": "^28.1.4",
