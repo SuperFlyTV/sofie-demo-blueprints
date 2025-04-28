@@ -1,13 +1,13 @@
 const _ = require('underscore')
 
 const BlueprintEntrypoints = {
-	showstyle: './src/main/showstyle/index.ts',
-	studio: './src/main/studio/index.ts',
+	demoshowstyle: './src/main/showstyle/index.ts',
+	demostudio: './src/main/studio/index.ts',
 	system: './src/system/index.ts',
 }
 
 const BlueprintBundles = {
-	show: ['showstyle', 'studio', 'system'],
+	show: ['demo-showstyle', 'demo-studio', 'system'],
 }
 
 function GetEntrypointsForBundle(id) {
