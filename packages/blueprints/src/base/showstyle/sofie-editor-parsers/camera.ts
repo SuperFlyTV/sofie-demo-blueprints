@@ -1,6 +1,6 @@
 import { ObjectType, SomeObject } from '../../../common/definitions/objects'
 import { t } from '../../../common/util'
-import { EditorIngestPart } from '../../../copy/rundown-editor'
+import { EditorIngestPart } from '../../../code-copy/rundown-editor'
 import { SourceType } from '../../studio/helpers/config'
 import { CameraProps, InvalidProps, PartInfo, PartProps, PartType } from '../definitions'
 import { findSource } from '../helpers/sources'

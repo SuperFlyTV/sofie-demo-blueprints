@@ -1,6 +1,6 @@
 import { ObjectType, SomeObject, VideoObject } from '../../../common/definitions/objects'
 import { t } from '../../../common/util'
-import { SpreadsheetIngestPart } from '../../../copy/spreadsheet-gateway'
+import { SpreadsheetIngestPart } from '../../../code-copy/spreadsheet-gateway'
 import { InvalidProps, PartInfo, PartProps, PartType, VOProps } from '../definitions'
 import { parseClipProps } from '../helpers/clips'
 import { parseBaseProps } from './base'

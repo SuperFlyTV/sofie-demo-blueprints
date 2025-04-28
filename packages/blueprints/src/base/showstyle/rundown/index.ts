@@ -7,7 +7,7 @@ import {
 	PlaylistTimingType,
 } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../../common/util'
-import { SpreadsheetIngestRundown } from '../../../copy/spreadsheet-gateway'
+import { SpreadsheetIngestRundown } from '../../../code-copy/spreadsheet-gateway'
 import { RundownMetadata } from '../helpers/metadata'
 import { getBaseline } from './baseline'
 import { getGlobalActions } from './globalActions'

@@ -1,6 +1,6 @@
 import { ITranslatableMessage } from '@sofie-automation/blueprints-integration'
 import { SomeObject } from '../../../common/definitions/objects'
-import { SpreadsheetIngestPart } from '../../../copy/spreadsheet-gateway'
+import { SpreadsheetIngestPart } from '../../../code-copy/spreadsheet-gateway'
 import { InvalidProps, PartInfo, PartProps, PartType } from '../definitions'
 import { parseBaseProps } from './base'
 

@@ -1,6 +1,6 @@
 import { GraphicObject, ObjectType, SomeObject } from '../../../common/definitions/objects'
 import { t } from '../../../common/util'
-import { EditorIngestPart } from '../../../copy/rundown-editor'
+import { EditorIngestPart } from '../../../code-copy/rundown-editor'
 import { GfxProps, InvalidProps, PartInfo, PartProps, PartType } from '../definitions'
 import { parseBaseProps } from './base'
 import { createInvalidProps } from './invalid'

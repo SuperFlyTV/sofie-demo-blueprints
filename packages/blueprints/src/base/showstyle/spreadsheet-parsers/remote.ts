@@ -1,6 +1,6 @@
 import { ObjectType, RemoteObject, SomeObject } from '../../../common/definitions/objects'
 import { t } from '../../../common/util'
-import { SpreadsheetIngestPart } from '../../../copy/spreadsheet-gateway'
+import { SpreadsheetIngestPart } from '../../../code-copy/spreadsheet-gateway'
 import { SourceType } from '../../studio/helpers/config'
 import { InvalidProps, PartInfo, PartProps, PartType, RemoteProps } from '../definitions'
 import { findSource } from '../helpers/sources'

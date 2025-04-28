@@ -1,5 +1,5 @@
 import { ObjectType, SomeObject, SplitObject, VideoObject } from '../../../common/definitions/objects'
-import { SpreadsheetIngestPart } from '../../../copy/spreadsheet-gateway'
+import { SpreadsheetIngestPart } from '../../../code-copy/spreadsheet-gateway'
 import { SourceType } from '../../studio/helpers/config'
 import { DVEProps, InvalidProps, PartInfo, PartProps, PartType } from '../definitions'
 import { parseClipProps } from '../helpers/clips'

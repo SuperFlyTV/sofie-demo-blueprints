@@ -1,5 +1,5 @@
 import { SomeObject } from '../../../common/definitions/objects'
-import { SpreadsheetIngestPart } from '../../../copy/spreadsheet-gateway'
+import { SpreadsheetIngestPart } from '../../../code-copy/spreadsheet-gateway'
 import { InvalidProps, PartInfo, PartProps, PartType, TitlesProps } from '../definitions'
 import { parseBaseProps } from './base'
 

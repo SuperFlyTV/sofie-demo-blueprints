@@ -1,5 +1,5 @@
 import { IShowStyleContext, IShowStyleUserContext } from '@sofie-automation/blueprints-integration'
-import { SuperSource } from '../../../copy/atem-connection'
+import { SuperSource } from '../../../code-copy/atem-connection'
 import { BlueprintConfig as BlueprintConfigBase, getStudioConfig } from '../../studio/helpers/config'
 import { ShowStyleConfig as ShowStyleConfig0 } from '../../../generated/showStyle-config'
 

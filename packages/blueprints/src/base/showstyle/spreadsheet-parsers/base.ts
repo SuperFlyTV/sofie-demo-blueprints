@@ -1,4 +1,4 @@
-import { SpreadsheetIngestPart } from '../../../copy/spreadsheet-gateway'
+import { SpreadsheetIngestPart } from '../../../code-copy/spreadsheet-gateway'
 import { PartBaseProps } from '../definitions'
 
 export function parseBaseProps(part: SpreadsheetIngestPart): PartBaseProps {

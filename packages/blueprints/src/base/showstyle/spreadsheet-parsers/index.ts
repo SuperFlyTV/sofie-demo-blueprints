@@ -1,6 +1,6 @@
 import { IngestSegment, IRundownUserContext } from '@sofie-automation/blueprints-integration'
 import { t } from '../../../common/util'
-import { SpreadsheetIngestPart, SpreadsheetIngestSegment } from '../../../copy/spreadsheet-gateway'
+import { SpreadsheetIngestPart, SpreadsheetIngestSegment } from '../../../code-copy/spreadsheet-gateway'
 import { AllProps, PartProps, SegmentProps, SegmentType } from '../definitions'
 import { parseCamera } from './camera'
 import { parseDVE } from './dve'

@@ -1,6 +1,6 @@
 import { ObjectType, SomeObject, VideoObject } from '../../../common/definitions/objects'
 import { t } from '../../../common/util'
-import { EditorIngestPart } from '../../../copy/rundown-editor'
+import { EditorIngestPart } from '../../../code-copy/rundown-editor'
 import { InvalidProps, PartInfo, PartProps, PartType, VOProps } from '../definitions'
 import { parseClipEditorProps } from '../helpers/clips'
 import { parseBaseProps } from './base'
