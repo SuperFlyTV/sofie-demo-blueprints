@@ -1,8 +1,8 @@
 const _ = require('underscore')
 
 const BlueprintEntrypoints = {
-	showstyle0: './src/showstyle0/index.ts',
-	studio0: './src/studio0/index.ts',
+	showstyle0: './src/main/showstyle/index.ts',
+	studio0: './src/main/studio/index.ts',
 	system: './src/system/index.ts',
 }
 

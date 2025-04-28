@@ -16,9 +16,9 @@ import { StudioConfig } from './helpers/config'
 declare const VERSION: string // Injected by webpack
 declare const VERSION_TSR: string // Injected by webpack
 declare const VERSION_INTEGRATION: string // Injected by webpack
-// declare const TRANSLATION_BUNDLES: string // injected by webpack
+declare const TRANSLATION_BUNDLES: string // injected by webpack
 
-export const manifest: StudioBlueprintManifest<StudioConfig> = {
+export const baseManifest: StudioBlueprintManifest<StudioConfig> = {
 	blueprintType: BlueprintManifestType.STUDIO,
 
 	blueprintVersion: VERSION,
@@ -49,6 +49,7 @@ export const manifest: StudioBlueprintManifest<StudioConfig> = {
 			},
 		},
 	},
+	translations: TRANSLATION_BUNDLES,
 }
 
-export default manifest
+export default baseManifest
