@@ -1,14 +1,15 @@
 import { TSR } from '@sofie-automation/blueprints-integration'
-import { assertNever, literal } from '../../../common/util'
-import { AudioSourceType, StudioConfig } from '../../studio/helpers/config'
-import { SisyfosLayers } from '../../studio/layers'
-import { TimelineBlueprintExt } from '../../studio/customTypes'
+import { assertNever, literal } from '../../../common/util.js'
+import { AudioSourceType, StudioConfig } from '../../studio/helpers/config.js'
+import { SisyfosLayers } from '../../studio/layers.js'
+import { TimelineBlueprintExt } from '../../studio/customTypes.js'
+import { SiyfosSourceConfig } from '../../../$schemas/generated/main-studio-config.js'
 
 // note - studio baseline and showstyle baseline are the same for now
 export function getSisyfosBaseline(config: StudioConfig): (TSR.SisyfosChannelOptions & { mappedLayer: string })[] {
 	const channels: (TSR.SisyfosChannelOptions & { mappedLayer: string })[] = []
 	const addChannelsFromType = (type: AudioSourceType) =>
-		Object.values(config.sisyfosSources)
+		Object.values<SiyfosSourceConfig>(config.sisyfosSources)
 			.filter((s) => s.type === type)
 			.forEach((s, i) => {
 				channels.push(
@@ -51,7 +52,9 @@ function getSisyfosPrimary(
 ): (TSR.SisyfosChannelOptions & { mappedLayer: string })[] {
 	return primaries
 		.map((primary) => {
-			const s = Object.values(config.sisyfosSources).filter((s) => s.type === primary.type)[primary.index]
+			const s = Object.values<SiyfosSourceConfig>(config.sisyfosSources).filter((s) => s.type === primary.type)[
+				primary.index
+			]
 			return (
 				s &&
 				literal<TSR.SisyfosChannelOptions & { mappedLayer: string }>({

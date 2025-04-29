@@ -1,4 +1,5 @@
-import { SourceType, StudioConfig, VisionMixerType } from '../../studio/helpers/config'
+import { SourceType, StudioConfig, VisionMixerType } from '../../studio/helpers/config.js'
+import { InputConfig, VmixInputConfig } from '../../..//$schemas/generated/main-studio-config.js'
 
 export interface RawSourceInfo {
 	type: SourceType
@@ -23,10 +24,10 @@ export function findSource(input: string | number | boolean | undefined, type: S
 }
 
 export function getSourceInfoFromRaw(config: StudioConfig, rawInfo: RawSourceInfo): SourceInfo {
-	let sourcesOfType = Object.values(config.atemSources).filter((s) => s.type === rawInfo.type)
+	let sourcesOfType = Object.values<InputConfig>(config.atemSources).filter((s) => s.type === rawInfo.type)
 
 	if (config.visionMixerType === VisionMixerType.VMix) {
-		sourcesOfType = Object.values(config.vmixSources).filter((s) => s.type === rawInfo.type)
+		sourcesOfType = Object.values<VmixInputConfig>(config.vmixSources).filter((s) => s.type === rawInfo.type)
 	}
 
 	const input = sourcesOfType[rawInfo.id - 1]

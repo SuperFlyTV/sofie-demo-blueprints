@@ -1,12 +1,14 @@
-import { GraphicObject, ObjectType, SomeObject } from '../../../common/definitions/objects'
-import { t } from '../../../common/util'
-import { SpreadsheetIngestPart } from '../../../code-copy/spreadsheet-gateway'
-import { GfxProps, InvalidProps, PartInfo, PartProps, PartType } from '../definitions'
-import { parseBaseProps } from './base'
-import { createInvalidProps } from './invalid'
+import { GraphicObject, ObjectType, SomeObject } from '../../../common/definitions/objects.js'
+import { t } from '../../../common/util.js'
+import { SpreadsheetIngestPart } from '../../../code-copy/spreadsheet-gateway/index.js'
+import { GfxProps, InvalidProps, PartInfo, PartProps, PartType } from '../definitions/index.js'
+import { parseBaseProps } from './base.js'
+import { createInvalidProps } from './invalid.js'
 
 export function parseGfx(ingestPart: SpreadsheetIngestPart): PartProps<GfxProps | InvalidProps> {
-	const gfxObject = ingestPart.pieces.find((p): p is GraphicObject => p.objectType === ObjectType.Graphic)
+	const gfxObject = ingestPart.pieces.find(
+		(p): p is GraphicObject => (p.objectType as ObjectType) === ObjectType.Graphic
+	)
 	if (!gfxObject) {
 		return createInvalidProps(t('No graphic object'), ingestPart)
 	}

@@ -39,7 +39,7 @@ export function createVirtualPiece<TPieceMetadata>(
 				? {
 						start,
 						duration: 0,
-				  }
+					}
 				: start,
 		sourceLayerId: layer,
 		outputLayerId: outputLayer,

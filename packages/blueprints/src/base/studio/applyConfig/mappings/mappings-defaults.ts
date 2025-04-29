@@ -1,7 +1,8 @@
 import { BlueprintMapping, BlueprintMappings, LookaheadMode, TSR } from '@sofie-automation/blueprints-integration'
-import { literal } from '../../../../common/util'
-import { AudioSourceType, SourceType, StudioConfig } from '../../helpers/config'
-import { AsbtractLayers, AtemLayers, CasparCGLayers, SisyfosLayers, VMixLayers } from './layers'
+import { literal } from '../../../../common/util.js'
+import { AudioSourceType, SourceType, StudioConfig } from '../../helpers/config.js'
+import { AsbtractLayers, AtemLayers, CasparCGLayers, SisyfosLayers, VMixLayers } from './layers.js'
+import { VmixInputConfig, SiyfosSourceConfig } from '../../../../$schemas/generated/main-studio-config.js'
 
 export default literal<BlueprintMappings>({
 	[AsbtractLayers.CoreAbstract]: {
@@ -192,7 +193,9 @@ export function getDynamicVMixMappings(vmixSources: StudioConfig['vmixSources'])
 		}),
 	}
 
-	const multiviewSource = Object.values(vmixSources).find((source) => source.type === SourceType.MultiView)
+	const multiviewSource = Object.values<VmixInputConfig>(vmixSources).find(
+		(source) => source.type === SourceType.MultiView
+	)
 	if (multiviewSource) {
 		/**
 		 * Note that the word "MultiView" here does not refer to a traditional multiviewer used to monitor inputs and outputs in a studio.
@@ -233,7 +236,7 @@ export function getAllAuxMappings(total: number): BlueprintMappings {
 export function getDynamicSisyfosMappings(sisyfosSources: StudioConfig['sisyfosSources']): BlueprintMappings {
 	const mappings: BlueprintMappings = {}
 	const pushSisyfosMappings = (type: AudioSourceType) => {
-		const sources = Object.values(sisyfosSources).filter((m) => m.type === type)
+		const sources = Object.values<SiyfosSourceConfig>(sisyfosSources).filter((m) => m.type === type)
 		for (let i = 0; i < sources.length; i++) {
 			mappings[`sisyfos_source_${type}${i}`] = literal<BlueprintMapping<TSR.MappingSisyfosChannel>>({
 				device: TSR.DeviceType.SISYFOS,

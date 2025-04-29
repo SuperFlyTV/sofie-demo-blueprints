@@ -1,13 +1,13 @@
-import { ObjectType, SomeObject, VideoObject } from '../../../common/definitions/objects'
-import { t } from '../../../common/util'
-import { EditorIngestPart } from '../../../code-copy/rundown-editor'
-import { InvalidProps, PartInfo, PartProps, PartType, VOProps } from '../definitions'
-import { parseClipEditorProps } from '../helpers/clips'
-import { parseBaseProps } from './base'
-import { createInvalidProps } from './invalid'
+import { ObjectType, SomeObject, VideoObject } from '../../../common/definitions/objects.js'
+import { t } from '../../../common/util.js'
+import { EditorIngestPart } from '../../../code-copy/rundown-editor/index.js'
+import { InvalidProps, PartInfo, PartProps, PartType, VOProps } from '../definitions/index.js'
+import { parseClipEditorProps } from '../helpers/clips.js'
+import { parseBaseProps } from './base.js'
+import { createInvalidProps } from './invalid.js'
 
 export function parseVO(ingestPart: EditorIngestPart): PartProps<VOProps | InvalidProps> {
-	const videoObject = ingestPart.pieces.find((p): p is VideoObject => p.objectType === ObjectType.Video)
+	const videoObject = ingestPart.pieces.find((p): p is VideoObject => (p.objectType as ObjectType) === ObjectType.Video)
 	if (!videoObject) {
 		return createInvalidProps(t('No video object'), ingestPart)
 	}

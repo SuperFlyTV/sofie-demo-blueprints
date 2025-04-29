@@ -6,12 +6,12 @@ import {
 	PlaylistTimingForwardTime,
 	PlaylistTimingType,
 } from '@sofie-automation/blueprints-integration'
-import { literal } from '../../../common/util'
-import { SpreadsheetIngestRundown } from '../../../code-copy/spreadsheet-gateway'
-import { RundownMetadata } from '../helpers/metadata'
-import { getBaseline } from './baseline'
-import { getGlobalActions } from './globalActions'
-import { getGlobalAdlibs } from './globalAdlibs'
+import { literal } from '../../../common/util.js'
+import { SpreadsheetIngestRundown } from '../../../code-copy/spreadsheet-gateway/index.js'
+import { RundownMetadata } from '../helpers/metadata.js'
+import { getBaseline } from './baseline.js'
+import { getGlobalActions } from './globalActions.js'
+import { getGlobalAdlibs } from './globalAdlibs.js'
 
 export function getRundown(
 	context: IShowStyleUserContext,

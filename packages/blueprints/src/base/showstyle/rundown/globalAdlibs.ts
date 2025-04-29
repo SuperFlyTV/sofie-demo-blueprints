@@ -1,10 +1,11 @@
 import { IBlueprintAdLibPiece, IShowStyleUserContext, PieceLifespan } from '@sofie-automation/blueprints-integration'
-import { assertUnreachable, literal } from '../../../common/util'
-import { AudioSourceType, SourceType, StudioConfig, VisionMixerType } from '../../studio/helpers/config'
-import { SisyfosLayers } from '../../studio/layers'
-import { getAudioObjectOnLayer, getAudioPrimaryObject } from '../helpers/audio'
-import { createVisionMixerObjects } from '../helpers/visionMixer'
-import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers'
+import { assertUnreachable, literal } from '../../../common/util.js'
+import { AudioSourceType, SourceType, StudioConfig, VisionMixerType } from '../../studio/helpers/config.js'
+import { SisyfosLayers } from '../../studio/layers.js'
+import { getAudioObjectOnLayer, getAudioPrimaryObject } from '../helpers/audio.js'
+import { createVisionMixerObjects } from '../helpers/visionMixer.js'
+import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
+import { InputConfig } from '../../../$schemas/generated/main-studio-config.js'
 
 export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLibPiece[] {
 	const config = context.getStudioConfig() as StudioConfig
@@ -71,20 +72,20 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 
 	if (config.visionMixerType === VisionMixerType.Atem) {
 		return [
-			...Object.values(config.atemSources)
+			...Object.values<InputConfig>(config.atemSources)
 				.filter((source) => source.type === SourceType.Camera)
 				.map((source, i) => makeCameraAdlib(i, source.input)),
-			...Object.values(config.atemSources)
+			...Object.values<InputConfig>(config.atemSources)
 				.filter((source) => source.type === SourceType.Remote)
 				.map((source, i) => makeRemoteAdlib(i, source.input)),
 			...hostMicOverrides,
 		]
 	} else if (config.visionMixerType === VisionMixerType.VMix) {
 		return [
-			...Object.values(config.vmixSources)
+			...Object.values<InputConfig>(config.vmixSources)
 				.filter((source) => source.type === SourceType.Camera)
 				.map((source, i) => makeCameraAdlib(i, source.input)),
-			...Object.values(config.vmixSources)
+			...Object.values<InputConfig>(config.vmixSources)
 				.filter((source) => source.type === SourceType.Remote)
 				.map((source, i) => makeRemoteAdlib(i, source.input)),
 			...hostMicOverrides,

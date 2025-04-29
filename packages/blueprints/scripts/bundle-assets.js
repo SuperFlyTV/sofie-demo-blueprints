@@ -11,7 +11,7 @@ module.exports = function (_env, compilation) {
 
 	try {
 		fs.mkdirSync('./dist')
-	} catch (e) {
+	} catch (_e) {
 		// It either already exists, or the write will fail with a useful error
 	}
 

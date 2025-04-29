@@ -1,18 +1,19 @@
 import { BlueprintResultPart, IBlueprintPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
-import { PartContext } from '../../../common/context'
-import { assertUnreachable, literal } from '../../../common/util'
-import { AudioSourceType, SourceType, StudioConfig, VisionMixerType } from '../../studio/helpers/config'
-import { AtemLayers, VMixLayers } from '../../studio/layers'
-import { DVEProps, PartProps } from '../definitions'
-import { getAudioPrimaryObject } from '../helpers/audio'
-import { getClipPlayerInput, parseClipsFromObjects } from '../helpers/clips'
-import { dveLayoutToContent, parseSuperSourceLayout, parseSuperSourceProps } from '../helpers/dve'
-import { parseGraphicsFromObjects } from '../helpers/graphics'
-import { createScriptPiece } from '../helpers/script'
-import { getSourceInfoFromRaw } from '../helpers/sources'
-import { createVisionMixerObjects } from '../helpers/visionMixer'
-import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers'
-import { TimelineBlueprintExt } from '../../studio/customTypes'
+import { PartContext } from '../../../common/context.js'
+import { assertUnreachable, literal } from '../../../common/util.js'
+import { AudioSourceType, SourceType, StudioConfig, VisionMixerType } from '../../studio/helpers/config.js'
+import { AtemLayers, VMixLayers } from '../../studio/layers.js'
+import { DVEProps, PartProps } from '../definitions/index.js'
+import { getAudioPrimaryObject } from '../helpers/audio.js'
+import { getClipPlayerInput, parseClipsFromObjects } from '../helpers/clips.js'
+import { dveLayoutToContent, parseSuperSourceLayout, parseSuperSourceProps } from '../helpers/dve.js'
+import { parseGraphicsFromObjects } from '../helpers/graphics.js'
+import { createScriptPiece } from '../helpers/script.js'
+import { getSourceInfoFromRaw } from '../helpers/sources.js'
+import { createVisionMixerObjects } from '../helpers/visionMixer.js'
+import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
+import { TimelineBlueprintExt } from '../../studio/customTypes.js'
+import { VmixInputConfig } from '../../../$schemas/generated/main-studio-config.js'
 
 const SUPER_SOURCE_LATENCY = 80
 const SUPER_SOURCE_INPUT = 6000
@@ -63,7 +64,8 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 	)
 
 	const vmixDVEInput =
-		Object.values(config.vmixSources).find((source) => source.type === SourceType.MultiView)?.input ?? -1
+		Object.values<VmixInputConfig>(config.vmixSources).find((source) => source.type === SourceType.MultiView)?.input ??
+		-1
 	const dvePieceTimelineObjects: TimelineBlueprintExt[] = [
 		...createVisionMixerObjects(
 			config,

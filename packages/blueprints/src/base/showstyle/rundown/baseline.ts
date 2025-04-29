@@ -1,11 +1,12 @@
 import { BlueprintResultBaseline, IShowStyleUserContext, TSR } from '@sofie-automation/blueprints-integration'
 import * as _ from 'underscore'
-import { literal } from '../../../common/util'
-import { SourceType, StudioConfig, VisionMixerType } from '../../studio/helpers/config'
-import { AtemLayers, CasparCGLayers, SisyfosLayers, VMixLayers } from '../../studio/layers'
-import { getSisyfosBaseline } from '../helpers/audio'
-import { DVEDesigns, DVELayouts } from '../helpers/dve'
-import { TimelineBlueprintExt } from '../../studio/customTypes'
+import { literal } from '../../../common/util.js'
+import { SourceType, StudioConfig, VisionMixerType } from '../../studio/helpers/config.js'
+import { AtemLayers, CasparCGLayers, SisyfosLayers, VMixLayers } from '../../studio/layers.js'
+import { getSisyfosBaseline } from '../helpers/audio.js'
+import { DVEDesigns, DVELayouts } from '../helpers/dve.js'
+import { TimelineBlueprintExt } from '../../studio/customTypes.js'
+import { InputConfig, OutputConfig, VmixInputConfig } from '../../../$schemas/generated/main-studio-config.js'
 
 export function getBaseline(context: IShowStyleUserContext): BlueprintResultBaseline {
 	const config = context.getStudioConfig() as StudioConfig
@@ -49,7 +50,7 @@ export function getBaseline(context: IShowStyleUserContext): BlueprintResultBase
 }
 
 function getAtemBaseline(config: StudioConfig): TimelineBlueprintExt[] {
-	const dskInput = Object.values(config.atemSources).find((source) => source.type === SourceType.Graphics)
+	const dskInput = Object.values<InputConfig>(config.atemSources).find((source) => source.type === SourceType.Graphics)
 
 	return [
 		literal<TimelineBlueprintExt<TSR.TimelineContentAtemSsrcProps>>({
@@ -107,7 +108,7 @@ function getAtemBaseline(config: StudioConfig): TimelineBlueprintExt[] {
 			},
 		}),
 
-		...Object.values(config.atemOutputs).map((output) =>
+		...Object.values<OutputConfig>(config.atemOutputs).map((output) =>
 			literal<TimelineBlueprintExt<TSR.TimelineContentAtemAUX>>({
 				id: '',
 				enable: { while: 1 },
@@ -127,7 +128,9 @@ function getAtemBaseline(config: StudioConfig): TimelineBlueprintExt[] {
 }
 
 function getVMixBaseline(config: StudioConfig): TimelineBlueprintExt[] {
-	const dskInput = Object.values(config.vmixSources).find((source) => source.type === SourceType.Graphics)
+	const dskInput = Object.values<VmixInputConfig>(config.vmixSources).find(
+		(source) => source.type === SourceType.Graphics
+	)
 
 	return [
 		literal<TimelineBlueprintExt<TSR.TimelineContentVMixOverlay>>({

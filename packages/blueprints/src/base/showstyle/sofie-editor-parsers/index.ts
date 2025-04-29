@@ -1,16 +1,16 @@
 import { IngestSegment, IRundownUserContext } from '@sofie-automation/blueprints-integration'
-import { ObjectType } from '../../../common/definitions/objects'
-import { t } from '../../../common/util'
-import { EditorIngestPart, EditorIngestSegment } from '../../../code-copy/rundown-editor'
-import { AllProps, PartProps, SegmentProps, SegmentType } from '../definitions'
-import { createInvalidProps } from '../spreadsheet-parsers/invalid'
-import { parseCamera } from './camera'
-import { parseDVE } from './dve'
-import { parseGfx } from './gfx'
-import { parseRemote } from './remote'
-import { parseOpener } from './titles'
-import { parseVO } from './vo'
-import { parseVT } from './vt'
+import { ObjectType } from '../../../common/definitions/objects.js'
+import { t } from '../../../common/util.js'
+import { EditorIngestPart, EditorIngestSegment } from '../../../code-copy/rundown-editor/index.js'
+import { AllProps, PartProps, SegmentProps, SegmentType } from '../definitions/index.js'
+import { createInvalidProps } from '../spreadsheet-parsers/invalid.js'
+import { parseCamera } from './camera.js'
+import { parseDVE } from './dve.js'
+import { parseGfx } from './gfx.js'
+import { parseRemote } from './remote.js'
+import { parseOpener } from './titles.js'
+import { parseVO } from './vo.js'
+import { parseVT } from './vt.js'
 
 /**
  * This function converts from raw ingest segments to parsed segments, we
@@ -35,21 +35,21 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: I
 			// process the pieces
 			const graphicTypes = ['strap', 'head', 'l3d', 'fullscreen']
 			partPayload.pieces.forEach((piece) => {
-				if (piece.objectType === ObjectType.Graphic) {
-					piece.clipName = (piece.attributes as any).template || ''
+				if ((piece.objectType as ObjectType) === ObjectType.Graphic) {
+					piece.clipName = String(piece.attributes.template || '')
 
 					if (piece.clipName === 'gfx/strap') {
-						piece.attributes.location = (piece.attributes as any).field0
-						piece.attributes.text = (piece.attributes as any).field1
+						piece.attributes.location = piece.attributes.field0
+						piece.attributes.text = piece.attributes.field1
 					} else if (piece.clipName === 'gfx/head') {
-						piece.attributes.text = (piece.attributes as any).field0
+						piece.attributes.text = piece.attributes.field0
 					} else if (piece.clipName === 'gfx/l3d') {
-						piece.attributes.name = (piece.attributes as any).field0
-						piece.attributes.description = (piece.attributes as any).field1
+						piece.attributes.name = piece.attributes.field0
+						piece.attributes.description = piece.attributes.field1
 					} else if (piece.clipName === 'gfx/fullscreen') {
-						;(piece.attributes as any).url = (piece.attributes as any).field0
+						piece.attributes.url = piece.attributes.field0
 					}
-				} else if (piece.objectType === ObjectType.Video) {
+				} else if ((piece.objectType as ObjectType) === ObjectType.Video) {
 					piece.clipName = piece.attributes.fileName as string
 				}
 

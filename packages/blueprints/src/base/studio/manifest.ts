@@ -4,14 +4,14 @@ import {
 	JSONSchema,
 	StudioBlueprintManifest,
 } from '@sofie-automation/blueprints-integration'
-import { getBaseline } from './getBaseline'
-import { getShowStyleId } from './getShowStyleId'
-import { validateConfig } from './validateConfig'
-import { preprocessConfig } from './preprocessConfig'
-import { getRundownPlaylistInfo } from './getRundownPlaylistInfo'
-import { applyConfig } from './applyConfig'
+import { getBaseline } from './getBaseline.js'
+import { getShowStyleId } from './getShowStyleId.js'
+import { validateConfig } from './validateConfig.js'
+import { preprocessConfig } from './preprocessConfig.js'
+import { getRundownPlaylistInfo } from './getRundownPlaylistInfo.js'
+import { applyConfig } from './applyConfig/index.js'
 import * as ConfigSchema from '../../$schemas/main-studio-config.json'
-import { StudioConfig } from './helpers/config'
+import { StudioConfig } from './helpers/config.js'
 
 declare const VERSION: string // Injected by webpack
 declare const VERSION_TSR: string // Injected by webpack

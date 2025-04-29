@@ -60,7 +60,7 @@ module.exports = function (env, compilation) {
 					console.error(`Blueprints assets upload failed:`, e.toString(), e.stack)
 				})
 		})
-	} catch (e) {
+	} catch (_e) {
 		//
 	}
 }

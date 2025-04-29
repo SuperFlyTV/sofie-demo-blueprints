@@ -1,8 +1,8 @@
-import { ShowStyleConfig } from '../../base/showstyle/helpers/config'
-import { baseManifest } from '../../base/showstyle/manifest'
+import { ShowStyleConfig } from '../../base/showstyle/helpers/config.js'
+import { baseManifest } from '../../base/showstyle/manifest.js'
 
 import { ShowStyleBlueprintManifest } from '@sofie-automation/blueprints-integration'
-import { getShowStyleConfigPreset } from './configPresets'
+import { getShowStyleConfigPreset } from './configPresets.js'
 
 const manifest: ShowStyleBlueprintManifest<ShowStyleConfig> = {
 	...baseManifest,

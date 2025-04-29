@@ -5,16 +5,16 @@ import {
 	PieceLifespan,
 	TSR,
 } from '@sofie-automation/blueprints-integration'
-import { PartContext } from '../../../common/context'
-import { literal } from '../../../common/util'
-import { StudioConfig } from '../../studio/helpers/config'
-import { CasparCGLayers } from '../../studio/layers'
-import { PartProps, TitlesProps } from '../definitions'
-import { getClipPlayerInput } from '../helpers/clips'
-import { createScriptPiece } from '../helpers/script'
-import { createVisionMixerObjects } from '../helpers/visionMixer'
-import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers'
-import { TimelineBlueprintExt } from '../../studio/customTypes'
+import { PartContext } from '../../../common/context.js'
+import { literal } from '../../../common/util.js'
+import { StudioConfig } from '../../studio/helpers/config.js'
+import { CasparCGLayers } from '../../studio/layers.js'
+import { PartProps, TitlesProps } from '../definitions/index.js'
+import { getClipPlayerInput } from '../helpers/clips.js'
+import { createScriptPiece } from '../helpers/script.js'
+import { createVisionMixerObjects } from '../helpers/visionMixer.js'
+import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
+import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 
 export function generateOpenerPart(context: PartContext, part: PartProps<TitlesProps>): BlueprintResultPart {
 	const config = context.getStudioConfig() as StudioConfig

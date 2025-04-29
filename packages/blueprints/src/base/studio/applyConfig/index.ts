@@ -4,9 +4,9 @@ import {
 	ICommonContext,
 	TSR,
 } from '@sofie-automation/blueprints-integration'
-import { StudioConfig } from '../helpers/config'
-import { getMappingsDefaults } from './mappings'
-import { preprocessConfig } from '../preprocessConfig'
+import { StudioConfig } from '../helpers/config.js'
+import { getMappingsDefaults } from './mappings/index.js'
+import { preprocessConfig } from '../preprocessConfig.js'
 
 export function applyConfig(
 	context: ICommonContext,

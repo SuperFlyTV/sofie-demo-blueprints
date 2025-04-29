@@ -1,7 +1,7 @@
-import { ShowStyleConfig } from '../../base/showstyle/helpers/config'
+import { ShowStyleConfig } from '../../base/showstyle/helpers/config.js'
 import { IShowStyleConfigPreset, IShowStyleVariantConfigPreset } from '@sofie-automation/blueprints-integration'
-import { demoShowStyleConfigDefaults } from './configs/demo'
-import { demoVariants } from './variants/demo'
+import { demoShowStyleConfigDefaults } from './configs/demo.js'
+import { demoVariants } from './variants/demo.js'
 
 export const ShowStyleConfigPreset: Record<string, IShowStyleConfigPreset<ShowStyleConfig>> = {
 	demo: {

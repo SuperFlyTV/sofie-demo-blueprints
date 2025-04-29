@@ -1,14 +1,16 @@
-import { CameraObject, ObjectType, SomeObject } from '../../../common/definitions/objects'
-import { t } from '../../../common/util'
-import { SpreadsheetIngestPart } from '../../../code-copy/spreadsheet-gateway'
-import { SourceType } from '../../studio/helpers/config'
-import { CameraProps, InvalidProps, PartInfo, PartProps, PartType } from '../definitions'
-import { findSource } from '../helpers/sources'
-import { parseBaseProps } from './base'
-import { createInvalidProps } from './invalid'
+import { CameraObject, ObjectType, SomeObject } from '../../../common/definitions/objects.js'
+import { t } from '../../../common/util.js'
+import { SpreadsheetIngestPart } from '../../../code-copy/spreadsheet-gateway/index.js'
+import { SourceType } from '../../studio/helpers/config.js'
+import { CameraProps, InvalidProps, PartInfo, PartProps, PartType } from '../definitions/index.js'
+import { findSource } from '../helpers/sources.js'
+import { parseBaseProps } from './base.js'
+import { createInvalidProps } from './invalid.js'
 
 export function parseCamera(ingestPart: SpreadsheetIngestPart): PartProps<CameraProps | InvalidProps> {
-	const cameraPiece = ingestPart.pieces.find((p): p is CameraObject => p.objectType === ObjectType.Camera)
+	const cameraPiece = ingestPart.pieces.find(
+		(p): p is CameraObject => (p.objectType as ObjectType) === ObjectType.Camera
+	)
 	if (!cameraPiece) {
 		return createInvalidProps(t('No camera object'), ingestPart)
 	}

@@ -3,9 +3,9 @@ import {
 	IBlueprintActionManifest,
 	IShowStyleUserContext,
 } from '@sofie-automation/blueprints-integration'
-import { literal, t } from '../../../common/util'
-import { ActionId } from '../actionDefinitions'
-import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers'
+import { literal, t } from '../../../common/util.js'
+import { ActionId } from '../actionDefinitions.js'
+import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 
 export function getGlobalActions(
 	_context: IShowStyleUserContext,

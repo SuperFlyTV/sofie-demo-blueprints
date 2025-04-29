@@ -6,7 +6,7 @@
  */
 
 export interface StudioConfig {
-	visionMixerType: 'atem' | 'vmix'
+	visionMixerType: VisionMixerType
 	atemSources: {
 		[k: string]: InputConfig
 	}
@@ -28,7 +28,7 @@ export interface StudioConfig {
  */
 export interface InputConfig {
 	input: number
-	type: string
+	type: SourceType
 }
 /**
  * This interface was referenced by `undefined`'s JSON-Schema definition
@@ -44,7 +44,7 @@ export interface OutputConfig {
  */
 export interface VmixInputConfig {
 	input: number
-	type: string
+	type: SourceType
 }
 /**
  * This interface was referenced by `undefined`'s JSON-Schema definition
@@ -52,5 +52,23 @@ export interface VmixInputConfig {
  */
 export interface SiyfosSourceConfig {
 	source: number
-	type: string
+	type: AudioSourceType
+}
+
+export enum VisionMixerType {
+	Atem = 'atem',
+	VMix = 'vmix',
+}
+export enum SourceType {
+	Camera = 'camera',
+	Remote = 'remote',
+	MediaPlayer = 'mediaplayer',
+	Graphics = 'graphics',
+	MultiView = 'multiview',
+}
+export enum AudioSourceType {
+	Host = 'host',
+	Guest = 'guest',
+	Remote = 'remote',
+	Playback = 'playback',
 }

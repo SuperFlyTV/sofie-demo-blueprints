@@ -1,12 +1,12 @@
 import { IBlueprintAdLibPiece, IBlueprintPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
-import { GraphicObject, ObjectType, SomeObject } from '../../../common/definitions/objects'
-import { literal } from '../../../common/util'
-import { StudioConfig } from '../../studio/helpers/config'
-import { CasparCGLayers } from '../../studio/layers'
-import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers'
-import { getClipPlayerInput } from './clips'
-import { createVisionMixerObjects } from './visionMixer'
-import { TimelineBlueprintExt } from '../../studio/customTypes'
+import { GraphicObject, ObjectType, SomeObject } from '../../../common/definitions/objects.js'
+import { literal } from '../../../common/util.js'
+import { StudioConfig } from '../../studio/helpers/config.js'
+import { CasparCGLayers } from '../../studio/layers.js'
+import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
+import { getClipPlayerInput } from './clips.js'
+import { createVisionMixerObjects } from './visionMixer.js'
+import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 
 export interface GraphicsResult {
 	pieces: IBlueprintPiece[]
@@ -69,7 +69,7 @@ function parseGraphic(config: StudioConfig, object: GraphicObject): IBlueprintPi
 
 	return {
 		externalId: object.id,
-		name: `${object.clipName} | ${Object.values(object.attributes)
+		name: `${object.clipName} | ${Object.values<string | undefined>(object.attributes)
 			.filter((v) => v !== 'true' && v !== 'false')
 			.join(', ')}`, // todo - add info
 		lifespan,
@@ -113,7 +113,7 @@ export function parseAdlibGraphic(config: StudioConfig, object: GraphicObject, i
 
 	return {
 		externalId: object.id,
-		name: `${object.clipName} | ${Object.values(object.attributes)
+		name: `${object.clipName} | ${Object.values<string | undefined>(object.attributes)
 			.filter((v) => v !== 'true' && v !== 'false')
 			.join(', ')}`, // todo - add info
 		lifespan,

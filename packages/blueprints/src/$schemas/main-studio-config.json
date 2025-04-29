@@ -6,9 +6,11 @@
 	"properties": {
 		"visionMixerType": {
 			"type": "string",
+			"title": "VisionMixerType",
 			"ui:title": "Vision mixer type",
 			"ui:description": "Atem or VMix",
 			"enum": ["atem", "vmix"],
+			"tsEnumNames": ["Atem", "VMix"],
 			"default": "atem"
 		},
 		"atemSources": {
@@ -29,11 +31,7 @@
 							"default": 1
 						},
 						"type": {
-							"type": "string",
-							"ui:title": "Type",
-							"ui:description": "Input Type",
-							"ui:summaryTitle": "Type",
-							"default": "camera"
+							"$ref": "#/$defs/SourceType"
 						}
 					},
 					"required": ["input", "type"]
@@ -87,11 +85,7 @@
 							"default": 1
 						},
 						"type": {
-							"type": "string",
-							"ui:title": "Type",
-							"ui:description": "Input Type",
-							"ui:summaryTitle": "Type",
-							"default": "camera"
+							"$ref": "#/$defs/SourceType"
 						}
 					},
 					"required": ["input", "type"]
@@ -120,7 +114,11 @@
 							"ui:title": "Type",
 							"ui:description": "Input Type",
 							"ui:summaryTitle": "Type",
-							"default": "host"
+							"default": "host",
+
+							"title": "AudioSourceType",
+							"enum": ["host", "guest", "remote", "playback"],
+							"tsEnumNames": ["Host", "Guest", "Remote", "Playback"]
 						}
 					},
 					"required": ["source", "type"]
@@ -150,5 +148,18 @@
 		"atemOutputs",
 		"atemSources",
 		"visionMixerType"
-	]
+	],
+	"$defs": {
+		"SourceType": {
+			"title": "SourceType",
+			"type": "string",
+			"enum": ["camera", "remote", "mediaplayer", "graphics", "multiview"],
+			"tsEnumNames": ["Camera", "Remote", "MediaPlayer", "Graphics", "MultiView"],
+
+			"ui:title": "Type",
+			"ui:description": "Input Type",
+			"ui:summaryTitle": "Type",
+			"default": "camera"
+		}
+	}
 }

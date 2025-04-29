@@ -1,8 +1,8 @@
 import { ITranslatableMessage } from '@sofie-automation/blueprints-integration'
-import { SomeObject } from '../../../common/definitions/objects'
-import { SpreadsheetIngestPart } from '../../../code-copy/spreadsheet-gateway'
-import { InvalidProps, PartInfo, PartProps, PartType } from '../definitions'
-import { parseBaseProps } from './base'
+import { SomeObject } from '../../../common/definitions/objects.js'
+import { SpreadsheetIngestPart } from '../../../code-copy/spreadsheet-gateway/index.js'
+import { InvalidProps, PartInfo, PartProps, PartType } from '../definitions/index.js'
+import { parseBaseProps } from './base.js'
 
 export function createInvalidProps(
 	reason: ITranslatableMessage,

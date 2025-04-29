@@ -1,6 +1,6 @@
-import { literal } from '../../common/util'
+import { literal } from '../../common/util.js'
 import { BlueprintConfigCoreConfig, ICommonContext } from '@sofie-automation/blueprints-integration'
-import { BlueprintConfig, StudioConfig } from './helpers/config'
+import { BlueprintConfig, StudioConfig } from './helpers/config.js'
 
 export function preprocessConfig(
 	_context: ICommonContext,

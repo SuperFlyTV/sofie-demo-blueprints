@@ -1,4 +1,4 @@
-import { SpreadsheetIngestPiece } from '../../code-copy/spreadsheet-gateway'
+import { SpreadsheetIngestPiece } from '../../code-copy/spreadsheet-gateway/index.js'
 
 export type SomeObject =
 	| CameraObject

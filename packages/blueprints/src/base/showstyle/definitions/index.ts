@@ -1,8 +1,8 @@
 import { ITranslatableMessage } from '@sofie-automation/blueprints-integration'
-import { GraphicObject, SomeObject } from '../../../common/definitions/objects'
-import { ClipProps } from '../helpers/clips'
-import { RawSourceInfo } from '../helpers/sources'
-import { IntermediatePart, IntermediateSegment } from './intermediate'
+import { GraphicObject, SomeObject } from '../../../common/definitions/objects.js'
+import { ClipProps } from '../helpers/clips.js'
+import { RawSourceInfo } from '../helpers/sources.js'
+import { IntermediatePart, IntermediateSegment } from './intermediate.js'
 
 export enum SegmentType {
 	NORMAL = 'normal',

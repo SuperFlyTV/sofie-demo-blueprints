@@ -3,11 +3,11 @@ const {
 	commonRules,
 	tsRules,
 	tsParser,
-} = require('../../node_modules/@sofie-automation/code-standard-preset/eslint/fragments') // eslint-disable-line node/no-unpublished-require
+} = require('../../node_modules/@sofie-automation/code-standard-preset/eslint/fragments') // eslint-disable-line n/no-unpublished-require
 
 const localCommonRules = {
 	'import/no-unresolved': [2, { ignore: ['^@theme', '^@docusaurus', '^@site'] }],
-	'node/no-missing-import': 'off',
+	'n/no-missing-import': 'off',
 }
 
 module.exports = {

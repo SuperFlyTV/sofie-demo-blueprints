@@ -1,4 +1,4 @@
-import { StudioConfig } from '../../../base/studio/helpers/config'
+import { StudioConfig } from '../../../base/studio/helpers/config.js'
 
 export const DemoStudioConfig: StudioConfig = {
 	previewRenderer: 'sofie',

@@ -7,7 +7,7 @@ import {
 	PlayoutActions,
 	TriggerType,
 } from '@sofie-automation/blueprints-integration'
-import { SourceLayer } from './layers'
+import { SourceLayer } from './layers.js'
 
 const triggeredActionIdMap: Map<string, number> = new Map()
 let rankCounter = 0
@@ -79,14 +79,14 @@ export function createAdLibHotkey(
 								object: 'adLib',
 								field: 'segment',
 								value: 'current',
-						  }
+							}
 						: undefined,
 					tags && tags.length > 0
 						? {
 								object: 'adLib',
 								field: 'tag',
 								value: tags,
-						  }
+							}
 						: undefined,
 					{
 						object: 'adLib',

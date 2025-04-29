@@ -1,8 +1,8 @@
 import { TSR } from '@sofie-automation/blueprints-integration'
-import { assertUnreachable, literal } from '../../../common/util'
-import { TimelineBlueprintExt } from '../../studio/customTypes'
-import { StudioConfig, VisionMixerType } from '../../studio/helpers/config'
-import { AtemLayers, VMixLayers } from '../../studio/layers'
+import { assertUnreachable, literal } from '../../../common/util.js'
+import { TimelineBlueprintExt } from '../../studio/customTypes.js'
+import { StudioConfig, VisionMixerType } from '../../studio/helpers/config.js'
+import { AtemLayers, VMixLayers } from '../../studio/layers.js'
 
 export function createAtemInputTimelineObjects(
 	input: number,

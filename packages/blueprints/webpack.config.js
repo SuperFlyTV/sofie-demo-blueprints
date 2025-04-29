@@ -1,4 +1,3 @@
-/* eslint-disable node/no-unpublished-require */
 const path = require('path')
 const getTranslations = require('./scripts/translation/bundle.js')
 const uploader = require('./scripts/upload')

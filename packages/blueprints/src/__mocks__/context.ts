@@ -34,18 +34,10 @@ export class CommonContext implements ICommonContext {
 	constructor(idPrefix: string) {
 		this.idPrefix = idPrefix
 	}
-	public logDebug(message: string): void {
-		message // stop eslint complaining about unused arguments. The argument has to be there to implement the interface
-	}
-	public logInfo(message: string): void {
-		message // stop eslint complaining about unused arguments. The argument has to be there to implement the interface
-	}
-	public logWarning(message: string): void {
-		message // stop eslint complaining about unused arguments. The argument has to be there to implement the interface
-	}
-	public logError(message: string): void {
-		message // stop eslint complaining about unused arguments. The argument has to be there to implement the interface
-	}
+	public logDebug(_message: string): void {}
+	public logInfo(_message: string): void {}
+	public logWarning(_message: string): void {}
+	public logError(_message: string): void {}
 
 	public getHashId(origin: string, isNotUnique?: boolean): string {
 		if (isNotUnique) {

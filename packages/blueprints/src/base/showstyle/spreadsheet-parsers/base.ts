@@ -1,5 +1,5 @@
-import { SpreadsheetIngestPart } from '../../../code-copy/spreadsheet-gateway'
-import { PartBaseProps } from '../definitions'
+import { SpreadsheetIngestPart } from '../../../code-copy/spreadsheet-gateway/index.js'
+import { PartBaseProps } from '../definitions/index.js'
 
 export function parseBaseProps(part: SpreadsheetIngestPart): PartBaseProps {
 	const piecesScript = part.pieces

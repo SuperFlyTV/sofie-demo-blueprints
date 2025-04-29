@@ -1,14 +1,15 @@
 import { BlueprintResultPart, IBlueprintPiece, PieceLifespan } from '@sofie-automation/blueprints-integration'
-import { PartContext } from '../../../common/context'
-import { AudioSourceType, StudioConfig } from '../../studio/helpers/config'
-import { PartProps, RemoteProps } from '../definitions'
-import { getAudioPrimaryObject } from '../helpers/audio'
-import { parseClipsFromObjects } from '../helpers/clips'
-import { parseGraphicsFromObjects } from '../helpers/graphics'
-import { createScriptPiece } from '../helpers/script'
-import { getSourceInfoFromRaw } from '../helpers/sources'
-import { createVisionMixerObjects } from '../helpers/visionMixer'
-import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers'
+import { PartContext } from '../../../common/context.js'
+import { AudioSourceType, StudioConfig } from '../../studio/helpers/config.js'
+import { PartProps, RemoteProps } from '../definitions/index.js'
+import { getAudioPrimaryObject } from '../helpers/audio.js'
+import { parseClipsFromObjects } from '../helpers/clips.js'
+import { parseGraphicsFromObjects } from '../helpers/graphics.js'
+import { createScriptPiece } from '../helpers/script.js'
+import { getSourceInfoFromRaw } from '../helpers/sources.js'
+import { createVisionMixerObjects } from '../helpers/visionMixer.js'
+import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
+import { ObjectType } from '../../../common/definitions/objects.js'
 
 export function generateRemotePart(context: PartContext, part: PartProps<RemoteProps>): BlueprintResultPart {
 	const config = context.getStudioConfig() as StudioConfig
@@ -37,7 +38,7 @@ export function generateRemotePart(context: PartContext, part: PartProps<RemoteP
 	context.logDebug(
 		'objects ' +
 			JSON.stringify(
-				part.objects.filter((o) => o.objectType === 'graphic'),
+				part.objects.filter((o) => o.objectType === ObjectType.Graphic),
 				undefined,
 				4
 			)

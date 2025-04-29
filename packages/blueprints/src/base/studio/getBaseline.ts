@@ -1,13 +1,14 @@
 import { BlueprintResultStudioBaseline, IStudioContext, TSR } from '@sofie-automation/blueprints-integration'
-import { literal } from '../../common/util'
-import { AudioSourceType, StudioConfig } from './helpers/config'
-import { SisyfosLayers } from './layers'
-import { TimelineBlueprintExt } from './customTypes'
+import { literal } from '../../common/util.js'
+import { AudioSourceType, StudioConfig } from './helpers/config.js'
+import { SisyfosLayers } from './layers.js'
+import { TimelineBlueprintExt } from './customTypes.js'
+import { OutputConfig, SiyfosSourceConfig } from '../../$schemas/generated/main-studio-config.js'
 
 function getSisyfosBaseline(config: StudioConfig): (TSR.SisyfosChannelOptions & { mappedLayer: string })[] {
 	const channels: (TSR.SisyfosChannelOptions & { mappedLayer: string })[] = []
 	const addChannelsFromType = (type: AudioSourceType) =>
-		Object.values(config.sisyfosSources)
+		Object.values<SiyfosSourceConfig>(config.sisyfosSources)
 			.filter((s) => s.type === type)
 			.forEach((s, i) => {
 				channels.push(
@@ -45,7 +46,7 @@ export function getBaseline(context: IStudioContext): BlueprintResultStudioBasel
 				},
 				priority: 1,
 			}),
-			...Object.values(config.atemOutputs).map((output) =>
+			...Object.values<OutputConfig>(config.atemOutputs).map((output) =>
 				literal<TimelineBlueprintExt<TSR.TimelineContentAtemAUX>>({
 					id: '',
 					enable: { while: 1 },

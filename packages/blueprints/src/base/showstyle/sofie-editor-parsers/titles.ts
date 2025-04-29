@@ -1,7 +1,7 @@
-import { SomeObject } from '../../../common/definitions/objects'
-import { EditorIngestPart } from '../../../code-copy/rundown-editor'
-import { InvalidProps, PartInfo, PartProps, PartType, TitlesProps } from '../definitions'
-import { parseBaseProps } from './base'
+import { SomeObject } from '../../../common/definitions/objects.js'
+import { EditorIngestPart } from '../../../code-copy/rundown-editor/index.js'
+import { InvalidProps, PartInfo, PartProps, PartType, TitlesProps } from '../definitions/index.js'
+import { parseBaseProps } from './base.js'
 
 export function parseOpener(ingestPart: EditorIngestPart): PartProps<TitlesProps | InvalidProps> {
 	return {

@@ -1,14 +1,14 @@
-import { ObjectType, SomeObject } from '../../../common/definitions/objects'
-import { t } from '../../../common/util'
-import { EditorIngestPart } from '../../../code-copy/rundown-editor'
-import { SourceType } from '../../studio/helpers/config'
-import { CameraProps, InvalidProps, PartInfo, PartProps, PartType } from '../definitions'
-import { findSource } from '../helpers/sources'
-import { parseBaseProps } from './base'
-import { createInvalidProps } from './invalid'
+import { ObjectType, SomeObject } from '../../../common/definitions/objects.js'
+import { t } from '../../../common/util.js'
+import { EditorIngestPart } from '../../../code-copy/rundown-editor/index.js'
+import { SourceType } from '../../studio/helpers/config.js'
+import { CameraProps, InvalidProps, PartInfo, PartProps, PartType } from '../definitions/index.js'
+import { findSource } from '../helpers/sources.js'
+import { parseBaseProps } from './base.js'
+import { createInvalidProps } from './invalid.js'
 
 export function parseCamera(ingestPart: EditorIngestPart): PartProps<CameraProps | InvalidProps> {
-	const cameraPiece = ingestPart.pieces.find((p) => p.objectType === ObjectType.Camera)
+	const cameraPiece = ingestPart.pieces.find((p) => (p.objectType as ObjectType) === ObjectType.Camera)
 	if (!cameraPiece) {
 		return createInvalidProps(t('No camera object'), ingestPart)
 	}

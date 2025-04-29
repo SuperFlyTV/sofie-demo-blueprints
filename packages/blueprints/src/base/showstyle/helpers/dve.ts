@@ -6,12 +6,12 @@ import {
 	SplitsContentBoxProperties,
 	TSR,
 } from '@sofie-automation/blueprints-integration'
-import { literal } from '../../../common/util'
-import { SourceType, StudioConfig } from '../../studio/helpers/config'
-import { DVEProps } from '../definitions'
-import { getClipPlayerInput } from './clips'
-import { parseConfig } from './config'
-import { getSourceInfoFromRaw } from './sources'
+import { literal } from '../../../common/util.js'
+import { SourceType, StudioConfig } from '../../studio/helpers/config.js'
+import { DVEProps } from '../definitions/index.js'
+import { getClipPlayerInput } from './clips.js'
+import { parseConfig } from './config.js'
+import { getSourceInfoFromRaw } from './sources.js'
 
 export type DVELayout = TSR.SuperSourceBox[]
 
@@ -68,12 +68,12 @@ export function parseSuperSourceProps(
 					artInvertKey: layout?.preset.properties.artInvertKey,
 					artClip: layout?.preset.properties.artClip * 10,
 					artGain: layout?.preset.properties.artGain * 10,
-			  }
+				}
 			: { artPreMultiplied: true }),
 		...(layout?.preset.border?.borderEnabled
 			? {
 					...layout?.preset.border,
-			  }
+				}
 			: { borderEnabled: false }),
 	})
 }
@@ -106,9 +106,9 @@ export function dveLayoutToContent(
 								right: (atemBox.cropRight || 0) / 32000,
 								top: (atemBox.cropTop || 0) / 18000,
 								bottom: (atemBox.cropBottom || 0) / 18000,
-						  }
+							}
 						: undefined,
-			  })
+				})
 			: undefined
 
 		return literal<SplitsContentBoxContent & SplitsContentBoxProperties>({
@@ -119,8 +119,8 @@ export function dveLayoutToContent(
 				'fileName' in info
 					? SourceLayerType.VT
 					: info.type === SourceType.Remote
-					? SourceLayerType.REMOTE
-					: SourceLayerType.CAMERA,
+						? SourceLayerType.REMOTE
+						: SourceLayerType.CAMERA,
 			geometry,
 		})
 	}

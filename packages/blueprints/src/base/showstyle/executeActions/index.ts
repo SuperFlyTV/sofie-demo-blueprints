@@ -4,8 +4,8 @@ import {
 	IActionExecutionContext,
 	IDataStoreActionExecutionContext,
 } from '@sofie-automation/blueprints-integration'
-import { ActionId } from './actionDefinitions'
-import { SourceLayer } from '../applyconfig/layers'
+import { ActionId } from './actionDefinitions.js'
+import { SourceLayer } from '../applyconfig/layers.js'
 
 export async function executeAction(
 	context: IActionExecutionContext,
@@ -44,7 +44,9 @@ export async function executeDataStoreAction(
 	triggerMode?: string
 ): Promise<void> {
 	const actionId = actionId0 as ActionId
-	context.logDebug('executeDataStoreAction id:' + actionId + ' userData: ' + userData + ' Triggermode :' + triggerMode)
+	context.logDebug(
+		'executeDataStoreAction id:' + actionId + ' userData: ' + JSON.stringify(userData) + ' Triggermode :' + triggerMode
+	)
 }
 
 async function executeLastOnSourceLayer(context: IActionExecutionContext, sourceLayer: SourceLayer) {

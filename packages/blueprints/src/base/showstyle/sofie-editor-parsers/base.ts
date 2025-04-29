@@ -1,5 +1,5 @@
-import { EditorIngestPart } from '../../../code-copy/rundown-editor'
-import { PartBaseProps } from '../definitions'
+import { EditorIngestPart } from '../../../code-copy/rundown-editor/index.js'
+import { PartBaseProps } from '../definitions/index.js'
 
 export function parseBaseProps(part: EditorIngestPart): PartBaseProps {
 	const script = part.script

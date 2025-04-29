@@ -1,10 +1,10 @@
 import { BlueprintResultPart } from '@sofie-automation/blueprints-integration'
-import { PartContext } from '../../../common/context'
-import { StudioConfig } from '../../studio/helpers/config'
-import { GfxProps, PartProps } from '../definitions'
-import { parseClipsFromObjects } from '../helpers/clips'
-import { parseGraphicsFromObjects } from '../helpers/graphics'
-import { createScriptPiece } from '../helpers/script'
+import { PartContext } from '../../../common/context.js'
+import { StudioConfig } from '../../studio/helpers/config.js'
+import { GfxProps, PartProps } from '../definitions/index.js'
+import { parseClipsFromObjects } from '../helpers/clips.js'
+import { parseGraphicsFromObjects } from '../helpers/graphics.js'
+import { createScriptPiece } from '../helpers/script.js'
 
 export function generateGfxPart(context: PartContext, part: PartProps<GfxProps>): BlueprintResultPart {
 	const config = context.getStudioConfig() as StudioConfig

@@ -3,8 +3,8 @@ import {
 	BlueprintResultSegment,
 	ISegmentUserContext,
 } from '@sofie-automation/blueprints-integration'
-import { PartContext } from '../../../common/context'
-import { t } from '../../../common/util'
+import { PartContext } from '../../../common/context.js'
+import { t } from '../../../common/util.js'
 import {
 	CameraProps,
 	DVEProps,
@@ -16,14 +16,14 @@ import {
 	TitlesProps,
 	VOProps,
 	VTProps,
-} from '../definitions'
-import { generateCameraPart } from './camera'
-import { generateDVEPart } from './dve'
-import { generateGfxPart } from './gfx'
-import { generateRemotePart } from './remote'
-import { generateOpenerPart as generateTitlesPart } from './titles'
-import { generateVOPart } from './vo'
-import { generateVTPart } from './vt'
+} from '../definitions/index.js'
+import { generateCameraPart } from './camera.js'
+import { generateDVEPart } from './dve.js'
+import { generateGfxPart } from './gfx.js'
+import { generateRemotePart } from './remote.js'
+import { generateOpenerPart as generateTitlesPart } from './titles.js'
+import { generateVOPart } from './vo.js'
+import { generateVTPart } from './vt.js'
 
 export function generateParts(context: ISegmentUserContext, intermediateSegment: SegmentProps): BlueprintResultSegment {
 	const parts = intermediateSegment.parts.map((rawPart): BlueprintResultPart => {

@@ -5,8 +5,8 @@ import {
 	ScriptContent,
 	WithTimeline,
 } from '@sofie-automation/blueprints-integration'
-import { literal } from '../../../common/util'
-import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers'
+import { literal } from '../../../common/util.js'
+import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 
 function getFirstWords(input: string): string {
 	const firstWordsMatch = (input + '').match(/^([\S]*[^\n]){1,3}/)

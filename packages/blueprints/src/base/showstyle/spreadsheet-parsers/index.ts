@@ -1,15 +1,15 @@
 import { IngestSegment, IRundownUserContext } from '@sofie-automation/blueprints-integration'
-import { t } from '../../../common/util'
-import { SpreadsheetIngestPart, SpreadsheetIngestSegment } from '../../../code-copy/spreadsheet-gateway'
-import { AllProps, PartProps, SegmentProps, SegmentType } from '../definitions'
-import { parseCamera } from './camera'
-import { parseDVE } from './dve'
-import { parseGfx } from './gfx'
-import { createInvalidProps } from './invalid'
-import { parseRemote } from './remote'
-import { parseOpener } from './titles'
-import { parseVO } from './vo'
-import { parseVT } from './vt'
+import { t } from '../../../common/util.js'
+import { SpreadsheetIngestPart, SpreadsheetIngestSegment } from '../../../code-copy/spreadsheet-gateway/index.js'
+import { AllProps, PartProps, SegmentProps, SegmentType } from '../definitions/index.js'
+import { parseCamera } from './camera.js'
+import { parseDVE } from './dve.js'
+import { parseGfx } from './gfx.js'
+import { createInvalidProps } from './invalid.js'
+import { parseRemote } from './remote.js'
+import { parseOpener } from './titles.js'
+import { parseVO } from './vo.js'
+import { parseVT } from './vt.js'
 
 /**
  * This function converts from raw ingest segments to parsed segments
@@ -54,7 +54,7 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: I
 	// parse the objects
 	parts.forEach((p) => {
 		p.objects.forEach((obj) => {
-			obj.isAdlib = (obj.attributes as any).adlib === 'true'
+			obj.isAdlib = obj.attributes.adlib === 'true'
 		})
 	})
 

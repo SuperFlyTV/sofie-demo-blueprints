@@ -5,18 +5,18 @@ import {
 	PieceLifespan,
 	TSR,
 } from '@sofie-automation/blueprints-integration'
-import { PartContext } from '../../../common/context'
-import { changeExtension, literal, stripExtension } from '../../../common/util'
-import { AudioSourceType, StudioConfig } from '../../studio/helpers/config'
-import { CasparCGLayers } from '../../studio/layers'
-import { PartProps, VTProps } from '../definitions'
-import { getAudioPrimaryObject } from '../helpers/audio'
-import { getClipPlayerInput } from '../helpers/clips'
-import { parseGraphicsFromObjects } from '../helpers/graphics'
-import { createScriptPiece } from '../helpers/script'
-import { createVisionMixerObjects } from '../helpers/visionMixer'
-import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers'
-import { TimelineBlueprintExt } from '../../studio/customTypes'
+import { PartContext } from '../../../common/context.js'
+import { changeExtension, literal, stripExtension } from '../../../common/util.js'
+import { AudioSourceType, StudioConfig } from '../../studio/helpers/config.js'
+import { CasparCGLayers } from '../../studio/layers.js'
+import { PartProps, VTProps } from '../definitions/index.js'
+import { getAudioPrimaryObject } from '../helpers/audio.js'
+import { getClipPlayerInput } from '../helpers/clips.js'
+import { parseGraphicsFromObjects } from '../helpers/graphics.js'
+import { createScriptPiece } from '../helpers/script.js'
+import { createVisionMixerObjects } from '../helpers/visionMixer.js'
+import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
+import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 
 export function generateVTPart(context: PartContext, part: PartProps<VTProps>): BlueprintResultPart {
 	const config = context.getStudioConfig() as StudioConfig

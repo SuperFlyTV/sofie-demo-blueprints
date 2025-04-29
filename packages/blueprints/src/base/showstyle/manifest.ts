@@ -4,14 +4,14 @@ import {
 	JSONBlobStringify,
 	JSONSchema,
 } from '@sofie-automation/blueprints-integration'
-import { executeAction, executeDataStoreAction } from './executeActions'
-import { getAdlibItem } from './getAdlibItem'
-import { getSegment } from './getSegment'
-import { getShowStyleVariantId } from './getShowStyleVariantId'
-import { ShowStyleConfig } from './helpers/config'
-import { getRundown } from './rundown'
-import { validateConfig } from './validateConfig'
-import { applyConfig } from './applyconfig'
+import { executeAction, executeDataStoreAction } from './executeActions/index.js'
+import { getAdlibItem } from './getAdlibItem.js'
+import { getSegment } from './getSegment.js'
+import { getShowStyleVariantId } from './getShowStyleVariantId.js'
+import { ShowStyleConfig } from './helpers/config.js'
+import { getRundown } from './rundown/index.js'
+import { validateConfig } from './validateConfig.js'
+import { applyConfig } from './applyconfig/index.js'
 import * as ConfigSchema from '../../$schemas/main-showstyle-config.json'
 
 declare const VERSION: string // Injected by webpack

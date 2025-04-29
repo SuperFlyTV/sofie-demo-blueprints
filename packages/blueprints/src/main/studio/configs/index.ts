@@ -1,6 +1,6 @@
 import { IStudioConfigPreset } from '@sofie-automation/blueprints-integration'
-import { StudioConfig } from '../../../base/studio/helpers/config'
-import { DemoStudioConfig } from './demo'
+import { StudioConfig } from '../../../base/studio/helpers/config.js'
+import { DemoStudioConfig } from './demo.js'
 
 export const demoStudioConfigPresets: Record<string, IStudioConfigPreset<StudioConfig>> = {
 	demo: {
