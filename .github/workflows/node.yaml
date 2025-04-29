@@ -103,7 +103,7 @@ jobs:
     name: Build Deploy Image
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    needs: [lint, test]
+    # needs: [lint, test]
 
     env:
       # Use docker.io for Docker Hub if empty

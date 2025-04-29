@@ -15,8 +15,7 @@
         "generate-schema-types": "lerna run generate-schema-types --scope=blueprints",
         "test:blueprints": "lerna run test --scope=blueprints",
         "build:docs": "lerna run build --scope=docs",
-        "watch:docs": "lerna run start --scope=docs",
-        "lint:raw": "eslint --ext .ts --ext .js --ext .tsx --ext .jsx --ignore-pattern dist"
+        "watch:docs": "lerna run start --scope=docs"
     },
     "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
     "lint-staged": {
@@ -33,6 +32,7 @@
     "devDependencies": {
         "@babel/eslint-parser": "^7.27.0",
         "@sofie-automation/code-standard-preset": "2.5.2",
+        "eslint": "^8.57.1",
         "eslint-import-resolver-typescript": "^4.3.4",
         "eslint-plugin-import": "^2.31.0",
         "eslint-plugin-react": "^7.37.5",

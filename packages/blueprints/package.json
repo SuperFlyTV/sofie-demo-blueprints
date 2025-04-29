@@ -13,7 +13,7 @@
         "build-sync-local": "yarn run build --env server=\"http://127.0.0.1:3000\"",
         "watch": "yarn run build-inner --watch",
         "watch-sync-local": "yarn run watch --env server=\"http://127.0.0.1:3000\"",
-        "lint:raw": "eslint --ext .ts --ext .js --ext .tsx --ext .jsx --ignore-pattern dist",
+        "lint:raw": "run -B -T eslint --ext .ts --ext .js --ext .tsx --ext .jsx --ignore-pattern dist",
         "lint": "yarn lint:raw .",
         "unit": "jest",
         "test": "yarn unit",
