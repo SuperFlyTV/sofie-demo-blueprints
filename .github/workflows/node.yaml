@@ -13,6 +13,14 @@ jobs:
     name: Typecheck and Lint
     runs-on: ubuntu-latest
     timeout-minutes: 15
+
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - blueprints
+          - docs
+
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js 22.x
@@ -33,7 +41,7 @@ jobs:
           CI: true
       - name: Run typecheck and linter
         run: |
-          cd packages/blueprints
+          cd packages/${{ matrix.package }}
           yarn lint
           yarn build
         env:
