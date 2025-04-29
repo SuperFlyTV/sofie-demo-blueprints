@@ -8,7 +8,7 @@
         "prepare": "husky",
         "validate:dependencies": "yarn audit && yarn license-validate",
         "license-validate": "yarn sofie-licensecheck --allowPackages \"caniuse-lite@1.0.30001363\"",
-        "build:blueprints": "lerna run build-now --scope=blueprints",
+        "build:blueprints": "lerna run build-now --scope=blueprints && lerna run bundle --scope=blueprints",
         "watch:blueprints": "lerna run watch-sync-local --scope=blueprints",
         "build-sync-local": "lerna run build-sync-local --scope=blueprints",
         "watch-sync-local": "lerna run watch-sync-local --scope=blueprints",

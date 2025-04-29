@@ -7,7 +7,7 @@ const BlueprintEntrypoints = {
 }
 
 const BlueprintBundles = {
-	show: ['demo-showstyle', 'demo-studio', 'system'],
+	show: ['demoshowstyle', 'demostudio', 'system'],
 }
 
 function GetEntrypointsForBundle(id) {
