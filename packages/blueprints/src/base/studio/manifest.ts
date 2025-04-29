@@ -11,7 +11,7 @@ import { preprocessConfig } from './preprocessConfig.js'
 import { getRundownPlaylistInfo } from './getRundownPlaylistInfo.js'
 import { applyConfig } from './applyConfig/index.js'
 import * as ConfigSchema from '../../$schemas/main-studio-config.json'
-import { StudioConfig } from './helpers/config.js'
+import { StudioConfig, VisionMixerType } from './helpers/config.js'
 
 declare const VERSION: string // Injected by webpack
 declare const VERSION_TSR: string // Injected by webpack
@@ -41,7 +41,7 @@ export const baseManifest: StudioBlueprintManifest<StudioConfig> = {
 			config: {
 				previewRenderer: 'sofie',
 				casparcgLatency: 0,
-				visionMixerType: 'atem',
+				visionMixerType: VisionMixerType.Atem,
 				sisyfosSources: {},
 				vmixSources: {},
 				atemOutputs: {},

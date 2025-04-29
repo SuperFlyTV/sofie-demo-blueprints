@@ -10,6 +10,7 @@ import { parseRemote } from './remote.js'
 import { parseOpener } from './titles.js'
 import { parseVO } from './vo.js'
 import { parseVT } from './vt.js'
+import { BaseObject } from '../../../common/definitions/objects.js'
 
 /**
  * This function converts from raw ingest segments to parsed segments
@@ -53,7 +54,7 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: I
 
 	// parse the objects
 	parts.forEach((p) => {
-		p.objects.forEach((obj) => {
+		p.objects.forEach((obj: BaseObject) => {
 			obj.isAdlib = obj.attributes.adlib === 'true'
 		})
 	})

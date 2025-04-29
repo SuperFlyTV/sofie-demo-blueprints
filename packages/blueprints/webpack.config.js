@@ -75,6 +75,12 @@ module.exports = async (env) => {
 		},
 		resolve: {
 			extensions: ['.tsx', '.ts', '.js'],
+			// Add support for TypeScripts fully qualified ESM imports.
+			extensionAlias: {
+				'.js': ['.js', '.ts'],
+				'.cjs': ['.cjs', '.cts'],
+				'.mjs': ['.mjs', '.mts'],
+			},
 		},
 		output: {
 			filename: '[name]-bundle.js',
