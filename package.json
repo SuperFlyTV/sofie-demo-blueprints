@@ -18,17 +18,6 @@
         "watch:docs": "yarn workspace docs start"
     },
     "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
-    "lint-staged": {
-        "*.{css,json,md,scss}": [
-            "prettier --write"
-        ],
-        "packages/blueprints/**/*.{ts,tsx,js,jsx}": [
-            "yarn lint:raw --fix --parser-options=project:\"./packages/blueprints/tsconfig.json\""
-        ],
-        "packages/docs/**/*.{ts,tsx,js,jsx}": [
-            "yarn lint:raw --fix --parser-options=project:\"./packages/docs/tsconfig.json\""
-        ]
-    },
     "devDependencies": {
         "@sofie-automation/code-standard-preset": "3.0.0",
         "eslint": "^9.25.1",
