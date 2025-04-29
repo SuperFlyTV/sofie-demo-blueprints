@@ -15,10 +15,10 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js 18.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: 22.x
       - name: restore node_modules
         uses: actions/cache@v3
         with:
@@ -27,6 +27,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
       - name: Prepare Environment
         run: |
+          corepack enable
           yarn
         env:
           CI: true
@@ -44,10 +45,10 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js 18.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: 22.x
       - name: restore node_modules
         uses: actions/cache@v3
         with:
@@ -56,6 +57,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
       - name: Prepare Environment
         run: |
+          corepack enable
           yarn
         env:
           CI: true
@@ -74,12 +76,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js 18.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: 22.x
       - name: Prepare Environment
         run: |
+          corepack enable
           yarn
         env:
           CI: true
