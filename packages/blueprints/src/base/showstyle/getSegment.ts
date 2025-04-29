@@ -15,9 +15,11 @@ export function getSegment(context: ISegmentUserContext, ingestSegment: IngestSe
 	let intermediateSegment
 	switch (rundownType) {
 		case 'sofie-rundown-editor':
+			console.log('Using Sofie Rundown Editor ingest data')
 			intermediateSegment = convertEditorIngestData(context, ingestSegment)
 			break
 		default:
+			console.log('Using Spreadsheet ingest data')
 			intermediateSegment = convertSpreadsheetIngestData(context, ingestSegment)
 	}
 

@@ -4370,17 +4370,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.18.21":
-  version: 14.18.63
-  resolution: "@types/node@npm:14.18.63"
-  checksum: 10c0/626a371419a6a0e11ca460b22bb4894abe5d75c303739588bc96267e380aa8b90ba5a87bc552400584f0ac2a84b5c458dadcbcf0dfd2396ebeb765f7a7f95893
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:^17.0.5":
   version: 17.0.45
   resolution: "@types/node@npm:17.0.45"
   checksum: 10c0/0db377133d709b33a47892581a21a41cd7958f22723a3cc6c71d55ac018121382de42fbfc7970d5ae3e7819dbe5f40e1c6a5174aedf7e7964e9cb8fa72b580b0
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^22":
+  version: 22.15.3
+  resolution: "@types/node@npm:22.15.3"
+  dependencies:
+    undici-types: "npm:~6.21.0"
+  checksum: 10c0/2879f012d1aeba0bfdb5fed80d165f4f2cb3d1f2e1f98a24b18d4a211b4ace7d64bf2622784c78355982ffc1081ba79d0934efc2fb8353913e5871a63609661f
   languageName: node
   linkType: hard
 
@@ -5989,7 +5991,7 @@ __metadata:
   dependencies:
     "@sofie-automation/blueprints-integration": "npm:1.53.0-nightly-release53-20250423-081454-dc957dd.0"
     "@types/jest": "npm:^28.1.4"
-    "@types/node": "npm:^14.18.21"
+    "@types/node": "npm:^22"
     "@types/object-path": "npm:^0.11.1"
     "@types/underscore": "npm:~1.11.4"
     axios: "npm:^0.27.2"
@@ -6003,7 +6005,7 @@ __metadata:
     object-path: "npm:^0.11.8"
     ts-jest: "npm:^28.0.5"
     ts-loader: "npm:^9.4.1"
-    ts-node: "npm:^10.9.1"
+    ts-node: "npm:^10.9.2"
     type-fest: "npm:^4.9.0"
     typescript: "npm:~4.9.0"
     underscore: "npm:^1.13.4"
@@ -19586,7 +19588,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-node@npm:^10.9.1":
+"ts-node@npm:^10.9.2":
   version: 10.9.2
   resolution: "ts-node@npm:10.9.2"
   dependencies:

@@ -15,9 +15,9 @@ import { parseVT } from './vt'
 /**
  * This function converts from raw ingest segments to parsed segments, we
  * make sure to parse to the data structure originally used by the
- * spreadsheets.
+ * Editor
  * @param context
- * @param ingestSegment The segment from the spreadsheet-gateway
+ * @param ingestSegment The segment from the rundown editor
  * @returns Intermediate data type used to generate parts
  */
 export function convertIngestData(context: IRundownUserContext, ingestSegment: IngestSegment): SegmentProps {
