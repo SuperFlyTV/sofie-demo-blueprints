@@ -30,7 +30,6 @@
         ]
     },
     "devDependencies": {
-        "@babel/eslint-parser": "^7.27.0",
         "@sofie-automation/code-standard-preset": "2.5.2",
         "eslint": "^8.57.1",
         "eslint-import-resolver-typescript": "^4.3.4",

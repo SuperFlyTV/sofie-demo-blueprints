@@ -21,6 +21,9 @@
 	--ifm-font-family-base: Roboto, Arial, sans-serif;
 
 	--ifm-hero-background-color: #1769ff;
+}
+
+html[data-theme='dark'] {
 	--ifm-hero-text-color: #fff;
 	--ifm-heading-color: #fff;
 }
