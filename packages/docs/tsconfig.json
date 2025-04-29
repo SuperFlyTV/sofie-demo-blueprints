@@ -1,6 +1,6 @@
 {
 	// This file is not used in compilation. It is here just for a nice editor experience and ESLint.
-	"extends": "@tsconfig/docusaurus/tsconfig.json",
+	"extends": "@docusaurus/tsconfig",
 	"include": ["src/**/*", "../../node_modules/@docusaurus/module-type-aliases/src/index.d.ts"],
 	"compilerOptions": {
 		"baseUrl": ".",
