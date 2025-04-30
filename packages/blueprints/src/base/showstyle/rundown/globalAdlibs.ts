@@ -1,15 +1,20 @@
 import { IBlueprintAdLibPiece, IShowStyleUserContext, PieceLifespan } from '@sofie-automation/blueprints-integration'
-import { assertUnreachable, literal } from '../../../common/util.js'
-import { AudioSourceType, SourceType, StudioConfig, VisionMixerType } from '../../studio/helpers/config.js'
-import { SisyfosLayers } from '../../studio/layers.js'
-import { getAudioObjectOnLayer, getAudioPrimaryObject } from '../helpers/audio.js'
+import { assertUnreachable, literal, } from '../../../common/util.js'
+import { AudioSourceType, SourceType, VisionMixerType } from '../../studio/helpers/config.js'
+import {getAudioObjectOnLayer, getAudioPrimaryObject } from '../helpers/audio.js'
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { InputConfig } from '../../../$schemas/generated/main-studio-config.js'
+import { parseConfig } from '../helpers/config.js'
+import { SisyfosLayers } from '../../studio/layers.js'
 
 export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLibPiece[] {
-	const config = context.getStudioConfig() as StudioConfig
+	const config = parseConfig(context).studio
 
+	context.logError('Global Adlib Studio Config: ' + JSON.stringify(config))
+
+
+	context.logError('Making camera adlibs')
 	const makeCameraAdlib = (id: number, input: number): IBlueprintAdLibPiece => ({
 		_rank: 100 + id,
 		externalId: 'cam' + id,
@@ -24,6 +29,7 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 			],
 		},
 	})
+	context.logError('Making remote adlibs')
 	const makeRemoteAdlib = (id: number, input: number): IBlueprintAdLibPiece => ({
 		_rank: 200 + id,
 		externalId: 'rem' + id,
@@ -39,7 +45,8 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 		},
 	})
 
-	const hostMicOverrides = [
+	context.logError('Making host mic overrides')
+	const hostMicOverrides: IBlueprintAdLibPiece<unknown, unknown>[] = [
 		literal<IBlueprintAdLibPiece>({
 			_rank: 301,
 			externalId: 'Host Mics Up',
@@ -70,7 +77,11 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 		}),
 	]
 
+	context.logError('Checking vision mixer type')
+	context.logError('Vision mixer type: ' + config.visionMixerType)
+	context.logError('Vision mixer defined Types: ' + JSON.stringify(VisionMixerType))
 	if (config.visionMixerType === VisionMixerType.Atem) {
+		context.logError('Vision mixer type is found: Atem')
 		return [
 			...Object.values<InputConfig>(config.atemSources)
 				.filter((source) => source.type === SourceType.Camera)
@@ -81,6 +92,7 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 			...hostMicOverrides,
 		]
 	} else if (config.visionMixerType === VisionMixerType.VMix) {
+		context.logError('Vision mixer type is found: VMix')
 		return [
 			...Object.values<InputConfig>(config.vmixSources)
 				.filter((source) => source.type === SourceType.Camera)

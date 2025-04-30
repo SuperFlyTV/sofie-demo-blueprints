@@ -7,9 +7,10 @@ import { getSisyfosBaseline } from '../helpers/audio.js'
 import { DVEDesigns, DVELayouts } from '../helpers/dve.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 import { InputConfig, OutputConfig, VmixInputConfig } from '../../../$schemas/generated/main-studio-config.js'
+import { parseConfig } from '../helpers/config.js'
 
 export function getBaseline(context: IShowStyleUserContext): BlueprintResultBaseline {
-	const config = context.getStudioConfig() as StudioConfig
+	const config = parseConfig(context).studio
 
 	return {
 		timelineObjects: _.compact([

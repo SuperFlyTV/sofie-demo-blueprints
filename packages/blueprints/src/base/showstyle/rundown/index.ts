@@ -6,17 +6,18 @@ import {
 	PlaylistTimingForwardTime,
 	PlaylistTimingType,
 } from '@sofie-automation/blueprints-integration'
-import { literal } from '../../../common/util.js'
-import { SpreadsheetIngestRundown } from '../../../code-copy/spreadsheet-gateway/index.js'
-import { RundownMetadata } from '../helpers/metadata.js'
-import { getBaseline } from './baseline.js'
-import { getGlobalActions } from './globalActions.js'
-import { getGlobalAdlibs } from './globalAdlibs.js'
+import { literal } from '../../../common/util'
+import { SpreadsheetIngestRundown } from '../../../code-copy/spreadsheet-gateway'
+import { RundownMetadata } from '../helpers/metadata'
+import { getBaseline } from './baseline'
+import { getGlobalActions } from './globalActions'
+import { getGlobalAdlibs } from './globalAdlibs'
 
 export function getRundown(
 	context: IShowStyleUserContext,
 	ingestRundown: ExtendedIngestRundown
 ): BlueprintResultRundown {
+	context.logDebug('------------------------------- getRundown ----------------------------------------------------------------')
 	const rundownMetadata: RundownMetadata = {
 		ingestType: ingestRundown.type,
 	}
@@ -32,6 +33,7 @@ export function getRundown(
 		privateData: rundownMetadata,
 		timing,
 	})
+	context.logDebug('rundown' + JSON.stringify(rundown))
 
 	const res: BlueprintResultRundown = {
 		rundown,
@@ -48,6 +50,8 @@ export function getRundown(
 			timing.expectedDuration = payload.expectedEnd - payload.expectedStart
 		}
 	}
+
+	context.logDebug('res' + JSON.stringify(res))
 
 	return res
 }
