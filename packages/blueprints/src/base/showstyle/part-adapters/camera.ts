@@ -12,9 +12,11 @@ import { createScriptPiece } from '../helpers/script.js'
 import { getSourceInfoFromRaw } from '../helpers/sources.js'
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
+import { parseConfig } from '../helpers/config.js'
 
 export function generateCameraPart(context: PartContext, part: PartProps<CameraProps>): BlueprintResultPart {
-	const config = context.getStudioConfig() as StudioConfig
+	const config = parseConfig(context).studio
+	context.logError('studioConfig inside generate camerapart: ' + JSON.stringify(config, null, 2))
 	const sourceInfo = getSourceInfoFromRaw(config, part.payload.input)
 
 	const audioTlObj = getAudioPrimaryObject(config, [{ type: AudioSourceType.Host, index: 0 }]) // todo: all hosts?

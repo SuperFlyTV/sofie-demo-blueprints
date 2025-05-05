@@ -1,7 +1,7 @@
 import { BlueprintResultPart, IBlueprintPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../../common/context.js'
 import { assertUnreachable, literal } from '../../../common/util.js'
-import { AudioSourceType, SourceType, StudioConfig, VisionMixerType } from '../../studio/helpers/config.js'
+import { AudioSourceType, SourceType, VisionMixerType } from '../../studio/helpers/config.js'
 import { AtemLayers, VMixLayers } from '../../studio/layers.js'
 import { DVEProps, PartProps } from '../definitions/index.js'
 import { getAudioPrimaryObject } from '../helpers/audio.js'
@@ -14,12 +14,13 @@ import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 import { VmixInputConfig } from '../../../$schemas/generated/main-studio-config.js'
+import { parseConfig } from '../helpers/config.js'
 
 const SUPER_SOURCE_LATENCY = 80
 const SUPER_SOURCE_INPUT = 6000
 
 export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>): BlueprintResultPart {
-	const config = context.getStudioConfig() as StudioConfig
+	const config = parseConfig(context).studio
 	// const sourceInfo = getSourceInfoFromRaw(config, part.payload.input1)
 
 	context.logDebug(JSON.stringify(part, null, 2))

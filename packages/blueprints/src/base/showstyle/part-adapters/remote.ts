@@ -1,6 +1,6 @@
 import { BlueprintResultPart, IBlueprintPiece, PieceLifespan } from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../../common/context.js'
-import { AudioSourceType, StudioConfig } from '../../studio/helpers/config.js'
+import { AudioSourceType } from '../../studio/helpers/config.js'
 import { PartProps, RemoteProps } from '../definitions/index.js'
 import { getAudioPrimaryObject } from '../helpers/audio.js'
 import { parseClipsFromObjects } from '../helpers/clips.js'
@@ -10,9 +10,10 @@ import { getSourceInfoFromRaw } from '../helpers/sources.js'
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { ObjectType } from '../../../common/definitions/objects.js'
+import { parseConfig } from '../helpers/config.js'
 
 export function generateRemotePart(context: PartContext, part: PartProps<RemoteProps>): BlueprintResultPart {
-	const config = context.getStudioConfig() as StudioConfig
+	const config = parseConfig(context).studio
 	const sourceInfo = getSourceInfoFromRaw(config, part.payload.input)
 
 	const audioTlObj = getAudioPrimaryObject(config, [{ type: AudioSourceType.Remote, index: part.payload.input.id - 1 }]) // todo: all hosts?

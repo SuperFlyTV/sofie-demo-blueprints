@@ -7,7 +7,7 @@ import {
 } from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../../common/context.js'
 import { changeExtension, literal, stripExtension } from '../../../common/util.js'
-import { AudioSourceType, StudioConfig } from '../../studio/helpers/config.js'
+import { AudioSourceType } from '../../studio/helpers/config.js'
 import { CasparCGLayers } from '../../studio/layers.js'
 import { PartProps, VTProps } from '../definitions/index.js'
 import { getAudioPrimaryObject } from '../helpers/audio.js'
@@ -17,9 +17,10 @@ import { createScriptPiece } from '../helpers/script.js'
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
+import { parseConfig } from '../helpers/config.js'
 
 export function generateVTPart(context: PartContext, part: PartProps<VTProps>): BlueprintResultPart {
-	const config = context.getStudioConfig() as StudioConfig
+	const config = parseConfig(context).studio
 	const visionMixerInput = getClipPlayerInput(config)
 
 	const audioTlObj = getAudioPrimaryObject(config, [{ type: AudioSourceType.Playback, index: 0 }]) // todo: which playback?
