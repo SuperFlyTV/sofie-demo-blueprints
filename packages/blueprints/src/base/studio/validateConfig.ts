@@ -6,7 +6,10 @@ export function validateConfig(_context: ICommonContext, config: StudioConfig): 
 	const messages: IConfigMessage[] = []
 
 	if (config.atemSources) {
-		messages.push({ level: NoteSeverity.ERROR, message: t('Here we should add check for Atem/VMix') })
+		messages.push({
+			level: NoteSeverity.INFO,
+			message: t('Here in validateConfig you can add check for e.g. Atem/VMix'),
+		})
 	}
 	return messages
 }

@@ -9,7 +9,7 @@ export function validateConfig(_context: ICommonContext, _config: ShowStyleConfi
 	if (_config.dvePresets) {
 		messages.push({
 			level: NoteSeverity.INFO,
-			message: t('Validation example'),
+			message: t('Here you can add validation for your showstyle config'),
 		})
 	}
 
