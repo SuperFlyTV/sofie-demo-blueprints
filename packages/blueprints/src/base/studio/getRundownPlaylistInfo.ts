@@ -14,8 +14,9 @@ export function getRundownPlaylistInfo(
 	if (rundowns.length === 0) {
 		return null
 	}
-	console.log('Playlist externalId:', playlistExternalId)
-	const order = [...rundowns].reduce<BlueprintResultOrderedRundowns>((prev, curr, i) => {
+	const readyOnAirRundowns = rundowns.filter((r) => r.playlistExternalId === playlistExternalId)
+
+	const order = [...readyOnAirRundowns].reduce<BlueprintResultOrderedRundowns>((prev, curr, i) => {
 		return {
 			...prev,
 			[curr.externalId]: i,
@@ -25,7 +26,7 @@ export function getRundownPlaylistInfo(
 	return {
 		playlist: {
 			name: 'READY TO AIR',
-			timing: { type: PlaylistTimingType.None },
+			timing: { type: PlaylistTimingType.ForwardTime, expectedStart: 0, expectedDuration: 0 },
 		},
 		order,
 	}

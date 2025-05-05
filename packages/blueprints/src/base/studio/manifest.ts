@@ -8,7 +8,7 @@ import { getBaseline } from './getBaseline.js'
 import { getShowStyleId } from './getShowStyleId.js'
 import { validateConfig } from './validateConfig.js'
 import { preprocessConfig } from './preprocessConfig.js'
-import { getRundownPlaylistInfo } from './getRundownPlaylistInfo.js'
+//import { getRundownPlaylistInfo } from './getRundownPlaylistInfo.js'
 import { applyConfig } from './applyConfig/index.js'
 import * as ConfigSchema from '../../$schemas/main-studio-config.json'
 import { StudioConfig, VisionMixerType } from './helpers/config.js'
@@ -30,7 +30,10 @@ export const baseManifest: StudioBlueprintManifest<StudioConfig> = {
 	getBaseline,
 	getShowStyleId,
 
-	getRundownPlaylistInfo,
+	/* function to group rundowns into playlists
+	 * When commented out, there will be no grouping
+	 */
+	//getRundownPlaylistInfo,
 
 	validateConfig,
 	applyConfig,
