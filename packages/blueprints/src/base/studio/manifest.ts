@@ -17,11 +17,6 @@ import androidSvg from '../../../../../assets/android.svg'
 
 console.log('ad2', androidSvg)
 
-declare const __VERSION__: string // Injected by webpack
-declare const __VERSION_TSR__: string // Injected by webpack
-declare const __VERSION_INTEGRATION__: string // Injected by webpack
-declare const __TRANSLATION_BUNDLES__: string // injected by webpack
-
 export const baseManifest: StudioBlueprintManifest<StudioConfig> = {
 	blueprintType: BlueprintManifestType.STUDIO,
 
