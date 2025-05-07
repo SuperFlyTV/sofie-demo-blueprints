@@ -5803,7 +5803,7 @@ __metadata:
     "@types/underscore": "npm:~1.13.0"
     jest: "npm:^29.7.0"
     object-path: "npm:^0.11.8"
-    sofie-blueprint-tools: ../../../sofie-blueprint-tools
+    sofie-blueprint-tools: "https://github.com/SuperFlyTV/sofie-blueprint-tools"
     ts-jest: "npm:^29.3.2"
     type-fest: "npm:^4.40.1"
     typescript: "npm:~5.8.3"
@@ -16994,9 +16994,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sofie-blueprint-tools@file:../../../sofie-blueprint-tools::locator=blueprints%40workspace%3Apackages%2Fblueprints":
-  version: 0.0.0
-  resolution: "sofie-blueprint-tools@file:../../../sofie-blueprint-tools#../../../sofie-blueprint-tools::hash=f7a74a&locator=blueprints%40workspace%3Apackages%2Fblueprints"
+"sofie-blueprint-tools@https://github.com/SuperFlyTV/sofie-blueprint-tools":
+  version: 0.1.0
+  resolution: "sofie-blueprint-tools@https://github.com/SuperFlyTV/sofie-blueprint-tools.git#commit=4890a7bd3f74ef1b82425b5eeb8ac1838cb34b22"
   dependencies:
     "@rollup/plugin-commonjs": "npm:^28.0.3"
     "@rollup/plugin-json": "npm:^6.1.0"
@@ -17017,9 +17017,8 @@ __metadata:
     blueprint-build: bin/build.mjs
     blueprint-bundle: bin/bundle.mjs
     blueprint-extract-translations: bin/extract-translations.mjs
-    blueprint-schema-deref: bin/schema-deref.mjs
     blueprint-schema-types: bin/schema-types.mjs
-  checksum: 10c0/3ce02f1a479189df81edca74738ee2f4dd22f816124575809383ce1a62e7857915350b8059c49e6d0ebcdab3d9b3ed55f7a61ac54f310985fa66b0d3bae8ae2b
+  checksum: 10c0/b08fd7afb2cc5c12a0953db2814b3141221d8604fc1c511b94194ef22b41588096d702935ac4e9275bbb37da95e31083360b2c834ff78f6df6e408e5d23dcde4
   languageName: node
   linkType: hard
 
