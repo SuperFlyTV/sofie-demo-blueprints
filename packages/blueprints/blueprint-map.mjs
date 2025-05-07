@@ -4,6 +4,6 @@ export const BlueprintEntrypoints = {
 	system: './src/system/index.ts',
 }
 
-// export const BlueprintBundles = {
-// 	show: ['demoshowstyle', 'demostudio', 'system'],
-// }
+export const BlueprintBundles = {
+	show: ['demoshowstyle', 'demostudio', 'system'],
+}
