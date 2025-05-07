@@ -1,4 +1,4 @@
-import { IngestSegment, IRundownUserContext } from '@sofie-automation/blueprints-integration'
+import { IRundownUserContext, SofieIngestSegment } from '@sofie-automation/blueprints-integration'
 import { ObjectType } from '../../../common/definitions/objects.js'
 import { t } from '../../../common/util.js'
 import { EditorIngestPart, EditorIngestSegment } from '../../../code-copy/rundown-editor/index.js'
@@ -20,7 +20,7 @@ import { parseVT } from './vt.js'
  * @param ingestSegment The segment from the rundown editor
  * @returns Intermediate data type used to generate parts
  */
-export function convertIngestData(context: IRundownUserContext, ingestSegment: IngestSegment): SegmentProps {
+export function convertIngestData(context: IRundownUserContext, ingestSegment: SofieIngestSegment): SegmentProps {
 	const parts: PartProps<AllProps>[] = []
 	let type = SegmentType.NORMAL
 

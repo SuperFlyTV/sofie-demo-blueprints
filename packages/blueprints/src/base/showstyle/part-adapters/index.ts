@@ -2,6 +2,7 @@ import {
 	BlueprintResultPart,
 	BlueprintResultSegment,
 	ISegmentUserContext,
+	UserEditingType,
 } from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../../common/context.js'
 import { t } from '../../../common/util.js'
@@ -24,28 +25,52 @@ import { generateRemotePart } from './remote.js'
 import { generateOpenerPart as generateTitlesPart } from './titles.js'
 import { generateVOPart } from './vo.js'
 import { generateVTPart } from './vt.js'
+import { UserEditingDefinition } from '@sofie-automation/blueprints-integration'
+import { BlueprintUserOperationTypes } from '../../studio/userEditOperations/types.js'
 
 export function generateParts(context: ISegmentUserContext, intermediateSegment: SegmentProps): BlueprintResultSegment {
+	// Create Segment UserEditOperations:
+	const userEditOperations: UserEditingDefinition[] = [
+		{
+			type: UserEditingType.ACTION,
+			id: BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES,
+			label: t('Lock Segment for NRCS Updates'),
+			svgIcon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="7" width="10" height="7" rx="1" ry="1" />
+  <path d="M5 7V5a3 3 0 0 1 6 0v2" />
+</svg>`,
+			isActive: intermediateSegment.userEditStates?.[BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES],
+		},
+	]
+
 	const parts = intermediateSegment.parts.map((rawPart): BlueprintResultPart => {
 		const partContext = new PartContext(context, rawPart.payload.externalId)
+		let newPart: BlueprintResultPart
 
 		switch (rawPart.type) {
 			case PartType.Camera:
-				return generateCameraPart(partContext, rawPart as unknown as PartProps<CameraProps>)
+				newPart = generateCameraPart(partContext, rawPart as unknown as PartProps<CameraProps>)
+				break
 			case PartType.Remote:
-				return generateRemotePart(partContext, rawPart as unknown as PartProps<CameraProps>)
+				newPart = generateRemotePart(partContext, rawPart as unknown as PartProps<CameraProps>)
+				break
 			case PartType.VT:
-				return generateVTPart(partContext, rawPart as unknown as PartProps<VTProps>)
+				newPart = generateVTPart(partContext, rawPart as unknown as PartProps<VTProps>)
+				break
 			case PartType.VO:
-				return generateVOPart(partContext, rawPart as unknown as PartProps<VOProps>)
+				newPart = generateVOPart(partContext, rawPart as unknown as PartProps<VOProps>)
+				break
 			case PartType.Titles:
-				return generateTitlesPart(partContext, rawPart as unknown as PartProps<TitlesProps>)
+				newPart = generateTitlesPart(partContext, rawPart as unknown as PartProps<TitlesProps>)
+				break
 			case PartType.DVE:
-				return generateDVEPart(partContext, rawPart as unknown as PartProps<DVEProps>)
+				newPart = generateDVEPart(partContext, rawPart as unknown as PartProps<DVEProps>)
+				break
 			case PartType.GFX:
-				return generateGfxPart(partContext, rawPart as unknown as PartProps<GfxProps>)
+				newPart = generateGfxPart(partContext, rawPart as unknown as PartProps<GfxProps>)
+				break
 			case PartType.Invalid:
-				return {
+				newPart = {
 					part: {
 						externalId: rawPart.payload.externalId,
 						title: rawPart.payload.name,
@@ -58,8 +83,9 @@ export function generateParts(context: ISegmentUserContext, intermediateSegment:
 					adLibPieces: [],
 					actions: [],
 				}
+				break
 			default:
-				return {
+				newPart = {
 					part: {
 						externalId: rawPart.payload.externalId,
 						title: rawPart.payload.name,
@@ -73,12 +99,27 @@ export function generateParts(context: ISegmentUserContext, intermediateSegment:
 					actions: [],
 				}
 		}
+		newPart.part.userEditOperations = [
+			...userEditOperations,
+			{
+				type: UserEditingType.ACTION,
+				id: BlueprintUserOperationTypes.LOCK_PART_NRCS_UPDATES,
+				label: t('Lock Part for NRCS Updates'),
+				svgIcon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="7" width="10" height="7" rx="1" ry="1" />
+  <path d="M5 7V5a3 3 0 0 1 6 0v2" />
+</svg>`,
+				isActive: rawPart.userEditStates?.[BlueprintUserOperationTypes.LOCK_PART_NRCS_UPDATES],
+			},
+		]
+		return newPart
 	})
 
 	return {
 		segment: {
 			name: intermediateSegment.payload.name,
+			userEditOperations: userEditOperations,
 		},
-		parts,
+		parts: parts,
 	}
 }

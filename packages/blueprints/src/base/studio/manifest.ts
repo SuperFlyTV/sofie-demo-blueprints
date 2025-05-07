@@ -12,6 +12,7 @@ import { preprocessConfig } from './preprocessConfig.js'
 import { applyConfig } from './applyConfig/index.js'
 import * as ConfigSchema from '../../$schemas/main-studio-config.json'
 import { StudioConfig, VisionMixerType } from './helpers/config.js'
+import { processIngestData } from './userEditOperations/processIngestData.js'
 
 declare const VERSION: string // Injected by webpack
 declare const VERSION_TSR: string // Injected by webpack
@@ -38,6 +39,7 @@ export const baseManifest: StudioBlueprintManifest<StudioConfig> = {
 	validateConfig,
 	applyConfig,
 	preprocessConfig,
+	processIngestData,
 	configPresets: {
 		default: {
 			name: 'Default',
