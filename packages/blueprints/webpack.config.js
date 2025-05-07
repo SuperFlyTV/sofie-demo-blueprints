@@ -1,5 +1,5 @@
 const path = require('path')
-const getTranslations = require('./scripts/translation/bundle.js')
+// const getTranslations = require('./scripts/translation/bundle.js')
 const uploader = require('./scripts/upload')
 const webpack = require('webpack')
 const moment = require('moment')
@@ -11,6 +11,8 @@ const { TMP_TSR_VERSION } = require('@sofie-automation/blueprints-integration')
 
 module.exports = async (env) => {
 	if (!env) env = {}
+
+	const { getTranslations } = await import('sofie-blueprint-tools/lib/translation/bundle.mjs')
 
 	let versionStr
 	if (env.production) {
