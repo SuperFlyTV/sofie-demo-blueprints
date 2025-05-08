@@ -160,6 +160,7 @@ export function generateParts(context: ISegmentUserContext, intermediateSegment:
 					},
 				},
 			},
+			// This is the global properties for the part - the lock is referencing the segment:
 			globalProperties: {
 				schema: JSONBlobStringify<JSONSchema>({
 					$schema: 'https://json-schema.org/draft/2020-12/schema',
@@ -176,8 +177,7 @@ export function generateParts(context: ISegmentUserContext, intermediateSegment:
 				}),
 				currentValue: {
 					[BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES]:
-						intermediateSegment.userEditStates?.[BlueprintUserOperationTypes.LOCK_PART_NRCS_UPDATES],
-					disable: false,
+						intermediateSegment.userEditStates?.[BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES],
 				},
 			},
 		}
@@ -189,6 +189,28 @@ export function generateParts(context: ISegmentUserContext, intermediateSegment:
 		segment: {
 			name: intermediateSegment.payload.name,
 			userEditOperations: userEditOperationsOnSegment,
+			userEditProperties: {
+				// This is the global properties for the segment - the lock is referencing this segment:
+				globalProperties: {
+					schema: JSONBlobStringify<JSONSchema>({
+						$schema: 'https://json-schema.org/draft/2020-12/schema',
+						title: 'Source schema for SPL Type',
+						type: 'object',
+						properties: {
+							[BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES]: {
+								type: 'boolean',
+								title: 'Lock Segment',
+								'ui:displayType': 'switch',
+							} as any, // note - get custom schema types here
+						},
+						required: [BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES],
+					}),
+					currentValue: {
+						[BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES]:
+							intermediateSegment.userEditStates?.[BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES],
+					},
+				},
+			},
 		},
 		parts: parts,
 	}
