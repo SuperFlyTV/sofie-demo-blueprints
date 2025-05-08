@@ -1,4 +1,5 @@
 import {
+	DefaultUserOperationEditProperties,
 	DefaultUserOperations,
 	DefaultUserOperationsTypes,
 	IngestChangeType,
@@ -11,7 +12,6 @@ import {
 } from '@sofie-automation/blueprints-integration'
 import {
 	BlueprintMutableIngestRundown,
-	BlueprintsUserOperationLockPart,
 	BlueprintsUserOperationLockSegment,
 	BlueprintsUserOperations,
 	BlueprintsUserOperationUserEdited,
@@ -89,26 +89,133 @@ async function applyUserOperation(
 ) {
 	context.logWarning(`Execute user operation: ${JSON.stringify(changes)}`)
 
-	const operation = changes.operation
-	switch (operation.id) {
+	switch (changes.operation.id) {
 		case BlueprintUserOperationTypes.CHANGE_SOURCE:
 			changeSource(context, mutableIngestRundown, changes)
 			break
 		case BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES:
-			segmentNrcsLock(context, mutableIngestRundown, changes.operationTarget, operation)
-			break
-		case BlueprintUserOperationTypes.LOCK_PART_NRCS_UPDATES:
-			partNrcsLock(context, mutableIngestRundown, changes.operationTarget, operation)
+			segmentNrcsLock(context, mutableIngestRundown, changes.operationTarget, changes.operation)
 			break
 		case BlueprintUserOperationTypes.USER_EDITED:
-			undoUserEdits(context, mutableIngestRundown, changes.operationTarget, operation)
+			undoUserEdits(context, mutableIngestRundown, changes.operationTarget, changes.operation)
 			break
 		case DefaultUserOperationsTypes.REVERT_SEGMENT:
-			undoUserEdits(context, mutableIngestRundown, changes.operationTarget, operation)
+			undoUserEdits(context, mutableIngestRundown, changes.operationTarget, changes.operation)
+			break
+		// Update changes from properties panel:
+		case DefaultUserOperationsTypes.UPDATE_PROPS:
+			processUpdateProps(context, mutableIngestRundown, changes.operationTarget, changes)
 			break
 		default:
 			context.logWarning(`Unknown operation: ${changes.operation.id}`)
 	}
+}
+
+function processUpdateProps(
+	context: IProcessIngestDataContext,
+	mutableIngestRundown: BlueprintMutableIngestRundown,
+	operationTarget: UserOperationTarget,
+	changes: UserOperationChange<BlueprintsUserOperations | DefaultUserOperations>
+) {
+	if (operationTarget.pieceExternalId) {
+		return updatePieceProps(
+			context,
+			mutableIngestRundown,
+			{ ...operationTarget, pieceExternalId: operationTarget.pieceExternalId }, // sometimes typescript is kind of dumb >.>
+			changes
+		)
+	} else if (operationTarget.partExternalId) {
+		return updatePartProps(
+			context,
+			mutableIngestRundown,
+			{ ...operationTarget, partExternalId: operationTarget.partExternalId }, // sometimes typescript is kind of dumb >.>
+			changes
+		)
+	} else if (operationTarget.segmentExternalId) {
+		return updateSegmentProps(
+			context,
+			mutableIngestRundown,
+			{ ...operationTarget, segmentExternalId: operationTarget.segmentExternalId }, // sometimes typescript is kind of dumb >.>
+			changes
+		)
+	}
+}
+
+function updateSegmentProps(
+	context: IProcessIngestDataContext,
+	mutableIngestRundown: BlueprintMutableIngestRundown,
+	operationTarget: UserOperationTarget & { segmentExternalId: string },
+	changes: UserOperationChange<BlueprintsUserOperations | DefaultUserOperations>
+) {
+	const operation = changes.operation as DefaultUserOperationEditProperties
+	const segment = mutableIngestRundown.getSegment(operationTarget.segmentExternalId)
+	if (!segment) return
+
+	const newProps = operation.payload.globalProperties
+
+	if (newProps[BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES] !== undefined) {
+		segment.setUserEditState(
+			BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES,
+			newProps[BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES]
+		)
+	}
+
+	if (newProps[BlueprintUserOperationTypes.APPROVED] !== undefined)
+		segment.setUserEditState(BlueprintUserOperationTypes.APPROVED, newProps[BlueprintUserOperationTypes.APPROVED])
+
+	context.logInfo(
+		`Update segment: ${operationTarget.segmentExternalId} new props: lock=${newProps['lock']} approve=${newProps['approve']} mute=${newProps['mute']}`
+	)
+}
+
+function updatePartProps(
+	_context: IProcessIngestDataContext,
+	mutableIngestRundown: BlueprintMutableIngestRundown,
+	operationTarget: UserOperationTarget & { partExternalId: string },
+	changes: UserOperationChange<BlueprintsUserOperations | DefaultUserOperations>
+) {
+	const operation = changes.operation as DefaultUserOperationEditProperties
+
+	const partAndSegment = mutableIngestRundown.findPartAndSegment(operationTarget.partExternalId)
+	const part = partAndSegment?.part
+	const segment = partAndSegment?.segment
+	_context.logDebug(
+		'Update part ' +
+			operationTarget.partExternalId +
+			' New prop updates : ' +
+			JSON.stringify(operation.payload.globalProperties)
+	)
+	if (!part?.payload) return
+
+	const newProps = operation.payload.globalProperties
+	// Also check for any segment properties: (e.g. locked)
+	if (newProps[BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES] !== undefined && segment) {
+		segment.setUserEditState(
+			BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES,
+			newProps[BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES]
+		)
+	}
+
+	if (newProps[BlueprintUserOperationTypes.CHANGE_SOURCE] !== undefined) {
+		changeSource(_context, mutableIngestRundown, changes)
+	}
+}
+
+function updatePieceProps(
+	context: IProcessIngestDataContext,
+	mutableIngestRundown: BlueprintMutableIngestRundown,
+	operationTarget: UserOperationTarget & { pieceExternalId: string },
+	changes: UserOperationChange<BlueprintsUserOperations | DefaultUserOperations>
+) {
+	const operation = changes.operation as DefaultUserOperationEditProperties
+
+	if (!operationTarget.partExternalId) return // I'm lazy and don't feel like looking this up manually
+
+	const part = mutableIngestRundown.findPart(operationTarget.partExternalId)
+	if (!part?.payload) return
+
+	const lifespan = operation.payload.globalProperties['lifespan']
+	context.logDebug('Update piece ' + operationTarget.pieceExternalId + ': ' + lifespan)
 }
 
 function changeSource(
@@ -135,21 +242,9 @@ function changeSource(
 		const newPayload: any = JSON.parse(JSON.stringify(partProps.payload))
 		let changed = false
 
-		for (const item of newPayload?.Body ?? []) {
-			if (item.Type !== 'storyItem') continue
-			item.Content.Slug = newSource
-			for (const metadata of item.Content.MosExternalMetaData ?? []) {
-				if (
-					metadata.MosPayload &&
-					'mosarttemplate' in metadata.MosPayload &&
-					metadata.MosPayload.mosarttemplate?.type?.attributes?.name === 'CAMERA'
-				) {
-					metadata.MosPayload.mosarttemplate.type.variants.attributes.value = newSource
-					metadata.MosPayload.mosarttemplate.type.variants.variant.attributes.name = newSource
-
-					changed = true
-				}
-			}
+		if (newPayload.input !== newSource) {
+			newPayload.input = newSource
+			changed = true
 		}
 		context.logInfo(`changed: ${changed} = ${JSON.stringify(newPayload, undefined, 4)}`)
 		if (changed) {
@@ -178,25 +273,6 @@ function segmentNrcsLock(
 
 	segment.setUserEditState(operation.id, newLockedState)
 	context.logInfo(`Lock segment: ${operationTarget.segmentExternalId} new state: ${newLockedState}`)
-
-	// TODO: for this to work it needs to be copied from the nrcsIngestRundown too
-	// // Force it to be regenerated
-	// if (!newLockedState) segment.forceRegenerate()
-}
-
-function partNrcsLock(
-	context: IProcessIngestDataContext,
-	mutableIngestRundown: BlueprintMutableIngestRundown,
-	operationTarget: UserOperationTarget,
-	operation: BlueprintsUserOperationLockPart
-) {
-	if (!operationTarget.partExternalId) return
-
-	const part = mutableIngestRundown.findPart(operationTarget.partExternalId)
-	if (!part) return
-
-	part.setUserEditState(operation.id, !part.userEditStates[operation.id])
-	context.logInfo(`Lock part: ${operationTarget.partExternalId} new state: ${part.userEditStates[operation.id]}`)
 }
 
 function undoUserEdits(

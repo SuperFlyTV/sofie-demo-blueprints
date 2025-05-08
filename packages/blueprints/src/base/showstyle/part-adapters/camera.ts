@@ -1,11 +1,4 @@
-import {
-	BlueprintResultPart,
-	IBlueprintPiece,
-	JSONBlobStringify,
-	JSONSchema,
-	PieceLifespan,
-	UserEditingType,
-} from '@sofie-automation/blueprints-integration'
+import { BlueprintResultPart, IBlueprintPiece, PieceLifespan } from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../../common/context.js'
 import { ObjectType, StudioGuestObject } from '../../../common/definitions/objects.js'
 import { literal } from '../../../common/util.js'
@@ -20,7 +13,6 @@ import { getSourceInfoFromRaw } from '../helpers/sources.js'
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { parseConfig } from '../helpers/config.js'
-import { t } from '../../../common/util.js'
 
 export function generateCameraPart(context: PartContext, part: PartProps<CameraProps>): BlueprintResultPart {
 	const config = parseConfig(context).studio
@@ -40,31 +32,6 @@ export function generateCameraPart(context: PartContext, part: PartProps<CameraP
 		content: {
 			timelineObjects: [...createVisionMixerObjects(config, sourceInfo.input), audioTlObj],
 		},
-		userEditOperations: [
-			{
-				type: UserEditingType.FORM,
-				id: 'camera',
-				label: t('Camera'),
-				schema: JSONBlobStringify<JSONSchema>({
-					$schema: 'http://json-schema.org/draft-07/schema#',
-					type: 'object',
-					properties: {
-						cameraId: {
-							type: 'string',
-							title: 'Camera ID',
-						},
-						cameraName: {
-							type: 'string',
-							title: 'Camera Name',
-						},
-					},
-				}),
-				currentValues: {
-					cameraId: part.payload.externalId,
-					cameraName: part.payload.name,
-				},
-			},
-		],
 	}
 
 	const pieces = [cameraPiece]
