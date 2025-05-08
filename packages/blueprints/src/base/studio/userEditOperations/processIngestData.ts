@@ -196,7 +196,9 @@ function updatePartProps(
 		)
 	}
 
-	if (newProps[BlueprintUserOperationTypes.CHANGE_SOURCE] !== undefined) {
+	// Only changes source if specified to do so
+	if (Object.keys(operation.payload.pieceTypeProperties).length > 0) {
+		changes.operation.id = BlueprintUserOperationTypes.CHANGE_SOURCE
 		changeSource(_context, mutableIngestRundown, changes)
 	}
 }
@@ -223,30 +225,50 @@ function changeSource(
 	mutableIngestRundown: BlueprintMutableIngestRundown,
 	changes: UserOperationChange<BlueprintsUserOperations | DefaultUserOperations>
 ) {
+	//Example of a Change source user operation:
+	// {
+	// 	"source":"user",
+	// 	"operation":{
+	// 		"id":"__sofie-update-props",
+	// 	"	payload":{
+	// 			"pieceTypeProperties":
+	// 				{
+	// 				"type":"camera",
+	// 				"value":{"valueOnVariant":"4"}
+	// 				},
+	// 			"globalProperties":{}
+	// 		}
+	// 	},
+	// 	"operationTarget":
+	// 		{
+	// 		"segmentExternalId":"bc19641d-a857-493c-a639-db0c36ed668b",
+	// 		"partExternalId":"5e4ea08d-7bbb-4180-a19a-14193fb00bdd"}
+	// }"
+
 	if (
 		changes.operation.id !== BlueprintUserOperationTypes.CHANGE_SOURCE ||
-		!changes.operationTarget.segmentExternalId
+		changes.operationTarget.partExternalId === undefined
 	) {
 		return
 	}
 
-	const [[newSourceType]] = Object.entries<Record<string, string>>(changes.operation.source)
-	const newSource = changes.operation.source[newSourceType]
-
-	const segment = mutableIngestRundown.getSegment(changes.operationTarget.segmentExternalId)
-	context.logInfo(`segment: ${JSON.stringify(segment, undefined, 4)}`)
-	const partProps = segment?.parts?.[0] // TODO - better searching
-	context.logInfo(`searching: ${segment?.parts?.map((s) => s.externalId).join(' / ')}`)
-	context.logInfo(`part: ${JSON.stringify(partProps, undefined, 4)}`)
-	if (partProps && partProps.payload) {
-		const newPayload: any = JSON.parse(JSON.stringify(partProps.payload))
+	const newSourceType = changes.operation.payload.pieceTypeProperties.type
+	const newSource = changes.operation.payload.pieceTypeProperties.value.valueOnVariant
+	const part = mutableIngestRundown.findPart(changes.operationTarget.partExternalId)
+	if (part && part.payload) {
+		const newPayload: any = JSON.parse(JSON.stringify(part.payload))
 		let changed = false
+
+		if (newPayload.type !== newSourceType) {
+			newPayload.type = newSourceType
+			changed = true
+		}
 
 		if (newPayload.input !== newSource) {
 			newPayload.input = newSource
 			changed = true
 		}
-		context.logInfo(`changed: ${changed} = ${JSON.stringify(newPayload, undefined, 4)}`)
+		context.logInfo(`Changed source: ${changed} = ${JSON.stringify(newPayload, undefined, 4)}`)
 		if (changed) {
 			// Indicate that the segment has been edited:
 			mutableIngestRundown.setUserEditState(BlueprintUserOperationTypes.USER_EDITED, true)

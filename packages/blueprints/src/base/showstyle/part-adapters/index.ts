@@ -117,17 +117,17 @@ export function generateParts(context: ISegmentUserContext, intermediateSegment:
 							$schema: 'https://json-schema.org/draft/2020-12/schema',
 							type: 'object',
 							properties: {
-								variant: {
+								valueOnVariant: {
 									type: 'string',
 									title: 'Change to Camera on part:',
 									enum: ['1', '2', '3', '4', '5'],
 									tsEnumNames: ['Cam 1', 'Cam 2', 'Cam 3', 'Cam 4', 'Cam 5'],
 								} as any,
 							},
-							required: ['variant'],
+							required: ['valueOnVariant'],
 						}),
 						defaultValue: {
-							variant: '1',
+							valueOnVariant: '2',
 						},
 					},
 					[PartType.Remote]: {
@@ -137,17 +137,19 @@ export function generateParts(context: ISegmentUserContext, intermediateSegment:
 							$schema: 'https://json-schema.org/draft/2020-12/schema',
 							type: 'object',
 							properties: {
-								variant: {
+								valueOnVariant: {
 									type: 'string',
 									title: 'Change To External source on part:',
 									enum: ['1', '2', '3', '4', '5'],
 									tsEnumNames: ['Ext 1', 'Ext 2', 'Ext 3', 'Ext 4', 'Ext 5'],
 								} as any,
 							},
-							required: ['variant'],
+							required: ['valueOnVariant'],
 						}),
 						defaultValue: {
-							variant: '1',
+							// Here we need to get the camera number from the raw input:
+							//@ts-expect-error - rawPart rawInput type depends on the type:
+							valueOnVariant: String(rawPart.payload.input.id || 2),
 						},
 					},
 				},
@@ -155,8 +157,7 @@ export function generateParts(context: ISegmentUserContext, intermediateSegment:
 					type: String(rawPart.type),
 					value: {
 						//@ts-expect-error - rawPart.payload.input types not specified:
-						variant: String(rawPart.payload.input || 2),
-						...{},
+						valueOnVariant: String(rawPart.payload.input.id || 3),
 					},
 				},
 			},

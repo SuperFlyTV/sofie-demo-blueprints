@@ -42,9 +42,16 @@ export interface BlueprintsUserOperationUserEdited {
 export interface BlueprintsUserOperationApproved {
 	id: BlueprintUserOperationTypes.APPROVED
 }
+
 export interface BlueprintsUserOperationChangeCamera {
 	id: BlueprintUserOperationTypes.CHANGE_SOURCE
-	source: Record<string, any>
+	payload: {
+		pieceTypeProperties: {
+			type: string
+			value: { valueOnVariant: string }
+		}
+		globalProperties: Record<string, any>
+	}
 }
 
 export type BlueprintsUserOperations =
