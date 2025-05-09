@@ -87,7 +87,7 @@ async function applyUserOperation(
 	mutableIngestRundown: BlueprintMutableIngestRundown,
 	changes: UserOperationChange<BlueprintsUserOperations | DefaultUserOperations>
 ) {
-	context.logWarning(`Execute user operation: ${JSON.stringify(changes)}`)
+	context.logWarning('Execute user operation: ' + JSON.stringify(changes, null, 2))
 
 	switch (changes.operation.id) {
 		case BlueprintUserOperationTypes.CHANGE_SOURCE:
@@ -258,17 +258,29 @@ function changeSource(
 	if (part && part.payload) {
 		const newPayload: any = JSON.parse(JSON.stringify(part.payload))
 		let changed = false
-
-		if (newPayload.type !== newSourceType) {
-			newPayload.type = newSourceType
+		// We asume that the first piece is the primary piece
+		// Which is not always the case, but for now we will assume that
+		// Here's an example:
+		//       "pieces": [
+		// {
+		// 	"id": "4a0be9fc-d820-430e-bffc-c07207db1970",
+		// 	"objectType": "camera",
+		// 	"objectTime": 3,
+		// 	"duration": 3,
+		// 	"attributes": {
+		// 	  "camNo": 1,
+		// 	  "adlib": false
+		// 	}
+		if (newPayload.pieces[0].type !== newSourceType) {
+			newPayload.pieces[0].obejectType = newSourceType
 			changed = true
 		}
 
-		if (newPayload.input !== newSource) {
-			newPayload.input = newSource
+		if (newPayload.pieces[0].input !== newSource) {
+			newPayload.pieces[0].attributes.camNo = newSource
 			changed = true
 		}
-		context.logInfo(`Changed source: ${changed} = ${JSON.stringify(newPayload, undefined, 4)}`)
+		context.logInfo(`Changed source: ${changed} = ${JSON.stringify(newPayload, undefined, 2)}`)
 		if (changed) {
 			// Indicate that the segment has been edited:
 			mutableIngestRundown.setUserEditState(BlueprintUserOperationTypes.USER_EDITED, true)
@@ -277,6 +289,7 @@ function changeSource(
 			// Update the payload:
 			//partProps.replacePayload(newPayload)
 		}
+		part.replacePayload(newPayload)
 	}
 }
 

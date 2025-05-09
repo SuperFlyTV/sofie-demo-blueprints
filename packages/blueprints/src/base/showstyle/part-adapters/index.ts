@@ -32,6 +32,7 @@ import { generateVTPart } from './vt.js'
 import { BlueprintUserOperationTypes } from '../../studio/userEditOperations/types.js'
 
 export function generateParts(context: ISegmentUserContext, intermediateSegment: SegmentProps): BlueprintResultSegment {
+	context.logDebug('Generating parts for intermediateSegment: ' + JSON.stringify(intermediateSegment, null, 2))
 	// Create Segment UserEditOperations:
 	const userEditOperationsOnSegment: UserEditingDefinitionAction[] = [
 		{
@@ -47,7 +48,6 @@ export function generateParts(context: ISegmentUserContext, intermediateSegment:
 	]
 
 	const parts = intermediateSegment.parts.map((rawPart): BlueprintResultPart => {
-		context.logDebug('Generating from rawPart: ' + JSON.stringify(rawPart))
 		const partContext = new PartContext(context, rawPart.payload.externalId)
 		let newPart: BlueprintResultPart
 
