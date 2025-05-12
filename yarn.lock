@@ -16996,7 +16996,7 @@ __metadata:
 
 "sofie-blueprint-tools@https://github.com/SuperFlyTV/sofie-blueprint-tools":
   version: 0.1.0
-  resolution: "sofie-blueprint-tools@https://github.com/SuperFlyTV/sofie-blueprint-tools.git#commit=ac0565fa98529a9faeb62ea2794d93071fcf188c"
+  resolution: "sofie-blueprint-tools@https://github.com/SuperFlyTV/sofie-blueprint-tools.git#commit=87a42a554657f808420b6b153866321e3fa74f23"
   dependencies:
     "@rollup/plugin-commonjs": "npm:^28.0.3"
     "@rollup/plugin-json": "npm:^6.1.0"
@@ -17018,7 +17018,7 @@ __metadata:
     blueprint-bundle: bin/bundle.mjs
     blueprint-extract-translations: bin/extract-translations.mjs
     blueprint-schema-types: bin/schema-types.mjs
-  checksum: 10c0/e3995021a133382924d211751832079a48f9065a94e90777106f7be87c48a5135e0cec3ae66938c52e056ec3faf532a0ba031faf981b0a3fb824d47a3167a5a5
+  checksum: 10c0/1eff9be2316c98176ed3c662ae9d4eba2cd60472d164e99a81518a4a731ba6eed66719d1f4603a2a968e3d46d057dda4e9e09bebde74be1e5b95cfe8e0b09aed
   languageName: node
   linkType: hard
 
