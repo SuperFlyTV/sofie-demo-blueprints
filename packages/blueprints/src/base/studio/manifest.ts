@@ -39,7 +39,7 @@ export const baseManifest: StudioBlueprintManifest<StudioConfig> = {
 	validateConfig,
 	applyConfig,
 	preprocessConfig,
-	// procesIngestData is a "middleware" between the ingestDataCache and the sofieIngestDataCache
+	// processIngestData is a "middleware" between the ingestDataCache and the sofieIngestDataCache
 	// It is called for each Rundown, and can be used to modify the ingest data before it is sent to the blueprint
 	// This is the place where UsedEditOperations and PropertiesPanel edits are processed:
 	processIngestData,

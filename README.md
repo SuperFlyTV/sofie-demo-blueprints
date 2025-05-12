@@ -67,7 +67,7 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
    - Select the appropriate Device Type from the dropdown.
    - Fill out the Host and Port fields.
      - For an ATEM, the port will be `9910`.
-     - For vMix, the port can be obtained from "Settings > Web Contoller". It defaults to `8088`.
+     - For vMix, the port can be obtained from "Settings > Web Controller". It defaults to `8088`.
 1. Go back to the Studio Blueprint Configuration page (http://localhost:3000/settings/studio/studio0/blueprint-config).
    - Create and fill out the configuration for the devices you have.
      - If using an ATEM for your vision mixer, ensure that you have the following inputs configured: 2 `camera`, 1 `remote`, 1 `mediaplayer`, and 1 `graphics`.

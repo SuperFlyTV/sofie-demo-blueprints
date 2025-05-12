@@ -46,7 +46,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 				if ('fileName' in input) {
 					return {
 						type: AudioSourceType.Playback,
-						index: 0, // whihc player?
+						index: 0, // which player?
 					}
 				} else if (input.type === SourceType.Camera) {
 					return {
