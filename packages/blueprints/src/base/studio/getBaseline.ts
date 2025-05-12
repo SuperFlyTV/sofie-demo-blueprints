@@ -28,7 +28,7 @@ function getSisyfosBaseline(config: StudioConfig): (TSR.SisyfosChannelOptions & 
 }
 
 export function getBaseline(context: IStudioContext): BlueprintResultStudioBaseline {
-	const config = context.getStudioConfig() as StudioConfig
+	const config = (context.getStudioConfig() as any).studio as StudioConfig
 	context.logError('getBaseline - config' + JSON.stringify(config))
 
 	return {
