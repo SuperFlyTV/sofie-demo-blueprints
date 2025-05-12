@@ -13,9 +13,6 @@ import { applyConfig } from './applyConfig/index.js'
 import * as ConfigSchema from '../../$schemas/main-studio-config.json'
 import { StudioConfig, VisionMixerType } from './helpers/config.js'
 import { processIngestData } from './userEditOperations/processIngestData.js'
-import androidSvg from '../../../../../assets/android.svg'
-
-console.log('ad2', androidSvg)
 
 export const baseManifest: StudioBlueprintManifest<StudioConfig> = {
 	blueprintType: BlueprintManifestType.STUDIO,
