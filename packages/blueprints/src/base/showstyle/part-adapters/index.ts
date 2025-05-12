@@ -149,7 +149,7 @@ export function generateParts(context: ISegmentUserContext, intermediateSegment:
 						defaultValue: {
 							// Here we need to get the camera number from the raw input:
 							//@ts-expect-error - rawPart rawInput type depends on the type:
-							valueOnVariant: String(rawPart.payload.input.id || 2),
+							valueOnVariant: String(rawPart.payload.input?.id || 2),
 						},
 					},
 				},
@@ -157,7 +157,7 @@ export function generateParts(context: ISegmentUserContext, intermediateSegment:
 					type: String(rawPart.type),
 					value: {
 						//@ts-expect-error - rawPart.payload.input types not specified:
-						valueOnVariant: String(rawPart.payload.input.id || 3),
+						valueOnVariant: String(rawPart.payload.input?.id || 3),
 					},
 				},
 			},
