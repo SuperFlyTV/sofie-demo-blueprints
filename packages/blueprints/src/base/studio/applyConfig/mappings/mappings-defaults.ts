@@ -1,11 +1,11 @@
 import { BlueprintMapping, BlueprintMappings, LookaheadMode, TSR } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../../../common/util.js'
 import { AudioSourceType, SourceType, StudioConfig } from '../../helpers/config.js'
-import { AsbtractLayers, AtemLayers, CasparCGLayers, SisyfosLayers, VMixLayers } from './layers.js'
+import { AbstractLayers, AtemLayers, CasparCGLayers, SisyfosLayers, VMixLayers } from './layers.js'
 import { VmixInputConfig, SiyfosSourceConfig } from '../../../../$schemas/generated/main-studio-config.js'
 
 export default literal<BlueprintMappings>({
-	[AsbtractLayers.CoreAbstract]: {
+	[AbstractLayers.CoreAbstract]: {
 		device: TSR.DeviceType.ABSTRACT,
 		deviceId: 'abstract0',
 		lookahead: LookaheadMode.NONE,

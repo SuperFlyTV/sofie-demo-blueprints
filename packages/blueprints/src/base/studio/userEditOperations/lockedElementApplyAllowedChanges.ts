@@ -13,7 +13,7 @@ import { BlueprintMutableIngestPart, BlueprintUserOperationTypes } from './types
 
 /**
  * If a Segment or Part is locked, it can still be possible to update parts of it.
- * E.g. We wan't to udate the script from NRCS, but keep the rest of the part locked.
+ * E.g. We wan't to update the script from NRCS, but keep the rest of the part locked.
  * */
 export function lockedElementApplyAllowedChanges(
 	_context: IProcessIngestDataContext,
