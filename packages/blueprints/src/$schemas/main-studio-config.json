@@ -4,14 +4,51 @@
 	"title": "Studio Config",
 	"type": "object",
 	"properties": {
-		"visionMixerType": {
-			"type": "string",
-			"title": "VisionMixerType",
-			"ui:title": "Vision mixer type",
-			"ui:description": "Atem or VMix",
-			"enum": ["atem", "vmix"],
-			"tsEnumNames": ["Atem", "VMix"],
-			"default": "atem"
+		"visionMixer": {
+			"type": "object",
+			"title": "VisionMixerConfig",
+			"description": "Vision mixer device configuration",
+			"ui:category": "Vision Mixer Device",
+			"ui:title": "Vision Mixer Device Configuration",
+			"properties": {
+				"deviceId": {
+					"type": "string",
+					"description": "Vision mixer playout device ID",
+					"ui:title": "Vision Mixer Device ID",
+					"ui:description": "Vision Mixer Device ID (E.G. visionMixer)",
+					"ui:summaryTitle": "Device"
+				},
+				"type": {
+					"type": "string",
+					"description": "Vision mixer type",
+					"ui:category": "Vision Mixer",
+					"ui:title": "Vision Mixer Device",
+					"title": "VisionMixerDevice",
+					"enum": ["Atem", "Vmix"],
+					"tsEnumNames": ["Atem", "VMix"],
+					"default": "Atem"
+				}
+			},
+			"required": ["deviceId", "type"],
+			"additionalProperties": false
+		},
+		"audioMixer": {
+			"type": "object",
+			"title": "AudioMixerConfig",
+			"description": "Audio mixer device configuration",
+			"ui:category": "Sisyfos Device",
+			"ui:title": "Audio Mixer Device Configuration",
+			"properties": {
+				"deviceId": {
+					"type": "string",
+					"description": "Audio mixer playout device ID",
+					"ui:title": "Audio Mixer Device ID",
+					"ui:description": "Audio Mixer Device ID (E.G. audioMixer)",
+					"ui:summaryTitle": "Device"
+				}
+			},
+			"required": ["deviceId"],
+			"additionalProperties": false
 		},
 		"atemSources": {
 			"type": "object",
@@ -147,7 +184,8 @@
 		"vmixSources",
 		"atemOutputs",
 		"atemSources",
-		"visionMixerType"
+		"visionMixer",
+		"audioMixer"
 	],
 	"$defs": {
 		"SourceType": {
