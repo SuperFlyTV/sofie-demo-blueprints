@@ -28,35 +28,35 @@ export interface StudioConfig {
  */
 export interface VisionMixerConfig {
 	/**
-	 * Vision mixer hostname
-	 */
-	host: string
-	/**
-	 * Vision mixer port
-	 */
-	port?: number
-	/**
 	 * Vision mixer playout device ID
 	 */
 	deviceId: string
 	type: VisionMixerDevice
+	/**
+	 * Host IP of the vision mixer
+	 */
+	host: string
+	/**
+	 * Port of the vision mixer
+	 */
+	port: number
 }
 /**
  * Audio mixer device configuration
  */
 export interface AudioMixerConfig {
 	/**
-	 * Audio mixer hostname
-	 */
-	host: string
-	/**
-	 * Audio mixer port
-	 */
-	port: number
-	/**
 	 * Audio mixer playout device ID
 	 */
 	deviceId: string
+	/**
+	 * Host IP of Sisyfos
+	 */
+	host: string
+	/**
+	 * Port of Sisyfos
+	 */
+	port: number
 }
 /**
  * This interface was referenced by `undefined`'s JSON-Schema definition

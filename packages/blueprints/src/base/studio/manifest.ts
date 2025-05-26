@@ -43,6 +43,7 @@ export const baseManifest: StudioBlueprintManifest<StudioConfig> = {
 	// It is called for each Rundown, and can be used to modify the ingest data before it is sent to the blueprint
 	// This is the place where UsedEditOperations and PropertiesPanel edits are processed:
 	processIngestData,
+
 	configPresets: {
 		default: {
 			name: 'Default',

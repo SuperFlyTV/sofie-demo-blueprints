@@ -34,6 +34,12 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 		lifespan: PieceLifespan.WithinPart,
 		sourceLayerId: SourceLayer.VT,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.VT),
+		abSessions: [
+			{
+				sessionName: part.payload.externalId,
+				poolName: 'clip',
+			},
+		],
 		content: {
 			fileName: part.payload.clipProps.fileName,
 
@@ -43,7 +49,7 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 				literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
 					id: '',
 					enable: { start: 0 },
-					layer: CasparCGLayers.CasparCGClipPlayer,
+					layer: CasparCGLayers.CasparCGClipPlayer1,
 					content: {
 						deviceType: TSR.DeviceType.CASPARCG,
 						type: TSR.TimelineContentTypeCasparCg.MEDIA,
@@ -61,7 +67,7 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 		expectedPackages: [
 			literal<ExpectedPackage.ExpectedPackageMediaFile>({
 				_id: context.getHashId(part.payload.clipProps.fileName, true),
-				layers: [CasparCGLayers.CasparCGClipPlayer],
+				layers: [CasparCGLayers.CasparCGClipPlayer1],
 				type: ExpectedPackage.PackageType.MEDIA_FILE,
 				content: {
 					filePath: part.payload.clipProps.fileName,

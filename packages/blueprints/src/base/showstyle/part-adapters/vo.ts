@@ -40,7 +40,7 @@ export function generateVOPart(context: PartContext, part: PartProps<VOProps>): 
 				literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
 					id: '',
 					enable: { start: 0 },
-					layer: CasparCGLayers.CasparCGClipPlayer,
+					layer: CasparCGLayers.CasparCGClipPlayer1,
 					content: {
 						deviceType: TSR.DeviceType.CASPARCG,
 						type: TSR.TimelineContentTypeCasparCg.MEDIA,
@@ -57,7 +57,7 @@ export function generateVOPart(context: PartContext, part: PartProps<VOProps>): 
 		expectedPackages: [
 			literal<ExpectedPackage.ExpectedPackageMediaFile>({
 				_id: context.getHashId(part.payload.clipProps.fileName, true),
-				layers: [CasparCGLayers.CasparCGClipPlayer],
+				layers: [CasparCGLayers.CasparCGClipPlayer1],
 				type: ExpectedPackage.PackageType.MEDIA_FILE,
 				content: {
 					filePath: part.payload.clipProps.fileName,

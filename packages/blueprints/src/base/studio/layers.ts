@@ -14,7 +14,8 @@ export enum VMixLayers {
 }
 
 export enum CasparCGLayers {
-	CasparCGClipPlayer = 'casparcg_clip_player',
+	CasparCGClipPlayer1 = 'casparcg_clip_player1',
+	CasparCGClipPlayer2 = 'casparcg_clip_player2',
 	CasparCGClipPlayerPreview = 'casparcg_clip_player_preview',
 	CasparCGEffectsPlayer = 'casparcg_effects_player',
 

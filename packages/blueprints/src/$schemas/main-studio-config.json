@@ -27,9 +27,23 @@
 					"enum": ["Atem", "Vmix"],
 					"tsEnumNames": ["Atem", "VMix"],
 					"default": "Atem"
+				},
+				"host": {
+					"type": "string",
+					"description": "Host IP of the vision mixer",
+					"ui:title": "Host Ip",
+					"ui:description": "Host IP of the vision mixer (E.G. 0.0.0.0)",
+					"default": "127.0.0.1"
+				},
+				"port": {
+					"type": "integer",
+					"description": "Port of the vision mixer",
+					"ui:title": "Port",
+					"ui:description": "Port of the vision mixer (E.G. 9910)",
+					"default": 9910
 				}
 			},
-			"required": ["deviceId", "type"],
+			"required": ["deviceId", "type", "host", "port"],
 			"additionalProperties": false
 		},
 		"audioMixer": {
@@ -45,9 +59,23 @@
 					"ui:title": "Audio Mixer Device ID",
 					"ui:description": "Audio Mixer Device ID (E.G. audioMixer)",
 					"ui:summaryTitle": "Device"
+				},
+				"host": {
+					"type": "string",
+					"description": "Host IP of Sisyfos",
+					"ui:title": "Host Ip",
+					"ui:description": "Host IP of Sisyfos",
+					"default": "127.0.0.1"
+				},
+				"port": {
+					"type": "integer",
+					"description": "Port of Sisyfos",
+					"ui:title": "Port",
+					"ui:description": "Port of Sisyfos (default is 1176)",
+					"default": 1176
 				}
 			},
-			"required": ["deviceId"],
+			"required": ["deviceId", "host", "port"],
 			"additionalProperties": false
 		},
 		"atemSources": {

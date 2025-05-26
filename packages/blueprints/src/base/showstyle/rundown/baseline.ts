@@ -26,7 +26,7 @@ export function getBaseline(context: IShowStyleUserContext): BlueprintResultBase
 					deviceType: TSR.DeviceType.CASPARCG,
 					type: TSR.TimelineContentTypeCasparCg.ROUTE,
 
-					mappedLayer: CasparCGLayers.CasparCGClipPlayer,
+					mappedLayer: CasparCGLayers.CasparCGClipPlayer1,
 					mode: 'BACKGROUND',
 				},
 			}),

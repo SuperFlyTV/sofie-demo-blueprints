@@ -67,7 +67,7 @@ export function clipToAdlib(config: StudioConfig, clipObject: VideoObject): IBlu
 				literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
 					id: '',
 					enable: { start: 0 },
-					layer: CasparCGLayers.CasparCGClipPlayer,
+					layer: CasparCGLayers.CasparCGClipPlayer1,
 					content: {
 						deviceType: TSR.DeviceType.CASPARCG,
 						type: TSR.TimelineContentTypeCasparCg.MEDIA,
