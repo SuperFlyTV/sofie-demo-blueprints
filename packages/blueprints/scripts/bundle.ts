@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import { BlueprintManifestSet } from '@sofie-automation/blueprints-integration'
 import * as fs from 'fs'
 import * as _ from 'underscore'
 import * as util from 'util'
-const { BlueprintBundles } = require('./blueprint-map') // eslint-disable-line @typescript-eslint/no-var-requires
-const pWebpackConfig = require('../webpack.config.js') // eslint-disable-line @typescript-eslint/no-var-requires
+
+const { BlueprintBundles } = require('./blueprint-map')
+// eslint-disable-next-line n/no-missing-require
+const pWebpackConfig = require('../webpack.config.js')
 
 const readFile = util.promisify(fs.readFile)
 const writeFile = util.promisify(fs.writeFile)

@@ -1,8 +1,6 @@
 import {
 	BlueprintMappings,
 	ExtendedIngestRundown,
-	IAsRunEventContext,
-	IBlueprintAsRunLogEvent,
 	IBlueprintExternalMessageQueueObj,
 	IBlueprintPartDB,
 	IBlueprintPartInstance,
@@ -12,10 +10,13 @@ import {
 	ICommonContext,
 	IEventContext,
 	IngestPart,
+	IOutputLayer,
 	IRundownContext,
 	ISegmentUserContext,
 	IShowStyleContext,
+	ISourceLayer,
 	IUserNotesContext,
+	PackageInfo,
 } from '@sofie-automation/blueprints-integration'
 import * as crypto from 'crypto'
 import * as _ from 'underscore'
@@ -33,18 +34,10 @@ export class CommonContext implements ICommonContext {
 	constructor(idPrefix: string) {
 		this.idPrefix = idPrefix
 	}
-	public logDebug(message: string): void {
-		message // stop eslint complaining about unused arguments. The argument has to be there to implement the interface
-	}
-	public logInfo(message: string): void {
-		message // stop eslint complaining about unused arguments. The argument has to be there to implement the interface
-	}
-	public logWarning(message: string): void {
-		message // stop eslint complaining about unused arguments. The argument has to be there to implement the interface
-	}
-	public logError(message: string): void {
-		message // stop eslint complaining about unused arguments. The argument has to be there to implement the interface
-	}
+	public logDebug(_message: string): void {}
+	public logInfo(_message: string): void {}
+	public logWarning(_message: string): void {}
+	public logError(_message: string): void {}
 
 	public getHashId(origin: string, isNotUnique?: boolean): string {
 		if (isNotUnique) {
@@ -89,6 +82,9 @@ export interface PartNote {
 
 export class NotesContext extends CommonContext implements IUserNotesContext {
 	public savedNotes: PartNote[] = []
+	public notifyUserInfo(message: string, params?: { [key: string]: any }): void {
+		this._pushNote(NoteType.WARNING, message, params)
+	}
 
 	private contextName: string
 	private rundownIdInner?: string
@@ -146,6 +142,9 @@ export class LoggingNotesContext extends CommonContext implements IUserNotesCont
 	constructor(id?: string) {
 		super(id || 'LoggingNotesContext')
 	}
+	public notifyUserInfo(message: string, params?: { [key: string]: any }): void {
+		this.logInfo(flattenParametrizedString(message, params))
+	}
 
 	/** Throw Error and display message to the user in the GUI */
 	notifyUserError(message: string, params?: { [key: string]: any }): void {
@@ -164,6 +163,13 @@ export class LoggingNotesContext extends CommonContext implements IUserNotesCont
 export class ShowStyleContext extends NotesContext implements IShowStyleContext {
 	public studioConfig: unknown = {}
 	public showStyleConfig: unknown = {}
+	public studioId = ''
+	public getShowStyleSourceLayers(): Record<string, ISourceLayer | undefined> {
+		return {} // TODO: implement this
+	}
+	public getShowStyleOutputLayers(): Record<string, IOutputLayer | undefined> {
+		return {} // TODO: implement this
+	}
 
 	private mappingsDefaults: BlueprintMappings
 
@@ -191,6 +197,21 @@ export class ShowStyleContext extends NotesContext implements IShowStyleContext 
 export class RundownContext extends ShowStyleContext implements ISegmentUserContext, IRundownContext {
 	public rundownId: string
 	public rundown: IBlueprintRundownDB
+	public studioId = ''
+	public playlistId = ''
+	public getShowStyleSourceLayers(): Record<string, ISourceLayer | undefined> {
+		return {} // TODO: implement this
+	}
+	public getShowStyleOutputLayers(): Record<string, IOutputLayer | undefined> {
+		return {} // TODO: implement this
+	}
+	getPackageInfo: (packageId: string) => Readonly<PackageInfo.Any[]> = (_packageId: string) => {
+		return [] // TODO: implement this
+	}
+
+	hackGetMediaObjectDuration: (mediaId: string) => Promise<number | undefined> = async (_mediaId: string) => {
+		return 0 // TODO: implement this
+	}
 
 	constructor(rundown: IBlueprintRundownDB, mappings: BlueprintMappings, contextName?: string) {
 		super(contextName || rundown.name, mappings, rundown._id)
@@ -213,10 +234,7 @@ export class EventContext extends CommonContext implements IEventContext {
 	}
 }
 
-export class AsRunEventContext extends RundownContext implements IAsRunEventContext, EventContext {
-	public asRunEvent: IBlueprintAsRunLogEvent
-
-	public mockAsRunEvents: IBlueprintAsRunLogEvent[] = []
+export class AsRunEventContext extends RundownContext implements EventContext {
 	public mockQueuedMessages: IBlueprintExternalMessageQueueObj[] = []
 
 	public mockSegments: IBlueprintSegmentDB[] = []
@@ -224,15 +242,11 @@ export class AsRunEventContext extends RundownContext implements IAsRunEventCont
 	public mockPartInstances: IBlueprintPartInstance[] = []
 	public mockPieceInstances: IBlueprintPieceInstance[] = []
 
-	constructor(rundown: IBlueprintRundownDB, mappings: BlueprintMappings, asRunEvent: IBlueprintAsRunLogEvent) {
+	constructor(rundown: IBlueprintRundownDB, mappings: BlueprintMappings) {
 		super(rundown, mappings)
-		this.asRunEvent = asRunEvent
 	}
 	public getCurrentTime(): number {
 		return Date.now()
-	}
-	public getAllAsRunEvents(): IBlueprintAsRunLogEvent[] {
-		return this.mockAsRunEvents
 	}
 	public getAllQueuedMessages(): IBlueprintExternalMessageQueueObj[] {
 		return this.mockQueuedMessages
@@ -241,16 +255,16 @@ export class AsRunEventContext extends RundownContext implements IAsRunEventCont
 		return this.mockSegments
 	}
 	public getSegment(id?: string): IBlueprintSegmentDB | undefined {
-		return this.mockSegments.find((segment) => segment._id === (id || this.asRunEvent.segmentId))
+		return this.mockSegments.find((segment) => segment._id === id)
 	}
 	public getParts(): IBlueprintPartDB[] {
 		return this.mockParts
 	}
 	public getPartInstance(id?: string): IBlueprintPartInstance | undefined {
-		return this.mockPartInstances.find((p) => p._id === (id || this.asRunEvent.partInstanceId))
+		return this.mockPartInstances.find((p) => p._id === id)
 	}
 	public getPieceInstance(pieceInstanceId?: string): IBlueprintPieceInstance | undefined {
-		return this.mockPieceInstances.find((p) => p._id === (pieceInstanceId || this.asRunEvent.pieceInstanceId))
+		return this.mockPieceInstances.find((p) => p._id === pieceInstanceId)
 	}
 	public getPieceInstances(partInstanceId: string): IBlueprintPieceInstance[] {
 		return this.mockPieceInstances.filter((p) => (p as any).partInstanceId === partInstanceId) // TODO - tidy up this?

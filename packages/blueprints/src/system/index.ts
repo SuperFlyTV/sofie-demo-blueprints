@@ -9,7 +9,7 @@ const manifest: SystemBlueprintManifest = {
 
 	coreMigrations: [],
 
-	blueprintId: 'sofie-system',
+	blueprintId: 'sofie-demo-system',
 	blueprintVersion: VERSION,
 	integrationVersion: VERSION_INTEGRATION,
 	TSRVersion: VERSION_TSR,

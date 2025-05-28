@@ -10,7 +10,8 @@
 		},
 		"declaration": false,
 		"declarationMap": false,
-		"types": ["node"]
+		"types": ["node"],
+		"resolveJsonModule": true
 		// "noUncheckedIndexedAccess": true
 	}
 }

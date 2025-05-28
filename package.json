@@ -5,42 +5,33 @@
     "license": "MIT",
     "files": [],
     "scripts": {
-        "prepare": "husky install",
-        "validate:dependencies": "yarn audit && yarn license-validate",
-        "license-validate": "yarn sofie-licensecheck --allowPackages \"caniuse-lite@1.0.30001363\"",
-        "build:blueprints": "lerna run build-now --scope=blueprints",
-        "watch:blueprints": "lerna run watch-sync-local --scope=blueprints",
-        "test:blueprints": "lerna run test --scope=blueprints",
-        "build:docs": "lerna run build --scope=docs",
-        "watch:docs": "lerna run start --scope=docs",
-        "lint:raw": "eslint --ext .ts --ext .js --ext .tsx --ext .jsx --ignore-pattern dist"
+        "prepare": "husky",
+        "validate:dependencies": "yarn npm audit && run license-validate",
+        "license-validate": "run sofie-licensecheck --allowPackages \"caniuse-lite@1.0.30001363\"",
+        "build:blueprints": "yarn workspace blueprints build-now && yarn workspace blueprints bundle",
+        "watch:blueprints": "yarn workspace blueprints watch-sync-local",
+        "build-sync-local": "yarn workspace blueprints build-sync-local",
+        "watch-sync-local": "yarn workspace blueprints watch-sync-local",
+        "generate-schema-types": "yarn workspace blueprints generate-schema-types",
+        "test:blueprints": "yarn workspace blueprints test",
+        "build:docs": "yarn workspace docs build",
+        "watch:docs": "yarn workspace docs start"
     },
     "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
-    "lint-staged": {
-        "*.{css,json,md,scss}": [
-            "prettier --write"
-        ],
-        "packages/blueprints/**/*.{ts,tsx,js,jsx}": [
-            "yarn lint:raw --fix --parser-options=project:\"./packages/blueprints/tsconfig.json\""
-        ],
-        "packages/docs/**/*.{ts,tsx,js,jsx}": [
-            "yarn lint:raw --fix --parser-options=project:\"./packages/docs/tsconfig.json\""
-        ]
-    },
     "devDependencies": {
-        "@babel/eslint-parser": "^7.19.1",
-        "@sofie-automation/code-standard-preset": "^2.1.0",
-        "eslint-import-resolver-typescript": "^3.5.2",
-        "eslint-plugin-import": "^2.26.0",
-        "eslint-plugin-react": "^7.31.10",
-        "eslint-plugin-react-hooks": "^4.6.0",
-        "lerna": "^6.0.1"
+        "@sofie-automation/code-standard-preset": "3.0.0",
+        "eslint": "^9.25.1",
+        "husky": "^9.1.7",
+        "lint-staged": "^15.5.1",
+        "prettier": "^3.5.3",
+        "typescript": "~5.8.3"
     },
     "workspaces": [
         "packages/*"
     ],
     "private": true,
     "engines": {
-        "node": ">=16.14"
-    }
+        "node": ">=22.0.0"
+    },
+    "packageManager": "yarn@4.9.1"
 }

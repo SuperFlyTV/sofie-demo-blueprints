@@ -1,0 +1,231 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://example.com/product.schema.json",
+	"title": "Studio Config",
+	"type": "object",
+	"properties": {
+		"visionMixer": {
+			"type": "object",
+			"title": "VisionMixerConfig",
+			"description": "Vision mixer device configuration",
+			"ui:category": "Vision Mixer Device",
+			"ui:title": "Vision Mixer Device Configuration",
+			"properties": {
+				"deviceId": {
+					"type": "string",
+					"description": "Vision mixer playout device ID",
+					"ui:title": "Vision Mixer Device ID",
+					"ui:description": "Vision Mixer Device ID (E.G. visionMixer)",
+					"ui:summaryTitle": "Device"
+				},
+				"type": {
+					"type": "string",
+					"description": "Vision mixer type",
+					"ui:category": "Vision Mixer",
+					"ui:title": "Vision Mixer Device",
+					"title": "VisionMixerDevice",
+					"enum": ["Atem", "Vmix"],
+					"tsEnumNames": ["Atem", "VMix"],
+					"default": "Atem"
+				},
+				"host": {
+					"type": "string",
+					"description": "Host IP of the vision mixer",
+					"ui:title": "Host Ip",
+					"ui:description": "Host IP of the vision mixer (E.G. 0.0.0.0)",
+					"default": "127.0.0.1"
+				},
+				"port": {
+					"type": "integer",
+					"description": "Port of the vision mixer",
+					"ui:title": "Port",
+					"ui:description": "Port of the vision mixer (E.G. 9910)",
+					"default": 9910
+				}
+			},
+			"required": ["deviceId", "type", "host", "port"],
+			"additionalProperties": false
+		},
+		"audioMixer": {
+			"type": "object",
+			"title": "AudioMixerConfig",
+			"description": "Audio mixer device configuration",
+			"ui:category": "Sisyfos Device",
+			"ui:title": "Audio Mixer Device Configuration",
+			"properties": {
+				"deviceId": {
+					"type": "string",
+					"description": "Audio mixer playout device ID",
+					"ui:title": "Audio Mixer Device ID",
+					"ui:description": "Audio Mixer Device ID (E.G. audioMixer)",
+					"ui:summaryTitle": "Device"
+				},
+				"host": {
+					"type": "string",
+					"description": "Host IP of Sisyfos",
+					"ui:title": "Host Ip",
+					"ui:description": "Host IP of Sisyfos",
+					"default": "127.0.0.1"
+				},
+				"port": {
+					"type": "integer",
+					"description": "Port of Sisyfos",
+					"ui:title": "Port",
+					"ui:description": "Port of Sisyfos (default is 1176)",
+					"default": 1176
+				}
+			},
+			"required": ["deviceId", "host", "port"],
+			"additionalProperties": false
+		},
+		"atemSources": {
+			"type": "object",
+			"ui:title": "Atem Sources",
+			"ui:description": "Description of Atem inputs i.e. cameras, remotes etc.",
+			"ui:category": "Inputs",
+			"patternProperties": {
+				"": {
+					"type": "object",
+					"title": "InputConfig",
+					"properties": {
+						"input": {
+							"type": "integer",
+							"ui:title": "Input",
+							"ui:description": "Input number on the atem, see https://atem.julusian.dev/enums#videosource",
+							"ui:summaryTitle": "Input",
+							"default": 1
+						},
+						"type": {
+							"$ref": "#/$defs/SourceType"
+						}
+					},
+					"required": ["input", "type"]
+				}
+			}
+		},
+		"atemOutputs": {
+			"type": "object",
+			"ui:title": "Atem Outputs",
+			"ui:description": "Description of Atem outputs / auxes",
+			"ui:category": "Outputs",
+			"patternProperties": {
+				"": {
+					"type": "object",
+					"title": "OutputConfig",
+					"properties": {
+						"output": {
+							"type": "integer",
+							"ui:title": "Output",
+							"ui:description": "Aux number on the atem",
+							"ui:summaryTitle": "Output",
+							"default": 1
+						},
+						"source": {
+							"type": "number",
+							"ui:title": "Source",
+							"ui:description": "Source number, see https://atem.julusian.dev/enums#videosource",
+							"ui:summaryTitle": "Source",
+							"default": 1
+						}
+					},
+					"required": ["output", "source"]
+				}
+			}
+		},
+		"vmixSources": {
+			"type": "object",
+			"ui:title": "vMix Sources",
+			"ui:description": "Description of vMix inputs i.e. cameras, remotes etc.",
+			"ui:category": "Inputs",
+			"patternProperties": {
+				"": {
+					"type": "object",
+					"title": "VmixInputConfig",
+					"properties": {
+						"input": {
+							"type": "integer",
+							"ui:title": "Input",
+							"ui:description": "Input number for the vmix source",
+							"ui:summaryTitle": "Input",
+							"default": 1
+						},
+						"type": {
+							"$ref": "#/$defs/SourceType"
+						}
+					},
+					"required": ["input", "type"]
+				}
+			}
+		},
+		"sisyfosSources": {
+			"type": "object",
+			"ui:title": "Sisyfos Sources",
+			"ui:description": "Description of Sisyfos channels",
+			"ui:category": "Audio",
+			"patternProperties": {
+				"": {
+					"type": "object",
+					"title": "SiyfosSourceConfig",
+					"properties": {
+						"source": {
+							"type": "integer",
+							"ui:title": "Source",
+							"ui:description": "Channel number of the sisyfos channel",
+							"ui:summaryTitle": "Source",
+							"default": 1
+						},
+						"type": {
+							"type": "string",
+							"ui:title": "Type",
+							"ui:description": "Input Type",
+							"ui:summaryTitle": "Type",
+							"default": "host",
+
+							"title": "AudioSourceType",
+							"enum": ["host", "guest", "remote", "playback"],
+							"tsEnumNames": ["Host", "Guest", "Remote", "Playback"]
+						}
+					},
+					"required": ["source", "type"]
+				}
+			}
+		},
+		"previewRenderer": {
+			"type": "string",
+			"ui:title": "Preview Renderer",
+			"ui:description": "Graphics preview renderer URL",
+			"ui:category": "Graphics",
+			"default": ""
+		},
+		"casparcgLatency": {
+			"type": "integer",
+			"ui:title": "CasparCG Latency",
+			"ui:description": "Delay in ms before SDI signal hits the mixer",
+			"ui:category": "Playback",
+			"min": 0
+		}
+	},
+	"required": [
+		"previewRenderer",
+		"casparcgLatency",
+		"sisyfosSources",
+		"vmixSources",
+		"atemOutputs",
+		"atemSources",
+		"visionMixer",
+		"audioMixer"
+	],
+	"$defs": {
+		"SourceType": {
+			"title": "SourceType",
+			"type": "string",
+			"enum": ["camera", "remote", "mediaplayer", "graphics", "multiview"],
+			"tsEnumNames": ["Camera", "Remote", "MediaPlayer", "Graphics", "MultiView"],
+
+			"ui:title": "Type",
+			"ui:description": "Input Type",
+			"ui:summaryTitle": "Type",
+			"default": "camera"
+		}
+	}
+}
