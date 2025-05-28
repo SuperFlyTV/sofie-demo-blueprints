@@ -14,17 +14,12 @@ import * as ConfigSchema from '../../$schemas/main-studio-config.json'
 import { StudioConfig, VisionMixerDevice } from './helpers/config.js'
 import { processIngestData } from './userEditOperations/processIngestData.js'
 
-declare const VERSION: string // Injected by webpack
-declare const VERSION_TSR: string // Injected by webpack
-declare const VERSION_INTEGRATION: string // Injected by webpack
-declare const TRANSLATION_BUNDLES: string // injected by webpack
-
 export const baseManifest: StudioBlueprintManifest<StudioConfig> = {
 	blueprintType: BlueprintManifestType.STUDIO,
 
-	blueprintVersion: VERSION,
-	integrationVersion: VERSION_INTEGRATION,
-	TSRVersion: VERSION_TSR,
+	blueprintVersion: __VERSION__,
+	integrationVersion: __VERSION_INTEGRATION__,
+	TSRVersion: __VERSION_TSR__,
 
 	studioConfigSchema: JSONBlobStringify<JSONSchema>(ConfigSchema as any),
 
@@ -68,7 +63,7 @@ export const baseManifest: StudioBlueprintManifest<StudioConfig> = {
 			},
 		},
 	},
-	translations: TRANSLATION_BUNDLES,
+	translations: __TRANSLATION_BUNDLES__,
 }
 
 export default baseManifest

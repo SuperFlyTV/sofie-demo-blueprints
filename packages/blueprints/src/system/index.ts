@@ -1,18 +1,15 @@
 import { BlueprintManifestType, SystemBlueprintManifest } from '@sofie-automation/blueprints-integration'
 
-declare const VERSION: string // Injected by webpack
-declare const VERSION_TSR: string // Injected by webpack
-declare const VERSION_INTEGRATION: string // Injected by webpack
-
 const manifest: SystemBlueprintManifest = {
 	blueprintType: BlueprintManifestType.SYSTEM,
 
 	coreMigrations: [],
 
 	blueprintId: 'sofie-demo-system',
-	blueprintVersion: VERSION,
-	integrationVersion: VERSION_INTEGRATION,
-	TSRVersion: VERSION_TSR,
+	blueprintVersion: __VERSION__,
+	integrationVersion: __VERSION_INTEGRATION__,
+	TSRVersion: __VERSION_TSR__,
+	translations: __TRANSLATION_BUNDLES__,
 }
 
 export default manifest
