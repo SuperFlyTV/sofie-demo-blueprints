@@ -41,6 +41,7 @@ export interface SegmentProps extends IntermediateSegment {
 	parts: PartProps<AllProps>[]
 	payload: {
 		name: string
+		externalId?: string
 	}
 }
 

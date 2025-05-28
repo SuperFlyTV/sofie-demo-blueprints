@@ -1,10 +1,10 @@
 import { IBlueprintAdLibPiece, IShowStyleUserContext, PieceLifespan } from '@sofie-automation/blueprints-integration'
-import { assertUnreachable, literal, } from '../../../common/util.js'
-import { AudioSourceType, SourceType, VisionMixerType } from '../../studio/helpers/config.js'
-import {getAudioObjectOnLayer, getAudioPrimaryObject } from '../helpers/audio.js'
+import { assertUnreachable, literal } from '../../../common/util.js'
+import { AudioSourceType, SourceType } from '../../studio/helpers/config.js'
+import { getAudioObjectOnLayer, getAudioPrimaryObject } from '../helpers/audio.js'
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
-import { InputConfig } from '../../../$schemas/generated/main-studio-config.js'
+import { InputConfig, VisionMixerDevice } from '../../../$schemas/generated/main-studio-config.js'
 import { parseConfig } from '../helpers/config.js'
 import { SisyfosLayers } from '../../studio/layers.js'
 
@@ -12,7 +12,6 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 	const config = parseConfig(context).studio
 
 	context.logError('Global Adlib Studio Config: ' + JSON.stringify(config))
-
 
 	context.logError('Making camera adlibs')
 	const makeCameraAdlib = (id: number, input: number): IBlueprintAdLibPiece => ({
@@ -78,9 +77,9 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 	]
 
 	context.logError('Checking vision mixer type')
-	context.logError('Vision mixer type: ' + config.visionMixerType)
-	context.logError('Vision mixer defined Types: ' + JSON.stringify(VisionMixerType))
-	if (config.visionMixerType === VisionMixerType.Atem) {
+	context.logError('Vision mixer type: ' + config.visionMixer.type)
+	context.logError('Vision mixer defined Types: ' + JSON.stringify(VisionMixerDevice))
+	if (config.visionMixer.type === VisionMixerDevice.Atem) {
 		context.logError('Vision mixer type is found: Atem')
 		return [
 			...Object.values<InputConfig>(config.atemSources)
@@ -91,7 +90,7 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 				.map((source, i) => makeRemoteAdlib(i, source.input)),
 			...hostMicOverrides,
 		]
-	} else if (config.visionMixerType === VisionMixerType.VMix) {
+	} else if (config.visionMixer.type === VisionMixerDevice.VMix) {
 		context.logError('Vision mixer type is found: VMix')
 		return [
 			...Object.values<InputConfig>(config.vmixSources)
@@ -103,6 +102,6 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 			...hostMicOverrides,
 		]
 	} else {
-		assertUnreachable(config.visionMixerType)
+		assertUnreachable(config.visionMixer.type)
 	}
 }

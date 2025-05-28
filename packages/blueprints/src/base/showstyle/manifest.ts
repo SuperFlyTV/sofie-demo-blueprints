@@ -3,12 +3,14 @@ import {
 	ShowStyleBlueprintManifest,
 	JSONBlobStringify,
 	JSONSchema,
+	IRundownActivationContext,
 } from '@sofie-automation/blueprints-integration'
 import { executeAction, executeDataStoreAction } from './executeActions/index.js'
 import { getAdlibItem } from './getAdlibItem.js'
 import { getSegment } from './getSegment.js'
 import { getShowStyleVariantId } from './getShowStyleVariantId.js'
 import { ShowStyleConfig } from './helpers/config.js'
+import { getAbResolverConfiguration } from './getAbResolverConfiguration.js'
 import { getRundown } from './rundown/index.js'
 import { validateConfig } from './validateConfig.js'
 import { applyConfig } from './applyconfig/index.js'
@@ -30,8 +32,15 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 	executeAction,
 	executeDataStoreAction,
 
+	getAbResolverConfiguration,
 	translations: __TRANSLATION_BUNDLES__,
 
 	validateConfig,
 	applyConfig,
+	onRundownActivate: async (_context: IRundownActivationContext, _wasActive: boolean) => {
+		// Noop
+	},
+	fixUpConfig: () => {
+		// Noop
+	},
 }

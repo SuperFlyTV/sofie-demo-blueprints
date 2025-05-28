@@ -11,7 +11,7 @@ import { preprocessConfig } from './preprocessConfig.js'
 //import { getRundownPlaylistInfo } from './getRundownPlaylistInfo.js'
 import { applyConfig } from './applyConfig/index.js'
 import * as ConfigSchema from '../../$schemas/main-studio-config.json'
-import { StudioConfig, VisionMixerType } from './helpers/config.js'
+import { StudioConfig, VisionMixerDevice } from './helpers/config.js'
 import { processIngestData } from './userEditOperations/processIngestData.js'
 
 export const baseManifest: StudioBlueprintManifest<StudioConfig> = {
@@ -34,18 +34,32 @@ export const baseManifest: StudioBlueprintManifest<StudioConfig> = {
 	validateConfig,
 	applyConfig,
 	preprocessConfig,
+	// procesIngestData is a "middleware" between the ingestDataCache and the sofieIngestDataCache
+	// It is called for each Rundown, and can be used to modify the ingest data before it is sent to the blueprint
+	// This is the place where UsedEditOperations and PropertiesPanel edits are processed:
 	processIngestData,
+
 	configPresets: {
 		default: {
 			name: 'Default',
 			config: {
 				previewRenderer: 'sofie',
 				casparcgLatency: 0,
-				visionMixerType: VisionMixerType.Atem,
-				sisyfosSources: {},
+				visionMixer: {
+					type: VisionMixerDevice.Atem,
+					host: '0.0.0.0',
+					port: 0,
+					deviceId: 'atem',
+				},
 				vmixSources: {},
 				atemOutputs: {},
 				atemSources: {},
+				audioMixer: {
+					host: '0.0.0.0',
+					port: 1176,
+					deviceId: 'sisyfos0',
+				},
+				sisyfosSources: {},
 			},
 		},
 	},

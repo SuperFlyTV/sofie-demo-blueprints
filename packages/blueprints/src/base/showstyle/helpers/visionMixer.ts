@@ -1,7 +1,7 @@
 import { TSR } from '@sofie-automation/blueprints-integration'
 import { assertUnreachable, literal } from '../../../common/util.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
-import { StudioConfig, VisionMixerType } from '../../studio/helpers/config.js'
+import { StudioConfig, VisionMixerDevice } from '../../studio/helpers/config.js'
 import { AtemLayers, VMixLayers } from '../../studio/layers.js'
 
 export function createAtemInputTimelineObjects(
@@ -132,12 +132,12 @@ export function createVisionMixerObjects(
 		vmixTransitionProps?: TSR.VMixTransition
 	}
 ): TimelineBlueprintExt<TSR.TimelineContentVMixAny | TSR.TimelineContentAtemAny>[] {
-	if (config.visionMixerType === VisionMixerType.Atem) {
+	if (config.visionMixer.type === VisionMixerDevice.Atem) {
 		return createAtemInputTimelineObjects(input, start, transitionDuration, transitionProps?.atemTransitionProps)
-	} else if (config.visionMixerType === VisionMixerType.VMix) {
+	} else if (config.visionMixer.type === VisionMixerDevice.VMix) {
 		return createVMixTimelineObjects(input, start, transitionDuration, transitionProps?.vmixTransitionProps)
 	} else {
-		assertUnreachable(config.visionMixerType)
+		assertUnreachable(config.visionMixer.type)
 		return []
 	}
 }

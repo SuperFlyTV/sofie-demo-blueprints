@@ -6,7 +6,8 @@
  */
 
 export interface StudioConfig {
-	visionMixerType: VisionMixerType
+	visionMixer: VisionMixerConfig
+	audioMixer: AudioMixerConfig
 	atemSources: {
 		[k: string]: InputConfig
 	}
@@ -21,6 +22,41 @@ export interface StudioConfig {
 	}
 	previewRenderer: string
 	casparcgLatency: number
+}
+/**
+ * Vision mixer device configuration
+ */
+export interface VisionMixerConfig {
+	/**
+	 * Vision mixer playout device ID
+	 */
+	deviceId: string
+	type: VisionMixerDevice
+	/**
+	 * Host IP of the vision mixer
+	 */
+	host: string
+	/**
+	 * Port of the vision mixer
+	 */
+	port: number
+}
+/**
+ * Audio mixer device configuration
+ */
+export interface AudioMixerConfig {
+	/**
+	 * Audio mixer playout device ID
+	 */
+	deviceId: string
+	/**
+	 * Host IP of Sisyfos
+	 */
+	host: string
+	/**
+	 * Port of Sisyfos
+	 */
+	port: number
 }
 /**
  * This interface was referenced by `undefined`'s JSON-Schema definition
@@ -55,9 +91,12 @@ export interface SiyfosSourceConfig {
 	type: AudioSourceType
 }
 
-export enum VisionMixerType {
-	Atem = 'atem',
-	VMix = 'vmix',
+/**
+ * Vision mixer type
+ */
+export enum VisionMixerDevice {
+	Atem = 'Atem',
+	VMix = 'Vmix',
 }
 export enum SourceType {
 	Camera = 'camera',

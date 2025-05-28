@@ -1,7 +1,7 @@
 import { BlueprintResultBaseline, IShowStyleUserContext, TSR } from '@sofie-automation/blueprints-integration'
 import * as _ from 'underscore'
 import { literal } from '../../../common/util.js'
-import { SourceType, StudioConfig, VisionMixerType } from '../../studio/helpers/config.js'
+import { SourceType, StudioConfig, VisionMixerDevice } from '../../studio/helpers/config.js'
 import { AtemLayers, CasparCGLayers, SisyfosLayers, VMixLayers } from '../../studio/layers.js'
 import { getSisyfosBaseline } from '../helpers/audio.js'
 import { DVEDesigns, DVELayouts } from '../helpers/dve.js'
@@ -14,8 +14,8 @@ export function getBaseline(context: IShowStyleUserContext): BlueprintResultBase
 
 	return {
 		timelineObjects: _.compact([
-			...(config.visionMixerType === VisionMixerType.Atem ? getAtemBaseline(config) : []),
-			...(config.visionMixerType === VisionMixerType.VMix ? getVMixBaseline(config) : []),
+			...(config.visionMixer.type === VisionMixerDevice.Atem ? getAtemBaseline(config) : []),
+			...(config.visionMixer.type === VisionMixerDevice.VMix ? getVMixBaseline(config) : []),
 
 			literal<TimelineBlueprintExt<TSR.TimelineContentCCGRoute>>({
 				id: '',
@@ -26,7 +26,7 @@ export function getBaseline(context: IShowStyleUserContext): BlueprintResultBase
 					deviceType: TSR.DeviceType.CASPARCG,
 					type: TSR.TimelineContentTypeCasparCg.ROUTE,
 
-					mappedLayer: CasparCGLayers.CasparCGClipPlayer,
+					mappedLayer: CasparCGLayers.CasparCGClipPlayer1,
 					mode: 'BACKGROUND',
 				},
 			}),

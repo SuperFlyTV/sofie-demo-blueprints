@@ -10,6 +10,7 @@ import { convertIngestData as convertEditorIngestData } from './sofie-editor-par
 import { convertIngestData as convertSpreadsheetIngestData } from './spreadsheet-parsers/index.js'
 import { SegmentProps } from './definitions/index.js'
 
+// Get segment is called from Core and is the main entry point for the blueprint for receiving segments
 export function getSegment(context: ISegmentUserContext, ingestSegment: SofieIngestSegment): BlueprintResultSegment {
 	const rundownType = (context.rundown as Readonly<IBlueprintRundown<RundownMetadata>>).privateData?.ingestType
 	let intermediateSegment: SegmentProps

@@ -12,7 +12,7 @@ export default literal<BlueprintMappings>({
 		options: {},
 	},
 
-	[CasparCGLayers.CasparCGClipPlayer]: literal<BlueprintMapping<TSR.MappingCasparCGLayer>>({
+	[CasparCGLayers.CasparCGClipPlayer1]: literal<BlueprintMapping<TSR.MappingCasparCGLayer>>({
 		device: TSR.DeviceType.CASPARCG,
 		deviceId: 'casparcg0',
 		lookahead: LookaheadMode.NONE,
@@ -23,6 +23,18 @@ export default literal<BlueprintMappings>({
 			layer: 110,
 		},
 	}),
+	[CasparCGLayers.CasparCGClipPlayer2]: literal<BlueprintMapping<TSR.MappingCasparCGLayer>>({
+		device: TSR.DeviceType.CASPARCG,
+		deviceId: 'casparcg0',
+		lookahead: LookaheadMode.NONE,
+
+		options: {
+			mappingType: TSR.MappingCasparCGType.Layer,
+			channel: 2,
+			layer: 110,
+		},
+	}),
+
 	[CasparCGLayers.CasparCGClipPlayerPreview]: literal<BlueprintMapping<TSR.MappingCasparCGLayer>>({
 		device: TSR.DeviceType.CASPARCG,
 		deviceId: 'casparcg0',
@@ -40,7 +52,7 @@ export default literal<BlueprintMappings>({
 		lookahead: LookaheadMode.NONE,
 		options: {
 			mappingType: TSR.MappingCasparCGType.Layer,
-			channel: 2,
+			channel: 3,
 			layer: 200,
 		},
 	}),
@@ -50,7 +62,7 @@ export default literal<BlueprintMappings>({
 		lookahead: LookaheadMode.NONE,
 		options: {
 			mappingType: TSR.MappingCasparCGType.Layer,
-			channel: 2,
+			channel: 3,
 			layer: 110,
 		},
 	}),
@@ -60,7 +72,7 @@ export default literal<BlueprintMappings>({
 		lookahead: LookaheadMode.NONE,
 		options: {
 			mappingType: TSR.MappingCasparCGType.Layer,
-			channel: 2,
+			channel: 3,
 			layer: 111,
 		},
 	}),
@@ -70,7 +82,7 @@ export default literal<BlueprintMappings>({
 		lookahead: LookaheadMode.NONE,
 		options: {
 			mappingType: TSR.MappingCasparCGType.Layer,
-			channel: 2,
+			channel: 3,
 			layer: 112,
 		},
 	}),
@@ -80,7 +92,7 @@ export default literal<BlueprintMappings>({
 		lookahead: LookaheadMode.NONE,
 		options: {
 			mappingType: TSR.MappingCasparCGType.Layer,
-			channel: 2,
+			channel: 3,
 			layer: 113,
 		},
 	}),
@@ -90,7 +102,7 @@ export default literal<BlueprintMappings>({
 		lookahead: LookaheadMode.NONE,
 		options: {
 			mappingType: TSR.MappingCasparCGType.Layer,
-			channel: 2,
+			channel: 3,
 			layer: 80,
 		},
 	}),
