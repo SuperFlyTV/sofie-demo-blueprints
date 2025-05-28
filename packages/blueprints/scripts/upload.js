@@ -1,4 +1,3 @@
-const axios = require('axios')
 const https = require('https')
 const { promises: fs } = require('fs')
 
@@ -17,50 +16,59 @@ module.exports = function (env, compilation) {
 		if (bundle && data) {
 			console.log('Starting upload: ' + data.length + ' bytes to ' + id)
 
-			const instance = axios.create({
-				httpsAgent: new https.Agent({
+			fetch(env.server + '/api/private/blueprints/restore/' + id, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'text/javascript',
+				},
+				body: data,
+				agent: new https.Agent({
 					rejectUnauthorized: false,
 				}),
 			})
-
-			instance
-				.post(env.server + '/api/private/blueprints/restore/' + id, data, {
-					headers: {
-						'Content-Type': 'text/javascript',
-					},
-				})
-				.then(() => {
+				.then((response) => {
+					if (!response.ok) {
+						return response.text().then((text) => {
+							throw new Error(`Blueprints '${id}' upload failed: ${response.status} ${response.statusText} - ${text}`)
+						})
+					}
 					console.log(`Blueprints '${id}' uploaded`)
 				})
-				.catch((e) => {
-					console.error(`Blueprints '${id}' upload failed:`, e.toString(), e.stack)
+				.catch((error) => {
+					console.error(`Blueprints '${id}' upload failed:`, error.toString(), error.stack)
+					console.error(error)
 				})
 		}
 	}
 
 	// upload image assets
-	try {
-		fs.readFile('./dist/assets-bundle.json').then((payload) => {
-			const instance = axios.create({
-				httpsAgent: new https.Agent({
+	fs.readFile('./dist/assets-bundle.json')
+		.then((payload) => {
+			fetch(env.server + '/api/private/blueprints/assets', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: payload,
+				agent: new https.Agent({
 					rejectUnauthorized: false,
 				}),
 			})
-
-			instance
-				.post(env.server + '/api/private/blueprints/assets', payload, {
-					headers: {
-						'Content-Type': 'application/json',
-					},
-				})
-				.then(() => {
+				.then((response) => {
+					if (!response.ok) {
+						return response.text().then((text) => {
+							throw new Error(`Blueprints assets upload failed: ${response.status} ${response.statusText} - ${text}`)
+						})
+					}
 					console.log(`Blueprints assets uploaded`)
 				})
-				.catch((e) => {
-					console.error(`Blueprints assets upload failed:`, e.toString(), e.stack)
+				.catch((error) => {
+					console.error(`Blueprints assets upload failed:`, error.toString(), error.stack)
 				})
 		})
-	} catch (_e) {
-		//
-	}
+		.catch((error) => {
+			if (error) {
+				console.error('Error reading assets-bundle.json:', error)
+			}
+		})
 }
