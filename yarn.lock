@@ -5803,7 +5803,7 @@ __metadata:
     "@types/underscore": "npm:~1.13.0"
     jest: "npm:^29.7.0"
     object-path: "npm:^0.11.8"
-    sofie-blueprint-tools: "npm:^1.0.0"
+    sofie-blueprint-tools: "npm:^1.0.1"
     ts-jest: "npm:^29.3.2"
     type-fest: "npm:^4.40.1"
     typescript: "npm:~5.8.3"
@@ -16994,9 +16994,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sofie-blueprint-tools@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "sofie-blueprint-tools@npm:1.0.0"
+"sofie-blueprint-tools@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "sofie-blueprint-tools@npm:1.0.1"
   dependencies:
     "@rollup/plugin-commonjs": "npm:^28.0.3"
     "@rollup/plugin-json": "npm:^6.1.0"
@@ -17018,7 +17018,7 @@ __metadata:
     blueprint-bundle: bin/bundle.mjs
     blueprint-extract-translations: bin/extract-translations.mjs
     blueprint-schema-types: bin/schema-types.mjs
-  checksum: 10c0/91671a0d73af7c117358e21e095cac47e9b72fb04d638c04ac835ccfa603e162a86de9fa28dc7c1b80b4a7b22b9f92a95235bc1e3c6244c06a0b956347598d38
+  checksum: 10c0/1c9eb90919038ef4a05208db68de651d40739051ab1ecc2d4a029a88d29ba7b15031957ede3355c60c6fde9e6bb852097546e60bfe785a633fcd34251b65bf89
   languageName: node
   linkType: hard
 
