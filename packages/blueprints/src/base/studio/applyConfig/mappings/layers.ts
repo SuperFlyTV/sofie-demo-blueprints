@@ -16,6 +16,8 @@ export enum VMixLayers {
 export enum CasparCGLayers {
 	CasparCGClipPlayer1 = 'casparcg_clip_player1',
 	CasparCGClipPlayer2 = 'casparcg_clip_player2',
+	// This layer is used for ABResolverConfiguration to hold objects that are pending to be moved to a player layer:
+	CasparCGClipPlayerAbPending = 'casparcg_clip_player_ab_pending',
 	CasparCGClipPlayerPreview = 'casparcg_clip_player_preview',
 	CasparCGEffectsPlayer = 'casparcg_effects_player',
 

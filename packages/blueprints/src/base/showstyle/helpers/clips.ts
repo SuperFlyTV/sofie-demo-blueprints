@@ -64,10 +64,13 @@ export function clipToAdlib(config: StudioConfig, clipObject: VideoObject): IBlu
 			timelineObjects: [
 				...createVisionMixerObjects(config, visionMixerInput?.input || 0, config.casparcgLatency),
 
+				// Instead of assigning the clip to a specific player,
+				// we assign it to the pending layer which will be resolved by the AB resolver
+				// using the AB sessions configuration
 				literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
 					id: '',
 					enable: { start: 0 },
-					layer: CasparCGLayers.CasparCGClipPlayer1,
+					layer: CasparCGLayers.CasparCGClipPlayerAbPending,
 					content: {
 						deviceType: TSR.DeviceType.CASPARCG,
 						type: TSR.TimelineContentTypeCasparCg.MEDIA,
@@ -75,6 +78,13 @@ export function clipToAdlib(config: StudioConfig, clipObject: VideoObject): IBlu
 						file: props.fileName,
 					},
 					priority: 1,
+					// AB session configuration
+					abSessions: [
+						{
+							poolName: 'clip',
+							sessionName: clipObject.id,
+						},
+					],
 				}),
 			],
 		},

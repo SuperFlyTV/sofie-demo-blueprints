@@ -34,6 +34,17 @@ export default literal<BlueprintMappings>({
 			layer: 110,
 		},
 	}),
+	// This is the pending layer that will be used by the ABResolver to move clips to the actual player layers
+	[CasparCGLayers.CasparCGClipPlayerAbPending]: literal<BlueprintMapping<TSR.MappingCasparCGLayer>>({
+		device: TSR.DeviceType.ABSTRACT,
+		deviceId: 'abstract0',
+		lookahead: LookaheadMode.PRELOAD,
+		options: {
+			mappingType: TSR.MappingCasparCGType.Layer,
+			channel: 1, // This is a temporary channel, the actual channel will be set by the ABResolver
+			layer: 110, // This is a temporary layer, the actual layer will be set by the ABResolver
+		},
+	}),
 
 	[CasparCGLayers.CasparCGClipPlayerPreview]: literal<BlueprintMapping<TSR.MappingCasparCGLayer>>({
 		device: TSR.DeviceType.CASPARCG,

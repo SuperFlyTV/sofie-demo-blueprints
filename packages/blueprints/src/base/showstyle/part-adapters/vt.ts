@@ -46,10 +46,11 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 			timelineObjects: [
 				...createVisionMixerObjects(config, visionMixerInput?.input || 0, config.casparcgLatency),
 
+				// This is the pending layer that will be used by the ABResolver to move clips to the actual player layers
 				literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
 					id: '',
 					enable: { start: 0 },
-					layer: CasparCGLayers.CasparCGClipPlayer1,
+					layer: CasparCGLayers.CasparCGClipPlayerAbPending,
 					content: {
 						deviceType: TSR.DeviceType.CASPARCG,
 						type: TSR.TimelineContentTypeCasparCg.MEDIA,
@@ -57,6 +58,13 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 						file: stripExtension(part.payload.clipProps.fileName),
 					},
 					priority: 1,
+					// AB session configuration
+					abSessions: [
+						{
+							poolName: 'clip',
+							sessionName: part.payload.externalId,
+						},
+					],
 				}),
 
 				audioTlObj,
