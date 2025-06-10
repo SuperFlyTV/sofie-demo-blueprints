@@ -65,6 +65,7 @@ export interface AudioMixerConfig {
 export interface InputConfig {
 	input: number
 	type: SourceType
+	label?: string
 }
 /**
  * This interface was referenced by `undefined`'s JSON-Schema definition

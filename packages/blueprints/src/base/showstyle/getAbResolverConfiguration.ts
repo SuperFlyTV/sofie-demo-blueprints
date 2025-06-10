@@ -65,6 +65,8 @@ export function getAbResolverConfiguration(context: IShowStyleContext): ABResolv
 					const mediaPlayerInput = getMediaPlayerInputForPlayer(playerId, players, atemMediaPlayerMapping)
 					if (mediaPlayerInput !== undefined) {
 						content.me.input = mediaPlayerInput
+						//Modify something?????
+
 						return true
 					}
 				}
@@ -83,10 +85,10 @@ function getMediaPlayerInputForPlayer(
 	// This function maps the AB player to the correct ATEM media player input
 	if (playerId === players.player1.playerId) {
 		// Return the ATEM input number for MediaPlayer 1
-		return 99999999999 //mappings.mediaPlayer1.input
+		return 1 //mappings.atemSources.player1.input
 	} else if (playerId === players.player2.playerId) {
 		// Return the ATEM input number for MediaPlayer 2
-		return 888888888888 // mappings.mediaPlayer2.input
+		return 2 //mappings.atemSources.player2.input
 	}
 
 	return undefined
