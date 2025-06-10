@@ -2,13 +2,13 @@ import {
 	ABPlayerDefinition,
 	AbPlayerId,
 	ABResolverConfiguration,
-	BlueprintMappings,
 	ICommonContext,
 	IShowStyleContext,
 	OnGenerateTimelineObj,
 	TSR,
 } from '@sofie-automation/blueprints-integration'
 import { AtemLayers } from '../studio/layers.js'
+import { StudioConfig } from '../../$schemas/generated/main-studio-config.js'
 
 interface ABPlayerDefinitions {
 	player1: ABPlayerDefinition
@@ -25,7 +25,7 @@ export function getAbResolverConfiguration(context: IShowStyleContext): ABResolv
 			playerId: 'casparcg_clip_player2',
 		},
 	}
-	const atemMediaPlayerMapping = context.getStudioMappings()
+	const studioConfig = context.getStudioConfig() as StudioConfig
 
 	return {
 		resolverOptions: {
@@ -56,13 +56,13 @@ export function getAbResolverConfiguration(context: IShowStyleContext): ABResolv
 			_context.logInfo(
 				`ABResolver: Assigning player ${playerId} to ATEM Media Player input for timeline object ${timelineObject.id}`
 			)
-			_context.logDebug('Atem Media Player Mapping:' + JSON.stringify(atemMediaPlayerMapping, null, 2))
+			_context.logDebug('Atem Media Player Mapping:' + JSON.stringify(studioConfig, null, 2))
 			if (poolName === 'clip' && timelineObject.layer === AtemLayers.AtemMeProgram) {
 				const content = timelineObject.content as TSR.TimelineContentAtemME
 
 				if (content && content.me && typeof content.me === 'object') {
 					// Get the appropriate media player input based on the assigned player
-					const mediaPlayerInput = getMediaPlayerInputForPlayer(playerId, players, atemMediaPlayerMapping)
+					const mediaPlayerInput = getMediaPlayerInputForPlayer(playerId, players, studioConfig)
 					if (mediaPlayerInput !== undefined) {
 						content.me.input = mediaPlayerInput
 						//Modify something?????
@@ -80,15 +80,15 @@ export function getAbResolverConfiguration(context: IShowStyleContext): ABResolv
 function getMediaPlayerInputForPlayer(
 	playerId: AbPlayerId,
 	players: ABPlayerDefinitions,
-	_mappings: Readonly<BlueprintMappings>
+	studioConfig: StudioConfig
 ): number | undefined {
 	// This function maps the AB player to the correct ATEM media player input
 	if (playerId === players.player1.playerId) {
 		// Return the ATEM input number for MediaPlayer 1
-		return 1 //mappings.atemSources.player1.input
+		return studioConfig.atemSources.player1.input
 	} else if (playerId === players.player2.playerId) {
 		// Return the ATEM input number for MediaPlayer 2
-		return 2 //mappings.atemSources.player2.input
+		return studioConfig.atemSources.player2.input
 	}
 
 	return undefined
