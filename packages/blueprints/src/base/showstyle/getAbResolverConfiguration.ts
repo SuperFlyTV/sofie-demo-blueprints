@@ -7,8 +7,7 @@ import {
 	OnGenerateTimelineObj,
 	TSR,
 } from '@sofie-automation/blueprints-integration'
-import { AtemLayers } from '../studio/layers.js'
-import { StudioConfig } from '../../$schemas/generated/main-studio-config.js'
+import { CasparCGLayers } from '../studio/layers.js'
 
 interface ABPlayerDefinitions {
 	player1: ABPlayerDefinition
@@ -19,13 +18,12 @@ interface ABPlayerDefinitions {
 export function getAbResolverConfiguration(context: IShowStyleContext): ABResolverConfiguration {
 	const players: ABPlayerDefinitions = {
 		player1: {
-			playerId: 'casparcg_clip_player1',
+			playerId: CasparCGLayers.CasparCGClipPlayer1,
 		},
 		player2: {
-			playerId: 'casparcg_clip_player2',
+			playerId: CasparCGLayers.CasparCGClipPlayer2,
 		},
 	}
-	const studioConfig = context.getStudioConfig() as StudioConfig
 
 	return {
 		resolverOptions: {
@@ -37,59 +35,31 @@ export function getAbResolverConfiguration(context: IShowStyleContext): ABResolv
 		},
 		timelineObjectLayerChangeRules: {
 			// Objects on this "pending" layer will be moved to actual player layers
-			['casparcg_clip_player_ab_pending']: {
+			[CasparCGLayers.CasparCGClipPlayerAbPending]: {
 				acceptedPoolNames: ['clip'],
-				newLayerName: (playerId: AbPlayerId) => `casparcg_clip_player${playerId}`,
+				// ToDo - use the CasparCGClipPlayer1+2 instead of hardcoding the string with player IDs
+				newLayerName: (playerId: AbPlayerId) => {
+					context.logDebug(`ABResolver: Changing layer to player ${playerId}}`)
+					return String(playerId)
+				},
 				allowsLookahead: true,
 			},
 		},
 		customApplyToObject: (
-			_context: ICommonContext,
+			context: ICommonContext,
 			poolName: string,
 			playerId: AbPlayerId,
 			timelineObject: OnGenerateTimelineObj<TSR.TSRTimelineContent>
 		): boolean => {
-			// Handle ATEM input switching based on AB player assignment
-			_context.logDebug(
-				'------------------------------------ Resolving Atem AB input ---------------------------------------------'
-			)
-			_context.logInfo(
-				`ABResolver: Assigning player ${playerId} to ATEM Media Player input for timeline object ${timelineObject.id}`
-			)
-			_context.logDebug('Atem Media Player Mapping:' + JSON.stringify(studioConfig, null, 2))
-			if (poolName === 'clip' && timelineObject.layer === AtemLayers.AtemMeProgram) {
-				const content = timelineObject.content as TSR.TimelineContentAtemME
-
-				if (content && content.me && typeof content.me === 'object') {
-					// Get the appropriate media player input based on the assigned player
-					const mediaPlayerInput = getMediaPlayerInputForPlayer(playerId, players, studioConfig)
-					if (mediaPlayerInput !== undefined) {
-						content.me.input = mediaPlayerInput
-						//Modify something?????
-
-						return true
-					}
-				}
+			// Handle special cases for manipulating
+			context.logDebug('running customApplyToObjec')
+			context.logInfo(`AB customApplyToObject: ${playerId} for timeline object ${timelineObject.id}`)
+			context.logInfo(`AB customApplyToObject: Pool name: ${poolName}`)
+			if (poolName === 'clip' && timelineObject.lookaheadForLayer === CasparCGLayers.CasparCGClipPlayer1) {
+				// Here you can add
 			}
 			// Some error handling or logging shoule be added here
 			return false
 		},
 	}
-}
-
-function getMediaPlayerInputForPlayer(
-	playerId: AbPlayerId,
-	players: ABPlayerDefinitions,
-	studioConfig: StudioConfig
-): number | undefined {
-	// This function maps the AB player to the correct ATEM media player input
-	if (playerId === players.player1.playerId) {
-		// Return the ATEM input number for MediaPlayer 1
-		return studioConfig.atemSources.player1.input
-	} else if (playerId === players.player2.playerId) {
-		// Return the ATEM input number for MediaPlayer 2
-		return studioConfig.atemSources.player2.input
-	}
-
-	return undefined
 }
