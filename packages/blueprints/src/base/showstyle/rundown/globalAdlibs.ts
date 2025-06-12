@@ -4,7 +4,12 @@ import { AudioSourceType, SourceType } from '../../studio/helpers/config.js'
 import { getAudioObjectOnLayer, getAudioPrimaryObject } from '../helpers/audio.js'
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
-import { InputConfig, VisionMixerDevice } from '../../../$schemas/generated/main-studio-config.js'
+import {
+	InputConfig,
+	SourceTypeVMix,
+	VisionMixerDevice,
+	VmixInputConfig,
+} from '../../../$schemas/generated/main-studio-config.js'
 import { parseConfig } from '../helpers/config.js'
 import { SisyfosLayers } from '../../studio/layers.js'
 
@@ -93,11 +98,11 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 	} else if (config.visionMixer.type === VisionMixerDevice.VMix) {
 		context.logError('Vision mixer type is found: VMix')
 		return [
-			...Object.values<InputConfig>(config.vmixSources)
-				.filter((source) => source.type === SourceType.Camera)
+			...Object.values<VmixInputConfig>(config.vmixSources)
+				.filter((source) => source.type === SourceTypeVMix.Camera)
 				.map((source, i) => makeCameraAdlib(i, source.input)),
-			...Object.values<InputConfig>(config.vmixSources)
-				.filter((source) => source.type === SourceType.Remote)
+			...Object.values<VmixInputConfig>(config.vmixSources)
+				.filter((source) => source.type === SourceTypeVMix.Remote)
 				.map((source, i) => makeRemoteAdlib(i, source.input)),
 			...hostMicOverrides,
 		]

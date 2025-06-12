@@ -1,8 +1,12 @@
 import { BlueprintMapping, BlueprintMappings, LookaheadMode, TSR } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../../../common/util.js'
-import { AudioSourceType, SourceType, StudioConfig } from '../../helpers/config.js'
+import { AudioSourceType, StudioConfig } from '../../helpers/config.js'
 import { AsbtractLayers, AtemLayers, CasparCGLayers, SisyfosLayers, VMixLayers } from './layers.js'
-import { VmixInputConfig, SiyfosSourceConfig } from '../../../../$schemas/generated/main-studio-config.js'
+import {
+	VmixInputConfig,
+	SiyfosSourceConfig,
+	SourceTypeVMix,
+} from '../../../../$schemas/generated/main-studio-config.js'
 
 export default literal<BlueprintMappings>({
 	[AsbtractLayers.CoreAbstract]: {
@@ -217,7 +221,7 @@ export function getDynamicVMixMappings(vmixSources: StudioConfig['vmixSources'])
 	}
 
 	const multiviewSource = Object.values<VmixInputConfig>(vmixSources).find(
-		(source) => source.type === SourceType.MultiView
+		(source) => source.type === SourceTypeVMix.MultiView
 	)
 	if (multiviewSource) {
 		/**

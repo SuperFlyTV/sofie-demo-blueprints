@@ -6,7 +6,12 @@ import { AtemLayers, CasparCGLayers, SisyfosLayers, VMixLayers } from '../../stu
 import { getSisyfosBaseline } from '../helpers/audio.js'
 import { DVEDesigns, DVELayouts } from '../helpers/dve.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
-import { InputConfig, OutputConfig, VmixInputConfig } from '../../../$schemas/generated/main-studio-config.js'
+import {
+	InputConfig,
+	OutputConfig,
+	SourceTypeVMix,
+	VmixInputConfig,
+} from '../../../$schemas/generated/main-studio-config.js'
 import { parseConfig } from '../helpers/config.js'
 
 export function getBaseline(context: IShowStyleUserContext): BlueprintResultBaseline {
@@ -26,7 +31,7 @@ export function getBaseline(context: IShowStyleUserContext): BlueprintResultBase
 					deviceType: TSR.DeviceType.CASPARCG,
 					type: TSR.TimelineContentTypeCasparCg.ROUTE,
 
-					mappedLayer: CasparCGLayers.CasparCGClipPlayer1,
+					mappedLayer: CasparCGLayers.CasparCGClipPlayer2,
 					mode: 'BACKGROUND',
 				},
 			}),
@@ -130,7 +135,7 @@ function getAtemBaseline(config: StudioConfig): TimelineBlueprintExt[] {
 
 function getVMixBaseline(config: StudioConfig): TimelineBlueprintExt[] {
 	const dskInput = Object.values<VmixInputConfig>(config.vmixSources).find(
-		(source) => source.type === SourceType.Graphics
+		(source) => source.type === SourceTypeVMix.Graphics
 	)
 
 	return [

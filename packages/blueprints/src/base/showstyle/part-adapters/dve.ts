@@ -13,7 +13,7 @@ import { getSourceInfoFromRaw } from '../helpers/sources.js'
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
-import { VmixInputConfig } from '../../../$schemas/generated/main-studio-config.js'
+import { SourceTypeVMix, VmixInputConfig } from '../../../$schemas/generated/main-studio-config.js'
 import { parseConfig } from '../helpers/config.js'
 
 const SUPER_SOURCE_LATENCY = 80
@@ -65,8 +65,8 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 	)
 
 	const vmixDVEInput =
-		Object.values<VmixInputConfig>(config.vmixSources).find((source) => source.type === SourceType.MultiView)?.input ??
-		-1
+		Object.values<VmixInputConfig>(config.vmixSources).find((source) => source.type === SourceTypeVMix.MultiView)
+			?.input ?? -1
 	const dvePieceTimelineObjects: TimelineBlueprintExt[] = [
 		...createVisionMixerObjects(
 			config,

@@ -6,7 +6,7 @@ import { CasparCGLayers } from '../../studio/layers.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { createVisionMixerObjects } from './visionMixer.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
-import { InputConfig, VmixInputConfig } from '../../..//$schemas/generated/main-studio-config.js'
+import { InputConfig, SourceTypeVMix, VmixInputConfig } from '../../..//$schemas/generated/main-studio-config.js'
 
 export interface ClipProps {
 	fileName: string
@@ -38,8 +38,8 @@ export function getClipPlayerInput(config: StudioConfig): StudioConfig['atemSour
 		return mediaplayerInput
 	} else if (config.visionMixer.type === VisionMixerDevice.VMix) {
 		const mediaplayerInput = Object.values<VmixInputConfig>(config.vmixSources).find(
-			(s) => s.type === SourceType.MediaPlayer
-		)
+			(s) => s.type === SourceTypeVMix.MediaPlayer
+		) as any as InputConfig
 
 		return mediaplayerInput
 	} else {

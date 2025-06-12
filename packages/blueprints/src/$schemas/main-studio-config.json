@@ -96,7 +96,14 @@
 							"default": 1
 						},
 						"type": {
-							"$ref": "#/$defs/SourceType"
+							"type": "string",
+							"title": "SourceType",
+							"enum": ["camera", "remote", "mediaplayer", "graphics", "multiview"],
+							"tsEnumNames": ["Camera", "Remote", "MediaPlayer", "Graphics", "MultiView"],
+							"ui:title": "Type",
+							"ui:description": "Input Type",
+							"ui:summaryTitle": "Type",
+							"default": "camera"
 						},
 						"label": {
 							"type": "string",
@@ -157,7 +164,14 @@
 							"default": 1
 						},
 						"type": {
-							"$ref": "#/$defs/SourceType"
+							"type": "string",
+							"title": "SourceTypeVMix",
+							"enum": ["camera", "remote", "mediaplayer", "graphics", "multiview"],
+							"tsEnumNames": ["Camera", "Remote", "MediaPlayer", "Graphics", "MultiView"],
+							"ui:title": "Type",
+							"ui:description": "Input Type",
+							"ui:summaryTitle": "Type",
+							"default": "camera"
 						}
 					},
 					"required": ["input", "type"]
@@ -187,7 +201,6 @@
 							"ui:description": "Input Type",
 							"ui:summaryTitle": "Type",
 							"default": "host",
-
 							"title": "AudioSourceType",
 							"enum": ["host", "guest", "remote", "playback"],
 							"tsEnumNames": ["Host", "Guest", "Remote", "Playback"]
@@ -221,18 +234,5 @@
 		"atemSources",
 		"visionMixer",
 		"audioMixer"
-	],
-	"$defs": {
-		"SourceType": {
-			"type": "string",
-			"title": "SourceType",
-			"enum": ["camera", "remote", "mediaplayer", "graphics", "multiview"],
-			"tsEnumNames": ["Camera", "Remote", "MediaPlayer", "Graphics", "MultiView"],
-
-			"ui:title": "Type",
-			"ui:description": "Input Type",
-			"ui:summaryTitle": "Type",
-			"default": "camera"
-		}
-	}
+	]
 }
