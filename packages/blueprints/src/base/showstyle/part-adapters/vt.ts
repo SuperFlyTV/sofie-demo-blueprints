@@ -75,7 +75,7 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 		expectedPackages: [
 			literal<ExpectedPackage.ExpectedPackageMediaFile>({
 				_id: context.getHashId(part.payload.clipProps.fileName, true),
-				layers: [CasparCGLayers.CasparCGClipPlayer1],
+				layers: [CasparCGLayers.CasparCGClipPlayerAbPending],
 				type: ExpectedPackage.PackageType.MEDIA_FILE,
 				content: {
 					filePath: part.payload.clipProps.fileName,

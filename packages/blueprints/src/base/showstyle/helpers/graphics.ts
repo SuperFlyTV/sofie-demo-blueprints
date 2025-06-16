@@ -30,7 +30,7 @@ function getGraphicTlLayer(object: GraphicObject): CasparCGLayers {
 	} else if (object.clipName.match(/strap/i)) {
 		return CasparCGLayers.CasparCGGraphicsStrap
 	} else if (object.clipName.match(/fullscreen/i)) {
-		return CasparCGLayers.CasparCGClipPlayer1
+		return CasparCGLayers.CasparCGClipPlayerAbPending
 	} else {
 		return CasparCGLayers.CasparCGGraphicsLowerThird
 	}

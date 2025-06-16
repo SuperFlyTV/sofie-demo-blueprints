@@ -43,6 +43,9 @@ export default literal<BlueprintMappings>({
 		device: TSR.DeviceType.ABSTRACT,
 		deviceId: 'abstract0',
 		lookahead: LookaheadMode.PRELOAD,
+		// This is important for the ABResolver, otherwise it will alaways resolve the pending layer
+		// to the first player layer it finds:
+		lookaheadDepth: 3,
 		options: {
 			mappingType: TSR.MappingCasparCGType.Layer,
 			channel: 1, // This is a temporary channel, the actual channel will be set by the ABResolver

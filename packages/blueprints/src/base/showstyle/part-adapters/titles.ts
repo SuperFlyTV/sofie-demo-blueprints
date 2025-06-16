@@ -62,7 +62,7 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 		expectedPackages: [
 			literal<ExpectedPackage.ExpectedPackageMediaFile>({
 				_id: context.getHashId('assets/Sofie News Opener.mp4', true),
-				layers: [CasparCGLayers.CasparCGClipPlayer1],
+				layers: [CasparCGLayers.CasparCGClipPlayerAbPending],
 				type: ExpectedPackage.PackageType.MEDIA_FILE,
 				content: {
 					filePath: 'assets/Sofie News Opener.mp4',
@@ -129,7 +129,7 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 		expectedPackages: [
 			literal<ExpectedPackage.ExpectedPackageMediaFile>({
 				_id: context.getHashId('assets/Sofie News Opener Audio Bed.wav', true),
-				layers: [CasparCGLayers.CasparCGClipPlayer1],
+				layers: [CasparCGLayers.CasparCGClipPlayerAbPending],
 				type: ExpectedPackage.PackageType.MEDIA_FILE,
 				content: {
 					filePath: 'assets/Sofie News Opener Audio Bed.wav',
