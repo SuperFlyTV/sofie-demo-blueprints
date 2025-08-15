@@ -20,6 +20,7 @@ export enum ObjectType {
 	Camera = 'camera',
 	Video = 'video',
 	Graphic = 'graphic',
+	SteppedGraphic = 'stepped-graphic',
 	Split = 'split',
 	Overlay = 'overlay',
 	Lights = 'lights',
@@ -47,15 +48,23 @@ export interface VideoObject extends BaseObject {
 	adlibVariant?: string
 }
 export interface GraphicObject extends BaseObject {
-	objectType: ObjectType.Graphic
-	attributes: {
-		name: string
-		description: string // TODO - need to allow undefined here..
-		location?: string
-		text?: string
-	}
+	objectType: ObjectType.Graphic | ObjectType.SteppedGraphic
+	attributes: GraphicObjectAttributes
 	adlibVariant?: string
 }
+export interface SteppedGraphicObject extends Omit<GraphicObject, 'attributes'> {
+	attributes: SteppedGraphicObjectAttributes
+}
+export type GraphicObjectAttributes = {
+	name: string
+	description: string // TODO - need to allow undefined here..
+	location?: string
+	text?: string
+}
+export type SteppedGraphicObjectAttributes = GraphicObject & {
+	stepCount: number
+}
+
 export interface SplitObject extends BaseObject {
 	objectType: ObjectType.Split
 	attributes: {

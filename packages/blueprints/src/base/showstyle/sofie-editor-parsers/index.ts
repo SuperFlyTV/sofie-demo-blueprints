@@ -33,7 +33,7 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: S
 			const partPayload = part.payload as EditorIngestPart
 
 			// process the pieces
-			const graphicTypes = ['strap', 'head', 'l3d', 'fullscreen']
+			const graphicTypes = ['strap', 'head', 'l3d', 'fullscreen', 'stepped-graphic']
 			partPayload.pieces.forEach((piece) => {
 				if ((piece.objectType as ObjectType) === ObjectType.Graphic) {
 					piece.clipName = String(piece.attributes.template || '')

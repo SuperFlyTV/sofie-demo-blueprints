@@ -1,5 +1,5 @@
 import { IBlueprintAdLibPiece, IBlueprintPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
-import { GraphicObject, ObjectType, SomeObject } from '../../../common/definitions/objects.js'
+import { GraphicObject, ObjectType, SomeObject, SteppedGraphicObject } from '../../../common/definitions/objects.js'
 import { literal } from '../../../common/util.js'
 import { StudioConfig } from '../../studio/helpers/config.js'
 import { CasparCGLayers } from '../../studio/layers.js'
@@ -78,6 +78,7 @@ function parseGraphic(config: StudioConfig, object: GraphicObject): IBlueprintPi
 		content: {
 			timelineObjects: getGraphicTlObject(config, object, false),
 
+			step: { current: 0, count: (object as unknown as SteppedGraphicObject).attributes.stepCount },
 			templateData: {
 				name: object.attributes.name,
 				description: object.attributes.description,
