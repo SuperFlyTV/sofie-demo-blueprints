@@ -79,7 +79,7 @@ function parseGraphic(config: StudioConfig, object: GraphicObject): IBlueprintPi
 			timelineObjects: getGraphicTlObject(config, object, false),
 
 			step: object.clipName.includes('gfx/stepped-graphic')
-				? { current: 0, count: (object as unknown as SteppedGraphicObject).attributes.stepCount }
+				? { current: 1, count: (object as unknown as SteppedGraphicObject).attributes.stepCount }
 				: undefined,
 			templateData: {
 				name: object.attributes.name,

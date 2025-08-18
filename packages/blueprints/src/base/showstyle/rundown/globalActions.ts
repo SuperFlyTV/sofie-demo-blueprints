@@ -34,5 +34,16 @@ export function getGlobalActions(
 			},
 			externalId: ingestRundown.externalId,
 		}),
+		literal<IBlueprintActionManifest>({
+			actionId: ActionId.GFXNextStep,
+			userData: {},
+			userDataManifest: {},
+			display: {
+				label: t('Next Graphic Step'),
+				sourceLayerId: SourceLayer.GFX,
+				outputLayerId: getOutputLayerForSourceLayer(SourceLayer.GFX),
+			},
+			externalId: ingestRundown.externalId,
+		}),
 	]
 }
