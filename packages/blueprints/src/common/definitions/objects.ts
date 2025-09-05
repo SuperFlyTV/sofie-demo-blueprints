@@ -47,13 +47,14 @@ export interface VideoObject extends BaseObject {
 	objectType: ObjectType.Video
 	adlibVariant?: string
 }
-export interface GraphicObject extends BaseObject {
+export interface GraphicObjectBase extends BaseObject {
 	objectType: ObjectType.Graphic | ObjectType.SteppedGraphic
 	attributes: GraphicObjectAttributes
 	adlibVariant?: string
 }
-export interface SteppedGraphicObject extends Omit<GraphicObject, 'attributes'> {
-	attributes: SteppedGraphicObjectAttributes
+export interface GraphicObject extends GraphicObjectBase {
+	objectType: ObjectType.Graphic
+	attributes: GraphicObjectAttributes
 }
 export type GraphicObjectAttributes = {
 	name: string
@@ -61,10 +62,13 @@ export type GraphicObjectAttributes = {
 	location?: string
 	text?: string
 }
-export type SteppedGraphicObjectAttributes = GraphicObject & {
+export interface SteppedGraphicObject extends GraphicObjectBase {
+	objectType: ObjectType.SteppedGraphic
+	attributes: SteppedGraphicObjectAttributes
+}
+export interface SteppedGraphicObjectAttributes extends GraphicObjectAttributes {
 	stepCount: number
 }
-
 export interface SplitObject extends BaseObject {
 	objectType: ObjectType.Split
 	attributes: {
