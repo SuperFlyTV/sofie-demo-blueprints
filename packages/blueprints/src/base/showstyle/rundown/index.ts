@@ -30,6 +30,8 @@ export function getRundown(
 		expectedDuration: 0,
 	}
 	const rundown = literal<IBlueprintRundown>({
+		// playlistExternalId: 'test-playlist', // Uncomment to test simple playlist grouping. See 'packages/blueprints/src/base/studio/manifest.ts' for more advanced grouping
+
 		externalId: ingestRundown.externalId,
 		name: ingestRundown.name,
 		privateData: rundownMetadata,

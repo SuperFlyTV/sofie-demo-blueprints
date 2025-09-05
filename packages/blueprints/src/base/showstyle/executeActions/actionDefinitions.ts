@@ -1,5 +1,5 @@
 export enum ActionId {
 	LastRemote = 'lastRemote',
 	LastDVE = 'lastDVE',
-	GFXNextStep = 'GFXNextStep',
+	GFXStep = 'GFXStep',
 }
