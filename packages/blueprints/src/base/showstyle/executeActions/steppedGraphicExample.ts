@@ -87,7 +87,7 @@ export interface ExampleGFXStepActionOptions {
  *
  * Also supports trigger modes to step backwards and actionOptions to jump to a specific step or change the increment.
  *
- * Be sure to add it in 'packages/blueprints/src/base/showstyle/executeActions/index.ts' if you are making your own.
+ * Be sure to add it to `executeAction` in 'packages/blueprints/src/base/showstyle/executeActions/index.ts' if you are making your own.
  *
  * @param context - {IActionExecutionContext}
  * @param triggerMode - {string} - A simple string value that describes how the AdLib shoul
