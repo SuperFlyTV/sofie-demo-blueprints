@@ -13,6 +13,8 @@ export type SomeObject =
 	| VoiceoverObject
 	| ScriptObject
 	| StudioGuestObject
+	| GraphicObjectBase
+	| SteppedGraphicObject
 
 export type SomeAdlibPiece = VideoObject | GraphicObject
 

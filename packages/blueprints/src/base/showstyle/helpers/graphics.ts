@@ -3,6 +3,7 @@ import {
 	GraphicObject,
 	GraphicObjectBase,
 	ObjectType,
+	SomeObject,
 	SteppedGraphicObject,
 } from '../../../common/definitions/objects.js'
 import { literal } from '../../../common/util.js'
@@ -164,7 +165,7 @@ export function parseAdlibGraphic(
 	}
 }
 
-export function parseGraphicsFromObjects(config: StudioConfig, objects: GraphicObjectBase[]): GraphicsResult {
+export function parseGraphicsFromObjects(config: StudioConfig, objects: SomeObject[]): GraphicsResult {
 	const graphicsObjects = objects.filter((o): o is GraphicObject => o.objectType === ObjectType.Graphic)
 
 	return {
