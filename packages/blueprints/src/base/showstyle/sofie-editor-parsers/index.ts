@@ -32,7 +32,7 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: S
 		ingestSegment.parts.forEach((part) => {
 			const partPayload = part.payload as EditorIngestPart
 
-			// process the pieces
+			// convert graphic sub-types into graphic objects. to be parsed in a GFX part.
 			const graphicTypes = ['strap', 'head', 'l3d', 'fullscreen', 'stepped-graphic']
 			partPayload.pieces.forEach((piece) => {
 				if ((piece.objectType as ObjectType) === ObjectType.Graphic) {
@@ -62,6 +62,7 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: S
 				}
 			})
 
+			// process the pieces
 			if (partPayload.type?.match(/cam/i)) {
 				parts.push(parseCamera(partPayload))
 			} else if (partPayload.type?.match(/dve/i)) {

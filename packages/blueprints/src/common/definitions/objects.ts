@@ -49,7 +49,6 @@ export interface VideoObject extends BaseObject {
 }
 export interface GraphicObjectBase extends BaseObject {
 	objectType: ObjectType.Graphic | ObjectType.SteppedGraphic
-	attributes: GraphicObjectAttributes
 	adlibVariant?: string
 }
 export interface GraphicObject extends GraphicObjectBase {
@@ -62,12 +61,21 @@ export type GraphicObjectAttributes = {
 	location?: string
 	text?: string
 }
+/*
+Note that we are not using the interfaces defined in Sofie,
+because we would need to be able to have object attributes ingested
+from the rundown editor which is currently not possible.
+
+Ideally we'd have a step attribute as a `NoraContentSteps` interface.
+
+*/
 export interface SteppedGraphicObject extends GraphicObjectBase {
 	objectType: ObjectType.SteppedGraphic
 	attributes: SteppedGraphicObjectAttributes
 }
 export interface SteppedGraphicObjectAttributes extends GraphicObjectAttributes {
 	stepCount: number
+	[key: string]: string | number | boolean | undefined
 }
 export interface SplitObject extends BaseObject {
 	objectType: ObjectType.Split
