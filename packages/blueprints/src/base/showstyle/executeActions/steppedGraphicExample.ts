@@ -132,6 +132,10 @@ export async function executeGraphicNextStep(
 				...piece.piece,
 				content: {
 					...content,
+
+					// update step data
+					step: { ...content.step, current: newStep },
+
 					/* If needed modify the timelineObjects too.
 					
 					timelineObjects: content.timelineObjects.map((tlObj) => ({
@@ -143,8 +147,6 @@ export async function executeGraphicNextStep(
 								: undefined,
 						},
 					})), */
-					// update step data
-					step: { ...content.step, current: newStep },
 				},
 			})
 		}

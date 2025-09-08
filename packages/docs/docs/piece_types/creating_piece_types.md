@@ -5,6 +5,10 @@ import ParseGraphic from '@site/static/img/piece_types/ParseGraphic.png'
 
 # Creating Piece Types
 
+In this guide you'll learn how we extended the graphics piece to add a stepped graphic piece to the blueprints.
+
+By reading this guide and following the code you will be able to understand how the pieces are parsed by the blueprints in Sofie and allow you to create your own pieces.xs
+
 ## Create a new ObjectType in the blueprints
 
 In `packages\blueprints\src\common\definitions\objects.ts` create a new `ObjectType` in the `ObjectType` enum:
@@ -46,7 +50,11 @@ export interface SteppedGraphicObjectAttributes extends GraphicObjectAttributes 
 
 `packages\blueprints\src\common\definitions\objects.ts`
 
-Finally for the Sofie UI to render it as a stepped piece we need to return a piece with a step property on it's contents. Here the step property has to be the type of `NoraContentSteps`. The content of your pieces could also differ based on your use-case.
+Finally for the Sofie UI to render it as a stepped piece we need to return a piece with a step property on it's contents.
+
+This can be skipped if you don't need to show steps for your pieces.
+
+Here the step property has to be the type of `NoraContentSteps`. The content of your pieces could also differ based on your use-case.
 
 <img src={ParseGraphic} />
 
