@@ -5,7 +5,7 @@ import ParseGraphic from '@site/static/img/piece_types/ParseGraphic.png'
 
 # Creating Piece Types
 
-In this guide you'll learn how we extended the graphics piece to add a stepped graphic piece to the blueprints.
+In this guide you'll learn how we extended the graphics piece to add a stepped graphic piece to the blueprints which also covers the basics of adding a new piece type.
 
 By reading this guide and following the code you will be able to understand how the pieces are parsed by the blueprints in Sofie and allow you to create your own pieces.xs
 
@@ -31,7 +31,7 @@ We now have to also accept it during the parsing of the part:
 
 `packages\blueprints\src\base\showstyle\sofie-editor-parsers\gfx.ts`
 
-Create simple types, we only have a `stepCount` property here because of the Rundown Editor's limitations ideally we'd ingest a `NoraContentSteps` as a step property that is already defined in Sofie so if you want to implement stepped graphics we suggest looking into that.
+Create simple types, we only have a `stepCount` property here because of the Rundown Editor's limitations. Ideally we'd ingest a `NoraContentSteps` as a step property that is already defined in Sofie so if you want to implement stepped graphics we suggest looking into that.
 
 ```typescript
 export interface GraphicObjectBase extends BaseObject {

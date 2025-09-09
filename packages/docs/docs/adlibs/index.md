@@ -9,7 +9,7 @@ AdLibs are pieces or actions that can be taken by the user during a show. Sofie 
 1. AdLib Pieces
 2. AdLib Actions
 
-Both can have two context, either belong to a segment or part or have a global context (which is still limited to the Rundown they are in! It's important to keep in mind that a Global AdLib will not be available for an entire RundownPlaylist, it's tied to a given Rundown in that playlist.)
+Both can have two context, either belong to a segment/part or have a global context (which is still limited to the Rundown they are in! It's important to keep in mind that a Global AdLib will not be available for an entire RundownPlaylist, it's tied to a given Rundown in that playlist.)
 
 AdLib Pieces are the old way of improvising during a show, they simply insert a piece into it's layer.
 
