@@ -258,7 +258,7 @@ function changeSource(
 	if (part && part.payload) {
 		const newPayload: any = JSON.parse(JSON.stringify(part.payload))
 		let changed = false
-		// We asume that the first piece is the primary piece
+		// We assume that the first piece is the primary piece
 		// Which is not always the case, but for now we will assume that
 		// Here's an example:
 		//       "pieces": [
@@ -272,7 +272,7 @@ function changeSource(
 		// 	  "adlib": false
 		// 	}
 		if (newPayload.pieces[0].type !== newSourceType) {
-			newPayload.pieces[0].obejectType = newSourceType
+			newPayload.pieces[0].objectType = newSourceType
 			changed = true
 		}
 
