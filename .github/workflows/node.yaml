@@ -101,7 +101,7 @@ jobs:
         env:
           CI: true
       - name: Publish
-        if: github.ref == 'refs/heads/master' # always publish for just the master branch
+        if: github.ref == 'refs/heads/main' # always publish for just the main branch
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
