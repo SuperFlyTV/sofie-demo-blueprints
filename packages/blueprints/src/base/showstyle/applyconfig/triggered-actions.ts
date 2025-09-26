@@ -8,6 +8,7 @@ import {
 	TriggerType,
 } from '@sofie-automation/blueprints-integration'
 import { SourceLayer } from './layers.js'
+import { createAdLibHotkeyWithTriggerMode } from '../executeActions/steppedGraphicExample.js'
 
 const triggeredActionIdMap: Map<string, number> = new Map()
 let rankCounter = 0
@@ -25,6 +26,7 @@ export function getTriggeredActions(): IBlueprintTriggeredActions[] {
 			createAdLibHotkey(key, [SourceLayer.LowerThird, SourceLayer.LowerThird, SourceLayer.Ticker], false, i, undefined)
 		),
 		...['KeyV', 'Shift+KeyV'].map((key, i) => createAdLibHotkey(key, [SourceLayer.HostOverride], true, i, undefined)),
+		createAdLibHotkeyWithTriggerMode(rankCounter),
 	]
 	return triggeredActions
 }

@@ -13,6 +13,8 @@ export type SomeObject =
 	| VoiceoverObject
 	| ScriptObject
 	| StudioGuestObject
+	| GraphicObjectBase
+	| SteppedGraphicObject
 
 export type SomeAdlibPiece = VideoObject | GraphicObject
 
@@ -20,6 +22,7 @@ export enum ObjectType {
 	Camera = 'camera',
 	Video = 'video',
 	Graphic = 'graphic',
+	SteppedGraphic = 'stepped-graphic',
 	Split = 'split',
 	Overlay = 'overlay',
 	Lights = 'lights',
@@ -46,15 +49,35 @@ export interface VideoObject extends BaseObject {
 	objectType: ObjectType.Video
 	adlibVariant?: string
 }
-export interface GraphicObject extends BaseObject {
-	objectType: ObjectType.Graphic
-	attributes: {
-		name: string
-		description: string // TODO - need to allow undefined here..
-		location?: string
-		text?: string
-	}
+export interface GraphicObjectBase extends BaseObject {
+	objectType: ObjectType.Graphic | ObjectType.SteppedGraphic
 	adlibVariant?: string
+}
+export interface GraphicObject extends GraphicObjectBase {
+	objectType: ObjectType.Graphic
+	attributes: GraphicObjectAttributes
+}
+export type GraphicObjectAttributes = {
+	name: string
+	description: string // TODO - need to allow undefined here..
+	location?: string
+	text?: string
+}
+/*
+Note that we are not using the interfaces defined in Sofie,
+because we would need to be able to have object attributes ingested
+from the rundown editor which is currently not possible.
+
+Ideally we'd have a step attribute as a `NoraContentSteps` interface.
+
+*/
+export interface SteppedGraphicObject extends GraphicObjectBase {
+	objectType: ObjectType.SteppedGraphic
+	attributes: SteppedGraphicObjectAttributes
+}
+export interface SteppedGraphicObjectAttributes extends GraphicObjectAttributes {
+	stepCount: number
+	[key: string]: string | number | boolean | undefined
 }
 export interface SplitObject extends BaseObject {
 	objectType: ObjectType.Split

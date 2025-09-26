@@ -4,8 +4,9 @@ import {
 	IShowStyleUserContext,
 } from '@sofie-automation/blueprints-integration'
 import { literal, t } from '../../../common/util.js'
-import { ActionId } from '../actionDefinitions.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
+import { ActionId } from '../executeActions/actionDefinitions.js'
+import { exampleGraphicNextStepAdlibAction } from '../executeActions/steppedGraphicExample.js'
 
 export function getGlobalActions(
 	_context: IShowStyleUserContext,
@@ -34,5 +35,6 @@ export function getGlobalActions(
 			},
 			externalId: ingestRundown.externalId,
 		}),
+		exampleGraphicNextStepAdlibAction(ingestRundown),
 	]
 }

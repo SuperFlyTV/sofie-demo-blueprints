@@ -14,7 +14,7 @@ export function generateGfxPart(context: PartContext, part: PartProps<GfxProps>)
 
 	const fullscreenPiece = graphic.pieces[0]
 
-	const pieces = [fullscreenPiece]
+	const pieces = fullscreenPiece ? [fullscreenPiece] : []
 	const scriptPiece = createScriptPiece(part.payload.script, part.payload.externalId)
 	if (scriptPiece) pieces.push(scriptPiece)
 

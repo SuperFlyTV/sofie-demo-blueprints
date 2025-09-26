@@ -7,7 +7,8 @@ import { createInvalidProps } from './invalid.js'
 
 export function parseGfx(ingestPart: SpreadsheetIngestPart): PartProps<GfxProps | InvalidProps> {
 	const gfxObject = ingestPart.pieces.find(
-		(p): p is GraphicObject => (p.objectType as ObjectType) === ObjectType.Graphic
+		(p): p is GraphicObject =>
+			(p.objectType as ObjectType) === ObjectType.Graphic || (p.objectType as ObjectType) === ObjectType.SteppedGraphic
 	)
 	if (!gfxObject) {
 		return createInvalidProps(t('No graphic object'), ingestPart)
