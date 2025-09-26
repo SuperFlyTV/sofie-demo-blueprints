@@ -9,7 +9,7 @@ A TSR Action is a method which is executed inside of a TSR integration. The meth
 The main way to control devices (through TSR integrations) in Sofie is via the Timeline. By defining a time-based "State" in blueprints, the TSR can diff the target State compared to the current State at the time of playout, and generate commands to send. This is powerful since it allows Sofie (and blueprints) to not have to take into account the "current state" of the controlled device, and instead focus on the desired state at the time of playout.
 It also decouples the TSR device from Sofie/Blueprints on a "time-sensitiveness" level, since it allows Sofie to _not_ have to be as time-sensitive as the TSR device and increases the likelihood of commands being sent at the correct time.
 
-For certain operations though, the time sensitivity is not important, and there is no state to be diffed. Some example operations can be "Restart a device", "Clear all channels", "Send a custom HTTP request" or "Retrieve some data". It is for these operations that TSR Actions exist.
+For certain operations though, the time sensitivity is not important, and there is no state to be diffed. Some example operations can be "Restart a device", "Clear all channels", "Send a custom HTTP request" or "Retrieve some data". It is for these operations that TSR Actions exist. TSR Actions are often being used in these ways during onRundownActivate and onRundownDeActivate, to reset and prepare the system for a show or to perform some cleanup.
 
 ### A few words of caution
 

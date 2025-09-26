@@ -11,7 +11,7 @@ AdLibs are pieces or actions that can be taken by the user during a show. Sofie 
 
 Both can have two context, either belong to a segment/part or have a global context (which is still limited to the Rundown they are in! It's important to keep in mind that a Global AdLib will not be available for an entire RundownPlaylist, it's tied to a given Rundown in that playlist.)
 
-AdLib Pieces are the old way of improvising during a show, they simply insert a piece into it's layer.
+AdLib Pieces are the simple way of improvising during a show, they simply insert a piece into it's layer.
 
 AdLib Actions however as the name suggests are executing actions with logic inside your blueprint. Usually the result of an AdLib Action is a new piece or part in the rundown, but it can also change the current pieces and parts in the rundown.
 
