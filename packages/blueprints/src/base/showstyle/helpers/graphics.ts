@@ -1,5 +1,11 @@
 import { IBlueprintAdLibPiece, IBlueprintPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
-import { GraphicObject, ObjectType, SomeObject } from '../../../common/definitions/objects.js'
+import {
+	GraphicObject,
+	GraphicObjectBase,
+	ObjectType,
+	SomeObject,
+	SteppedGraphicObject,
+} from '../../../common/definitions/objects.js'
 import { literal } from '../../../common/util.js'
 import { StudioConfig } from '../../studio/helpers/config.js'
 import { CasparCGLayers } from '../../studio/layers.js'
@@ -13,7 +19,7 @@ export interface GraphicsResult {
 	adLibPieces: IBlueprintAdLibPiece[]
 }
 
-function getGraphicSourceLayer(object: GraphicObject): SourceLayer {
+function getGraphicSourceLayer(object: GraphicObjectBase): SourceLayer {
 	if (object.clipName.match(/ticker/i)) {
 		return SourceLayer.Ticker
 	} else if (object.clipName.match(/strap/i)) {
@@ -24,7 +30,7 @@ function getGraphicSourceLayer(object: GraphicObject): SourceLayer {
 		return SourceLayer.LowerThird
 	}
 }
-function getGraphicTlLayer(object: GraphicObject): CasparCGLayers {
+function getGraphicTlLayer(object: GraphicObjectBase): CasparCGLayers {
 	if (object.clipName.match(/ticker/i)) {
 		return CasparCGLayers.CasparCGGraphicsTicker
 	} else if (object.clipName.match(/strap/i)) {
@@ -36,7 +42,11 @@ function getGraphicTlLayer(object: GraphicObject): CasparCGLayers {
 	}
 }
 
-function getGraphicTlObject(config: StudioConfig, object: GraphicObject, isAdlib?: boolean): TimelineBlueprintExt[] {
+function getGraphicTlObject(
+	config: StudioConfig,
+	object: GraphicObjectBase,
+	isAdlib?: boolean
+): TimelineBlueprintExt[] {
 	const fullscreenAtemInput = getClipPlayerInput(config)
 	const isFullscreen = object.clipName.match(/fullscreen/i)
 
@@ -63,13 +73,13 @@ function getGraphicTlObject(config: StudioConfig, object: GraphicObject, isAdlib
 		...(isFullscreen ? createVisionMixerObjects(config, fullscreenAtemInput?.input || 0, config.casparcgLatency) : []),
 	]
 }
-function parseGraphic(config: StudioConfig, object: GraphicObject): IBlueprintPiece {
+function parseGraphic(config: StudioConfig, object: GraphicObject | SteppedGraphicObject): IBlueprintPiece {
 	const sourceLayer = getGraphicSourceLayer(object)
 	const lifespan = getGraphicLifespan(sourceLayer, object)
 
 	return {
 		externalId: object.id,
-		name: `${object.clipName} | ${Object.values<string | undefined>(object.attributes)
+		name: `${object.clipName} | ${Object.values<any>(object.attributes)
 			.filter((v) => v !== 'true' && v !== 'false')
 			.join(', ')}`, // todo - add info
 		lifespan,
@@ -78,6 +88,9 @@ function parseGraphic(config: StudioConfig, object: GraphicObject): IBlueprintPi
 		content: {
 			timelineObjects: getGraphicTlObject(config, object, false),
 
+			// Be careful the numbering of the current step is 1-based
+			// so it should start from 1 for `NoraContent` (stepped graphics) !
+			step: 'stepCount' in object.attributes ? { current: 1, count: object.attributes.stepCount } : undefined,
 			templateData: {
 				name: object.attributes.name,
 				description: object.attributes.description,
@@ -106,15 +119,20 @@ function parseGraphic(config: StudioConfig, object: GraphicObject): IBlueprintPi
 		prerollDuration: config.casparcgLatency,
 	}
 }
-export function parseAdlibGraphic(config: StudioConfig, object: GraphicObject, index: number): IBlueprintAdLibPiece {
+export function parseAdlibGraphic(
+	config: StudioConfig,
+	object: GraphicObjectBase,
+	index: number
+): IBlueprintAdLibPiece {
 	const sourceLayer = getGraphicSourceLayer(object)
 	const lifespan = getGraphicLifespan(sourceLayer, object)
 	const isFullscreen = object.clipName.match(/fullscreen/i)
 
 	return {
 		externalId: object.id,
-		name: `${object.clipName} | ${Object.values<string | undefined>(object.attributes)
-			.filter((v) => v !== 'true' && v !== 'false')
+		name: `${object.clipName} | ${Object.values<string | number | boolean | undefined>(object.attributes)
+			.map((v) => (typeof v === 'string' ? v : v?.toString()))
+			.filter((v) => v !== 'true' && v !== 'false' && v !== undefined)
 			.join(', ')}`, // todo - add info
 		lifespan,
 		sourceLayerId: sourceLayer,
@@ -155,7 +173,7 @@ export function parseGraphicsFromObjects(config: StudioConfig, objects: SomeObje
 		adLibPieces: graphicsObjects.filter((o) => !!o.isAdlib).map((o, i) => parseAdlibGraphic(config, o, i)),
 	}
 }
-function getGraphicLifespan(sourceLayer: SourceLayer, object: GraphicObject): PieceLifespan {
+function getGraphicLifespan(sourceLayer: SourceLayer, object: GraphicObjectBase): PieceLifespan {
 	if (sourceLayer === SourceLayer.Ticker) {
 		return PieceLifespan.OutOnRundownEnd
 	}
@@ -164,7 +182,11 @@ function getGraphicLifespan(sourceLayer: SourceLayer, object: GraphicObject): Pi
 		return PieceLifespan.OutOnRundownEnd
 	}
 
-	if (sourceLayer === SourceLayer.Strap && (!object.attributes['text'] || object.attributes['text'].match(/live/i))) {
+	if (
+		sourceLayer === SourceLayer.Strap &&
+		(!object.attributes['text'] ||
+			(typeof object.attributes['text'] === 'string' && object.attributes['text'].match(/live/i)))
+	) {
 		return PieceLifespan.OutOnSegmentEnd
 	}
 

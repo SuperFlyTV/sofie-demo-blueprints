@@ -6,6 +6,7 @@ import {
 } from '@sofie-automation/blueprints-integration'
 import { ActionId } from './actionDefinitions.js'
 import { SourceLayer } from '../applyconfig/layers.js'
+import { ExampleGFXStepActionOptions, executeGraphicNextStep } from './steppedGraphicExample.js'
 
 export async function executeAction(
 	context: IActionExecutionContext,
@@ -26,14 +27,19 @@ export async function executeAction(
 		triggerMode,
 		privateData,
 		publicData,
+		'executeActionactionOptions',
 		actionOptions,
 		playoutPersistentState
 	)
+
+	// Forward the action to the handlers for execution
 
 	if (actionId === ActionId.LastRemote) {
 		await executeLastOnSourceLayer(context, SourceLayer.Remote)
 	} else if (actionId === ActionId.LastDVE) {
 		await executeLastOnSourceLayer(context, SourceLayer.DVE)
+	} else if (actionId === ActionId.GFXStep) {
+		await executeGraphicNextStep(context, triggerMode, actionOptions as ExampleGFXStepActionOptions)
 	}
 }
 
