@@ -91,12 +91,12 @@ export function createAdLibHotkeyExample(): IBlueprintTriggeredActions {
 			['Hotkey trigger']: {
 				type: TriggerType.hotkey,
 				keys: 'L',
-				up: true,
+				up: false,
 			},
 			['Device trigger']: {
 				type: TriggerType.device,
 				deviceId: 'device0',
-				triggerId: '7 ↥', // on release of streamdeck button #7 connected via input gateway
+				triggerId: '7 ↧', // on release of streamdeck button #7 connected via input gateway
 			},
 		},
 		name: 'Custom Adlib from Blueprint',

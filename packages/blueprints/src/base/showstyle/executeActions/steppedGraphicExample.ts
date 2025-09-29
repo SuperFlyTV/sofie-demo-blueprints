@@ -191,13 +191,13 @@ export function createAdLibHotkeyWithTriggerMode(rankCounter: number): IBlueprin
 		triggers: {
 			['Hotkey trigger']: {
 				type: TriggerType.hotkey,
-				keys: 'L', // executed on release of the 'L' key when the sofie UI is open
-				up: true,
+				keys: 'L', // executed on press of the 'L' key when the sofie UI is open
+				up: false,
 			},
 			['Device trigger']: {
 				type: TriggerType.device,
 				deviceId: 'device0',
-				triggerId: '7 ↥', // on release of streamdeck button #7 connected via input gateway
+				triggerId: '7 ↧', // on press of streamdeck button #7 connected via input gateway
 			},
 		},
 		// User presentable name of the trigger

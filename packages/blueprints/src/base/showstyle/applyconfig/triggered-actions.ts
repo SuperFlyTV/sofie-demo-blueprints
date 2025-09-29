@@ -102,7 +102,7 @@ export function createAdLibHotkey(
 			[TriggerType.hotkey]: {
 				type: TriggerType.hotkey,
 				keys: keys,
-				up: true,
+				up: false,
 			},
 		},
 		name: label,
