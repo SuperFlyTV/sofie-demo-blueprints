@@ -15,6 +15,7 @@ import {
 import { literal, t } from '../../../common/util.js'
 import { SourceLayer, getOutputLayerForSourceLayer } from '../applyconfig/layers.js'
 import { ActionId } from './actionDefinitions.js'
+import { getResolvedCurrentlyPlayingPieceInstances } from '../helpers/pieces.js'
 
 /**
  * Defines an AdLib Action that steps through a Stepped Graphic.
@@ -102,7 +103,7 @@ export async function executeGraphicNextStep(
 	}
 ): Promise<void> {
 	// we filter for any stepped graphic piece
-	const pieceInstances = await context.getPieceInstances('current')
+	const pieceInstances = await getResolvedCurrentlyPlayingPieceInstances(context)
 	const steppedPieceInstances = pieceInstances.filter(
 		(piece) => (piece.piece.content as unknown as WithTimeline<NoraContent>).step
 	)
