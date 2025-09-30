@@ -47,6 +47,13 @@ function generatePlayoutDevices(config: BlueprintConfig): Record<string, TSR.Dev
 			type: TSR.DeviceType.HTTPSEND,
 			options: {},
 		}),
+		['casparcg0']: literal<TSR.DeviceOptionsCasparCG>({
+			type: TSR.DeviceType.CASPARCG,
+			options: {
+				host: config.studio.casparcg.host,
+				port: config.studio.casparcg.port || 5250,
+			},
+		}),
 	}
 
 	if (config.studio.visionMixer.type === VisionMixerDevice.Atem) {

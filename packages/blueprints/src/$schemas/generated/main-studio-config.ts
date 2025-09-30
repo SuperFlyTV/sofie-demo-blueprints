@@ -8,6 +8,7 @@
 export interface StudioConfig {
 	visionMixer: VisionMixerConfig
 	audioMixer: AudioMixerConfig
+	casparcg: CasparCGConfig
 	atemSources: {
 		[k: string]: InputConfig
 	}
@@ -55,6 +56,19 @@ export interface AudioMixerConfig {
 	host: string
 	/**
 	 * Port of Sisyfos
+	 */
+	port: number
+}
+/**
+ * CasparCG device configuration
+ */
+export interface CasparCGConfig {
+	/**
+	 * Host IP of CasparCG
+	 */
+	host: string
+	/**
+	 * Port of CasparCG
 	 */
 	port: number
 }
