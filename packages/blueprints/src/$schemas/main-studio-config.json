@@ -78,6 +78,31 @@
 			"required": ["deviceId", "host", "port"],
 			"additionalProperties": false
 		},
+		"casparcg": {
+			"type": "object",
+			"title": "CasparCGConfig",
+			"description": "CasparCG device configuration",
+			"ui:category": "CasparCG Device",
+			"ui:title": "CasparCG Device Configuration",
+			"properties": {
+				"host": {
+					"type": "string",
+					"description": "Host IP of CasparCG",
+					"ui:title": "Host Ip",
+					"ui:description": "Host IP of CasparCG",
+					"default": "127.0.0.1"
+				},
+				"port": {
+					"type": "integer",
+					"description": "Port of CasparCG",
+					"ui:title": "Port",
+					"ui:description": "Port of CasparCG (default is 5250)",
+					"default": 5250
+				}
+			},
+			"required": ["host", "port"],
+			"additionalProperties": false
+		},
 		"atemSources": {
 			"type": "object",
 			"ui:title": "Atem Sources",
@@ -213,7 +238,8 @@
 		"atemOutputs",
 		"atemSources",
 		"visionMixer",
-		"audioMixer"
+		"audioMixer",
+		"casparcg"
 	],
 	"$defs": {
 		"SourceType": {

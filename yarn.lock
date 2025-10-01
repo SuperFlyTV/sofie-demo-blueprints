@@ -3895,14 +3895,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sofie-automation/blueprints-integration@npm:1.53.0-nightly-release53-20250423-081454-dc957dd.0":
-  version: 1.53.0-nightly-release53-20250423-081454-dc957dd.0
-  resolution: "@sofie-automation/blueprints-integration@npm:1.53.0-nightly-release53-20250423-081454-dc957dd.0"
+"@sofie-automation/blueprints-integration@npm:1.53.0-nightly-release53-20250924-143640-007a9da.0":
+  version: 1.53.0-nightly-release53-20250924-143640-007a9da.0
+  resolution: "@sofie-automation/blueprints-integration@npm:1.53.0-nightly-release53-20250924-143640-007a9da.0"
   dependencies:
-    "@sofie-automation/shared-lib": "npm:1.53.0-nightly-release53-20250423-081454-dc957dd.0"
+    "@sofie-automation/shared-lib": "npm:1.53.0-nightly-release53-20250924-143640-007a9da.0"
     tslib: "npm:^2.8.1"
     type-fest: "npm:^4.33.0"
-  checksum: 10c0/4a1f3b214f2532a2fb155073d0d05e4b14f6bcd4ca1b1ad1524f3581174c56f3c750074002d872c6364c2d0decb854497b7f653577203cc31d1a1b0e4608f45c
+  checksum: 10c0/7c46c47da0e654c5765813eb36d088f6833601ebc71126879267fd5e48910db24a0a41ab82b941244f200c92fc3d0b72f72c8696c0e8f450ffeb6124cc643f64
   languageName: node
   linkType: hard
 
@@ -3943,15 +3943,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sofie-automation/shared-lib@npm:1.53.0-nightly-release53-20250423-081454-dc957dd.0":
-  version: 1.53.0-nightly-release53-20250423-081454-dc957dd.0
-  resolution: "@sofie-automation/shared-lib@npm:1.53.0-nightly-release53-20250423-081454-dc957dd.0"
+"@sofie-automation/shared-lib@npm:1.53.0-nightly-release53-20250924-143640-007a9da.0":
+  version: 1.53.0-nightly-release53-20250924-143640-007a9da.0
+  resolution: "@sofie-automation/shared-lib@npm:1.53.0-nightly-release53-20250924-143640-007a9da.0"
   dependencies:
     "@mos-connection/model": "npm:^4.2.2"
-    timeline-state-resolver-types: "npm:9.3.0-release52.2"
+    timeline-state-resolver-types: "npm:9.4.0-nightly-release53-20250730-145840-ce6dce9c1.0"
     tslib: "npm:^2.8.1"
     type-fest: "npm:^4.33.0"
-  checksum: 10c0/4a3db962ef3e76f638b10facf39f2c8d9a3d5ebcfca879387fe31660e118256e4c436be50983fcac653187f4f2b54f9642f2577b6b8c3619b7bc7e42e2db59e9
+  checksum: 10c0/7e03bbeb14b235793568c6775222d5aba43734d7ec1e4a79c58924557c40c99df29c8cae736a4e8f359be07819ae4a03b8aa94ca58a185136df88fc768c3954b
   languageName: node
   linkType: hard
 
@@ -5796,7 +5796,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "blueprints@workspace:packages/blueprints"
   dependencies:
-    "@sofie-automation/blueprints-integration": "npm:1.53.0-nightly-release53-20250423-081454-dc957dd.0"
+    "@sofie-automation/blueprints-integration": "npm:1.53.0-nightly-release53-20250924-143640-007a9da.0"
     "@types/jest": "npm:^29.5.14"
     "@types/node": "npm:^22.15.3"
     "@types/object-path": "npm:^0.11.4"
@@ -17738,12 +17738,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"timeline-state-resolver-types@npm:9.3.0-release52.2":
-  version: 9.3.0-release52.2
-  resolution: "timeline-state-resolver-types@npm:9.3.0-release52.2"
+"timeline-state-resolver-types@npm:9.4.0-nightly-release53-20250730-145840-ce6dce9c1.0":
+  version: 9.4.0-nightly-release53-20250730-145840-ce6dce9c1.0
+  resolution: "timeline-state-resolver-types@npm:9.4.0-nightly-release53-20250730-145840-ce6dce9c1.0"
   dependencies:
     tslib: "npm:^2.6.3"
-  checksum: 10c0/c7f43960b0a98e6a1eb40b3ac6f42053f21528ae63f8151bebbd608056cb6fbc4687fa6141a627c7c14fd0581b49c0b6c10a4d19d1da346b6830093a6f5159b2
+  checksum: 10c0/61ea4a31ee469b4070124045ff1dc4a92a287ce1f6ec2f3c15bfa4e3024c5c70d281933fd4e84be5fe0b832e75136a2c97409b02390740cf60de44506d8dc924
   languageName: node
   linkType: hard
 
