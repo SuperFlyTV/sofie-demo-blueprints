@@ -16,6 +16,7 @@ import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 import { parseConfig } from '../helpers/config.js'
+import { createPieceUserEditOperations } from '../helpers/userEditOperations.js'
 
 export function generateVOPart(context: PartContext, part: PartProps<VOProps>): BlueprintResultPart {
 	const config = parseConfig(context).studio
@@ -30,6 +31,7 @@ export function generateVOPart(context: PartContext, part: PartProps<VOProps>): 
 		lifespan: PieceLifespan.WithinPart,
 		sourceLayerId: SourceLayer.VO,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.VO),
+		userEditOperations: createPieceUserEditOperations(),
 
 		content: {
 			fileName: part.payload.clipProps.fileName,
