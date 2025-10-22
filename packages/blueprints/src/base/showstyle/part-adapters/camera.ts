@@ -13,6 +13,7 @@ import { getSourceInfoFromRaw } from '../helpers/sources.js'
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { parseConfig } from '../helpers/config.js'
+import { createPieceUserEditOperations } from '../helpers/userEditOperations.js'
 
 export function generateCameraPart(context: PartContext, part: PartProps<CameraProps>): BlueprintResultPart {
 	const config = parseConfig(context).studio
@@ -29,6 +30,7 @@ export function generateCameraPart(context: PartContext, part: PartProps<CameraP
 		lifespan: PieceLifespan.WithinPart,
 		sourceLayerId: SourceLayer.Camera,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Camera),
+		userEditOperations: createPieceUserEditOperations(),
 		content: {
 			timelineObjects: [...createVisionMixerObjects(config, sourceInfo.input), audioTlObj],
 		},
@@ -75,6 +77,7 @@ function addGuest(config: StudioConfig, count: number): IBlueprintPiece {
 		lifespan: PieceLifespan.OutOnSegmentEnd,
 		sourceLayerId: SourceLayer.StudioGuests,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.StudioGuests),
+		userEditOperations: createPieceUserEditOperations(),
 		content: {
 			timelineObjects: [audioTlObj],
 		},

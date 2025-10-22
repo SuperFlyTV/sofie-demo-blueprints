@@ -15,6 +15,7 @@ import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 import { VmixInputConfig } from '../../../$schemas/generated/main-studio-config.js'
 import { parseConfig } from '../helpers/config.js'
+import { createPieceUserEditOperations } from '../helpers/userEditOperations.js'
 
 const SUPER_SOURCE_LATENCY = 80
 const SUPER_SOURCE_INPUT = 6000
@@ -134,6 +135,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 		lifespan: PieceLifespan.WithinPart,
 		sourceLayerId: SourceLayer.DVE,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.DVE),
+		userEditOperations: createPieceUserEditOperations(),
 		prerollDuration: SUPER_SOURCE_LATENCY,
 		content: {
 			...dveLayoutToContent(config, { boxes }, part.payload.inputs),
@@ -206,6 +208,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 		lifespan: PieceLifespan.OutOnSegmentEnd,
 		sourceLayerId: SourceLayer.DVE_RETAIN,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.DVE_RETAIN),
+		userEditOperations: createPieceUserEditOperations(),
 		prerollDuration: SUPER_SOURCE_LATENCY,
 		content: {
 			...dveLayoutToContent(config, { boxes }, part.payload.inputs),

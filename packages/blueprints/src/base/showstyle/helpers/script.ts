@@ -7,6 +7,7 @@ import {
 } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../../common/util.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
+import { createPieceUserEditOperations } from './userEditOperations.js'
 
 function getFirstWords(input: string): string {
 	const firstWordsMatch = (input + '').match(/^([\S]*[^\n]){1,3}/)
@@ -40,6 +41,7 @@ export function createScriptPiece(script: string | undefined, extId: string): IB
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Script),
 		pieceType: IBlueprintPieceType.InTransition,
 		lifespan: PieceLifespan.WithinPart,
+		userEditOperations: createPieceUserEditOperations(),
 		privateData: {
 			source: 'script',
 		},

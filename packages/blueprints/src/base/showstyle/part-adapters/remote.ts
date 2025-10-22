@@ -11,6 +11,7 @@ import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { ObjectType } from '../../../common/definitions/objects.js'
 import { parseConfig } from '../helpers/config.js'
+import { createPieceUserEditOperations } from '../helpers/userEditOperations.js'
 
 export function generateRemotePart(context: PartContext, part: PartProps<RemoteProps>): BlueprintResultPart {
 	const config = parseConfig(context).studio
@@ -27,6 +28,7 @@ export function generateRemotePart(context: PartContext, part: PartProps<RemoteP
 		lifespan: PieceLifespan.WithinPart,
 		sourceLayerId: SourceLayer.Remote,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Remote),
+		userEditOperations: createPieceUserEditOperations(),
 		content: {
 			timelineObjects: [...createVisionMixerObjects(config, sourceInfo.input), audioTlObj],
 		},
