@@ -37,6 +37,7 @@ export interface EditorIngestPart {
 
 export interface EditorIngestPiece {
 	id: string
+	name?: string // hacky, we need to make it optional, since it's being cast as spreadsheet types in some parts of the code. We need a bigger refactor!!
 	objectType: string
 	objectTime: number
 	duration: number
