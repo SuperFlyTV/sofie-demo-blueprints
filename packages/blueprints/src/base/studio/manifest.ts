@@ -60,6 +60,10 @@ export const baseManifest: StudioBlueprintManifest<StudioConfig> = {
 					deviceId: 'sisyfos0',
 				},
 				sisyfosSources: {},
+				casparcg: {
+					host: '0.0.0.0',
+					port: 5250,
+				},
 			},
 		},
 	},

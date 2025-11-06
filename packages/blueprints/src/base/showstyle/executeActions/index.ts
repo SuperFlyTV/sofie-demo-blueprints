@@ -1,6 +1,5 @@
 import {
 	ActionUserData,
-	BlueprintPlayoutPersistentStore,
 	IActionExecutionContext,
 	IDataStoreActionExecutionContext,
 } from '@sofie-automation/blueprints-integration'
@@ -10,7 +9,7 @@ import { ExampleGFXStepActionOptions, executeGraphicNextStep } from './steppedGr
 
 export async function executeAction(
 	context: IActionExecutionContext,
-	playoutPersistentState: BlueprintPlayoutPersistentStore<unknown>,
+	// playoutPersistentState: BlueprintPlayoutPersistentStore<unknown>,
 	actionId0: string,
 	userData: ActionUserData,
 	triggerMode?: string,
@@ -28,8 +27,7 @@ export async function executeAction(
 		privateData,
 		publicData,
 		'executeActionactionOptions',
-		actionOptions,
-		playoutPersistentState
+		actionOptions
 	)
 
 	// Forward the action to the handlers for execution
