@@ -5801,6 +5801,7 @@ __metadata:
     "@types/node": "npm:^22.15.3"
     "@types/object-path": "npm:^0.11.4"
     "@types/underscore": "npm:~1.13.0"
+    dereference-json-schema: "npm:^0.2.1"
     jest: "npm:^29.7.0"
     object-path: "npm:^0.11.8"
     sofie-blueprint-tools: "npm:^1.0.1"
@@ -7356,6 +7357,13 @@ __metadata:
   version: 2.0.3
   resolution: "dequal@npm:2.0.3"
   checksum: 10c0/f98860cdf58b64991ae10205137c0e97d384c3a4edc7f807603887b7c4b850af1224a33d88012009f150861cbee4fa2d322c4cc04b9313bee312e47f6ecaa888
+  languageName: node
+  linkType: hard
+
+"dereference-json-schema@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "dereference-json-schema@npm:0.2.1"
+  checksum: 10c0/c45e4a0fffd82d21f7819ab667874820444d817cd80301993a26215d41f2b0012c91cf49408388b39da2e7eeb02bc532f89397a8887a7bd90f4ecddffc052261
   languageName: node
   linkType: hard
 
