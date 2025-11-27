@@ -15,6 +15,7 @@ import { getRundown } from './rundown/index.js'
 import { validateConfig } from './validateConfig.js'
 import { applyConfig } from './applyconfig/index.js'
 import * as ConfigSchema from '../../$schemas/main-showstyle-config.json'
+import { dereferenceSync } from 'dereference-json-schema'
 
 export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'blueprintId' | 'configPresets'> = {
 	blueprintType: BlueprintManifestType.SHOWSTYLE,
@@ -23,7 +24,9 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 	integrationVersion: __VERSION_INTEGRATION__,
 	TSRVersion: __VERSION_TSR__,
 
-	showStyleConfigSchema: JSONBlobStringify<JSONSchema>(ConfigSchema as any),
+	showStyleConfigSchema: JSONBlobStringify<JSONSchema>(
+		dereferenceSync(JSON.parse(JSON.stringify(ConfigSchema))) as any
+	),
 
 	getShowStyleVariantId,
 	getRundown,
@@ -33,11 +36,11 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 	executeDataStoreAction,
 
 	getAbResolverConfiguration,
-	translations: __TRANSLATION_BUNDLES__,
+	// translations: __TRANSLATION_BUNDLES__,
 
 	validateConfig,
 	applyConfig,
-	onRundownActivate: async (_context: IRundownActivationContext, _wasActive: boolean) => {
+	onRundownActivate: async (_context: IRundownActivationContext) => {
 		// Noop
 	},
 	fixUpConfig: () => {

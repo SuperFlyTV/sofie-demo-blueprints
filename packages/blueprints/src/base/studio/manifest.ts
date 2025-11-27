@@ -13,6 +13,7 @@ import { applyConfig } from './applyConfig/index.js'
 import * as ConfigSchema from '../../$schemas/main-studio-config.json'
 import { StudioConfig, VisionMixerDevice } from './helpers/config.js'
 import { processIngestData } from './userEditOperations/processIngestData.js'
+import { dereferenceSync } from 'dereference-json-schema'
 
 export const baseManifest: StudioBlueprintManifest<StudioConfig> = {
 	blueprintType: BlueprintManifestType.STUDIO,
@@ -21,7 +22,7 @@ export const baseManifest: StudioBlueprintManifest<StudioConfig> = {
 	integrationVersion: __VERSION_INTEGRATION__,
 	TSRVersion: __VERSION_TSR__,
 
-	studioConfigSchema: JSONBlobStringify<JSONSchema>(ConfigSchema as any),
+	studioConfigSchema: JSONBlobStringify<JSONSchema>(dereferenceSync(JSON.parse(JSON.stringify(ConfigSchema))) as any),
 
 	getBaseline,
 	getShowStyleId,
@@ -58,6 +59,10 @@ export const baseManifest: StudioBlueprintManifest<StudioConfig> = {
 					host: '0.0.0.0',
 					port: 1176,
 					deviceId: 'sisyfos0',
+				},
+				casparcg: {
+					host: '0.0.0.0',
+					port: 5250,
 				},
 				sisyfosSources: {},
 			},
