@@ -15,6 +15,7 @@ import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 import { parseConfig } from '../helpers/config.js'
+import { createPieceUserEditOperations } from '../helpers/userEditOperations.js'
 
 export function generateOpenerPart(context: PartContext, part: PartProps<TitlesProps>): BlueprintResultPart {
 	const config = parseConfig(context).studio
@@ -28,6 +29,7 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 		name: `Titles`,
 		lifespan: PieceLifespan.WithinPart,
 		sourceLayerId: SourceLayer.Titles,
+		userEditOperations: createPieceUserEditOperations(),
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Titles),
 
 		content: {
