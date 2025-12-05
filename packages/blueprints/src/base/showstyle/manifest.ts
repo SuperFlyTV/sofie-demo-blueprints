@@ -4,6 +4,7 @@ import {
 	JSONBlobStringify,
 	JSONSchema,
 	IRundownActivationContext,
+	PackageStatusMessage,
 } from '@sofie-automation/blueprints-integration'
 import { executeAction, executeDataStoreAction } from './executeActions/index.js'
 import { getAdlibItem } from './getAdlibItem.js'
@@ -75,4 +76,8 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 	// fixUpConfig: () => {
 	// 	// Noop
 	// },
+
+	packageStatusMessages: {
+		[PackageStatusMessage.MISSING_FILE_PATH]: `Some file paths are missing or incorrect. Please check your show style configuration.`,
+	},
 }
