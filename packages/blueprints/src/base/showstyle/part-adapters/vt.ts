@@ -34,6 +34,7 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 		lifespan: PieceLifespan.WithinPart,
 		sourceLayerId: SourceLayer.VT,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.VT),
+		displayAbChannel: true,
 		abSessions: [
 			{
 				sessionName: part.payload.externalId,
