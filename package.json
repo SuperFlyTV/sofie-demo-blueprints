@@ -20,10 +20,10 @@
     "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
     "devDependencies": {
         "@sofie-automation/code-standard-preset": "3.0.0",
-        "eslint": "^9.25.1",
+        "eslint": "^9.39.1",
         "husky": "^9.1.7",
-        "lint-staged": "^15.5.1",
-        "prettier": "^3.5.3",
+        "lint-staged": "^15.5.2",
+        "prettier": "^3.7.4",
         "typescript": "~5.8.3"
     },
     "workspaces": [
