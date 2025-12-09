@@ -11,11 +11,11 @@ import { preprocessConfig } from './preprocessConfig.js'
 //import { getRundownPlaylistInfo } from './getRundownPlaylistInfo.js'
 import { applyConfig } from './applyConfig/index.js'
 import * as ConfigSchema from '../../$schemas/main-studio-config.json'
-import { StudioConfig, VisionMixerDevice } from './helpers/config.js'
+import { StudioConfig } from './helpers/config.js'
 import { processIngestData } from './userEditOperations/processIngestData.js'
 import { dereferenceSync } from 'dereference-json-schema'
 
-export const baseManifest: StudioBlueprintManifest<StudioConfig> = {
+export const baseManifest: Omit<StudioBlueprintManifest<StudioConfig>, 'blueprintId' | 'configPresets'> = {
 	blueprintType: BlueprintManifestType.STUDIO,
 
 	blueprintVersion: __VERSION__,
@@ -40,34 +40,6 @@ export const baseManifest: StudioBlueprintManifest<StudioConfig> = {
 	// This is the place where UsedEditOperations and PropertiesPanel edits are processed:
 	processIngestData,
 
-	configPresets: {
-		default: {
-			name: 'Default',
-			config: {
-				previewRenderer: 'sofie',
-				casparcgLatency: 0,
-				visionMixer: {
-					type: VisionMixerDevice.Atem,
-					host: '0.0.0.0',
-					port: 0,
-					deviceId: 'atem',
-				},
-				vmixSources: {},
-				atemOutputs: {},
-				atemSources: {},
-				audioMixer: {
-					host: '0.0.0.0',
-					port: 1176,
-					deviceId: 'sisyfos0',
-				},
-				casparcg: {
-					host: '0.0.0.0',
-					port: 5250,
-				},
-				sisyfosSources: {},
-			},
-		},
-	},
 	translations: __TRANSLATION_BUNDLES__,
 }
 

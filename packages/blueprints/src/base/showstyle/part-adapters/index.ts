@@ -39,10 +39,8 @@ export function generateParts(context: ISegmentUserContext, intermediateSegment:
 			type: UserEditingType.ACTION,
 			id: BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES,
 			label: t('Lock Segment for NRCS Updates'),
-			svgIcon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-  <rect x="3" y="7" width="10" height="7" rx="1" ry="1" />
-  <path d="M5 7V5a3 3 0 0 1 6 0v2" />
-</svg>`,
+			// TODO: This could be a file on disk instead of data URL
+			icon: `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogIDxyZWN0IHg9IjMiIHk9IjciIHdpZHRoPSIxMCIgaGVpZ2h0PSI3IiByeD0iMSIgcnk9IjEiIC8+CiAgPHBhdGggZD0iTTUgN1Y1YTMgMyAwIDAgMSA2IDB2MiIgLz4KPC9zdmc+`,
 			isActive: intermediateSegment.userEditStates?.[BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES],
 		},
 	]
