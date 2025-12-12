@@ -57,8 +57,13 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: S
 				piece.objectTime = piece.objectTime * 1000
 
 				if (graphicTypes.includes(piece.objectType)) {
-					piece.clipName = 'gfx/' + piece.objectType + ` | ${piece.name}`
+					piece.clipName = 'gfx/' + piece.objectType
 					piece.objectType = ObjectType.Graphic
+
+					// Pass piece name to template as an attribute if it exists
+					if (piece.name) {
+						piece.attributes.pieceName = piece.name
+					}
 				}
 			})
 
