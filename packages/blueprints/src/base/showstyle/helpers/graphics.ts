@@ -24,7 +24,7 @@ function getGraphicSourceLayer(object: GraphicObjectBase): SourceLayer {
 		return SourceLayer.Ticker
 	} else if (object.clipName.match(/strap/i)) {
 		return SourceLayer.Strap
-	} else if (object.clipName.match(/fullscreen/i)) {
+	} else if (object.clipName.match(/fullscreen|coming-up/i)) {
 		return SourceLayer.GFX
 	} else {
 		return SourceLayer.LowerThird
@@ -35,7 +35,7 @@ function getGraphicTlLayer(object: GraphicObjectBase): CasparCGLayers {
 		return CasparCGLayers.CasparCGGraphicsTicker
 	} else if (object.clipName.match(/strap/i)) {
 		return CasparCGLayers.CasparCGGraphicsStrap
-	} else if (object.clipName.match(/fullscreen/i)) {
+	} else if (object.clipName.match(/fullscreen|coming-up/i)) {
 		return CasparCGLayers.CasparCGClipPlayer1
 	} else {
 		return CasparCGLayers.CasparCGGraphicsLowerThird
