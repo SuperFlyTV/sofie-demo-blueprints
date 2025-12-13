@@ -14,6 +14,7 @@ import { getAbResolverConfiguration } from './getAbResolverConfiguration.js'
 import { getRundown } from './rundown/index.js'
 import { validateConfig } from './validateConfig.js'
 import { applyConfig } from './applyconfig/index.js'
+import { onSetAsNext } from './onSetAsNext.js'
 import * as ConfigSchema from '../../$schemas/main-showstyle-config.json'
 import { dereferenceSync } from 'dereference-json-schema'
 
@@ -65,6 +66,8 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 	 * This should be written to give a predictable and stable result, it can be called with the same config multiple times.
 	 */
 	applyConfig,
+	/** Called when a new next part is set */
+	onSetAsNext,
 	/** Called when a RundownPlaylist has been activated */
 	onRundownActivate: async (_context: IRundownActivationContext) => {
 		// Noop
