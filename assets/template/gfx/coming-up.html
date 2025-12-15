@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Up</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            font-size: 300%;
+        }
+
+        .coming-up {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .coming-up h2 {
+            color: white;
+            margin-top: 0;
+        }
+
+        #parts-list {
+            color: white;
+            list-style: none;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="coming-up">
+        <h2>Coming Up</h2>
+        <ul id="parts-list">
+            <!-- Parts will be injected here -->
+            <li>Place holder part</li>
+        </ul>
+    </div>
+    <script>
+        // CasparCG will call update() with the data
+        function update(data) {
+            var partsList = document.getElementById('parts-list');
+            partsList.innerHTML = '';
+
+            try {
+                var parsedData = data;
+                if (typeof data === 'string') {
+                    parsedData = JSON.parse(data);
+                }
+                if (parsedData && parsedData.parts) {
+                    parsedData.parts.forEach(function (part) {
+                        var li = document.createElement('li');
+                        li.className = 'part';
+                        li.textContent = part.number + '. ' + part.title;
+                        partsList.appendChild(li);
+                    });
+                } else {
+                    var pre = document.createElement('pre');
+                    pre.className = 'part';
+                    pre.textContent = 'No upcoming parts available.\n' + JSON.stringify(parsedData, null, 2);
+                    partsList.appendChild(pre);
+                }
+            }
+            catch (e) {
+                var pre = document.createElement('pre');
+                pre.className = 'part';
+                pre.textContent = 'Error parsing data:\n' + e.message + '\n' + (typeof data === 'string' ? data : JSON.stringify(data));
+                partsList.appendChild(pre);
+            }
+        }
+
+        // Optional: play/stop animations
+        function play() { }
+        function stop() { }
+    </script>
+</body>
+
+</html>
