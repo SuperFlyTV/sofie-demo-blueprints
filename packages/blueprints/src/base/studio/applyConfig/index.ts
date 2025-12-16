@@ -65,7 +65,7 @@ function generatePlayoutDevices(config: BlueprintConfig): BlueprintResultApplySt
 		},
 		graphics: {
 			parentConfigId: 'playoutgateway',
-			options: literal<TSR.DeviceOptionsHTTPSend>({
+			options: literal<TSR.DeviceOptionsHttpSend>({
 				type: TSR.DeviceType.HTTPSEND,
 				options: {},
 			}),
