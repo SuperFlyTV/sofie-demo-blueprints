@@ -58,20 +58,20 @@ export function generateParentDevices(): Record<string, BlueprintParentDeviceSet
 function generatePlayoutDevices(config: BlueprintConfig): BlueprintResultApplyStudioConfig['playoutDevices'] {
 	const playoutDevices: BlueprintResultApplyStudioConfig['playoutDevices'] = {
 		abstract: {
-			parentDeviceName: 'playoutgateway',
+			parentConfigId: 'playoutgateway',
 			options: literal<TSR.DeviceOptionsAbstract>({
 				type: TSR.DeviceType.ABSTRACT,
 			}),
 		},
 		graphics: {
-			parentDeviceName: 'playoutgateway',
-			options: literal<TSR.DeviceOptionsHTTPSend>({
+			parentConfigId: 'playoutgateway',
+			options: literal<TSR.DeviceOptionsHttpSend>({
 				type: TSR.DeviceType.HTTPSEND,
 				options: {},
 			}),
 		},
 		casparcg0: {
-			parentDeviceName: 'playoutgateway',
+			parentConfigId: 'playoutgateway',
 			options: literal<TSR.DeviceOptionsCasparCG>({
 				type: TSR.DeviceType.CASPARCG,
 				options: {
@@ -84,7 +84,7 @@ function generatePlayoutDevices(config: BlueprintConfig): BlueprintResultApplySt
 
 	if (config.studio.visionMixer.type === VisionMixerDevice.Atem) {
 		playoutDevices[config.studio.visionMixer.deviceId] = {
-			parentDeviceName: 'playoutgateway',
+			parentConfigId: 'playoutgateway',
 			options: literal<TSR.DeviceOptionsAtem>({
 				type: TSR.DeviceType.ATEM,
 				options: {
@@ -96,7 +96,7 @@ function generatePlayoutDevices(config: BlueprintConfig): BlueprintResultApplySt
 	}
 
 	playoutDevices[config.studio.audioMixer.deviceId] = {
-		parentDeviceName: 'playoutgateway',
+		parentConfigId: 'playoutgateway',
 		options: literal<TSR.DeviceOptionsSisyfos>({
 			type: TSR.DeviceType.SISYFOS,
 			options: {
