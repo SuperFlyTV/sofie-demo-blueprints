@@ -18,6 +18,7 @@ import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 import { parseConfig } from '../helpers/config.js'
+import { createPieceUserEditOperations } from '../helpers/userEditOperations.js'
 
 export function generateVTPart(context: PartContext, part: PartProps<VTProps>): BlueprintResultPart {
 	const config = parseConfig(context).studio
@@ -34,6 +35,7 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 		lifespan: PieceLifespan.WithinPart,
 		sourceLayerId: SourceLayer.VT,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.VT),
+		userEditOperations: createPieceUserEditOperations(),
 		abSessions: [
 			{
 				sessionName: part.payload.externalId,
