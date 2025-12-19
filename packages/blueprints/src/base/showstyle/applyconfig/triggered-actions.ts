@@ -15,6 +15,28 @@ let rankCounter = 0
 
 export function getTriggeredActions(): IBlueprintTriggeredActions[] {
 	const triggeredActions = [
+		// Take action with spacebar
+		{
+			_id: 'demo_take_space',
+			_rank: ++rankCounter * 1000,
+			name: 'Take (Space)',
+			actions: {
+				'0': {
+					action: PlayoutActions.take,
+					filterChain: [
+						{
+							object: 'view',
+						},
+					],
+				},
+			},
+			triggers: {
+				'0': {
+					type: TriggerType.hotkey,
+					keys: 'Space',
+				},
+			},
+		} as IBlueprintTriggeredActions,
 		...['F1', 'F2', 'F3', 'F4', 'F5', 'F6'].map((key, i) =>
 			createAdLibHotkey(key, [SourceLayer.Camera], true, i, undefined)
 		),
