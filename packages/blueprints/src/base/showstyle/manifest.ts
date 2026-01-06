@@ -14,6 +14,7 @@ import { getAbResolverConfiguration } from './getAbResolverConfiguration.js'
 import { getRundown } from './rundown/index.js'
 import { validateConfig } from './validateConfig.js'
 import { applyConfig } from './applyconfig/index.js'
+import { onSetAsNext } from './onSetAsNext.js'
 import * as ConfigSchema from '../../$schemas/main-showstyle-config.json'
 import { dereferenceSync } from 'dereference-json-schema'
 
@@ -40,6 +41,7 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 
 	validateConfig,
 	applyConfig,
+	onSetAsNext,
 	onRundownActivate: async (_context: IRundownActivationContext) => {
 		// Noop
 	},
