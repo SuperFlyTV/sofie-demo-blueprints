@@ -26,7 +26,6 @@
 	"devDependencies": {
 		"@types/jest": "^29.5.14",
 		"@types/node": "^22.19.2",
-		"@types/object-path": "^0.11.4",
 		"@types/underscore": "~1.13.0",
 		"jest": "^29.7.0",
 		"sofie-blueprint-tools": "^1.1.0",
@@ -36,7 +35,6 @@
 	"dependencies": {
 		"@sofie-automation/blueprints-integration": "1.53.0-nightly-release53-20251210-154915-f7afd72.0",
 		"dereference-json-schema": "^0.2.1",
-		"object-path": "^0.11.8",
 		"type-fest": "^4.41.0",
 		"underscore": "^1.13.7"
 	},
