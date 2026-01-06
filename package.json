@@ -19,7 +19,7 @@
     },
     "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
     "devDependencies": {
-        "@sofie-automation/code-standard-preset": "3.0.0",
+        "@sofie-automation/code-standard-preset": "3.2.0",
         "eslint": "^9.39.1",
         "husky": "^9.1.7",
         "lint-staged": "^15.5.2",

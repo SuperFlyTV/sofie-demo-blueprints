@@ -11,7 +11,9 @@
 		"declaration": false,
 		"declarationMap": false,
 		"types": ["node"],
-		"resolveJsonModule": true
+		"resolveJsonModule": true,
+		"module": "esnext",
+		"moduleResolution": "bundler"
 		// "noUncheckedIndexedAccess": true
 	}
 }

@@ -1,9 +1,7 @@
 {
 	"extends": "./tsconfig.build.json",
 	"exclude": ["node_modules/**", "dist/**"],
-	"compilerOptions": {
-		"types": ["node", "jest"]
-	},
+	"compilerOptions": {},
 	"paths": {
 		"@schemas/*": ["src/schemas/*"],
 		"@base/*": ["src/base/*"],
