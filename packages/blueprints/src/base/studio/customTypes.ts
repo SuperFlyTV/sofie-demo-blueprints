@@ -11,7 +11,7 @@ import {
 	TSR,
 	TimelineObjectCoreExt,
 } from '@sofie-automation/blueprints-integration'
-import { SetRequired } from 'type-fest'
+import type { SetRequired } from 'type-fest'
 
 export interface PartEndStateExt {
 	_customTypes: void // just here to satisfy the linter

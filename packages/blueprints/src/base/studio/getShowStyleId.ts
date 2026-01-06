@@ -1,9 +1,9 @@
 import { IBlueprintShowStyleBase, IngestRundown, IStudioContext } from '@sofie-automation/blueprints-integration'
-import { ReadonlyObjectDeep } from 'type-fest/source/readonly-deep'
+import type { ReadonlyDeep } from 'type-fest'
 
 export function getShowStyleId(
 	_context: IStudioContext,
-	showStyles: ReadonlyObjectDeep<IBlueprintShowStyleBase[]>,
+	showStyles: ReadonlyDeep<IBlueprintShowStyleBase[]>,
 	_ingestRundown: IngestRundown
 ): string | null {
 	const showStyle =
