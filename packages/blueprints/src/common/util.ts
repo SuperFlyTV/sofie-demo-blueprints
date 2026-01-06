@@ -8,7 +8,6 @@ import {
 	PieceLifespan,
 } from '@sofie-automation/blueprints-integration'
 import type { SetRequired } from 'type-fest'
-import * as _ from 'underscore'
 
 export type ThisOrThat<T extends boolean, A, B> = T extends true ? A : B
 
@@ -53,30 +52,6 @@ export function createVirtualPiece<TPieceMetadata>(
 }
 
 export type OptionalExceptFor<T, TRequired extends keyof T> = Partial<T> & Pick<T, TRequired>
-
-export function omit<T, P extends keyof T>(obj: T, ...props: P[]): Omit<T, P> {
-	return _.omit(obj, ...(props as string[])) as any
-}
-// export function ToObject<T>(vals: Array<[string, T]>): { [key: string]: T } {
-// 	return _.object(vals)
-// }
-
-export function isNotUndefined<T>(v: T | undefined): v is T {
-	return v !== undefined
-}
-
-export function flatten<T>(vals: Array<T[] | undefined>): T[] {
-	const vals2 = vals.filter(isNotUndefined)
-	return _.flatten(vals2, true)
-}
-
-export function uniq<T>(vals: T[]): T[] {
-	return _.uniq(vals)
-}
-
-export function pick<T, P extends keyof T>(obj: T, props: P[]): Pick<T, P> {
-	return _.pick(obj, ...(props as string[])) as any
-}
 
 export function assertUnreachable(_never: never): never {
 	throw new Error("Didn't expect to get here")

@@ -1,5 +1,4 @@
 import { BlueprintResultBaseline, IShowStyleUserContext, TSR } from '@sofie-automation/blueprints-integration'
-import * as _ from 'underscore'
 import { literal } from '../../../common/util.js'
 import { SourceType, StudioConfig, VisionMixerDevice } from '../../studio/helpers/config.js'
 import { AtemLayers, CasparCGLayers, SisyfosLayers, VMixLayers } from '../../studio/layers.js'
@@ -13,7 +12,7 @@ export function getBaseline(context: IShowStyleUserContext): BlueprintResultBase
 	const config = parseConfig(context).studio
 
 	return {
-		timelineObjects: _.compact([
+		timelineObjects: [
 			...(config.visionMixer.type === VisionMixerDevice.Atem ? getAtemBaseline(config) : []),
 			...(config.visionMixer.type === VisionMixerDevice.VMix ? getVMixBaseline(config) : []),
 
@@ -46,7 +45,7 @@ export function getBaseline(context: IShowStyleUserContext): BlueprintResultBase
 				},
 				priority: 0,
 			}),
-		]),
+		],
 	}
 }
 

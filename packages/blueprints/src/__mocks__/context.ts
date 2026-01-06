@@ -19,7 +19,6 @@ import {
 	PackageInfo,
 } from '@sofie-automation/blueprints-integration'
 import * as crypto from 'crypto'
-import * as _ from 'underscore'
 
 export function getHash(str: string): string {
 	const hash = crypto.createHash('sha1')
@@ -190,7 +189,7 @@ export class ShowStyleContext extends NotesContext implements IShowStyleContext 
 		return 'showStyle.mock.' + configKey // just a placeholder
 	}
 	public getStudioMappings(): BlueprintMappings {
-		return _.clone(this.mappingsDefaults)
+		return structuredClone(this.mappingsDefaults)
 	}
 }
 
