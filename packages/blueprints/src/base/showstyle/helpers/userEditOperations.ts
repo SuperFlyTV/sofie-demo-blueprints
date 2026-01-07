@@ -13,6 +13,7 @@ export function createPieceUserEditOperations(): UserEditingDefinition[] {
 		{
 			type: UserEditingType.SOFIE,
 			id: DefaultUserOperationsTypes.RETIME_PIECE,
+			limitToCurrentPart: true,
 		},
 	]
 }
