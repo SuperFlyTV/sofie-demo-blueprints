@@ -33,7 +33,7 @@
 	"dependencies": {
 		"@sofie-automation/blueprints-integration": "^26.3.0-nightly-ci-fix-publish-20260204-141836-4220a1a.0",
 		"dereference-json-schema": "^0.2.1",
-		"type-fest": "^5.3.1"
+		"type-fest": "^4.33.0"
 	},
 	"private": true,
 	"engines": {
