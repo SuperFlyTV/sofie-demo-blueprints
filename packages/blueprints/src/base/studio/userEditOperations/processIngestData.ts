@@ -181,7 +181,6 @@ function processRetimePiece(
 
 	// Extract new timing from operation payload
 	const payload = operation.payload || {}
-	const newTime = payload.inPoint / 1000 // Convert milliseconds to seconds for comparison
 
 	// Example payload structure for retime operations:
 	// 	"payload": {
@@ -201,6 +200,49 @@ function processRetimePiece(
 	const unknownKeys = Object.keys(payload).filter((key) => !knownKeys.has(key))
 	if (unknownKeys.length > 0) {
 		context.logWarning(`Retime piece operation has unknown keys in payload: ${unknownKeys.join(', ')}`)
+	}
+
+	// Validate piece timing against part boundaries
+	// Require at least 1 second overlap with the part
+	// Note: ingest payload uses seconds, but UI inPoint is in milliseconds
+	const MIN_OVERLAP_S = 1
+	const partDurationS = partPayload.duration || 0 // Part duration in seconds (ingest format)
+	const pieceDurationS = piece.duration || 0 // Piece duration in seconds (ingest format)
+	let newTime = payload.inPoint / 1000 // Convert inPoint from milliseconds to seconds
+
+	context.logDebug(
+		`Retime validation: partDuration=${partDurationS}s, pieceDuration=${pieceDurationS}s, ` +
+			`originalTime=${originalTime}s, newTime=${newTime}s`
+	)
+
+	// Calculate the clamping boundaries (in seconds)
+	const maxStartTime = partDurationS > 0 ? partDurationS - MIN_OVERLAP_S : Infinity // Piece must start at least 1s before part ends
+	const minStartTime = pieceDurationS > 0 ? MIN_OVERLAP_S - pieceDurationS : -Infinity // Piece must end at least 1s after part starts
+
+	context.logDebug(`Clamping boundaries: minStartTime=${minStartTime}s, maxStartTime=${maxStartTime}s`)
+
+	// Check if constraints are satisfiable
+	// This can happen if partDuration + pieceDuration < 2 * MIN_OVERLAP_S
+	if (minStartTime > maxStartTime) {
+		context.logWarning(
+			`Piece ${operationTarget.pieceExternalId} cannot be positioned to satisfy overlap constraints ` +
+				`(part: ${partDurationS}s, piece: ${pieceDurationS}s). Rejecting retime.`
+		)
+		return
+	}
+
+	// Clamp the piece start time to valid range
+	if (newTime > maxStartTime) {
+		context.logWarning(
+			`Piece ${operationTarget.pieceExternalId} start time (${newTime}s) clamped to ${maxStartTime}s (1 second before part end)`
+		)
+		newTime = maxStartTime
+	}
+	if (newTime < minStartTime) {
+		context.logWarning(
+			`Piece ${operationTarget.pieceExternalId} start time (${newTime}s) clamped to ${minStartTime}s (so piece ends at least 1 second after part start)`
+		)
+		newTime = minStartTime
 	}
 
 	// Check if there are actually changes to apply
