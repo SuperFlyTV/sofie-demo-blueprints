@@ -1,0 +1,136 @@
+name: Update Nightly Dependencies
+
+on:
+  schedule:
+    # Run nightly at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-nightly:
+    name: Update to Latest Nightly
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0  # Need full history to check branch status
+
+      - name: Check existing PR status
+        id: pr-status
+        run: |
+          # Check if bot/update-nightly branch exists
+          if git ls-remote --exit-code --heads origin bot/update-nightly > /dev/null 2>&1; then
+            echo "branch_exists=true" >> $GITHUB_OUTPUT
+
+            # Get PR number for the branch
+            PR_NUMBER=$(gh pr list --head bot/update-nightly --json number --jq '.[0].number')
+
+            if [ -n "$PR_NUMBER" ]; then
+              echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+
+              # Check if PR checks are failing
+              PR_STATUS=$(gh pr view $PR_NUMBER --json statusCheckRollup --jq '.statusCheckRollup[] | select(.status == "COMPLETED") | .conclusion')
+
+              if echo "$PR_STATUS" | grep -q "FAILURE"; then
+                echo "pr_failing=true" >> $GITHUB_OUTPUT
+                echo "Found failing PR #$PR_NUMBER, will merge main to preserve history"
+              else
+                echo "pr_failing=false" >> $GITHUB_OUTPUT
+                echo "PR #$PR_NUMBER is passing or pending, will force push"
+              fi
+            else
+              echo "pr_failing=false" >> $GITHUB_OUTPUT
+              echo "No PR found, will create fresh branch"
+            fi
+          else
+            echo "branch_exists=false" >> $GITHUB_OUTPUT
+            echo "pr_failing=false" >> $GITHUB_OUTPUT
+            echo "Branch doesn't exist, will create fresh branch"
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup branch strategy
+        id: branch-strategy
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if [ "${{ steps.pr-status.outputs.branch_exists }}" = "true" ] && [ "${{ steps.pr-status.outputs.pr_failing }}" = "true" ]; then
+            # PR exists and is failing - merge main to preserve history
+            echo "strategy=merge" >> $GITHUB_OUTPUT
+            git fetch origin bot/update-nightly
+            git checkout bot/update-nightly
+            git merge origin/main -m "chore: merge main into nightly update branch"
+          else
+            # PR is passing/merged or doesn't exist - create fresh branch
+            echo "strategy=force" >> $GITHUB_OUTPUT
+            git checkout -B bot/update-nightly
+          fi
+
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22.x
+
+      - name: Prepare Environment
+        run: |
+          corepack enable
+          yarn
+        env:
+          CI: true
+
+      - name: Update Sofie Dependencies to Nightly
+        run: |
+          cd packages/blueprints
+          yarn add @sofie-automation/blueprints-integration@nightly
+
+      - name: Commit and push changes
+        run: |
+          git add .
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git commit -m "chore: update to latest nightly dependencies"
+
+          if [ "${{ steps.branch-strategy.outputs.strategy }}" = "force" ]; then
+            git push -f origin bot/update-nightly
+          else
+            git push origin bot/update-nightly
+          fi
+
+      - name: Create or update PR
+        run: |
+          PR_NUMBER="${{ steps.pr-status.outputs.pr_number }}"
+
+          if [ -z "$PR_NUMBER" ]; then
+            # Create new PR
+            gh pr create \
+              --title "Update to Latest Nightly Dependencies" \
+              --body "Automated update to latest nightly versions of Sofie dependencies.
+
+          This PR was automatically created by the scheduled nightly workflow.
+          The normal CI workflow will run tests on this PR.
+
+          Please review and merge if all tests pass." \
+              --head bot/update-nightly \
+              --base main \
+              --label dependencies,automated
+          else
+            # Update existing PR body
+            gh pr edit $PR_NUMBER --body "Automated update to latest nightly versions of Sofie dependencies.
+
+          This PR was automatically created by the scheduled nightly workflow.
+          The normal CI workflow will run tests on this PR.
+
+          ${{ steps.branch-strategy.outputs.strategy == 'merge' && 'Note: This PR had failing tests, so main was merged in to preserve history of the breakage.' || 'This branch was force-pushed with the latest nightly dependencies.' }}
+
+          Please review and merge if all tests pass."
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
