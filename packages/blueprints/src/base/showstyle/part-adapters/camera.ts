@@ -41,7 +41,7 @@ export function generateCameraPart(context: PartContext, part: PartProps<CameraP
 	const graphics = parseGraphicsFromObjects(config, part.objects)
 	if (graphics.pieces) pieces.push(...graphics.pieces)
 
-	const clips = parseClipsFromObjects(config, part.objects)
+	const clips = parseClipsFromObjects(context, config, part.objects)
 
 	const guestObj = part.objects.find((p): p is StudioGuestObject => p.objectType === ObjectType.StudioGuest)
 	if (guestObj) {

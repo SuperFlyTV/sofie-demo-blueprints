@@ -1,4 +1,10 @@
-import { IBlueprintAdLibPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
+import {
+	ExpectedPackage,
+	IBlueprintAdLibPiece,
+	ICommonContext,
+	PieceLifespan,
+	TSR,
+} from '@sofie-automation/blueprints-integration'
 import { ObjectType, SomeObject, VideoObject } from '../../../common/definitions/objects.js'
 import { assertUnreachable, literal } from '../../../common/util.js'
 import { SourceType, StudioConfig, VisionMixerDevice } from '../../studio/helpers/config.js'
@@ -47,7 +53,11 @@ export function getClipPlayerInput(config: StudioConfig): StudioConfig['atemSour
 	}
 }
 
-export function clipToAdlib(config: StudioConfig, clipObject: VideoObject): IBlueprintAdLibPiece {
+export function clipToAdlib(
+	context: ICommonContext,
+	config: StudioConfig,
+	clipObject: VideoObject
+): IBlueprintAdLibPiece {
 	const props = parseClipProps(clipObject)
 	const visionMixerInput = getClipPlayerInput(config)
 
@@ -58,6 +68,20 @@ export function clipToAdlib(config: StudioConfig, clipObject: VideoObject): IBlu
 		lifespan: PieceLifespan.WithinPart,
 		sourceLayerId: SourceLayer.VO,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.VO),
+		expectedPackages: [
+			literal<ExpectedPackage.ExpectedPackageMediaFile>({
+				_id: context.getHashId(props.fileName, true),
+				layers: [CasparCGLayers.CasparCGClipPlayer1],
+				type: ExpectedPackage.PackageType.MEDIA_FILE,
+				content: {
+					filePath: props.fileName,
+				},
+				version: {},
+				contentVersionHash: '',
+				sources: [],
+				sideEffect: {},
+			}),
+		],
 		content: {
 			fileName: props.fileName,
 
@@ -81,8 +105,12 @@ export function clipToAdlib(config: StudioConfig, clipObject: VideoObject): IBlu
 	})
 }
 
-export function parseClipsFromObjects(config: StudioConfig, objects: SomeObject[]): IBlueprintAdLibPiece[] {
+export function parseClipsFromObjects(
+	context: ICommonContext,
+	config: StudioConfig,
+	objects: SomeObject[]
+): IBlueprintAdLibPiece[] {
 	const clips = objects.filter((o): o is VideoObject => o.objectType === ObjectType.Video)
 
-	return clips.map((o) => clipToAdlib(config, o))
+	return clips.map((o) => clipToAdlib(context, config, o))
 }
