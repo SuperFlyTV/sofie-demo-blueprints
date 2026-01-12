@@ -1,5 +1,6 @@
 import {
 	DefaultUserOperationEditProperties,
+	DefaultUserOperationRetimePiece,
 	DefaultUserOperations,
 	DefaultUserOperationsTypes,
 	IngestChangeType,
@@ -106,9 +107,182 @@ async function applyUserOperation(
 		case DefaultUserOperationsTypes.UPDATE_PROPS:
 			processUpdateProps(context, mutableIngestRundown, changes.operationTarget, changes)
 			break
+		// Handle drag and drop retime operations:
+		case DefaultUserOperationsTypes.RETIME_PIECE:
+			processRetimePiece(context, mutableIngestRundown, changes.operationTarget, changes)
+			break
 		default:
 			context.logWarning(`Unknown operation: ${changes.operation.id}`)
 	}
+}
+
+/**
+ * Process piece retiming operations from the UI.
+ *
+ * This function handles drag-and-drop retime operations from the Sofie UI.
+ *
+ * It updates the piece timing in the ingest data structure based on the new inPoint provided and
+ * locks the segment/part to prevent NRCS updates.
+ *
+ * @param context - The ingest data processing context
+ * @param mutableIngestRundown - The mutable rundown being processed
+ * @param operationTarget - Target containing partExternalId and pieceExternalId
+ * @param changes - The user operation change containing timing information
+ */
+function processRetimePiece(
+	context: IProcessIngestDataContext,
+	mutableIngestRundown: BlueprintMutableIngestRundown,
+	operationTarget: UserOperationTarget,
+	changes: UserOperationChange<BlueprintsUserOperations | DefaultUserOperations>
+) {
+	// Extract piece timing information from the operation
+	const operation = changes.operation as DefaultUserOperationRetimePiece
+
+	context.logDebug('Processing piece retime operation: ' + JSON.stringify(changes, null, 2))
+
+	// Ensure we have the required identifiers
+	if (!operationTarget.partExternalId || !operationTarget.pieceExternalId) {
+		context.logError('Retime piece operation missing part or piece external ID')
+		return
+	}
+
+	// Find the part containing the piece
+	const partAndSegment = mutableIngestRundown.findPartAndSegment(operationTarget.partExternalId)
+	const { part, segment } = partAndSegment || {}
+
+	if (!part?.payload) {
+		context.logError(`Part not found for retime operation: ${operationTarget.partExternalId}`)
+		return
+	}
+
+	if (!segment) {
+		context.logError(`Segment not found for retime operation: ${operationTarget.segmentExternalId}`)
+		return
+	}
+
+	// Parse the part payload to access pieces
+	const partPayload: any = part.payload
+	if (!partPayload.pieces || !Array.isArray(partPayload.pieces)) {
+		context.logError(`Part has no pieces array: ${operationTarget.partExternalId}`)
+		return
+	}
+
+	context.logDebug('Original partPayload: ' + JSON.stringify(partPayload, null, 2))
+
+	// Find the specific piece to retime
+	const pieceIndex = partPayload.pieces.findIndex((piece: any) => piece.id === operationTarget.pieceExternalId)
+	if (pieceIndex === -1) {
+		context.logError(`Piece not found for retime: ${operationTarget.pieceExternalId}`)
+		return
+	}
+
+	const piece = partPayload.pieces[pieceIndex]
+	const originalTime = piece.objectTime || 0
+
+	// Extract new timing from operation payload
+	const payload = operation.payload || {}
+
+	// Example payload structure for retime operations:
+	// 	"payload": {
+	//   "segmentExternalId": "d26d22e2-4f4e-4d31-a0ca-de6f37ff9b3f",
+	//   "partExternalId": "42077925-8d15-4a5d-abeb-a445ccee2984",
+	//   "inPoint": 1061.4136732329084
+	// }
+
+	// Handle different retime operation types
+	if (payload.inPoint === undefined) {
+		context.logError('Retime piece operation missing inPoint in payload')
+		return
+	}
+
+	// Check if there are any unknown values in the payload that need to be handled apart from inPoint, segmentExternalId, partExternalId
+	const knownKeys = new Set(['inPoint', 'segmentExternalId', 'partExternalId'])
+	const unknownKeys = Object.keys(payload).filter((key) => !knownKeys.has(key))
+	if (unknownKeys.length > 0) {
+		context.logWarning(`Retime piece operation has unknown keys in payload: ${unknownKeys.join(', ')}`)
+	}
+
+	// Validate piece timing against part boundaries
+	// Require at least 1 second overlap with the part
+	// Note: ingest payload uses seconds, but UI inPoint is in milliseconds
+	const MIN_OVERLAP_S = 1
+	const partDurationS = partPayload.duration || 0 // Part duration in seconds (ingest format)
+	const pieceDurationS = piece.duration || 0 // Piece duration in seconds (ingest format)
+	let newTime = payload.inPoint / 1000 // Convert inPoint from milliseconds to seconds
+
+	context.logDebug(
+		`Retime validation: partDuration=${partDurationS}s, pieceDuration=${pieceDurationS}s, ` +
+			`originalTime=${originalTime}s, newTime=${newTime}s`
+	)
+
+	// Calculate the clamping boundaries (in seconds)
+	const maxStartTime = partDurationS > 0 ? partDurationS - MIN_OVERLAP_S : Infinity // Piece must start at least 1s before part ends
+	const minStartTime = pieceDurationS > 0 ? MIN_OVERLAP_S - pieceDurationS : -Infinity // Piece must end at least 1s after part starts
+
+	context.logDebug(`Clamping boundaries: minStartTime=${minStartTime}s, maxStartTime=${maxStartTime}s`)
+
+	// Check if constraints are satisfiable
+	// This can happen if partDuration + pieceDuration < 2 * MIN_OVERLAP_S
+	if (minStartTime > maxStartTime) {
+		context.logWarning(
+			`Piece ${operationTarget.pieceExternalId} cannot be positioned to satisfy overlap constraints ` +
+				`(part: ${partDurationS}s, piece: ${pieceDurationS}s). Rejecting retime.`
+		)
+		return
+	}
+
+	// Clamp the piece start time to valid range
+	if (newTime > maxStartTime) {
+		context.logWarning(
+			`Piece ${operationTarget.pieceExternalId} start time (${newTime}s) clamped to ${maxStartTime}s (1 second before part end)`
+		)
+		newTime = maxStartTime
+	}
+	if (newTime < minStartTime) {
+		context.logWarning(
+			`Piece ${operationTarget.pieceExternalId} start time (${newTime}s) clamped to ${minStartTime}s (so piece ends at least 1 second after part start)`
+		)
+		newTime = minStartTime
+	}
+
+	// Check if there are actually changes to apply
+	const timeDifference = Math.abs(newTime - originalTime)
+	if (timeDifference < 0.005) {
+		// Less than 5ms difference - consider it unchanged
+		context.logDebug(
+			`No significant timing changes needed for piece ${operationTarget.pieceExternalId} (${timeDifference}s difference)`
+		)
+		return
+	}
+
+	// Apply the retime changes to the ingest data structure
+	// Note: Ingest pieces use objectTime, not enable.start
+	const updatedPiece = {
+		...piece,
+		objectTime: newTime,
+	}
+
+	// Lock segment to prevent NRCS updates:
+	segment.setUserEditState(BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES, true)
+
+	// Mark both segment and part as user-edited
+	segment.setUserEditState(BlueprintUserOperationTypes.USER_EDITED, true)
+	part.setUserEditState(BlueprintUserOperationTypes.USER_EDITED, true)
+
+	// Update the piece in the part payload
+	partPayload.pieces[pieceIndex] = updatedPiece
+
+	// Mark the part as modified using replacePayload
+	part.replacePayload(partPayload)
+
+	// Store the retime operation as a user edit state
+	// Each retime gets a unique key to ensure state changes trigger persistence
+	// This is a horrible hack.
+	// segment.setUserEditState(pieceRetimeKey, true)
+	const pieceRetimeKey = `${operation.id}_${operationTarget.pieceExternalId}_${Date.now()}`
+	part.setUserEditState(pieceRetimeKey, true)
+
+	context.logDebug(`Marked segment and part as user-edited and created unique retime state: ${pieceRetimeKey}`)
 }
 
 function processUpdateProps(
@@ -218,6 +392,7 @@ function updatePieceProps(
 
 	const lifespan = operation.payload.globalProperties['lifespan']
 	context.logDebug('Update piece ' + operationTarget.pieceExternalId + ': ' + lifespan)
+	// TODO: Do we actually update anything here? We just seem to log.
 }
 
 function changeSource(

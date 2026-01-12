@@ -43,7 +43,10 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 	onRundownActivate: async (_context: IRundownActivationContext) => {
 		// Noop
 	},
-	fixUpConfig: () => {
-		// Noop
-	},
+	// Uncomment this to enable config fixup migrations between blueprint versions.
+	// Note: When defined, fixUpConfig must be run after every blueprint upload before
+	// config can be validated/applied.
+	// fixUpConfig: () => {
+	// 	// Noop
+	// },
 }
