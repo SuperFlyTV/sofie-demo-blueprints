@@ -4,9 +4,6 @@ import {
 	JSONBlobStringify,
 	JSONSchema,
 	IRundownActivationContext,
-	PackageStatusMessage,
-	DeviceErrorCode,
-	BlueprintErrorCode,
 } from '@sofie-automation/blueprints-integration'
 import { executeAction, executeDataStoreAction } from './executeActions/index.js'
 import { getAdlibItem } from './getAdlibItem.js'
@@ -19,6 +16,7 @@ import { validateConfig } from './validateConfig.js'
 import { applyConfig } from './applyconfig/index.js'
 import * as ConfigSchema from '../../$schemas/main-showstyle-config.json'
 import { dereferenceSync } from 'dereference-json-schema'
+import { packageStatusMessages, deviceErrorMessages, resolveErrorMessage } from './errorMessages.js'
 
 export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'blueprintId' | 'configPresets'> = {
 	/** The type of this blueprint */
@@ -80,36 +78,11 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 	// },
 
 	/** Alternate package status messages, to override the builtin ones produced by Sofie */
-	packageStatusMessages: {
-		[PackageStatusMessage.MISSING_FILE_PATH]: `Some file paths are missing or incorrect. Please check your show style configuration.`,
-	},
+	packageStatusMessages,
 
 	/** Alternate device error messages, to override the builtin ones produced by Sofie */
-	deviceErrorMessages: {
-		[DeviceErrorCode.HTTP_TIMEOUT]: '{{deviceName}}: Graphics system not responding',
-		[DeviceErrorCode.CASPARCG_DISCONNECTED]: '{{deviceName}}: Video server offline - videos will not play',
-	},
+	deviceErrorMessages,
 
-	/**
-	 * Dynamic error message resolver for complex logic like pluralization.
-	 * Return undefined to fall through to static messages above or defaults.
-	 */
-	resolveErrorMessage: (errorCode, args) => {
-		// Example: Pluralize missing files message
-		if (errorCode === DeviceErrorCode.CASPARCG_FILES_NOT_FOUND) {
-			const count = (args.count as number) || 1
-			return count === 1 ? `{{deviceName}}: Video file not found` : `{{deviceName}}: ${count} video files not found`
-		}
-
-		// Example: Custom message based on context
-		if (errorCode === BlueprintErrorCode.VALIDATION_ERROR) {
-			const field = args.field as string | undefined
-			if (field === 'duration') {
-				return 'Invalid duration - must be between 0 and 24 hours'
-			}
-		}
-
-		// Return undefined to use static messages or defaults
-		return undefined
-	},
+	/** Dynamic error message resolver for complex logic like pluralization */
+	resolveErrorMessage,
 }
