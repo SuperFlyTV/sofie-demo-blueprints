@@ -6,6 +6,7 @@ import {
 	IRundownActivationContext,
 	PackageStatusMessage,
 	DeviceErrorCode,
+	BlueprintErrorCode,
 } from '@sofie-automation/blueprints-integration'
 import { executeAction, executeDataStoreAction } from './executeActions/index.js'
 import { getAdlibItem } from './getAdlibItem.js'
@@ -85,5 +86,28 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 	deviceErrorMessages: {
 		[DeviceErrorCode.HTTP_TIMEOUT]: '{{deviceName}}: Graphics system not responding',
 		[DeviceErrorCode.CASPARCG_DISCONNECTED]: '{{deviceName}}: Video server offline - videos will not play',
+	},
+
+	/**
+	 * Dynamic error message resolver for complex logic like pluralization.
+	 * Return undefined to fall through to static messages above or defaults.
+	 */
+	resolveErrorMessage: (errorCode, args) => {
+		// Example: Pluralize missing files message
+		if (errorCode === DeviceErrorCode.CASPARCG_FILES_NOT_FOUND) {
+			const count = (args.count as number) || 1
+			return count === 1 ? `{{deviceName}}: Video file not found` : `{{deviceName}}: ${count} video files not found`
+		}
+
+		// Example: Custom message based on context
+		if (errorCode === BlueprintErrorCode.VALIDATION_ERROR) {
+			const field = args.field as string | undefined
+			if (field === 'duration') {
+				return 'Invalid duration - must be between 0 and 24 hours'
+			}
+		}
+
+		// Return undefined to use static messages or defaults
+		return undefined
 	},
 }
