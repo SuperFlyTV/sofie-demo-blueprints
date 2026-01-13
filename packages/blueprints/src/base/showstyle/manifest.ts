@@ -16,7 +16,7 @@ import { validateConfig } from './validateConfig.js'
 import { applyConfig } from './applyconfig/index.js'
 import * as ConfigSchema from '../../$schemas/main-showstyle-config.json'
 import { dereferenceSync } from 'dereference-json-schema'
-import { packageStatusMessages, deviceErrorMessages } from './errorMessages.js'
+import { packageStatusMessages, deviceErrorMessages, resolveErrorMessage } from './errorMessages.js'
 
 export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'blueprintId' | 'configPresets'> = {
 	/** The type of this blueprint */
@@ -82,4 +82,7 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 
 	/** Alternate device error messages, to override the builtin ones produced by Sofie */
 	deviceErrorMessages,
+
+	/** Dynamic error message resolver for complex logic like pluralization */
+	resolveErrorMessage,
 }
