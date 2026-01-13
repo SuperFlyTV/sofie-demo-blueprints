@@ -79,10 +79,12 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 	// 	// Noop
 	// },
 
+	/** Alternate package status messages, to override the builtin ones produced by Sofie */
 	packageStatusMessages: {
 		[PackageStatusMessage.MISSING_FILE_PATH]: `Some file paths are missing or incorrect. Please check your show style configuration.`,
 	},
 
+	/** Alternate device error messages, to override the builtin ones produced by Sofie */
 	deviceErrorMessages: {
 		[DeviceErrorCode.HTTP_TIMEOUT]: '{{deviceName}}: Graphics system not responding',
 		[DeviceErrorCode.CASPARCG_DISCONNECTED]: '{{deviceName}}: Video server offline - videos will not play',
