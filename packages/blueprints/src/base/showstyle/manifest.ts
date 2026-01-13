@@ -5,6 +5,7 @@ import {
 	JSONSchema,
 	IRundownActivationContext,
 	PackageStatusMessage,
+	DeviceErrorCode,
 } from '@sofie-automation/blueprints-integration'
 import { executeAction, executeDataStoreAction } from './executeActions/index.js'
 import { getAdlibItem } from './getAdlibItem.js'
@@ -79,5 +80,10 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 
 	packageStatusMessages: {
 		[PackageStatusMessage.MISSING_FILE_PATH]: `Some file paths are missing or incorrect. Please check your show style configuration.`,
+	},
+
+	deviceErrorMessages: {
+		[DeviceErrorCode.HTTP_TIMEOUT]: '{{deviceName}}: Graphics system not responding',
+		[DeviceErrorCode.CASPARCG_DISCONNECTED]: '{{deviceName}}: Video server offline - videos will not play',
 	},
 }
