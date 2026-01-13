@@ -75,8 +75,8 @@ function generatePlayoutDevices(config: BlueprintConfig): BlueprintResultApplySt
 			options: literal<TSR.DeviceOptionsCasparCG>({
 				type: TSR.DeviceType.CASPARCG,
 				options: {
-					host: config.studio.casparcg.host,
-					port: config.studio.casparcg.port || 5250,
+					host: config.studio.casparcg?.host || '',
+					port: config.studio.casparcg?.port || 5250,
 				},
 			}),
 		},
