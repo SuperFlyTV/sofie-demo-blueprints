@@ -1,4 +1,4 @@
-import { PackageStatusMessage } from '@sofie-automation/blueprints-integration'
+import { PackageStatusMessage, BlueprintErrorCode, BlueprintErrorEvent } from '@sofie-automation/blueprints-integration'
 // Device error codes come from TSR - import the specific device codes you need
 import { AtemErrorCode } from 'timeline-state-resolver'
 
@@ -28,4 +28,43 @@ export const packageStatusMessages: Partial<Record<PackageStatusMessage, string 
 export const deviceErrorMessages: Record<string, string | undefined> = {
 	// TEST: Silly message to verify error customisation is working
 	[AtemErrorCode.DISCONNECTED]: '🎬 Oh no! The vision mixer ran away! 🏃‍♂️💨 (Check the ATEM connection)',
+}
+
+/**
+ * Dynamic error message resolver for complex logic like pluralization or conditional messages.
+ * Called before checking static error message records above.
+ *
+ * @param event - Object containing errorCode (string) and args (Record<string, unknown>)
+ * @returns A custom message string, empty string to suppress, or undefined to fall through to static messages
+ *
+ * @example
+ * // Pluralization (using string error code from TSR)
+ * if (event.errorCode === 'DEVICE_CASPARCG_FILES_NOT_FOUND') {
+ *   const count = event.args.count || 1
+ *   return count === 1 ? 'File not found' : `${count} files not found`
+ * }
+ *
+ * @example
+ * // Conditional based on context
+ * if (event.errorCode === BlueprintErrorCode.VALIDATION_ERROR && event.args.field === 'duration') {
+ *   return 'Duration must be between 0 and 24 hours'
+ * }
+ *
+ * @example
+ * // Suppress a message entirely
+ * if (event.errorCode === 'DEVICE_SOME_NOISY_ERROR') {
+ *   return '' // Empty string suppresses the message
+ * }
+ */
+export function resolveErrorMessage(event: BlueprintErrorEvent): string | undefined {
+	// Example: Custom message based on context
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
+	if (event.errorCode === BlueprintErrorCode.VALIDATION_ERROR) {
+		if (event.args.field === 'duration') {
+			return 'Invalid duration - must be between 0 and 24 hours'
+		}
+	}
+
+	// Return undefined to use static messages or defaults
+	return undefined
 }
