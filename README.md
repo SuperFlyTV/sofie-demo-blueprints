@@ -117,10 +117,12 @@ yarn watch:blueprints # alias to upload to a local instance
 # yarn watch --server="http://localhost:3000" # can be used to upload to a remote sofie instance
 ```
 
-The `--bundle=distriktsnyheter` can be used for watch or build to only build a specific bundle. Warning: using this parameter with the `yarn dist` will cause mismatched versions in the outputs.
+The `--bundle=show` option can be used with watch or build to only build a specific bundle. Currently, `show` is the only bundle defined in these demo blueprints (see [blueprint-map.mjs](packages/blueprints/blueprint-map.mjs)). Warning: using this parameter with `yarn dist` will cause mismatched versions in the outputs.
+
+For more information on defining blueprint bundles, see the [sofie-blueprint-tools documentation](https://github.com/SuperFlyTV/sofie-blueprint-tools#blueprint-build).
 
 There are some unit tests for the project, currently just to validate that the blueprints do not crash while executing.
-These can be run with
+These can be run with:
 
 ```sh
 yarn test:blueprints
