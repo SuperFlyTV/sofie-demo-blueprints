@@ -99,11 +99,22 @@ The `dist/*-bundle.js` files can then be uploaded, assigned, and configured in t
 
 ## Development
 
-This project builds with webpack and can auto upload on successful compilation
+This project builds with webpack and can auto upload on successful compilation.
+
+### Quick Start for Development
+
+```sh
+yarn build-sync-local --development  # Build and upload to local Sofie
+yarn watch-sync-local                # Watch mode with auto-upload
+```
+
+**Tip**: Use the `--development` flag when uploading blueprints during development. Without it, you will need to manaully "Validate and Apply Config" from the "Apply blueprint upgrades" section of "Ugrade database" in settings.
+
+### Alternative Commands
 
 ```sh
 yarn watch:blueprints # alias to upload to a local instance
-# yarn watch --server="http://localhost:3000" # can be used to connect to upload to a remote sofie instance
+# yarn watch --server="http://localhost:3000" # can be used to upload to a remote sofie instance
 ```
 
 The `--bundle=distriktsnyheter` can be used for watch or build to only build a specific bundle. Warning: using this parameter with the `yarn dist` will cause mismatched versions in the outputs.
