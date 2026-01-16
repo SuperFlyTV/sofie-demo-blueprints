@@ -9,7 +9,7 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
 - One of the following supported vision mixers:
   - [Blackmagic ATEM](https://www.blackmagicdesign.com/products/atem)
   - [vMix](https://www.vmix.com/)
-- [A CasparCG setup](https://nrkno.github.io/tv-automation-server-core/docs/getting-started/installation/installing-connections-and-additional-hardware/casparcg-server-installation) with the [Sofie Demo Assets](https://superfly.tv/sofie/demo/assets/sofie-demo-assets_v1.1.1.zip) installed.
+- [A CasparCG setup](https://nrkno.github.io/sofie-core/docs/user-guide/installation/installing-a-gateway/casparcg-server-installation) with the [Sofie Demo Assets](https://superfly.tv/sofie/demo/assets/sofie-demo-assets_v1.1.1.zip) installed.
 
   - This demo expects two channels to be configured in CasparCG: the first is used for media/VT playout and the second is used for graphics playout. Open `casparcg.config` in your text editor of choice and scroll down for more information on how to configure CasparCG. Your `<paths>` section should look like this:
 
@@ -25,7 +25,7 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
   ```
 
 - A [Sisyfos Audio Controller](https://github.com/tv2/sisyfos-audio-controller) setup
-- A [Sofie Core](https://github.com/nrkno/sofie-core) release 46 setup.
+- A [Sofie Core](https://github.com/nrkno/sofie-core) release 53 setup.
 
 > 💡 If you don't have a supported vision mixer, CasparCG setup, or Sisyfos setup, that's okay. You can still proceed with the demo setup and skip the steps for the pieces you don't have.
 
@@ -37,7 +37,7 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
    - Fill out all the fields and then click "Run automatic migration procedure".
    - If you don't wish to demo the Slack integration, enter `http://localhost:3000` for the Slack webhook URL.
    - For this demo, we'll be using a media format of `1280x720p5000`.
-1. Ensure that [`playout-gateway`](https://github.com/nrkno/tv-automation-server-core/tree/master/packages/playout-gateway) is running and attached to the studio.
+1. Ensure that [`playout-gateway`](https://github.com/nrkno/sofie-core/tree/master/packages/playout-gateway) is running and attached to the studio.
    - Under the Studios heading, expand your studio and click Attached Devices.
    - Click the plus icon (`+`) and attach the Playout gateway.
 1. Head to the [releases](https://github.com/SuperFlyTV/sofie-demo-blueprints/releases) page and download the `demo-blueprints-r*.zip` file for the latest release.
@@ -47,14 +47,14 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
    - Select `system-bundle.js` from the extracted zip archive.
    - Name this blueprint `system`.
    - Click the plus icon again to add another blueprint.
-   - This time, upload `studio0-bundle.js`, naming it `studio0`.
-   - Repeat for `showstyle0-bundle.js`, naming it `showstyle0`.
+   - This time, upload `demostudio-bundle.js`, naming it `demostudio`.
+   - Repeat for `demoshowstyle-bundle.js`, naming it `demoshowstyle`.
 1. Assign the blueprints:
    - Select the `system` blueprint and click the "Assign" button.
    - Under the Studios heading, expand your studio and click Generic Properties.
-   - In the Blueprint dropdown, select `studio0`.
+   - In the Blueprint dropdown, select `demostudio`.
    - Under the Show Styles heading, expand your showstyle and click Generic Properties.
-   - In the Blueprint dropdown, select `showstyle0`.
+   - In the Blueprint dropdown, select `demoshowstyle`.
 1. Run the blueprint migrations
    - Under the Tools heading, click "Upgrade Database".
    - Fill out any fields and run the migrations.
@@ -68,7 +68,7 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
    - Fill out the Host and Port fields.
      - For an ATEM, the port will be `9910`.
      - For vMix, the port can be obtained from "Settings > Web Contoller". It defaults to `8088`.
-1. Go back to the Studio Blueprint Configuration page (http://localhost:3000/settings/studio/studio0/blueprint-config).
+1. Go back to the Studio Blueprint Configuration page (http://localhost:3000/settings/studio/demostudio/blueprint-config).
    - Create and fill out the configuration for the devices you have.
      - If using an ATEM for your vision mixer, ensure that you have the following inputs configured: 2 `camera`, 1 `remote`, 1 `mediaplayer`, and 1 `graphics`.
      - If using vMix, ensure that you have all of the above and 1 `multiview` input configured. This input will be used for DVEs.
@@ -77,7 +77,7 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
 1. Restart the Playout Gateway.
 1. Use the [Rundown Editor](https://github.com/SuperFlyTV/sofie-automation-rundown-editor) or the [Spreadsheet Gateway](https://github.com/SuperFlyTV/spreadsheet-gateway) to add a demo rundown to Sofie.
 1. Go to the Rundowns page (http://localhost:3000/rundowns) and click on the rundown you added in the previous step.
-1. (Optional) If you wish to have accurate media/VT statuses in the Rundown view, as well as hoverscrub media previews, set up [Package Manager](https://nrkno.github.io/sofie-core/docs/user-guide/installation/installing-package-manager).
+1. (Optional) If you wish to have accurate media/VT statuses in the Rundown view, as well as hoverscrub media previews, set up [Package Manager](https://nrkno.github.io/sofie-core/docs/user-guide/installation/installing-package-manager/).
 1. Right-click the blue header bar and click Activate (Rehearsal).
 1. Hit F12 to Take.
 
@@ -99,7 +99,7 @@ The `dist/*-bundle.js` files can then be uploaded, assigned, and configured in t
 
 ## Development
 
-This project builds with webpack and can auto upload on successful compilation.
+This project builds with Rollup (via [sofie-blueprint-tools](https://github.com/SuperFlyTV/sofie-blueprint-tools)) and can auto-upload on successful compilation.
 
 ### Quick Start for Development
 
