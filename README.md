@@ -1,6 +1,6 @@
 # Sofie: The Modern TV News Studio Automation System
 
-This is **not** the NRK-specific blueprints for the [Sofie News Studio Automation System](https://github.com/nrkno/Sofie-TV-automation/).
+This is **not** the NRK-specific blueprints for the [Sofie News Studio Automation System](https://github.com/Sofie-Automation/Sofie-TV-automation/).
 
 These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/sofie-automation-rundown-editor) or the [Spreadsheet Gateway](https://github.com/SuperFlyTV/spreadsheet-gateway).
 
@@ -9,7 +9,7 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
 - One of the following supported vision mixers:
   - [Blackmagic ATEM](https://www.blackmagicdesign.com/products/atem)
   - [vMix](https://www.vmix.com/)
-- [A CasparCG setup](https://nrkno.github.io/tv-automation-server-core/docs/getting-started/installation/installing-connections-and-additional-hardware/casparcg-server-installation) with the [Sofie Demo Assets](https://superfly.tv/sofie/demo/assets/sofie-demo-assets_v1.1.1.zip) installed.
+- [A CasparCG setup](https://sofie-automation.github.io/sofie-core/docs/user-guide/installation/installing-connections-and-additional-hardware/casparcg-server-installation) with the [Sofie Demo Assets](https://superfly.tv/sofie/demo/assets/sofie-demo-assets_v1.1.1.zip) installed.
 
   - This demo expects two channels to be configured in CasparCG: the first is used for media/VT playout and the second is used for graphics playout. Open `casparcg.config` in your text editor of choice and scroll down for more information on how to configure CasparCG. Your `<paths>` section should look like this:
 
@@ -25,7 +25,7 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
   ```
 
 - A [Sisyfos Audio Controller](https://github.com/tv2/sisyfos-audio-controller) setup
-- A [Sofie Core](https://github.com/nrkno/sofie-core) release 46 setup.
+- A [Sofie Core](https://github.com/Sofie-Automation/sofie-core) release 53 setup.
 
 > 💡 If you don't have a supported vision mixer, CasparCG setup, or Sisyfos setup, that's okay. You can still proceed with the demo setup and skip the steps for the pieces you don't have.
 
@@ -37,7 +37,7 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
    - Fill out all the fields and then click "Run automatic migration procedure".
    - If you don't wish to demo the Slack integration, enter `http://localhost:3000` for the Slack webhook URL.
    - For this demo, we'll be using a media format of `1280x720p5000`.
-1. Ensure that [`playout-gateway`](https://github.com/nrkno/tv-automation-server-core/tree/master/packages/playout-gateway) is running and attached to the studio.
+1. Ensure that [`playout-gateway`](https://github.com/Sofie-Automation/sofie-core/tree/main/packages/playout-gateway) is running and attached to the studio.
    - Under the Studios heading, expand your studio and click Attached Devices.
    - Click the plus icon (`+`) and attach the Playout gateway.
 1. Head to the [releases](https://github.com/SuperFlyTV/sofie-demo-blueprints/releases) page and download the `demo-blueprints-r*.zip` file for the latest release.
@@ -77,7 +77,7 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
 1. Restart the Playout Gateway.
 1. Use the [Rundown Editor](https://github.com/SuperFlyTV/sofie-automation-rundown-editor) or the [Spreadsheet Gateway](https://github.com/SuperFlyTV/spreadsheet-gateway) to add a demo rundown to Sofie.
 1. Go to the Rundowns page (http://localhost:3000/rundowns) and click on the rundown you added in the previous step.
-1. (Optional) If you wish to have accurate media/VT statuses in the Rundown view, as well as hoverscrub media previews, set up [Package Manager](https://nrkno.github.io/sofie-core/docs/user-guide/installation/installing-package-manager).
+1. (Optional) If you wish to have accurate media/VT statuses in the Rundown view, as well as hoverscrub media previews, set up [Package Manager](https://sofie-automation.github.io/sofie-core/docs/user-guide/installation/installing-connections-and-additional-hardware/package-manager).
 1. Right-click the blue header bar and click Activate (Rehearsal).
 1. Hit F12 to Take.
 
