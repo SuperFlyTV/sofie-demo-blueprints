@@ -33,5 +33,12 @@
     "engines": {
         "node": ">=22.0.0"
     },
-    "packageManager": "yarn@4.12.0"
+    "packageManager": "yarn@4.12.0",
+    "resolutions": {
+        "@sofie-automation/blueprints-integration": "portal:/home/julus/Projects/bbc/sofie-core/packages/blueprints-integration",
+        "@sofie-automation/live-status-gateway-api": "portal:/home/julus/Projects/bbc/sofie-core/packages/live-status-gateway-api",
+        "@sofie-automation/openapi": "portal:/home/julus/Projects/bbc/sofie-core/packages/openapi",
+        "@sofie-automation/server-core-integration": "portal:/home/julus/Projects/bbc/sofie-core/packages/server-core-integration",
+        "@sofie-automation/shared-lib": "portal:/home/julus/Projects/bbc/sofie-core/packages/shared-lib"
+    }
 }

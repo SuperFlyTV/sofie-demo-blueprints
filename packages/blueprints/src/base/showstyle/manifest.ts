@@ -4,6 +4,7 @@ import {
 	JSONBlobStringify,
 	JSONSchema,
 	IRundownActivationContext,
+	IOnTakeContext,
 } from '@sofie-automation/blueprints-integration'
 import { executeAction, executeDataStoreAction } from './executeActions/index.js'
 import { getAdlibItem } from './getAdlibItem.js'
@@ -40,10 +41,29 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 
 	validateConfig,
 	applyConfig,
-	onRundownActivate: async (_context: IRundownActivationContext) => {
-		// Noop
+	onRundownActivate: async (context: IRundownActivationContext) => {
+		context.clearAllTimers()
+
+		const t = context.getTimer(1)
+		t.setLabel('Test 123')
+		t.startFreeRun()
 	},
-	fixUpConfig: () => {
-		// Noop
+	onRundownDeActivate: async (context: IRundownActivationContext) => {
+		context.clearAllTimers()
 	},
+	onTake: async (context: IOnTakeContext) => {
+		const [currentSegment, nextSegment] = await Promise.all([context.getSegment('current'), context.getSegment('next')])
+		if (!currentSegment) return // Bad state
+
+		const hasSegmentChanged = !currentSegment || currentSegment._id !== nextSegment._id
+
+		if (hasSegmentChanged) {
+			// Recreate timer if segment has changed
+			const t = context.getTimer(1)
+			t.startTimeOfDay(context.getCurrentTime() + 10000) // Not a real usecase, just an example
+		}
+	},
+	// fixUpConfig: () => {
+	// 	// Noop
+	// },
 }
