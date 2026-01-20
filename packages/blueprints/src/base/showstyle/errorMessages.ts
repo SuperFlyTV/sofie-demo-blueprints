@@ -1,6 +1,10 @@
-import { PackageStatusMessage, BlueprintErrorCode, BlueprintErrorEvent } from '@sofie-automation/blueprints-integration'
-// Device error codes come from TSR - import the specific device codes you need
-import { AtemErrorCode } from 'timeline-state-resolver'
+import {
+	PackageStatusMessage,
+	BlueprintErrorCode,
+	BlueprintErrorEvent,
+	AtemErrorCode,
+	CasparCGErrorCode,
+} from '@sofie-automation/blueprints-integration'
 
 /**
  * Alternate package status messages, to override the builtin ones produced by Sofie.
@@ -13,21 +17,28 @@ export const packageStatusMessages: Partial<Record<PackageStatusMessage, string 
 /**
  * Alternate device error messages, to override the default messages from TSR devices.
  * Keys are error code strings from TSR devices (e.g., 'DEVICE_ATEM_DISCONNECTED').
- * Import error codes from 'timeline-state-resolver' (e.g., AtemErrorCode).
+ * Import error codes from '@sofie-automation/blueprints-integration' (e.g., AtemErrorCode, CasparCGErrorCode).
  *
  * Use {{placeholder}} syntax for dynamic values that will be substituted at runtime.
  *
  * @example
- * import { AtemErrorCode } from 'timeline-state-resolver'
+ * import { AtemErrorCode, CasparCGErrorCode } from '@sofie-automation/blueprints-integration'
  *
  * export const deviceErrorMessages: Record<string, string | undefined> = {
  *   [AtemErrorCode.DISCONNECTED]: '{{deviceName}}: Vision mixer offline',
  *   [AtemErrorCode.PSU_FAULT]: '{{deviceName}}: PSU {{psuNumber}} fault',
+ *   [CasparCGErrorCode.DISCONNECTED]: '{{deviceName}}: Graphics server offline ({{host}}:{{port}})',
+ *   [CasparCGErrorCode.QUEUE_OVERFLOW]: '{{deviceName}}: Too many commands - server needs restart',
  * }
  */
 export const deviceErrorMessages: Record<string, string | undefined> = {
 	// TEST: Silly message to verify error customisation is working
 	[AtemErrorCode.DISCONNECTED]: '🎬 Oh no! The vision mixer ran away! 🏃‍♂️💨 (Check the ATEM connection)',
+
+	// CasparCG error examples
+	[CasparCGErrorCode.DISCONNECTED]:
+		'👻 Caspar is a ghost - {{deviceName}} graphics server is offline - check {{host}}:{{port}}',
+	[CasparCGErrorCode.QUEUE_OVERFLOW]: '{{deviceName}} needs restart - CasparCG command queue is full',
 }
 
 /**
