@@ -47,14 +47,14 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
    - Select `system-bundle.js` from the extracted zip archive.
    - Name this blueprint `system`.
    - Click the plus icon again to add another blueprint.
-   - This time, upload `studio0-bundle.js`, naming it `studio0`.
-   - Repeat for `showstyle0-bundle.js`, naming it `showstyle0`.
+   - This time, upload `demostudio-bundle.js`, naming it `demostudio`.
+   - Repeat for `demoshowstyle-bundle.js`, naming it `demoshowstyle`.
 1. Assign the blueprints:
    - Select the `system` blueprint and click the "Assign" button.
    - Under the Studios heading, expand your studio and click Generic Properties.
-   - In the Blueprint dropdown, select `studio0`.
+   - In the Blueprint dropdown, select `demostudio`.
    - Under the Show Styles heading, expand your showstyle and click Generic Properties.
-   - In the Blueprint dropdown, select `showstyle0`.
+   - In the Blueprint dropdown, select `demoshowstyle`.
 1. Run the blueprint migrations
    - Under the Tools heading, click "Upgrade Database".
    - Fill out any fields and run the migrations.
@@ -68,7 +68,7 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
    - Fill out the Host and Port fields.
      - For an ATEM, the port will be `9910`.
      - For vMix, the port can be obtained from "Settings > Web Contoller". It defaults to `8088`.
-1. Go back to the Studio Blueprint Configuration page (http://localhost:3000/settings/studio/studio0/blueprint-config).
+1. Go back to the Studio Blueprint Configuration page (<http://localhost:3000/settings/studio/demostudio/blueprint-config>).
    - Create and fill out the configuration for the devices you have.
      - If using an ATEM for your vision mixer, ensure that you have the following inputs configured: 2 `camera`, 1 `remote`, 1 `mediaplayer`, and 1 `graphics`.
      - If using vMix, ensure that you have all of the above and 1 `multiview` input configured. This input will be used for DVEs.
