@@ -6,14 +6,17 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
 
 ## Prerequisites
 
-- One of the following supported vision mixers:
-  - [Blackmagic ATEM](https://www.blackmagicdesign.com/products/atem)
-  - [vMix](https://www.vmix.com/)
+### Essential
+
+- A [Sofie Core](https://github.com/Sofie-Automation/sofie-core) release 53 setup.
+
+### Recommended
+
 - [A CasparCG setup](https://sofie-automation.github.io/sofie-core/docs/user-guide/installation/installing-connections-and-additional-hardware/casparcg-server-installation) with the [Sofie Demo Assets](https://superfly.tv/sofie/demo/assets/sofie-demo-assets_v1.1.1.zip) installed.
 
   - This demo expects two channels to be configured in CasparCG: the first is used for media/VT playout and the second is used for graphics playout. Open `casparcg.config` in your text editor of choice and scroll down for more information on how to configure CasparCG. Your `<paths>` section should look like this:
 
-  ```
+  ```xml
   <paths>
   	<media-path>sofie-demo-media/</media-path>
   	<log-path>log/</log-path>
@@ -24,8 +27,12 @@ These blueprints work with the [Rundown Editor](https://github.com/SuperFlyTV/so
   </paths>
   ```
 
+### Optional (for full demo experience)
+
+- One of the following supported vision mixers:
+  - [Blackmagic ATEM](https://www.blackmagicdesign.com/products/atem)
+  - [vMix](https://www.vmix.com/)
 - A [Sisyfos Audio Controller](https://github.com/tv2/sisyfos-audio-controller) setup
-- A [Sofie Core](https://github.com/Sofie-Automation/sofie-core) release 53 setup.
 
 > 💡 If you don't have a supported vision mixer, CasparCG setup, or Sisyfos setup, that's okay. You can still proceed with the demo setup and skip the steps for the pieces you don't have.
 
@@ -99,7 +106,7 @@ The `dist/*-bundle.js` files can then be uploaded, assigned, and configured in t
 
 ## Development
 
-This project builds with webpack and can auto upload on successful compilation.
+This project builds with Rollup (via [sofie-blueprint-tools](https://github.com/SuperFlyTV/sofie-blueprint-tools)) and can auto-upload on successful compilation.
 
 ### Quick Start for Development
 
