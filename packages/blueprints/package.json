@@ -11,6 +11,7 @@
 		"build-now": "run build-inner",
 		"build-inner": "blueprint-build ./blueprint-map.mjs ./dist",
 		"build-sync-local": "run build-inner --server=\"http://127.0.0.1:3000\"",
+		"build:upload": "run build-sync-local --development",
 		"watch": "run build-inner --watch --development",
 		"watch-sync-local": "run build-inner --watch --development --server=\"http://127.0.0.1:3000\"",
 		"lint:raw": "run -B -T eslint",
