@@ -32,6 +32,13 @@ export async function executeAction(
 		playoutPersistentState
 	)
 
+	// Demo: Log whether we're in rehearsal or on-air mode
+	if (context.isRehearsal) {
+		context.logDebug(`executeAction: Action '${actionId}' triggered in REHEARSAL mode`)
+	} else {
+		context.logDebug(`executeAction: Action '${actionId}' triggered in ON-AIR mode`)
+	}
+
 	// Forward the action to the handlers for execution
 
 	if (actionId === ActionId.LastRemote) {

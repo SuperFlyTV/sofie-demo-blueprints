@@ -4,6 +4,7 @@ import {
 	JSONBlobStringify,
 	JSONSchema,
 	IRundownActivationContext,
+	IOnTakeContext,
 } from '@sofie-automation/blueprints-integration'
 import { executeAction, executeDataStoreAction } from './executeActions/index.js'
 import { getAdlibItem } from './getAdlibItem.js'
@@ -75,4 +76,12 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 	// fixUpConfig: () => {
 	// 	// Noop
 	// },
+	onTake: async (context: IOnTakeContext) => {
+		// Demo: Log whether we're in rehearsal or on-air mode
+		if (context.isRehearsal) {
+			context.logDebug('onTake: Running in REHEARSAL mode')
+		} else {
+			context.logDebug('onTake: Running in ON-AIR mode')
+		}
+	},
 }
