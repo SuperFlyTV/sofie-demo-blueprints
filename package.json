@@ -11,6 +11,7 @@
         "build:blueprints": "yarn workspace blueprints build-now && yarn workspace blueprints bundle",
         "watch:blueprints": "yarn workspace blueprints watch-sync-local",
         "build-sync-local": "yarn workspace blueprints build-sync-local",
+        "build:upload": "yarn workspace blueprints build:upload",
         "watch-sync-local": "yarn workspace blueprints watch-sync-local",
         "generate-schema-types": "yarn workspace blueprints generate-schema-types",
         "test:blueprints": "yarn workspace blueprints test",
