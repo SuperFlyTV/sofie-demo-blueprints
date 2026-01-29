@@ -16,6 +16,7 @@ import { validateConfig } from './validateConfig.js'
 import { applyConfig } from './applyconfig/index.js'
 import * as ConfigSchema from '../../$schemas/main-showstyle-config.json'
 import { dereferenceSync } from 'dereference-json-schema'
+import { packageStatusMessages } from './errorMessages.js'
 
 export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'blueprintId' | 'configPresets'> = {
 	/** The type of this blueprint */
@@ -75,4 +76,7 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 	// fixUpConfig: () => {
 	// 	// Noop
 	// },
+
+	/** Alternate package status messages, to override the builtin ones produced by Sofie */
+	packageStatusMessages,
 }
