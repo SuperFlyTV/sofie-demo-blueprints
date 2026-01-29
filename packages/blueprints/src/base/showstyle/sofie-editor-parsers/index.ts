@@ -22,7 +22,7 @@ import { parseVT } from './vt.js'
  */
 export function convertIngestData(context: IRundownUserContext, ingestSegment: SofieIngestSegment): SegmentProps {
 	const parts: PartProps<AllProps>[] = []
-	let type = SegmentType.NORMAL
+	let type = SegmentType.NORMAL // When using Sofie Rundown Editor you can get the segment type from ingestSegment.payload.type
 
 	if (ingestSegment.payload) {
 		const payload = ingestSegment.payload as EditorIngestSegment
@@ -31,6 +31,7 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: S
 
 		ingestSegment.parts.forEach((part) => {
 			const partPayload = part.payload as EditorIngestPart
+			// When using Sofie Rundown Editor you can get the segment type from partPayload.type
 
 			// convert graphic sub-types into graphic objects. to be parsed in a GFX part.
 			const graphicTypes = ['strap', 'head', 'l3d', 'fullscreen', 'stepped-graphic']

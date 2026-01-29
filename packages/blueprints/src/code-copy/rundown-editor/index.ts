@@ -16,6 +16,7 @@ export interface EditorIngestSegment {
 	rank: number
 	name: string
 	float: boolean
+	type: string
 }
 
 export interface DecoratedEditorIngestPart extends IngestPart {
