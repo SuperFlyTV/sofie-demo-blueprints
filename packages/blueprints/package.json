@@ -31,7 +31,7 @@
 		"vitest": "^4.0.16"
 	},
 	"dependencies": {
-		"@sofie-automation/blueprints-integration": "1.53.0-nightly-release53-20251210-154915-f7afd72.0",
+		"@sofie-automation/blueprints-integration": "^26.3.0-nightly-ci-fix-publish-20260204-141836-4220a1a.0",
 		"dereference-json-schema": "^0.2.1",
 		"type-fest": "^5.3.1"
 	},
