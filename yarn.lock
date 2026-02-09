@@ -5838,6 +5838,7 @@ __metadata:
     "@types/node": "npm:^22.19.3"
     dereference-json-schema: "npm:^0.2.1"
     sofie-blueprint-tools: "npm:^1.3.0"
+    timeline-state-resolver-types: "npm:10.0.0-nightly-release53-20251217-143607-df590aa96.0"
     type-fest: "npm:^4.33.0"
     typescript: "npm:~5.8.3"
     vitest: "npm:^4.0.16"
@@ -16567,6 +16568,15 @@ __metadata:
   version: 1.1.0
   resolution: "thunky@npm:1.1.0"
   checksum: 10c0/369764f39de1ce1de2ba2fa922db4a3f92e9c7f33bcc9a713241bc1f4a5238b484c17e0d36d1d533c625efb00e9e82c3e45f80b47586945557b45abb890156d2
+  languageName: node
+  linkType: hard
+
+"timeline-state-resolver-types@npm:10.0.0-nightly-release53-20251217-143607-df590aa96.0":
+  version: 10.0.0-nightly-release53-20251217-143607-df590aa96.0
+  resolution: "timeline-state-resolver-types@npm:10.0.0-nightly-release53-20251217-143607-df590aa96.0"
+  dependencies:
+    tslib: "npm:^2.8.1"
+  checksum: 10c0/bb53d0583726365ea449480f7111ec46b1108df81e8995ebe013ce76ef577e35559ab928687fc39f306e60c3eb6f2dd97b65729e820bab99e856b05f55d008ee
   languageName: node
   linkType: hard
 

@@ -14,6 +14,7 @@ import * as ConfigSchema from '../../$schemas/main-studio-config.json'
 import { StudioConfig } from './helpers/config.js'
 import { processIngestData } from './userEditOperations/processIngestData.js'
 import { dereferenceSync } from 'dereference-json-schema'
+import { deviceErrorMessages } from './errorMessages.js'
 
 export const baseManifest: Omit<StudioBlueprintManifest<StudioConfig>, 'blueprintId' | 'configPresets'> = {
 	blueprintType: BlueprintManifestType.STUDIO,
@@ -41,6 +42,10 @@ export const baseManifest: Omit<StudioBlueprintManifest<StudioConfig>, 'blueprin
 	processIngestData,
 
 	translations: __TRANSLATION_BUNDLES__,
+
+	// Device error message customization - overrides default messages from TSR devices
+	// See ./errorMessages.ts for examples of string templates and functions
+	deviceErrorMessages,
 }
 
 export default baseManifest
