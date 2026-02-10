@@ -48,7 +48,8 @@ function getGraphicTlObject(
 	isAdlib?: boolean
 ): TimelineBlueprintExt[] {
 	const fullscreenAtemInput = getClipPlayerInput(config)
-	const isFullscreen = object.clipName.match(/fullscreen/i)
+	// Fullscreen graphics (including coming-up) need special handling for vision mixer and stop command
+	const isFullscreen = object.clipName.match(/fullscreen|coming-up/i)
 
 	return [
 		literal<TimelineBlueprintExt<TSR.TimelineContentCCGTemplate>>({
@@ -126,7 +127,8 @@ export function parseAdlibGraphic(
 ): IBlueprintAdLibPiece {
 	const sourceLayer = getGraphicSourceLayer(object)
 	const lifespan = getGraphicLifespan(sourceLayer, object)
-	const isFullscreen = object.clipName.match(/fullscreen/i)
+	// Fullscreen graphics (including coming-up) need preroll latency for CasparCG
+	const isFullscreen = object.clipName.match(/fullscreen|coming-up/i)
 
 	return {
 		externalId: object.id,
