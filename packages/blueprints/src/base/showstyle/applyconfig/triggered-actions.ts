@@ -45,7 +45,19 @@ export function getTriggeredActions(): IBlueprintTriggeredActions[] {
 		),
 		...['F8'].map((key, i) => createAdLibHotkey(key, [SourceLayer.DVE], true, i, undefined)),
 		...['KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY'].map((key, i) =>
-			createAdLibHotkey(key, [SourceLayer.LowerThird, SourceLayer.LowerThird, SourceLayer.Ticker], false, i, undefined)
+			createAdLibHotkey(
+				key,
+				[
+					SourceLayer.LowerThird,
+					SourceLayer.Ticker,
+					SourceLayer.OGrafOverlay1,
+					SourceLayer.OGrafOverlay2,
+					SourceLayer.OGrafOverlay3,
+				],
+				false,
+				i,
+				undefined
+			)
 		),
 		...['KeyV', 'Shift+KeyV'].map((key, i) => createAdLibHotkey(key, [SourceLayer.HostOverride], true, i, undefined)),
 		createAdLibHotkeyWithTriggerMode(rankCounter),

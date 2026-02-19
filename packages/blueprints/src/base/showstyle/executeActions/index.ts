@@ -7,6 +7,7 @@ import {
 import { ActionId } from './actionDefinitions.js'
 import { SourceLayer } from '../applyconfig/layers.js'
 import { ExampleGFXStepActionOptions, executeGraphicNextStep } from './steppedGraphicExample.js'
+import { executeOGrafClear } from './ograf.js'
 
 export async function executeAction(
 	context: IActionExecutionContext,
@@ -40,6 +41,8 @@ export async function executeAction(
 		await executeLastOnSourceLayer(context, SourceLayer.DVE)
 	} else if (actionId === ActionId.GFXStep) {
 		await executeGraphicNextStep(context, triggerMode, actionOptions as ExampleGFXStepActionOptions)
+	} else if (actionId === ActionId.OGrafClear) {
+		await executeOGrafClear(context)
 	}
 }
 

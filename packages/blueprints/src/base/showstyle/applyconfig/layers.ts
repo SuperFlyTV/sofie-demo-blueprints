@@ -8,6 +8,11 @@ export enum SourceLayer {
 	DVE_RETAIN = 'dveRetain',
 	GFX = 'gfx',
 
+	OGrafFullScreen = 'ograf_fullscreen',
+	OGrafOverlay1 = 'ograf_overlay1',
+	OGrafOverlay2 = 'ograf_overlay2',
+	OGrafOverlay3 = 'ograf_overlay3',
+
 	AudioBed = 'audioBed',
 	StudioGuests = 'guest',
 	HostOverride = 'hostOverride',
@@ -31,6 +36,9 @@ export function getOutputLayerForSourceLayer(layer: SourceLayer): OutputLayer {
 	switch (layer) {
 		case SourceLayer.Script:
 			return OutputLayer.Script
+		case SourceLayer.OGrafOverlay1:
+		case SourceLayer.OGrafOverlay2:
+		case SourceLayer.OGrafOverlay3:
 		case SourceLayer.LowerThird:
 		case SourceLayer.Strap:
 		case SourceLayer.Ticker:
