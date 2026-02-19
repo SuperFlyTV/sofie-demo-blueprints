@@ -3,6 +3,7 @@ import { SpreadsheetIngestPiece } from '../../code-copy/spreadsheet-gateway/inde
 export type SomeObject =
 	| CameraObject
 	| VideoObject
+	| OGrafGraphicObject
 	| GraphicObject
 	| SplitObject
 	| OverlayObject
@@ -21,6 +22,7 @@ export type SomeAdlibPiece = VideoObject | GraphicObject
 export enum ObjectType {
 	Camera = 'camera',
 	Video = 'video',
+	OGrafGraphic = 'ograf-graphic',
 	Graphic = 'graphic',
 	SteppedGraphic = 'stepped-graphic',
 	Split = 'split',
@@ -50,8 +52,17 @@ export interface VideoObject extends BaseObject {
 	adlibVariant?: string
 }
 export interface GraphicObjectBase extends BaseObject {
-	objectType: ObjectType.Graphic | ObjectType.SteppedGraphic
+	objectType: ObjectType.OGrafGraphic | ObjectType.Graphic | ObjectType.SteppedGraphic
 	adlibVariant?: string
+}
+export interface OGrafGraphicObject extends GraphicObjectBase {
+	objectType: ObjectType.OGrafGraphic
+	attributes: OGrafGraphicObjectAttributes
+}
+export type OGrafGraphicObjectAttributes = {
+	'ograf-id': string
+	'ograf-data': any
+	type: string | 'full-screen' | 'overlay1' | 'overlay2' | 'overlay3'
 }
 export interface GraphicObject extends GraphicObjectBase {
 	objectType: ObjectType.Graphic

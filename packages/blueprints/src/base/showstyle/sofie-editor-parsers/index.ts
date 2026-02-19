@@ -52,6 +52,9 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: S
 					}
 				} else if ((piece.objectType as ObjectType) === ObjectType.Video) {
 					piece.clipName = piece.attributes.fileName as string
+				} else if (piece.objectType.startsWith('ograf-')) {
+					piece.objectType = ObjectType.OGrafGraphic
+					piece.clipName = piece.name ?? 'N/A'
 				}
 
 				piece.duration = piece.duration * 1000

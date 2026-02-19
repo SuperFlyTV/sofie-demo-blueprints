@@ -1,4 +1,9 @@
-import { BlueprintResultPart, IBlueprintAdLibPiece, IBlueprintPiece, PieceLifespan } from '@sofie-automation/blueprints-integration'
+import {
+	BlueprintResultPart,
+	IBlueprintAdLibPiece,
+	IBlueprintPiece,
+	PieceLifespan,
+} from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../../common/context.js'
 import { ObjectType, StudioGuestObject } from '../../../common/definitions/objects.js'
 import { literal } from '../../../common/util.js'
@@ -13,6 +18,7 @@ import { getSourceInfoFromRaw } from '../helpers/sources.js'
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { parseConfig } from '../helpers/config.js'
+import { parseOGrafGraphicsFromObjects } from '../helpers/ograf-graphics.js'
 
 export function generateCameraPart(context: PartContext, part: PartProps<CameraProps>): BlueprintResultPart {
 	const config = parseConfig(context).studio
@@ -40,6 +46,8 @@ export function generateCameraPart(context: PartContext, part: PartProps<CameraP
 
 	const graphics = parseGraphicsFromObjects(config, part.objects)
 	if (graphics.pieces) pieces.push(...graphics.pieces)
+	const ografGraphics = parseOGrafGraphicsFromObjects(config, part.objects)
+	if (ografGraphics.pieces) pieces.push(...ografGraphics.pieces)
 
 	const clips = parseClipsFromObjects(context, config, part.objects)
 
@@ -62,7 +70,7 @@ export function generateCameraPart(context: PartContext, part: PartProps<CameraP
 			expectedDuration: part.payload.duration,
 		},
 		pieces,
-		adLibPieces: [...graphics.adLibPieces, ...clips, cameraAdLibPiece],
+		adLibPieces: [...graphics.adLibPieces, ...clips, cameraAdLibPiece, ...ografGraphics.adLibPieces],
 		actions: [],
 	}
 }

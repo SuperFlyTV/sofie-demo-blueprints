@@ -35,6 +35,17 @@ export function getGlobalActions(
 			},
 			externalId: ingestRundown.externalId,
 		}),
+		literal<IBlueprintActionManifest>({
+			actionId: ActionId.OGrafClear,
+			userData: {},
+			userDataManifest: {},
+			display: {
+				label: t('Clear Graphics'),
+				sourceLayerId: SourceLayer.OGrafOverlay1,
+				outputLayerId: getOutputLayerForSourceLayer(SourceLayer.OGrafOverlay1),
+			},
+			externalId: ingestRundown.externalId,
+		}),
 		exampleGraphicNextStepAdlibAction(ingestRundown),
 	]
 }
