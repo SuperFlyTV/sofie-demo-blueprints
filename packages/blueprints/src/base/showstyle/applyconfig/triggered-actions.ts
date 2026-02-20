@@ -1,4 +1,5 @@
 import {
+	ClientActions,
 	IAdLibFilterLink,
 	IBlueprintTriggeredActions,
 	IGUIContextFilterLink,
@@ -49,6 +50,27 @@ export function getTriggeredActions(): IBlueprintTriggeredActions[] {
 		),
 		...['KeyV', 'Shift+KeyV'].map((key, i) => createAdLibHotkey(key, [SourceLayer.HostOverride], true, i, undefined)),
 		createAdLibHotkeyWithTriggerMode(rankCounter),
+		{
+			_id: 'editMode_toggle',
+			_rank: rankCounter++ * 1000,
+			actions: {
+				[ClientActions.editMode]: {
+					action: ClientActions.editMode,
+					filterChain: [
+						{
+							object: 'view',
+						} as IGUIContextFilterLink,
+					],
+					state: 'toggle',
+				},
+			},
+			triggers: {
+				['shift_e']: {
+					type: TriggerType.hotkey,
+					keys: 'Shift+KeyE',
+				},
+			},
+		} as IBlueprintTriggeredActions,
 	]
 	return triggeredActions
 }

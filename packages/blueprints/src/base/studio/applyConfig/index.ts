@@ -39,6 +39,7 @@ export function applyConfig(
 			allowHold: false,
 			allowPieceDirectPlay: false,
 			enableBuckets: false,
+			enableUserEdits: true,
 			enableEvaluationForm: true,
 		},
 	}
