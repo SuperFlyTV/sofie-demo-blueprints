@@ -47,7 +47,6 @@ jobs:
           
           if [ -n "$BRANCH_INFO" ]; then
             echo "branch_exists=true" >> $GITHUB_OUTPUT
-            HEAD_SHA=$(echo "$BRANCH_INFO" | awk '{print $1}')
 
             # Get PR number for the branch
             PR_NUMBER=$(gh pr list --head bot/update-nightly --json number --jq '.[0].number')
@@ -55,18 +54,8 @@ jobs:
             if [ -n "$PR_NUMBER" ]; then
               echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
 
-              # Check if checks are failing using hub (returns exit code 1 on failure)
-              # Exit codes: 0=success, 1=failure, 2=pending, 3=neutral
-              STATUS_CODE=0
-              hub ci-status "$HEAD_SHA" || STATUS_CODE=$?
-
-              if [ "$STATUS_CODE" -eq 1 ]; then
-                echo "pr_failing=true" >> $GITHUB_OUTPUT
-                echo "Found failing PR #$PR_NUMBER (status code $STATUS_CODE), will merge main to preserve history"
-              else
-                echo "pr_failing=false" >> $GITHUB_OUTPUT
-                echo "PR #$PR_NUMBER is passing, pending or neutral (status code $STATUS_CODE), will force push"
-              fi
+              PR_FAILING=$(gh pr checks "$PR_NUMBER" --json bucket --jq 'if (length > 0 and all(.[]; .bucket == "pass")) then "false" else "true" end')
+              echo "pr_failing=$PR_FAILING" >> $GITHUB_OUTPUT
             else
               echo "pr_failing=false" >> $GITHUB_OUTPUT
               echo "No PR found, will create fresh branch"
@@ -115,6 +104,7 @@ jobs:
           yarn add @sofie-automation/blueprints-integration@nightly
 
       - name: Commit and push changes
+        id: commit
         run: |
           set -e
 
@@ -122,25 +112,23 @@ jobs:
 
           if git diff --cached --quiet; then
             echo "No changes to commit"
-            exit 0
+            echo "no_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "no_changes=false" >> $GITHUB_OUTPUT
+
+            git commit -m "chore: update to latest nightly dependencies"
+
+            git push -f origin bot/update-nightly
           fi
 
-          git commit -m "chore: update to latest nightly dependencies"
-
-          git push -f origin bot/update-nightly
-
       - name: Create or update PR
+        if: steps.commit.outputs.no_changes != 'true'
         run: |
           set -e
 
           PR_NUMBER="${{ steps.pr-status.outputs.pr_number }}"
 
-          PR_BODY_BASE="Automated update to latest nightly versions of Sofie dependencies.
-
-          This PR was automatically created by the scheduled nightly workflow.
-          The normal CI workflow will run tests on this PR.
-
-          Please review and merge if all tests pass."
+          PR_BODY_BASE=$'Automated update to latest nightly versions of Sofie dependencies.\n\nThis PR was automatically created by the scheduled nightly workflow.\nThe normal CI workflow will run tests on this PR.\n\nPlease review and merge if all tests pass.'
 
           if [ -z "$PR_NUMBER" ]; then
             # Create new PR
@@ -148,8 +136,7 @@ jobs:
               --title "Update to Latest Nightly Dependencies" \
               --body "$PR_BODY_BASE" \
               --head bot/update-nightly \
-              --base main \
-              --label dependencies,automated
+              --base main
           else
             # Update existing PR body with strategy-specific note
             if [ "${{ steps.branch-strategy.outputs.strategy }}" = "merge" ]; then
@@ -158,14 +145,8 @@ jobs:
               STRATEGY_NOTE="This branch was force-pushed with the latest nightly dependencies."
             fi
 
-            gh pr edit "$PR_NUMBER" --body "Automated update to latest nightly versions of Sofie dependencies.
-
-          This PR was automatically created by the scheduled nightly workflow.
-          The normal CI workflow will run tests on this PR.
-
-          $STRATEGY_NOTE
-
-          Please review and merge if all tests pass."
+            PR_BODY="$PR_BODY_BASE"$'\n\n'"$STRATEGY_NOTE"
+            gh pr edit "$PR_NUMBER" --body "$PR_BODY"
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
