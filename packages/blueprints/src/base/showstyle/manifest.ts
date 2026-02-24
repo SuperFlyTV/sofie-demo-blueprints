@@ -3,7 +3,9 @@ import {
 	ShowStyleBlueprintManifest,
 	JSONBlobStringify,
 	JSONSchema,
+	IBlueprintRundown,
 	IRundownActivationContext,
+	PlaylistTimingType,
 } from '@sofie-automation/blueprints-integration'
 import { executeAction, executeDataStoreAction } from './executeActions/index.js'
 import { getAdlibItem } from './getAdlibItem.js'
@@ -66,8 +68,27 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 	 */
 	applyConfig,
 	/** Called when a RundownPlaylist has been activated */
-	onRundownActivate: async (_context: IRundownActivationContext) => {
-		// Noop
+	onRundownActivate: async (context: IRundownActivationContext) => {
+		const endOfShowTimer = context.getTimer(1)
+		endOfShowTimer.setLabel('End of Show')
+		endOfShowTimer.setEstimateAnchorPartByExternalId('end-of-rundown-break')
+
+		// Determine the expected end time from the rundown timing and start a countdown
+		const timing = (context.rundown as Readonly<IBlueprintRundown>).timing
+		let expectedEnd: number | undefined
+		if (timing.type === PlaylistTimingType.BackTime) {
+			expectedEnd = timing.expectedEnd
+		} else if (timing.type === PlaylistTimingType.ForwardTime) {
+			if (timing.expectedEnd !== undefined) {
+				expectedEnd = timing.expectedEnd
+			} else if (timing.expectedDuration !== undefined) {
+				expectedEnd = timing.expectedStart + timing.expectedDuration
+			}
+		}
+
+		if (expectedEnd !== undefined) {
+			endOfShowTimer.startTimeOfDay(expectedEnd)
+		}
 	},
 	// Uncomment this to enable config fixup migrations between blueprint versions.
 	// Note: When defined, fixUpConfig must be run after every blueprint upload before
