@@ -12,6 +12,26 @@ import { SegmentProps } from './definitions/index.js'
 
 // Get segment is called from Core and is the main entry point for the blueprint for receiving segments
 export function getSegment(context: ISegmentUserContext, ingestSegment: SofieIngestSegment): BlueprintResultSegment {
+	// The end-of-rundown segment is injected by the studio blueprint's processIngestData.
+	// It holds only a zero-length break part used as the T-Timer anchor.
+	if (ingestSegment.externalId === 'end-of-rundown') {
+		return {
+			segment: { name: 'End of Show' },
+			parts: [
+				{
+					part: {
+						externalId: 'end-of-rundown-break',
+						title: 'Break',
+						expectedDuration: 0,
+					},
+					pieces: [],
+					adLibPieces: [],
+					actions: [],
+				},
+			],
+		}
+	}
+
 	const rundownType = (context.rundown as Readonly<IBlueprintRundown<RundownMetadata>>).privateData?.ingestType
 	let intermediateSegment: SegmentProps
 	switch (rundownType) {

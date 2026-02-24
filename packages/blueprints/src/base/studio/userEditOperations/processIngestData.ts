@@ -73,6 +73,18 @@ export async function processIngestData(
 	} else {
 		context.logWarning(`Unknown change source: ${(ingestChanges as { source: string }).source}`)
 	}
+
+	// Always ensure an end-of-rundown segment exists at the very end, for T-Timer anchoring.
+	// replaceSegment will insert or update, and null positions it last.
+	mutableIngestRundown.replaceSegment(
+		{
+			externalId: 'end-of-rundown',
+			name: 'End of Show',
+			payload: undefined,
+			parts: [],
+		},
+		null
+	)
 }
 
 async function applyIngestOperation(
