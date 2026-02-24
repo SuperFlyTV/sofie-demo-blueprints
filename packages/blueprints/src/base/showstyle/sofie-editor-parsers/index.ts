@@ -34,7 +34,7 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: S
 			// When using Sofie Rundown Editor you can get the segment type from partPayload.type
 
 			// convert graphic sub-types into graphic objects. to be parsed in a GFX part.
-			const graphicTypes = ['strap', 'head', 'l3d', 'fullscreen', 'stepped-graphic']
+			const graphicTypes = ['strap', 'head', 'l3d', 'fullscreen', 'stepped-graphic', 'coming-up']
 			partPayload.pieces.forEach((piece) => {
 				if ((piece.objectType as ObjectType) === ObjectType.Graphic) {
 					piece.clipName = String(piece.attributes.template || '')
@@ -49,6 +49,9 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: S
 						piece.attributes.description = piece.attributes.field1
 					} else if (piece.clipName === 'gfx/fullscreen') {
 						piece.attributes.url = piece.attributes.field0
+					} else if (piece.clipName === 'gfx/coming-up') {
+						piece.attributes.count = piece.attributes.field0 || 5
+						piece.attributes.style = piece.attributes.field1 || 'list'
 					}
 				} else if ((piece.objectType as ObjectType) === ObjectType.Video) {
 					piece.clipName = piece.attributes.fileName as string

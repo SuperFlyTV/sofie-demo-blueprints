@@ -168,5 +168,26 @@
 			}
 		],
 		"id": "head"
+	},
+	{
+		"name": "Coming Up",
+		"shortName": "CUP",
+		"colour": "#9B59B6",
+		"includeTypeInName": true,
+		"payload": [
+			{
+				"id": "count",
+				"label": "Number of upcoming parts to show",
+				"type": "number",
+				"includeInName": true
+			},
+			{
+				"id": "style",
+				"label": "Display style (list/grid)",
+				"type": "string",
+				"includeInName": false
+			}
+		],
+		"id": "coming-up"
 	}
 ]
