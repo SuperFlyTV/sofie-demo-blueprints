@@ -10,7 +10,7 @@
 		},
 		"declaration": false,
 		"declarationMap": false,
-		"types": ["node"],
+		"types": ["node", "./src/tsr-extend.d.ts"],
 		"resolveJsonModule": true,
 		"module": "esnext",
 		"moduleResolution": "bundler"

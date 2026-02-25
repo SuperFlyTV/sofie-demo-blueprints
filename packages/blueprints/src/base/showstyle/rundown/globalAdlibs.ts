@@ -7,6 +7,8 @@ import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers
 import { InputConfig, VisionMixerDevice } from '../../../$schemas/generated/main-studio-config.js'
 import { parseConfig } from '../helpers/config.js'
 import { SisyfosLayers } from '../../studio/layers.js'
+import { FakeDeviceType, TimelineContentFakeAny, TimelineContentTypeFake } from '../../../test-types.js'
+import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 
 export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLibPiece[] {
 	const config = parseConfig(context).studio
@@ -40,6 +42,19 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 			timelineObjects: [
 				...createVisionMixerObjects(config, input, 0),
 				getAudioPrimaryObject(config, [{ type: AudioSourceType.Remote, index: id }]),
+				{
+					id: `remote-${id}-talkback`,
+					enable: { while: '1' },
+					layer: 'abc',
+					priority: 0,
+					content: {
+						deviceType: FakeDeviceType,
+						type: TimelineContentTypeFake.AUX,
+						aux: {
+							input: id,
+						},
+					},
+				} satisfies TimelineBlueprintExt<TimelineContentFakeAny>,
 			],
 		},
 	})

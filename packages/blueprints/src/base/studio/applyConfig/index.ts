@@ -12,6 +12,7 @@ import { preprocessConfig } from '../preprocessConfig.js'
 import { literal } from '../../../common/util.js'
 // eslint-disable-next-line n/no-missing-import
 import { StudioPackageContainer } from '@sofie-automation/shared-lib/dist/core/model/PackageContainer.js'
+import { DeviceOptionsFake, FakeDeviceType } from '../../../test-types.js'
 
 export function applyConfig(
 	context: ICommonContext,
@@ -77,6 +78,15 @@ function generatePlayoutDevices(config: BlueprintConfig): BlueprintResultApplySt
 				options: {
 					host: config.studio.casparcg.host,
 					port: config.studio.casparcg.port || 5250,
+				},
+			}),
+		},
+		test: {
+			parentConfigId: 'playoutgateway',
+			options: literal<DeviceOptionsFake>({
+				type: FakeDeviceType,
+				options: {
+					abc: 123,
 				},
 			}),
 		},
