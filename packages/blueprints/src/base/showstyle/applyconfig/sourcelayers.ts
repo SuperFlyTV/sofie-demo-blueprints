@@ -66,6 +66,34 @@ export function getSourceLayer(): ISourceLayer[] {
 			exclusiveGroup: 'pgm',
 			onPresenterScreen: true,
 		},
+		{
+			_id: SourceLayer.OGrafFullScreen,
+			type: SourceLayerType.GRAPHICS,
+			_rank: 110,
+			name: 'OGraf Full Screen',
+			abbreviation: 'GFX FULL',
+		},
+		{
+			_id: SourceLayer.OGrafOverlay1,
+			type: SourceLayerType.GRAPHICS,
+			_rank: 111,
+			name: 'OGraf Overlay 1',
+			abbreviation: 'GFX1',
+		},
+		{
+			_id: SourceLayer.OGrafOverlay2,
+			type: SourceLayerType.GRAPHICS,
+			_rank: 112,
+			name: 'OGraf Overlay 2',
+			abbreviation: 'GFX2',
+		},
+		{
+			_id: SourceLayer.OGrafOverlay3,
+			type: SourceLayerType.GRAPHICS,
+			_rank: 113,
+			name: 'OGraf Overlay 3',
+			abbreviation: 'GFX3',
+		},
 
 		{
 			_id: SourceLayer.LowerThird,

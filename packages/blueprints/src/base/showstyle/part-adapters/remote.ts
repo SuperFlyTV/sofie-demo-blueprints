@@ -11,6 +11,7 @@ import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { ObjectType } from '../../../common/definitions/objects.js'
 import { parseConfig } from '../helpers/config.js'
+import { parseOGrafGraphicsFromObjects } from '../helpers/ograf-graphics.js'
 
 export function generateRemotePart(context: PartContext, part: PartProps<RemoteProps>): BlueprintResultPart {
 	const config = parseConfig(context).studio
@@ -47,6 +48,8 @@ export function generateRemotePart(context: PartContext, part: PartProps<RemoteP
 
 	const graphics = parseGraphicsFromObjects(config, part.objects)
 	if (graphics.pieces) pieces.push(...graphics.pieces)
+	const ografGraphics = parseOGrafGraphicsFromObjects(config, part.objects)
+	if (ografGraphics.pieces) pieces.push(...ografGraphics.pieces)
 
 	const clips = parseClipsFromObjects(context, config, part.objects)
 
@@ -58,7 +61,7 @@ export function generateRemotePart(context: PartContext, part: PartProps<RemoteP
 			expectedDuration: part.payload.duration,
 		},
 		pieces,
-		adLibPieces: [...graphics.adLibPieces, ...clips],
+		adLibPieces: [...graphics.adLibPieces, ...clips, ...ografGraphics.adLibPieces],
 		actions: [],
 	}
 }
