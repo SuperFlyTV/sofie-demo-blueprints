@@ -1,4 +1,4 @@
-import { BlueprintResultPart, IBlueprintPiece, PieceLifespan } from '@sofie-automation/blueprints-integration'
+import { BlueprintResultPart, IBlueprintAdLibPiece, IBlueprintPiece, PieceLifespan } from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../../common/context.js'
 import { ObjectType, StudioGuestObject } from '../../../common/definitions/objects.js'
 import { literal } from '../../../common/util.js'
@@ -48,6 +48,12 @@ export function generateCameraPart(context: PartContext, part: PartProps<CameraP
 		pieces.push(addGuest(config, guestObj.attributes.count))
 	}
 
+	// Also create adlibs for cameras:
+	const cameraAdLibPiece: IBlueprintAdLibPiece = {
+		...cameraPiece,
+		_rank: 0,
+	}
+
 	return {
 		part: {
 			externalId: part.payload.externalId,
@@ -56,7 +62,7 @@ export function generateCameraPart(context: PartContext, part: PartProps<CameraP
 			expectedDuration: part.payload.duration,
 		},
 		pieces,
-		adLibPieces: [...graphics.adLibPieces, ...clips],
+		adLibPieces: [...graphics.adLibPieces, ...clips, cameraAdLibPiece],
 		actions: [],
 	}
 }
