@@ -71,14 +71,13 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 	onRundownActivate: async (context: IRundownActivationContext) => {
 		const endOfShowTimer = context.getTimer(1)
 		endOfShowTimer.setLabel('End of Show')
-		endOfShowTimer.setEstimateAnchorPartByExternalId('end-of-rundown-break')
 
 		// Determine the expected end time from the rundown timing and start a countdown
 		const timing = (context.rundown as Readonly<IBlueprintRundown>).timing
 		let expectedEnd: number | undefined
-		if (timing.type === PlaylistTimingType.BackTime) {
+		if (timing && timing.type === PlaylistTimingType.BackTime) {
 			expectedEnd = timing.expectedEnd
-		} else if (timing.type === PlaylistTimingType.ForwardTime) {
+		} else if (timing && timing.type === PlaylistTimingType.ForwardTime) {
 			if (timing.expectedEnd !== undefined) {
 				expectedEnd = timing.expectedEnd
 			} else if (timing.expectedDuration !== undefined) {
@@ -88,6 +87,11 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 
 		if (expectedEnd !== undefined) {
 			endOfShowTimer.startTimeOfDay(expectedEnd)
+			// Set the anchor part for automatic estimate calculation (over/under diff)
+			endOfShowTimer.setEstimateAnchorPartByExternalId('end-of-rundown-break')
+			context.logDebug(`Expected end time is ${expectedEnd}`)
+		} else {
+			context.logWarning('Expected end time is not defined for this rundown, end of show timer will not be started')
 		}
 	},
 	// Uncomment this to enable config fixup migrations between blueprint versions.
