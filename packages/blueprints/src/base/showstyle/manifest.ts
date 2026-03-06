@@ -70,18 +70,20 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 	/** Called when a RundownPlaylist has been activated */
 	onRundownActivate: async (context: IRundownActivationContext) => {
 		const endOfShowTimer = context.getTimer(1)
-		endOfShowTimer.setLabel('End of Show')
 
 		// Determine the expected end time from the rundown timing and start a countdown
 		const timing = ((context as any)._rundown as Readonly<IBlueprintRundown>).timing
 		let expectedEnd: number | undefined
 		if (timing && timing.type === PlaylistTimingType.BackTime) {
 			expectedEnd = timing.expectedEnd
+			endOfShowTimer.setLabel('End of Show (expected end, backtime)')
 		} else if (timing && timing.type === PlaylistTimingType.ForwardTime) {
 			if (timing.expectedEnd !== undefined) {
 				expectedEnd = timing.expectedEnd
+				endOfShowTimer.setLabel('End of Show (expected end, forward time)')
 			} else if (timing.expectedDuration !== undefined) {
 				expectedEnd = timing.expectedStart + timing.expectedDuration
+				endOfShowTimer.setLabel('End of Show (expected duration, forward time)')
 			}
 		}
 
