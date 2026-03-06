@@ -95,6 +95,17 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 		} else {
 			context.logWarning('Expected end time is not defined for this rundown, end of show timer will not be started')
 		}
+
+		if (timing.expectedDuration) {
+			const endOfShowTimer2 = context.getTimer(2)
+			endOfShowTimer2.setLabel('End of Show (duration)')
+			endOfShowTimer2.startCountdown(timing.expectedDuration, { startPaused: true })
+			endOfShowTimer2.setEstimateAnchorPartByExternalId('end-of-rundown-break')
+		}
+	},
+	onTake: async (context) => {
+		// Ensure timer 2 is running
+		context.getTimer(2).resume()
 	},
 	// Uncomment this to enable config fixup migrations between blueprint versions.
 	// Note: When defined, fixUpConfig must be run after every blueprint upload before
