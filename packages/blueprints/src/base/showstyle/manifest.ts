@@ -73,7 +73,7 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 		endOfShowTimer.setLabel('End of Show')
 
 		// Determine the expected end time from the rundown timing and start a countdown
-		const timing = (context.rundown as Readonly<IBlueprintRundown>).timing
+		const timing = ((context as any)._rundown as Readonly<IBlueprintRundown>).timing
 		let expectedEnd: number | undefined
 		if (timing && timing.type === PlaylistTimingType.BackTime) {
 			expectedEnd = timing.expectedEnd
