@@ -84,7 +84,7 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: S
 			} else if (partPayload.type?.match(/vt|full|package/i)) {
 				parts.push(parseVT(partPayload))
 			} else {
-				parts.push(createInvalidProps(t('Unknown part type'), partPayload))
+				parts.push(createInvalidProps(t('Unknown part type ' + JSON.stringify(partPayload.type)), partPayload))
 			}
 		})
 	} else {

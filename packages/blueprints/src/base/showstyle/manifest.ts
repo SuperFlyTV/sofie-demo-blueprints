@@ -3,7 +3,9 @@ import {
 	ShowStyleBlueprintManifest,
 	JSONBlobStringify,
 	JSONSchema,
+	IBlueprintRundown,
 	IRundownActivationContext,
+	PlaylistTimingType,
 } from '@sofie-automation/blueprints-integration'
 import { executeAction, executeDataStoreAction } from './executeActions/index.js'
 import { getAdlibItem } from './getAdlibItem.js'
@@ -66,8 +68,44 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 	 */
 	applyConfig,
 	/** Called when a RundownPlaylist has been activated */
-	onRundownActivate: async (_context: IRundownActivationContext) => {
-		// Noop
+	onRundownActivate: async (context: IRundownActivationContext) => {
+		const endOfShowTimer = context.getTimer(1)
+
+		// Determine the expected end time from the rundown timing and start a countdown
+		const timing = ((context as any)._rundown as Readonly<IBlueprintRundown>).timing
+		let expectedEnd: number | undefined
+		if (timing && timing.type === PlaylistTimingType.BackTime) {
+			expectedEnd = timing.expectedEnd
+			endOfShowTimer.setLabel('End of Show (expected end, backtime)')
+		} else if (timing && timing.type === PlaylistTimingType.ForwardTime) {
+			if (timing.expectedEnd !== undefined) {
+				expectedEnd = timing.expectedEnd
+				endOfShowTimer.setLabel('End of Show (expected end, forward time)')
+			} else if (timing.expectedDuration !== undefined) {
+				expectedEnd = timing.expectedStart + timing.expectedDuration
+				endOfShowTimer.setLabel('End of Show (expected duration, forward time)')
+			}
+		}
+
+		if (expectedEnd !== undefined) {
+			endOfShowTimer.startTimeOfDay(expectedEnd)
+			// Set the anchor part for automatic estimate calculation (over/under diff)
+			endOfShowTimer.setEstimateAnchorPartByExternalId('end-of-rundown-break')
+			context.logDebug(`Expected end time is ${expectedEnd}`)
+		} else {
+			context.logWarning('Expected end time is not defined for this rundown, end of show timer will not be started')
+		}
+
+		if (timing.expectedDuration) {
+			const endOfShowTimer2 = context.getTimer(2)
+			endOfShowTimer2.setLabel('End of Show (duration)')
+			endOfShowTimer2.startCountdown(timing.expectedDuration, { startPaused: true })
+			endOfShowTimer2.setEstimateAnchorPartByExternalId('end-of-rundown-break')
+		}
+	},
+	onTake: async (context) => {
+		// Ensure timer 2 is running
+		context.getTimer(2).resume()
 	},
 	// Uncomment this to enable config fixup migrations between blueprint versions.
 	// Note: When defined, fixUpConfig must be run after every blueprint upload before
