@@ -3,8 +3,6 @@ import { BlueprintManifestType, SystemBlueprintManifest } from '@sofie-automatio
 const manifest: SystemBlueprintManifest = {
 	blueprintType: BlueprintManifestType.SYSTEM,
 
-	coreMigrations: [],
-
 	blueprintId: 'sofie-demo-system',
 	blueprintVersion: __VERSION__,
 	integrationVersion: __VERSION_INTEGRATION__,
