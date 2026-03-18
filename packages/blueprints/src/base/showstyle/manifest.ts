@@ -89,8 +89,8 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 
 		if (expectedEnd !== undefined) {
 			endOfShowTimer.startTimeOfDay(expectedEnd)
-			// Set the anchor part for automatic estimate calculation (over/under diff)
-			endOfShowTimer.setEstimateAnchorPartByExternalId('end-of-rundown-break')
+			// Set the anchor part for automatic projection calculation (over/under diff)
+			endOfShowTimer.setProjectedAnchorPartByExternalId('end-of-rundown-break')
 			context.logDebug(`Expected end time is ${expectedEnd}`)
 		} else {
 			context.logWarning('Expected end time is not defined for this rundown, end of show timer will not be started')
@@ -100,7 +100,7 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 			const endOfShowTimer2 = context.getTimer(2)
 			endOfShowTimer2.setLabel('End of Show (duration)')
 			endOfShowTimer2.startCountdown(timing.expectedDuration, { startPaused: true })
-			endOfShowTimer2.setEstimateAnchorPartByExternalId('end-of-rundown-break')
+			endOfShowTimer2.setProjectedAnchorPartByExternalId('end-of-rundown-break')
 		}
 	},
 	onTake: async (context) => {
