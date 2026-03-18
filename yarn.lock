@@ -3969,14 +3969,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sofie-automation/blueprints-integration@npm:^26.3.0-nightly-ci-fix-publish-20260204-141836-4220a1a.0":
-  version: 26.3.0-nightly-ci-fix-publish-20260204-141836-4220a1a.0
-  resolution: "@sofie-automation/blueprints-integration@npm:26.3.0-nightly-ci-fix-publish-20260204-141836-4220a1a.0"
+"@sofie-automation/blueprints-integration@npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0":
+  version: 26.3.0-nightly-main-20260317-140512-23b7ecc.0
+  resolution: "@sofie-automation/blueprints-integration@npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0"
   dependencies:
-    "@sofie-automation/shared-lib": "npm:26.3.0-nightly-ci-fix-publish-20260204-141836-4220a1a.0"
+    "@sofie-automation/shared-lib": "npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0"
     tslib: "npm:^2.8.1"
-    type-fest: "npm:^4.33.0"
-  checksum: 10c0/639946959851368cf4b92cffa5cc1fc0cafd9c12920c9cfce302a15bfe4e4fabd3023a191ece51b1a87602e7f8936358baa03467cfba0f5b76f963851b813db3
+    type-fest: "npm:^4.41.0"
+  checksum: 10c0/a28f07166c4abd91d8183d6dca82e3c86f063b2ee425cf60e3d94e99808a7165c8e0d9780f78b0d5326c4f6869d3fb49cac25756c2322a7f56a7b554019705d6
   languageName: node
   linkType: hard
 
@@ -4019,16 +4019,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sofie-automation/shared-lib@npm:26.3.0-nightly-ci-fix-publish-20260204-141836-4220a1a.0":
-  version: 26.3.0-nightly-ci-fix-publish-20260204-141836-4220a1a.0
-  resolution: "@sofie-automation/shared-lib@npm:26.3.0-nightly-ci-fix-publish-20260204-141836-4220a1a.0"
+"@sofie-automation/shared-lib@npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0":
+  version: 26.3.0-nightly-main-20260317-140512-23b7ecc.0
+  resolution: "@sofie-automation/shared-lib@npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0"
   dependencies:
     "@mos-connection/model": "npm:^5.0.0-alpha.0"
     kairos-lib: "npm:^0.2.3"
-    timeline-state-resolver-types: "npm:10.0.0-nightly-release53-20251217-143607-df590aa96.0"
+    timeline-state-resolver-types: "npm:10.0.0-nightly-chore-update-atem-state-20260309-091304-dea89c910.0"
     tslib: "npm:^2.8.1"
-    type-fest: "npm:^4.33.0"
-  checksum: 10c0/a576324b5da484169f2a07ad8073105f36362c04c72e8f3f4dceb8cf83e4314df29bc4a5a2586b70f4a9c6681bb0449657144140cd8d785ee1b4087cd51b0e56
+    type-fest: "npm:^4.41.0"
+  checksum: 10c0/e29c9bdb6173ef79b83bcc3c4f7887f92abf2f190b1cdbf468a409187d20b6dadb58ce0efb3e0953aa11e805875b673ff3a288fd59fd835403a9bb96184dcd41
   languageName: node
   linkType: hard
 
@@ -5827,7 +5827,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "blueprints@workspace:packages/blueprints"
   dependencies:
-    "@sofie-automation/blueprints-integration": "npm:^26.3.0-nightly-ci-fix-publish-20260204-141836-4220a1a.0"
+    "@sofie-automation/blueprints-integration": "npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0"
     "@types/node": "npm:^22.19.3"
     dereference-json-schema: "npm:^0.2.1"
     sofie-blueprint-tools: "npm:^1.3.0"
@@ -10999,7 +10999,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"kairos-lib@npm:^0.2.3":
+"kairos-lib@npm:0.2.3, kairos-lib@npm:^0.2.3":
   version: 0.2.3
   resolution: "kairos-lib@npm:0.2.3"
   dependencies:
@@ -16570,12 +16570,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"timeline-state-resolver-types@npm:10.0.0-nightly-release53-20251217-143607-df590aa96.0":
-  version: 10.0.0-nightly-release53-20251217-143607-df590aa96.0
-  resolution: "timeline-state-resolver-types@npm:10.0.0-nightly-release53-20251217-143607-df590aa96.0"
+"timeline-state-resolver-types@npm:10.0.0-nightly-chore-update-atem-state-20260309-091304-dea89c910.0":
+  version: 10.0.0-nightly-chore-update-atem-state-20260309-091304-dea89c910.0
+  resolution: "timeline-state-resolver-types@npm:10.0.0-nightly-chore-update-atem-state-20260309-091304-dea89c910.0"
   dependencies:
+    kairos-lib: "npm:0.2.3"
     tslib: "npm:^2.8.1"
-  checksum: 10c0/bb53d0583726365ea449480f7111ec46b1108df81e8995ebe013ce76ef577e35559ab928687fc39f306e60c3eb6f2dd97b65729e820bab99e856b05f55d008ee
+  checksum: 10c0/45059ee998e8c90301363be61d9533ef635e56c2df02232ead0deb2c7987de44400260f6099605e1326d625946d1e7c257609db8a7ffba6f78d5f59a4662186d
   languageName: node
   linkType: hard
 
@@ -16785,7 +16786,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:^4.33.0, type-fest@npm:^4.39.1, type-fest@npm:^4.6.0":
+"type-fest@npm:^4.33.0, type-fest@npm:^4.39.1, type-fest@npm:^4.41.0, type-fest@npm:^4.6.0":
   version: 4.41.0
   resolution: "type-fest@npm:4.41.0"
   checksum: 10c0/f5ca697797ed5e88d33ac8f1fec21921839871f808dc59345c9cf67345bfb958ce41bd821165dbf3ae591cedec2bf6fe8882098dfdd8dc54320b859711a2c1e4
