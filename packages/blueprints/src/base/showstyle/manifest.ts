@@ -107,6 +107,12 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 		// Ensure timer 2 is running
 		context.getTimer(2).resume()
 	},
+	onRundownDeActivate: async (context) => {
+		// Stop timers when rundown is deactivated
+		context.getTimer(1).pause()
+		context.getTimer(2).pause()
+		context.getTimer(2).restart()
+	},
 	// Uncomment this to enable config fixup migrations between blueprint versions.
 	// Note: When defined, fixUpConfig must be run after every blueprint upload before
 	// config can be validated/applied.
