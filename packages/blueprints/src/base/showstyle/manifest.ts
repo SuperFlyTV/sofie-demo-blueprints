@@ -4,6 +4,8 @@ import {
 	JSONBlobStringify,
 	JSONSchema,
 	IRundownActivationContext,
+	IOnSetAsNextContext,
+	BlueprintPlayoutPersistentStore,
 } from '@sofie-automation/blueprints-integration'
 import { executeAction, executeDataStoreAction } from './executeActions/index.js'
 import { getAdlibItem } from './getAdlibItem.js'
@@ -65,6 +67,24 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 	 * This should be written to give a predictable and stable result, it can be called with the same config multiple times.
 	 */
 	applyConfig,
+	/**
+	 * Called when a part is set as Next. Has a 50% chance of marking the next partInstance as invalid.
+	 */
+	onSetAsNext: async (
+		context: IOnSetAsNextContext,
+		_playoutPersistentState: BlueprintPlayoutPersistentStore<unknown>
+	) => {
+		if (Math.random() < 0.5) {
+			await context.updatePartInstance(
+				'next',
+				{},
+				{
+					invalidReason: { key: 'test 123', args: { someValue: 123 } },
+				}
+			)
+		}
+	},
+
 	/** Called when a RundownPlaylist has been activated */
 	onRundownActivate: async (_context: IRundownActivationContext) => {
 		// Noop
