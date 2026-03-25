@@ -16,7 +16,8 @@
         "generate-schema-types": "yarn workspace blueprints generate-schema-types",
         "test:blueprints": "yarn workspace blueprints test",
         "build:docs": "yarn workspace docs build",
-        "watch:docs": "yarn workspace docs start"
+        "watch:docs": "yarn workspace docs start",
+        "link-core": "zx ./scripts/link-core.mjs"
     },
     "prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
     "devDependencies": {
@@ -25,7 +26,8 @@
         "husky": "^9.1.7",
         "lint-staged": "^16.2.7",
         "prettier": "^3.7.4",
-        "typescript": "~5.8.3"
+        "typescript": "~5.8.3",
+        "zx": "^8.8.5"
     },
     "workspaces": [
         "packages/*"
