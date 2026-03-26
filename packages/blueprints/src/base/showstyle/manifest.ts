@@ -112,6 +112,19 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 		context.getTimer(2).pause()
 		context.getTimer(2).restart()
 	},
+	syncIngestUpdateToPartInstance: (context, _existingPartInstance, _newData, _playoutStatus) => {
+		// Update timer 2 if the expected duration has changed
+		const timing = context.rundown.timing
+		const timer2 = context.getTimer(2)
+
+		if (timing?.expectedDuration && timer2.mode?.type === 'countdown' && timer2.state) {
+			const origDuration = timer2.mode.duration
+			if (origDuration !== timing.expectedDuration) {
+				context.logDebug(`Expected duration changed from ${origDuration} to ${timing.expectedDuration}, updating timer`)
+				timer2.setDuration({ original: timing.expectedDuration })
+			}
+		}
+	},
 	// Uncomment this to enable config fixup migrations between blueprint versions.
 	// Note: When defined, fixUpConfig must be run after every blueprint upload before
 	// config can be validated/applied.
