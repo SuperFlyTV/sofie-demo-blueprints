@@ -3,7 +3,6 @@ import {
 	ShowStyleBlueprintManifest,
 	JSONBlobStringify,
 	JSONSchema,
-	IBlueprintRundown,
 	IRundownActivationContext,
 	PlaylistTimingType,
 } from '@sofie-automation/blueprints-integration'
@@ -72,7 +71,7 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 		const endOfShowTimer = context.getTimer(1)
 
 		// Determine the expected end time from the rundown timing and start a countdown
-		const timing = ((context as any)._rundown as Readonly<IBlueprintRundown>).timing
+		const timing = context.rundown.timing
 		let expectedEnd: number | undefined
 		if (timing && timing.type === PlaylistTimingType.BackTime) {
 			expectedEnd = timing.expectedEnd
