@@ -75,7 +75,7 @@ function getGraphicTlObject(
 }
 function parseGraphic(config: StudioConfig, object: GraphicObject | SteppedGraphicObject): IBlueprintPiece {
 	const sourceLayer = getGraphicSourceLayer(object)
-	const lifespan = getGraphicLifespan(sourceLayer, object)
+	const lifespan = (object as any).lifespan ?? 'part-only'
 
 	return {
 		externalId: object.id,

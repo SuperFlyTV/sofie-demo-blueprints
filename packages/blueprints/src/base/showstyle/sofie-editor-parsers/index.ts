@@ -53,6 +53,9 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: S
 				} else if ((piece.objectType as ObjectType) === ObjectType.Video) {
 					piece.clipName = piece.attributes.fileName as string
 				}
+				if (piece.attributes.lifespan) {
+					;(piece as any).lifespan = piece.attributes.lifespan
+				}
 
 				piece.duration = piece.duration * 1000
 				piece.objectTime = piece.objectTime * 1000

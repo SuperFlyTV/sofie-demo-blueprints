@@ -25,5 +25,5 @@ export function parseGfx(ingestPart: EditorIngestPart): PartProps<GfxProps | Inv
 
 			graphic: gfxObject,
 		},
-	}
+	} as any
 }
