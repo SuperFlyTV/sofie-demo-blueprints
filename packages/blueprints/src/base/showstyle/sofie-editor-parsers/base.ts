@@ -8,6 +8,7 @@ export function parseBaseProps(part: EditorIngestPart): PartBaseProps {
 		externalId: part.externalId,
 		duration: (part.duration || 0) * 1000,
 		name: part.name,
+		floated: part.float ?? false,
 		script,
 	}
 }

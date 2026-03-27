@@ -91,6 +91,7 @@ export function generateVOPart(context: PartContext, part: PartProps<VOProps>): 
 			title: part.payload.name,
 
 			expectedDuration: part.payload.duration,
+			floated: part.payload.floated,
 		},
 		pieces,
 		adLibPieces: [...graphics.adLibPieces],

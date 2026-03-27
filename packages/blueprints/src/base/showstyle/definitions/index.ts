@@ -49,6 +49,7 @@ export interface PartBaseProps {
 	externalId: string
 	duration: number
 	name: string
+	floated: boolean
 	script?: string
 }
 

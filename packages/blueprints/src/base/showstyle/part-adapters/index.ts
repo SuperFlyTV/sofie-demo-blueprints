@@ -76,6 +76,7 @@ export function generateParts(context: ISegmentUserContext, intermediateSegment:
 					part: {
 						externalId: rawPart.payload.externalId,
 						title: rawPart.payload.name,
+						floated: rawPart.payload.floated,
 						invalid: true,
 						invalidReason: {
 							message: (rawPart.payload as InvalidProps).invalidReason,
@@ -91,6 +92,7 @@ export function generateParts(context: ISegmentUserContext, intermediateSegment:
 					part: {
 						externalId: rawPart.payload.externalId,
 						title: rawPart.payload.name,
+						floated: rawPart.payload.floated,
 						invalid: true,
 						invalidReason: {
 							message: t(`Parts generation for ${rawPart.type} not implemented`),

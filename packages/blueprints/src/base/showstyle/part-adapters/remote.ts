@@ -56,6 +56,7 @@ export function generateRemotePart(context: PartContext, part: PartProps<RemoteP
 			title: part.payload.name,
 
 			expectedDuration: part.payload.duration,
+			floated: part.payload.floated,
 		},
 		pieces,
 		adLibPieces: [...graphics.adLibPieces, ...clips],

@@ -30,6 +30,7 @@ export function generateGfxPart(context: PartContext, part: PartProps<GfxProps>)
 
 			expectedDuration: part.payload.duration,
 			autoNext: true,
+			floated: part.payload.floated,
 		},
 		pieces,
 		adLibPieces: [...graphics.adLibPieces, ...clips],

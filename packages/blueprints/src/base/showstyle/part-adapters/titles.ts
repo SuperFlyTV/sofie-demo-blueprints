@@ -161,6 +161,7 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 
 			expectedDuration: part.payload.duration,
 			autoNext: true,
+			floated: part.payload.floated,
 		},
 		pieces,
 		adLibPieces: [],

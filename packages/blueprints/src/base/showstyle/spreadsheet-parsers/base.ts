@@ -12,6 +12,7 @@ export function parseBaseProps(part: SpreadsheetIngestPart): PartBaseProps {
 		externalId: part.externalId,
 		duration: part.pieces.find((p) => p.attributes.adlib === 'false')?.duration || 0, // TODO - better default time?
 		name: part.name,
+		floated: part.float ?? false,
 		script,
 	}
 }

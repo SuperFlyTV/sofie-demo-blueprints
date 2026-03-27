@@ -102,6 +102,7 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 
 			expectedDuration: part.payload.duration,
 			autoNext: true,
+			floated: part.payload.floated,
 		},
 		pieces,
 		adLibPieces: [...graphics.adLibPieces],
