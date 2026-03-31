@@ -67,8 +67,9 @@ export async function processIngestData(
 	} else if (ingestChanges.source === IngestChangeType.User) {
 		await applyUserOperation(context, blueprintMutableIngestRundown, ingestChanges)
 	} else if (ingestChanges.source === IngestChangeType.Playout) {
-		// Playout operations are handled by core, no blueprint processing needed
-		context.logDebug('Playout operation change received, no blueprint processing required')
+		// Playout operations are ingest updates triggered by adlib-actions (or similar methods)
+		// We don't have a demo of this currently
+		context.logDebug('Playout operation change received, but not implemented yet: ' + JSON.stringify(ingestChanges))
 	} else {
 		context.logWarning(`Unknown change source: ${(ingestChanges as { source: string }).source}`)
 	}
