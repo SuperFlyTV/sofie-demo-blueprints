@@ -7,6 +7,7 @@ import {
 	IProcessIngestDataContext,
 	MutableIngestRundown,
 	NrcsIngestChangeDetails,
+	PlayoutOperationChange,
 	UserOperationChange,
 	UserOperationTarget,
 } from '@sofie-automation/blueprints-integration'
@@ -25,7 +26,7 @@ export async function processIngestData(
 	mutableIngestRundown: MutableIngestRundown,
 	nrcsIngestRundown: IngestRundown,
 	previousNrcsIngestRundown: IngestRundown | undefined,
-	ingestChanges: NrcsIngestChangeDetails | UserOperationChange<BlueprintsUserOperations>
+	ingestChanges: NrcsIngestChangeDetails | PlayoutOperationChange | UserOperationChange<BlueprintsUserOperations>
 ): Promise<void> {
 	const blueprintMutableIngestRundown = mutableIngestRundown as BlueprintMutableIngestRundown
 	if (ingestChanges.source === IngestChangeType.Ingest) {
@@ -63,8 +64,14 @@ export async function processIngestData(
 		)
 
 		// TODO - does any work need to be done to preserve order?
-	} else {
+	} else if (ingestChanges.source === IngestChangeType.User) {
 		await applyUserOperation(context, blueprintMutableIngestRundown, ingestChanges)
+	} else if (ingestChanges.source === IngestChangeType.Playout) {
+		// Playout operations are ingest updates triggered by adlib-actions (or similar methods)
+		// We don't have a demo of this currently
+		context.logDebug('Playout operation change received, but not implemented yet: ' + JSON.stringify(ingestChanges))
+	} else {
+		context.logWarning(`Unknown change source: ${(ingestChanges as { source: string }).source}`)
 	}
 }
 

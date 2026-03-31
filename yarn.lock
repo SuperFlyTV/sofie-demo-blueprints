@@ -3969,7 +3969,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sofie-automation/blueprints-integration@npm:^26.3.0-nightly-ci-fix-publish-20260204-141836-4220a1a.0":
+"@sofie-automation/blueprints-integration@npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0":
   version: 26.3.0-nightly-main-20260317-140512-23b7ecc.0
   resolution: "@sofie-automation/blueprints-integration@npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0"
   dependencies:
@@ -5827,7 +5827,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "blueprints@workspace:packages/blueprints"
   dependencies:
-    "@sofie-automation/blueprints-integration": "npm:^26.3.0-nightly-ci-fix-publish-20260204-141836-4220a1a.0"
+    "@sofie-automation/blueprints-integration": "npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0"
     "@types/node": "npm:^22.19.3"
     dereference-json-schema: "npm:^0.2.1"
     sofie-blueprint-tools: "npm:^1.3.0"
