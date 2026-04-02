@@ -17,6 +17,37 @@ import { validateConfig } from './validateConfig.js'
 import { applyConfig } from './applyconfig/index.js'
 import * as ConfigSchema from '../../$schemas/main-showstyle-config.json'
 import { dereferenceSync } from 'dereference-json-schema'
+import type { ITTimersContext, RundownPlaylistTiming } from '@sofie-automation/blueprints-integration'
+
+/**
+ * Initialize or update Timer 2 (End of Show duration timer)
+ * This is called both on activation and during ingest updates
+ */
+function setupTimer2(
+	tTimerContext: ITTimersContext,
+	timing: RundownPlaylistTiming,
+	logDebug: (message: string) => void
+): void {
+	const timer2 = tTimerContext.getTimer(2)
+
+	if (timing?.expectedDuration) {
+		// Check if timer is already initialized
+		if (timer2.mode?.type === 'countdown' && timer2.state) {
+			// Timer exists - update if duration changed
+			const origDuration = timer2.mode.duration
+			if (origDuration !== timing.expectedDuration) {
+				logDebug(`Expected duration changed from ${origDuration} to ${timing.expectedDuration}, updating timer`)
+				timer2.setDuration({ original: timing.expectedDuration })
+			}
+		} else {
+			// Timer doesn't exist - initialize it
+			timer2.setLabel('End of Show (duration)')
+			timer2.startCountdown(timing.expectedDuration, { startPaused: true })
+			timer2.setProjectedAnchorPartByExternalId('end-of-rundown-break')
+			logDebug(`Initialized timer 2 with duration ${timing.expectedDuration}`)
+		}
+	}
+}
 
 export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'blueprintId' | 'configPresets'> = {
 	/** The type of this blueprint */
@@ -95,12 +126,8 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 			context.logWarning('Expected end time is not defined for this rundown, end of show timer will not be started')
 		}
 
-		if (timing.expectedDuration) {
-			const endOfShowTimer2 = context.getTimer(2)
-			endOfShowTimer2.setLabel('End of Show (duration)')
-			endOfShowTimer2.startCountdown(timing.expectedDuration, { startPaused: true })
-			endOfShowTimer2.setProjectedAnchorPartByExternalId('end-of-rundown-break')
-		}
+		// Initialize or update timer 2 using shared logic
+		setupTimer2(context, timing, (msg) => context.logDebug(msg))
 	},
 	onTake: async (context) => {
 		// Ensure timer 2 is running
@@ -113,17 +140,9 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 		context.getTimer(2).restart()
 	},
 	syncIngestUpdateToPartInstance: (context, _existingPartInstance, _newData, _playoutStatus) => {
-		// Update timer 2 if the expected duration has changed
+		// Initialize or update timer 2 (will create it if it doesn't exist, or update if duration changed)
 		const timing = context.rundown.timing
-		const timer2 = context.getTimer(2)
-
-		if (timing?.expectedDuration && timer2.mode?.type === 'countdown' && timer2.state) {
-			const origDuration = timer2.mode.duration
-			if (origDuration !== timing.expectedDuration) {
-				context.logDebug(`Expected duration changed from ${origDuration} to ${timing.expectedDuration}, updating timer`)
-				timer2.setDuration({ original: timing.expectedDuration })
-			}
-		}
+		setupTimer2(context, timing, (msg) => context.logDebug(msg))
 	},
 	// Uncomment this to enable config fixup migrations between blueprint versions.
 	// Note: When defined, fixUpConfig must be run after every blueprint upload before
