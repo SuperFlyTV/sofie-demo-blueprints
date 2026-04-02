@@ -31,7 +31,7 @@
 		"vitest": "^4.0.16"
 	},
 	"dependencies": {
-		"@sofie-automation/blueprints-integration": "26.3.0-nightly-main-20260317-140512-23b7ecc.0",
+		"@sofie-automation/blueprints-integration": "26.3.0-nightly-main-20260401-110808-7ef4508.0",
 		"dereference-json-schema": "^0.2.1",
 		"type-fest": "^4.33.0"
 	},

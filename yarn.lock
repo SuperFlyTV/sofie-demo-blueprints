@@ -3969,14 +3969,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sofie-automation/blueprints-integration@npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0":
-  version: 26.3.0-nightly-main-20260317-140512-23b7ecc.0
-  resolution: "@sofie-automation/blueprints-integration@npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0"
+"@sofie-automation/blueprints-integration@npm:26.3.0-nightly-main-20260401-110808-7ef4508.0":
+  version: 26.3.0-nightly-main-20260401-110808-7ef4508.0
+  resolution: "@sofie-automation/blueprints-integration@npm:26.3.0-nightly-main-20260401-110808-7ef4508.0"
   dependencies:
-    "@sofie-automation/shared-lib": "npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0"
+    "@sofie-automation/shared-lib": "npm:26.3.0-nightly-main-20260401-110808-7ef4508.0"
     tslib: "npm:^2.8.1"
     type-fest: "npm:^4.41.0"
-  checksum: 10c0/a28f07166c4abd91d8183d6dca82e3c86f063b2ee425cf60e3d94e99808a7165c8e0d9780f78b0d5326c4f6869d3fb49cac25756c2322a7f56a7b554019705d6
+  checksum: 10c0/5cdeb8ab3a466c2210e8d50fefe28c8e654afa4f18cea14b05785b8726604761f2dabd74d3e67bedae6f50c5b2c9cb887aa408863a5ae4b48439966367a5f6b7
   languageName: node
   linkType: hard
 
@@ -4019,16 +4019,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sofie-automation/shared-lib@npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0":
-  version: 26.3.0-nightly-main-20260317-140512-23b7ecc.0
-  resolution: "@sofie-automation/shared-lib@npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0"
+"@sofie-automation/shared-lib@npm:26.3.0-nightly-main-20260401-110808-7ef4508.0":
+  version: 26.3.0-nightly-main-20260401-110808-7ef4508.0
+  resolution: "@sofie-automation/shared-lib@npm:26.3.0-nightly-main-20260401-110808-7ef4508.0"
   dependencies:
     "@mos-connection/model": "npm:^5.0.0-alpha.0"
     kairos-lib: "npm:^0.2.3"
     timeline-state-resolver-types: "npm:10.0.0-nightly-chore-update-atem-state-20260309-091304-dea89c910.0"
     tslib: "npm:^2.8.1"
     type-fest: "npm:^4.41.0"
-  checksum: 10c0/e29c9bdb6173ef79b83bcc3c4f7887f92abf2f190b1cdbf468a409187d20b6dadb58ce0efb3e0953aa11e805875b673ff3a288fd59fd835403a9bb96184dcd41
+  checksum: 10c0/fce740bf7b433961605d492d96d9ced2e1eed6e72a487b1ce34069da80c2c42a8c12cd044de7fb24e90f0efd066a8d99197adb2a44c07febdf2ecd73adf3e721
   languageName: node
   linkType: hard
 
@@ -5827,7 +5827,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "blueprints@workspace:packages/blueprints"
   dependencies:
-    "@sofie-automation/blueprints-integration": "npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0"
+    "@sofie-automation/blueprints-integration": "npm:26.3.0-nightly-main-20260401-110808-7ef4508.0"
     "@types/node": "npm:^22.19.3"
     dereference-json-schema: "npm:^0.2.1"
     sofie-blueprint-tools: "npm:^1.3.0"
