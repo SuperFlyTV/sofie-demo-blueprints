@@ -16,6 +16,7 @@ import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 import { parseConfig } from '../helpers/config.js'
+import { parseOGrafGraphicsFromObjects } from '../helpers/ograf-graphics.js'
 
 export function generateVOPart(context: PartContext, part: PartProps<VOProps>): BlueprintResultPart {
 	const config = parseConfig(context).studio
@@ -84,6 +85,8 @@ export function generateVOPart(context: PartContext, part: PartProps<VOProps>): 
 
 	const graphics = parseGraphicsFromObjects(config, part.objects)
 	if (graphics.pieces) pieces.push(...graphics.pieces)
+	const ografGraphics = parseOGrafGraphicsFromObjects(config, part.objects)
+	if (ografGraphics.pieces) pieces.push(...ografGraphics.pieces)
 
 	return {
 		part: {
@@ -93,7 +96,7 @@ export function generateVOPart(context: PartContext, part: PartProps<VOProps>): 
 			expectedDuration: part.payload.duration,
 		},
 		pieces,
-		adLibPieces: [...graphics.adLibPieces],
+		adLibPieces: [...graphics.adLibPieces, ...ografGraphics.adLibPieces],
 		actions: [],
 	}
 }

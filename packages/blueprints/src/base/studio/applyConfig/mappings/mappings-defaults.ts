@@ -3,6 +3,7 @@ import { literal } from '../../../../common/util.js'
 import { AudioSourceType, SourceType, StudioConfig } from '../../helpers/config.js'
 import { AsbtractLayers, AtemLayers, CasparCGLayers, SisyfosLayers, VMixLayers } from './layers.js'
 import { VmixInputConfig, SiyfosSourceConfig } from '../../../../$schemas/generated/main-studio-config.js'
+import { OGrafLayers } from '../../layers.js'
 
 export default literal<BlueprintMappings>({
 	[AsbtractLayers.CoreAbstract]: {
@@ -12,6 +13,50 @@ export default literal<BlueprintMappings>({
 		options: {},
 	},
 
+	[OGrafLayers.OGrafFullScreen]: literal<BlueprintMapping<TSR.MappingOgrafRenderTarget>>({
+		device: TSR.DeviceType.OGRAF,
+		deviceId: 'ograf0',
+		lookahead: LookaheadMode.NONE,
+
+		options: {
+			mappingType: TSR.MappingOgrafType.RenderTarget,
+			rendererId: 'renderer-1',
+			renderTarget: '{"layerId": "layer-0"}',
+		},
+	}),
+	[OGrafLayers.OGrafOverlay1]: literal<BlueprintMapping<TSR.MappingOgrafRenderTarget>>({
+		device: TSR.DeviceType.OGRAF,
+		deviceId: 'ograf0',
+		lookahead: LookaheadMode.NONE,
+
+		options: {
+			mappingType: TSR.MappingOgrafType.RenderTarget,
+			rendererId: 'renderer-1',
+			renderTarget: '{"layerId": "layer-1"}',
+		},
+	}),
+	[OGrafLayers.OGrafOverlay2]: literal<BlueprintMapping<TSR.MappingOgrafRenderTarget>>({
+		device: TSR.DeviceType.OGRAF,
+		deviceId: 'ograf0',
+		lookahead: LookaheadMode.NONE,
+
+		options: {
+			mappingType: TSR.MappingOgrafType.RenderTarget,
+			rendererId: 'renderer-1',
+			renderTarget: '{"layerId": "layer-2"}',
+		},
+	}),
+	[OGrafLayers.OGrafOverlay3]: literal<BlueprintMapping<TSR.MappingOgrafRenderTarget>>({
+		device: TSR.DeviceType.OGRAF,
+		deviceId: 'ograf0',
+		lookahead: LookaheadMode.NONE,
+
+		options: {
+			mappingType: TSR.MappingOgrafType.RenderTarget,
+			rendererId: 'renderer-1',
+			renderTarget: '{"layerId": "layer-3"}',
+		},
+	}),
 	[CasparCGLayers.CasparCGClipPlayer1]: literal<BlueprintMapping<TSR.MappingCasparCGLayer>>({
 		device: TSR.DeviceType.CASPARCG,
 		deviceId: 'casparcg0',
