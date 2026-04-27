@@ -6,6 +6,7 @@ import {
 	IShowStyleContext,
 	ISourceLayer,
 	PackageInfo,
+	Time,
 } from '@sofie-automation/blueprints-integration'
 
 export function isPartContext(context: IShowStyleContext): context is PartContext {
@@ -17,6 +18,7 @@ export class PartContext implements ISegmentUserContext {
 	public readonly studioId: string
 	public readonly rundown: IBlueprintSegmentRundown
 	public readonly playlistId: string
+	public readonly startedPlayback: Time | undefined
 
 	private baseContext: ISegmentUserContext
 	private externalId: string
@@ -31,6 +33,7 @@ export class PartContext implements ISegmentUserContext {
 		this.rundown = baseContext.rundown
 		this.studioId = baseContext.studioId
 		this.playlistId = baseContext.playlistId
+		this.startedPlayback = baseContext.startedPlayback
 	}
 	getShowStyleSourceLayers(): Record<string, ISourceLayer | undefined> {
 		return this.baseContext.getShowStyleSourceLayers()

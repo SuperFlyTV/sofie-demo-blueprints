@@ -198,6 +198,7 @@ export class RundownContext extends ShowStyleContext implements ISegmentUserCont
 	public rundown: IBlueprintRundownDB
 	public studioId = ''
 	public playlistId = ''
+	public startedPlayback: number | undefined = undefined
 	public getShowStyleSourceLayers(): Record<string, ISourceLayer | undefined> {
 		return {} // TODO: implement this
 	}
