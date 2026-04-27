@@ -23,6 +23,11 @@ export class PartContext implements ISegmentUserContext {
 
 	public readonly isPartContext = true
 
+	public get startedPlayback(): number | undefined {
+		// TODO: why do we have startedPlayback on an ingest context?
+		return this.baseContext.startedPlayback
+	}
+
 	constructor(baseContext: ISegmentUserContext, externalId: string) {
 		this.baseContext = baseContext
 		this.externalId = externalId
