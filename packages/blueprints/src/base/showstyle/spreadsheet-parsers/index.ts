@@ -45,7 +45,7 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: I
 			} else if (partPayload.type.match(/gfx/i)) {
 				parts.push(parseGfx(partPayload))
 			} else {
-				parts.push(createInvalidProps(t('Unknown part type'), partPayload))
+				parts.push(createInvalidProps(t('Unknown part type ' + JSON.stringify(partPayload.type)), partPayload))
 			}
 		})
 	} else {

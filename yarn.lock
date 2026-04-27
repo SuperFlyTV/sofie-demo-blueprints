@@ -3969,14 +3969,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sofie-automation/blueprints-integration@npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0":
-  version: 26.3.0-nightly-main-20260317-140512-23b7ecc.0
-  resolution: "@sofie-automation/blueprints-integration@npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0"
+"@sofie-automation/blueprints-integration@npm:26.3.0-nightly-main-20260421-093052-38fae25.0":
+  version: 26.3.0-nightly-main-20260421-093052-38fae25.0
+  resolution: "@sofie-automation/blueprints-integration@npm:26.3.0-nightly-main-20260421-093052-38fae25.0"
   dependencies:
-    "@sofie-automation/shared-lib": "npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0"
+    "@sofie-automation/shared-lib": "npm:26.3.0-nightly-main-20260421-093052-38fae25.0"
     tslib: "npm:^2.8.1"
     type-fest: "npm:^4.41.0"
-  checksum: 10c0/a28f07166c4abd91d8183d6dca82e3c86f063b2ee425cf60e3d94e99808a7165c8e0d9780f78b0d5326c4f6869d3fb49cac25756c2322a7f56a7b554019705d6
+  checksum: 10c0/26c98cd4ca9eda22d8657e56dfcb10578b9b7f114dca788475e03728fc87a60058a21f47b5d6aa6b7934b203a14c59ccf0b7faf1a11820dc03545e82b6c2f50d
   languageName: node
   linkType: hard
 
@@ -4019,16 +4019,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sofie-automation/shared-lib@npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0":
-  version: 26.3.0-nightly-main-20260317-140512-23b7ecc.0
-  resolution: "@sofie-automation/shared-lib@npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0"
+"@sofie-automation/shared-lib@npm:26.3.0-nightly-main-20260421-093052-38fae25.0":
+  version: 26.3.0-nightly-main-20260421-093052-38fae25.0
+  resolution: "@sofie-automation/shared-lib@npm:26.3.0-nightly-main-20260421-093052-38fae25.0"
   dependencies:
     "@mos-connection/model": "npm:^5.0.0-alpha.0"
-    kairos-lib: "npm:^0.2.3"
-    timeline-state-resolver-types: "npm:10.0.0-nightly-chore-update-atem-state-20260309-091304-dea89c910.0"
+    kairos-lib: "npm:^1.0.0"
+    timeline-state-resolver-types: "npm:10.0.0-nightly-main-20260415-093148-f35c4cadc.0"
     tslib: "npm:^2.8.1"
     type-fest: "npm:^4.41.0"
-  checksum: 10c0/e29c9bdb6173ef79b83bcc3c4f7887f92abf2f190b1cdbf468a409187d20b6dadb58ce0efb3e0953aa11e805875b673ff3a288fd59fd835403a9bb96184dcd41
+  checksum: 10c0/e266d96a9845ea0fbb9d7e6dd3b1c8ac56963a4e8d15b4310c845cf5b743350ce76e58e2ae45e094810983211c9982ff471621f33bb8c901d79a7fad782948e7
   languageName: node
   linkType: hard
 
@@ -5827,7 +5827,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "blueprints@workspace:packages/blueprints"
   dependencies:
-    "@sofie-automation/blueprints-integration": "npm:26.3.0-nightly-main-20260317-140512-23b7ecc.0"
+    "@sofie-automation/blueprints-integration": "npm:26.3.0-nightly-main-20260421-093052-38fae25.0"
     "@types/node": "npm:^22.19.3"
     dereference-json-schema: "npm:^0.2.1"
     sofie-blueprint-tools: "npm:^1.3.0"
@@ -10999,12 +10999,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"kairos-lib@npm:0.2.3, kairos-lib@npm:^0.2.3":
-  version: 0.2.3
-  resolution: "kairos-lib@npm:0.2.3"
+"kairos-lib@npm:1.0.0, kairos-lib@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "kairos-lib@npm:1.0.0"
   dependencies:
     tslib: "npm:^2.8.1"
-  checksum: 10c0/d40347cc5f3b00a10acee99156b54e2fe742dc5d80def3749f5096b2c8da5b03491c7ac87172421684846debb13cbc4f1f2a3283debb6b95b3d7b94e64514db1
+  checksum: 10c0/d1290f1611ad2d73482eeae3ad1d760ad88d92a1d91abd33344ef8eb5db034096c36cc52cbeb1152322993f9014ac5cb13b8110ed23dd7b36080dcd55b78caaf
   languageName: node
   linkType: hard
 
@@ -16571,13 +16571,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"timeline-state-resolver-types@npm:10.0.0-nightly-chore-update-atem-state-20260309-091304-dea89c910.0":
-  version: 10.0.0-nightly-chore-update-atem-state-20260309-091304-dea89c910.0
-  resolution: "timeline-state-resolver-types@npm:10.0.0-nightly-chore-update-atem-state-20260309-091304-dea89c910.0"
+"timeline-state-resolver-types@npm:10.0.0-nightly-main-20260415-093148-f35c4cadc.0":
+  version: 10.0.0-nightly-main-20260415-093148-f35c4cadc.0
+  resolution: "timeline-state-resolver-types@npm:10.0.0-nightly-main-20260415-093148-f35c4cadc.0"
   dependencies:
-    kairos-lib: "npm:0.2.3"
+    kairos-lib: "npm:1.0.0"
     tslib: "npm:^2.8.1"
-  checksum: 10c0/45059ee998e8c90301363be61d9533ef635e56c2df02232ead0deb2c7987de44400260f6099605e1326d625946d1e7c257609db8a7ffba6f78d5f59a4662186d
+  checksum: 10c0/4efd55ce4d0eb761200c6181a7ee4e1818219e66fb5141e3a9be353a4e5437d39bb5e4febf4ad19cb5100506fb1013449a819cc327903e144332352b417ea553
   languageName: node
   linkType: hard
 
