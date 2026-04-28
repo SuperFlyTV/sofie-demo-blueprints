@@ -21,7 +21,7 @@ export function applyConfig(
 	const parsedConfig = preprocessConfig(context, config, coreConfig)
 
 	return {
-		mappings: getMappingsDefaults(parsedConfig),
+		mappings: getMappingsDefaults(context, parsedConfig),
 		playoutDevices: generatePlayoutDevices(parsedConfig),
 		parentDevices: generateParentDevices(),
 		inputDevices: {},
