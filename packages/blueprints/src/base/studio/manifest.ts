@@ -14,6 +14,7 @@ import * as ConfigSchema from '../../$schemas/main-studio-config.json'
 import { StudioConfig } from './helpers/config.js'
 import { processIngestData } from './userEditOperations/processIngestData.js'
 import { dereferenceSync } from 'dereference-json-schema'
+import { AtemStatusCode, CasparCGStatusCode } from 'timeline-state-resolver-types'
 
 export const baseManifest: Omit<StudioBlueprintManifest<StudioConfig>, 'blueprintId' | 'configPresets'> = {
 	blueprintType: BlueprintManifestType.STUDIO,
@@ -41,6 +42,13 @@ export const baseManifest: Omit<StudioBlueprintManifest<StudioConfig>, 'blueprin
 	processIngestData,
 
 	translations: __TRANSLATION_BUNDLES__,
+
+	// Device status message customization - overrides default messages from TSR devices
+	deviceStatusMessages: {
+		[AtemStatusCode.DISCONNECTED]: '🎬 Vision mixer {{deviceName}} ran away! 🏃‍♂️💨 (Check the ATEM connection)',
+		[AtemStatusCode.PSU_FAULT]: '⚡ {{deviceName}}: Power supply {{psuNumber}} is faulty - check hardware',
+		[CasparCGStatusCode.QUEUE_OVERFLOW]: '{{deviceName}} needs restart - CasparCG command queue is full',
+	},
 }
 
 export default baseManifest
