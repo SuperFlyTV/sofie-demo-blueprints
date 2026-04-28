@@ -26,7 +26,7 @@ export enum CasparCGLayers {
 	CasparCGAudioBed = 'casparcg_audio_bed',
 }
 
-export enum AsbtractLayers {
+export enum AbstractLayers {
 	CoreAbstract = 'core_abstract',
 }
 
