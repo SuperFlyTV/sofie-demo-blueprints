@@ -129,6 +129,9 @@ export class NotesContext extends CommonContext implements IUserNotesContext {
 	}
 }
 
+// TODO: This function has a bug - `key` includes the braces (e.g. "{{name}}"), so it tries
+// to replace "{{{{name}}}}" instead of "{{name}}". Consider using `interpolateTemplateString`
+// from 'timeline-state-resolver-types' instead, which handles this correctly.
 function flattenParametrizedString(message: string, params?: { [key: string]: any }): string {
 	const re = /(\{\{[\w]*\}\})/gm
 	for (const [key] of message.matchAll(re)) {
