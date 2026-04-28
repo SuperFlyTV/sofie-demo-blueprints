@@ -1,7 +1,7 @@
 import { BlueprintMappings, BlueprintMapping, TSR, LookaheadMode } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../../../common/util.js'
 import { BlueprintConfig, OutputConfig } from '../../helpers/config.js'
-import { AtemLayers } from './layers.js'
+import { AtemLayers } from '../../layers.js'
 
 export function getAtemMappings(config: BlueprintConfig): BlueprintMappings {
 	const mappings: BlueprintMappings = {
@@ -45,6 +45,8 @@ export function getAtemMappings(config: BlueprintConfig): BlueprintMappings {
 
 	for (const output of Object.values<OutputConfig>(config.studio.atemOutputs)) {
 		const i = output.output - 1
+		if (isNaN(i) || i < 0) continue
+
 		mappings[`atem_aux_${i}`] = literal<BlueprintMapping<TSR.MappingAtemAuxilliary>>({
 			device: TSR.DeviceType.ATEM,
 			deviceId: 'atem0',

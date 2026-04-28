@@ -4,13 +4,12 @@ import { getVMixMappings } from './vmix.js'
 import { getAtemMappings } from './atem.js'
 import { getSisyfosMappings } from './sisyfos.js'
 import { getCasparCGMappings } from './casparcg.js'
-import { AsbtractLayers } from './layers.js'
+import { AbstractLayers } from '../../layers.js'
+import { assertNever } from '../../../../common/util.js'
 
 export function getMappingsDefaults(context: ICommonContext, config: BlueprintConfig): BlueprintMappings {
-	console.log('getMappingsDefaults', config)
-	//ToDo: Split this up into files with specific mappings for each device:
 	const mappings: BlueprintMappings = {
-		[AsbtractLayers.CoreAbstract]: {
+		[AbstractLayers.CoreAbstract]: {
 			device: TSR.DeviceType.ABSTRACT,
 			deviceId: 'abstract0',
 			lookahead: LookaheadMode.NONE,
@@ -28,6 +27,7 @@ export function getMappingsDefaults(context: ICommonContext, config: BlueprintCo
 			Object.assign(mappings, getVMixMappings(config.studio.vmixSources))
 			break
 		default:
+			assertNever(config.studio.visionMixer.type)
 			context.logError('Unknown vision mixer type: ' + config.studio.visionMixer.type)
 			break
 	}

@@ -1,7 +1,7 @@
 import { BlueprintMappings, BlueprintMapping, TSR, LookaheadMode } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../../../common/util.js'
 import { BlueprintConfig } from '../../helpers/config.js'
-import { CasparCGLayers } from './layers.js'
+import { CasparCGLayers } from '../../layers.js'
 
 export function getCasparCGMappings(_config: BlueprintConfig): BlueprintMappings {
 	const mappings: BlueprintMappings = {

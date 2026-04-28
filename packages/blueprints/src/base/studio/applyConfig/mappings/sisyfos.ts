@@ -1,7 +1,7 @@
 import { BlueprintMappings, BlueprintMapping, TSR, LookaheadMode } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../../../common/util.js'
 import { AudioSourceType, BlueprintConfig, SiyfosSourceConfig } from '../../helpers/config.js'
-import { SisyfosLayers } from './layers.js'
+import { SisyfosLayers } from '../../layers.js'
 
 export function getSisyfosMappings(config: BlueprintConfig): BlueprintMappings {
 	const mappings: BlueprintMappings = {

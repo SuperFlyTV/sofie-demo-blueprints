@@ -1,7 +1,7 @@
 import { BlueprintMapping, BlueprintMappings, LookaheadMode, TSR } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../../../common/util.js'
 import { SourceType, StudioConfig } from '../../helpers/config.js'
-import { VMixLayers } from './layers.js'
+import { VMixLayers } from '../../layers.js'
 import { VmixInputConfig } from '../../../../$schemas/generated/main-studio-config.js'
 
 export function getVMixMappings(vmixSources: StudioConfig['vmixSources']): BlueprintMappings {
