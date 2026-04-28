@@ -36,5 +36,17 @@
     "engines": {
         "node": ">=22.0.0"
     },
-    "packageManager": "yarn@4.12.0"
+    "packageManager": "yarn@4.12.0",
+    "resolutions": {
+        "@sofie-automation/blueprints-integration": "portal:/Users/rjmunro/superflytv/sofie-core/packages/blueprints-integration",
+        "@sofie-automation/live-status-gateway-api": "portal:/Users/rjmunro/superflytv/sofie-core/packages/live-status-gateway-api",
+        "@sofie-automation/openapi": "portal:/Users/rjmunro/superflytv/sofie-core/packages/openapi",
+        "@sofie-automation/server-core-integration": "portal:/Users/rjmunro/superflytv/sofie-core/packages/server-core-integration",
+        "@sofie-automation/shared-lib": "portal:/Users/rjmunro/superflytv/sofie-core/packages/shared-lib",
+        "sofie-blueprint-tools": "portal:/Users/rjmunro/superflytv/sofie-blueprint-tools",
+        "timeline-state-resolver": "portal:/Users/rjmunro/superflytv/sofie-timeline-state-resolver/packages/timeline-state-resolver",
+        "timeline-state-resolver-api": "portal:/Users/rjmunro/superflytv/sofie-timeline-state-resolver/packages/timeline-state-resolver-api",
+        "timeline-state-resolver-tools": "portal:/Users/rjmunro/superflytv/sofie-timeline-state-resolver/packages/timeline-state-resolver-tools",
+        "timeline-state-resolver-types": "portal:/Users/rjmunro/superflytv/sofie-timeline-state-resolver/packages/timeline-state-resolver-types"
+    }
 }
