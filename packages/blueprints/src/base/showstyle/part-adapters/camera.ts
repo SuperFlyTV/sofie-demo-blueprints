@@ -18,7 +18,7 @@ export function generateCameraPart(context: PartContext, part: PartProps<CameraP
 	const config = parseConfig(context).studio
 	const sourceInfo = getSourceInfoFromRaw(config, part.payload.input)
 
-	const audioTlObj = getAudioPrimaryObject(config, [{ type: AudioSourceType.Host, index: 0 }]) // todo: all hosts?
+	const audioTlObjects = getAudioPrimaryObject(config, [{ type: AudioSourceType.Host, index: 0 }]) // todo: all hosts?
 
 	const cameraPiece: IBlueprintPiece = {
 		enable: {
@@ -30,7 +30,7 @@ export function generateCameraPart(context: PartContext, part: PartProps<CameraP
 		sourceLayerId: SourceLayer.Camera,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Camera),
 		content: {
-			timelineObjects: [...createVisionMixerObjects(config, sourceInfo.input), audioTlObj],
+			timelineObjects: [...createVisionMixerObjects(config, sourceInfo.input), ...audioTlObjects],
 		},
 	}
 
@@ -64,7 +64,7 @@ export function generateCameraPart(context: PartContext, part: PartProps<CameraP
 function addGuest(config: StudioConfig, count: number): IBlueprintPiece {
 	const guests: { type: AudioSourceType.Guest; index: number }[] = []
 	for (let i = 0; i < count; i++) guests.push({ type: AudioSourceType.Guest, index: i })
-	const audioTlObj = getAudioObjectOnLayer(config, SisyfosLayers.Guests, guests)
+	const audioTlObjects = getAudioObjectOnLayer(config, SisyfosLayers.Guests, guests)
 
 	return literal<IBlueprintPiece>({
 		enable: {
@@ -76,7 +76,7 @@ function addGuest(config: StudioConfig, count: number): IBlueprintPiece {
 		sourceLayerId: SourceLayer.StudioGuests,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.StudioGuests),
 		content: {
-			timelineObjects: [audioTlObj],
+			timelineObjects: audioTlObjects,
 		},
 	})
 }

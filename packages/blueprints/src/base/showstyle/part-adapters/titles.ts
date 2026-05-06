@@ -7,9 +7,10 @@ import {
 } from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../../common/context.js'
 import { literal } from '../../../common/util.js'
+import { VisionMixerDevice } from '../../studio/helpers/config.js'
 import { CasparCGLayers } from '../../studio/layers.js'
 import { PartProps, TitlesProps } from '../definitions/index.js'
-import { getClipPlayerInput } from '../helpers/clips.js'
+import { createOBSClipPlayerObjects, getClipPlayerInput } from '../helpers/clips.js'
 import { createScriptPiece } from '../helpers/script.js'
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
@@ -18,7 +19,13 @@ import { parseConfig } from '../helpers/config.js'
 
 export function generateOpenerPart(context: PartContext, part: PartProps<TitlesProps>): BlueprintResultPart {
 	const config = parseConfig(context).studio
-	const visionMixerInput = getClipPlayerInput(config)
+	const visionMixerInput =
+		config.visionMixer.type === VisionMixerDevice.OBS
+			? {
+					input: config.obsSources.mediaplayer1?.sceneName || getClipPlayerInput(config)?.input || 0,
+				}
+			: getClipPlayerInput(config)
+	const openerClipProps = { fileName: 'assets/Sofie News Opener.mp4' }
 
 	const cameraPiece: IBlueprintPiece = {
 		enable: {
@@ -31,7 +38,7 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Titles),
 
 		content: {
-			fileName: 'assets/Sofie News Opener',
+			fileName: 'assets/Sofie News Opener.mp4',
 
 			/**
 			 * The opener video file does not have an audio track,
@@ -43,19 +50,22 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 			timelineObjects: [
 				...createVisionMixerObjects(config, visionMixerInput?.input || 0),
 
-				// clip
-				literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
-					id: '',
-					enable: { start: 0 },
-					layer: CasparCGLayers.CasparCGEffectsPlayer,
-					content: {
-						deviceType: TSR.DeviceType.CASPARCG,
-						type: TSR.TimelineContentTypeCasparCg.MEDIA,
+				...(config.visionMixer.type === VisionMixerDevice.OBS
+					? createOBSClipPlayerObjects(config, openerClipProps, 0, 'mediaplayer1')
+					: [
+							literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
+								id: '',
+								enable: { start: 0 },
+								layer: CasparCGLayers.CasparCGEffectsPlayer,
+								content: {
+									deviceType: TSR.DeviceType.CASPARCG,
+									type: TSR.TimelineContentTypeCasparCg.MEDIA,
 
-						file: 'assets/Sofie News Opener',
-					},
-					priority: 1,
-				}),
+									file: 'assets/Sofie News Opener.mp4',
+								},
+								priority: 1,
+							}),
+						]),
 			],
 		},
 
@@ -150,7 +160,7 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 		prerollDuration: config.casparcgLatency,
 	})
 
-	const pieces = [cameraPiece, audioBedPiece]
+	const pieces = config.visionMixer.type === VisionMixerDevice.OBS ? [cameraPiece] : [cameraPiece, audioBedPiece]
 	const scriptPiece = createScriptPiece(part.payload.script, part.payload.externalId)
 	if (scriptPiece) pieces.push(scriptPiece)
 

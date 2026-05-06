@@ -2,6 +2,7 @@ import { SourceType, StudioConfig, VisionMixerDevice } from '../../../base/studi
 
 export const DemoStudioConfig: StudioConfig = {
 	previewRenderer: 'sofie',
+	obsMediaBasePath: '',
 	casparcgLatency: 0,
 	visionMixer: {
 		type: VisionMixerDevice.Atem,
@@ -20,6 +21,7 @@ export const DemoStudioConfig: StudioConfig = {
 	},
 	sisyfosSources: {},
 	vmixSources: {},
+	obsSources: {},
 	atemOutputs: {},
 	atemSources: {
 		camera1: { input: 1, type: SourceType.Camera },
@@ -30,5 +32,68 @@ export const DemoStudioConfig: StudioConfig = {
 		remote2: { input: 6, type: SourceType.Remote },
 		mediaplayer: { input: 7, type: SourceType.MediaPlayer },
 		graphics: { input: 8, type: SourceType.Graphics },
+	},
+}
+
+export const DemoOBSStudioConfig: StudioConfig = {
+	previewRenderer: 'sofie',
+	obsMediaBasePath: '',
+	obsDownstreamKeyerSourceId: 'dsk',
+	casparcgLatency: 0,
+	visionMixer: {
+		type: VisionMixerDevice.OBS,
+		host: 'localhost',
+		port: 4455,
+		deviceId: 'obs0',
+		password: '',
+	},
+	audioMixer: {
+		host: 'localhost',
+		port: 1176,
+		deviceId: 'sisyfos0',
+	},
+	casparcg: {
+		host: 'localhost',
+		port: 5250,
+	},
+	sisyfosSources: {},
+	vmixSources: {},
+	atemOutputs: {},
+	atemSources: {},
+	obsSources: {
+		camera1: { sceneName: 'CAM 1', sourceName: 'CAM 1', type: SourceType.Camera },
+		camera2: { sceneName: 'CAM 2', sourceName: 'CAM 2', type: SourceType.Camera },
+		camera3: { sceneName: 'CAM 3', sourceName: 'CAM 3', type: SourceType.Camera },
+		remote1: {
+			sceneName: 'EXT 1',
+			sourceName: 'EXT 1',
+			audioSourceName: 'EXT 1',
+			type: SourceType.Remote,
+		},
+		remote2: {
+			sceneName: 'EXT 2',
+			sourceName: 'EXT 2',
+			audioSourceName: 'EXT 2',
+			type: SourceType.Remote,
+		},
+		mediaplayer1: {
+			sceneName: 'Media player 1',
+			sourceName: 'Media',
+			audioSourceName: 'Media',
+			type: SourceType.MediaPlayer,
+		},
+		mediaplayer2: {
+			sceneName: 'Media player 2',
+			sourceName: 'Media',
+			audioSourceName: 'Media',
+			type: SourceType.MediaPlayer,
+		},
+		dve: { sceneName: 'DVE 2BOX', sourceName: 'DVE 2BOX', type: SourceType.MultiView },
+		lowerThird: { sceneName: 'LAYER Graphics', sourceName: 'Lower Third', type: SourceType.Graphics },
+		strap: { sceneName: 'LAYER Graphics', sourceName: 'Strap', type: SourceType.Graphics },
+		ticker: { sceneName: 'LAYER Graphics', sourceName: 'Ticker', type: SourceType.Graphics },
+		fullscreen: { sceneName: 'LAYER Graphics', sourceName: 'Fullscreen', type: SourceType.Graphics },
+		fullscreenBrowser: { sceneName: 'Fullscreen GFX', sourceName: 'Browser', type: SourceType.Graphics },
+		dsk: { sceneName: 'GFX', sourceName: 'TXT', type: SourceType.Graphics },
 	},
 }

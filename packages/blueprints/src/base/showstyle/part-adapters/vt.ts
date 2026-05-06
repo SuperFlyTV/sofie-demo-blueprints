@@ -7,11 +7,11 @@ import {
 } from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../../common/context.js'
 import { changeExtension, literal, stripExtension } from '../../../common/util.js'
-import { AudioSourceType } from '../../studio/helpers/config.js'
+import { AudioSourceType, VisionMixerDevice } from '../../studio/helpers/config.js'
 import { CasparCGLayers } from '../../studio/layers.js'
 import { PartProps, VTProps } from '../definitions/index.js'
 import { getAudioPrimaryObject } from '../helpers/audio.js'
-import { getClipPlayerInput } from '../helpers/clips.js'
+import { createOBSClipPlayerObjects, getClipPlayerInput } from '../helpers/clips.js'
 import { parseGraphicsFromObjects } from '../helpers/graphics.js'
 import { createScriptPiece } from '../helpers/script.js'
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
@@ -23,7 +23,24 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 	const config = parseConfig(context).studio
 	const visionMixerInput = getClipPlayerInput(config)
 
-	const audioTlObj = getAudioPrimaryObject(config, [{ type: AudioSourceType.Playback, index: 0 }]) // todo: which playback?
+	const audioTlObjects = getAudioPrimaryObject(config, [{ type: AudioSourceType.Playback, index: 0 }]) // todo: which playback?
+	const clipPlayerObjects =
+		config.visionMixer.type === VisionMixerDevice.OBS
+			? createOBSClipPlayerObjects(config, part.payload.clipProps)
+			: [
+					literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
+						id: '',
+						enable: { start: 0 },
+						layer: CasparCGLayers.CasparCGClipPlayer1,
+						content: {
+							deviceType: TSR.DeviceType.CASPARCG,
+							type: TSR.TimelineContentTypeCasparCg.MEDIA,
+
+							file: stripExtension(part.payload.clipProps.fileName),
+						},
+						priority: 1,
+					}),
+				]
 
 	const vtPiece: IBlueprintPiece = {
 		enable: {
@@ -45,21 +62,8 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 
 			timelineObjects: [
 				...createVisionMixerObjects(config, visionMixerInput?.input || 0, config.casparcgLatency),
-
-				literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
-					id: '',
-					enable: { start: 0 },
-					layer: CasparCGLayers.CasparCGClipPlayer1,
-					content: {
-						deviceType: TSR.DeviceType.CASPARCG,
-						type: TSR.TimelineContentTypeCasparCg.MEDIA,
-
-						file: stripExtension(part.payload.clipProps.fileName),
-					},
-					priority: 1,
-				}),
-
-				audioTlObj,
+				...clipPlayerObjects,
+				...audioTlObjects,
 			],
 
 			sourceDuration: part.payload.clipProps.sourceDuration,

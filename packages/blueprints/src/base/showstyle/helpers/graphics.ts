@@ -7,12 +7,15 @@ import {
 	SteppedGraphicObject,
 } from '../../../common/definitions/objects.js'
 import { literal } from '../../../common/util.js'
-import { StudioConfig } from '../../studio/helpers/config.js'
-import { CasparCGLayers } from '../../studio/layers.js'
+import { SourceType, StudioConfig, VisionMixerDevice } from '../../studio/helpers/config.js'
+import { CasparCGLayers, OBSLayers } from '../../studio/layers.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { getClipPlayerInput } from './clips.js'
+import { createOBSBrowserSourceObjects } from './clips.js'
 import { createVisionMixerObjects } from './visionMixer.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
+import { ObsSourceConfig } from '../../../$schemas/generated/main-studio-config.js'
+import { getOBSSceneItemLayer } from '../../studio/applyConfig/mappings/obs.js'
 
 export interface GraphicsResult {
 	pieces: IBlueprintPiece[]
@@ -47,8 +50,59 @@ function getGraphicTlObject(
 	object: GraphicObjectBase,
 	isAdlib?: boolean
 ): TimelineBlueprintExt[] {
-	const fullscreenAtemInput = getClipPlayerInput(config)
 	const isFullscreen = object.clipName.match(/fullscreen/i)
+
+	if (config.visionMixer.type === VisionMixerDevice.OBS) {
+		// Check if this is a fullscreen graphic with a URL (for browser source)
+		if (isFullscreen && 'attributes' in object) {
+			const url = (object.attributes as any).url
+			if (url && typeof url === 'string') {
+				// Use browser source for HTTP URLs
+				const browserObjects = createOBSBrowserSourceObjects(config, url)
+				const browserSource = config.obsSources['fullscreenBrowser']
+				if (browserSource && browserObjects.length > 0) {
+					return [
+						...browserObjects,
+						literal<TimelineBlueprintExt<TSR.TimelineContentOBSCurrentScene>>({
+							id: '',
+							enable: {
+								start: 0,
+							},
+							layer: OBSLayers.OBSCurrentScene,
+							priority: 1 + (isAdlib ? 10 : 0),
+							content: {
+								deviceType: TSR.DeviceType.OBS,
+								type: TSR.TimelineContentTypeOBS.CURRENT_SCENE,
+								sceneName: browserSource.sceneName,
+							},
+						}),
+					]
+				}
+			}
+		}
+
+		// Default OBS graphics handling (non-URL based)
+		const obsGraphicSource = getOBSGraphicSource(config, object)
+		if (!obsGraphicSource) return []
+
+		return [
+			literal<TimelineBlueprintExt<TSR.TimelineContentOBSSceneItem>>({
+				id: '',
+				enable: {
+					start: 0,
+				},
+				layer: getOBSSceneItemLayer(obsGraphicSource[0]),
+				priority: 1 + (isAdlib ? 10 : 0),
+				content: {
+					deviceType: TSR.DeviceType.OBS,
+					type: TSR.TimelineContentTypeOBS.SCENE_ITEM,
+					on: true,
+				},
+			}),
+		]
+	}
+
+	const fullscreenAtemInput = getClipPlayerInput(config)
 
 	return [
 		literal<TimelineBlueprintExt<TSR.TimelineContentCCGTemplate>>({
@@ -72,6 +126,20 @@ function getGraphicTlObject(
 		}),
 		...(isFullscreen ? createVisionMixerObjects(config, fullscreenAtemInput?.input || 0, config.casparcgLatency) : []),
 	]
+}
+
+function getOBSGraphicSource(config: StudioConfig, object: GraphicObjectBase): [string, ObsSourceConfig] | undefined {
+	const sourceLayer = getGraphicSourceLayer(object)
+	const sourceLayerName = sourceLayer.toLowerCase()
+	const graphicsSources = Object.entries<ObsSourceConfig>(config.obsSources).filter(
+		([, source]) => source.type === SourceType.Graphics
+	)
+
+	return (
+		graphicsSources.find(([sourceId, source]) =>
+			[sourceId, source.sourceName, source.sceneName].some((value) => value.toLowerCase().includes(sourceLayerName))
+		) || graphicsSources[0]
+	)
 }
 function parseGraphic(config: StudioConfig, object: GraphicObject | SteppedGraphicObject): IBlueprintPiece {
 	const sourceLayer = getGraphicSourceLayer(object)

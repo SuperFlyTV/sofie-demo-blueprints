@@ -7,9 +7,10 @@ import {
 } from '@sofie-automation/blueprints-integration'
 import { PartContext } from '../../../common/context.js'
 import { changeExtension, literal, stripExtension } from '../../../common/util.js'
+import { VisionMixerDevice } from '../../studio/helpers/config.js'
 import { CasparCGLayers } from '../../studio/layers.js'
 import { PartProps, VOProps } from '../definitions/index.js'
-import { getClipPlayerInput } from '../helpers/clips.js'
+import { createOBSClipPlayerObjects, getClipPlayerInput } from '../helpers/clips.js'
 import { parseGraphicsFromObjects } from '../helpers/graphics.js'
 import { createScriptPiece } from '../helpers/script.js'
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
@@ -20,6 +21,23 @@ import { parseConfig } from '../helpers/config.js'
 export function generateVOPart(context: PartContext, part: PartProps<VOProps>): BlueprintResultPart {
 	const config = parseConfig(context).studio
 	const atemInput = getClipPlayerInput(config)
+	const clipPlayerObjects =
+		config.visionMixer.type === VisionMixerDevice.OBS
+			? createOBSClipPlayerObjects(config, part.payload.clipProps)
+			: [
+					literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
+						id: '',
+						enable: { start: 0 },
+						layer: CasparCGLayers.CasparCGClipPlayer1,
+						content: {
+							deviceType: TSR.DeviceType.CASPARCG,
+							type: TSR.TimelineContentTypeCasparCg.MEDIA,
+
+							file: stripExtension(part.payload.clipProps.fileName),
+						},
+						priority: 1,
+					}),
+				]
 
 	const cameraPiece: IBlueprintPiece = {
 		enable: {
@@ -36,19 +54,7 @@ export function generateVOPart(context: PartContext, part: PartProps<VOProps>): 
 
 			timelineObjects: [
 				...createVisionMixerObjects(config, atemInput?.input || 0, config.casparcgLatency),
-
-				literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
-					id: '',
-					enable: { start: 0 },
-					layer: CasparCGLayers.CasparCGClipPlayer1,
-					content: {
-						deviceType: TSR.DeviceType.CASPARCG,
-						type: TSR.TimelineContentTypeCasparCg.MEDIA,
-
-						file: stripExtension(part.payload.clipProps.fileName),
-					},
-					priority: 1,
-				}),
+				...clipPlayerObjects,
 			],
 
 			sourceDuration: part.payload.clipProps.sourceDuration,

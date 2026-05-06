@@ -24,8 +24,8 @@
 					"ui:category": "Vision Mixer",
 					"ui:title": "Vision Mixer Device",
 					"title": "VisionMixerDevice",
-					"enum": ["Atem", "Vmix"],
-					"tsEnumNames": ["Atem", "VMix"],
+					"enum": ["Atem", "Vmix", "OBS"],
+					"tsEnumNames": ["Atem", "VMix", "OBS"],
 					"default": "Atem"
 				},
 				"host": {
@@ -41,6 +41,13 @@
 					"ui:title": "Port",
 					"ui:description": "Port of the vision mixer (E.G. 9910)",
 					"default": 9910
+				},
+				"password": {
+					"type": "string",
+					"description": "OBS websocket password",
+					"ui:title": "Password",
+					"ui:description": "OBS websocket password. Only used when Vision Mixer Device is OBS.",
+					"default": ""
 				}
 			},
 			"required": ["deviceId", "type", "host", "port"],
@@ -182,6 +189,45 @@
 				}
 			}
 		},
+		"obsSources": {
+			"type": "object",
+			"ui:title": "OBS Sources",
+			"ui:description": "Description of OBS shot scenes, scene items and inputs",
+			"ui:category": "Inputs",
+			"patternProperties": {
+				"": {
+					"type": "object",
+					"title": "ObsSourceConfig",
+					"properties": {
+						"sceneName": {
+							"type": "string",
+							"ui:title": "Scene Name",
+							"ui:description": "OBS scene to switch to, or scene containing the source item",
+							"ui:summaryTitle": "Scene",
+							"default": ""
+						},
+						"sourceName": {
+							"type": "string",
+							"ui:title": "Source Name",
+							"ui:description": "OBS source/input name for media, graphics item visibility, or source audio",
+							"ui:summaryTitle": "Source",
+							"default": ""
+						},
+						"audioSourceName": {
+							"type": "string",
+							"ui:title": "Audio Source Name",
+							"ui:description": "Optional OBS audio input name if it differs from Source Name",
+							"ui:summaryTitle": "Audio",
+							"default": ""
+						},
+						"type": {
+							"$ref": "#/$defs/SourceType"
+						}
+					},
+					"required": ["sceneName", "sourceName", "type"]
+				}
+			}
+		},
 		"sisyfosSources": {
 			"type": "object",
 			"ui:title": "Sisyfos Sources",
@@ -222,6 +268,20 @@
 			"ui:category": "Graphics",
 			"default": ""
 		},
+		"obsMediaBasePath": {
+			"type": "string",
+			"ui:title": "OBS Media Base Path",
+			"ui:description": "Optional filesystem base path for OBS media and asset files when rundown paths are relative",
+			"ui:category": "Playback",
+			"default": ""
+		},
+		"obsDownstreamKeyerSourceId": {
+			"type": "string",
+			"ui:title": "OBS Downstream Keyer Source",
+			"ui:description": "Optional OBS source id from obsSources used for downstream keyer scene selection",
+			"ui:category": "Graphics",
+			"default": ""
+		},
 		"casparcgLatency": {
 			"type": "integer",
 			"ui:title": "CasparCG Latency",
@@ -234,6 +294,7 @@
 		"previewRenderer",
 		"casparcgLatency",
 		"sisyfosSources",
+		"obsSources",
 		"vmixSources",
 		"atemOutputs",
 		"atemSources",

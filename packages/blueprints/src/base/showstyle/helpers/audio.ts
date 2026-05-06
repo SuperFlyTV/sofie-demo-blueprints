@@ -1,9 +1,11 @@
 import { TSR } from '@sofie-automation/blueprints-integration'
 import { assertNever, literal } from '../../../common/util.js'
-import { AudioSourceType, StudioConfig } from '../../studio/helpers/config.js'
+import { AudioSourceType, SourceType, StudioConfig, VisionMixerDevice } from '../../studio/helpers/config.js'
 import { SisyfosLayers } from '../../studio/layers.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
-import { SiyfosSourceConfig } from '../../../$schemas/generated/main-studio-config.js'
+import { ObsSourceConfig, SiyfosSourceConfig } from '../../../$schemas/generated/main-studio-config.js'
+import { getOBSAudioInputName, getOBSInputAudioLayer } from '../../studio/applyConfig/mappings/obs.js'
+export { getOBSAudioBaseline, getOBSDownstreamKeyerBaseline } from '../../studio/helpers/obs.js'
 
 // note - studio baseline and showstyle baseline are the same for now
 export function getSisyfosBaseline(config: StudioConfig): (TSR.SisyfosChannelOptions & { mappedLayer: string })[] {
@@ -70,27 +72,78 @@ export function getAudioObjectOnLayer(
 	config: StudioConfig,
 	layer: SisyfosLayers,
 	primaries: { type: AudioSourceType; index: number; isOn?: boolean }[]
-): TimelineBlueprintExt<TSR.TimelineContentSisyfosChannels> {
-	return {
-		id: '',
-		enable: {
-			start: 0,
-		},
-		layer: layer,
-		content: {
-			deviceType: TSR.DeviceType.SISYFOS,
-			type: TSR.TimelineContentTypeSisyfos.CHANNELS,
-			overridePriority: getOverridePriorityByLayer(layer),
-
-			channels: getSisyfosPrimary(config, primaries),
-		},
-		priority: 1,
+): TimelineBlueprintExt<TSR.TimelineContentSisyfosChannels | TSR.TimelineContentOBSInputAudio>[] {
+	if (config.visionMixer.type === VisionMixerDevice.OBS) {
+		return getOBSPrimaryAudioObjects(config, primaries)
 	}
+
+	return [
+		{
+			id: '',
+			enable: {
+				start: 0,
+			},
+			layer: layer,
+			content: {
+				deviceType: TSR.DeviceType.SISYFOS,
+				type: TSR.TimelineContentTypeSisyfos.CHANNELS,
+				overridePriority: getOverridePriorityByLayer(layer),
+
+				channels: getSisyfosPrimary(config, primaries),
+			},
+			priority: 1,
+		},
+	]
 }
 
 export function getAudioPrimaryObject(
 	config: StudioConfig,
 	primaries: { type: AudioSourceType; index: number; isOn?: boolean }[]
-): TimelineBlueprintExt<TSR.TimelineContentSisyfosChannels> {
+): TimelineBlueprintExt<TSR.TimelineContentSisyfosChannels | TSR.TimelineContentOBSInputAudio>[] {
 	return getAudioObjectOnLayer(config, SisyfosLayers.Primary, primaries)
+}
+
+function getOBSPrimaryAudioObjects(
+	config: StudioConfig,
+	primaries: { type: AudioSourceType; index: number; isOn?: boolean }[]
+): TimelineBlueprintExt<TSR.TimelineContentOBSInputAudio>[] {
+	return primaries
+		.map((primary) => {
+			const sourceType = getOBSSourceTypeForAudioType(primary.type)
+			if (!sourceType) return undefined
+
+			const sourceEntry = Object.entries<ObsSourceConfig>(config.obsSources).filter(
+				([, source]) => source.type === sourceType && !!getOBSAudioInputName(source)
+			)[primary.index]
+			if (!sourceEntry) return undefined
+
+			return literal<TimelineBlueprintExt<TSR.TimelineContentOBSInputAudio>>({
+				id: '',
+				enable: { start: 0 },
+				layer: getOBSInputAudioLayer(sourceEntry[0]),
+				content: {
+					deviceType: TSR.DeviceType.OBS,
+					type: TSR.TimelineContentTypeOBS.INPUT_AUDIO,
+					mute: primary.isOn === undefined ? false : !primary.isOn,
+				},
+				priority: 1,
+			})
+		})
+		.filter((tlObject): tlObject is TimelineBlueprintExt<TSR.TimelineContentOBSInputAudio> => !!tlObject)
+}
+
+function getOBSSourceTypeForAudioType(type: AudioSourceType): SourceType | undefined {
+	switch (type) {
+		case AudioSourceType.Host:
+			return SourceType.Camera
+		case AudioSourceType.Remote:
+			return SourceType.Remote
+		case AudioSourceType.Playback:
+			return SourceType.MediaPlayer
+		case AudioSourceType.Guest:
+			return undefined
+		default:
+			assertNever(type)
+			return undefined
+	}
 }

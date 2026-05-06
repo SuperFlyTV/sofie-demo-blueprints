@@ -1,9 +1,10 @@
 import { BlueprintResultStudioBaseline, IStudioContext, TSR } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../common/util.js'
-import { AudioSourceType, StudioConfig } from './helpers/config.js'
+import { AudioSourceType, StudioConfig, VisionMixerDevice } from './helpers/config.js'
 import { SisyfosLayers } from './layers.js'
 import { TimelineBlueprintExt } from './customTypes.js'
 import { OutputConfig, SiyfosSourceConfig } from '../../$schemas/generated/main-studio-config.js'
+import { getOBSAudioBaseline } from './helpers/obs.js'
 
 function getSisyfosBaseline(config: StudioConfig): (TSR.SisyfosChannelOptions & { mappedLayer: string })[] {
 	const channels: (TSR.SisyfosChannelOptions & { mappedLayer: string })[] = []
@@ -33,36 +34,40 @@ export function getBaseline(context: IStudioContext): BlueprintResultStudioBasel
 
 	return {
 		timelineObjects: [
-			literal<TimelineBlueprintExt<TSR.TimelineContentSisyfosChannels>>({
-				id: '',
-				enable: {
-					while: 1,
-				},
-				layer: SisyfosLayers.Baseline,
-				content: {
-					deviceType: TSR.DeviceType.SISYFOS,
-					type: TSR.TimelineContentTypeSisyfos.CHANNELS,
+			...(config.visionMixer.type === VisionMixerDevice.OBS
+				? getOBSAudioBaseline(config)
+				: [
+						literal<TimelineBlueprintExt<TSR.TimelineContentSisyfosChannels>>({
+							id: '',
+							enable: {
+								while: 1,
+							},
+							layer: SisyfosLayers.Baseline,
+							content: {
+								deviceType: TSR.DeviceType.SISYFOS,
+								type: TSR.TimelineContentTypeSisyfos.CHANNELS,
 
-					channels: getSisyfosBaseline(config),
-				},
-				priority: 1,
-			}),
-			...Object.values<OutputConfig>(config.atemOutputs).map((output) =>
-				literal<TimelineBlueprintExt<TSR.TimelineContentAtemAUX>>({
-					id: '',
-					enable: { while: 1 },
-					priority: 0,
-					layer: `atem_aux_${output.output - 1}`,
-					content: {
-						deviceType: TSR.DeviceType.ATEM,
-						type: TSR.TimelineContentTypeAtem.AUX,
+								channels: getSisyfosBaseline(config),
+							},
+							priority: 1,
+						}),
+						...Object.values<OutputConfig>(config.atemOutputs).map((output) =>
+							literal<TimelineBlueprintExt<TSR.TimelineContentAtemAUX>>({
+								id: '',
+								enable: { while: 1 },
+								priority: 0,
+								layer: `atem_aux_${output.output - 1}`,
+								content: {
+									deviceType: TSR.DeviceType.ATEM,
+									type: TSR.TimelineContentTypeAtem.AUX,
 
-						aux: {
-							input: output.source,
-						},
-					},
-				})
-			),
+									aux: {
+										input: output.source,
+									},
+								},
+							})
+						),
+					]),
 		],
 		expectedPackages: [],
 	}

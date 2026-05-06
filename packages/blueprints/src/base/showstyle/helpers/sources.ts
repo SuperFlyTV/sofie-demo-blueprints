@@ -1,5 +1,10 @@
 import { SourceType, StudioConfig } from '../../studio/helpers/config.js'
-import { InputConfig, VisionMixerDevice, VmixInputConfig } from '../../..//$schemas/generated/main-studio-config.js'
+import {
+	InputConfig,
+	ObsSourceConfig,
+	VisionMixerDevice,
+	VmixInputConfig,
+} from '../../..//$schemas/generated/main-studio-config.js'
 
 export interface RawSourceInfo {
 	type: SourceType
@@ -8,7 +13,7 @@ export interface RawSourceInfo {
 }
 
 export interface SourceInfo extends RawSourceInfo {
-	input: number
+	input: number | string
 }
 
 export function findSource(input: string | number | boolean | undefined, type: SourceType): RawSourceInfo | undefined {
@@ -28,6 +33,14 @@ export function getSourceInfoFromRaw(config: StudioConfig, rawInfo: RawSourceInf
 
 	if (config.visionMixer.type === VisionMixerDevice.VMix) {
 		sourcesOfType = Object.values<VmixInputConfig>(config.vmixSources).filter((s) => s.type === rawInfo.type)
+	} else if (config.visionMixer.type === VisionMixerDevice.OBS) {
+		const obsSource = Object.values<ObsSourceConfig>(config.obsSources).filter((s) => s.type === rawInfo.type)[
+			rawInfo.id - 1
+		]
+		return {
+			...rawInfo,
+			input: obsSource?.sceneName || '',
+		}
 	}
 
 	const input = sourcesOfType[rawInfo.id - 1]

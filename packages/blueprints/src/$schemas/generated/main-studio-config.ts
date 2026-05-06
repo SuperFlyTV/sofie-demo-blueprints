@@ -18,6 +18,9 @@ export interface StudioConfig {
 	vmixSources: {
 		[k: string]: VmixInputConfig
 	}
+	obsSources: {
+		[k: string]: ObsSourceConfig
+	}
 	sisyfosSources: {
 		[k: string]: SiyfosSourceConfig
 	}
@@ -41,6 +44,10 @@ export interface VisionMixerConfig {
 	 * Port of the vision mixer
 	 */
 	port: number
+	/**
+	 * OBS websocket password
+	 */
+	password?: string
 }
 /**
  * Audio mixer device configuration
@@ -100,6 +107,16 @@ export interface VmixInputConfig {
  * This interface was referenced by `undefined`'s JSON-Schema definition
  * via the `patternProperty` "".
  */
+export interface ObsSourceConfig {
+	sceneName: string
+	sourceName: string
+	audioSourceName?: string
+	type: SourceType
+}
+/**
+ * This interface was referenced by `undefined`'s JSON-Schema definition
+ * via the `patternProperty` "".
+ */
 export interface SiyfosSourceConfig {
 	source: number
 	type: AudioSourceType
@@ -111,6 +128,7 @@ export interface SiyfosSourceConfig {
 export enum VisionMixerDevice {
 	Atem = 'Atem',
 	VMix = 'Vmix',
+	OBS = 'OBS',
 }
 export enum SourceType {
 	Camera = 'camera',

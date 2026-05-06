@@ -16,7 +16,9 @@ export function generateRemotePart(context: PartContext, part: PartProps<RemoteP
 	const config = parseConfig(context).studio
 	const sourceInfo = getSourceInfoFromRaw(config, part.payload.input)
 
-	const audioTlObj = getAudioPrimaryObject(config, [{ type: AudioSourceType.Remote, index: part.payload.input.id - 1 }]) // todo: all hosts?
+	const audioTlObjects = getAudioPrimaryObject(config, [
+		{ type: AudioSourceType.Remote, index: part.payload.input.id - 1 },
+	]) // todo: all hosts?
 
 	const cameraPiece: IBlueprintPiece = {
 		enable: {
@@ -28,7 +30,7 @@ export function generateRemotePart(context: PartContext, part: PartProps<RemoteP
 		sourceLayerId: SourceLayer.Remote,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Remote),
 		content: {
-			timelineObjects: [...createVisionMixerObjects(config, sourceInfo.input), audioTlObj],
+			timelineObjects: [...createVisionMixerObjects(config, sourceInfo.input), ...audioTlObjects],
 		},
 	}
 

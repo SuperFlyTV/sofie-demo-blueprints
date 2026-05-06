@@ -27,7 +27,7 @@ export function applyConfig(
 		inputDevices: {},
 		ingestDevices: generateIngestDevices(),
 
-		packageContainers: generatePackageContainers(),
+		packageContainers: generatePackageContainers(parsedConfig),
 
 		studioSettings: {
 			frameRate: 25,
@@ -70,7 +70,10 @@ function generatePlayoutDevices(config: BlueprintConfig): BlueprintResultApplySt
 				options: {},
 			}),
 		},
-		casparcg0: {
+	}
+
+	if (config.studio.visionMixer.type !== VisionMixerDevice.OBS) {
+		playoutDevices.casparcg0 = {
 			parentConfigId: 'playoutgateway',
 			options: literal<TSR.DeviceOptionsCasparCG>({
 				type: TSR.DeviceType.CASPARCG,
@@ -79,7 +82,7 @@ function generatePlayoutDevices(config: BlueprintConfig): BlueprintResultApplySt
 					port: config.studio.casparcg.port || 5250,
 				},
 			}),
-		},
+		}
 	}
 
 	if (config.studio.visionMixer.type === VisionMixerDevice.Atem) {
@@ -93,18 +96,44 @@ function generatePlayoutDevices(config: BlueprintConfig): BlueprintResultApplySt
 				},
 			}),
 		}
+	} else if (config.studio.visionMixer.type === VisionMixerDevice.VMix) {
+		playoutDevices[config.studio.visionMixer.deviceId] = {
+			parentConfigId: 'playoutgateway',
+			options: literal({
+				type: TSR.DeviceType.VMIX,
+				options: {
+					host: config.studio.visionMixer.host,
+					port: config.studio.visionMixer.port,
+				},
+			}),
+		}
+	} else if (config.studio.visionMixer.type === VisionMixerDevice.OBS) {
+		playoutDevices[config.studio.visionMixer.deviceId] = {
+			parentConfigId: 'playoutgateway',
+			options: literal<TSR.DeviceOptionsObs>({
+				type: TSR.DeviceType.OBS,
+				options: {
+					host: config.studio.visionMixer.host,
+					port: config.studio.visionMixer.port,
+					password: config.studio.visionMixer.password || undefined,
+				},
+			}),
+		}
 	}
 
-	playoutDevices[config.studio.audioMixer.deviceId] = {
-		parentConfigId: 'playoutgateway',
-		options: literal<TSR.DeviceOptionsSisyfos>({
-			type: TSR.DeviceType.SISYFOS,
-			options: {
-				host: config.studio.audioMixer.host,
-				port: config.studio.audioMixer.port || 1176,
-			},
-		}),
+	if (config.studio.visionMixer.type !== VisionMixerDevice.OBS) {
+		playoutDevices[config.studio.audioMixer.deviceId] = {
+			parentConfigId: 'playoutgateway',
+			options: literal<TSR.DeviceOptionsSisyfos>({
+				type: TSR.DeviceType.SISYFOS,
+				options: {
+					host: config.studio.audioMixer.host,
+					port: config.studio.audioMixer.port || 1176,
+				},
+			}),
+		}
 	}
+
 	return playoutDevices
 }
 
@@ -114,8 +143,8 @@ function generateIngestDevices(): BlueprintResultApplyStudioConfig['ingestDevice
 	return ingestDevices
 }
 
-function generatePackageContainers(): Record<string, StudioPackageContainer> {
-	return {
+function generatePackageContainers(config: BlueprintConfig): Record<string, StudioPackageContainer> {
+	const containers: Record<string, StudioPackageContainer> = {
 		httpProxy0: {
 			deviceIds: [],
 			container: {
@@ -131,7 +160,10 @@ function generatePackageContainers(): Record<string, StudioPackageContainer> {
 				},
 			},
 		},
-		casparcg0: {
+	}
+
+	if (config.studio.visionMixer.type !== VisionMixerDevice.OBS) {
+		containers.casparcg0 = {
 			deviceIds: ['casparcg0'],
 			container: {
 				label: 'CasparCG Media folder',
@@ -145,6 +177,8 @@ function generatePackageContainers(): Record<string, StudioPackageContainer> {
 					},
 				},
 			},
-		},
+		}
 	}
+
+	return containers
 }

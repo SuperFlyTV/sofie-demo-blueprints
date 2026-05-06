@@ -2,7 +2,7 @@ import { BlueprintResultBaseline, IShowStyleUserContext, TSR } from '@sofie-auto
 import { literal } from '../../../common/util.js'
 import { SourceType, StudioConfig, VisionMixerDevice } from '../../studio/helpers/config.js'
 import { AtemLayers, CasparCGLayers, SisyfosLayers, VMixLayers } from '../../studio/layers.js'
-import { getSisyfosBaseline } from '../helpers/audio.js'
+import { getOBSAudioBaseline, getOBSDownstreamKeyerBaseline, getSisyfosBaseline } from '../helpers/audio.js'
 import { DVEDesigns, DVELayouts } from '../helpers/dve.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 import { InputConfig, OutputConfig, VmixInputConfig } from '../../../$schemas/generated/main-studio-config.js'
@@ -15,36 +15,47 @@ export function getBaseline(context: IShowStyleUserContext): BlueprintResultBase
 		timelineObjects: [
 			...(config.visionMixer.type === VisionMixerDevice.Atem ? getAtemBaseline(config) : []),
 			...(config.visionMixer.type === VisionMixerDevice.VMix ? getVMixBaseline(config) : []),
+			...(config.visionMixer.type === VisionMixerDevice.OBS
+				? [...getOBSAudioBaseline(config), ...getOBSDownstreamKeyerBaseline(config)]
+				: []),
 
-			literal<TimelineBlueprintExt<TSR.TimelineContentCCGRoute>>({
-				id: '',
-				enable: { while: 1 },
-				priority: 0,
-				layer: CasparCGLayers.CasparCGClipPlayerPreview,
-				content: {
-					deviceType: TSR.DeviceType.CASPARCG,
-					type: TSR.TimelineContentTypeCasparCg.ROUTE,
+			...(config.visionMixer.type !== VisionMixerDevice.OBS
+				? [
+						literal<TimelineBlueprintExt<TSR.TimelineContentCCGRoute>>({
+							id: '',
+							enable: { while: 1 },
+							priority: 0,
+							layer: CasparCGLayers.CasparCGClipPlayerPreview,
+							content: {
+								deviceType: TSR.DeviceType.CASPARCG,
+								type: TSR.TimelineContentTypeCasparCg.ROUTE,
 
-					mappedLayer: CasparCGLayers.CasparCGClipPlayer1,
-					mode: 'BACKGROUND',
-				},
-			}),
+								mappedLayer: CasparCGLayers.CasparCGClipPlayer1,
+								mode: 'BACKGROUND',
+							},
+						}),
+					]
+				: []),
 
-			literal<TimelineBlueprintExt<TSR.TimelineContentSisyfosChannels>>({
-				id: '',
-				enable: {
-					while: 1,
-				},
-				layer: SisyfosLayers.Baseline,
-				content: {
-					deviceType: TSR.DeviceType.SISYFOS,
-					type: TSR.TimelineContentTypeSisyfos.CHANNELS,
-					overridePriority: -10,
+			...(config.visionMixer.type !== VisionMixerDevice.OBS
+				? [
+						literal<TimelineBlueprintExt<TSR.TimelineContentSisyfosChannels>>({
+							id: '',
+							enable: {
+								while: 1,
+							},
+							layer: SisyfosLayers.Baseline,
+							content: {
+								deviceType: TSR.DeviceType.SISYFOS,
+								type: TSR.TimelineContentTypeSisyfos.CHANNELS,
+								overridePriority: -10,
 
-					channels: getSisyfosBaseline(config),
-				},
-				priority: 0,
-			}),
+								channels: getSisyfosBaseline(config),
+							},
+							priority: 0,
+						}),
+					]
+				: []),
 		],
 	}
 }

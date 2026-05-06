@@ -13,6 +13,12 @@ export enum VMixLayers {
 	VMixDVEMultiView = 'vmix_dve_multiview',
 }
 
+export enum OBSLayers {
+	OBSCurrentScene = 'obs_current_scene',
+	OBSCurrentTransition = 'obs_current_transition',
+	OBSDownstreamKeyer = 'obs_downstream_keyer',
+}
+
 export enum CasparCGLayers {
 	CasparCGClipPlayer1 = 'casparcg_clip_player1',
 	CasparCGClipPlayer2 = 'casparcg_clip_player2',

@@ -13,7 +13,7 @@ import { getSourceInfoFromRaw } from '../helpers/sources.js'
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
-import { VmixInputConfig } from '../../../$schemas/generated/main-studio-config.js'
+import { ObsSourceConfig, VmixInputConfig } from '../../../$schemas/generated/main-studio-config.js'
 import { parseConfig } from '../helpers/config.js'
 
 const SUPER_SOURCE_LATENCY = 80
@@ -35,11 +35,11 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 		}
 		return {
 			...layout[i],
-			source: source?.input || 0,
+			source: typeof source?.input === 'number' ? source.input : 0,
 		}
 	})
 
-	const audioTlObj = getAudioPrimaryObject(
+	const audioTlObjects = getAudioPrimaryObject(
 		config,
 		part.payload.inputs
 			.map((input) => {
@@ -67,13 +67,20 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 	const vmixDVEInput =
 		Object.values<VmixInputConfig>(config.vmixSources).find((source) => source.type === SourceType.MultiView)?.input ??
 		-1
+	const obsDVEInput =
+		Object.values<ObsSourceConfig>(config.obsSources).find((source) => source.type === SourceType.MultiView)
+			?.sceneName || ''
 	const dvePieceTimelineObjects: TimelineBlueprintExt[] = [
 		...createVisionMixerObjects(
 			config,
-			config.visionMixer.type === VisionMixerDevice.Atem ? SUPER_SOURCE_INPUT : vmixDVEInput,
+			config.visionMixer.type === VisionMixerDevice.Atem
+				? SUPER_SOURCE_INPUT
+				: config.visionMixer.type === VisionMixerDevice.OBS
+					? obsDVEInput
+					: vmixDVEInput,
 			SUPER_SOURCE_LATENCY
 		),
-		audioTlObj,
+		...audioTlObjects,
 	]
 	if (config.visionMixer.type === VisionMixerDevice.Atem) {
 		dvePieceTimelineObjects.push(
@@ -121,6 +128,8 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 				},
 			})
 		)
+	} else if (config.visionMixer.type === VisionMixerDevice.OBS) {
+		// OBS DVE layouts are prepared in OBS as shot scenes for v1.
 	} else {
 		assertUnreachable(config.visionMixer.type)
 	}
@@ -188,6 +197,8 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 				},
 			})
 		)
+	} else if (config.visionMixer.type === VisionMixerDevice.OBS) {
+		// OBS DVE layouts are prepared in OBS as shot scenes for v1.
 	} else {
 		assertUnreachable(config.visionMixer.type)
 	}
