@@ -1,8 +1,15 @@
 import { TSR } from '@sofie-automation/blueprints-integration'
 import { assertUnreachable, literal } from '../../../common/util.js'
+import { ObsSourceConfig } from '../../../$schemas/generated/main-studio-config.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
-import { StudioConfig, VisionMixerDevice } from '../../studio/helpers/config.js'
+import { SourceType, StudioConfig, VisionMixerDevice } from '../../studio/helpers/config.js'
+import { getOBSClipMediaPlayerSourceIds } from '../../studio/helpers/obsSources.js'
 import { AtemLayers, OBSLayers, VMixLayers } from '../../studio/layers.js'
+
+interface ABSessionLabel {
+	poolName: string
+	sessionName: string
+}
 
 export function createAtemInputTimelineObjects(
 	input: number,
@@ -130,7 +137,8 @@ export function createVisionMixerObjects(
 	transitionProps?: {
 		atemTransitionProps?: Omit<TSR.TimelineContentAtemME['me'], 'programInput' | 'previewInput'>
 		vmixTransitionProps?: TSR.VMixTransition
-	}
+	},
+	abSession?: ABSessionLabel
 ): TimelineBlueprintExt<TSR.TimelineContentVMixAny | TSR.TimelineContentAtemAny | TSR.TimelineContentOBSAny>[] {
 	if (config.visionMixer.type === VisionMixerDevice.Atem) {
 		return createAtemInputTimelineObjects(
@@ -142,6 +150,30 @@ export function createVisionMixerObjects(
 	} else if (config.visionMixer.type === VisionMixerDevice.VMix) {
 		return createVMixTimelineObjects(Number(input), start, transitionDuration, transitionProps?.vmixTransitionProps)
 	} else if (config.visionMixer.type === VisionMixerDevice.OBS) {
+		const clipMediaPlayerSourceIds = getOBSClipMediaPlayerSourceIds(config)
+		const obsMediaPlayerSceneKeyframes = abSession
+			? Object.entries<ObsSourceConfig>(config.obsSources)
+					.filter(
+						([sourceId, source]) =>
+							source.type === SourceType.MediaPlayer &&
+							!!source.sceneName &&
+							clipMediaPlayerSourceIds.includes(sourceId)
+					)
+					.map(([sourceId, source]) => ({
+						id: '',
+						enable: { while: 1 },
+						disabled: true,
+						content: {
+							sceneName: source.sceneName,
+						},
+						abSession: {
+							poolName: abSession.poolName,
+							playerId: sourceId,
+						},
+						preserveForLookahead: true,
+					}))
+			: undefined
+
 		return [
 			literal<TimelineBlueprintExt<TSR.TimelineContentOBSCurrentScene>>({
 				id: '',
@@ -152,7 +184,9 @@ export function createVisionMixerObjects(
 					type: TSR.TimelineContentTypeOBS.CURRENT_SCENE,
 					sceneName: `${input || ''}`,
 				},
+				keyframes: obsMediaPlayerSceneKeyframes as any,
 				priority: 1,
+				...(abSession ? { abSessions: [abSession] } : {}),
 			}),
 		]
 	} else {

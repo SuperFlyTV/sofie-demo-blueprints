@@ -4,6 +4,7 @@ import { BlueprintConfig } from '../../helpers/config.js'
 import { CasparCGLayers } from '../../layers.js'
 
 export function getCasparCGMappings(_config: BlueprintConfig): BlueprintMappings {
+	const clipPlayerPoolSize = 2
 	const mappings: BlueprintMappings = {
 		[CasparCGLayers.CasparCGClipPlayer1]: literal<BlueprintMapping<TSR.MappingCasparCGLayer>>({
 			device: TSR.DeviceType.CASPARCG,
@@ -26,6 +27,14 @@ export function getCasparCGMappings(_config: BlueprintConfig): BlueprintMappings
 				channel: 2,
 				layer: 110,
 			},
+		}),
+		[CasparCGLayers.CasparCGClipPlayerAbPending]: literal<BlueprintMapping<TSR.SomeMappingAbstract>>({
+			device: TSR.DeviceType.ABSTRACT,
+			deviceId: 'abstract0',
+			lookahead: LookaheadMode.PRELOAD,
+			lookaheadMaxSearchDistance: clipPlayerPoolSize,
+			lookaheadDepth: clipPlayerPoolSize,
+			options: {},
 		}),
 
 		[CasparCGLayers.CasparCGClipPlayerPreview]: literal<BlueprintMapping<TSR.MappingCasparCGLayer>>({

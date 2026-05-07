@@ -2,6 +2,7 @@ import { BlueprintMapping, BlueprintMappings, LookaheadMode, TSR } from '@sofie-
 import { literal } from '../../../../common/util.js'
 import { ObsSourceConfig } from '../../../../$schemas/generated/main-studio-config.js'
 import { StudioConfig } from '../../helpers/config.js'
+import { getOBSClipMediaPlayerSourceIds } from '../../helpers/obsSources.js'
 import { OBSLayers } from '../../layers.js'
 
 export function getOBSInputSettingsLayer(sourceId: string): string {
@@ -16,6 +17,22 @@ export function getOBSInputAudioLayer(sourceId: string): string {
 	return `obs_input_audio_${sourceId}`
 }
 
+export function getOBSInputSettingsABPendingLayer(): string {
+	return 'obs_input_settings_ab_pending'
+}
+
+export function getOBSInputMediaABPendingLayer(): string {
+	return 'obs_input_media_ab_pending'
+}
+
+export function getOBSInputAudioABPendingLayer(): string {
+	return 'obs_input_audio_ab_pending'
+}
+
+export function getOBSCurrentSceneLookaheadLayer(): string {
+	return `${OBSLayers.OBSCurrentScene}_lookahead`
+}
+
 export function getOBSSceneItemLayer(sourceId: string): string {
 	return `obs_scene_item_${sourceId}`
 }
@@ -26,6 +43,7 @@ export function getOBSAudioInputName(source: { sourceName: string; audioSourceNa
 
 export function getOBSMappings(config: StudioConfig): BlueprintMappings {
 	const deviceId = config.visionMixer.deviceId
+	const clipPlayerPoolSize = getOBSClipMediaPlayerSourceIds(config).length || 1
 	const mappings: BlueprintMappings = {
 		[OBSLayers.OBSCurrentScene]: literal<BlueprintMapping<TSR.MappingObsCurrentScene>>({
 			device: TSR.DeviceType.OBS,
@@ -33,6 +51,12 @@ export function getOBSMappings(config: StudioConfig): BlueprintMappings {
 			lookahead: LookaheadMode.PRELOAD,
 			lookaheadMaxSearchDistance: 1,
 			lookaheadDepth: 1,
+			options: { mappingType: TSR.MappingObsType.CurrentScene },
+		}),
+		[getOBSCurrentSceneLookaheadLayer()]: literal<BlueprintMapping<TSR.MappingObsCurrentScene>>({
+			device: TSR.DeviceType.OBS,
+			deviceId,
+			lookahead: LookaheadMode.NONE,
 			options: { mappingType: TSR.MappingObsType.CurrentScene },
 		}),
 		[OBSLayers.OBSCurrentTransition]: literal<BlueprintMapping<TSR.MappingObsCurrentTransition>>({
@@ -48,6 +72,30 @@ export function getOBSMappings(config: StudioConfig): BlueprintMappings {
 			options: { mappingType: TSR.MappingObsType.DownstreamKeyer },
 		}),
 	}
+
+	mappings[getOBSInputSettingsABPendingLayer()] = literal<BlueprintMapping<TSR.SomeMappingAbstract>>({
+		device: TSR.DeviceType.ABSTRACT,
+		deviceId: 'abstract0',
+		lookahead: LookaheadMode.WHEN_CLEAR,
+		lookaheadMaxSearchDistance: clipPlayerPoolSize,
+		lookaheadDepth: clipPlayerPoolSize,
+		options: {},
+	})
+	mappings[getOBSInputMediaABPendingLayer()] = literal<BlueprintMapping<TSR.SomeMappingAbstract>>({
+		device: TSR.DeviceType.ABSTRACT,
+		deviceId: 'abstract0',
+		// OBS media players are filled while clear; the assigned future media object is paused until on-air.
+		lookahead: LookaheadMode.WHEN_CLEAR,
+		lookaheadMaxSearchDistance: clipPlayerPoolSize,
+		lookaheadDepth: clipPlayerPoolSize,
+		options: {},
+	})
+	mappings[getOBSInputAudioABPendingLayer()] = literal<BlueprintMapping<TSR.SomeMappingAbstract>>({
+		device: TSR.DeviceType.ABSTRACT,
+		deviceId: 'abstract0',
+		lookahead: LookaheadMode.NONE,
+		options: {},
+	})
 
 	for (const [sourceId, source] of Object.entries<ObsSourceConfig>(config.obsSources)) {
 		if (source.sourceName) {

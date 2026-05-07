@@ -282,6 +282,23 @@
 			"ui:category": "Graphics",
 			"default": ""
 		},
+		"obsAbMediaPlayerSourceIds": {
+			"type": "array",
+			"ui:title": "OBS AB Media Players",
+			"ui:description": "OBS source ids from obsSources used as the A/B clip player pool",
+			"ui:category": "Playback",
+			"items": {
+				"type": "string"
+			},
+			"default": []
+		},
+		"obsEffectsMediaPlayerSourceId": {
+			"type": "string",
+			"ui:title": "OBS Effects Media Player",
+			"ui:description": "Optional OBS source id from obsSources used for fixed effects or titles playback",
+			"ui:category": "Playback",
+			"default": ""
+		},
 		"casparcgLatency": {
 			"type": "integer",
 			"ui:title": "CasparCG Latency",

@@ -10,7 +10,12 @@ import { literal } from '../../../common/util.js'
 import { VisionMixerDevice } from '../../studio/helpers/config.js'
 import { CasparCGLayers } from '../../studio/layers.js'
 import { PartProps, TitlesProps } from '../definitions/index.js'
-import { createOBSClipPlayerObjects, getClipPlayerInput } from '../helpers/clips.js'
+import {
+	createOBSEffectsPlayerObjects,
+	getClipExpectedPackageLayers,
+	getClipPlayerInput,
+	getOBSEffectsPlayerSourceIds,
+} from '../helpers/clips.js'
 import { createScriptPiece } from '../helpers/script.js'
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
@@ -22,7 +27,7 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 	const visionMixerInput =
 		config.visionMixer.type === VisionMixerDevice.OBS
 			? {
-					input: config.obsSources.mediaplayer1?.sceneName || getClipPlayerInput(config)?.input || 0,
+					input: getClipPlayerInput(config)?.input || 0,
 				}
 			: getClipPlayerInput(config)
 	const openerClipProps = { fileName: 'assets/Sofie News Opener.mp4' }
@@ -48,10 +53,12 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 			ignoreAudioFormat: true,
 
 			timelineObjects: [
-				...createVisionMixerObjects(config, visionMixerInput?.input || 0),
+				...(config.visionMixer.type === VisionMixerDevice.OBS
+					? []
+					: createVisionMixerObjects(config, visionMixerInput?.input || 0)),
 
 				...(config.visionMixer.type === VisionMixerDevice.OBS
-					? createOBSClipPlayerObjects(config, openerClipProps, 0, 'mediaplayer1')
+					? createOBSEffectsPlayerObjects(config, openerClipProps, 0)
 					: [
 							literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
 								id: '',
@@ -72,7 +79,10 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 		expectedPackages: [
 			literal<ExpectedPackage.ExpectedPackageMediaFile>({
 				_id: context.getHashId('assets/Sofie News Opener.mp4', true),
-				layers: [CasparCGLayers.CasparCGClipPlayer1],
+				layers:
+					config.visionMixer.type === VisionMixerDevice.OBS
+						? getClipExpectedPackageLayers(config, getOBSEffectsPlayerSourceIds(config))
+						: [CasparCGLayers.CasparCGClipPlayer1],
 				type: ExpectedPackage.PackageType.MEDIA_FILE,
 				content: {
 					filePath: 'assets/Sofie News Opener.mp4',

@@ -25,6 +25,10 @@ export interface StudioConfig {
 		[k: string]: SiyfosSourceConfig
 	}
 	previewRenderer: string
+	obsMediaBasePath?: string
+	obsDownstreamKeyerSourceId?: string
+	obsAbMediaPlayerSourceIds?: string[]
+	obsEffectsMediaPlayerSourceId?: string
 	casparcgLatency: number
 }
 /**

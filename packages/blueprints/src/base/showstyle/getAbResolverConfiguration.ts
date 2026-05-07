@@ -3,49 +3,57 @@ import {
 	ABResolverConfiguration,
 	IShowStyleContext,
 } from '@sofie-automation/blueprints-integration'
+import { VisionMixerDevice } from '../studio/helpers/config.js'
 import { CasparCGLayers } from '../studio/layers.js'
 import {
+	getOBSInputAudioABPendingLayer,
+	getOBSInputMediaABPendingLayer,
+	getOBSInputSettingsABPendingLayer,
 	getOBSInputAudioLayer,
 	getOBSInputMediaLayer,
 	getOBSInputSettingsLayer,
 } from '../studio/applyConfig/mappings/obs.js'
+import { parseConfig } from './helpers/config.js'
+import { getOBSClipPlayerSourceIds } from './helpers/clips.js'
 
-// This is a very basic implementation of the ABResolverConfiguration:
-export function getAbResolverConfiguration(_context: IShowStyleContext): ABResolverConfiguration {
-	const player1: ABPlayerDefinition = {
-		playerId: 'casparcg_clip_player1',
-	}
-	const player2: ABPlayerDefinition = {
-		playerId: 'casparcg_clip_player2',
-	}
+export function getAbResolverConfiguration(context: IShowStyleContext): ABResolverConfiguration {
+	const config = parseConfig(context).studio
+
+	const isOBS = config.visionMixer.type === VisionMixerDevice.OBS
+	const obsClipPlayerSourceIds = isOBS ? getOBSClipPlayerSourceIds(config) : []
+
+	const players: ABPlayerDefinition[] =
+		obsClipPlayerSourceIds.length > 0
+			? obsClipPlayerSourceIds.map((sourceId) => ({ playerId: sourceId }))
+			: [{ playerId: CasparCGLayers.CasparCGClipPlayer1 }, { playerId: CasparCGLayers.CasparCGClipPlayer2 }]
+
 	return {
 		resolverOptions: {
 			idealGapBefore: 1000,
-			nowWindow: 2000,
+			nowWindow: 8000,
 		},
 		pools: {
-			clip: [player1, player2],
+			clip: players,
 		},
 		timelineObjectLayerChangeRules: {
-			[CasparCGLayers.CasparCGClipPlayer1]: {
+			[CasparCGLayers.CasparCGClipPlayerAbPending]: {
 				acceptedPoolNames: ['clip'],
-				newLayerName: (playerId) => `${playerId}`,
+				newLayerName: (playerId) => String(playerId),
 				allowsLookahead: true,
 			},
-			[getOBSInputSettingsLayer('mediaplayer1')]: {
+			[getOBSInputSettingsABPendingLayer()]: {
 				acceptedPoolNames: ['clip'],
-				newLayerName: (playerId) =>
-					getOBSInputSettingsLayer(`${playerId}`.replace('casparcg_clip_player', 'mediaplayer')),
+				newLayerName: (playerId) => getOBSInputSettingsLayer(String(playerId)),
 				allowsLookahead: true,
 			},
-			[getOBSInputMediaLayer('mediaplayer1')]: {
+			[getOBSInputMediaABPendingLayer()]: {
 				acceptedPoolNames: ['clip'],
-				newLayerName: (playerId) => getOBSInputMediaLayer(`${playerId}`.replace('casparcg_clip_player', 'mediaplayer')),
+				newLayerName: (playerId) => getOBSInputMediaLayer(String(playerId)),
 				allowsLookahead: true,
 			},
-			[getOBSInputAudioLayer('mediaplayer1')]: {
+			[getOBSInputAudioABPendingLayer()]: {
 				acceptedPoolNames: ['clip'],
-				newLayerName: (playerId) => getOBSInputAudioLayer(`${playerId}`.replace('casparcg_clip_player', 'mediaplayer')),
+				newLayerName: (playerId) => getOBSInputAudioLayer(String(playerId)),
 				allowsLookahead: true,
 			},
 		},

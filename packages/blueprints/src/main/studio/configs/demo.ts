@@ -39,6 +39,8 @@ export const DemoOBSStudioConfig: StudioConfig = {
 	previewRenderer: 'sofie',
 	obsMediaBasePath: '',
 	obsDownstreamKeyerSourceId: 'dsk',
+	obsAbMediaPlayerSourceIds: ['mediaplayer1', 'mediaplayer2'],
+	obsEffectsMediaPlayerSourceId: 'mediaplayer3',
 	casparcgLatency: 0,
 	visionMixer: {
 		type: VisionMixerDevice.OBS,
@@ -78,14 +80,20 @@ export const DemoOBSStudioConfig: StudioConfig = {
 		},
 		mediaplayer1: {
 			sceneName: 'Media player 1',
-			sourceName: 'Media',
-			audioSourceName: 'Media',
+			sourceName: 'Player 1',
+			audioSourceName: 'Player 1',
 			type: SourceType.MediaPlayer,
 		},
 		mediaplayer2: {
 			sceneName: 'Media player 2',
-			sourceName: 'Media',
-			audioSourceName: 'Media',
+			sourceName: 'Player 2',
+			audioSourceName: 'Player 2',
+			type: SourceType.MediaPlayer,
+		},
+		mediaplayer3: {
+			sceneName: 'Media player 3',
+			sourceName: 'Player 3',
+			audioSourceName: 'Player 3',
 			type: SourceType.MediaPlayer,
 		},
 		dve: { sceneName: 'DVE 2BOX', sourceName: 'DVE 2BOX', type: SourceType.MultiView },

@@ -4,7 +4,7 @@ import { AudioSourceType, StudioConfig, VisionMixerDevice } from './helpers/conf
 import { SisyfosLayers } from './layers.js'
 import { TimelineBlueprintExt } from './customTypes.js'
 import { OutputConfig, SiyfosSourceConfig } from '../../$schemas/generated/main-studio-config.js'
-import { getOBSAudioBaseline } from './helpers/obs.js'
+import { getOBSAudioBaseline, getOBSMediaPlayerBaseline } from './helpers/obs.js'
 
 function getSisyfosBaseline(config: StudioConfig): (TSR.SisyfosChannelOptions & { mappedLayer: string })[] {
 	const channels: (TSR.SisyfosChannelOptions & { mappedLayer: string })[] = []
@@ -35,7 +35,7 @@ export function getBaseline(context: IStudioContext): BlueprintResultStudioBasel
 	return {
 		timelineObjects: [
 			...(config.visionMixer.type === VisionMixerDevice.OBS
-				? getOBSAudioBaseline(config)
+				? [...getOBSAudioBaseline(config), ...getOBSMediaPlayerBaseline(config)]
 				: [
 						literal<TimelineBlueprintExt<TSR.TimelineContentSisyfosChannels>>({
 							id: '',

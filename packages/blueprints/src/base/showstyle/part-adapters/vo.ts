@@ -10,7 +10,7 @@ import { changeExtension, literal, stripExtension } from '../../../common/util.j
 import { VisionMixerDevice } from '../../studio/helpers/config.js'
 import { CasparCGLayers } from '../../studio/layers.js'
 import { PartProps, VOProps } from '../definitions/index.js'
-import { createOBSClipPlayerObjects, getClipPlayerInput } from '../helpers/clips.js'
+import { createOBSClipPlayerObjects, getClipExpectedPackageLayers, getClipPlayerInput } from '../helpers/clips.js'
 import { parseGraphicsFromObjects } from '../helpers/graphics.js'
 import { createScriptPiece } from '../helpers/script.js'
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
@@ -23,12 +23,15 @@ export function generateVOPart(context: PartContext, part: PartProps<VOProps>): 
 	const atemInput = getClipPlayerInput(config)
 	const clipPlayerObjects =
 		config.visionMixer.type === VisionMixerDevice.OBS
-			? createOBSClipPlayerObjects(config, part.payload.clipProps)
+			? createOBSClipPlayerObjects(config, part.payload.clipProps, 0, undefined, {
+					poolName: 'clip',
+					sessionName: part.payload.externalId,
+				})
 			: [
 					literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
 						id: '',
 						enable: { start: 0 },
-						layer: CasparCGLayers.CasparCGClipPlayer1,
+						layer: CasparCGLayers.CasparCGClipPlayerAbPending,
 						content: {
 							deviceType: TSR.DeviceType.CASPARCG,
 							type: TSR.TimelineContentTypeCasparCg.MEDIA,
@@ -36,6 +39,12 @@ export function generateVOPart(context: PartContext, part: PartProps<VOProps>): 
 							file: stripExtension(part.payload.clipProps.fileName),
 						},
 						priority: 1,
+						abSessions: [
+							{
+								poolName: 'clip',
+								sessionName: part.payload.externalId,
+							},
+						],
 					}),
 				]
 
@@ -48,12 +57,21 @@ export function generateVOPart(context: PartContext, part: PartProps<VOProps>): 
 		lifespan: PieceLifespan.WithinPart,
 		sourceLayerId: SourceLayer.VO,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.VO),
+		abSessions: [
+			{
+				sessionName: part.payload.externalId,
+				poolName: 'clip',
+			},
+		],
 
 		content: {
 			fileName: part.payload.clipProps.fileName,
 
 			timelineObjects: [
-				...createVisionMixerObjects(config, atemInput?.input || 0, config.casparcgLatency),
+				...createVisionMixerObjects(config, atemInput?.input || 0, config.casparcgLatency, 40, undefined, {
+					poolName: 'clip',
+					sessionName: part.payload.externalId,
+				}),
 				...clipPlayerObjects,
 			],
 
@@ -63,7 +81,7 @@ export function generateVOPart(context: PartContext, part: PartProps<VOProps>): 
 		expectedPackages: [
 			literal<ExpectedPackage.ExpectedPackageMediaFile>({
 				_id: context.getHashId(part.payload.clipProps.fileName, true),
-				layers: [CasparCGLayers.CasparCGClipPlayer1],
+				layers: getClipExpectedPackageLayers(config),
 				type: ExpectedPackage.PackageType.MEDIA_FILE,
 				content: {
 					filePath: part.payload.clipProps.fileName,

@@ -1,4 +1,4 @@
-import { BlueprintConfigCoreConfig, TSR } from '@sofie-automation/blueprints-integration'
+import { BlueprintConfigCoreConfig, LookaheadMode, TSR } from '@sofie-automation/blueprints-integration'
 import { describe, it, expect } from 'vitest'
 // eslint-disable-next-line vitest/no-mocks-import
 import { CommonContext, RundownContext, ShowStyleContext } from '../__mocks__/context.js'
@@ -7,15 +7,20 @@ import { PartContext } from '../common/context.js'
 import { applyConfig } from '../base/studio/applyConfig/index.js'
 import { OBSLayers } from '../base/studio/layers.js'
 import {
+	getOBSInputAudioABPendingLayer,
+	getOBSCurrentSceneLookaheadLayer,
+	getOBSInputMediaABPendingLayer,
+	getOBSInputSettingsABPendingLayer,
 	getOBSInputAudioLayer,
-	getOBSInputSettingsLayer,
 	getOBSInputMediaLayer,
+	getOBSInputSettingsLayer,
 	getOBSSceneItemLayer,
 } from '../base/studio/applyConfig/mappings/obs.js'
 import { generateCameraPart } from '../base/showstyle/part-adapters/camera.js'
 import { generateDVEPart } from '../base/showstyle/part-adapters/dve.js'
 import { generateOpenerPart } from '../base/showstyle/part-adapters/titles.js'
 import { generateVTPart } from '../base/showstyle/part-adapters/vt.js'
+import { getAbResolverConfiguration } from '../base/showstyle/getAbResolverConfiguration.js'
 import { parseGraphicsFromObjects } from '../base/showstyle/helpers/graphics.js'
 import { PartInfo, PartType } from '../base/showstyle/definitions/index.js'
 import { SourceType } from '../base/studio/helpers/config.js'
@@ -38,13 +43,37 @@ describe('OBS standalone blueprints', () => {
 		expect(result.playoutDevices.casparcg0).toBeUndefined()
 		expect(result.playoutDevices.sisyfos0).toBeUndefined()
 		expect(result.mappings[OBSLayers.OBSCurrentScene]?.device).toBe(TSR.DeviceType.OBS)
+		expect(result.mappings[OBSLayers.OBSCurrentScene]?.lookahead).toBe(LookaheadMode.PRELOAD)
+		expect(result.mappings[OBSLayers.OBSCurrentScene]?.lookaheadDepth).toBe(1)
+		expect(result.mappings[OBSLayers.OBSCurrentScene]?.lookaheadMaxSearchDistance).toBe(1)
+		expect(result.mappings[getOBSCurrentSceneLookaheadLayer()]?.options).toMatchObject({
+			mappingType: TSR.MappingObsType.CurrentScene,
+		})
+		expect(result.mappings[getOBSCurrentSceneLookaheadLayer()]?.lookahead).toBe(LookaheadMode.NONE)
 		expect(result.mappings[OBSLayers.OBSDownstreamKeyer]?.options).toMatchObject({
 			mappingType: TSR.MappingObsType.DownstreamKeyer,
 		})
+		expect(result.mappings[getOBSInputSettingsABPendingLayer()]?.lookahead).toBe(LookaheadMode.WHEN_CLEAR)
+		expect(result.mappings[getOBSInputSettingsABPendingLayer()]?.lookaheadDepth).toBe(2)
+		expect(result.mappings[getOBSInputMediaABPendingLayer()]?.lookahead).toBe(LookaheadMode.WHEN_CLEAR)
+		expect(result.mappings[getOBSInputMediaABPendingLayer()]?.lookaheadDepth).toBe(2)
 		expect(result.mappings[getOBSInputMediaLayer('mediaplayer1')]?.options).toMatchObject({
 			mappingType: TSR.MappingObsType.InputMedia,
-			input: 'Media',
+			input: 'Player 1',
 		})
+		expect(result.mappings[getOBSInputMediaLayer('mediaplayer2')]?.options).toMatchObject({
+			mappingType: TSR.MappingObsType.InputMedia,
+			input: 'Player 2',
+		})
+		expect(result.mappings[getOBSInputMediaLayer('mediaplayer3')]?.options).toMatchObject({
+			mappingType: TSR.MappingObsType.InputMedia,
+			input: 'Player 3',
+		})
+		expect(DemoOBSStudioConfig.obsAbMediaPlayerSourceIds).toEqual(['mediaplayer1', 'mediaplayer2'])
+		expect(DemoOBSStudioConfig.obsEffectsMediaPlayerSourceId).toBe('mediaplayer3')
+		const mediaPlayer1Input = (result.mappings[getOBSInputMediaLayer('mediaplayer1')]?.options as any).input
+		const mediaPlayer2Input = (result.mappings[getOBSInputMediaLayer('mediaplayer2')]?.options as any).input
+		expect(mediaPlayer1Input).not.toBe(mediaPlayer2Input)
 		expect(result.mappings[getOBSInputAudioLayer('camera1')]).toBeUndefined()
 		expect(result.mappings[getOBSSceneItemLayer('lowerThird')]?.options).toMatchObject({
 			mappingType: TSR.MappingObsType.SceneItem,
@@ -98,9 +127,13 @@ describe('OBS standalone blueprints', () => {
 		})
 
 		const timelineObjects = part.pieces[0].content.timelineObjects
+		expect(part.pieces[0].abSessions).toContainEqual({
+			sessionName: 'vt1',
+			poolName: 'clip',
+		})
 		expect(timelineObjects).toContainEqual(
 			expect.objectContaining({
-				layer: getOBSInputSettingsLayer('mediaplayer1'),
+				layer: getOBSInputSettingsABPendingLayer(),
 				content: expect.objectContaining({
 					deviceType: TSR.DeviceType.OBS,
 					type: TSR.TimelineContentTypeOBS.INPUT_SETTINGS,
@@ -109,31 +142,40 @@ describe('OBS standalone blueprints', () => {
 						local_file: 'clip.mp4',
 					}),
 				}),
+				abSessions: [{ sessionName: 'vt1', poolName: 'clip' }],
 			})
 		)
-		expect(timelineObjects).toContainEqual(
-			expect.objectContaining({
-				layer: getOBSInputMediaLayer('mediaplayer1'),
-				content: expect.objectContaining({
-					deviceType: TSR.DeviceType.OBS,
-					type: TSR.TimelineContentTypeOBS.INPUT_MEDIA,
-					state: 'playing',
+		const mediaObject = timelineObjects.find((o) => o.layer === getOBSInputMediaABPendingLayer())
+		expect(mediaObject).toMatchObject({
+			content: expect.objectContaining({
+				deviceType: TSR.DeviceType.OBS,
+				type: TSR.TimelineContentTypeOBS.INPUT_MEDIA,
+				seek: 0,
+				state: 'paused',
+			}),
+			keyframes: [
+				expect.objectContaining({
+					enable: { start: 0 },
+					content: { state: 'playing' },
 				}),
-			})
-		)
+			],
+			abSessions: [{ sessionName: 'vt1', poolName: 'clip' }],
+		})
+		expect(mediaObject?.keyframes?.[0]).not.toHaveProperty('preserveForLookahead')
 		expect(timelineObjects).toContainEqual(
 			expect.objectContaining({
-				layer: getOBSInputAudioLayer('mediaplayer1'),
+				layer: getOBSInputAudioABPendingLayer(),
 				content: expect.objectContaining({
 					deviceType: TSR.DeviceType.OBS,
 					type: TSR.TimelineContentTypeOBS.INPUT_AUDIO,
 					mute: false,
 				}),
+				abSessions: [{ sessionName: 'vt1', poolName: 'clip' }],
 			})
 		)
 	})
 
-	it('generates OBS titles opener media timeline objects on mediaplayer1', () => {
+	it('generates OBS titles opener media timeline objects on fixed Player 3', () => {
 		const part = generateOpenerPart(createPartContext(), {
 			type: PartType.Titles,
 			rawType: 'titles',
@@ -149,25 +191,36 @@ describe('OBS standalone blueprints', () => {
 		})
 
 		const timelineObjects = part.pieces[0].content.timelineObjects
+		expect(part.pieces[0].abSessions).toBeUndefined()
 		expect(timelineObjects).toContainEqual(
 			expect.objectContaining({
-				layer: getOBSInputSettingsLayer('mediaplayer1'),
+				layer: getOBSInputSettingsLayer('mediaplayer3'),
 				content: expect.objectContaining({
 					deviceType: TSR.DeviceType.OBS,
 					type: TSR.TimelineContentTypeOBS.INPUT_SETTINGS,
 				}),
 			})
 		)
-		expect(timelineObjects).toContainEqual(
-			expect.objectContaining({
-				layer: getOBSInputMediaLayer('mediaplayer1'),
-				content: expect.objectContaining({
-					deviceType: TSR.DeviceType.OBS,
-					type: TSR.TimelineContentTypeOBS.INPUT_MEDIA,
-					state: 'playing',
+		const mediaObject = timelineObjects.find((o) => o.layer === getOBSInputMediaLayer('mediaplayer3'))
+		expect(mediaObject).toMatchObject({
+			content: expect.objectContaining({
+				deviceType: TSR.DeviceType.OBS,
+				type: TSR.TimelineContentTypeOBS.INPUT_MEDIA,
+				seek: 0,
+				state: 'paused',
+			}),
+			keyframes: [
+				expect.objectContaining({
+					enable: { start: 0 },
+					content: { state: 'playing' },
 				}),
-			})
-		)
+			],
+		})
+		expect(mediaObject).not.toHaveProperty('abSessions')
+		expect(mediaObject?.keyframes?.[0]).not.toHaveProperty('preserveForLookahead')
+		expect(timelineObjects.some((o) => o.layer === getOBSInputAudioABPendingLayer())).toBe(false)
+		expect(timelineObjects.some((o) => o.layer === OBSLayers.OBSCurrentScene)).toBe(false)
+		expect(timelineObjects.some((o) => o.layer === OBSLayers.OBSDownstreamKeyer)).toBe(false)
 	})
 
 	it('generates OBS shot-scene timeline objects for DVE parts', () => {
@@ -246,23 +299,48 @@ describe('OBS standalone blueprints', () => {
 		)
 	})
 
-	it('generates OBS downstream keyer baseline object for graphics scene', () => {
+	it('generates OBS media player baseline without controlling downstream keyer', () => {
 		const context = new ShowStyleContext('baseline', {})
 		context.studioConfig = { studio: DemoOBSStudioConfig }
 		context.showStyleConfig = { dvePresets: {} }
 
 		const baseline = getBaseline(context as any)
 
-		expect(baseline.timelineObjects).toContainEqual(
-			expect.objectContaining({
-				layer: OBSLayers.OBSDownstreamKeyer,
-				content: expect.objectContaining({
-					deviceType: TSR.DeviceType.OBS,
-					type: TSR.TimelineContentTypeOBS.DOWNSTREAM_KEYER,
-					sceneName: 'GFX',
+		expect(baseline.timelineObjects).toEqual(
+			expect.arrayContaining([
+				expect.objectContaining({
+					layer: getOBSInputMediaLayer('mediaplayer1'),
+					content: expect.objectContaining({
+						deviceType: TSR.DeviceType.OBS,
+						type: TSR.TimelineContentTypeOBS.INPUT_MEDIA,
+						state: 'stopped',
+						seek: 0,
+					}),
+					priority: 0,
 				}),
-			})
+				expect.objectContaining({
+					layer: getOBSInputMediaLayer('mediaplayer2'),
+					content: expect.objectContaining({
+						deviceType: TSR.DeviceType.OBS,
+						type: TSR.TimelineContentTypeOBS.INPUT_MEDIA,
+						state: 'stopped',
+						seek: 0,
+					}),
+					priority: 0,
+				}),
+				expect.objectContaining({
+					layer: getOBSInputMediaLayer('mediaplayer3'),
+					content: expect.objectContaining({
+						deviceType: TSR.DeviceType.OBS,
+						type: TSR.TimelineContentTypeOBS.INPUT_MEDIA,
+						state: 'stopped',
+						seek: 0,
+					}),
+					priority: 0,
+				}),
+			])
 		)
+		expect(baseline.timelineObjects.some((o) => o.layer === OBSLayers.OBSDownstreamKeyer)).toBe(false)
 	})
 
 	it('does not include OBS downstream keyer in studio baseline', () => {
@@ -272,6 +350,100 @@ describe('OBS standalone blueprints', () => {
 		} as any)
 
 		expect(baseline.timelineObjects.some((o) => o.layer === OBSLayers.OBSDownstreamKeyer)).toBe(false)
+	})
+
+	it('adds AB keyframes to OBS current scene objects for media-player scene switching', () => {
+		const part = generateVTPart(createPartContext(), {
+			type: PartType.VT,
+			rawType: 'vt',
+			rawTitle: 'VT',
+			info: PartInfo.NORMAL,
+			payload: {
+				externalId: 'vt-keyframe',
+				duration: 1000,
+				name: 'VT Keyframe',
+				clipProps: { fileName: 'clip.mp4', sourceDuration: 1000 },
+			},
+			objects: [],
+		})
+
+		const sceneObject = part.pieces[0].content.timelineObjects.find((o) => o.layer === OBSLayers.OBSCurrentScene)
+		expect(sceneObject).toBeDefined()
+		expect(sceneObject?.keyframes).toEqual(
+			expect.arrayContaining([
+				expect.objectContaining({
+					abSession: {
+						poolName: 'clip',
+						playerId: 'mediaplayer1',
+					},
+					disabled: true,
+					preserveForLookahead: true,
+					content: expect.objectContaining({ sceneName: DemoOBSStudioConfig.obsSources.mediaplayer1.sceneName }),
+				}),
+				expect.objectContaining({
+					abSession: {
+						poolName: 'clip',
+						playerId: 'mediaplayer2',
+					},
+					disabled: true,
+					preserveForLookahead: true,
+					content: expect.objectContaining({ sceneName: DemoOBSStudioConfig.obsSources.mediaplayer2.sceneName }),
+				}),
+			])
+		)
+	})
+
+	it('configures OBS AB resolver pools from media-player sources', () => {
+		const context = new ShowStyleContext('ab-resolver', {})
+		context.studioConfig = { studio: DemoOBSStudioConfig }
+		context.showStyleConfig = { dvePresets: {} }
+
+		const config = getAbResolverConfiguration(context as any)
+
+		expect(config.pools.clip).toEqual([{ playerId: 'mediaplayer1' }, { playerId: 'mediaplayer2' }])
+		expect(config.pools.clip).not.toContainEqual({ playerId: 'mediaplayer3' })
+		expect(config.timelineObjectLayerChangeRules?.[getOBSInputSettingsABPendingLayer()]).toMatchObject({
+			acceptedPoolNames: ['clip'],
+			allowsLookahead: true,
+		})
+		expect(config.timelineObjectLayerChangeRules?.[getOBSInputMediaABPendingLayer()]).toMatchObject({
+			acceptedPoolNames: ['clip'],
+			allowsLookahead: true,
+		})
+		expect(config.customApplyToObject).toBeUndefined()
+	})
+
+	it('keeps OBS lookahead media paused by relying on the non-preserved play keyframe', () => {
+		const timelineObject = {
+			id: 'lookahead-media',
+			enable: { while: 1 },
+			layer: getOBSInputMediaLayer('mediaplayer2'),
+			lookaheadForLayer: getOBSInputMediaLayer('mediaplayer2'),
+			isLookahead: true,
+			content: {
+				deviceType: TSR.DeviceType.OBS,
+				type: TSR.TimelineContentTypeOBS.INPUT_MEDIA,
+				seek: 0,
+				state: 'paused',
+			},
+			keyframes: [
+				{
+					id: 'should-be-dropped',
+					enable: { start: 0 },
+					content: { state: 'playing' },
+				},
+			],
+			priority: 0.1,
+		} as any
+
+		expect(timelineObject.isLookahead).toBe(true)
+		expect(timelineObject.lookaheadForLayer).toBe(getOBSInputMediaLayer('mediaplayer2'))
+		expect(timelineObject.keyframes[0].preserveForLookahead).toBeUndefined()
+		expect(timelineObject.content).toMatchObject({
+			type: TSR.TimelineContentTypeOBS.INPUT_MEDIA,
+			state: 'paused',
+			seek: 0,
+		})
 	})
 
 	it('generates OBS browser source INPUT_SETTINGS and scene switch for fullscreen graphics with URLs', () => {

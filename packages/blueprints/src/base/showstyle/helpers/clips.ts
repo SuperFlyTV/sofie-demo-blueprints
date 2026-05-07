@@ -13,12 +13,52 @@ import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers
 import { createVisionMixerObjects } from './visionMixer.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 import { InputConfig, ObsSourceConfig, VmixInputConfig } from '../../..//$schemas/generated/main-studio-config.js'
-import { getOBSInputMediaLayer, getOBSInputSettingsLayer } from '../../studio/applyConfig/mappings/obs.js'
+import { getOBSClipMediaPlayerSourceIds, getOBSEffectsMediaPlayerSourceIds } from '../../studio/helpers/obsSources.js'
+import {
+	getOBSInputAudioABPendingLayer,
+	getOBSInputAudioLayer,
+	getOBSInputMediaABPendingLayer,
+	getOBSInputMediaLayer,
+	getOBSInputSettingsABPendingLayer,
+	getOBSInputSettingsLayer,
+} from '../../studio/applyConfig/mappings/obs.js'
+
+export interface ABSessionLabel {
+	poolName: string
+	sessionName: string
+}
+
+export function getOBSClipPlayerSourceIds(config: StudioConfig): string[] {
+	if (config.visionMixer.type !== VisionMixerDevice.OBS) return []
+
+	return getOBSClipMediaPlayerSourceIds(config)
+}
+
+export function getOBSEffectsPlayerSourceIds(config: StudioConfig): string[] {
+	if (config.visionMixer.type !== VisionMixerDevice.OBS) return []
+
+	const sourceIds = getOBSEffectsMediaPlayerSourceIds(config)
+	return sourceIds.length > 0 ? sourceIds : getOBSClipPlayerSourceIds(config).slice(0, 1)
+}
+
+export function getClipExpectedPackageLayers(config: StudioConfig, sourceIds?: string[]): string[] {
+	if (config.visionMixer.type === VisionMixerDevice.OBS) {
+		const obsSourceIds = sourceIds || getOBSClipPlayerSourceIds(config)
+		if (obsSourceIds.length === 0) return [getOBSInputMediaLayer('mediaplayer1')]
+		return obsSourceIds.map((sourceId) => getOBSInputMediaLayer(sourceId))
+	}
+
+	return [CasparCGLayers.CasparCGClipPlayer1, CasparCGLayers.CasparCGClipPlayer2]
+}
 
 export interface ClipProps {
 	fileName: string
 	duration?: number
 	sourceDuration?: number
+}
+
+interface CreateOBSClipPlayerObjectOptions {
+	includeAudio?: boolean
 }
 
 export function parseClipProps(object: VideoObject): ClipProps {
@@ -79,7 +119,8 @@ export function getClipPlayerInput(config: StudioConfig): ClipPlayerInput | unde
 		return mediaplayerInput
 	} else if (config.visionMixer.type === VisionMixerDevice.OBS) {
 		const mediaplayerEntry = Object.entries<ObsSourceConfig>(config.obsSources).find(
-			([, source]) => source.type === SourceType.MediaPlayer
+			([sourceId, source]) =>
+				source.type === SourceType.MediaPlayer && getOBSClipPlayerSourceIds(config).includes(sourceId)
 		)
 
 		return mediaplayerEntry
@@ -98,8 +139,12 @@ export function createOBSClipPlayerObjects(
 	config: StudioConfig,
 	clipProps: ClipProps,
 	start = 0,
-	preferredSourceId?: string
-): TimelineBlueprintExt<TSR.TimelineContentOBSInputSettings | TSR.TimelineContentOBSInputMedia>[] {
+	preferredSourceId?: string,
+	abSession?: ABSessionLabel,
+	options: CreateOBSClipPlayerObjectOptions = {}
+): TimelineBlueprintExt<
+	TSR.TimelineContentOBSInputSettings | TSR.TimelineContentOBSInputMedia | TSR.TimelineContentOBSInputAudio
+>[] {
 	const preferredSource = preferredSourceId
 		? config.obsSources[preferredSourceId]
 			? {
@@ -113,11 +158,20 @@ export function createOBSClipPlayerObjects(
 	const clipPlayerInput = preferredSource || getClipPlayerInput(config)
 	if (!clipPlayerInput?.sourceId) return []
 
-	return [
+	const settingsLayer = abSession
+		? getOBSInputSettingsABPendingLayer()
+		: getOBSInputSettingsLayer(clipPlayerInput.sourceId)
+	const mediaLayer = abSession ? getOBSInputMediaABPendingLayer() : getOBSInputMediaLayer(clipPlayerInput.sourceId)
+	const audioLayer = abSession ? getOBSInputAudioABPendingLayer() : getOBSInputAudioLayer(clipPlayerInput.sourceId)
+	const includeAudio = options.includeAudio ?? true
+
+	const timelineObjects: TimelineBlueprintExt<
+		TSR.TimelineContentOBSInputSettings | TSR.TimelineContentOBSInputMedia | TSR.TimelineContentOBSInputAudio
+	>[] = [
 		literal<TimelineBlueprintExt<TSR.TimelineContentOBSInputSettings>>({
 			id: '',
 			enable: { start },
-			layer: getOBSInputSettingsLayer(clipPlayerInput.sourceId),
+			layer: settingsLayer,
 			content: {
 				deviceType: TSR.DeviceType.OBS,
 				type: TSR.TimelineContentTypeOBS.INPUT_SETTINGS,
@@ -128,20 +182,59 @@ export function createOBSClipPlayerObjects(
 				},
 			},
 			priority: 1,
+			...(abSession ? { abSessions: [abSession] } : {}),
 		}),
 		literal<TimelineBlueprintExt<TSR.TimelineContentOBSInputMedia>>({
 			id: '',
 			enable: { start },
-			layer: getOBSInputMediaLayer(clipPlayerInput.sourceId),
+			layer: mediaLayer,
 			content: {
 				deviceType: TSR.DeviceType.OBS,
 				type: TSR.TimelineContentTypeOBS.INPUT_MEDIA,
 				seek: 0,
-				state: 'playing',
+				state: 'paused',
 			},
+			keyframes: [
+				{
+					id: '',
+					enable: { start: 0 },
+					content: { state: 'playing' },
+				},
+			],
 			priority: 1,
+			...(abSession ? { abSessions: [abSession] } : {}),
 		}),
 	]
+
+	if (includeAudio) {
+		timelineObjects.push(
+			literal<TimelineBlueprintExt<TSR.TimelineContentOBSInputAudio>>({
+				id: '',
+				enable: { start },
+				layer: audioLayer,
+				content: {
+					deviceType: TSR.DeviceType.OBS,
+					type: TSR.TimelineContentTypeOBS.INPUT_AUDIO,
+					mute: false,
+				},
+				priority: 1,
+				...(abSession ? { abSessions: [abSession] } : {}),
+			})
+		)
+	}
+
+	return timelineObjects
+}
+
+export function createOBSEffectsPlayerObjects(
+	config: StudioConfig,
+	clipProps: ClipProps,
+	start = 0
+): TimelineBlueprintExt[] {
+	const effectsSourceId = getOBSEffectsPlayerSourceIds(config)[0]
+	if (!effectsSourceId) return []
+
+	return createOBSClipPlayerObjects(config, clipProps, start, effectsSourceId, undefined, { includeAudio: false })
 }
 
 export function createOBSBrowserSourceObjects(
@@ -180,12 +273,15 @@ export function clipToAdlib(
 	const visionMixerInput = getClipPlayerInput(config)
 	const mediaObjects =
 		config.visionMixer.type === VisionMixerDevice.OBS
-			? createOBSClipPlayerObjects(config, props)
+			? createOBSClipPlayerObjects(config, props, 0, undefined, {
+					poolName: 'clip',
+					sessionName: clipObject.id,
+				})
 			: [
 					literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
 						id: '',
 						enable: { start: 0 },
-						layer: CasparCGLayers.CasparCGClipPlayer1,
+						layer: CasparCGLayers.CasparCGClipPlayerAbPending,
 						content: {
 							deviceType: TSR.DeviceType.CASPARCG,
 							type: TSR.TimelineContentTypeCasparCg.MEDIA,
@@ -193,6 +289,12 @@ export function clipToAdlib(
 							file: props.fileName,
 						},
 						priority: 1,
+						abSessions: [
+							{
+								poolName: 'clip',
+								sessionName: clipObject.id,
+							},
+						],
 					}),
 				]
 
@@ -203,10 +305,16 @@ export function clipToAdlib(
 		lifespan: PieceLifespan.WithinPart,
 		sourceLayerId: SourceLayer.VO,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.VO),
+		abSessions: [
+			{
+				sessionName: clipObject.id,
+				poolName: 'clip',
+			},
+		],
 		expectedPackages: [
 			literal<ExpectedPackage.ExpectedPackageMediaFile>({
 				_id: context.getHashId(props.fileName, true),
-				layers: [CasparCGLayers.CasparCGClipPlayer1],
+				layers: getClipExpectedPackageLayers(config),
 				type: ExpectedPackage.PackageType.MEDIA_FILE,
 				content: {
 					filePath: props.fileName,
@@ -221,7 +329,10 @@ export function clipToAdlib(
 			fileName: props.fileName,
 
 			timelineObjects: [
-				...createVisionMixerObjects(config, visionMixerInput?.input || 0, config.casparcgLatency),
+				...createVisionMixerObjects(config, visionMixerInput?.input || 0, config.casparcgLatency, 40, undefined, {
+					poolName: 'clip',
+					sessionName: clipObject.id,
+				}),
 				...mediaObjects,
 			],
 		},

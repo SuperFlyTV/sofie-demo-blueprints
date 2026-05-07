@@ -11,7 +11,7 @@ import { AudioSourceType, VisionMixerDevice } from '../../studio/helpers/config.
 import { CasparCGLayers } from '../../studio/layers.js'
 import { PartProps, VTProps } from '../definitions/index.js'
 import { getAudioPrimaryObject } from '../helpers/audio.js'
-import { createOBSClipPlayerObjects, getClipPlayerInput } from '../helpers/clips.js'
+import { createOBSClipPlayerObjects, getClipExpectedPackageLayers, getClipPlayerInput } from '../helpers/clips.js'
 import { parseGraphicsFromObjects } from '../helpers/graphics.js'
 import { createScriptPiece } from '../helpers/script.js'
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
@@ -23,15 +23,21 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 	const config = parseConfig(context).studio
 	const visionMixerInput = getClipPlayerInput(config)
 
-	const audioTlObjects = getAudioPrimaryObject(config, [{ type: AudioSourceType.Playback, index: 0 }]) // todo: which playback?
+	const audioTlObjects =
+		config.visionMixer.type === VisionMixerDevice.OBS
+			? []
+			: getAudioPrimaryObject(config, [{ type: AudioSourceType.Playback, index: 0 }]) // todo: which playback?
 	const clipPlayerObjects =
 		config.visionMixer.type === VisionMixerDevice.OBS
-			? createOBSClipPlayerObjects(config, part.payload.clipProps)
+			? createOBSClipPlayerObjects(config, part.payload.clipProps, 0, undefined, {
+					poolName: 'clip',
+					sessionName: part.payload.externalId,
+				})
 			: [
 					literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
 						id: '',
 						enable: { start: 0 },
-						layer: CasparCGLayers.CasparCGClipPlayer1,
+						layer: CasparCGLayers.CasparCGClipPlayerAbPending,
 						content: {
 							deviceType: TSR.DeviceType.CASPARCG,
 							type: TSR.TimelineContentTypeCasparCg.MEDIA,
@@ -39,6 +45,12 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 							file: stripExtension(part.payload.clipProps.fileName),
 						},
 						priority: 1,
+						abSessions: [
+							{
+								poolName: 'clip',
+								sessionName: part.payload.externalId,
+							},
+						],
 					}),
 				]
 
@@ -61,7 +73,10 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 			fileName: part.payload.clipProps.fileName,
 
 			timelineObjects: [
-				...createVisionMixerObjects(config, visionMixerInput?.input || 0, config.casparcgLatency),
+				...createVisionMixerObjects(config, visionMixerInput?.input || 0, config.casparcgLatency, 40, undefined, {
+					poolName: 'clip',
+					sessionName: part.payload.externalId,
+				}),
 				...clipPlayerObjects,
 				...audioTlObjects,
 			],
@@ -71,7 +86,7 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 		expectedPackages: [
 			literal<ExpectedPackage.ExpectedPackageMediaFile>({
 				_id: context.getHashId(part.payload.clipProps.fileName, true),
-				layers: [CasparCGLayers.CasparCGClipPlayer1],
+				layers: getClipExpectedPackageLayers(config),
 				type: ExpectedPackage.PackageType.MEDIA_FILE,
 				content: {
 					filePath: part.payload.clipProps.fileName,
