@@ -22,12 +22,14 @@ export function generateGfxPart(context: PartContext, part: PartProps<GfxProps>)
 	const scriptPiece = createScriptPiece(part.payload.script, part.payload.externalId)
 	if (scriptPiece) pieces.push(scriptPiece)
 
-	const graphics = parseGraphicsFromObjects(config, part.objects)
+	const secondaryObjects = part.objects.filter((object) => object.id !== part.payload.graphic.id)
+
+	const graphics = parseGraphicsFromObjects(config, secondaryObjects)
 	if (graphics.pieces) pieces.push(...graphics.pieces)
-	const ografGraphics = parseOGrafGraphicsFromObjects(config, part.objects)
+	const ografGraphics = parseOGrafGraphicsFromObjects(config, secondaryObjects)
 	if (ografGraphics.pieces) pieces.push(...ografGraphics.pieces)
 
-	const clips = parseClipsFromObjects(context, config, part.objects)
+	const clips = parseClipsFromObjects(context, config, secondaryObjects)
 
 	return {
 		part: {

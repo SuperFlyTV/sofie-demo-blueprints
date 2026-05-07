@@ -12,6 +12,22 @@ import { parseOpener } from './titles.js'
 import { parseVO } from './vo.js'
 import { parseVT } from './vt.js'
 
+function inferOGrafTypeFromObjectType(
+	incomingObjectType: string
+): 'full-screen' | 'overlay1' | 'overlay2' | 'overlay3' {
+	const suffix = incomingObjectType.slice('ograf-'.length).toLowerCase()
+
+	if (suffix.includes('fullscreen') || suffix.includes('full-screen')) return 'full-screen'
+	if (suffix.includes('strap') || suffix.includes('overlay2')) return 'overlay2'
+	if (suffix.includes('ticker') || suffix.includes('overlay3')) return 'overlay3'
+
+	return 'overlay1'
+}
+
+function getStringAttribute(value: unknown, fallback: string): string {
+	return typeof value === 'string' ? value : fallback
+}
+
 /**
  * This function converts from raw ingest segments to parsed segments, we
  * make sure to parse to the data structure originally used by the
@@ -34,27 +50,45 @@ export function convertIngestData(context: IRundownUserContext, ingestSegment: S
 			// When using Sofie Rundown Editor you can get the segment type from partPayload.type
 
 			// convert graphic sub-types into graphic objects. to be parsed in a GFX part.
-			const graphicTypes = ['strap', 'head', 'l3d', 'fullscreen', 'stepped-graphic']
+			const graphicTypes = ['strap', 'head', 'l3d', 'fullscreen', 'ticker', 'wipe', 'stepped-graphic']
 			partPayload.pieces.forEach((piece) => {
 				if ((piece.objectType as ObjectType) === ObjectType.Graphic) {
 					piece.clipName = String(piece.attributes.template || '')
 
 					if (piece.clipName === 'gfx/strap') {
-						piece.attributes.location = piece.attributes.field0
-						piece.attributes.text = piece.attributes.field1
+						piece.attributes.location = piece.attributes.location ?? piece.attributes.field0
+						piece.attributes.text = piece.attributes.text ?? piece.attributes.field1
 					} else if (piece.clipName === 'gfx/head') {
-						piece.attributes.text = piece.attributes.field0
+						piece.attributes.text = piece.attributes.text ?? piece.attributes.field0
 					} else if (piece.clipName === 'gfx/l3d') {
-						piece.attributes.name = piece.attributes.field0
-						piece.attributes.description = piece.attributes.field1
+						piece.attributes.name = piece.attributes.name ?? piece.attributes.field0
+						piece.attributes.description = piece.attributes.description ?? piece.attributes.field1
+						piece.attributes.f2 = piece.attributes.f2 ?? piece.attributes.field2
+						piece.attributes.f3 = piece.attributes.f3 ?? piece.attributes.field3
 					} else if (piece.clipName === 'gfx/fullscreen') {
-						piece.attributes.url = piece.attributes.field0
+						piece.attributes.url = piece.attributes.url ?? piece.attributes.field0
+					} else if (piece.clipName === 'gfx/ticker') {
+						piece.attributes.f0 = piece.attributes.f0 ?? piece.attributes.field0
+					} else if (piece.clipName === 'gfx/wipe') {
+						piece.attributes.f0 = piece.attributes.f0 ?? piece.attributes.field0
+						piece.attributes.f1 = piece.attributes.f1 ?? piece.attributes.field1
 					}
 				} else if ((piece.objectType as ObjectType) === ObjectType.Video) {
 					piece.clipName = piece.attributes.fileName as string
 				} else if (piece.objectType.startsWith('ograf-')) {
+					const incomingObjectType = piece.objectType
+					const rawAttributes = (piece.attributes || {}) as Record<string, unknown>
 					piece.objectType = ObjectType.OGrafGraphic
-					piece.clipName = piece.name ?? 'N/A'
+					piece.clipName = piece.name ?? incomingObjectType
+
+					rawAttributes['ograf-id'] = getStringAttribute(
+						rawAttributes['ograf-id'],
+						incomingObjectType.slice('ograf-'.length)
+					)
+					rawAttributes['ograf-data'] = rawAttributes['ograf-data'] ?? rawAttributes['data'] ?? {}
+					rawAttributes.type = getStringAttribute(rawAttributes.type, inferOGrafTypeFromObjectType(incomingObjectType))
+
+					piece.attributes = rawAttributes as typeof piece.attributes
 				}
 
 				piece.duration = piece.duration * 1000

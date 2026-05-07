@@ -13,10 +13,18 @@ export enum VMixLayers {
 	VMixDVEMultiView = 'vmix_dve_multiview',
 }
 export enum OGrafLayers {
-	OGrafFullScreen = 'ograf_full_screen',
-	OGrafOverlay1 = 'ograf_overlay_1',
-	OGrafOverlay2 = 'ograf_overlay_2',
-	OGrafOverlay3 = 'ograf_overlay_3',
+	OGrafFullScreenLoad = 'ograf_full_screen_load',
+	OGrafFullScreenPlay = 'ograf_full_screen_play',
+	OGrafFullScreenStop = 'ograf_full_screen_stop',
+	OGrafOverlay1Load = 'ograf_overlay_1_load',
+	OGrafOverlay1Play = 'ograf_overlay_1_play',
+	OGrafOverlay1Stop = 'ograf_overlay_1_stop',
+	OGrafOverlay2Load = 'ograf_overlay_2_load',
+	OGrafOverlay2Play = 'ograf_overlay_2_play',
+	OGrafOverlay2Stop = 'ograf_overlay_2_stop',
+	OGrafOverlay3Load = 'ograf_overlay_3_load',
+	OGrafOverlay3Play = 'ograf_overlay_3_play',
+	OGrafOverlay3Stop = 'ograf_overlay_3_stop',
 }
 
 export enum OBSLayers {

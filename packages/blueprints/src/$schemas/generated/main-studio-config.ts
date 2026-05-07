@@ -25,6 +25,7 @@ export interface StudioConfig {
 		[k: string]: SiyfosSourceConfig
 	}
 	previewRenderer: string
+	ografBaseUrl?: string
 	obsMediaBasePath?: string
 	obsDownstreamKeyerSourceId?: string
 	obsAbMediaPlayerSourceIds?: string[]

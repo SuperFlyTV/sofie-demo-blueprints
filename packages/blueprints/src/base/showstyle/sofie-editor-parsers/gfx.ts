@@ -1,4 +1,4 @@
-import { GraphicObject, ObjectType, SomeObject } from '../../../common/definitions/objects.js'
+import { GraphicObjectBase, ObjectType, SomeObject } from '../../../common/definitions/objects.js'
 import { t } from '../../../common/util.js'
 import { EditorIngestPart } from '../../../code-copy/rundown-editor/index.js'
 import { GfxProps, InvalidProps, PartInfo, PartProps, PartType } from '../definitions/index.js'
@@ -7,8 +7,10 @@ import { createInvalidProps } from './invalid.js'
 
 export function parseGfx(ingestPart: EditorIngestPart): PartProps<GfxProps | InvalidProps> {
 	const gfxObject = ingestPart.pieces.find(
-		(p): p is GraphicObject =>
-			(p.objectType as ObjectType) === ObjectType.Graphic || (p.objectType as ObjectType) === ObjectType.SteppedGraphic
+		(p): p is GraphicObjectBase =>
+			(p.objectType as ObjectType) === ObjectType.Graphic ||
+			(p.objectType as ObjectType) === ObjectType.SteppedGraphic ||
+			(p.objectType as ObjectType) === ObjectType.OGrafGraphic
 	)
 	if (!gfxObject) {
 		return createInvalidProps(t('No graphic object'), ingestPart)

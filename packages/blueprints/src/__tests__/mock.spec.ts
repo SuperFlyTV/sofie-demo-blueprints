@@ -1,11 +1,11 @@
-import { BlueprintConfigCoreConfig, LookaheadMode, TSR } from '@sofie-automation/blueprints-integration'
+import { BlueprintConfigCoreConfig, LookaheadMode, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
 import { describe, it, expect } from 'vitest'
 // eslint-disable-next-line vitest/no-mocks-import
 import { CommonContext, RundownContext, ShowStyleContext } from '../__mocks__/context.js'
 import { ObjectType, type GraphicObject } from '../common/definitions/objects.js'
 import { PartContext } from '../common/context.js'
 import { applyConfig } from '../base/studio/applyConfig/index.js'
-import { OBSLayers } from '../base/studio/layers.js'
+import { OBSLayers, OGrafLayers } from '../base/studio/layers.js'
 import {
 	getOBSInputAudioABPendingLayer,
 	getOBSCurrentSceneLookaheadLayer,
@@ -18,15 +18,20 @@ import {
 } from '../base/studio/applyConfig/mappings/obs.js'
 import { generateCameraPart } from '../base/showstyle/part-adapters/camera.js'
 import { generateDVEPart } from '../base/showstyle/part-adapters/dve.js'
+import { generateGfxPart } from '../base/showstyle/part-adapters/gfx.js'
 import { generateOpenerPart } from '../base/showstyle/part-adapters/titles.js'
 import { generateVTPart } from '../base/showstyle/part-adapters/vt.js'
 import { getAbResolverConfiguration } from '../base/showstyle/getAbResolverConfiguration.js'
 import { parseGraphicsFromObjects } from '../base/showstyle/helpers/graphics.js'
+import { parseOGrafGraphicsFromObjects } from '../base/showstyle/helpers/ograf-graphics.js'
 import { PartInfo, PartType } from '../base/showstyle/definitions/index.js'
 import { SourceType } from '../base/studio/helpers/config.js'
 import { DemoOBSStudioConfig } from '../main/studio/configs/demo.js'
 import { getBaseline } from '../base/showstyle/rundown/baseline.js'
 import { getBaseline as getStudioBaseline } from '../base/studio/getBaseline.js'
+import { SourceLayer } from '../base/showstyle/applyconfig/layers.js'
+
+const OGRAPH_DEVICE_TYPE_FOR_TEST = ((TSR.DeviceType as any).OGRAF ?? 'OGRAF') as TSR.DeviceType
 
 function createPartContext(showStyleConfig = { dvePresets: {} }): PartContext {
 	const context = new RundownContext({ _id: 'rundown0', name: 'Rundown' } as any, {}, 'test')
@@ -299,6 +304,185 @@ describe('OBS standalone blueprints', () => {
 		)
 	})
 
+	it('keeps timed OGraf fullscreen pieces Part-scoped so they clear on Part end', () => {
+		const graphics = parseOGrafGraphicsFromObjects(DemoOBSStudioConfig, [
+			{
+				id: 'ograf-fullscreen',
+				objectType: ObjectType.Graphic,
+				objectTime: 0,
+				duration: 5000,
+				clipName: 'gfx/fullscreen',
+				attributes: {
+					name: 'Fullscreen',
+					description: 'Clear me',
+					text: 'Fullscreen text',
+				},
+			},
+		])
+
+		const piece = graphics.pieces[0]
+		const graphicObject = piece.content.timelineObjects.find((o) => o.layer === OGrafLayers.OGrafFullScreenLoad)
+
+		expect(piece.sourceLayerId).toBe(SourceLayer.OGrafFullScreen)
+		expect(piece.lifespan).toBe(PieceLifespan.WithinPart)
+		expect(piece.enable).toMatchObject({
+			start: 0,
+			duration: 6000,
+		})
+		expect(graphicObject).toMatchObject({
+			layer: OGrafLayers.OGrafFullScreenLoad,
+			enable: {
+				start: 0,
+				duration: 6000,
+			},
+			content: expect.objectContaining({
+				graphicId: 'demo-blueprint-fullscreen',
+				playing: false,
+				useStopCommand: false,
+			}),
+			keyframes: expect.arrayContaining([
+				expect.objectContaining({
+					enable: { start: 1 },
+					content: { playing: true },
+				}),
+				expect.objectContaining({
+					enable: { start: 5000 },
+					content: { playing: false, useStopCommand: false },
+				}),
+			]),
+		})
+		expect(piece.content.timelineObjects.some((o) => (o.content as any)?.deviceType === TSR.DeviceType.OBS)).toBe(false)
+	})
+
+	it('maps legacy L3D graphics to one OGraf object with play and stop keyframes', () => {
+		const graphics = parseOGrafGraphicsFromObjects(DemoOBSStudioConfig, [
+			{
+				id: 'l3d1',
+				objectType: ObjectType.Graphic,
+				objectTime: 0,
+				duration: 5000,
+				clipName: 'gfx/l3d',
+				attributes: {
+					name: 'Ada',
+					description: 'Engineer',
+					f2: 'Grace',
+					f3: 'Producer',
+				},
+			},
+		])
+
+		const piece = graphics.pieces[0]
+		const timelineObjects = piece.content.timelineObjects
+
+		expect(piece.sourceLayerId).toBe(SourceLayer.OGrafOverlay1)
+		expect(piece.lifespan).toBe(PieceLifespan.OutOnSegmentEnd)
+		expect(piece.enable).toMatchObject({
+			start: 0,
+			duration: 6000,
+		})
+		expect(timelineObjects).toHaveLength(1)
+		expect(timelineObjects[0]).toMatchObject({
+			layer: OGrafLayers.OGrafOverlay1Load,
+			content: expect.objectContaining({
+				graphicId: 'demo-blueprint-l3d',
+				playing: false,
+				useStopCommand: true,
+				data: {
+					name: 'Ada',
+					description: 'Engineer',
+					f2: 'Grace',
+					f3: 'Producer',
+				},
+			}),
+			keyframes: expect.arrayContaining([
+				expect.objectContaining({
+					enable: { start: 1 },
+					content: { playing: true },
+				}),
+				expect.objectContaining({
+					enable: { start: 5000 },
+					content: { playing: false, useStopCommand: true },
+				}),
+			]),
+		})
+	})
+
+	it('maps legacy Strap graphics to the OGraf overlay 2 render target', () => {
+		const graphics = parseOGrafGraphicsFromObjects(DemoOBSStudioConfig, [
+			{
+				id: 'strap1',
+				objectType: ObjectType.Graphic,
+				objectTime: 0,
+				duration: 5000,
+				clipName: 'gfx/strap',
+				attributes: {
+					name: 'Strap',
+					description: '',
+					location: 'Oslo',
+					text: 'Live',
+				},
+			},
+		])
+
+		const piece = graphics.pieces[0]
+		expect(piece.sourceLayerId).toBe(SourceLayer.OGrafOverlay2)
+		expect(piece.content.timelineObjects).toHaveLength(1)
+		expect(piece.content.timelineObjects[0]).toMatchObject({
+			layer: OGrafLayers.OGrafOverlay2Load,
+			content: expect.objectContaining({
+				graphicId: 'demo-blueprint-strap',
+				playing: false,
+				useStopCommand: true,
+				data: expect.objectContaining({
+					location: 'Oslo',
+					text: 'Live',
+				}),
+			}),
+		})
+	})
+
+	it('does not duplicate the primary OGraf graphic in GFX parts', () => {
+		const graphic = {
+			id: 'gfx-primary',
+			objectType: ObjectType.Graphic,
+			objectTime: 0,
+			duration: 5000,
+			clipName: 'gfx/l3d',
+			attributes: {
+				name: 'Ada',
+				description: 'Engineer',
+				f2: 'Grace',
+				f3: 'Producer',
+			},
+		} as GraphicObject
+
+		const part = generateGfxPart(createPartContext(), {
+			type: PartType.GFX,
+			rawType: 'gfx',
+			rawTitle: 'L3D',
+			info: PartInfo.NORMAL,
+			payload: {
+				externalId: 'gfx-part',
+				duration: 5000,
+				name: 'L3D',
+				graphic,
+			},
+			objects: [graphic],
+		})
+
+		const ografObjects = part.pieces.flatMap((piece) =>
+			piece.content.timelineObjects.filter(
+				(object) => (object.content as any)?.deviceType === OGRAPH_DEVICE_TYPE_FOR_TEST
+			)
+		)
+
+		expect(ografObjects).toHaveLength(1)
+		expect(ografObjects[0]).toMatchObject({
+			layer: OGrafLayers.OGrafOverlay1Load,
+			content: expect.objectContaining({ graphicId: 'demo-blueprint-l3d' }),
+		})
+	})
+
 	it('generates OBS media player baseline without controlling downstream keyer', () => {
 		const context = new ShowStyleContext('baseline', {})
 		context.studioConfig = { studio: DemoOBSStudioConfig }
@@ -335,6 +519,15 @@ describe('OBS standalone blueprints', () => {
 						type: TSR.TimelineContentTypeOBS.INPUT_MEDIA,
 						state: 'stopped',
 						seek: 0,
+					}),
+					priority: 0,
+				}),
+				expect.objectContaining({
+					layer: getOBSSceneItemLayer('fullscreen'),
+					content: expect.objectContaining({
+						deviceType: TSR.DeviceType.OBS,
+						type: TSR.TimelineContentTypeOBS.SCENE_ITEM,
+						on: false,
 					}),
 					priority: 0,
 				}),

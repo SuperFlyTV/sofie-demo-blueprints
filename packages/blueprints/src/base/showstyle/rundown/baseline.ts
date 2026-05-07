@@ -2,7 +2,12 @@ import { BlueprintResultBaseline, IShowStyleUserContext, TSR } from '@sofie-auto
 import { literal } from '../../../common/util.js'
 import { SourceType, StudioConfig, VisionMixerDevice } from '../../studio/helpers/config.js'
 import { AtemLayers, CasparCGLayers, SisyfosLayers, VMixLayers } from '../../studio/layers.js'
-import { getOBSAudioBaseline, getOBSMediaPlayerBaseline, getSisyfosBaseline } from '../helpers/audio.js'
+import {
+	getOBSAudioBaseline,
+	getOBSGraphicsBaseline,
+	getOBSMediaPlayerBaseline,
+	getSisyfosBaseline,
+} from '../helpers/audio.js'
 import { DVEDesigns, DVELayouts } from '../helpers/dve.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 import { InputConfig, OutputConfig, VmixInputConfig } from '../../../$schemas/generated/main-studio-config.js'
@@ -16,7 +21,7 @@ export function getBaseline(context: IShowStyleUserContext): BlueprintResultBase
 			...(config.visionMixer.type === VisionMixerDevice.Atem ? getAtemBaseline(config) : []),
 			...(config.visionMixer.type === VisionMixerDevice.VMix ? getVMixBaseline(config) : []),
 			...(config.visionMixer.type === VisionMixerDevice.OBS
-				? [...getOBSAudioBaseline(config), ...getOBSMediaPlayerBaseline(config)]
+				? [...getOBSAudioBaseline(config), ...getOBSMediaPlayerBaseline(config), ...getOBSGraphicsBaseline(config)]
 				: []),
 
 			...(config.visionMixer.type !== VisionMixerDevice.OBS

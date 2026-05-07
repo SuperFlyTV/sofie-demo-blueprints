@@ -2,7 +2,12 @@ import { TSR } from '@sofie-automation/blueprints-integration'
 import { literal } from '../../../common/util.js'
 import { ObsSourceConfig, SourceType, StudioConfig } from '../../../$schemas/generated/main-studio-config.js'
 import { TimelineBlueprintExt } from '../customTypes.js'
-import { getOBSAudioInputName, getOBSInputAudioLayer, getOBSInputMediaLayer } from '../applyConfig/mappings/obs.js'
+import {
+	getOBSAudioInputName,
+	getOBSInputAudioLayer,
+	getOBSInputMediaLayer,
+	getOBSSceneItemLayer,
+} from '../applyConfig/mappings/obs.js'
 import { OBSLayers } from '../layers.js'
 
 export function getOBSAudioBaseline(config: StudioConfig): TimelineBlueprintExt<TSR.TimelineContentOBSInputAudio>[] {
@@ -38,6 +43,24 @@ export function getOBSMediaPlayerBaseline(
 					type: TSR.TimelineContentTypeOBS.INPUT_MEDIA,
 					state: 'stopped',
 					seek: 0,
+				},
+				priority: 0,
+			})
+		)
+}
+
+export function getOBSGraphicsBaseline(config: StudioConfig): TimelineBlueprintExt<TSR.TimelineContentOBSSceneItem>[] {
+	return Object.entries<ObsSourceConfig>(config.obsSources)
+		.filter(([, source]) => source.type === SourceType.Graphics && !!source.sceneName && !!source.sourceName)
+		.map(([sourceId]) =>
+			literal<TimelineBlueprintExt<TSR.TimelineContentOBSSceneItem>>({
+				id: '',
+				enable: { while: 1 },
+				layer: getOBSSceneItemLayer(sourceId),
+				content: {
+					deviceType: TSR.DeviceType.OBS,
+					type: TSR.TimelineContentTypeOBS.SCENE_ITEM,
+					on: false,
 				},
 				priority: 0,
 			})

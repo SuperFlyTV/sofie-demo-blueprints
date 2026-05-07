@@ -63,11 +63,13 @@ function generatePlayoutDevices(config: BlueprintConfig): BlueprintResultApplySt
 				type: TSR.DeviceType.ABSTRACT,
 			}),
 		},
-		graphics: {
+		ograf0: {
 			parentConfigId: 'playoutgateway',
-			options: literal<TSR.DeviceOptionsHttpSend>({
-				type: TSR.DeviceType.HTTPSEND,
-				options: {},
+			options: literal<any>({
+				type: ((TSR.DeviceType as any).OGRAF ?? 'OGRAF') as TSR.DeviceType,
+				options: {
+					url: config.studio.ografBaseUrl || 'http://localhost:8080',
+				},
 			}),
 		},
 	}
@@ -82,16 +84,7 @@ function generatePlayoutDevices(config: BlueprintConfig): BlueprintResultApplySt
 					port: config.studio.casparcg.port || 5250,
 				},
 			}),
-		},
-		ograf0: {
-			parentConfigId: 'playoutgateway',
-			options: literal<TSR.DeviceOptionsOgraf>({
-				type: TSR.DeviceType.OGRAF,
-				options: {
-					url: 'http://localhost:8080/ograf/v1',
-				},
-			}),
-		},
+		}
 	}
 
 	if (config.studio.visionMixer.type === VisionMixerDevice.Atem) {

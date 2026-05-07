@@ -234,12 +234,28 @@ export function parseAdlibGraphic(
 }
 
 export function parseGraphicsFromObjects(config: StudioConfig, objects: SomeObject[]): GraphicsResult {
-	const graphicsObjects = objects.filter((o): o is GraphicObject => o.objectType === ObjectType.Graphic)
+	const graphicsObjects = objects
+		.filter((o): o is GraphicObject => o.objectType === ObjectType.Graphic)
+		.filter((o) => !shouldRouteGraphicToOGraf(config, o))
 
 	return {
 		pieces: graphicsObjects.filter((o) => !o.isAdlib).map((o) => parseGraphic(config, o)),
 		adLibPieces: graphicsObjects.filter((o) => !!o.isAdlib).map((o, i) => parseAdlibGraphic(config, o, i)),
 	}
+}
+
+function shouldRouteGraphicToOGraf(config: StudioConfig, object: GraphicObjectBase): boolean {
+	if (config.visionMixer.type !== VisionMixerDevice.OBS) return false
+
+	const clipName = object.clipName || ''
+	return (
+		clipName === 'gfx/head' ||
+		clipName === 'gfx/l3d' ||
+		clipName === 'gfx/wipe' ||
+		clipName === 'gfx/strap' ||
+		clipName === 'gfx/ticker' ||
+		clipName === 'gfx/fullscreen'
+	)
 }
 function getGraphicLifespan(sourceLayer: SourceLayer, object: GraphicObjectBase): PieceLifespan {
 	if (sourceLayer === SourceLayer.Ticker) {

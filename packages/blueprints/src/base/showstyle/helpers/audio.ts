@@ -5,7 +5,7 @@ import { SisyfosLayers } from '../../studio/layers.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 import { ObsSourceConfig, SiyfosSourceConfig } from '../../../$schemas/generated/main-studio-config.js'
 import { getOBSAudioInputName, getOBSInputAudioLayer } from '../../studio/applyConfig/mappings/obs.js'
-export { getOBSAudioBaseline, getOBSMediaPlayerBaseline } from '../../studio/helpers/obs.js'
+export { getOBSAudioBaseline, getOBSGraphicsBaseline, getOBSMediaPlayerBaseline } from '../../studio/helpers/obs.js'
 
 // note - studio baseline and showstyle baseline are the same for now
 export function getSisyfosBaseline(config: StudioConfig): (TSR.SisyfosChannelOptions & { mappedLayer: string })[] {

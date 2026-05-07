@@ -2,6 +2,7 @@ import { SourceType, StudioConfig, VisionMixerDevice } from '../../../base/studi
 
 export const DemoStudioConfig: StudioConfig = {
 	previewRenderer: 'sofie',
+	ografBaseUrl: 'http://localhost:8080',
 	obsMediaBasePath: '',
 	casparcgLatency: 0,
 	visionMixer: {
@@ -37,6 +38,7 @@ export const DemoStudioConfig: StudioConfig = {
 
 export const DemoOBSStudioConfig: StudioConfig = {
 	previewRenderer: 'sofie',
+	ografBaseUrl: 'http://localhost:8080',
 	obsMediaBasePath: '',
 	obsDownstreamKeyerSourceId: 'dsk',
 	obsAbMediaPlayerSourceIds: ['mediaplayer1', 'mediaplayer2'],
