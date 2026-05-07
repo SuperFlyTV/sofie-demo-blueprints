@@ -12,6 +12,12 @@ export enum VMixLayers {
 	VMixOverlayGraphics = 'vmix_overlay_graphics',
 	VMixDVEMultiView = 'vmix_dve_multiview',
 }
+export enum OGrafLayers {
+	OGrafFullScreen = 'ograf_full_screen',
+	OGrafOverlay1 = 'ograf_overlay_1',
+	OGrafOverlay2 = 'ograf_overlay_2',
+	OGrafOverlay3 = 'ograf_overlay_3',
+}
 
 export enum OBSLayers {
 	OBSCurrentScene = 'obs_current_scene',

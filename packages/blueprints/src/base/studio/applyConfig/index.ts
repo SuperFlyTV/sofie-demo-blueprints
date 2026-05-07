@@ -82,7 +82,16 @@ function generatePlayoutDevices(config: BlueprintConfig): BlueprintResultApplySt
 					port: config.studio.casparcg.port || 5250,
 				},
 			}),
-		}
+		},
+		ograf0: {
+			parentConfigId: 'playoutgateway',
+			options: literal<TSR.DeviceOptionsOgraf>({
+				type: TSR.DeviceType.OGRAF,
+				options: {
+					url: 'http://localhost:8080/ograf/v1',
+				},
+			}),
+		},
 	}
 
 	if (config.studio.visionMixer.type === VisionMixerDevice.Atem) {

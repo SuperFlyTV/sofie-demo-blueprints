@@ -5,11 +5,15 @@ import { parseClipsFromObjects } from '../helpers/clips.js'
 import { parseGraphicsFromObjects } from '../helpers/graphics.js'
 import { createScriptPiece } from '../helpers/script.js'
 import { parseConfig } from '../helpers/config.js'
+import { parseOGrafGraphicsFromObjects } from '../helpers/ograf-graphics.js'
 
 export function generateGfxPart(context: PartContext, part: PartProps<GfxProps>): BlueprintResultPart {
 	const config = parseConfig(context).studio
 
-	const graphic = parseGraphicsFromObjects(config, [part.payload.graphic])
+	let graphic = parseGraphicsFromObjects(config, [part.payload.graphic])
+	if (!graphic.pieces[0]) {
+		graphic = parseOGrafGraphicsFromObjects(config, [part.payload.graphic])
+	}
 	if (!graphic.pieces[0]) context.notifyUserError('Missing fullscreen graphic')
 
 	const fullscreenPiece = graphic.pieces[0]
@@ -20,6 +24,8 @@ export function generateGfxPart(context: PartContext, part: PartProps<GfxProps>)
 
 	const graphics = parseGraphicsFromObjects(config, part.objects)
 	if (graphics.pieces) pieces.push(...graphics.pieces)
+	const ografGraphics = parseOGrafGraphicsFromObjects(config, part.objects)
+	if (ografGraphics.pieces) pieces.push(...ografGraphics.pieces)
 
 	const clips = parseClipsFromObjects(context, config, part.objects)
 
@@ -32,7 +38,7 @@ export function generateGfxPart(context: PartContext, part: PartProps<GfxProps>)
 			autoNext: true,
 		},
 		pieces,
-		adLibPieces: [...graphics.adLibPieces, ...clips],
+		adLibPieces: [...graphics.adLibPieces, ...clips, ...ografGraphics.adLibPieces],
 		actions: [],
 	}
 }

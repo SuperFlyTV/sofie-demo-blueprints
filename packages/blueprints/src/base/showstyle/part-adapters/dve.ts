@@ -15,6 +15,7 @@ import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 import { ObsSourceConfig, VmixInputConfig } from '../../../$schemas/generated/main-studio-config.js'
 import { parseConfig } from '../helpers/config.js'
+import { parseOGrafGraphicsFromObjects } from '../helpers/ograf-graphics.js'
 
 const SUPER_SOURCE_LATENCY = 80
 const SUPER_SOURCE_INPUT = 6000
@@ -230,6 +231,8 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 
 	const graphics = parseGraphicsFromObjects(config, part.objects)
 	if (graphics.pieces) pieces.push(...graphics.pieces)
+	const ografGraphics = parseOGrafGraphicsFromObjects(config, part.objects)
+	if (ografGraphics.pieces) pieces.push(...ografGraphics.pieces)
 
 	const clips = parseClipsFromObjects(context, config, part.objects)
 
@@ -241,7 +244,7 @@ export function generateDVEPart(context: PartContext, part: PartProps<DVEProps>)
 			expectedDuration: part.payload.duration,
 		},
 		pieces,
-		adLibPieces: [...graphics.adLibPieces, ...clips],
+		adLibPieces: [...graphics.adLibPieces, ...clips, ...ografGraphics.adLibPieces],
 		actions: [],
 	}
 }
