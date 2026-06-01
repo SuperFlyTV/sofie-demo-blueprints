@@ -28,7 +28,7 @@
 		"@types/node": "^22.19.3",
 		"sofie-blueprint-tools": "^1.3.0",
 		"typescript": "~5.8.3",
-		"vitest": "^4.0.16"
+		"vitest": "^4.1.0"
 	},
 	"dependencies": {
 		"@sofie-automation/blueprints-integration": "26.3.0-nightly-main-20260421-093052-38fae25.0",
