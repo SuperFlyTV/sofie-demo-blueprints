@@ -5,6 +5,7 @@ import { getAudioObjectOnLayer, getAudioPrimaryObject } from '../helpers/audio.j
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { InputConfig, VisionMixerDevice } from '../../../$schemas/generated/main-studio-config.js'
+import { VmixInputReference } from '../../studio/helpers/vmixInputs.js'
 import { parseConfig } from '../helpers/config.js'
 import { SisyfosLayers } from '../../studio/layers.js'
 
@@ -14,7 +15,7 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 	context.logError('Global Adlib Studio Config: ' + JSON.stringify(config))
 
 	context.logError('Making camera adlibs')
-	const makeCameraAdlib = (id: number, input: number): IBlueprintAdLibPiece => ({
+	const makeCameraAdlib = (id: number, input: VmixInputReference): IBlueprintAdLibPiece => ({
 		_rank: 100 + id,
 		externalId: 'cam' + id,
 		name: `Camera ${id + 1}`,
@@ -29,7 +30,7 @@ export function getGlobalAdlibs(context: IShowStyleUserContext): IBlueprintAdLib
 		},
 	})
 	context.logError('Making remote adlibs')
-	const makeRemoteAdlib = (id: number, input: number): IBlueprintAdLibPiece => ({
+	const makeRemoteAdlib = (id: number, input: VmixInputReference): IBlueprintAdLibPiece => ({
 		_rank: 200 + id,
 		externalId: 'rem' + id,
 		name: `Remote ${id + 1}`,

@@ -15,6 +15,7 @@ import { getClipPlayerInput } from '../helpers/clips.js'
 import { parseGraphicsFromObjects } from '../helpers/graphics.js'
 import { createScriptPiece } from '../helpers/script.js'
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
+import { shouldGenerateCasparCGTimeline } from '../../studio/helpers/vmixInputs.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 import { parseConfig } from '../helpers/config.js'
@@ -46,18 +47,22 @@ export function generateVTPart(context: PartContext, part: PartProps<VTProps>): 
 			timelineObjects: [
 				...createVisionMixerObjects(config, visionMixerInput?.input || 0, config.casparcgLatency),
 
-				literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
-					id: '',
-					enable: { start: 0 },
-					layer: CasparCGLayers.CasparCGClipPlayer1,
-					content: {
-						deviceType: TSR.DeviceType.CASPARCG,
-						type: TSR.TimelineContentTypeCasparCg.MEDIA,
+				...(shouldGenerateCasparCGTimeline(config)
+					? [
+							literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
+								id: '',
+								enable: { start: 0 },
+								layer: CasparCGLayers.CasparCGClipPlayer1,
+								content: {
+									deviceType: TSR.DeviceType.CASPARCG,
+									type: TSR.TimelineContentTypeCasparCg.MEDIA,
 
-						file: stripExtension(part.payload.clipProps.fileName),
-					},
-					priority: 1,
-				}),
+									file: stripExtension(part.payload.clipProps.fileName),
+								},
+								priority: 1,
+							}),
+						]
+					: []),
 
 				audioTlObj,
 			],

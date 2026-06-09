@@ -30,7 +30,7 @@ export function generateCameraPart(context: PartContext, part: PartProps<CameraP
 		sourceLayerId: SourceLayer.Camera,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Camera),
 		content: {
-			timelineObjects: [...createVisionMixerObjects(config, sourceInfo.input), audioTlObj],
+			timelineObjects: [...createVisionMixerObjects(config, sourceInfo.input ?? 0), audioTlObj],
 		},
 	}
 

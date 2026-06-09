@@ -176,6 +176,110 @@
 				"required": ["input", "type"]
 			}
 		},
+		"vmixInputs": {
+			"type": "object",
+			"ui:title": "vMix Input Registry",
+			"ui:description": "Named vMix input registry for production newsroom layouts. Coexists with legacy vmixSources.",
+			"ui:category": "Inputs",
+			"default": {},
+			"additionalProperties": {
+				"type": "object",
+				"title": "VmixRegistryInputConfig",
+				"properties": {
+					"input": {
+						"oneOf": [{ "type": "integer" }, { "type": "string" }],
+						"ui:title": "Input",
+						"ui:description": "vMix input number or name",
+						"ui:summaryTitle": "Input"
+					},
+					"role": {
+						"type": "string",
+						"ui:title": "Role",
+						"ui:description": "Optional role identifier (e.g. camera1, lower_third)"
+					},
+					"overlay": {
+						"type": "integer",
+						"minimum": 1,
+						"maximum": 4,
+						"ui:title": "Overlay",
+						"ui:description": "vMix overlay channel (1-4) when this input is used as an overlay"
+					},
+					"mix": {
+						"type": "integer",
+						"minimum": 1,
+						"maximum": 16,
+						"ui:title": "Mix",
+						"ui:description": "vMix mix bus (1 = main, 2-16 = optional mix inputs)"
+					},
+					"loop": {
+						"type": "boolean",
+						"ui:title": "Loop",
+						"ui:description": "Loop media input on activate"
+					},
+					"playOnActivate": {
+						"type": "boolean",
+						"ui:title": "Play On Activate",
+						"ui:description": "Start playback when input is activated"
+					}
+				},
+				"required": ["input"]
+			}
+		},
+		"vmixControlMode": {
+			"type": "string",
+			"title": "VmixControlMode",
+			"ui:title": "vMix Control Mode",
+			"ui:description": "Demo preserves CasparCG and multiview DVE paths. Production uses registry-driven vMix layouts.",
+			"ui:category": "Vision Mixer",
+			"enum": ["demo", "production"],
+			"tsEnumNames": ["Demo", "Production"],
+			"default": "demo"
+		},
+		"vmixGraphicsTargets": {
+			"type": "object",
+			"title": "VmixGraphicsTargets",
+			"ui:title": "vMix Graphics Targets",
+			"ui:description": "Maps graphic types to vmixInputs registry keys for production overlay graphics.",
+			"ui:category": "Graphics",
+			"properties": {
+				"lowerThird": {
+					"type": "string",
+					"ui:title": "Lower Third",
+					"ui:description": "vmixInputs registry key for lower third overlay"
+				},
+				"headline": {
+					"type": "string",
+					"ui:title": "Headline",
+					"ui:description": "vmixInputs registry key for headline overlay"
+				},
+				"bug": {
+					"type": "string",
+					"ui:title": "Bug",
+					"ui:description": "vmixInputs registry key for bug overlay"
+				},
+				"logo": {
+					"type": "string",
+					"ui:title": "Logo",
+					"ui:description": "vmixInputs registry key for logo overlay"
+				},
+				"strap": {
+					"type": "string",
+					"ui:title": "Strap",
+					"ui:description": "vmixInputs registry key for strap overlay"
+				},
+				"ticker": {
+					"type": "string",
+					"ui:title": "Ticker",
+					"ui:description": "vmixInputs registry key for ticker overlay"
+				},
+				"fullscreen": {
+					"type": "string",
+					"ui:title": "Fullscreen",
+					"ui:description": "vmixInputs registry key for fullscreen graphics input"
+				}
+			},
+			"additionalProperties": false
+		},
 		"sisyfosSources": {
 			"type": "object",
 			"ui:title": "Sisyfos Sources",
