@@ -2,7 +2,6 @@ import { TSR } from '@sofie-automation/blueprints-integration'
 import { assertUnreachable, literal } from '../../../common/util.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 import { StudioConfig, VisionMixerDevice } from '../../studio/helpers/config.js'
-import { VmixInputReference } from '../../studio/helpers/vmixInputs.js'
 import { AtemLayers, VMixLayers } from '../../studio/layers.js'
 
 export function createAtemInputTimelineObjects(
@@ -75,20 +74,16 @@ export function createAtemInputTimelineObjects(
 }
 
 export function createVMixTimelineObjects(
-	input: VmixInputReference,
+	input: number,
 	start = 0,
 	transitionDuration = 40,
-	transitionProps?: TSR.VMixTransition,
-	mix?: number
+	transitionProps?: TSR.VMixTransition
 ): TimelineBlueprintExt<TSR.TimelineContentVMixAny>[] {
-	const programLayer = mix && mix > 1 ? `vmix_mix${mix}_program` : VMixLayers.VMixMeProgram
-	const previewLayer = mix && mix > 1 ? `vmix_mix${mix}_preview` : VMixLayers.VMixMePreview
-
 	return [
 		literal<TimelineBlueprintExt<TSR.TimelineContentVMixProgram>>({
 			id: '',
 			enable: { start: start },
-			layer: programLayer,
+			layer: VMixLayers.VMixMeProgram,
 			content: {
 				deviceType: TSR.DeviceType.VMIX,
 				type: TSR.TimelineContentTypeVMix.PROGRAM,
@@ -99,11 +94,11 @@ export function createVMixTimelineObjects(
 			priority: 1,
 		}),
 
-		// Add object for preview — explicit timeline object drives lookahead; mapping disableDefaults prevents baseline spam
+		// Add object for preview
 		literal<TimelineBlueprintExt<TSR.TimelineContentVMixPreview>>({
 			id: '',
 			enable: { start: start },
-			layer: previewLayer,
+			layer: VMixLayers.VMixMePreview,
 			content: {
 				deviceType: TSR.DeviceType.VMIX,
 				type: TSR.TimelineContentTypeVMix.PREVIEW,
@@ -129,7 +124,7 @@ export function createVMixTimelineObjects(
 
 export function createVisionMixerObjects(
 	config: StudioConfig,
-	input: VmixInputReference,
+	input: number,
 	start = 0,
 	transitionDuration = 40,
 	transitionProps?: {
@@ -138,12 +133,7 @@ export function createVisionMixerObjects(
 	}
 ): TimelineBlueprintExt<TSR.TimelineContentVMixAny | TSR.TimelineContentAtemAny>[] {
 	if (config.visionMixer.type === VisionMixerDevice.Atem) {
-		return createAtemInputTimelineObjects(
-			typeof input === 'number' ? input : Number(input) || 0,
-			start,
-			transitionDuration,
-			transitionProps?.atemTransitionProps
-		)
+		return createAtemInputTimelineObjects(input, start, transitionDuration, transitionProps?.atemTransitionProps)
 	} else if (config.visionMixer.type === VisionMixerDevice.VMix) {
 		return createVMixTimelineObjects(input, start, transitionDuration, transitionProps?.vmixTransitionProps)
 	} else {

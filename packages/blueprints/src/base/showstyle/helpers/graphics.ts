@@ -8,13 +8,11 @@ import {
 } from '../../../common/definitions/objects.js'
 import { literal } from '../../../common/util.js'
 import { StudioConfig } from '../../studio/helpers/config.js'
-import { shouldGenerateCasparCGTimeline } from '../../studio/helpers/vmixInputs.js'
 import { CasparCGLayers } from '../../studio/layers.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { getClipPlayerInput } from './clips.js'
 import { createVisionMixerObjects } from './visionMixer.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
-import { createVmixOverlayGraphicTimelineObjects, shouldUseVmixOverlayGraphics } from './vmixGraphics.js'
 
 export interface GraphicsResult {
 	pieces: IBlueprintPiece[]
@@ -49,21 +47,6 @@ function getGraphicTlObject(
 	object: GraphicObjectBase,
 	isAdlib?: boolean
 ): TimelineBlueprintExt[] {
-	const sourceLayer = getGraphicSourceLayer(object)
-	const vmixOverlayObjects = createVmixOverlayGraphicTimelineObjects(config, sourceLayer, isAdlib)
-	if (vmixOverlayObjects) {
-		const isFullscreen = object.clipName.match(/fullscreen/i)
-		const fullscreenInput = getClipPlayerInput(config)
-		return [
-			...vmixOverlayObjects,
-			...(isFullscreen ? createVisionMixerObjects(config, fullscreenInput?.input || 0, config.casparcgLatency) : []),
-		]
-	}
-
-	if (!shouldGenerateCasparCGTimeline(config)) {
-		return []
-	}
-
 	const fullscreenAtemInput = getClipPlayerInput(config)
 	const isFullscreen = object.clipName.match(/fullscreen/i)
 
@@ -93,7 +76,6 @@ function getGraphicTlObject(
 function parseGraphic(config: StudioConfig, object: GraphicObject | SteppedGraphicObject): IBlueprintPiece {
 	const sourceLayer = getGraphicSourceLayer(object)
 	const lifespan = getGraphicLifespan(sourceLayer, object)
-	const usesVmixOverlay = shouldUseVmixOverlayGraphics(config, sourceLayer)
 
 	return {
 		externalId: object.id,
@@ -115,13 +97,26 @@ function parseGraphic(config: StudioConfig, object: GraphicObject | SteppedGraph
 				location: object.attributes.location,
 				text: object.attributes.text,
 			},
+			// ToDo: This was the old way of doing it, but it doesn't work in R53:
+			// payload: {
+			// 	content: {
+			// 		...object.attributes,
+			// 		adlib: undefined,
+			// 	},
+			// 	manifest: '',
+			// 	template: {
+			// 		event: '',
+			// 		layer: '',
+			// 		name: object.clipName,
+			// 	},
+			// },
 			previewRenderer: config.previewRenderer,
 		},
 		enable: {
 			start: object.objectTime,
 			duration: object.duration > 0 ? object.duration : undefined,
 		},
-		prerollDuration: usesVmixOverlay ? 0 : config.casparcgLatency,
+		prerollDuration: config.casparcgLatency,
 	}
 }
 export function parseAdlibGraphic(
@@ -132,7 +127,6 @@ export function parseAdlibGraphic(
 	const sourceLayer = getGraphicSourceLayer(object)
 	const lifespan = getGraphicLifespan(sourceLayer, object)
 	const isFullscreen = object.clipName.match(/fullscreen/i)
-	const usesVmixOverlay = shouldUseVmixOverlayGraphics(config, sourceLayer)
 
 	return {
 		externalId: object.id,
@@ -143,7 +137,7 @@ export function parseAdlibGraphic(
 		lifespan,
 		sourceLayerId: sourceLayer,
 		outputLayerId: getOutputLayerForSourceLayer(sourceLayer),
-		prerollDuration: usesVmixOverlay ? 0 : isFullscreen ? config.casparcgLatency : 0,
+		prerollDuration: isFullscreen ? config.casparcgLatency : 0,
 		content: {
 			timelineObjects: getGraphicTlObject(config, object, true),
 
@@ -153,6 +147,18 @@ export function parseAdlibGraphic(
 				location: object.attributes.location,
 				text: object.attributes.text,
 			},
+			// payload: {
+			// 	content: {
+			// 		...object.attributes,
+			// 		adlib: undefined,
+			// 	},
+			// 	manifest: '',
+			// 	template: {
+			// 		event: '',
+			// 		layer: '',
+			// 		name: object.clipName,
+			// 	},
+			// },
 		},
 		_rank: index, // todo - probably some offset for ordering
 		expectedDuration: object.duration,

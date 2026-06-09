@@ -18,11 +18,6 @@ export interface StudioConfig {
 	vmixSources: {
 		[k: string]: VmixInputConfig
 	}
-	vmixInputs?: {
-		[k: string]: VmixRegistryInputConfig
-	}
-	vmixControlMode?: VmixControlMode
-	vmixGraphicsTargets?: VmixGraphicsTargets
 	sisyfosSources: {
 		[k: string]: SiyfosSourceConfig
 	}
@@ -77,35 +72,34 @@ export interface CasparCGConfig {
 	 */
 	port: number
 }
+/**
+ * This interface was referenced by `undefined`'s JSON-Schema definition
+ * via the `patternProperty` "".
+ */
 export interface InputConfig {
 	input: number
 	type: SourceType
 }
+/**
+ * This interface was referenced by `undefined`'s JSON-Schema definition
+ * via the `patternProperty` "".
+ */
 export interface OutputConfig {
 	output: number
 	source: number
 }
+/**
+ * This interface was referenced by `undefined`'s JSON-Schema definition
+ * via the `patternProperty` "".
+ */
 export interface VmixInputConfig {
 	input: number
 	type: SourceType
 }
-export interface VmixRegistryInputConfig {
-	input: number | string
-	role?: string
-	overlay?: number
-	mix?: number
-	loop?: boolean
-	playOnActivate?: boolean
-}
-export interface VmixGraphicsTargets {
-	lowerThird?: string
-	headline?: string
-	bug?: string
-	logo?: string
-	strap?: string
-	ticker?: string
-	fullscreen?: string
-}
+/**
+ * This interface was referenced by `undefined`'s JSON-Schema definition
+ * via the `patternProperty` "".
+ */
 export interface SiyfosSourceConfig {
 	source: number
 	type: AudioSourceType
@@ -124,10 +118,6 @@ export enum SourceType {
 	MediaPlayer = 'mediaplayer',
 	Graphics = 'graphics',
 	MultiView = 'multiview',
-}
-export enum VmixControlMode {
-	Demo = 'demo',
-	Production = 'production',
 }
 export enum AudioSourceType {
 	Host = 'host',
