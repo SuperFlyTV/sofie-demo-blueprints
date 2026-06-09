@@ -8,12 +8,6 @@ import {
 import { ObjectType, SomeObject, VideoObject } from '../../../common/definitions/objects.js'
 import { assertUnreachable, literal } from '../../../common/util.js'
 import { SourceType, StudioConfig, VisionMixerDevice } from '../../studio/helpers/config.js'
-import {
-	resolveVmixInput,
-	resolveVmixInputByRole,
-	shouldGenerateCasparCGTimeline,
-	VmixInputReference,
-} from '../../studio/helpers/vmixInputs.js'
 import { CasparCGLayers } from '../../studio/layers.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { createVisionMixerObjects } from './visionMixer.js'
@@ -24,10 +18,6 @@ export interface ClipProps {
 	fileName: string
 	duration?: number
 	sourceDuration?: number
-}
-
-export interface ClipPlayerInput {
-	input: VmixInputReference
 }
 
 export function parseClipProps(object: VideoObject): ClipProps {
@@ -45,27 +35,19 @@ export function parseClipEditorProps(object: VideoObject): ClipProps {
 	}
 }
 
-export function getClipPlayerInput(config: StudioConfig): ClipPlayerInput | undefined {
-	const registryInput =
-		resolveVmixInput(config, 'MEDIAPLAYER') ??
-		resolveVmixInput(config, 'BG_LOOP') ??
-		resolveVmixInputByRole(config, 'mediaplayer')
-	if (registryInput) {
-		return { input: registryInput.input }
-	}
-
+export function getClipPlayerInput(config: StudioConfig): StudioConfig['atemSources'][any] | undefined {
 	if (config.visionMixer.type === VisionMixerDevice.Atem) {
 		const mediaplayerInput = Object.values<InputConfig>(config.atemSources).find(
 			(s) => s.type === SourceType.MediaPlayer
 		)
 
-		return mediaplayerInput ? { input: mediaplayerInput.input } : undefined
+		return mediaplayerInput
 	} else if (config.visionMixer.type === VisionMixerDevice.VMix) {
 		const mediaplayerInput = Object.values<VmixInputConfig>(config.vmixSources).find(
 			(s) => s.type === SourceType.MediaPlayer
 		)
 
-		return mediaplayerInput ? { input: mediaplayerInput.input } : undefined
+		return mediaplayerInput
 	} else {
 		assertUnreachable(config.visionMixer.type)
 	}
@@ -106,22 +88,18 @@ export function clipToAdlib(
 			timelineObjects: [
 				...createVisionMixerObjects(config, visionMixerInput?.input || 0, config.casparcgLatency),
 
-				...(shouldGenerateCasparCGTimeline(config)
-					? [
-							literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
-								id: '',
-								enable: { start: 0 },
-								layer: CasparCGLayers.CasparCGClipPlayer1,
-								content: {
-									deviceType: TSR.DeviceType.CASPARCG,
-									type: TSR.TimelineContentTypeCasparCg.MEDIA,
+				literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
+					id: '',
+					enable: { start: 0 },
+					layer: CasparCGLayers.CasparCGClipPlayer1,
+					content: {
+						deviceType: TSR.DeviceType.CASPARCG,
+						type: TSR.TimelineContentTypeCasparCg.MEDIA,
 
-									file: props.fileName,
-								},
-								priority: 1,
-							}),
-						]
-					: []),
+						file: props.fileName,
+					},
+					priority: 1,
+				}),
 			],
 		},
 	})

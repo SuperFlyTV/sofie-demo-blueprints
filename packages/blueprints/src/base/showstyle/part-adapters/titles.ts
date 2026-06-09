@@ -12,7 +12,6 @@ import { PartProps, TitlesProps } from '../definitions/index.js'
 import { getClipPlayerInput } from '../helpers/clips.js'
 import { createScriptPiece } from '../helpers/script.js'
 import { createVisionMixerObjects } from '../helpers/visionMixer.js'
-import { shouldGenerateCasparCGTimeline } from '../../studio/helpers/vmixInputs.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 import { parseConfig } from '../helpers/config.js'
@@ -44,22 +43,19 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 			timelineObjects: [
 				...createVisionMixerObjects(config, visionMixerInput?.input || 0),
 
-				...(shouldGenerateCasparCGTimeline(config)
-					? [
-							literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
-								id: '',
-								enable: { start: 0 },
-								layer: CasparCGLayers.CasparCGEffectsPlayer,
-								content: {
-									deviceType: TSR.DeviceType.CASPARCG,
-									type: TSR.TimelineContentTypeCasparCg.MEDIA,
+				// clip
+				literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
+					id: '',
+					enable: { start: 0 },
+					layer: CasparCGLayers.CasparCGEffectsPlayer,
+					content: {
+						deviceType: TSR.DeviceType.CASPARCG,
+						type: TSR.TimelineContentTypeCasparCg.MEDIA,
 
-									file: 'assets/Sofie News Opener',
-								},
-								priority: 1,
-							}),
-						]
-					: []),
+						file: 'assets/Sofie News Opener',
+					},
+					priority: 1,
+				}),
 			],
 		},
 
@@ -105,31 +101,28 @@ export function generateOpenerPart(context: PartContext, part: PartProps<TitlesP
 			timelineObjects: [
 				...createVisionMixerObjects(config, visionMixerInput?.input || 0),
 
-				...(shouldGenerateCasparCGTimeline(config)
-					? [
-							literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
-								id: '',
-								enable: { start: 0 },
-								layer: CasparCGLayers.CasparCGAudioBed,
-								content: {
-									deviceType: TSR.DeviceType.CASPARCG,
-									type: TSR.TimelineContentTypeCasparCg.MEDIA,
+				// clip
+				literal<TimelineBlueprintExt<TSR.TimelineContentCCGMedia>>({
+					id: '',
+					enable: { start: 0 },
+					layer: CasparCGLayers.CasparCGAudioBed,
+					content: {
+						deviceType: TSR.DeviceType.CASPARCG,
+						type: TSR.TimelineContentTypeCasparCg.MEDIA,
 
-									file: 'assets/Sofie News Opener Audio Bed',
+						file: 'assets/Sofie News Opener Audio Bed',
 
-									noStarttime: true,
+						noStarttime: true,
 
-									transitions: {
-										outTransition: {
-											type: TSR.Transition.MIX,
-											duration: 1500,
-										},
-									},
-								},
-								priority: 1,
-							}),
-						]
-					: []),
+						transitions: {
+							outTransition: {
+								type: TSR.Transition.MIX,
+								duration: 1500,
+							},
+						},
+					},
+					priority: 1,
+				}),
 			],
 		},
 
