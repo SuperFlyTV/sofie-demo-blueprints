@@ -5,17 +5,8 @@ on:
     branches:
       - '**'
     tags:
-      - 'v*'
-      - '[0-9]*'
+      - 'v**'
   pull_request:
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Existing git tag to attach release assets to'
-        required: true
-      asset_suffix:
-        description: 'Zip filename suffix (e.g. r53). Defaults to the tag name without a leading v.'
-        required: false
 
 jobs:
   lint:
@@ -168,75 +159,3 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-  release-blueprints:
-    name: Release Blueprints
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
-    needs: [lint, test]
-    permissions:
-      contents: write
-
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref }}
-
-      - name: Use Node.js 22.x
-        uses: actions/setup-node@v6
-        with:
-          node-version: 22.x
-
-      - name: restore node_modules
-        uses: actions/cache@v5
-        with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
-
-      - name: Prepare Environment
-        run: |
-          corepack enable
-          yarn
-        env:
-          CI: true
-
-      - name: Build blueprints
-        run: |
-          cd packages/blueprints
-          yarn dist
-        env:
-          CI: true
-
-      - name: Package release assets
-        id: package
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            VERSION="${{ inputs.tag }}"
-            SUFFIX="${{ inputs.asset_suffix }}"
-          else
-            VERSION="${GITHUB_REF_NAME}"
-            SUFFIX=""
-          fi
-          VERSION="${VERSION#v}"
-          SUFFIX="${SUFFIX:-$VERSION}"
-          ZIP_NAME="demo-blueprints-${SUFFIX}.zip"
-
-          cd packages/blueprints/dist
-          zip "../../../${ZIP_NAME}" \
-            system-bundle.js \
-            demostudio-bundle.js \
-            demoshowstyle-bundle.js
-
-          echo "zip_name=${ZIP_NAME}" >> "$GITHUB_OUTPUT"
-          echo "release_tag=${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}" >> "$GITHUB_OUTPUT"
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ steps.package.outputs.release_tag }}
-          files: |
-            ${{ steps.package.outputs.zip_name }}
-            packages/blueprints/dist/bundle.json
-          generate_release_notes: true
