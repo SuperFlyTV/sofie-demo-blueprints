@@ -114,9 +114,7 @@ export function dveLayoutToContent(
 		return literal<SplitsContentBoxContent & SplitsContentBoxProperties>({
 			studioLabel: 'fileName' in info ? info.fileName : `${info.type} ${info.id}`,
 			switcherInput:
-				'fileName' in info
-					? getClipPlayerInput(config)?.input ?? 0
-					: getSourceInfoFromRaw(config, info).input ?? 0,
+				'fileName' in info ? (getClipPlayerInput(config)?.input ?? 0) : (getSourceInfoFromRaw(config, info).input ?? 0),
 			type:
 				'fileName' in info
 					? SourceLayerType.VT

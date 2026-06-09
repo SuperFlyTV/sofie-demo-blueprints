@@ -2,7 +2,7 @@ import { BlueprintMapping, BlueprintMappings, LookaheadMode, TSR } from '@sofie-
 import { literal } from '../../../../common/util.js'
 import { SourceType, StudioConfig } from '../../helpers/config.js'
 import { VMixLayers } from '../../layers.js'
-import { VmixInputConfig } from '../../../../$schemas/generated/main-studio-config.js'
+import { VmixInputConfig, VmixRegistryInputConfig } from '../../../../$schemas/generated/main-studio-config.js'
 import {
 	formatVmixMappingIndex,
 	getVmixInputLayerId,
@@ -65,7 +65,7 @@ export function getVMixMappings(config: StudioConfig): BlueprintMappings {
 
 	const additionalMixBuses = new Set<number>()
 
-	for (const [key, entry] of Object.entries(config.vmixInputs ?? {})) {
+	for (const [key, entry] of Object.entries<VmixRegistryInputConfig>(config.vmixInputs ?? {})) {
 		mappings[getVmixInputLayerId(key)] = literal<BlueprintMapping<TSR.MappingVmixInput>>({
 			device: TSR.DeviceType.VMIX,
 			deviceId: 'vmix0',

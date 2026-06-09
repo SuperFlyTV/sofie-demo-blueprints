@@ -56,9 +56,7 @@ function getGraphicTlObject(
 		const fullscreenInput = getClipPlayerInput(config)
 		return [
 			...vmixOverlayObjects,
-			...(isFullscreen
-				? createVisionMixerObjects(config, fullscreenInput?.input || 0, config.casparcgLatency)
-				: []),
+			...(isFullscreen ? createVisionMixerObjects(config, fullscreenInput?.input || 0, config.casparcgLatency) : []),
 		]
 	}
 

@@ -24,7 +24,7 @@ export function resolveVmixInput(config: StudioConfig, key: string): VmixRegistr
 }
 
 export function resolveVmixInputByRole(config: StudioConfig, role: string): VmixRegistryInputConfig | undefined {
-	const entries = Object.values(config.vmixInputs ?? {})
+	const entries = Object.values<VmixRegistryInputConfig>(config.vmixInputs ?? {})
 	return entries.find((entry) => entry.role === role)
 }
 
@@ -55,7 +55,7 @@ function normalizeRegistryKey(key: string): string {
 export function validateVmixInputsRegistry(config: StudioConfig): string[] {
 	const errors: string[] = []
 
-	for (const [key, entry] of Object.entries(config.vmixInputs ?? {})) {
+	for (const [key, entry] of Object.entries<VmixRegistryInputConfig>(config.vmixInputs ?? {})) {
 		if (entry.input === undefined || entry.input === '') {
 			errors.push(`vmixInputs.${key}: input is required`)
 		}

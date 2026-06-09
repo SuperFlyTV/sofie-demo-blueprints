@@ -8,7 +8,12 @@ import {
 import { ObjectType, SomeObject, VideoObject } from '../../../common/definitions/objects.js'
 import { assertUnreachable, literal } from '../../../common/util.js'
 import { SourceType, StudioConfig, VisionMixerDevice } from '../../studio/helpers/config.js'
-import { resolveVmixInput, resolveVmixInputByRole, shouldGenerateCasparCGTimeline, VmixInputReference } from '../../studio/helpers/vmixInputs.js'
+import {
+	resolveVmixInput,
+	resolveVmixInputByRole,
+	shouldGenerateCasparCGTimeline,
+	VmixInputReference,
+} from '../../studio/helpers/vmixInputs.js'
 import { CasparCGLayers } from '../../studio/layers.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
 import { createVisionMixerObjects } from './visionMixer.js'

@@ -56,9 +56,7 @@ export function createVmixOverlayGraphicTimelineObjects(
 	const registryEntry = resolveVmixInput(config, registryKey)
 	if (!registryEntry) return undefined
 
-	const layer = registryEntry.overlay
-		? getVmixOverlayLayerId(registryKey)
-		: VMixLayers.VMixOverlayGraphics
+	const layer = registryEntry.overlay ? getVmixOverlayLayerId(registryKey) : VMixLayers.VMixOverlayGraphics
 
 	return [
 		literal<TimelineBlueprintExt<TSR.TimelineContentVMixOverlay>>({
