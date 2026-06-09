@@ -1,6 +1,6 @@
-import { literal } from '../../common/util.js'
 import { BlueprintConfigCoreConfig, ICommonContext } from '@sofie-automation/blueprints-integration'
-import { BlueprintConfig, StudioConfig } from './helpers/config.js'
+import { literal } from '../../common/util.js'
+import { BlueprintConfig, StudioConfig, VmixControlMode } from './helpers/config.js'
 
 export function preprocessConfig(
 	_context: ICommonContext,
@@ -10,6 +10,8 @@ export function preprocessConfig(
 	console.log('Core config', coreConfig)
 	const processedConfig: BlueprintConfig = {
 		studio: literal<Partial<StudioConfig>>({
+			vmixInputs: {},
+			vmixControlMode: VmixControlMode.Demo,
 			...config,
 		}) as StudioConfig,
 	}

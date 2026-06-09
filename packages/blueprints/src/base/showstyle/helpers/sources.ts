@@ -1,5 +1,6 @@
 import { SourceType, StudioConfig } from '../../studio/helpers/config.js'
-import { InputConfig, VisionMixerDevice, VmixInputConfig } from '../../..//$schemas/generated/main-studio-config.js'
+import { InputConfig, VisionMixerDevice, VmixInputConfig } from '../../../$schemas/generated/main-studio-config.js'
+import { resolveVmixInput, resolveVmixInputByRole, VmixInputReference } from '../../studio/helpers/vmixInputs.js'
 
 export interface RawSourceInfo {
 	type: SourceType
@@ -8,7 +9,7 @@ export interface RawSourceInfo {
 }
 
 export interface SourceInfo extends RawSourceInfo {
-	input: number
+	input: VmixInputReference | undefined
 }
 
 export function findSource(input: string | number | boolean | undefined, type: SourceType): RawSourceInfo | undefined {
@@ -23,6 +24,23 @@ export function findSource(input: string | number | boolean | undefined, type: S
 	}
 }
 
+function resolveRegistryInputForRawInfo(config: StudioConfig, rawInfo: RawSourceInfo): VmixInputReference | undefined {
+	const roleCandidates = [`${rawInfo.type}${rawInfo.id}`, `${rawInfo.type}_${rawInfo.id}`]
+
+	for (const role of roleCandidates) {
+		const byRole = resolveVmixInputByRole(config, role)
+		if (byRole) return byRole.input
+	}
+
+	const registryKey = Object.keys(config.vmixInputs ?? {})[rawInfo.id - 1]
+	if (registryKey) {
+		const byIndex = resolveVmixInput(config, registryKey)
+		if (byIndex) return byIndex.input
+	}
+
+	return undefined
+}
+
 export function getSourceInfoFromRaw(config: StudioConfig, rawInfo: RawSourceInfo): SourceInfo {
 	let sourcesOfType = Object.values<InputConfig>(config.atemSources).filter((s) => s.type === rawInfo.type)
 
@@ -30,10 +48,11 @@ export function getSourceInfoFromRaw(config: StudioConfig, rawInfo: RawSourceInf
 		sourcesOfType = Object.values<VmixInputConfig>(config.vmixSources).filter((s) => s.type === rawInfo.type)
 	}
 
-	const input = sourcesOfType[rawInfo.id - 1]
+	const legacyInput = sourcesOfType[rawInfo.id - 1]
+	const registryInput = resolveRegistryInputForRawInfo(config, rawInfo)
 
 	return {
 		...rawInfo,
-		input: input && input.input,
+		input: registryInput ?? (legacyInput && legacyInput.input),
 	}
 }

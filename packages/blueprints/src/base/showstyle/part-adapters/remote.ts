@@ -28,7 +28,7 @@ export function generateRemotePart(context: PartContext, part: PartProps<RemoteP
 		sourceLayerId: SourceLayer.Remote,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Remote),
 		content: {
-			timelineObjects: [...createVisionMixerObjects(config, sourceInfo.input), audioTlObj],
+			timelineObjects: [...createVisionMixerObjects(config, sourceInfo.input ?? 0), audioTlObj],
 		},
 	}
 

@@ -24,7 +24,7 @@ export function getMappingsDefaults(context: ICommonContext, config: BlueprintCo
 			Object.assign(mappings, getAtemMappings(config))
 			break
 		case VisionMixerDevice.VMix:
-			Object.assign(mappings, getVMixMappings(config.studio.vmixSources))
+			Object.assign(mappings, getVMixMappings(config.studio))
 			break
 		default:
 			assertNever(config.studio.visionMixer.type)
