@@ -80,6 +80,15 @@ function generatePlayoutDevices(config: BlueprintConfig): BlueprintResultApplySt
 				},
 			}),
 		},
+		ograf0: {
+			parentConfigId: 'playoutgateway',
+			options: literal<TSR.DeviceOptionsOgraf>({
+				type: TSR.DeviceType.OGRAF,
+				options: {
+					url: 'http://localhost:8080/ograf/v1',
+				},
+			}),
+		},
 	}
 
 	if (config.studio.visionMixer.type === VisionMixerDevice.Atem) {

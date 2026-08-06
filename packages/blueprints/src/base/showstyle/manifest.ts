@@ -16,6 +16,7 @@ import { validateConfig } from './validateConfig.js'
 import { applyConfig } from './applyconfig/index.js'
 import * as ConfigSchema from '../../$schemas/main-showstyle-config.json'
 import { dereferenceSync } from 'dereference-json-schema'
+import onRundownActivate from './onRundownActivate.js'
 
 export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'blueprintId' | 'configPresets'> = {
 	/** The type of this blueprint */
@@ -66,8 +67,8 @@ export const baseManifest: Omit<ShowStyleBlueprintManifest<ShowStyleConfig>, 'bl
 	 */
 	applyConfig,
 	/** Called when a RundownPlaylist has been activated */
-	onRundownActivate: async (_context: IRundownActivationContext) => {
-		// Noop
+	onRundownActivate: async (context: IRundownActivationContext) => {
+		return onRundownActivate(context)
 	},
 	// Uncomment this to enable config fixup migrations between blueprint versions.
 	// Note: When defined, fixUpConfig must be run after every blueprint upload before
