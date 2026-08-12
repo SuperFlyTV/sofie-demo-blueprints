@@ -12,6 +12,8 @@ import { preprocessConfig } from '../preprocessConfig.js'
 import { literal } from '../../../common/util.js'
 // eslint-disable-next-line n/no-missing-import
 import { StudioPackageContainer } from '@sofie-automation/shared-lib/dist/core/model/PackageContainer.js'
+// eslint-disable-next-line n/no-missing-import
+import { ShelfButtonSize } from '@sofie-automation/shared-lib/dist/core/model/StudioSettings.js'
 
 export function applyConfig(
 	context: ICommonContext,
@@ -40,6 +42,7 @@ export function applyConfig(
 			allowPieceDirectPlay: false,
 			enableBuckets: false,
 			enableEvaluationForm: true,
+			shelfAdlibButtonSize: ShelfButtonSize.LARGE,
 		},
 	}
 }

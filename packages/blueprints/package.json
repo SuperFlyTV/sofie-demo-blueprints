@@ -27,11 +27,12 @@
 	"devDependencies": {
 		"@types/node": "^22.19.3",
 		"sofie-blueprint-tools": "^1.3.0",
+		"timeline-state-resolver-types": "10.0.0-nightly-main-20260714-110908-7c702dedf.0",
 		"typescript": "~5.8.3",
 		"vitest": "^4.1.0"
 	},
 	"dependencies": {
-		"@sofie-automation/blueprints-integration": "26.3.0-nightly-main-20260421-093052-38fae25.0",
+		"@sofie-automation/blueprints-integration": "26.3.0-nightly-main-20260810-055126-73a9f46.0",
 		"dereference-json-schema": "^0.2.1",
 		"type-fest": "^4.33.0"
 	},
