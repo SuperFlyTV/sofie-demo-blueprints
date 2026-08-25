@@ -46,6 +46,17 @@ export function getGlobalActions(
 			},
 			externalId: ingestRundown.externalId,
 		}),
+		literal<IBlueprintActionManifest>({
+			actionId: ActionId.OGrafClearStudio,
+			userData: {},
+			userDataManifest: {},
+			display: {
+				label: t('Clear Graphics in Studio'),
+				sourceLayerId: SourceLayer.OGrafStudio1,
+				outputLayerId: getOutputLayerForSourceLayer(SourceLayer.OGrafStudio1),
+			},
+			externalId: ingestRundown.externalId,
+		}),
 		exampleGraphicNextStepAdlibAction(ingestRundown),
 	]
 }

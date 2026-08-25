@@ -10,7 +10,12 @@ import { TimelineBlueprintExt } from '../../studio/customTypes.js'
 import { GraphicsResult } from './graphics.js'
 
 export function parseOGrafGraphicsFromObjects(config: StudioConfig, objects: SomeObject[]): GraphicsResult {
-	const graphicsObjects = objects.filter((o): o is OGrafGraphicObject => o.objectType === ObjectType.OGrafGraphic)
+	const graphicsObjects: OGrafGraphicObject[] = []
+	for (const o of objects) {
+		if (o.objectType === ObjectType.OGrafGraphic) {
+			graphicsObjects.push(o as OGrafGraphicObject)
+		}
+	}
 
 	return {
 		pieces: graphicsObjects.filter((o) => !o.isAdlib).map((o) => parseOGrafGraphic(config, o)),
@@ -66,6 +71,12 @@ function getSourceLayer(object: OGrafGraphicObject): SourceLayer {
 			return SourceLayer.OGrafOverlay2
 		case 'overlay3':
 			return SourceLayer.OGrafOverlay3
+		case 'studio1':
+			return SourceLayer.OGrafStudio1
+		case 'studio2':
+			return SourceLayer.OGrafStudio2
+		case 'studio3':
+			return SourceLayer.OGrafStudio3
 		default:
 			return SourceLayer.OGrafOverlay1
 	}
@@ -80,6 +91,12 @@ function getGraphicTlLayer(object: OGrafGraphicObject): OGrafLayers {
 			return OGrafLayers.OGrafOverlay2
 		case 'overlay3':
 			return OGrafLayers.OGrafOverlay3
+		case 'studio1':
+			return OGrafLayers.OGrafStudio1
+		case 'studio2':
+			return OGrafLayers.OGrafStudio2
+		case 'studio3':
+			return OGrafLayers.OGrafStudio3
 		default:
 			return OGrafLayers.OGrafOverlay1
 	}

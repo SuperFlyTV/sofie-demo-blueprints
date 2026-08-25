@@ -3,4 +3,5 @@ export enum ActionId {
 	LastDVE = 'lastDVE',
 	GFXStep = 'GFXStep',
 	OGrafClear = 'ograf-clear',
+	OGrafClearStudio = 'ograf-clear-studio',
 }

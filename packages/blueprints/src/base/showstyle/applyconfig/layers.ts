@@ -12,6 +12,9 @@ export enum SourceLayer {
 	OGrafOverlay1 = 'ograf_overlay1',
 	OGrafOverlay2 = 'ograf_overlay2',
 	OGrafOverlay3 = 'ograf_overlay3',
+	OGrafStudio1 = 'ograf_studio1',
+	OGrafStudio2 = 'ograf_studio2',
+	OGrafStudio3 = 'ograf_studio3',
 
 	AudioBed = 'audioBed',
 	StudioGuests = 'guest',
@@ -44,6 +47,9 @@ export function getOutputLayerForSourceLayer(layer: SourceLayer): OutputLayer {
 		case SourceLayer.Ticker:
 		case SourceLayer.Logo:
 			return OutputLayer.Gfx
+		case SourceLayer.OGrafStudio1:
+		case SourceLayer.OGrafStudio2:
+		case SourceLayer.OGrafStudio3:
 		case SourceLayer.StudioGuests:
 		case SourceLayer.HostOverride:
 		case SourceLayer.AudioBed:

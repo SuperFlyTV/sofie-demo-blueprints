@@ -94,6 +94,27 @@ export function getSourceLayer(): ISourceLayer[] {
 			name: 'OGraf Overlay 3',
 			abbreviation: 'GFX3',
 		},
+		{
+			_id: SourceLayer.OGrafStudio1,
+			type: SourceLayerType.STUDIO_SCREEN,
+			_rank: 114,
+			name: 'OGraf Studio 1',
+			abbreviation: 'STUDIO1',
+		},
+		{
+			_id: SourceLayer.OGrafStudio2,
+			type: SourceLayerType.STUDIO_SCREEN,
+			_rank: 115,
+			name: 'OGraf Studio 2',
+			abbreviation: 'STUDIO2',
+		},
+		{
+			_id: SourceLayer.OGrafStudio3,
+			type: SourceLayerType.STUDIO_SCREEN,
+			_rank: 116,
+			name: 'OGraf Studio 3',
+			abbreviation: 'STUDIO3',
+		},
 
 		{
 			_id: SourceLayer.LowerThird,

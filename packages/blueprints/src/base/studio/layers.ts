@@ -17,6 +17,9 @@ export enum OGrafLayers {
 	OGrafOverlay1 = 'ograf_overlay_1',
 	OGrafOverlay2 = 'ograf_overlay_2',
 	OGrafOverlay3 = 'ograf_overlay_3',
+	OGrafStudio1 = 'ograf_studio_1',
+	OGrafStudio2 = 'ograf_studio_2',
+	OGrafStudio3 = 'ograf_studio_3',
 }
 export enum CasparCGLayers {
 	CasparCGClipPlayer1 = 'casparcg_clip_player1',

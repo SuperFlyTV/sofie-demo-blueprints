@@ -102,6 +102,7 @@ export function unwrapStart(value: number | 'now'): number {
 }
 
 export function changeExtension(fileName: string, newExt: string): string {
+	fileName = fileName ?? ''
 	const pos = fileName.includes('.') ? fileName.lastIndexOf('.') : fileName.length
 	const fileRoot = fileName.substring(0, pos)
 	const output = `${fileRoot}.${newExt}`
@@ -109,6 +110,7 @@ export function changeExtension(fileName: string, newExt: string): string {
 }
 
 export function stripExtension(fileName: string): string {
+	fileName = fileName ?? ''
 	const pos = fileName.includes('.') ? fileName.lastIndexOf('.') : fileName.length
 	const fileRoot = fileName.substring(0, pos)
 	return fileRoot

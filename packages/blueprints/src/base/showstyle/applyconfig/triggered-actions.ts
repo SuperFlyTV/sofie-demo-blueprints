@@ -44,7 +44,7 @@ export function getTriggeredActions(): IBlueprintTriggeredActions[] {
 			createAdLibHotkey(key, [SourceLayer.Remote], true, i, undefined)
 		),
 		...['F8'].map((key, i) => createAdLibHotkey(key, [SourceLayer.DVE], true, i, undefined)),
-		...['KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY'].map((key, i) =>
+		...['KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO'].map((key, i) =>
 			createAdLibHotkey(
 				key,
 				[
@@ -53,6 +53,9 @@ export function getTriggeredActions(): IBlueprintTriggeredActions[] {
 					SourceLayer.OGrafOverlay1,
 					SourceLayer.OGrafOverlay2,
 					SourceLayer.OGrafOverlay3,
+					SourceLayer.OGrafStudio1,
+					SourceLayer.OGrafStudio2,
+					SourceLayer.OGrafStudio3,
 				],
 				false,
 				i,

@@ -12,6 +12,12 @@ export interface SourceInfo extends RawSourceInfo {
 }
 
 export function findSource(input: string | number | boolean | undefined, type: SourceType): RawSourceInfo | undefined {
+	if (typeof input === 'number') {
+		return {
+			id: input,
+			type,
+		}
+	}
 	const match = (input + '').match(/(.*?)(\d+)(.*)/) // find the first number
 	if (match) {
 		return {

@@ -6,6 +6,7 @@ import { getSisyfosMappings } from './sisyfos.js'
 import { getCasparCGMappings } from './casparcg.js'
 import { AbstractLayers } from '../../layers.js'
 import { assertNever } from '../../../../common/util.js'
+import { getOGrafMappings } from './ograf.js'
 
 export function getMappingsDefaults(context: ICommonContext, config: BlueprintConfig): BlueprintMappings {
 	const mappings: BlueprintMappings = {
@@ -17,6 +18,7 @@ export function getMappingsDefaults(context: ICommonContext, config: BlueprintCo
 		},
 		...getSisyfosMappings(config),
 		...getCasparCGMappings(config),
+		...getOGrafMappings(config),
 	}
 
 	switch (config.studio.visionMixer.type) {

@@ -15,7 +15,12 @@ export function parseCamera(ingestPart: EditorIngestPart): PartProps<CameraProps
 
 	const input = findSource(cameraPiece.attributes.camNo, SourceType.Camera)
 	if (!input) {
-		return createInvalidProps(t(`Could not find camera for input ${cameraPiece.attributes.camNo}`), ingestPart)
+		return createInvalidProps(
+			t(
+				`Could not find camera for input ${cameraPiece.attributes.camNo} (attributes: ${JSON.stringify(cameraPiece.attributes)})`
+			),
+			ingestPart
+		)
 	}
 
 	return {
