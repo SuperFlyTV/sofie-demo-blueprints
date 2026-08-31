@@ -124,21 +124,21 @@ function processUpdateProps(
 	operationTarget: UserOperationTarget,
 	changes: UserOperationChange<BlueprintsUserOperations | DefaultUserOperations>
 ) {
-	if (operationTarget.pieceExternalId) {
+	if (operationTarget.target === 'piece') {
 		return updatePieceProps(
 			context,
 			mutableIngestRundown,
 			{ ...operationTarget, pieceExternalId: operationTarget.pieceExternalId }, // sometimes typescript is kind of dumb >.>
 			changes
 		)
-	} else if (operationTarget.partExternalId) {
+	} else if (operationTarget.target === 'part') {
 		return updatePartProps(
 			context,
 			mutableIngestRundown,
 			{ ...operationTarget, partExternalId: operationTarget.partExternalId }, // sometimes typescript is kind of dumb >.>
 			changes
 		)
-	} else if (operationTarget.segmentExternalId) {
+	} else if (operationTarget.target === 'segment') {
 		return updateSegmentProps(
 			context,
 			mutableIngestRundown,
@@ -218,7 +218,7 @@ function updatePieceProps(
 ) {
 	const operation = changes.operation as DefaultUserOperationEditProperties
 
-	if (!operationTarget.partExternalId) return // I'm lazy and don't feel like looking this up manually
+	if (operationTarget.target !== 'piece' || !operationTarget.partExternalId) return // I'm lazy and don't feel like looking this up manually
 
 	const part = mutableIngestRundown.findPart(operationTarget.partExternalId)
 	if (!part?.payload) return
@@ -254,6 +254,7 @@ function changeSource(
 
 	if (
 		changes.operation.id !== BlueprintUserOperationTypes.CHANGE_SOURCE ||
+		changes.operationTarget.target !== 'part' ||
 		changes.operationTarget.partExternalId === undefined
 	) {
 		return
