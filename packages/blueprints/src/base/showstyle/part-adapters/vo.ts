@@ -31,6 +31,12 @@ export function generateVOPart(context: PartContext, part: PartProps<VOProps>): 
 		lifespan: PieceLifespan.WithinPart,
 		sourceLayerId: SourceLayer.VO,
 		outputLayerId: getOutputLayerForSourceLayer(SourceLayer.VO),
+		abSessions: [
+			{
+				sessionName: part.payload.externalId,
+				poolName: 'clip',
+			},
+		],
 
 		content: {
 			fileName: part.payload.clipProps.fileName,
