@@ -35,6 +35,17 @@ export function getGlobalActions(
 			},
 			externalId: ingestRundown.externalId,
 		}),
+		literal<IBlueprintActionManifest>({
+			actionId: ActionId.AddPart,
+			userData: {},
+			userDataManifest: {},
+			display: {
+				label: t('Add Part'),
+				sourceLayerId: SourceLayer.Camera,
+				outputLayerId: getOutputLayerForSourceLayer(SourceLayer.Camera),
+			},
+			externalId: ingestRundown.externalId,
+		}),
 		exampleGraphicNextStepAdlibAction(ingestRundown),
 	]
 }
