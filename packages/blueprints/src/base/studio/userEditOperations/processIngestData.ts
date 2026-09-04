@@ -1,4 +1,5 @@
 import {
+	BlueprintResultPart,
 	DefaultUserOperationEditProperties,
 	DefaultUserOperations,
 	DefaultUserOperationsTypes,
@@ -20,6 +21,8 @@ import {
 } from './types.js'
 import { removeChangesForLockedElements } from './lockedElementsHandler.js'
 import { lockedElementApplyAllowedChanges } from './lockedElementApplyAllowedChanges.js'
+import { EditorIngestPart } from '../../../code-copy/rundown-editor/index.js'
+import { OGrafGraphicObject } from '../../../common/definitions/objects.js'
 
 export async function processIngestData(
 	context: IProcessIngestDataContext,
@@ -109,7 +112,11 @@ async function applyUserOperation(
 		case DefaultUserOperationsTypes.REVERT_SEGMENT:
 			undoUserEdits(context, mutableIngestRundown, changes.operationTarget, changes.operation)
 			break
+		case DefaultUserOperationsTypes.REVERT_PART:
+			undoUserEdits(context, mutableIngestRundown, changes.operationTarget, changes.operation)
+			break
 		// Update changes from properties panel:
+		case DefaultUserOperationsTypes.RETIME_PIECE:
 		case DefaultUserOperationsTypes.UPDATE_PROPS:
 			processUpdateProps(context, mutableIngestRundown, changes.operationTarget, changes)
 			break
@@ -216,15 +223,61 @@ function updatePieceProps(
 	operationTarget: UserOperationTarget & { pieceExternalId: string },
 	changes: UserOperationChange<BlueprintsUserOperations | DefaultUserOperations>
 ) {
-	const operation = changes.operation as DefaultUserOperationEditProperties
-
 	if (operationTarget.target !== 'piece' || !operationTarget.partExternalId) return // I'm lazy and don't feel like looking this up manually
 
 	const part = mutableIngestRundown.findPart(operationTarget.partExternalId)
 	if (!part?.payload) return
 
-	const lifespan = operation.payload.globalProperties['lifespan']
-	context.logDebug('Update piece ' + operationTarget.pieceExternalId + ': ' + lifespan)
+	const partPayload = clone(part.payload) as EditorIngestPart
+
+	context.logDebug('Update piece ' + operationTarget.pieceExternalId)
+
+	let hasChanged = false
+
+	let edit: {
+		startTime?: number
+		duration?: number
+		ografData?: unknown
+	} = {}
+	if (changes.operation.id === DefaultUserOperationsTypes.UPDATE_PROPS) {
+		edit = changes.operation.payload.globalProperties
+	} else if (changes.operation.id === DefaultUserOperationsTypes.RETIME_PIECE) {
+		edit = {
+			startTime: Math.max(0, Math.floor(changes.operation.payload.inPoint)),
+		}
+	} else {
+		return // do nothing
+	}
+
+	for (const piece of partPayload.pieces) {
+		// EditorIngestPiece
+		if (piece.id !== operationTarget.pieceExternalId) continue
+
+		// OGraf edits
+		if (piece.objectType.startsWith('ograf-')) {
+			const ografPiece = piece as OGrafGraphicObject
+			if (!ografPiece.userOverrides) ografPiece.userOverrides = {}
+			const originalOverridesStr = JSON.stringify(ografPiece.userOverrides)
+
+			ografPiece.userOverrides = {
+				objectTime: edit.startTime ?? ografPiece.userOverrides.objectTime,
+				duration: edit.duration ?? ografPiece.userOverrides.duration,
+				ografData: edit.ografData ?? ografPiece.userOverrides.ografData,
+			}
+
+			if (ografPiece.userOverrides.objectTime === ografPiece.objectTime) delete ografPiece.userOverrides.objectTime
+			if (ografPiece.userOverrides.duration === ografPiece.duration) delete ografPiece.userOverrides.duration
+			if (JSON.stringify(ografPiece.userOverrides.ografData) === JSON.stringify(ografPiece.attributes['ograf-data']))
+				delete ografPiece.userOverrides.ografData
+
+			if (originalOverridesStr !== JSON.stringify(ografPiece.userOverrides)) hasChanged = true
+		}
+	}
+
+	if (hasChanged) {
+		context.logDebug('Part has changed, updating payload. ' + JSON.stringify(partPayload))
+		part.replacePayload(partPayload)
+	}
 }
 
 function changeSource(
@@ -324,15 +377,36 @@ function undoUserEdits(
 	operationTarget: UserOperationTarget,
 	operation: BlueprintsUserOperationUserEdited | DefaultUserOperations
 ) {
-	if (!operationTarget.segmentExternalId) return
+	if (operationTarget.target === 'segment') {
+		const segment = mutableIngestRundown.getSegment(operationTarget.segmentExternalId)
+		if (!segment) return
 
-	const segment = mutableIngestRundown.getSegment(operationTarget.segmentExternalId)
-	if (!segment) return
+		// Unlock the segment to allow NRCS updates:
+		segment.setUserEditState(BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES, false)
+		//ToDo: At the moment this will only undo it on the next MOS update
+		// Should be updated instantly but re-running the processIngestData?
+		context.logInfo(`Undo userEdits: ${operationTarget.segmentExternalId}`)
+		segment.setUserEditState(operation.id, false)
+	} else if (operationTarget.target === 'part') {
+		const segment = mutableIngestRundown.getSegment(operationTarget.segmentExternalId)
+		if (!segment) return
 
-	// Unlock the segment to allow NRCS updates:
-	segment.setUserEditState(BlueprintUserOperationTypes.LOCK_SEGMENT_NRCS_UPDATES, false)
-	//ToDo: At the moment this will only undo it on the next MOS update
-	// Should be updated instantly but re-running the processIngestData?
-	context.logInfo(`Undo userEdits: ${operationTarget.segmentExternalId}`)
-	segment.setUserEditState(operation.id, false)
+		const part = segment.getPart(operationTarget.partExternalId)
+		if (!part?.payload) return
+
+		const partPayload = clone(part.payload) as EditorIngestPart
+		for (const piece of partPayload.pieces) {
+			if (piece.objectType.startsWith('ograf-')) {
+				const ografPiece = piece as OGrafGraphicObject
+				delete ografPiece.userOverrides
+			}
+		}
+		part.replacePayload(partPayload)
+	} else {
+		context.logWarning('Not implemented for target: ' + operationTarget.target)
+	}
+}
+
+function clone<T>(obj: T): T {
+	return JSON.parse(JSON.stringify(obj))
 }

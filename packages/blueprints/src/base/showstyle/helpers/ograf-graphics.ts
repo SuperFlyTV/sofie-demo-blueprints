@@ -1,6 +1,16 @@
-import { IBlueprintAdLibPiece, IBlueprintPiece, PieceLifespan, TSR } from '@sofie-automation/blueprints-integration'
+import {
+	DefaultUserOperationsTypes,
+	IBlueprintAdLibPiece,
+	IBlueprintPiece,
+	JSONBlobStringify,
+	JSONSchema,
+	PieceLifespan,
+	TSR,
+	UserEditingType,
+} from '@sofie-automation/blueprints-integration'
+import * as OGraf from 'ograf'
 import { ObjectType, OGrafGraphicObject, SomeObject } from '../../../common/definitions/objects.js'
-import { literal } from '../../../common/util.js'
+import { literal, t } from '../../../common/util.js'
 import { StudioConfig } from '../../studio/helpers/config.js'
 import { OGrafLayers } from '../../studio/layers.js'
 import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers.js'
@@ -26,7 +36,7 @@ export function parseOGrafGraphicsFromObjects(config: StudioConfig, objects: Som
 function parseOGrafGraphic(config: StudioConfig, object: OGrafGraphicObject): IBlueprintPiece {
 	const sourceLayer = getSourceLayer(object)
 
-	return {
+	const piece: IBlueprintPiece = {
 		externalId: object.id,
 		name: makeOGrafName(object),
 		lifespan: PieceLifespan.WithinPart,
@@ -38,27 +48,61 @@ function parseOGrafGraphic(config: StudioConfig, object: OGrafGraphicObject): IB
 			previewRenderer: config.previewRenderer,
 		},
 		enable: {
-			start: object.objectTime ?? 0,
-			duration: object.duration > 0 ? object.duration : undefined,
+			start: object.userOverrides?.objectTime ?? object.objectTime ?? 0,
+			duration: (object.userOverrides?.duration ?? object.duration > 0) ? object.duration : undefined,
 		},
 		prerollDuration: config.casparcgLatency,
+		userEditOperations: [
+			{
+				type: UserEditingType.SOFIE,
+				id: DefaultUserOperationsTypes.RETIME_PIECE,
+				limitToCurrentPart: true,
+			},
+		],
 	}
-}
-function parseAdlibOGrafGraphic(config: StudioConfig, object: OGrafGraphicObject, index: number): IBlueprintAdLibPiece {
-	const sourceLayer = getSourceLayer(object)
+	if (object.attributes['ograf-manifest']?.schema) {
+		piece.userEditProperties = {
+			globalProperties: {
+				schema: JSONBlobStringify<JSONSchema>({
+					type: 'object',
+					properties: {
+						startTime: {
+							type: 'number',
+							title: 'Start Time',
+						},
+						duration: {
+							type: 'number',
+							title: 'Duration',
+						},
 
-	return {
-		externalId: object.id,
-		name: makeOGrafName(object),
-		lifespan: PieceLifespan.WithinPart,
-		sourceLayerId: sourceLayer,
-		outputLayerId: getOutputLayerForSourceLayer(sourceLayer),
-		content: {
-			timelineObjects: getGraphicTlObject(config, object, true),
-		},
-		_rank: index, // todo - probably some offset for ordering
-		expectedDuration: object.duration,
+						ografData: {
+							...object.attributes['ograf-manifest'].schema,
+							title: 'OGraf Data',
+							$schema: 'https://ograf.ebu.io/v1/specification/json-schemas/gdd/object.json',
+						} satisfies Required<OGraf.GraphicsManifest>['schema'],
+					},
+				}),
+				currentValue: {
+					startTime: object.userOverrides?.objectTime ?? object.objectTime,
+					duration: object.userOverrides?.duration ?? object.duration,
+					ografData: object.userOverrides?.ografData ?? object.attributes['ograf-data'],
+				},
+			},
+		}
 	}
+
+	return piece
+}
+
+function parseAdlibOGrafGraphic(config: StudioConfig, object: OGrafGraphicObject, index: number): IBlueprintAdLibPiece {
+	const piece = parseOGrafGraphic(config, object)
+
+	const adlib: IBlueprintAdLibPiece = {
+		...piece,
+		_rank: index, // todo - probably some offset for ordering
+		expectedDuration: object.userOverrides?.duration ?? object.duration,
+	}
+	return adlib
 }
 
 function getSourceLayer(object: OGrafGraphicObject): SourceLayer {
@@ -126,7 +170,7 @@ function getGraphicTlObject(
 				graphicId: object.attributes['ograf-id'],
 				playing: true,
 
-				data: object.attributes['ograf-data'],
+				data: object.userOverrides?.ografData ?? object.attributes['ograf-data'],
 				useStopCommand: true,
 			},
 		}),
@@ -135,7 +179,7 @@ function getGraphicTlObject(
 }
 
 function makeOGrafName(object: OGrafGraphicObject): string {
-	const data = object.attributes['ograf-data'] || {}
+	const data = (object.userOverrides?.ografData ?? object.attributes['ograf-data']) || {}
 
 	if (Object.keys(data).length === 0) {
 		// data is empty

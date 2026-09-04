@@ -33,7 +33,7 @@ export function getSegment(context: ISegmentUserContext, ingestSegment: SofieIng
 		},
 	}
 
-	context.logDebug('Intermediate segment: ' + JSON.stringify(intermediateSegment))
+	// context.logDebug('Intermediate segment: ' + JSON.stringify(intermediateSegment))
 
 	return generateParts(context, intermediateSegment)
 }

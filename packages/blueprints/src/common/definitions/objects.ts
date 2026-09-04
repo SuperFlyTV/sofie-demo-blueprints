@@ -58,10 +58,17 @@ export interface GraphicObjectBase extends BaseObject {
 export interface OGrafGraphicObject extends GraphicObjectBase {
 	objectType: ObjectType.OGrafGraphic
 	attributes: OGrafGraphicObjectAttributes
+
+	userOverrides?: {
+		ografData?: OGrafGraphicObjectAttributes['ograf-data']
+		objectTime?: SpreadsheetIngestPiece['objectTime']
+		duration?: SpreadsheetIngestPiece['duration']
+	}
 }
 export type OGrafGraphicObjectAttributes = {
 	'ograf-id': string
 	'ograf-data': any
+	'ograf-manifest': any
 	type: string | 'full-screen' | 'overlay1' | 'overlay2' | 'overlay3'
 }
 export interface GraphicObject extends GraphicObjectBase {
