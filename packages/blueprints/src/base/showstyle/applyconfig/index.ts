@@ -1,4 +1,8 @@
-import { BlueprintResultApplyShowStyleConfig, ICommonContext } from '@sofie-automation/blueprints-integration'
+import {
+	BlueprintResultApplyShowStyleConfig,
+	ICommonContext,
+	SourceLayerType,
+} from '@sofie-automation/blueprints-integration'
 import { ShowStyleConfig } from '../../../$schemas/generated/main-showstyle-config.js'
 import { getOutputLayer } from './outputlayers.js'
 import { getSourceLayer } from './sourcelayers.js'
@@ -13,5 +17,11 @@ export function applyConfig(
 		sourceLayers: getSourceLayer(),
 		outputLayers: getOutputLayer(),
 		triggeredActions: getTriggeredActions(),
+		abChannelDisplay: {
+			sourceLayerIds: [],
+			sourceLayerTypes: [SourceLayerType.VT, SourceLayerType.LIVE_SPEAK],
+			outputLayerIds: [],
+			showOnDirectorScreen: true,
+		},
 	}
 }
