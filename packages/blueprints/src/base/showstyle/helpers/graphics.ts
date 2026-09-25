@@ -13,6 +13,7 @@ import { getOutputLayerForSourceLayer, SourceLayer } from '../applyconfig/layers
 import { getClipPlayerInput } from './clips.js'
 import { createVisionMixerObjects } from './visionMixer.js'
 import { TimelineBlueprintExt } from '../../studio/customTypes.js'
+import { createPieceUserEditOperations } from './userEditOperations.js'
 
 export interface GraphicsResult {
 	pieces: IBlueprintPiece[]
@@ -85,6 +86,7 @@ function parseGraphic(config: StudioConfig, object: GraphicObject | SteppedGraph
 		lifespan,
 		sourceLayerId: sourceLayer,
 		outputLayerId: getOutputLayerForSourceLayer(sourceLayer),
+		userEditOperations: createPieceUserEditOperations(),
 		content: {
 			timelineObjects: getGraphicTlObject(config, object, false),
 
